@@ -65,20 +65,6 @@ hui.ui.get = function(nameOrWidget) {
 	return null;
 };
 
-/**
- * Get a localized text, defaults to english or the key
- * @param {String} key The key of the text
- * @returns {String} The localized string
- */
-hui.ui.getText = function(key) {
-	var x = this.texts[key];
-	if (!x) {return key}
-	if (x[this.language]) {
-		return x[this.language];
-	} else {
-		return x['en'];
-	}
-}
 
 /**
  * Called when the DOM is ready and hui.ui is ready
@@ -281,26 +267,6 @@ hui.ui.reLayout = function() {
 	}
 }
 
-//////////////////////////////// Widget //////////////////////////////
-
-hui.ui.Widget = function() {
-	
-}
-
-hui.ui.Widget.prototype = {
-	_init : function(options) {
-		this.options = options;
-		this.name = options.name;
-		this.element = hui.get(options.element);
-	},
-	hide : function() {
-		this.element.style.display = 'none';
-	},
-	show : function() {
-		this.element.style.display = '';
-	}
-}
-
 ///////////////////////////////// Indexes /////////////////////////////
 
 hui.ui.nextIndex = function() {
@@ -384,6 +350,40 @@ hui.ui.hideCurtain = function(widget) {
 		hui.animate(widget.curtain,'opacity',0,200,{hideOnComplete:true});
 	}
 };
+
+
+///////////////////////////// Localization ////////////////////////////
+
+
+/**
+ * Get a localized text, defaults to english or the key
+ * @param {String} key The key of the text
+ * @returns {String} The localized string
+ */
+hui.ui.getText = function(key) {
+	var x = this.texts[key];
+	if (!x) {return key}
+	if (x[this.language]) {
+		return x[this.language];
+	} else {
+		return x['en'];
+	}
+}
+
+hui.ui.getTranslated = function(value) {
+	if (!hui.isDefined(value) || hui.isString(value)) {
+		return value;
+	}
+	if (value[hui.ui.language]) {
+		return value[hui.ui.language];
+	}
+	if (value[null]) {
+		return value[null];
+	}
+	for (key in value) {
+		return value[key];
+	}
+}
 
 //////////////////////////////// Message //////////////////////////////
 
@@ -505,22 +505,6 @@ hui.ui.msg.success = function(options) {
 hui.ui.msg.fail = function(options) {
 	options = hui.override({icon:'common/warning',duration:3000},options);
 	hui.ui.msg(options);
-}
-
-
-hui.ui.getTranslated = function(value) {
-	if (!hui.isDefined(value) || hui.isString(value)) {
-		return value;
-	}
-	if (value[hui.ui.language]) {
-		return value[hui.ui.language];
-	}
-	if (value[null]) {
-		return value[null];
-	}
-	for (key in value) {
-		return value[key];
-	}
 }
 
 hui.ui.hideMessage = function() {
@@ -647,34 +631,6 @@ hui.ui.stress = function(widget) {
 }
 
 
-/////////////////////////////// Validation /////////////////////////////
-
-/** @constructor */
-hui.ui.NumberValidator = function(options) {
-	hui.override({allowNull:false,min:0,max:10},options)
-	this.min = options.min;
-	this.max = options.max;
-	this.allowNull = options.allowNull;
-	this.middle = Math.max(Math.min(this.max,0),this.min);
-}
-
-hui.ui.NumberValidator.prototype = {
-	validate : function(value) {
-		if (hui.isBlank(value) && this.allowNull) {
-			return {valid:true,value:null};
-		}
-		var number = parseFloat(value);
-		if (isNaN(number)) {
-			return {valid:false,value:this.middle};
-		} else if (number<this.min) {
-			return {valid:false,value:this.min};
-		} else if (number>this.max) {
-			return {valid:false,value:this.max};
-		}
-		return {valid:true,value:number};
-	}
-}
-
 //////////////////////////// Positioning /////////////////////////////
 
 hui.ui.positionAtElement = function(element,target,options) {
@@ -771,15 +727,6 @@ hui.ui.extend = function(obj,options) {
 	}
 	if (!obj.valueForProperty) {
 		obj.valueForProperty = function(p) {return this[p]};
-	}
-};
-
-/** Send a global drag and drop message */
-hui.ui.callDelegatesDrop = function(dragged,dropped) {
-	for (var i=0; i < hui.ui.delegates.length; i++) {
-		if (hui.ui.delegates[i]['$drop$'+dragged.kind+'$'+dropped.kind]) {
-			hui.ui.delegates[i]['$drop$'+dragged.kind+'$'+dropped.kind](dragged,dropped);
-		}
 	}
 };
 

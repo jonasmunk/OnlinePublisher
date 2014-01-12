@@ -3,7 +3,7 @@
 DIR=$(dirname $0)
 BIN_PATH=${DIR}"/../bin/"
 
-${DIR}/concat.sh
+${DIR}/join.sh
 
 echo "Compressing scripts"
 java -jar ${DIR}/yuicompressor-2.4.8.jar ${BIN_PATH}combined.js --charset UTF-8 -o ${BIN_PATH}minimized.js

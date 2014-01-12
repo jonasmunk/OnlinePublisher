@@ -1,3 +1,12 @@
+/** Send a global drag and drop message */
+hui.ui.callDelegatesDrop = function(dragged,dropped) {
+	for (var i=0; i < hui.ui.delegates.length; i++) {
+		if (hui.ui.delegates[i]['$drop$'+dragged.kind+'$'+dropped.kind]) {
+			hui.ui.delegates[i]['$drop$'+dragged.kind+'$'+dropped.kind](dragged,dropped);
+		}
+	}
+};
+
 /** @private */
 hui.ui.getDragProxy = function() {
 	if (!hui.ui.dragProxy) {

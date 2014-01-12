@@ -2,14 +2,14 @@
 
 DIR=$(dirname $0)
 
-${DIR}/concat.sh
+${DIR}/join.sh
 
 echo "Deleting old symbols"
 rm -rf ${DIR}/../api/symbols/*.html
 
 echo "Documenting"
 
-java -Xmx256m -jar jsdoc_toolkit/jsrun.jar jsdoc_toolkit/app/run.js -a -s -t=jsdoc_toolkit/templates/clean -d=../api ${DIR}/../bin/all.js
+java -Xmx256m -jar ${DIR}/jsdoc_toolkit/jsrun.jar ${DIR}/jsdoc_toolkit/app/run.js -a -s -t=${DIR}/jsdoc_toolkit/templates/clean -d=${DIR}/../api ${DIR}/../bin/all.js
 
 
 #		-a or --allfunctions

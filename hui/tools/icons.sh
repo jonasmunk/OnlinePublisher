@@ -2,18 +2,17 @@
 
 import os
 import re
+import sys
 import codecs
 import json
 from xml.sax.saxutils import escape
 
 
 
-base = '/Users/jbm/Sites/onlinepublisher/hui'
-
-base = os.getcwd()+'/..'
+pathname = os.path.dirname(sys.argv[0])
+base = os.path.abspath(pathname)+'/..'
 
 iconReg = re.compile('([^0-9]+)([0-9]+).png')
-
 
 dictionary = {}
 

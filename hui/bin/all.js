@@ -2464,7 +2464,9 @@ if (!Function.prototype.argumentNames) {
 			.replace(/\s+/g, '').split(',');
 		return names.length == 1 && !names[0] ? [] : names;
 	}
-}/////////////////////////// Animation ///////////////////////////
+}
+
+/////////////////////////// Animation ///////////////////////////
 
 /**
  * Animate something
@@ -3060,6 +3062,8 @@ hui.ease = {
         };
     }
 }());
+
+
 /** @constructor
  * @param str The color like red or rgb(255, 0, 0) or #ff0000 or rgb(100%, 0%, 0%)
  */
@@ -3289,6 +3293,8 @@ hui.Color.rgb2hex = function(rgbary) {
   	return c;
 }
 
+
+
 /*
   * $script.js v1.3
   * https://github.com/ded/script.js
@@ -3402,6 +3408,8 @@ hui.Color.rgb2hex = function(rgbary) {
     (module.exports = $script) :
     (win.hui.require = $script);
 }(this, document, setTimeout);
+
+
 hui.parallax = {
 	
 	_listeners : [],
@@ -3469,7 +3477,9 @@ hui.parallax = {
 	}
 }
 
-/* EOF */hui.store = {
+/* EOF */
+
+hui.store = {
 
 	isSupported: function() {
 		try {
@@ -3499,6 +3509,8 @@ hui.parallax = {
 	
 
 }
+
+
 /**
  * SWFUpload: http://www.swfupload.org, http://swfupload.googlecode.com
  *
@@ -4317,6 +4329,8 @@ SWFUpload.prototype.uploadComplete = function (file) {
 SWFUpload.prototype.debug = function (message) {
 	hui.log(message);
 };
+
+
 /*
     json2.js
     2008-01-17
@@ -4590,6 +4604,8 @@ replace(/(?:^|:|,)(?:\s*\[)+/g, ''))) {
         };
     }();
 }
+
+
 
 
 /*
@@ -5000,6 +5016,8 @@ Date.patterns = {
     SortableDateTimePattern: "Y-m-d\\TH:i:s",
     UniversalSortableDateTimePattern: "Y-m-d H:i:sO",
     YearMonthPattern: "F, Y"};
+
+
 /**
   The namespace of the HUI framework
   @namespace
@@ -5067,20 +5085,6 @@ hui.ui.get = function(nameOrWidget) {
 	return null;
 };
 
-/**
- * Get a localized text, defaults to english or the key
- * @param {String} key The key of the text
- * @returns {String} The localized string
- */
-hui.ui.getText = function(key) {
-	var x = this.texts[key];
-	if (!x) {return key}
-	if (x[this.language]) {
-		return x[this.language];
-	} else {
-		return x['en'];
-	}
-}
 
 /**
  * Called when the DOM is ready and hui.ui is ready
@@ -5283,26 +5287,6 @@ hui.ui.reLayout = function() {
 	}
 }
 
-//////////////////////////////// Widget //////////////////////////////
-
-hui.ui.Widget = function() {
-	
-}
-
-hui.ui.Widget.prototype = {
-	_init : function(options) {
-		this.options = options;
-		this.name = options.name;
-		this.element = hui.get(options.element);
-	},
-	hide : function() {
-		this.element.style.display = 'none';
-	},
-	show : function() {
-		this.element.style.display = '';
-	}
-}
-
 ///////////////////////////////// Indexes /////////////////////////////
 
 hui.ui.nextIndex = function() {
@@ -5386,6 +5370,40 @@ hui.ui.hideCurtain = function(widget) {
 		hui.animate(widget.curtain,'opacity',0,200,{hideOnComplete:true});
 	}
 };
+
+
+///////////////////////////// Localization ////////////////////////////
+
+
+/**
+ * Get a localized text, defaults to english or the key
+ * @param {String} key The key of the text
+ * @returns {String} The localized string
+ */
+hui.ui.getText = function(key) {
+	var x = this.texts[key];
+	if (!x) {return key}
+	if (x[this.language]) {
+		return x[this.language];
+	} else {
+		return x['en'];
+	}
+}
+
+hui.ui.getTranslated = function(value) {
+	if (!hui.isDefined(value) || hui.isString(value)) {
+		return value;
+	}
+	if (value[hui.ui.language]) {
+		return value[hui.ui.language];
+	}
+	if (value[null]) {
+		return value[null];
+	}
+	for (key in value) {
+		return value[key];
+	}
+}
 
 //////////////////////////////// Message //////////////////////////////
 
@@ -5507,22 +5525,6 @@ hui.ui.msg.success = function(options) {
 hui.ui.msg.fail = function(options) {
 	options = hui.override({icon:'common/warning',duration:3000},options);
 	hui.ui.msg(options);
-}
-
-
-hui.ui.getTranslated = function(value) {
-	if (!hui.isDefined(value) || hui.isString(value)) {
-		return value;
-	}
-	if (value[hui.ui.language]) {
-		return value[hui.ui.language];
-	}
-	if (value[null]) {
-		return value[null];
-	}
-	for (key in value) {
-		return value[key];
-	}
 }
 
 hui.ui.hideMessage = function() {
@@ -5649,34 +5651,6 @@ hui.ui.stress = function(widget) {
 }
 
 
-/////////////////////////////// Validation /////////////////////////////
-
-/** @constructor */
-hui.ui.NumberValidator = function(options) {
-	hui.override({allowNull:false,min:0,max:10},options)
-	this.min = options.min;
-	this.max = options.max;
-	this.allowNull = options.allowNull;
-	this.middle = Math.max(Math.min(this.max,0),this.min);
-}
-
-hui.ui.NumberValidator.prototype = {
-	validate : function(value) {
-		if (hui.isBlank(value) && this.allowNull) {
-			return {valid:true,value:null};
-		}
-		var number = parseFloat(value);
-		if (isNaN(number)) {
-			return {valid:false,value:this.middle};
-		} else if (number<this.min) {
-			return {valid:false,value:this.min};
-		} else if (number>this.max) {
-			return {valid:false,value:this.max};
-		}
-		return {valid:true,value:number};
-	}
-}
-
 //////////////////////////// Positioning /////////////////////////////
 
 hui.ui.positionAtElement = function(element,target,options) {
@@ -5773,15 +5747,6 @@ hui.ui.extend = function(obj,options) {
 	}
 	if (!obj.valueForProperty) {
 		obj.valueForProperty = function(p) {return this[p]};
-	}
-};
-
-/** Send a global drag and drop message */
-hui.ui.callDelegatesDrop = function(dragged,dropped) {
-	for (var i=0; i < hui.ui.delegates.length; i++) {
-		if (hui.ui.delegates[i]['$drop$'+dragged.kind+'$'+dropped.kind]) {
-			hui.ui.delegates[i]['$drop$'+dragged.kind+'$'+dropped.kind](dragged,dropped);
-		}
 	}
 };
 
@@ -6130,6 +6095,8 @@ hui.ui.require = function(names,func) {
 	hui.require(names,func);
 }
 /* EOF */
+
+
 /** A data source
  * @constructor
  */
@@ -6321,7 +6288,18 @@ hui.ui.Source.prototype = {
 	}
 }
 
-/* EOF *//** @private */
+/* EOF */
+
+/** Send a global drag and drop message */
+hui.ui.callDelegatesDrop = function(dragged,dropped) {
+	for (var i=0; i < hui.ui.delegates.length; i++) {
+		if (hui.ui.delegates[i]['$drop$'+dragged.kind+'$'+dropped.kind]) {
+			hui.ui.delegates[i]['$drop$'+dragged.kind+'$'+dropped.kind](dragged,dropped);
+		}
+	}
+};
+
+/** @private */
 hui.ui.getDragProxy = function() {
 	if (!hui.ui.dragProxy) {
 		hui.ui.dragProxy = hui.build('div',{'class':'hui_dragproxy',style:'display:none'});
@@ -6427,7 +6405,9 @@ hui.ui.dropOutListener = function(event) {
 	if (hui.ui.dragging) {
 		//this.style.backgroundColor='';
 	}
-};/**
+};
+
+/**
  * @constructor
  */
 hui.ui.Window = function(options) {
@@ -6628,7 +6608,9 @@ hui.ui.Window.prototype = {
 	}
 }
 
-/* EOF *//**
+/* EOF */
+
+/**
  * @class
  * This is a formula
  */
@@ -6827,7 +6809,9 @@ hui.ui.Formula.Field.prototype = {
     setVisible : function(visible) {
         this.element.style.display = visible ? '' : 'none';
     }
-}/**
+}
+
+/**
  * A list
  * <pre><strong>options:</strong> {
  *  element : «Element | ID»,
@@ -7750,7 +7734,9 @@ hui.ui.List.prototype = {
 	}
 };
 
-/* EOF *//**
+/* EOF */
+
+/**
  * @constructor
  */
 hui.ui.Tabs = function(o) {
@@ -7854,7 +7840,9 @@ hui.ui.Tab.prototype = {
 	}
 }
 
-/* EOF *//**
+/* EOF */
+
+/**
  * @constructor
  */
 hui.ui.ObjectList = function(options) {
@@ -8064,7 +8052,9 @@ hui.ui.ObjectList.Select.prototype = {
 	}
 }
 
-/* EOF */////////////////////////// DropDown ///////////////////////////
+/* EOF */
+
+////////////////////////// DropDown ///////////////////////////
 
 /**
  * A drop down selector
@@ -8343,7 +8333,9 @@ hui.ui.DropDown.prototype = {
 		this.fire('valueChanged',this.value);
 		hui.ui.firePropertyChange(this,'value',this.value);
 	}
-}/**
+}
+
+/**
  * An alert
  * <pre><strong>options:</strong> {
  *  element : «Element | ID»,
@@ -8470,7 +8462,9 @@ hui.ui.Alert.prototype = {
 	}
 }
 
-/* EOF *//**
+/* EOF */
+
+/**
  * A push button
  * <pre><strong>options:</strong> {
  *  element : «Element | ID»,
@@ -8683,7 +8677,9 @@ hui.ui.Buttons.prototype = {
 	}
 }
 
-/* EOF *//**
+/* EOF */
+
+/**
  * @constructor
  * @param {Object} options The options : {value:null}
  */
@@ -9110,6 +9106,8 @@ hui.ui.Selection.Items.prototype = {
 	}
 }
 /* EOF */
+
+
 /** @constructor */
 hui.ui.Toolbar = function(options) {
 	this.element = hui.get(options.element);
@@ -9343,7 +9341,9 @@ hui.ui.Toolbar.More.prototype = {
 	}
 }
 
-/* EOF *//**
+/* EOF */
+
+/**
 	Used to choose an image
 	@constructor
 */
@@ -9480,7 +9480,9 @@ hui.ui.ImageInput.prototype = {
 	}
 }
 
-/* EOF *//**
+/* EOF */
+
+/**
  * A bound panel is a panel that is shown at a certain place
  * @constructor
  * @param {Object} options { element: «Node | id», name: «String» }
@@ -9803,7 +9805,9 @@ hui.ui.BoundPanel.prototype = {
 	}
 }
 
-/* EOF *//**
+/* EOF */
+
+/**
  * An image slideshow viewer
  * <pre><strong>options:</strong> {
  *  element : «Element | ID»,
@@ -10300,7 +10304,9 @@ hui.ui.ImageViewer.prototype = {
 	
 }
 
-/* EOF *//** @constructor */
+/* EOF */
+
+/** @constructor */
 hui.ui.Picker = function(options) {
 	options = this.options = hui.override({itemWidth:100,itemHeight:150,itemsVisible:null,shadow:true,valueProperty:'value'},options);
 	this.element = hui.get(options.element);
@@ -10479,7 +10485,9 @@ hui.ui.Picker.prototype = {
 	}
 }
 
-/* EOF *//**
+/* EOF */
+
+/**
  * @constructor
  */
 hui.ui.Menu = function(options) {
@@ -10642,7 +10650,9 @@ hui.ui.Menu.prototype = {
 
 
 
-/* EOF *//**
+/* EOF */
+
+/**
  * @constructor
  */
 hui.ui.Overlay = function(options) {
@@ -10792,6 +10802,8 @@ hui.ui.Overlay.prototype = {
 }
 
 /* EOF */
+
+
 /**
  * A component for uploading files 
  * <pre><strong>options:</strong> {
@@ -11554,7 +11566,9 @@ hui.ui.Upload.HTML5.prototype = {
 	}
 }
 
-/* EOF *//** A progress bar is a widget that shows progress from 0% to 100%
+/* EOF */
+
+/** A progress bar is a widget that shows progress from 0% to 100%
 	@constructor
 */
 hui.ui.ProgressBar = function(o) {
@@ -11618,7 +11632,9 @@ hui.ui.ProgressBar.prototype = {
 	}
 }
 
-/* EOF *//** @constructor */
+/* EOF */
+
+/** @constructor */
 hui.ui.Gallery = function(options) {
 	this.options = options || {};
 	this.name = options.name;
@@ -11910,7 +11926,9 @@ hui.ui.Gallery.prototype = {
 	}
 }
 
-/* EOF *//**
+/* EOF */
+
+/**
  * @constructor
  */
 hui.ui.Calendar = function(o) {
@@ -12179,7 +12197,9 @@ hui.ui.Calendar.prototype = {
 	}
 }
 
-/* EOF *//**
+/* EOF */
+
+/**
 	Fires dateChanged(date) when the user changes the date
 	@constructor
 	@param options The options (non)
@@ -12338,7 +12358,9 @@ Date.dayNames =
     "Fredag",
     "Lørdag"];
 
-/* EOF *//**
+/* EOF */
+
+/**
  * @constructor
  * @param {Object} options { element «Node | id», name: «String» }
  */
@@ -12414,7 +12436,9 @@ hui.ui.Layout.prototype = {
 	}
 };
 
-/* EOF *//**
+/* EOF */
+
+/**
  * A dock
  * @param {Object} The options
  * @constructor
@@ -12546,7 +12570,9 @@ hui.ui.Dock.prototype = {
 	}
 }
 
-/* EOF *//**
+/* EOF */
+
+/**
  * @constructor
  * @param {Object} options The options : {modal:false}
  */
@@ -12664,7 +12690,9 @@ hui.ui.Box.prototype = {
 			this._close();
 		}
 	}
-};/**
+};
+
+/**
  * @constructor
  * A wizard with a number of steps
  */
@@ -12739,7 +12767,9 @@ hui.ui.Wizard.prototype = {
 	}
 }
 
-/* EOF *//** @constructor */
+/* EOF */
+
+/** @constructor */
 hui.ui.Input = function(options) {
 	this.options = hui.override({placeholderElement:null,validator:null},options);
 	var e = this.element = hui.get(options.element);
@@ -12853,7 +12883,9 @@ hui.ui.Input.prototype = {
 	}
 };
 
-/* EOF *//** @constructor */
+/* EOF */
+
+/** @constructor */
 hui.ui.InfoView = function(options) {
 	this.options = hui.override({clickObjects:false},options);
 	this.element = hui.get(options.element);
@@ -12918,7 +12950,9 @@ hui.ui.InfoView.prototype = {
 	}
 }
 
-/* EOF *//**
+/* EOF */
+
+/**
  * Overflow with scroll bars
  * @param {Object} The options
  * @constructor
@@ -12988,7 +13022,9 @@ hui.ui.Overflow.prototype = {
 	}
 }
 
-/* EOF *//** @constructor */
+/* EOF */
+
+/** @constructor */
 hui.ui.SearchField = function(options) {
 	this.options = hui.override({expandedWidth:null},options);
 	this.element = hui.get(options.element);
@@ -13107,7 +13143,9 @@ hui.ui.SearchField.prototype = {
 	}
 }
 
-/* EOF *//**
+/* EOF */
+
+/**
  * Simple container
  * @param {Object} The options
  * @constructor
@@ -13137,7 +13175,9 @@ hui.ui.Fragment.prototype = {
 	}
 }
 
-/* EOF *//**
+/* EOF */
+
+/**
 	Used to get a geografical location
 	@constructor
 */
@@ -13231,7 +13271,9 @@ hui.ui.LocationPicker.prototype = {
 	}
 }
 
-/* EOF *//**
+/* EOF */
+
+/**
  * A bar
  * <pre><strong>options:</strong> {
  *  element : «Element»,
@@ -13461,7 +13503,9 @@ hui.ui.Bar.Text.prototype = {
 	setText : function(str) {
 		hui.dom.setText(this.element,hui.ui.getTranslated(str));
 	}
-}/**
+}
+
+/**
  * A dock
  * @param {Object} The options
  * @constructor
@@ -13501,7 +13545,9 @@ hui.ui.IFrame.prototype = {
 	}
 }
 
-/* EOF *//** A video player
+/* EOF */
+
+/** A video player
  * @constructor
  */
 hui.ui.VideoPlayer = function(options) {
@@ -13711,7 +13757,9 @@ hui.ui.VideoPlayer.Embedded.prototype = {
 	}
 }
 
-/* EOF *//**
+/* EOF */
+
+/**
  * @constructor
  * @param {Object} options The options
  */
@@ -13768,7 +13816,9 @@ hui.ui.Segmented.prototype = {
 	}
 }
 
-/* EOF *//** @namespace */
+/* EOF */
+
+/** @namespace */
 hui.ui.Flash = {
 	
 	fullVersion:undefined,
@@ -13898,7 +13948,9 @@ hui.ui.Flash = {
 	}
 }
 
-/* EOF *//**
+/* EOF */
+
+/**
  * @constructor
  * A link
  */
@@ -13923,7 +13975,9 @@ hui.ui.Link.prototype = {
 	}
 }
 
-/* EOF *//**
+/* EOF */
+
+/**
  * Simple container
  * @param {Object} The options
  * @constructor
@@ -14116,7 +14170,9 @@ hui.ui.Links.prototype = {
 	}
 }
 
-/* EOF *//**
+/* EOF */
+
+/**
  * @constructor
  * @param options The options { debug : «boolean», value : '«html»', autoHideToolbar : «boolean», style : '«css»', replace : «node-or-id»}
  */
@@ -14845,7 +14901,9 @@ hui.ui.MarkupEditor.util = {
 	}
 }
 
-/* EOF *//**
+/* EOF */
+
+/**
  * @constructor
  */
 hui.ui.ColorPicker = function(options) {
@@ -15109,7 +15167,9 @@ hui.ui.ColorPicker.prototype = {
 	}
 }
 
-/* EOF *//////////////////////////// Style length /////////////////////////
+/* EOF */
+
+/////////////////////////// Style length /////////////////////////
 
 /**
  * An input component for geo-location
@@ -15200,7 +15260,9 @@ hui.ui.LocationField.prototype = {
 		this.fire('valueChanged',this.value);
 		hui.ui.callAncestors(this,'childValueChanged',this.value);
 	}
-}/////////////////////////// Style length /////////////////////////
+}
+
+/////////////////////////// Style length /////////////////////////
 
 /**
  * A date and time field
@@ -15334,7 +15396,9 @@ hui.ui.StyleLength.prototype = {
 	reset : function() {
 		this.setValue('');
 	}
-}/////////////////////////// Date time /////////////////////////
+}
+
+/////////////////////////// Date time /////////////////////////
 
 /**
  * A date and time field
@@ -15555,7 +15619,9 @@ hui.ui.DateTimeField.prototype = {
 			this.panel.hide();
 		}
 	}
-}/**
+}
+
+/**
  * A tokens component
  * @constructor
  */
@@ -15642,7 +15708,9 @@ hui.ui.TokenField.prototype = {
 	}
 }
 
-/* EOF *//**
+/* EOF */
+
+/**
  * A check box
  * @constructor
  */
@@ -15710,7 +15778,9 @@ hui.ui.Checkbox.prototype = {
 	getLabel : function() {
 		return this.options.label;
 	}
-}/////////////////////////// Checkboxes ////////////////////////////////
+}
+
+/////////////////////////// Checkboxes ////////////////////////////////
 
 /**
  * Multiple checkboxes
@@ -15914,7 +15984,9 @@ hui.ui.Checkboxes.Items.prototype = {
 		};
 		return false;
 	}
-}/**
+}
+
+/**
  * @constructor
  */
 hui.ui.Radiobuttons = function(options) {
@@ -15970,7 +16042,9 @@ hui.ui.Radiobuttons.prototype = {
 			hui.ui.callAncestors(self,'childValueChanged',radio.value);
 		}
 	}
-}/////////////////////////// Number /////////////////////////
+}
+
+/////////////////////////// Number /////////////////////////
 
 /**
  * A number field
@@ -16157,7 +16231,9 @@ hui.ui.NumberField.prototype = {
 			this.sliderPanel.show();
 		}
 	}
-}///////////////////////// Text /////////////////////////
+}
+
+///////////////////////// Text /////////////////////////
 
 /**
  * A text field
@@ -16381,7 +16457,9 @@ hui.ui.TextField.prototype = {
 		}
 		this.input.style.overflowY = this.input.clientHeight >= this.options.maxHeight ? 'auto' : 'hidden';
 	}
-}/** @constructor */
+}
+
+/** @constructor */
 hui.ui.Rendering = function(options) {
 	this.options = hui.override({clickObjects:false},options);
 	this.element = hui.get(options.element);
@@ -16398,7 +16476,9 @@ hui.ui.Rendering.prototype = {
 	setContent : function(html) {
 		this.element.innerHTML = html;
 	}
-}/**
+}
+
+/**
  * A push button
  * <pre><strong>options:</strong> {
  *  element : «Element | ID»,
@@ -16435,7 +16515,9 @@ hui.ui.Icon.prototype = {
 		inner.className = 'hui_icon_'+this.size;
 		inner.style.backgroundImage = 'url('+hui.ui.getIconUrl(this.options.icon,this.size)+')';
 	}
-}/////////////////////////// Color input /////////////////////////
+}
+
+/////////////////////////// Color input /////////////////////////
 
 /**
  * A component for color input
@@ -16537,7 +16619,9 @@ hui.ui.ColorInput.prototype = {
 	}
 }
 
-/* EOF *//**
+/* EOF */
+
+/**
  * @constructor
  * @param {Object} options { element «Node | id», name: «String» }
  */
@@ -16598,7 +16682,9 @@ hui.ui.Columns.prototype = {
 	}
 }
 
-/* EOF */////////////////////////// Finder ///////////////////////////
+/* EOF */
+
+////////////////////////// Finder ///////////////////////////
 
 /**
  * A "finder" for finding objects
@@ -16748,6 +16834,8 @@ hui.ui.Finder.prototype = {
 	}
 }
 
+
+
 /**
  * @constructor
  * @param {Object} options { element «Node | id», name: «String» }
@@ -16770,7 +16858,9 @@ hui.ui.Structure.prototype = {
 			m.style.bottom = (b ? b.clientHeight+2 : 0)+'px'
 		}
 	}
-}/**
+}
+
+/**
  * @constructor
  * @param {Object} options The options : {modal:false}
  */
@@ -16846,7 +16936,9 @@ hui.ui.Slider.prototype = {
 		}
 		this.position = this.value = pos;
 	}
-}/**
+}
+
+/**
  * A code editor
  * @constructor
  */
@@ -17035,7 +17127,9 @@ hui.ui.CodeInput.prototype = {
 	    } 
 	    t.scrollTop = scrollTop; 
 	} 
-}/**
+}
+
+/**
  * An input for objects
  * @constructor
  */
@@ -17189,7 +17283,9 @@ hui.ui.ObjectInput.prototype = {
 	reset : function() {
 		this.setValue(null);
 	}
-}/////////////////////////// Color input /////////////////////////
+}
+
+/////////////////////////// Color input /////////////////////////
 
 /**
  * A component for font input
@@ -17277,7 +17373,9 @@ hui.ui.FontInput.prototype = {
 	}
 }
 
-/* EOF *//**
+/* EOF */
+
+/**
 	@constructor
 	@param options The options (non)
 */
@@ -17409,6 +17507,8 @@ hui.ui.FontPicker.prototype = {
 
 
 
+
+
 /**
  * A bar
  * <pre><strong>options:</strong> {
@@ -17502,7 +17602,2765 @@ hui.ui.Split.prototype = {
 			}
 		};
 	}
-}/** A graph
+}
+
+/** @constructor */
+hui.ui.NumberValidator = function(options) {
+	hui.override({allowNull:false,min:0,max:10},options)
+	this.min = options.min;
+	this.max = options.max;
+	this.allowNull = options.allowNull;
+	this.middle = Math.max(Math.min(this.max,0),this.min);
+}
+
+hui.ui.NumberValidator.prototype = {
+	validate : function(value) {
+		if (hui.isBlank(value) && this.allowNull) {
+			return {valid:true,value:null};
+		}
+		var number = parseFloat(value);
+		if (isNaN(number)) {
+			return {valid:false,value:this.middle};
+		} else if (number<this.min) {
+			return {valid:false,value:this.min};
+		} else if (number>this.max) {
+			return {valid:false,value:this.max};
+		}
+		return {valid:true,value:number};
+	}
+}
+
+hui.ui.Chart = function(options) {
+	this.options = options = options || {};
+	this.element = hui.get(options.element);
+	this.body  = { width: undefined, height: undefined, paddingTop: 10, paddingBottom: 30, paddingLeft: 10, paddingRight: 10, innerPaddingVertical: 10, innerPaddingHorizontal: 10 };
+	this.style = { border:true, background:true, colors:['#36a','#69d','#acf']};
+	this.style.legends = { position: 'right' , left: 0, top: 0 };
+	this.style.pie = { radiusFactor: .9 , valueInLegend: false , left: 0, top: 0 };
+	this.xAxis = { labels:[], grid:true, concentration:.8 , maxLabels:12};
+	this.yAxis = { min:0, max:0, steps:8, above:false , factor: 10};
+	this.dataSets = [];
+	this.data = null;
+	hui.ui.extend(this);
+	if (this.options.source) {
+		this.options.source.listen(this);
+	}
+}
+
+hui.ui.Chart.create = function(options) {	
+	options.element = hui.build('div',{'class':'hui_chart',parent:hui.get(options.parent),style:'width: 100%; height: 100%;'});
+	return new hui.ui.Chart(options);
+}
+
+hui.ui.Chart.prototype = {
+	addDataSet : function(dataSet) {
+		this.dataSets[this.dataSets.length] = dataSet;
+	},
+	setXaxisLabels : function(labels) {
+		for (var i=0; i < labels.length; i++) {
+			this.xAxis.labels[this.xAxis.labels.length] = {key:labels[i],label:labels[i]};
+		}
+	},
+	setData : function(data) {
+		if (!data.dataSets) {
+			this.data = hui.ui.Chart.Util.convertData(data);
+		} else {
+			this.data = data;
+		}
+	},
+	render : function() {
+		var renderer = new hui.ui.Chart.Renderer(this);
+		renderer.render();
+	},
+	$$layout : function() {
+		this.render();
+	},
+	$objectsLoaded : function(data) {
+		this.setData(data);
+		this.render();
+	}
+}
+
+
+//////////////////////// Data ////////////////////
+
+hui.ui.Chart.Data = function(options) {
+	this.xAxis = hui.override({ labels:[], grid:true, concentration:.8 , maxLabels:12},options.xAxis);
+	this.yAxis = hui.override({ min:0, max:0, steps:8, above:false , factor: 10},options.yAxis);
+	this.dataSets = [];
+}
+
+hui.ui.Chart.Data.prototype = {
+	addDataSet : function(set) {
+		this.dataSets.push(set);
+	}
+}
+
+
+///////////////////// Data set ////////////////////
+
+hui.ui.Chart.DataSet = function(options) {
+	options = options || {};
+	this.dataSets = [];
+	this.entries = options.entries || [];
+	this.legend = null;
+	this.style = {type:options.type || 'line'};
+}
+
+hui.ui.Chart.DataSet.prototype = {
+	
+	addDataSet : function(dataSet) {
+		this.dataSets[this.dataSets.length] = dataSet;
+	},
+	setLegend : function(legend) {
+		this.legend = legend;
+	},
+	isMultiDimensional : function() {
+		return this.dataSets.length>0;
+	},
+	addEntry : function(key,value) {
+		this.entries[this.entries.length] = {key:key,value:value};
+	},
+	setValues : function(graph,values) {
+		for (var i=0; i < graph.xAxis.labels.length; i++) {
+			if (values[i]) {
+				this.addEntry(graph.xAxis.labels[i].key,values[i])
+			}
+		};
+	},
+	getEntryValue : function(key) {
+		var value = 0;
+		for (var i=0;i<this.entries.length;i++) {
+			if (this.entries[i].key==key) {
+				return this.entries[i].value;
+			}
+		}
+		return value;
+	},
+	getEntryValue2D : function(key) {
+		var value = [];
+		for (var i=0;i<this.dataSets.length;i++) {
+			var set = this.dataSets[i];
+			for (var j=0;j<set.entries.length;j++) {
+				if (set.entries[j].key==key) {
+					value[i] = set.entries[j].value;
+				}
+			}
+			if (!value[i]) {
+				value[i]=0;
+			}
+		}
+		return value;
+	},
+	keysToValues : function(keys) {
+		var values = [];
+		for (var i=0;i<keys.length;i++) {
+			values[i] = this.getEntryValue(keys[i].key);
+		}
+		return values;
+	},
+	keysToValues2D : function(keys) {
+		var values = [];
+		for (var i=0;i<keys.length;i++) {
+			values[i] = this.getEntryValue2D(keys[i].key);
+		}
+		return values;
+	},
+	getValueRange : function(keys) {
+		var vals = [];
+		if (this.isMultiDimensional()) {
+			var vals2D = this.keysToValues2D(keys);
+			for (var i=0;i<vals2D.length;i++) {
+				var sum = 0;
+				for (var j=0;j<vals2D[i].length;j++) {
+					sum+=vals2D[i][j];
+				}
+				vals[i] = sum;
+			}
+		} else {
+			vals = this.keysToValues(keys);
+		}
+		var min = Number.MAX_VALUE,
+			max = Number.MIN_VALUE;
+		for (var i=0;i<vals.length;i++) {
+			min = Math.min(min,vals[i]);
+			max = Math.max(max,vals[i]);
+		}
+		return {min:min,max:max};
+	},
+	getSubLegends : function() {
+		var value = [];
+		for (var i=0;i<this.dataSets.length;i++) {
+			value[i] = this.dataSets[i].legend;
+		}
+		return value;
+	}
+}
+
+/*********************************************************************/
+/*                             Renderer                              */
+/*********************************************************************/
+
+hui.ui.Chart.Renderer = function(chart) {
+	this.chart = chart;
+	this.crisp = false;
+	this.legends = [];
+	this.state = { numColumns:0, currColumn:0, xLabels:[], yLabels:[], body:{left:0}, innerBody:{}, coordinateSystem: false, currColor:0 };
+	this.width = null;
+	this.height = null;
+}
+
+hui.ui.Chart.Renderer.prototype = {
+	_registerLegend : function(color,label) {
+		this.legends[this.legends.length] = {color:color,label:label};
+	},
+	_buildInnerBody : function() {
+		var body = this.chart.body;
+		var xLabels = this.state.xLabels;
+		var space = 0;
+		if (this.state.numColumns>0) {
+			space = ( this.width - 2 * body.innerPaddingHorizontal - body.paddingLeft - body.paddingRight ) / xLabels.length;
+		}
+		var innerBody = {
+			left : (body.innerPaddingHorizontal + this.state.body.left + space/2),
+			top : (body.paddingTop + body.innerPaddingVertical),
+			width : (this.state.body.width-2 * body.innerPaddingHorizontal - space),
+			height : (this.state.body.height - body.innerPaddingVertical * 2 )
+		};
+		return innerBody;
+	},
+	_buildBody : function() {
+		var body = this.chart.body,
+			left = body.paddingLeft + this.state.yLabelWidth
+		return {
+			left : left,
+			top : body.paddingTop,
+			width : this.width - left - body.paddingRight,
+			height : this.height - body.paddingTop - body.paddingBottom,
+			right : this.width - body.paddingRight,
+			bottom : this.height - body.paddingBottom
+		}
+	}
+}
+
+hui.ui.Chart.Renderer.prototype.render = function() {
+	
+	this.width = this.chart.body.width || this.chart.element.clientWidth;
+	this.height = this.chart.body.height || this.chart.element.clientHeight;
+	
+	hui.dom.clear(this.chart.element);
+	this.canvas = hui.build('canvas',{parent:this.chart.element,width:this.width,height:this.height});
+	if (!this.canvas.getContext) {
+		return;
+	}
+	this.ctx = this.canvas.getContext("2d");
+	
+	if (this.chart.data==null) {
+		return;
+	}
+	
+	// Extract basic info about the chart
+	for (var i=0;i<this.chart.data.dataSets.length;i++) {
+		var set = this.chart.data.dataSets[i];
+		if (set.style.type=='line' || set.style.type=='column') {
+			this.state.coordinateSystem = true;
+		}
+		if (set.style.type=='column') {
+			this.state.numColumns++;
+		}
+	}
+	
+	this.state.xLabels = this.chart.data.xAxis.labels;
+	this.state.yLabels = hui.ui.Chart.Util.generateYLabels(this.chart);
+	this.state.yLabelWidth = 0;
+	for (var i=0; i < this.state.yLabels.length; i++) {
+		this.state.yLabelWidth = Math.max(this.state.yLabelWidth,new String(this.state.yLabels[i]).length*5);
+	};
+	this.state.yLabelWidth+=5;
+	this.state.body = this._buildBody();
+	this.state.innerBody = this._buildInnerBody();
+
+	// Render the coordinate system (below)
+	if (this.state.coordinateSystem) {
+		this.renderBody();
+	}
+	
+	// Loop through data sets and render them
+	var xLabels = this.state.xLabels;
+	for (var i=0;i<this.chart.data.dataSets.length;i++) {
+		var set = this.chart.data.dataSets[i];
+		if (set.style.type=='line') {
+			var values = set.keysToValues(xLabels);
+			this.renderLineGraph( { values:values, style:set.style , legend:set.legend } );
+		} else if (set.style.type=='column') {
+			if (set.isMultiDimensional()) {
+				var values = set.keysToValues2D(xLabels);
+				var legend = set.getSubLegends();
+			} else {
+				var values = set.keysToValues(xLabels);
+				var legend = set.legend;
+			}
+			this.renderColumnGraph( { values:values, style:set.style , legend: legend} );	
+		} else if (set.style.type=='pie') {
+			var values = set.keysToValues(xLabels);
+			this.renderPie( { values:values, style:set.style } );
+		}
+	}
+	
+	// Render the coordinate system (above)
+	if (this.shouldRenderCoordinateSystem) {
+		this.renderPostBody();
+	}
+	
+	// Render possible lengends
+	this.renderLegends();
+}
+
+/**
+ * Renders a legend box
+ */
+hui.ui.Chart.Renderer.prototype.renderLegends = function() {
+	if (this.legends.length>0) {
+		var position = this.chart.style.legends.position;
+		var box = hui.build('div',{style:{position:'absolute',zIndex:5,width:this.width+'px'}});
+		
+		var html='<div class="hui_chart_legends" style="margin-right: '+(5-this.chart.style.legends.left)+'px; margin-top: '+(5+this.chart.style.legends.top)+'px;">';
+		for (var i=0;i<this.legends.length;i++) {
+			if (position=='bottom') {
+				var style = 'padding: 2px; padding-right: 8px; float: left; white-space: nowrap;';
+				if (i==this.legends.length-1) {
+					style+='padding-right: 3px';
+				}
+			} else {
+				var style = 'padding: 2px;';
+			}
+			html+='<div class="hui_chart_legend" style="'+style+'"><em style="background: '+this.legends[i].color+';"></em><span>'+this.legends[i].label+'</span></div>'
+		}
+		html+='</div>';
+		box.innerHTML = html;
+		if (position=='right') {
+			this.canvas.parentNode.insertBefore(box,this.canvas);
+		} else if (position=='bottom') {
+			this.canvas.parentNode.appendChild(box);
+			var y = document.createElement('div');
+			y.appendChild(box);
+			this.canvas.parentNode.appendChild(y);
+		}
+	}
+}
+
+/**
+ * Renders the body of the chart
+ */
+hui.ui.Chart.Renderer.prototype.renderBody = function() {
+	
+	var body = this.chart.body,
+		stroke = 'rgb(255,255,255)',
+		background = 'rgb(240,240,240)',
+		state = this.state,
+		innerBody = this.state.innerBody;	
+
+	if (this.chart.style.background) {
+		this.ctx.fillStyle = background;
+		this.ctx.fillRect(
+			state.body.left,
+			state.body.top,
+			state.body.width,
+			state.body.height
+		);
+	}
+	
+	var mod = 1;
+	/* Build X-axis*/
+	var xLabels = this.state.xLabels;
+	if (xLabels.length>this.chart.data.xAxis.maxLabels) {
+		mod = Math.ceil(xLabels.length/this.chart.data.xAxis.maxLabels);
+	}
+	this.ctx.strokeStyle=stroke;
+	for (var i=0;i<xLabels.length;i++) {
+		var left = i*((innerBody.width)/(xLabels.length-1))+innerBody.left;
+		var left = Math.round(left);
+
+		if (mod<10 || (i % mod) ==0) {
+			// Draw grid
+			if (this.chart.data.xAxis.grid) {
+				this.ctx.beginPath();
+				this.ctx.moveTo(.5+left,state.body.top+.5);
+				this.ctx.lineTo(.5+left,state.body.top+.5+state.body.height);
+				this.ctx.stroke();
+				this.ctx.closePath();
+			}
+		}
+		if ((i % mod) ==0) {
+			// Draw label
+			var label = hui.build('span',{
+				'class' : 'hui_chart_label',
+				text : xLabels[i].label,
+				before : this.canvas,
+				style : {
+					marginLeft : left-25+'px',
+					marginTop : state.body.bottom + 4 + 'px'
+				}
+			});
+		}
+	}
+	this.ctx.strokeStyle=stroke;
+	
+	/* Build Y-axis*/
+	var yLabels = this.state.yLabels.concat();
+	yLabels.reverse();
+	for (var i=0; i < yLabels.length ; i++) {
+		// Draw grid
+		var top = i*((state.body.height-body.innerPaddingVertical*2)/(yLabels.length-1))+body.paddingTop+body.innerPaddingVertical;
+		top = Math.round(top);
+		if (!this.chart.data.yAxis.above) {
+			this.ctx.beginPath();
+			this.ctx.moveTo(.5+state.body.left,top+.5);
+			this.ctx.lineTo(.5+state.body.right,top+.5);
+			this.ctx.stroke();
+			this.ctx.closePath();
+		}
+		// Draw label
+		var label = hui.build('span',{text:yLabels[i],style:{
+			position: 'absolute',
+			textAlign : 'right',
+			width : this.state.yLabelWidth-5+'px',
+			font : '9px Tahoma',
+			marginTop : top-5+'px',
+			marginLeft : body.paddingLeft+'px'
+		}});
+		this.canvas.parentNode.insertBefore(label,this.canvas);
+	}
+	
+	// Draw a line at 0 if 
+	if (!this.chart.data.yAxis.above && yLabels[0] > 0 && yLabels[yLabels.length-1] < 0) {
+		var top = (state.body.height - body.innerPaddingVertical*2) * yLabels[0] / (yLabels[0] - yLabels[yLabels.length-1]) + body.paddingTop + body.innerPaddingVertical;
+		top = Math.round(top);
+		this.ctx.lineWidth = 2;
+		this.ctx.strokeStyle=stroke;
+		this.ctx.beginPath();
+		this.ctx.moveTo(.5+state.body.left,top);
+		this.ctx.lineTo(.5+state.body.right,top);
+		this.ctx.stroke();
+		this.ctx.closePath();
+	}
+}
+
+hui.ui.Chart.Renderer.prototype.renderPostBody = function() {
+	var body = this.chart.body;
+	if (this.chart.data.yAxis.above) {
+
+		this.ctx.strokeStyle='rgb(240,240,240)';
+		var yLabels = this.state.yLabels.concat();
+		yLabels.reverse();
+		for (var i=0;i<yLabels.length;i++) {
+			var top = i*((this.height-body.innerPaddingVertical*2-body.paddingTop-body.paddingBottom)/(yLabels.length-1))+body.paddingTop+body.innerPaddingVertical;
+			top = Math.round(top);
+			this.ctx.lineWidth = 1;
+			this.ctx.beginPath();
+			this.ctx.moveTo(.5+body.paddingLeft,top+.5);
+			this.ctx.lineTo(.5+this.width-body.paddingRight,top+.5);
+			this.ctx.stroke();
+			this.ctx.closePath();
+		}
+		if (yLabels[0]>0 && yLabels[yLabels.length-1]<0) {
+			var top = (this.height-body.innerPaddingVertical*2-body.paddingTop-body.paddingBottom)*yLabels[0]/(yLabels[0]-yLabels[yLabels.length-1])+body.paddingTop+body.innerPaddingVertical;
+			top = Math.round(top);
+			this.ctx.lineWidth = 2;
+			this.ctx.strokeStyle='rgb(255,255,255)';
+			this.ctx.beginPath();
+			this.ctx.moveTo(.5+body.paddingLeft,top);
+			this.ctx.lineTo(.5+this.width-body.paddingRight,top);
+			this.ctx.stroke();
+			this.ctx.closePath();
+		}
+	}
+	if (this.chart.style.border) {
+		this.ctx.lineWidth = 1;
+		this.ctx.strokeStyle='rgb(230,230,230)';
+		this.ctx.strokeRect(body.paddingLeft+.5,body.paddingTop+.5,this.width-body.paddingLeft-body.paddingRight,this.height-body.paddingTop-body.paddingBottom);
+	}
+}
+
+hui.ui.Chart.Renderer.prototype.renderLineGraph = function(data) {
+	var values = data.values;
+	var xLabels = this.state.xLabels;
+	var yLabels = this.state.yLabels;
+	var yMin = yLabels[0];
+	var yMax = yLabels[yLabels.length-1];
+	var body = this.chart.body;
+	var innerBody = this.state.innerBody;
+	if (data.style.colors) {
+		var color = data.style.colors[0];
+	} else {
+		var color = this.chart.style.colors[this.state.currColor];
+		if (this.state.currColor+2>this.chart.style.colors.length) {
+			this.state.currColor = 0;
+		} else {
+			this.state.currColor++;
+		}
+	}
+	this.ctx.strokeStyle = color;
+	this.ctx.lineWidth = data.width ? data.width : 3;
+	this.ctx.lineCap = this.ctx.lineJoin = 'round';
+	this.ctx.beginPath();
+	for (var i=0;i<xLabels.length;i++) {
+		var amount = (values[i] == undefined ? 0 : values[i]);
+		var value = (amount-yMin)/(yMax-yMin);
+		var top = this.height-value*(innerBody.height)-body.innerPaddingVertical-body.paddingBottom;
+		var left = i*(innerBody.width/(xLabels.length-1))+innerBody.left;
+		if (i==0) {
+			this.ctx.moveTo(left+.5,top+.5);
+		} else {
+			this.ctx.lineTo(left+.5,top+.5);
+		}
+	}
+	this.ctx.stroke();
+	this.ctx.closePath();
+	
+	if (data.legend) {
+		this._registerLegend(color,data.legend);
+	}
+}
+
+
+hui.ui.Chart.Renderer.prototype.renderColumnGraph = function(data) {
+	var values = data.values;
+	var xLabels = this.state.xLabels;
+	var yLabels = this.state.yLabels;
+	var yMin = yLabels[0];
+	var yMax = yLabels[yLabels.length-1];
+	var body = this.chart.body;
+	var colors = data.style.colors ? data.style.colors : this.chart.style.colors;
+	this.state.currColumn++;
+	var innerBody = this.state.innerBody;
+	var space = (this.width-body.paddingLeft-body.paddingRight)/xLabels.length*this.chart.data.xAxis.concentration;
+	var thickness = space/this.state.numColumns;
+	this.ctx.lineCap = this.ctx.lineJoin = 'round';
+	this.ctx.beginPath();
+	for (var i=0;i<xLabels.length;i++) {
+		if (values[i]) {
+			var colorIndex = 0;
+			var currTop = 0;
+			if (values[i] instanceof Array) {
+				for (var j=0;j<values[i].length;j++) {
+					var val = values[i][j];
+					currTop+=this.renderOneColumn(val,colors[colorIndex],body,innerBody,yMin,yMax,currTop,i,xLabels,space,thickness);
+					
+					if (colorIndex+2>colors.length) {
+						colorIndex = 0;
+					} else {
+						colorIndex++;
+					}
+				}
+			} else {
+				currTop+=this.renderOneColumn(values[i],colors[colorIndex],body,innerBody,yMin,yMax,currTop,i,xLabels,space,thickness);
+			}
+		}
+	}
+	this.ctx.stroke();
+	this.ctx.closePath();
+	
+	if (data.legend && data.legend instanceof Array) {
+		for (var i=0; i < data.legend.length; i++) {
+			this._registerLegend(colors[i],data.legend[i]);
+		};
+	} else if (data.legend) {
+		this._registerLegend(colors[0],data.legend);
+	}
+}
+
+hui.ui.Chart.Renderer.prototype.renderOneColumn = function(val,color,body,innerBody,yMin,yMax,currTop,i,xLabels,space,thickness) {
+	var value = (val-yMin)/(yMax-yMin);
+	if (yMin<=0 && val<=0) {
+		var top = innerBody.top+(innerBody.height)*yMax/(yMax-yMin)+currTop;
+		var height = innerBody.height*Math.abs(val)/(yMax-yMin);
+	} else if (yMin<=0) {
+		var top = this.height-body.innerPaddingVertical-body.paddingBottom-value*(innerBody.height)-currTop;
+		var height = (innerBody.height)*Math.abs(val)/(yMax-yMin);
+	}
+	else {
+		var top = this.height-value*(this.height-body.innerPaddingVertical*2-body.paddingTop-body.paddingBottom)-body.innerPaddingVertical-body.paddingBottom-currTop;
+		var height = (this.height-body.paddingBottom-top);
+	}
+	var left = i*((innerBody.width)/(xLabels.length-1))+innerBody.left;
+	
+	this.ctx.fillStyle = color;
+	if (this.crisp) {
+		this.ctx.fillRect(Math.round(left-space/2+thickness*(this.state.currColumn-1)),Math.floor(top),Math.ceil(thickness),Math.ceil(height));
+	} else {
+		this.ctx.fillRect(left-space/2+thickness*(this.state.currColumn-1),top,thickness,height);
+	}
+	return height;
+}
+
+hui.ui.Chart.Renderer.prototype.renderPie = function(data) {
+	
+	var values = data.values;
+	var colors = data.style.colors ? data.style.colors : this.chart.style.colors;
+	var total = hui.ui.Chart.Util.arraySum(values);
+
+	var colorIndex = 0;
+	var current = Math.PI*1.5;
+	var cTop = this.height/2+this.chart.style.pie.top;
+	var cLeft = this.width/2+this.chart.style.pie.left;
+	var radius = this.height/2*this.chart.style.pie.radiusFactor;
+
+	for (var i=0;i<values.length;i++) {
+		this.ctx.beginPath();
+		var color = colors[colorIndex]
+		this.ctx.fillStyle = color;
+		var rads = values[i]/total*(Math.PI*2);
+		this.ctx.moveTo(cLeft,cTop);
+		this.ctx.arc(cLeft,cTop,radius,current,current+rads,false);
+		this.ctx.lineTo(cLeft,cTop);
+		this.ctx.fill();
+		this.ctx.closePath();
+		current+=rads;
+		
+		if (!true) {
+			this._registerLegend(color,this.state.xLabels[i].label);
+		} else {
+			this._registerLegend(color,values[i]+' '+this.state.xLabels[i].label);
+		}
+		if (colorIndex+2>colors.length) {
+			colorIndex = 0;
+		} else {
+			colorIndex++;
+		}
+	}
+	
+}
+
+
+
+
+
+/*********************************************************************/
+/*                           Utitlities                              */
+/*********************************************************************/
+
+hui.ui.Chart.Util = function() {}
+
+hui.ui.Chart.Util.generateYLabels = function(graph) {
+	var range = hui.ui.Chart.Util.getYrange(graph);
+	var labels = [];
+	for (var i=0;i<=graph.yAxis.steps;i++) {
+		labels[labels.length] = Math.round(range.min+(range.max-range.min)/graph.yAxis.steps*i);
+	}
+	return labels;
+}
+
+hui.ui.Chart.Util.getYrange = function(graph) {
+	var min = graph.yAxis.min,
+		max = graph.yAxis.max,
+		data = graph.data;
+	for (var i=0;i<data.dataSets.length;i++) {
+		var range = data.dataSets[i].getValueRange(data.xAxis.labels);
+		min = Math.min(min,range.min);
+		max = Math.max(max,range.max);
+	}
+	var factor = max/graph.yAxis.steps;
+	if (factor < graph.yAxis.factor) {
+		factor = Math.ceil(factor);
+	} else {
+		factor = graph.yAxis.factor;
+	}
+	if (max != Number.MIN_VALUE) {
+		max = Math.ceil(max/factor/graph.yAxis.steps)*factor*graph.yAxis.steps;
+	} else {
+		max = graph.yAxis.steps;
+	}
+	return {min:min,max:max};
+}
+
+hui.ui.Chart.Util.arraySum = function(values) {
+	var total = 0;
+	for (var i=0;i<values.length;i++) {
+		total+=values[i];
+	}
+	return total;
+}
+
+/** Converts a simple data-representation into a class-based stucture */
+hui.ui.Chart.Util.convertData = function(obj) {
+	var labels = [],keys = [];
+	for (var i=0; i < obj.sets.length; i++) {
+		var set = obj.sets[i];
+		if (hui.isArray(set.entries)) {
+			for (var j=0; j < set.entries.length; j++) {
+				var entry = set.entries[j];
+				if (!hui.array.contains(keys,entry.key)) {
+					keys.push(entry.key)
+					labels.push({key:entry.key,label:entry.label || entry.key});					
+				}
+			}
+		} else {
+			for (key in set.entries) {
+				if (!hui.array.contains(keys,key)) {
+					keys.push(key)
+					labels.push({key:key,label:key});
+				}
+			}
+		}
+	};
+	var options = {xAxis:{labels:labels}};
+	if (obj.axis && obj.axis.x && obj.axis.x.time===true) {
+		options.xAxis.resolution = 'time';
+	}
+	var data = new hui.ui.Chart.Data(options);
+		
+	for (var i=0; i < obj.sets.length; i++) {
+		var set = obj.sets[i];
+		var dataSet = new hui.ui.Chart.DataSet({type:set.type});
+		if (hui.isArray(set.entries)) {
+			for (var j=0; j < set.entries.length; j++) {
+				var entry = set.entries[j];
+				dataSet.addEntry(entry.key,entry.value);
+			};
+		} else {
+			for (key in set.entries) {
+				dataSet.addEntry(key,set.entries[key]);
+			}
+		}
+		data.addDataSet(dataSet);
+	}
+	hui.log(data)
+	return data;
+}
+
+/** A diagram
+ * @constructor
+ */
+hui.ui.Diagram = function(options) {
+	this.options = hui.override({layout:'D3'},options);;
+	this.name = options.name;
+	this.nodes = [];
+	this.lines = [];
+	this.data = {};
+	this.translation = {x:0,y:0};
+	this.element = hui.get(options.element);
+	this.width = this.element.clientWidth;	
+	this.height = this.element.clientHeight;
+	this.layout = hui.ui.Diagram[this.options.layout];
+	//this.layout = hui.ui.Diagram.Springy;
+	this.layout.diagram = this;
+	hui.ui.extend(this);
+	if (options.source) {
+		options.source.listen(this);
+	}
+	this._init();
+}
+
+hui.ui.Diagram.create = function(options) {
+	options = hui.override({width:null,height:null},options);
+	
+	options.element = hui.build('div',{'class':'hui_diagram',parent:options.parent,style:{height:options.height+'px'}});
+	
+	return new hui.ui.Diagram(options);
+}
+
+hui.ui.Diagram.prototype = {
+	_init : function() {
+		this.background = hui.ui.Drawing.create({
+			width: this.width || 0,
+			height: this.height || 0
+		});
+		this.element.appendChild(this.background.element);
+		this.fire('added');
+	},
+	$$layout : function() {
+		this.width = this.element.clientWidth;	
+		this.height = this.element.clientHeight;
+		hui.log(this.width,this.height)
+		this.background.setSize(this.width,this.height);
+		this.layout.resize();
+		this.layout.resume();
+	},
+	_getMagnet : function(from,to,node) {
+		var margin = 1;
+		var size = node.getSize();
+		var center = node.getCenter();
+		var topLeft = {
+				x : center.x - size.width/2 - margin,
+				y : center.y - size.height/2 - margin
+			},
+			bottomRight = {
+				x : topLeft.x + size.width + margin * 2,
+				y : topLeft.y + size.height + margin * 2
+			};
+		var hits = [];
+		hits = hui.geometry.intersectLineRectangle(from,to,topLeft,bottomRight);
+		if (hits.length>0) {
+			return hits[0];
+		}
+		return to;
+	},
+	
+	// Data ...
+	
+	/** @private */
+	$objectsLoaded : function(data) {
+		this.setData(data);
+	},
+	setData : function(data) {
+		this.data = data;
+		this.clear();
+		var nodes = data.nodes,
+			lines = data.lines || data.edges;
+		if (!nodes || !lines) {
+			return;
+		}
+		for (var i=0; i < nodes.length; i++) {
+			if (nodes[i].type=='icon') {
+				this.addIcon(nodes[i]);
+			} else {
+				this.addBox(nodes[i]);				
+			}
+		};
+		for (var i=0; i < lines.length; i++) {
+			this.addLine(lines[i]);
+		};
+		if (this.layout.loaded) {
+			this.layout.populate();
+		} else {
+			this.play();
+		}
+	},
+	/** Deprecated */
+	play : function() {
+		this.layout.start();
+	},
+	resume : function() {
+		if (this.layout.resume) { this.layout.resume() }
+	},
+	expand : function() {
+		if (this.layout.expand) { this.layout.expand() }
+	},
+	contract : function() {
+		if (this.layout.contract) { this.layout.contract() }
+	},
+	/** @private */
+	$sourceShouldRefresh : function() {
+		return hui.dom.isVisible(this.element);
+	},
+	/** @private */
+	$visibilityChanged : function() {
+		if (hui.dom.isVisible(this.element)) {
+			this.width = this.element.clientWidth;	
+			this.height = this.element.clientHeight;
+			this.background.setSize(this.width,this.height);
+			if (this.options.source) {
+				this.options.source.refreshFirst();
+			}
+		}
+	},
+	clear : function() {
+		this.layout.clear();
+		this.selection = null;
+		this.background.clear();
+		this.lines = [];
+		for (var i = this.nodes.length - 1; i >= 0; i--){
+			hui.dom.remove(this.nodes[i].element);
+		};
+		this.nodes = [];
+		var lines = hui.get.byClass(this.element,'hui_diagram_line_label');
+		for (var i = lines.length - 1; i >= 0; i--){
+			hui.dom.remove(lines[i]);
+		};
+	},
+	
+	addBox : function(options) {
+		var box = hui.ui.Diagram.Box.create(options,this);
+		this.add(box);
+	},
+	
+	addIcon : function(options) {
+		var box = hui.ui.Diagram.Icon.create(options,this);
+		this.add(box);
+	},
+	add : function(widget) {
+		var e = widget.element;
+		this.element.appendChild(e);
+		widget.setCenter({x:this.width/2,y:this.height/2});
+		this.nodes.push(widget);
+	},
+	addLine : function(options) {
+		var from = this.getNode(options.from),
+			to = this.getNode(options.to);
+		if (from==null || to==null) {
+			hui.log('Unable to build line...');
+			hui.log(options);
+			return;
+		}
+		var fromCenter = this._getCenter(from),
+			toCenter = this._getCenter(to);
+		var lineNode = this.background.addLine({ from: fromCenter, to: toCenter, color: options.color || '#999' ,end:{}}),
+			line = { from: options.from, fromNode : from, to: options.to, toNode : to, node: lineNode };
+		if (options.label) {
+			line.label = hui.build('span',{parent:this.element,'class':'hui_diagram_line_label',text:options.label});
+			this._updateLine(line);
+		}
+		//hui.listen(lineNode.node,'click',function() {alert(line)});
+		this.lines.push(line);
+	},
+	
+	
+	_getCenter : function(widget) {
+		return widget.getCenter();
+		var e = widget.element;
+		return {
+			x : Math.round(parseInt(e.style.left)+e.clientWidth/2),
+			y : Math.round(parseInt(e.style.top)+e.clientHeight/2)
+		};
+	},
+	getNode : function(id) {
+		return this._getNode(id,this.nodes);
+	},
+	getDataNode : function(id) {
+		return this._getNode(id,this.data.nodes);
+	},
+	_getNode : function(id,nodes) {
+		if (nodes) {
+			for (var i=0; i < nodes.length; i++) {
+				if (nodes[i].id == id) {
+					return nodes[i];
+				}
+			};
+		}
+		return null;		
+	},
+	
+	// Drawing...
+	
+	_updateLine : function(line) {
+		if (!line.label) {
+			return;
+		}
+		var from = line.node.getFrom(),
+			to = line.node.getTo(),
+			label = line.label;
+		var middle = { x : from.x+(to.x-from.x)/2, y : from.y+(to.y-from.y)/2 };
+		//var deg = Math.atan((from.y-to.y) / (from.x-to.x)) * 180/Math.PI;
+		line.label.style.webkitTransform='rotate('+line.node.getDegree()+'deg)';
+		//line.label.innerHTML = Math.round(hui.geometry.distance(from,to));
+		var width = Math.round(hui.geometry.distance(from,to)-30);
+		// TODO: cache width + height
+		var w = label.huiWidth = label.huiWidth || label.clientWidth;
+		var h = label.huiHeight = label.huiHeight || label.clientHeight;
+		w = Math.min(w,width);
+		hui.style.set(line.label,{
+			left : (middle.x-w/2)+'px',
+			top : (middle.y-h/2)+'px',
+			maxWidth : Math.max(0,width)+'px',
+			visibility : width>10 ? '' : 'hidden'
+		});
+	},
+	__nodeMoved : function(widget) {
+		var center = this._getCenter(widget);
+		for (var i=0; i < this.lines.length; i++) {
+			var line = this.lines[i];
+			if (line.from == widget.id) {
+				var magnet = this._getMagnet(line.node.getTo(),center,widget);
+				line.node.setFrom(magnet);
+				var magnet2 = this._getMagnet(center,this._getCenter(line.toNode),line.toNode);
+				line.node.setTo(magnet2);
+				this._updateLine(line);
+			}
+			else if (line.to == widget.id) {
+				var magnet = this._getMagnet(line.node.getFrom(),center,widget);
+				line.node.setTo(magnet);
+				var magnet2 = this._getMagnet(center,this._getCenter(line.fromNode),line.fromNode);
+				line.node.setFrom(magnet2);
+				this._updateLine(line);
+			}
+		};
+	},
+	__select : function(widget) {
+		if (this.selection) {
+			this.selection.setSelected(false);
+		}
+		this.selection = widget;
+		this.selection.setSelected(true);
+	},
+	__nodeOpen : function(widget) {
+		this.fire('open',this.getDataNode(widget.id));
+	}
+}
+
+
+hui.ui.Diagram.Arbor = {
+	running : false,
+	loaded : false,
+	diagram : null,
+
+	_load : function() {
+		hui.require(hui.ui.context+'/hui/lib/jquery.min.js',function() {
+			hui.require(hui.ui.context+'/hui/lib/arbor/lib/arbor.js',function() {
+				this.loaded = true;
+				this.start();
+			}.bind(this))
+		}.bind(this));		
+	},
+	
+	start : function() {
+		if (!this.loaded) {
+			this._load();
+			return;
+		}
+		if (window.arbor==undefined) {
+			hui.log('Arbor is not available!');
+			return;
+		}
+		
+		var repulsion = 50,
+			stiffness = 600,
+			friction = 0.5,
+			gravity = true,
+			fps = 40,
+			dt = 0.02 //0.02,			// timestep to use for stepping the simulation
+			precision = 0.6;	// accuracy vs. speed in force calculations
+		
+		var diagram = this.diagram;
+		
+		var renderer = {
+  			init:  function(system) {
+				hui.log("starting",system);
+			},
+  			redraw : function() {
+				var sel = diagram.selection ? diagram.selection.id : null;
+				system.eachNode(function(node,point) {
+					if (node.name!=sel) {
+						node.data.setCenter(point);						
+					}
+				});
+				system.eachEdge(function(edge,point1,point2) {
+					if (edge.target.name==sel) {
+						point2 = diagram._getCenter(diagram.selection)
+					}
+					if (edge.source.name==sel) {
+						point1 = diagram._getCenter(diagram.selection)
+					}
+					var line = edge.data.node;
+					if (edge.source.name!=sel) {
+						line.setFrom(diagram._getMagnet(point2,point1,edge.source.data));
+					}
+					if (edge.target.name!=sel) {
+						line.setTo(diagram._getMagnet(point1,point2,edge.target.data));						
+					}
+					diagram._updateLine(edge.data);
+				}.bind(this));
+			}.bind(this)
+		}
+		var system = this.particleSystem = arbor.ParticleSystem(repulsion, stiffness, friction, gravity, fps, dt, precision);
+		system.screenSize(diagram.element.clientWidth, diagram.element.clientHeight);
+		system.screenPadding(50,100);
+		system.renderer = renderer
+		
+		this.populate();
+	},
+	populate : function() {
+		var system = this.particleSystem,
+			nodes = this.diagram.nodes,
+			lines = this.diagram.lines;
+		
+		for (var i=0; i < nodes.length; i++) {
+			system.addNode(nodes[i].id, nodes[i]);
+		};
+		
+		hui.each(lines,function(line) {
+			system.addEdge(line.from, line.to, line);
+		})
+		
+		window.setTimeout(function() {
+			system.stop();
+		},6000)
+	},
+	clear : function() {
+		if (this.particleSystem) {
+			this.particleSystem.prune(function() {return true});
+			this.particleSystem.stop();
+		}
+	}
+}
+
+
+
+hui.ui.Diagram.D3 = {
+	loaded : false,
+	diagram : null,
+
+	_load : function() {
+		hui.require(hui.ui.context+'/hui/lib/d3.v3/d3.v3.min.js',function() {
+			this.loaded = true;
+			this.start();
+		}.bind(this))
+	},
+	
+	resize : function() {
+		if (this.layout) {
+			this.layout.size([this.diagram.width,this.diagram.height]);
+		}
+	},
+	
+	start : function() {
+		if (!this.loaded) {
+			this._load();
+			return;
+		}
+		var diagram = this.diagram,
+			nodes = diagram.nodes,
+			lines = diagram.lines,
+			width = diagram.element.clientWidth,
+			height = diagram.element.clientHeight;
+		
+		for (var i=0; i < lines.length; i++) {
+			lines[i].source = this._findById(nodes,lines[i].from);
+			lines[i].target = this._findById(nodes,lines[i].to);
+		};
+		
+		var force = this.layout = d3.layout.force()
+            .linkDistance(100)
+            .friction(0.9)
+            .gravity(0.1)
+            .theta(0.3)
+            .linkStrength(0.2)
+			.charge(-1000)
+			.distance(100)
+			.nodes(this.diagram.nodes)
+			.links(this.diagram.lines)
+			.size([width, height]);
+		
+		var ticker = function() {
+			var sel = diagram.selection ? diagram.selection.id : null;
+			var nodes = force.nodes(),
+				links = force.links();
+			for (var i=0; i < nodes.length; i++) {
+				var node = diagram.nodes[nodes[i].index];
+				if (node.id!=sel) {
+					node.setCenter(nodes[i]);
+				}
+			};
+			for (var i=0; i < links.length; i++) {
+				var link = links[i];
+				var source = link.source,
+					sourceCenter = link.source.center;
+				var target = link.target,
+					targetCenter = link.target;
+				if (source==diagram.selection) {
+					sourceCenter = diagram._getCenter(diagram.selection)
+				}
+				if (target==diagram.selection) {
+					targetCenter = diagram._getCenter(diagram.selection)
+				}
+				var from = diagram._getMagnet(sourceCenter,targetCenter,source)
+				var to = diagram._getMagnet(targetCenter,sourceCenter,target)
+				link.node.setFrom(from);
+				link.node.setTo(to);
+				diagram._updateLine(link);
+			};
+		};
+		force.start();
+		force.gravity(0.5);
+		for (var i=0; i < 10000; i++) {
+			force.tick()
+		};
+		force.gravity(0.1);
+		
+		force.on("tick", ticker);
+		
+		force.start()
+	},
+	
+	resume : function() {
+		if (this.layout) { this.layout.start(); }
+	},
+	expand : function() {
+		if (this.layout) {
+			this.layout.linkDistance(this.layout.linkDistance() * 1.3);
+			this.layout.charge(this.layout.charge() * 1.3);
+			this.layout.start();
+		}
+	},
+	contract : function() {
+		if (this.layout) {
+			this.layout.linkDistance(Math.max(0,this.layout.linkDistance() * 0.9));
+			this.layout.charge(Math.min(0,this.layout.charge() * 0.9));
+			this.layout.start();
+		}
+	},
+	
+	_findById : function(nodes,id) {
+		for (var i = nodes.length - 1; i >= 0; i--){
+			if (nodes[i].id===id) {
+				return i;
+			}
+		};
+		return null;
+	},
+	_convert : function(data) {
+		var nodes = data.nodes;
+		data.links = data.edges;
+		for (var i = data.links.length - 1; i >= 0; i--){
+			var link = data.links[i];
+			link.source = this._findById(nodes,link.from);
+			link.target = this._findById(nodes,link.to);
+		};
+		return data;		
+	},
+	populate : function() {
+		this.start();
+	},
+	clear : function() {
+		if (this.layout) {
+			this.layout.stop();
+		}
+	}
+	
+}
+
+
+
+hui.ui.Diagram.Springy = {
+	loaded : false,
+	diagram : null,
+
+	_load : function() {
+		hui.require(hui.ui.context+'/hui/lib/springy-master/springy.js',function() {
+			this.loaded = true;
+			this.start();
+		}.bind(this))
+	},
+	
+	start : function() {
+		if (!this.loaded) {
+			this._load();
+			return;
+		}
+		var diagram = this.diagram,
+			nodes = diagram.nodes,
+			lines = diagram.lines,
+			width = diagram.element.clientWidth,
+			height = diagram.element.clientHeight;
+		
+		var graph = new Graph();
+		var cachedNodes = {},
+			cachedLines = {};
+		for (var i=0; i < nodes.length; i++) {
+			cachedNodes[nodes[i].id] = graph.newNode(nodes[i]);
+		};
+		
+		for (var i=0; i < lines.length; i++) {
+			var edge = graph.newEdge(
+				cachedNodes[lines[i].from],
+				cachedNodes[lines[i].to]
+			);
+			cachedLines[edge.id] = lines[i];
+		};
+		
+		var layout = new Layout.ForceDirected(graph, width, height, 0.4);
+		
+		var toScreen = function(p) {
+			  return {
+				  x : (p.x*width/10)+width/2,
+				  y : (p.y*height/10)+height/2
+			  }
+		  }
+		
+		var renderer = new Renderer(layout,
+			function clear() {
+			  
+			},
+			function drawEdge(edge, p1, p2) {
+				var sel = diagram.selection ? diagram.selection.id : null;
+				p1 = toScreen(p1);
+				p2 = toScreen(p2);
+				var line = cachedLines[edge.id];
+				if (sel!=edge.source.data.id) {
+					var from = diagram._getMagnet(p1,p2,edge.source.data)
+					line.node.setFrom(from);
+				}
+				if (sel!=edge.target.data.id) {
+					var to = diagram._getMagnet(p1,p2,edge.target.data)
+					line.node.setTo(to);
+				}
+				diagram._updateLine(line);
+			},
+			function drawNode(node, p) {
+				var sel = diagram.selection ? diagram.selection.id : null;
+				if (node.data.id==sel) return;
+				node.data.setCenter(toScreen(p));
+			}
+		);
+		renderer.start();
+	},
+	_findById : function(nodes,id) {
+		for (var i = nodes.length - 1; i >= 0; i--){
+			if (nodes[i].id===id) {
+				return nodes[i];
+			}
+		};
+		return null;
+	},
+	populate : function() {
+		
+	},
+	clear : function() {
+		
+	}
+	
+}
+
+
+/** A box in a diagram
+ * @constructor
+ */
+hui.ui.Diagram.Box = function(options) {
+	this.options = options;
+	this.id = options.id;
+	this.name = options.name;
+	this.element = hui.get(options.element);	
+	this.center = {};
+	this.size = null;
+	hui.ui.extend(this);
+	hui.ui.Diagram.util.enableDragging(this)
+}
+
+hui.ui.Diagram.Box.create = function(options,diagram) {
+	options = hui.override({title:'Untitled',diagram:diagram},options);
+	var e = options.element = hui.build('div',{'class':'hui_diagram_box'});
+	hui.build('h1',{text:options.title,parent:e});
+	if (options.properties) {
+		var table = hui.build('table',{parent:e})
+		for (var i=0; i < options.properties.length; i++) {
+			var p = options.properties[i];
+			var tr = hui.build('tr',{parent:table});
+			hui.build('th',{parent:tr,text:p.label});
+			var td = hui.build('td',{parent:tr,text:p.value});
+			if (p.hint) {
+				hui.build('em',{parent:td,text:p.hint});
+			}
+		};
+	}
+	return new hui.ui.Diagram.Box(options);
+}
+
+hui.ui.Diagram.Box.prototype = {
+	_syncSize : function() {
+		if (this.size) {
+			return;
+		}
+		this.size = {
+			width : this.element.offsetWidth,
+			height : this.element.offsetHeight
+		};
+	},
+	getSize : function() {
+		this._syncSize();
+		return this.size;
+	},
+	getCenter : function() {
+		return this.center;
+	},
+	setCenter : function(point) {
+		this._syncSize();
+		this.center = {x : point.x, y : point.y};
+		this._updateCenter();
+	},
+	_updateCenter : function() {
+		this.element.style.top = Math.round(this.center.y - this.size.height/2)+'px';
+		this.element.style.left = Math.round(this.center.x - this.size.width/2)+'px';
+	},
+	setSelected : function(selected) {
+		hui.cls.set(this.element,'hui_diagram_box_selected',selected);
+	}
+}
+
+if (hui.browser.webkit) {
+	hui.ui.Diagram.Box.prototype._updateCenter = function() {
+		this.element.style.WebkitTransform = 'translate3d(' + Math.round(this.center.x - this.size.width/2) + 'px,' + Math.round(this.center.y - this.size.height/2) + 'px,0)';      
+	}
+}
+
+
+
+
+/** A box in a diagram
+ * @constructor
+ */
+hui.ui.Diagram.Icon = function(options) {
+	this.options = options;
+	this.id = options.id;
+	this.name = options.name;
+	this.element = hui.get(options.element);	
+	this.center = {};
+	hui.ui.extend(this);
+	hui.ui.Diagram.util.enableDragging(this)
+}
+
+hui.ui.Diagram.Icon.create = function(options,diagram) {
+	options = hui.override({icon:'common/folder',diagram:diagram},options);
+	var e = options.element = hui.build('div',{'class':'hui_diagram_icon'});
+	e.appendChild(hui.ui.createIcon(options.icon,32));
+	if (options.title) {
+		hui.build('strong',{parent:e,text:options.title})
+	}
+	return new hui.ui.Diagram.Icon(options);
+}
+
+hui.ui.Diagram.Icon.prototype = {
+	_syncSize : function() {
+		if (this.size) {
+			return;
+		}
+		this.size = {
+			width : this.element.offsetWidth,
+			height : this.element.offsetHeight
+		};
+	},
+	getSize : function() {
+		this._syncSize();
+		return this.size;
+	},
+	getCenter : function() {
+		return this.center;
+	},
+	setCenter : function(point) {
+		var e = this.element;
+		e.style.top = Math.round(point.y - e.clientHeight/2)+'px';
+		e.style.left = Math.round(point.x - e.clientWidth/2)+'px';
+		this.center = {x : point.x, y : point.y};
+	},
+	setSelected : function(selected) {
+		hui.cls.set(this.element,'hui_diagram_icon_selected',selected);
+	}
+}
+
+/** Utilities **/
+
+hui.ui.Diagram.util = {
+	enableDragging : function(obj) {
+		var diagram = obj.options.diagram;
+		hui.cls.add(obj.element,'hui_diagram_dragable');
+		var dragState = null;
+		hui.drag.register({
+			element : obj.element,
+			onStart : function() {
+				hui.cls.add(obj.element,'hui_diagram_dragging');
+				obj.fixed = true;
+			},
+			onNotMoved : function() {
+				diagram.__select(obj);
+				diagram.fire('select',obj.id);
+			},
+			onBeforeMove : function(e) {
+				diagram.__nodeMoved(obj);
+				e = hui.event(e);
+				obj.element.style.zIndex = hui.ui.nextPanelIndex();
+                var pos = obj.getCenter();
+				var size = obj.getSize();
+                pos = {left:pos.x - size.width/2,top:pos.y - size.height/2};
+				var diagramPosition = hui.position.get(diagram.element);
+				dragState = {
+					left : e.getLeft() - pos.left,
+					top : e.getTop()-pos.top
+				};
+				obj.element.style.right = 'auto';
+			},
+ 			onMove : function(e) {
+				var top = (e.getTop()-dragState.top);
+				var left = (e.getLeft()-dragState.left);
+				var size = obj.getSize();
+				top += size.height/2;
+				left += size.width/2;
+				obj.setCenter({x:left,y:top});
+				obj.px = left;
+				obj.py = top;
+				diagram.__nodeMoved(obj);
+ 			},
+			onEnd : function() {
+				hui.cls.remove(obj.element,'hui_diagram_dragging');
+				obj.fixed = false;
+				hui.log('end')
+			}
+		});
+		hui.listen(obj.element,'dblclick',function(e) {
+			diagram.__nodeOpen(obj);
+		});
+	}
+}
+
+/**
+ * @constructor
+ */
+hui.ui.Drawing = function(options) {
+	this.options = hui.override({width:200,height:200},options);
+	this.element = hui.get(options.element);
+	hui.log({width:options.width,height:options.height})
+	this.svg = hui.ui.Drawing._build({tag:'svg',parent:this.element,attributes:{width:options.width,height:options.height}});
+	this.element.appendChild(this.svg);
+	this.name = options.name;
+	hui.ui.extend(this);
+}
+
+hui.ui.Drawing.create = function(options) {
+	options = options || {};
+	var e = options.element = hui.build('div',{'class':'hui_drawing',style:'position: relative; overflow: hidden;'});
+	if (options.height) {
+		e.style.height = options.height+'px';
+	}
+	if (options.width) {
+		e.style.width = options.width+'px';
+	}
+	if (options.parent) {
+		hui.get(options.parent).appendChild(e);
+	}
+	return new hui.ui.Drawing(options);
+}
+
+hui.ui.Drawing.prototype = {
+	setSize : function(width,height) {
+		this.svg.setAttribute('width',width);
+		this.svg.setAttribute('height',height);
+		this.svg.style.width = width+'px';
+		this.svg.style.height = height+'px';
+		this.element.style.width = width+'px';
+		this.element.style.height = height+'px';
+	},
+	clear : function() {
+		hui.dom.clear(this.svg);
+	},
+	addLine : function(options) {
+		options.parent = this.svg;
+		return hui.ui.Drawing.Line.create(options);
+	},
+	addRect : function(options) {
+		options.parent = this.svg;
+		return hui.ui.Drawing.Rect.create(options);
+	},
+	addCircle : function(options) {
+		options.parent = this.svg;
+		return hui.ui.Drawing.Circle.create(options);
+	},
+	addArc : function(options) {
+		options.parent = this.svg;
+		return hui.ui.Drawing.Arc.create(options);
+	},
+	addElement : function(options) {
+		var node = hui.build('div',{style:'position:absolute;left:0;top:0;',parent:this.element,html:options.html}),
+			element = new hui.ui.Drawing.Element(node);
+		if (options.movable) {
+			hui.drag.register({
+				element : node,
+				onBeforeMove : function(e) {
+					this.fire('shapeWillMove',{shape:element,event:e});
+				}.bind(this),
+				onMove : function(e) {
+					node.style.left = e.getLeft()+'px';
+					node.style.top = e.getTop()+'px';
+					this.fire('shapeMoved',{shape:element,event:e});
+				}.bind(this),
+				onAfterMove : function(e) {
+					this.fire('shapeWasMoved',{shape:element,event:e});
+				}.bind(this)
+			})
+		}
+		return element;
+	}
+}
+
+hui.ui.Drawing._build = function(options) {
+	if (false && (hui.browser.msie8 || hui.browser.msie7 || hui.browser.msie6)) {
+		var line = document.createElement("v:line");
+		line.setAttribute('from','0 0');
+		line.setAttribute('to','100 100');
+		line.setAttribute("fillcolor","#FF0000");
+		line.setAttribute("strokeweight","2pt");
+		return line;
+			
+		var frag = document.createDocumentFragment();
+		frag.insertAdjacentHTML('beforeEnd',
+			'<v:rect id="myRect" fillcolor="blue" style="top:10px;left:15px;width:50px;height:30px;position:absolute;"></biv:rect>'
+		);
+		document.body.appendChild(frag);
+		return document.getElementById('myRect');
+	} else {
+		var node = document.createElementNS('http://www.w3.org/2000/svg',options.tag);
+	}
+	if (options.attributes) {
+		for (att in options.attributes) {
+			node.setAttribute(att,options.attributes[att]);
+		}
+	}
+	if (options.parent) {
+		options.parent.appendChild(node);
+	}
+	return node;
+}
+
+if (hui.browser.msie8) {
+	document.namespaces.add('v', 'urn:schemas-microsoft-com:vml', "#default#VML");
+}
+
+
+
+// Line
+
+hui.ui.Drawing.Line = function(options) {
+	this.node = options.node;
+	this.endNode = options.endNode;
+	this.from = options.from;
+	this.to = options.to;
+	this._updateEnds();
+}
+
+hui.ui.Drawing.Line.create = function(options) {
+	if (!options.from) {
+		options.from = {x:options.x1,y:options.y1};
+	}
+	if (!options.to) {
+		options.to = {x:options.x2,y:options.y2};
+	}
+	
+	var attributes = {
+		x1 : options.from.x.toFixed(10),
+		y1 : options.from.y.toFixed(10),
+		x2 : options.to.x.toFixed(10),
+		y2 : options.to.y.toFixed(10),
+		style : 'stroke:'+(options.color || '#000')+';stroke-width:'+(options.width || 1)
+	};
+		
+	options.node = hui.ui.Drawing._build({
+		tag : 'line',
+		parent : options.parent,
+		attributes : attributes
+	});
+	if (options.end) {
+		options.endNode = hui.ui.Drawing._build({
+			tag : 'path',
+			parent : options.parent,
+			attributes : {d:'M 0 -1 L 5 10 L -5 10',fill:options.color || '#000'}
+		})
+	}
+	return new hui.ui.Drawing.Line(options);
+}
+
+hui.ui.Drawing.Line.prototype = {
+	setFrom : function(point) {
+		this.from = point;
+		this.node.setAttribute('x1',point.x.toFixed(10));
+		this.node.setAttribute('y1',point.y.toFixed(10));
+		this._updateEnds();
+	},
+	getFrom : function() {
+		return this.from;
+	},
+	setTo : function(point) {
+		this.to = point;
+		this.node.setAttribute('x2',point.x.toFixed(10));
+		this.node.setAttribute('y2',point.y.toFixed(10));
+		this._updateEnds();
+	},
+	getTo : function() {
+		return this.to;
+	},
+	_updateEnds : function() {
+		//var deg = Math.atan((this.from.y-this.to.y) / (this.from.x-this.to.x)) * 180/Math.PI;
+		if (this.endNode) {
+			var deg = -90+Math.atan2(this.from.y-this.to.y, this.from.x-this.to.x)*180/Math.PI
+			this.endNode.setAttribute('transform','translate('+(this.to.x.toFixed(10))+','+(this.to.y.toFixed(10))+') rotate('+(deg)+')')
+
+		}
+	},
+	getDegree : function() {
+		return Math.atan((this.from.y-this.to.y) / (this.from.x-this.to.x)) * 180/Math.PI;
+	}
+}
+
+
+
+// Circle
+
+hui.ui.Drawing.Circle = function(options) {
+	this.node = options.node;
+	this.properties = {};
+}
+
+hui.ui.Drawing.Circle.create = function(options) {
+	var css = [];
+	if (options.stroke) {
+		if (options.stroke.color) {
+			css.push('stroke:'+options.stroke.color);
+		}
+		if (options.stroke.width) {
+			css.push('stroke-width:'+options.stroke.width);
+		}
+	}
+	if (options.fill) {
+		css.push('fill:'+options.fill);
+	}
+	options.node = hui.ui.Drawing._build({
+		tag : 'circle',
+		parent : options.parent,
+		attributes : {
+			cx : options.cx,
+			cy : options.cy,
+			r : options.r,
+			style : css.join(';')
+		}
+	});
+	return new hui.ui.Drawing.Circle(options);
+};
+
+hui.ui.Drawing.Circle.prototype = {
+	setRadius : function(radius) {
+		this.node.setAttribute("r",radius);
+	},
+	
+	setCenter : function(point) {
+		this.node.setAttribute('cx',point.x);
+		this.node.setAttribute('cy',point.y);
+	}
+}
+
+
+
+// Rect
+
+hui.ui.Drawing.Rect = function(options) {
+	this.node = options.node;
+}
+
+hui.ui.Drawing.Rect.create = function(options) {
+	var css = [];
+	if (options.stroke) {
+		if (options.stroke.color) {
+			css.push('stroke:'+options.stroke.color);
+		}
+		if (options.stroke.width) {
+			css.push('stroke-width:'+options.stroke.width);
+		}
+	}
+	if (options.fill) {
+		css.push('fill:'+options.fill);
+	}
+	options.node = hui.ui.Drawing._build({
+		tag : 'rect',
+		parent : options.parent,
+		attributes : {
+			x : options.x,
+			y : options.y,
+			width : options.width,
+			height : options.height,
+			style : css.join(';')
+		}
+	});
+	return new hui.ui.Drawing.Circle(options);
+};
+
+hui.ui.Drawing.Rect.prototype = {
+	setPosition : function(point) {
+		this.node.setAttribute('x',point.x);
+		this.node.setAttribute('y',point.y);
+	}
+}
+
+
+// Arc
+hui.ui.Drawing.Arc = function(options) {
+	this.node = options.node;
+	this.options = hui.override({
+		center : {x:100,y:100},
+  		startDegrees : 0,
+		endDegrees : 0,
+  		innerRadius : 0, 
+		outerRadius : 0,
+		fill : '#eee'
+	},options);
+	this._redraw();
+}
+
+hui.ui.Drawing.Arc.create = function(options) {
+	var css = [];
+	if (options.stroke) {
+		if (options.stroke.color) {
+			css.push('stroke:'+options.stroke.color);
+		}
+		if (options.stroke.width) {
+			css.push('stroke-width:'+options.stroke.width);
+		}
+	}
+	options.node = hui.ui.Drawing._build({ tag : 'path' ,parent : options.parent, attributes : {fill : options.fill || '#000', style:css.join(';')}});
+	var arc = new hui.ui.Drawing.Arc(options);
+	return arc;
+}
+
+hui.ui.Drawing.Arc.prototype = {
+	
+	update : function(options) {
+		this.options = hui.override(this.options,options);
+		this._redraw();
+	},
+	_redraw : function() {
+		var o = this.options,
+			cx = o.center.x,
+			cy = o.center.y,
+			startRadians = (o.startDegrees || 0) * Math.PI/180,
+			closeRadians = (o.endDegrees   || 0) * Math.PI/180,
+			r1 = o.innerRadius,
+			r2 = o.outerRadius;
+		
+		var points = [
+			[
+				cx + r2 * Math.cos(startRadians),
+				cy + r2 * Math.sin(startRadians)
+			],
+			[
+				cx + r2 * Math.cos(closeRadians),
+				cy + r2 * Math.sin(closeRadians)
+			],
+			[
+				cx + r1 * Math.cos(closeRadians),
+				cy + r1 * Math.sin(closeRadians)
+			],
+			[
+				cx + r1 * Math.cos(startRadians),
+				cy + r1 * Math.sin(startRadians)
+			]
+		];
+
+		var angleDiff = closeRadians - startRadians;
+		var largeArc = (angleDiff % (Math.PI*2)) > Math.PI ? 1 : 0;
+		var cmds = [
+			"M"+points[0].join(),									// Move to P0
+			"A"+[r2,r2,0,largeArc,1,points[1]].join(),				// Arc to  P1
+			"L"+points[2].join(),									// Line to P2
+			"A"+[r1,r1,0,largeArc,0,points[3]].join(),				// Arc to  P3
+			"z" 		                               				// Close path (Line to P0)
+		];		
+		this.node.setAttribute('d',cmds.join(' '));
+	}
+}
+
+
+
+// Element
+
+hui.ui.Drawing.Element = function(node) {
+	this.node = node;
+}
+
+hui.ui.Drawing.Element.prototype = {
+	setPosition : function(point) {
+		this.node.style.left = point.x+'px';
+		this.node.style.top = point.y+'px';
+	},
+	setCenter : function(point) {
+		this.node.style.left = (point.x - this.node.clientWidth/2)+'px';
+		this.node.style.top = (point.y - this.node.clientHeight/2)+'px';
+	}
+}
+
+
+hui.geometry = {
+	intersectLineLine : function(a1, a2, b1, b2) {
+    
+	    var ua_t = (b2.x - b1.x) * (a1.y - b1.y) - (b2.y - b1.y) * (a1.x - b1.x);
+	    var ub_t = (a2.x - a1.x) * (a1.y - b1.y) - (a2.y - a1.y) * (a1.x - b1.x);
+	    var u_b  = (b2.y - b1.y) * (a2.x - a1.x) - (b2.x - b1.x) * (a2.y - a1.y);
+
+	    if ( u_b != 0 ) {
+	        var ua = ua_t / u_b;
+	        var ub = ub_t / u_b;
+
+	        if ( 0 <= ua && ua <= 1 && 0 <= ub && ub <= 1 ) {
+				return {
+	                    x : a1.x + ua * (a2.x - a1.x),
+	                    y : a1.y + ua * (a2.y - a1.y)
+	               }
+	        }
+	    }
+
+	    return null;
+	},
+	intersectLineRectangle : function(a1, a2, r1, r2) {
+	    var min        = {x : Math.min(r1.x,r2.x),y : Math.min(r1.y,r2.y)};
+	    var max        = {x : Math.max(r1.x,r2.x),y : Math.max(r1.y,r2.y)};
+	    var topRight   = {x: max.x, y: min.y };
+	    var bottomLeft = {x: min.x, y: max.y };
+    
+	    var inter1 = hui.geometry.intersectLineLine(min, topRight, a1, a2);
+	    var inter2 = hui.geometry.intersectLineLine(topRight, max, a1, a2);
+	    var inter3 = hui.geometry.intersectLineLine(max, bottomLeft, a1, a2);
+	    var inter4 = hui.geometry.intersectLineLine(bottomLeft, min, a1, a2);
+    
+	    var result = [];
+
+		if (inter1!=null) result.push(inter1);
+		if (inter2!=null) result.push(inter2);
+		if (inter3!=null) result.push(inter3);
+		if (inter4!=null) result.push(inter4);
+	    return result;
+	},
+	distance : function( point1, point2 ) {
+		var xs = point2.x - point1.x;
+
+		var ys = point2.y - point1.y;
+
+		return Math.sqrt( xs * xs + ys * ys );
+	}
+}
+
+
+/**
+ * Editing of documents composed of different parts
+ *
+ * <pre>
+ * <strong>Events</strong>
+ * $partWasMoved : function(info)
+ * $addPart
+ * </pre>
+ * @constructor
+ */
+hui.ui.Editor = function() {
+	this.name = 'huiEditor';
+	this.options = {rowClass:'row',columnClass:'column',partClass:'part'};
+	this.parts = [];
+	this.rows = [];
+	this.partControllers = [];
+	this.activePart = null;
+	this.active = false;
+	this.live = true;
+	hui.ui.extend(this);
+}
+
+hui.ui.Editor.get = function() {
+	if (!hui.ui.Editor.instance) {
+		hui.ui.Editor.instance = new hui.ui.Editor();
+	}
+	return hui.ui.Editor.instance;
+}
+
+hui.ui.Editor.prototype = {
+	/** Start the editor */
+	ignite : function() {
+		hui.listen(window,'keydown',this._onKeyDown.bind(this));
+		hui.listen(window,'keyup',this._onKeyUp.bind(this));
+		this.reload();
+	},
+	_onKeyDown : function(e) {
+		e = hui.event(e);
+		//this.live = e.altKey;
+	},
+	_onKeyUp : function(e) {
+		//this.live = false;
+	},
+	
+	addPartController : function(key,title,controller) {
+		this.partControllers.push({key:key,'title':title,'controller':controller});
+	},
+	setOptions : function(options) {
+		hui.override(this.options,options);
+	},
+	_getPartController : function(key) {
+		var ctrl = null;
+		hui.each(this.partControllers,function(item) {
+			if (item.key==key) {ctrl=item};
+		});
+		return ctrl;
+	},
+	reload : function() {
+		if (this.partControls) {
+			this.partControls.hide();
+		}
+		var self = this;
+		this.parts = [];
+		var rows = hui.get.byClass(document.body,this.options.rowClass);
+		hui.each(rows,function(row,i) {
+			var columns = hui.get.byClass(row,self.options.columnClass);
+			self._reloadColumns(columns,i);
+			hui.each(columns,function(column,j) {
+				var parts = hui.get.byClass(column,self.options.partClass);
+				self._reloadParts(parts,i,j);
+			});
+		});
+		/*
+		var parts = hui.get.byClass(document.body,this.options.partClass);
+		hui.each(this.parts,function(part) {
+			var i = parts.indexOf(part.element);
+			if (i!=-1) {
+				delete(parts[i]);
+			}
+		});
+		this._reloadParts(parts,-1,-1);
+		*/
+	},
+	_reloadColumns : function(columns,rowIndex) {
+		var self = this;
+		hui.each(columns,function(column,columnIndex) {
+			hui.listen(column,'mouseover',function() {
+				self._onHoverColumn(column);
+			});
+			hui.listen(column,'mouseout',function(e) {
+				self._onBlurColumn(e);
+			});
+			/*
+			hui.listen(column,'contextmenu',function(e) {
+				self.contextColumn(column,rowIndex,columnIndex,e);
+			});*/
+		});
+	},
+	_reloadParts : function(parts,row,column) {
+		var self = this;
+		var reg = new RegExp(this.options.partClass+"_([\\w]+)","i");
+		hui.each(parts,function(element,partIndex) {
+			if (!element) return;
+			var match = element.className.match(reg);
+			if (match && match[1]) {
+				var handler = self._getPartController(match[1]);
+				if (handler) {
+					var part = new handler.controller({element:element});
+					part.type = match[1];
+					hui.listen(element,'click',function(e) {
+						e = hui.event(e);
+						if (!e.findByTag('a') && e.altKey) {
+							self._editPart(part);
+						}
+					});
+					hui.listen(element,'mouseover',function(e) {
+						self.hoverPart(part);
+					});
+					hui.listen(element,'mouseout',function(e) {
+						self.blurPart(e);
+					});
+					self.parts.push(part);
+				}
+				hui.listen(element,'mousedown',function(e) {
+					self._startPartDrag({
+						element : element,
+						event : e
+					});
+				});
+			}
+		});
+	},
+	activate : function() {
+		this.active = true;
+	},
+	deactivate : function() {
+		this.active = false;
+		if (this.activePart) {
+			this._deactivatePart(this.activePart);
+		}
+		if (this.partControls) {
+			this.partControls.hide();
+		}
+	},
+	
+	
+	///////////////////////// Columns ////////////////////////
+	
+	_onHoverColumn : function(column) {
+		if (this.hoveredColumn) {
+			hui.cls.remove(this.hoveredColumn,'hui_editor_column_hover');
+		}
+		this.hoveredColumn = column;
+		if (!this.active || this.activePart) {
+			return;
+		}
+		hui.cls.add(column,'hui_editor_column_hover');
+	},
+	
+	_onBlurColumn : function(e) {
+		if (!this.active || !this.hoveredColumn || hui.ui.isWithin(e,this.hoveredColumn)) return;
+		hui.cls.remove(this.hoveredColumn,'hui_editor_column_hover');
+	},
+	
+	contextColumn : function(column,rowIndex,columnIndex,e) {
+		if (!this.active || this.activePart) return;
+		if (!this.columnMenu) {
+			var menu = hui.ui.Menu.create({name:'huiEditorColumnMenu'});
+			menu.addItem({title:'Rediger kolonne',value:'editColumn'});
+			menu.addItem({title:'Slet kolonne',value:'removeColumn'});
+			menu.addItem({title:'Tilføj kolonne',value:'addColumn'});
+			menu.addDivider();
+			for (var i=0; i < this.partControllers.length; i++) {
+				var ctrl = this.partControllers[i];
+				menu.addItem({title:ctrl.title,value:ctrl.key});
+			};
+			this.columnMenu = menu;
+			menu.listen(this);
+		}
+		this.hoveredRow=rowIndex;
+		this.hoveredColumnIndex=columnIndex;
+		this.columnMenu.showAtPointer(e);
+	},
+	/** @private */
+	$itemWasClicked$huiEditorColumnMenu : function(value) {
+		if (value=='removeColumn') {
+			this.fire('removeColumn',{'row':this.hoveredRow,'column':this.hoveredColumnIndex});
+		} else if (value=='editColumn') {
+			this.editColumn(this.hoveredRow,this.hoveredColumnIndex);
+		} else if (value=='addColumn') {
+			this.fire('addColumn',{'row':this.hoveredRow,'position':this.hoveredColumnIndex+1});
+		} else {
+			this.fire('addPart',{'row':this.hoveredRow,'column':this.hoveredColumnIndex,'position':0,type:value});
+		}
+	},
+	
+	///////////////////// Column editor //////////////////////
+	
+	editColumn : function(rowIndex,columnIndex) {
+		this.closeColumn();
+		var row = hui.get.byClass(document.body,'row')[rowIndex];
+		var c = this.activeColumn = hui.get.byClass(row,'column')[columnIndex];
+		hui.cls.add(c,'hui_editor_column_edit');
+		this.showColumnWindow();
+		this.columnEditorForm.setValues({width:hui.style.get(c,'width'),paddingLeft:hui.style.get(c,'padding-left')});
+	},
+	closeColumn : function() {
+		if (this.activeColumn) {
+			hui.cls.remove(this.activeColumn,'hui_editor_column_edit');
+		}
+	},
+	showColumnWindow : function() {
+		if (!this.columnEditor) {
+			var w = this.columnEditor = hui.ui.Window.create({name:'columnEditor',title:'Rediger kolonne',width:200});
+			var f = this.columnEditorForm = hui.ui.Formula.create();
+			var g = f.createGroup();
+			var width = hui.ui.TextField.create({label:'Bredde',key:'width'});
+			width.listen({$valueChanged:function(v) {this.changeColumnWidth(v)}.bind(this)})
+			g.add(width);
+			var marginLeft = hui.ui.TextField.create({label:'Venstremargen',key:'left'});
+			marginLeft.listen({$valueChanged:function(v) {this.changeColumnLeftMargin(v)}.bind(this)})
+			g.add(marginLeft);
+			var marginRight = hui.ui.TextField.create({label:'Højremargen',key:'right'});
+			marginRight.listen({$valueChanged:this.changeColumnRightMargin.bind(this)})
+			g.add(marginRight);
+			w.add(f);
+			w.listen(this);
+		}
+		this.columnEditor.show();
+	},
+	/** @private */
+	$userClosedWindow$columnEditor : function() {
+		this.closeColumn();
+		var values = this.columnEditorForm.getValues();
+		values.row=this.hoveredRow;
+		values.column=this.hoveredColumnIndex;
+		this.fire('updateColumn',values);
+	},
+	changeColumnWidth : function(width) {
+		this.activeColumn.style.width=width;
+	},
+	changeColumnLeftMargin : function(margin) {
+		this.activeColumn.setStyle({'paddingLeft':margin});
+	},
+	changeColumnRightMargin : function(margin) {
+		this.activeColumn.setStyle({'paddingRight':margin});
+	},
+	///////////////////////// Parts //////////////////////////
+	
+	hoverPart : function(part,event) {
+		if (!this.active || this.activePart || !this.live || this.dragging || this.busy) {
+			return;
+		}
+		this.hoveredPart = part;
+		hui.cls.add(part.element,'hui_editor_part_hover');
+		var self = this;
+		this.partControlTimer = window.setTimeout(function() {self.showPartControls()},200);
+	},
+	blurPart : function(e) {
+		window.clearTimeout(this.partControlTimer);
+		if (hui.ui.isWithin(e,this.hoveredPart.element)) {
+			return;
+		}
+		if (!this.active) return;
+		if (this.partControls && !hui.ui.isWithin(e,this.partControls.element)) {
+			this._hidePartControls();
+			hui.cls.remove(this.hoveredPart.element,'hui_editor_part_hover');
+		}
+		if (!this.partControls && this.hoveredPart) {
+			hui.cls.remove(this.hoveredPart.element,'hui_editor_part_hover');			
+		}
+	},
+	showPartEditControls : function() {
+		if (!this.partEditControls) {
+			this.partEditControls = hui.ui.Overlay.create({name:'huiEditorPartEditActions',variant:'light'});
+			this.partEditControls.addIcon('save','common/ok');
+			this.partEditControls.addIcon('cancel','common/stop');
+			this.partEditControls.addIcon('info','common/info_small');
+			this.partEditControls.listen(this);
+		}
+		this.partEditControls.showAtElement(this.activePart.element,{'horizontal':'right','vertical':'topOutside'});
+	},
+	showPartControls : function() {
+		if (!this.partControls) {
+			this.partControls = hui.ui.Overlay.create({name:'huiEditorPartActions',variant:'light'});
+			this.partControls.addIcon('edit','common/edit');
+			this.partControls.addIcon('new','common/new');
+			this.partControls.addIcon('delete','common/delete');
+			var self = this;
+			hui.listen(this.partControls.getElement(),'mouseout',this._blurControls.bind(this));
+			hui.listen(this.partControls.getElement(),'mouseover',this._hoverControls.bind(this));
+			this.partControls.listen(this);
+		}
+		if (this.hoveredPart.column==-1 || true) {
+			this.partControls.hideIcons(['new','delete']);
+		} else {
+			this.partControls.showIcons(['new','delete']);
+		}
+		this.partControls.showAtElement(this.hoveredPart.element,{'horizontal':'right'});
+	},
+	_hoverControls : function(e) {
+		hui.cls.add(this.hoveredPart.element,'hui_editor_part_hover');
+	},
+	_blurControls : function(e) {
+		hui.cls.remove(this.hoveredPart.element,'hui_editor_part_hover');
+		if (!hui.ui.isWithin(e,this.hoveredPart.element)) {
+			this._hidePartControls();
+		}
+	},
+	/** @private */
+	$iconWasClicked$huiEditorPartActions : function(key,event) {
+		if (key=='delete') {
+			this.deletePart(this.hoveredPart);
+		} else if (key=='new') {
+			this.newPart(event);
+		} else if (key=='edit') {
+			this._editPart(this.hoveredPart);
+		}
+	},
+	/** @private */
+	$iconWasClicked$huiEditorPartEditActions : function(key,event) {
+		if (key=='cancel') {
+			this.cancelPart(this.activePart);
+		} else if (key=='save') {
+			this.savePart(this.activePart);
+		} else if (key=='info') {
+			this.fire('toggleInfo');
+		}
+	},
+	_hidePartControls : function() {
+		if (this.partControls) {
+			this.partControls.hide();
+		}
+	},
+	_hidePartEditControls : function() {
+		if (this.partEditControls) {
+			this.partEditControls.hide();
+		}
+	},
+	_editPart : function(part) {
+		if (!this.active || this.activePart) return;
+		if (this.activePart) {
+			this._deactivatePart(this.activePart);
+		}
+		if (this.hoveredPart) {
+			hui.cls.remove(this.hoveredPart.element,'hui_editor_part_hover');
+		}
+		this.activePart = part;
+		this.showPartEditControls();
+		hui.cls.add(part.element,'hui_editor_part_active');
+		hui.ui.msg({text:{en:'Loading...',da:'Indlæser...'},delay:300,busy:true});
+		part.activate(function() {
+			hui.ui.hideMessage();
+		});
+		window.clearTimeout(this.partControlTimer);
+		this._hidePartControls();
+		if (this.hoveredColumn) {
+			hui.cls.remove(this.hoveredColumn,'hui_editor_column_hover');
+		}
+		this.fire('editPart',part);
+	},
+	cancelPart : function(part) {
+		part.cancel();
+		this._deactivatePart(this.activePart);
+		this.activePart = null;
+		this.fire('cancelPart',part);
+	},
+	savePart : function(part) {
+		this.busy = true;
+		hui.ui.msg({text:{en:'Saving...',da:'Gemmer...'},delay:300,busy:true});
+		part.save({
+			callback : function() {
+				hui.ui.hideMessage();
+				this.activePart = null;
+				this.busy = false;
+				this._deactivatePart(part);
+				this.partChanged(part);
+				this.fire('savePart',part);
+			}.bind(this)
+		});
+	},
+	getEditorForElement : function(element) {
+		for (var i=0; i < this.parts.length; i++) {
+			if (this.parts[i].element==element) {
+				return this.parts[i];
+			}
+		};
+		return null;
+	},
+	_deactivatePart : function(part) {
+		part.deactivate(function() {
+			this.partDidDeactivate(part);
+			this.fire('deactivatePart',part);
+		}.bind(this))
+	},
+	partDidDeactivate : function(part) {
+		hui.cls.remove(part.element,'hui_editor_part_active');
+		this.activePart = null;
+		this._hidePartEditControls();
+	},
+	partChanged : function(part) {
+		hui.ui.callDelegates(part,'partChanged');
+	},
+	deletePart : function(part) {
+		hui.ui.callDelegates(part,'deletePart');
+		this.partControls.hide();
+	},
+	newPart : function(e) {
+		if (!this.newPartMenu) {
+			var menu = hui.ui.Menu.create({name:'huiEditorNewPartMenu'});
+			hui.each(this.partControllers,function(item) {
+				menu.addItem({title:item.title,value:item.key});
+			});
+			menu.listen(this);
+			this.newPartMenu=menu;
+		}
+		this.newPartMenu.showAtPointer(e);
+	},
+	$itemWasClicked$huiEditorNewPartMenu : function(value) {
+		var info = {row:this.hoveredPart.row,column:this.hoveredPart.column,position:this.hoveredPart.position+1,type:value};
+		hui.ui.callDelegates(this,'addPart',info);
+	},
+	
+	
+	
+	
+	
+	
+	/**** Dragging ****/
+	
+	_dragInfo : null,
+	
+	_dropInfo : null,
+	
+	dragProxy : null,
+	
+	_startPartDrag : function(info) {
+		if (!this.active || this.activePart || !this.live) {
+			return true;
+		}
+		var e = hui.event(info.event),
+			element = info.element;
+		if (!e.altKey) {
+			return;
+		}
+		e.stop();
+		
+		if (!this.dragProxy) {
+			this.dragProxy = hui.build('div',{'class':'hui_editor_dragproxy',parent:document.body,style:'display:none;'});
+		}
+		var proxy = this.dragProxy;
+		proxy.innerHTML = element.innerHTML;
+		
+		var pos = this._getPartPosition(element);
+		if (!pos) {
+			return;
+		}
+		
+		this._dragInfo = {
+			diffLeft : e.getLeft() - hui.position.getLeft(element),
+			diffTop : e.getTop() - hui.position.getTop(element),
+			draggedElement : element,
+			partIndex : pos.partIndex,
+			rowIndex : pos.rowIndex,
+			columnIndex : pos.columnIndex,
+			initialHeight : element.clientHeight
+		}
+		hui.log('startDrag')
+		hui.drag.start({
+			element : proxy,
+			onBeforeMove : this._onBeforeDrag.bind(this),
+			onMove : this._onDrag.bind(this),
+			onAfterMove : this._onAfterDrag.bind(this),
+			onEnd : function() {
+				
+			}
+		})
+	},
+	_onBeforeDrag : function() {
+		var dragged = this._dragInfo.draggedElement,
+			proxy = this.dragProxy;
+		
+		
+		this._insertDropPlaceholders();
+		
+		hui.style.set(proxy,{
+			display : 'block',
+			visibility : 'visible',
+			height  : dragged.clientHeight+'px',
+			width  : dragged.clientWidth+'px',
+			transform : 'scale(1)',
+			background : 'rgba(255,255,255,.5)',
+			padding : '1px',
+			opacity: 1
+		});
+		
+		//hui.animate({node:this.dragProxy,css:{transform:'scale(1.1)'},duration:1000,ease:hui.ease.slowFastSlow});
+		
+		hui.style.setOpacity(dragged,0.5);
+		
+		this._dragging = true;
+		
+		if (!this._dropMarker) {
+			this._dropMarker = hui.build('div',{'class':'hui_editor_dropmarker',parent:document.body});
+		}
+	},
+	_onDrag : function(e) {
+		var left = e.getLeft();
+		var top = e.getTop();
+		this.dragProxy.style.left = (left - this._dragInfo.diffLeft) + 'px';
+		this.dragProxy.style.top = (top - this._dragInfo.diffTop) + 'px';
+		for (var i=0; i < this.dropTargets.length; i++) {
+			var info = this.dropTargets[i];
+			if (info.left<left && info.right>left && info.top<top && info.bottom>top) {
+				//if (info.placeholder!=this._activeDragPlaceholder) {
+					var h = this._dragColumnHeights[info.rowIndex+'-'+info.columnIndex];
+					//hui.log(info.columnIndex+': '+h)
+					//info.debug.style.borderColor='blue'
+					//hui.animate({node:info.placeholder,css:{height : h+'px'},duration:500,ease:hui.ease.slowFastSlow});
+					if (this._latestProxyColumn!=info.columnIndex || this._latestProxyRow!=info.rowIndex) {
+						hui.animate({node:this.dragProxy,css:{width:(info.right-info.left)+'px'},duration:300,ease:hui.ease.fastSlow});
+						this._latestProxyColumn = info.columnIndex;
+						this._latestProxyrow = info.rowIndex;
+					}
+					//this._activeDragPlaceholder = info.placeholder;
+					this._dropInfo = info;
+					hui.style.set(this._dropMarker,{width:(info.right-info.left)+'px',left:info.left+'px',top:info.position+'px',display:'block'});
+				//}	
+				break;
+			}
+		};
+	},
+	_onAfterDrag : function(e) {
+		var proxy = this.dragProxy,
+			dragInfo = this._dragInfo,
+			dragged = this._dragInfo.draggedElement,
+			dropInfo = this._dropInfo;
+		
+		if (dropInfo) {
+			var newHeight = this._dragColumnHeights[dropInfo.rowIndex+'-'+dropInfo.columnIndex];
+			
+			var top = dropInfo.position,
+				left = dropInfo.left;
+				
+			if ((dragInfo.columnIndex == dropInfo.columnIndex && dragInfo.partIndex < dropInfo.partIndex) || dragInfo.rowIndex < dropInfo.rowIndex) {
+				top = top - dragInfo.initialHeight;
+			}
+			//top+=3;
+			left++;
+			// Move the proxy to new position
+			hui.animate({
+				node : proxy,
+				css : {
+					left : left+'px',
+					top : top+'px',
+					opacity : 0.5
+					},
+				duration : 500,
+				ease : hui.ease.slowFastSlow
+			});
+			
+			var column = this._getColumn(dropInfo.rowIndex,dropInfo.columnIndex);
+			
+			var parts = hui.get.byClass(column,this.options.partClass);
+			
+			if (parts[dropInfo.partIndex] != dragged) {
+				this.fire('partWasMoved',{dragged:dragged,rowIndex : dropInfo.rowIndex,columnIndex : dropInfo.columnIndex,partIndex : dropInfo.partIndex, 
+					onSuccess : function() {
+						dragged.style.webkitTransformOrigin='0 0';
+						var dummy = hui.build('div');
+						if (dropInfo.partIndex>=parts.length) {
+							hui.animate({node:dragged,css:{height:'0px'},duration:500,ease:hui.ease.slowFastSlow,onComplete:function() {
+								hui.dom.remove(dragged);
+								column.appendChild(dragged);
+								hui.animate({node:dragged,css:{transform:'scale(1)',height:newHeight+'px'},duration:500,ease:hui.ease.slowFastSlow,onComplete:function() {
+									dragged.style.height='';
+								}});
+							}});
+						} else {
+							hui.dom.insertBefore(parts[dropInfo.partIndex],dummy);
+							hui.animate({node:dummy,css:{height:newHeight+'px'},duration:600,ease:hui.ease.slowFastSlow,onComplete:function() {
+								hui.dom.remove(dragged);
+								hui.dom.replaceNode(dummy,dragged);
+								hui.style.set(dragged,{transform:'scale(1)',opacity:0,height:''})
+								hui.animate({node:dragged,css:{opacity:1},duration:500,ease:hui.ease.slowFastSlow});
+							}});
+							hui.animate({node:dragged,css:{transform:'scale(0)',height:'0px'},duration:500,ease:hui.ease.slowFastSlow});
+						}
+						this._cleanDrag();
+					}.bind(this),
+					onFailure : function() {
+						this._cleanDrag();
+					}.bind(this)
+				});
+			} else {	
+				this._cleanDrag();
+			}
+		}
+	},
+	_cleanDrag : function() {
+		var proxy = this.dragProxy;
+		hui.animate({node:proxy,css:{opacity:0},duration:500,delay:500,ease:hui.ease.slowFastSlow,onComplete:function() {
+				proxy.style.display='none';
+			}
+		});
+		hui.style.setOpacity(this._dragInfo.draggedElement,1);
+		var p = hui.get.byClass(document.body,'hui_editor_drop_placeholder');
+		for (var i=0; i < p.length; i++) {
+			hui.dom.remove(p[i]);
+		};
+		this.dropTargets = [];
+		this._dragging = false;
+		if (this._dropMarker) {
+			this._dropMarker.style.display='none'
+		}
+	},
+	_getColumn : function(rowIndex,columnIndex) {
+		var rows = hui.get.byClass(document.body,this.options.rowClass);
+		var row = rows[rowIndex];
+		var columns = hui.get.byClass(row,this.options.columnClass);
+		return columns[columnIndex];
+	},
+	_getPartPosition : function(element) {
+		var rows = hui.get.byClass(document.body,this.options.rowClass);
+		for (var i=0; i < rows.length; i++) {
+			
+			var columns = hui.get.byClass(rows[i],this.options.columnClass);
+			for (var j=0; j < columns.length; j++) {
+				var parts = hui.get.byClass(columns[j],this.options.partClass);
+				for (var k=0; k < parts.length; k++) {
+					if (element===parts[k]) {
+						return {rowIndex:i,columnIndex:j,partIndex:k};
+					}
+				};
+			};
+		};
+		return null;
+	},
+	
+	
+	_activeDragPlaceholder : null,
+	
+	_dragInfo : null,
+	
+	_dragColumnHeights : null,
+	
+	_insertDropPlaceholders : function() {
+		var infos = this.dropTargets = [];
+		var colHeights = this._dragColumnHeights = {}
+		var proxy = this.dragProxy;
+		var draggedPart = this._dragInfo.draggedElement;
+		var rows = hui.get.byClass(document.body,this.options.rowClass);
+		for (var i=0; i < rows.length; i++) {
+			var row = rows[i]
+			var columns = hui.get.byClass(row,this.options.columnClass);
+			for (var j=0; j < columns.length; j++) {
+				var column = columns[j];
+				hui.style.set(proxy,{
+					width : column.clientWidth+'px',
+					height : '',
+					visibility : 'hidden',
+					display : 'block'
+				});
+				var height = colHeights[i+'-'+j] = proxy.clientHeight;
+				var parts = hui.get.byClass(column,this.options.partClass);
+				var min = hui.position.getTop(column);
+				var max = min+column.clientHeight;
+				var current = min;
+				var k=0;
+				var previous = null;
+				for (; k < parts.length; k++) {
+					var part = parts[k],
+						next = parts[k+1],
+						previous = parts[k-1]
+					var left = hui.position.getLeft(part);
+					var right = left + part.clientWidth;
+					var top = previous ? hui.position.getTop(previous)+previous.clientHeight/2 : min;
+					var bottom = hui.position.getTop(part)+part.clientHeight/2;
+					
+					var info = {
+						rowIndex : i,
+						columnIndex : j,
+						partIndex : k,
+						part : part,
+						left : left,
+						right : right,
+						top : top,
+						bottom : bottom,
+						position : hui.position.getTop(part)
+					}
+					current += part.clientHeight;
+					infos.push(info);
+					previous = part;
+				};
+				var last = parts.length>0 ? parts[parts.length-1] : null;
+				if (last) {
+					var top = hui.position.getTop(last)+last.clientHeight/2;
+					var position = hui.position.getTop(last)+last.clientHeight;
+				} else {
+					var top = min;
+					var position = min;
+					var left = hui.position.getLeft(column);
+					var right = left + column.clientWidth;
+				}
+				var info = {
+					rowIndex : i,
+					columnIndex : j,
+					partIndex : k+1,
+					part : part,
+					left : left,
+					right : right,
+					top : top,
+					position : position,
+					bottom : max-top > 20 ? max : top+20
+				}
+				if (part) {
+					current += part.clientHeight;
+				}
+				infos.push(info);
+			}
+		}
+		for (var i=0; i < infos.length; i++) {
+			var info = infos[i]
+			//info.debug = hui.build('div',{style:'border: 1px solid red; position: absolute; top:'+info.top+'px;left:'+(info.left)+'px; height: '+(info.bottom-info.top)+'px; width:'+(info.right-info.left)+'px',parent:document.body})
+		};
+	}
+}
+
+hui.ui.Editor.getPartId = function(element) {
+	if (!element.id) return;
+	var m = element.id.match(/part\-([\d]+)/i);
+	if (m && m.length>0) return m[1];
+}
+
+////////////////////////////////// Header editor ////////////////////////////////
+
+/**
+ * @constructor
+ */
+hui.ui.Editor.Header = function(options) {
+	this.element = hui.get(options.element);
+	this.id = hui.ui.Editor.getPartId(this.element);
+	this.header = hui.get.firstByTag(this.element,'*');
+	this.field = null;
+}
+
+hui.ui.Editor.Header.prototype = {
+	activate : function(callback) {
+		this.value = this.header.innerHTML;
+		this.field = hui.build('textarea',{className:'hui_editor_header'});
+		this.field.value = this.value;
+		this.header.style.visibility='hidden';
+		this.updateFieldStyle();
+		this.element.insertBefore(this.field,this.header);
+		this.field.focus();
+		this.field.select();
+		hui.listen(this.field,'keydown',function(e) {
+			if (e.keyCode==Event.KEY_RETURN) {
+				this.save();
+			}
+		}.bind(this));
+        callback();
+	},
+	save : function(options) {
+		var value = this.field.value;
+		this.header.innerHTML = value;
+		if (value!=this.value) {
+			this.value = value;
+		}
+        options.callback();
+	},
+	cancel : function() {
+		
+	},
+	deactivate : function(callback) {
+		this.header.style.visibility='';
+		this.element.removeChild(this.field);
+        callback();
+	},
+	updateFieldStyle : function() {
+		hui.style.set(this.field,{width:this.header.clientWidth+'px',height:this.header.clientHeight+'px'});
+		hui.style.copy(this.header,this.field,['font-size','line-height','margin-top','font-weight','font-family','text-align','color','font-style']);
+	},
+	getValue : function() {
+		return this.value;
+	}
+}
+
+////////////////////////////////// Html editor ////////////////////////////////
+
+/**
+ * @constructor
+ */
+hui.ui.Editor.Html = function(options) {
+	this.element = hui.get(options.element);
+	this.id = hui.ui.Editor.getPartId(this.element);
+	this.field = null;
+}
+
+hui.ui.Editor.Html.prototype = {
+	activate : function(callback) {
+		this.value = this.element.innerHTML;
+		this.element.innerHTML='';
+		var style = this.buildStyle();
+		this.editor = hui.ui.MarkupEditor.create({autoHideToolbar:false,style:style});
+		this.element.appendChild(this.editor.getElement());
+		this.editor.listen(this);
+		this.editor.setValue(this.value);
+		this.editor.focus();
+		callback();
+	},
+	buildStyle : function() {
+		return {
+			'textAlign':hui.style.get(this.element,'text-align')
+			,'fontFamily':hui.style.get(this.element,'font-family')
+			,'fontSize':hui.style.get(this.element,'font-size')
+			,'fontWeight':hui.style.get(this.element,'font-weight')
+			,'color':hui.style.get(this.element,'color')
+		}
+	},
+	cancel : function() {
+		this.element.innerHTML = this.value;
+	},
+	save : function(options) {
+		var value = this.editor.getValue();
+		if (value!=this.value) {
+			this.value = value;
+		}
+		this.element.innerHTML = this.value;
+        options.callback();
+	},
+	deactivate : function(callback) {
+		if (this.editor) {
+			this.editor.destroy();
+			this.element.innerHTML = this.value;
+		}
+		callback();
+	},
+	richTextDidChange : function() {
+		//this.deactivate();
+	},
+	getValue : function() {
+		return this.value;
+	}
+}
+
+/* EOF */
+
+/** A graph
  * @constructor
  */
 hui.ui.Graph = function(options) {
@@ -17983,7 +20841,865 @@ hui.ui.Graph.Raphael = {
 			connections.push(r.connection(idsToShape[edge.from], idsToShape[edge.to], "#fff",null,edge.label));
 		};
 	}
-}/** Grphviz viewer
+}
+
+hui.Color.table = {
+	aliceblue: 'f0f8ff',
+	antiquewhite: 'faebd7',
+	aqua: '00ffff',
+	aquamarine: '7fffd4',
+	azure: 'f0ffff',
+	beige: 'f5f5dc',
+	bisque: 'ffe4c4',
+	black: '000000',
+	blanchedalmond: 'ffebcd',
+	blue: '0000ff',
+	blueviolet: '8a2be2',
+	brown: 'a52a2a',
+	burlywood: 'deb887',
+	cadetblue: '5f9ea0',
+	chartreuse: '7fff00',
+	chocolate: 'd2691e',
+	coral: 'ff7f50',
+	cornflowerblue: '6495ed',
+	cornsilk: 'fff8dc',
+	crimson: 'dc143c',
+	cyan: '00ffff',
+	darkblue: '00008b',
+	darkcyan: '008b8b',
+	darkgoldenrod: 'b8860b',
+	darkgray: 'a9a9a9',
+	darkgreen: '006400',
+	darkkhaki: 'bdb76b',
+	darkmagenta: '8b008b',
+	darkolivegreen: '556b2f',
+	darkorange: 'ff8c00',
+	darkorchid: '9932cc',
+	darkred: '8b0000',
+	darksalmon: 'e9967a',
+	darkseagreen: '8fbc8f',
+	darkslateblue: '483d8b',
+	darkslategray: '2f4f4f',
+	darkturquoise: '00ced1',
+	darkviolet: '9400d3',
+	deeppink: 'ff1493',
+	deepskyblue: '00bfff',
+	dimgray: '696969',
+	dodgerblue: '1e90ff',
+	feldspar: 'd19275',
+	firebrick: 'b22222',
+	floralwhite: 'fffaf0',
+	forestgreen: '228b22',
+	fuchsia: 'ff00ff',
+	gainsboro: 'dcdcdc',
+	ghostwhite: 'f8f8ff',
+	gold: 'ffd700',
+	goldenrod: 'daa520',
+	gray: '808080',
+	green: '008000',
+	greenyellow: 'adff2f',
+	honeydew: 'f0fff0',
+	hotpink: 'ff69b4',
+	indianred : 'cd5c5c',
+	indigo : '4b0082',
+	ivory: 'fffff0',
+	khaki: 'f0e68c',
+	lavender: 'e6e6fa',
+	lavenderblush: 'fff0f5',
+	lawngreen: '7cfc00',
+	lemonchiffon: 'fffacd',
+	lightblue: 'add8e6',
+	lightcoral: 'f08080',
+	lightcyan: 'e0ffff',
+	lightgoldenrodyellow: 'fafad2',
+	lightgrey: 'd3d3d3',
+	lightgreen: '90ee90',
+	lightpink: 'ffb6c1',
+	lightsalmon: 'ffa07a',
+	lightseagreen: '20b2aa',
+	lightskyblue: '87cefa',
+	lightslateblue: '8470ff',
+	lightslategray: '778899',
+	lightsteelblue: 'b0c4de',
+	lightyellow: 'ffffe0',
+	lime: '00ff00',
+	limegreen: '32cd32',
+	linen: 'faf0e6',
+	magenta: 'ff00ff',
+	maroon: '800000',
+	mediumaquamarine: '66cdaa',
+	mediumblue: '0000cd',
+	mediumorchid: 'ba55d3',
+	mediumpurple: '9370d8',
+	mediumseagreen: '3cb371',
+	mediumslateblue: '7b68ee',
+	mediumspringgreen: '00fa9a',
+	mediumturquoise: '48d1cc',
+	mediumvioletred: 'c71585',
+	midnightblue: '191970',
+	mintcream: 'f5fffa',
+	mistyrose: 'ffe4e1',
+	moccasin: 'ffe4b5',
+	navajowhite: 'ffdead',
+	navy: '000080',
+	oldlace: 'fdf5e6',
+	olive: '808000',
+	olivedrab: '6b8e23',
+	orange: 'ffa500',
+	orangered: 'ff4500',
+	orchid: 'da70d6',
+	palegoldenrod: 'eee8aa',
+	palegreen: '98fb98',
+	paleturquoise: 'afeeee',
+	palevioletred: 'd87093',
+	papayawhip: 'ffefd5',
+	peachpuff: 'ffdab9',
+	peru: 'cd853f',
+	pink: 'ffc0cb',
+	plum: 'dda0dd',
+	powderblue: 'b0e0e6',
+	purple: '800080',
+	red: 'ff0000',
+	rosybrown: 'bc8f8f',
+	royalblue: '4169e1',
+	saddlebrown: '8b4513',
+	salmon: 'fa8072',
+	sandybrown: 'f4a460',
+	seagreen: '2e8b57',
+	seashell: 'fff5ee',
+	sienna: 'a0522d',
+	silver: 'c0c0c0',
+	skyblue: '87ceeb',
+	slateblue: '6a5acd',
+	slategray: '708090',
+	snow: 'fffafa',
+	springgreen: '00ff7f',
+	steelblue: '4682b4',
+	tan: 'd2b48c',
+	teal: '008080',
+	thistle: 'd8bfd8',
+	tomato: 'ff6347',
+	turquoise: '40e0d0',
+	violet: 'ee82ee',
+	violetred: 'd02090',
+	wheat: 'f5deb3',
+	white: 'ffffff',
+	whitesmoke: 'f5f5f5',
+	yellow: 'ffff00',
+	yellowgreen: '9acd32'
+};
+
+hui.ui.KeyboardNavigator = function(options) {
+	options = options || {};
+	this.text = '';
+	this.items = [];
+	this.index = null;
+	this.name = options.name;
+	hui.listen(window,'keydown',this._onKeyDown.bind(this));
+	this.element = hui.build('div',{'class':'hui_keyboardnavigator',parent:document.body})
+	this.input = hui.build('p',{'class':'hui_keyboardnavigator_input',parent:this.element});
+	this.list = hui.build('ul',{parent:this.element});
+	this.listNodes = [];
+	hui.ui.extend(this);
+}
+
+hui.ui.KeyboardNavigator.prototype = {
+	_onKeyDown : function(e) {
+		if (hui.ui.keyboardTarget) {
+			return;
+		}
+		e = hui.event(e.key);
+		if (e.metaKey || e.altKey || e.shiftKey || e.leftKey || e.rightKey) {
+			return;
+		} else if (e.downKey) {
+			this._selectNext();
+			return;
+		} else if (e.upKey) {
+			this._selectPrevious();
+			return;
+		} else if (e.returnKey || e.enterKey) {
+			this._select();
+			this.text = '';
+			this._render();
+			return;
+		}
+		if (e.escapeKey) {
+			this.text = '';
+		} else if (e.backspaceKey) {
+			e.stop();
+			if (this.text.length>0) {
+				this.text = this.text.substring(0,this.text.length-1);				
+			} else {
+				return;
+			}
+		} else {
+			this.text+=String.fromCharCode(e.keyCode).toLowerCase();
+		}
+		this._render();
+		if (this.text.length>0) {
+			this._complete();			
+		}
+	},
+	_select : function() {
+		if (this.index!==null) {
+			this.fire('select',this.items[this.index]);
+		}
+	},
+	_selectPrevious : function() {
+		if (this.items.length==0) {
+			return;
+		}
+		if (this.index===null) {
+			this.index = 0;
+		} else {
+			hui.cls.remove(this.listNodes[this.index],'hui_keyboardnavigator_selected');
+		}
+		this.index--;
+		if (this.index < 0) {
+			this.index = this.items.length-1;
+		}
+		hui.cls.add(this.listNodes[this.index],'hui_keyboardnavigator_selected');
+	},
+	_selectNext : function() {
+		if (this.items.length==0) {
+			return;
+		}
+		if (this.index===null) {
+			this.index = -1;
+		} else {
+			hui.cls.remove(this.listNodes[this.index],'hui_keyboardnavigator_selected');
+		}
+		this.index++;
+		if (this.index>this.items.length-1) {
+			this.index = 0;
+		}
+		hui.cls.add(this.listNodes[this.index],'hui_keyboardnavigator_selected');
+	},
+	_render : function() {
+		if (!this.text) {
+			this.element.style.display='none';
+			return;
+		}
+		hui.dom.setText(this.input,this.text);
+		hui.dom.clear(this.list);
+		this.listNodes = [];
+		this.index = Math.min(this.index,this.items.length-1);
+		for (var i=0; i < this.items.length; i++) {
+			var item = this.items[i]
+			var node = hui.build('li',{text:item.text,parent:this.list});
+			this.listNodes.push(node);
+		};
+		if (this.index>-1) {
+			hui.cls.add(this.listNodes[this.index],'hui_keyboardnavigator_selected');
+		} else {
+			this.index = null;
+		}
+		this.element.style.display = 'block';
+		this.element.style.marginLeft = (this.element.clientWidth/-2)+'px';
+		hui.animate({node:this.element,duration:300,ease:hui.ease.slowFastSlow,css:{marginTop:(this.element.clientHeight/-2)+'px'}})
+	},
+	_complete : function() {
+		this.fire('complete',{
+			text : this.text,
+			callback : function(items) {
+				this.items = items;
+				this._render();
+			}.bind(this)
+		});
+	}
+}
+
+hui.ui.Matrix = function(options) {
+	this.options = options = options || {};
+	this.element = hui.get(options.element);
+	hui.ui.extend(this);
+	if (this.options.source) {
+		this.options.source.listen(this);
+	}
+}
+
+hui.ui.Matrix.create = function(options) {	
+	options.element = hui.build('div',{'class':'hui_matrix',parent:hui.get(options.parent),style:'width: 100%; height: 100%;'});
+	return new hui.ui.Matrix(options);
+}
+
+hui.ui.Matrix.prototype = {
+	$$layout : function() {
+		
+	},
+	$objectsLoaded : function(data) {
+		this.setData(data);
+		this.render();
+	}
+}
+
+/**
+ * Pages
+ * @constructor
+ */
+hui.ui.Pages = function(options) {
+	this.options = options || {};
+	this.element = hui.get(options.element);
+	this.name = options.name;
+	this.pages = hui.get.children(this.element);
+	this.index = 0;
+	this.fixedHeight = hui.cls.has(this.element,'hui_pages_full');
+	this.expanded = false;
+	hui.ui.extend(this);
+	//hui.listen(this.element,'click',this.next.bind(this));
+}
+
+hui.ui.Pages.create = function(options) {
+	options = options || {};
+	options.element = hui.build('div',{'class':'hui_pages'});
+	return new hui.ui.Pages(options);
+}
+
+hui.ui.Pages.prototype = {
+	add : function(widgetOrElement) {
+		var element = hui.dom.isElement(widgetOrElement) ? element : widgetOrElement.element;
+		var page = hui.build('div',{'class':'hui_pages_page'});
+		page.appendChild(element);
+		this.element.appendChild(page);
+		if (this.pages.length>0) {
+			page.style.display = 'none';
+		}
+		this.pages = hui.get.children(this.element);
+	},
+	next : function() {
+		if (this.expanded) {return}
+		var current = this.pages[this.index];
+		this.index = this.pages.length <= this.index+1 ? 0 : this.index+1;
+		this._transition({hide:current,show:this.pages[this.index]});
+	},
+	previous : function() {
+		if (this.expanded) {return}
+		var current = this.pages[this.index];
+		this.index = this.index == 0 ? this.pages.length-1 : this.index-1;
+		this._transition({hide:current,show:this.pages[this.index]});
+	},
+	goTo : function(key) {
+		for (var i=0; i < this.pages.length; i++) {
+			if (this.pages[i].getAttribute('data-key')==key && i!=this.index) {
+				var current = this.pages[this.index];
+				this.index = i;
+				this._transition({hide:current,show:this.pages[i]});
+				return;
+			}
+		};
+	},
+	getPageKey : function() {
+		return this.pages[this.index].getAttribute('data-key');
+	},
+	expand : function() {
+		var l = this.pages.length;
+		for (var i=0; i < l; i++) {
+			if (!this.expanded) {
+				hui.style.set(this.pages[i],{
+					width : (100 / l)+'%',
+					display : 'block',
+					'float' : 'left',
+					opacity: 1
+				});
+			} else {
+				hui.style.set(this.pages[i],{
+					width : '',
+					display : i==this.index ? 'block' : 'none',
+					'float' : ''
+				});
+			}
+		};
+		hui.ui.callVisible(this);
+		this.expanded = !this.expanded;
+	},
+	_transition : function(options) {
+		var hide = options.hide,
+			show = options.show,
+			e = this.element;
+		if (this.fixedHeight) {
+			hui.style.set(hide,{position:'absolute',width:e.clientWidth+'px',height:this.element.clientHeight+'px'});
+			hui.style.set(show,{position:'absolute',width:e.clientWidth+'px',display:'block',opacity:0,height:this.element.clientHeight+'px'});			
+		} else {
+			hui.style.set(hide,{position:'absolute',width:e.clientWidth+'px'});
+			hui.style.set(show,{position:'absolute',width:e.clientWidth+'px',display:'block',opacity:0});
+			hui.style.set(e,{height:hide.offsetHeight+'px',overflow:'hidden',position:'relative'});
+			hui.animate({
+        node : e,
+        css : {height:show.offsetHeight+'px'},
+        duration : 500,
+        ease : hui.ease.slowFastSlow
+      })
+		}
+		hui.ui.reLayout();
+		
+		hui.effect.fadeOut({
+      element : hide,
+      duration : 500,
+      $complete : function() {
+			  hui.style.set(hide,{width : '',position:'',height:''});
+        window.setTimeout(function() {
+          hide.style.display = 'none';
+        })
+		  }
+    });
+		
+		hui.effect.fadeIn({
+      element : show,
+      duration : 500,
+      $complete:function() {
+  			hui.style.set(show,{width : '',position:'',height:''});
+        if (!this.fixedHeight) {
+          hui.style.set(e,{height:'',overflow:'',position:''});          
+        }
+  			hui.ui.reLayout();
+  			hui.ui.callVisible(this);
+      }.bind(this)
+    });
+	}
+}
+
+/** A progress indictator that shows progress from 0% to 100%
+	@constructor
+*/
+hui.ui.ProgressIndicator = function(options) {
+	this.element = hui.get(options.element);
+	this.options = options || {};
+	this.size = options.size;
+	this.name = options.name;
+	this.value = 0;
+	this._renderedValue = 0;
+	hui.ui.extend(this);
+	this._init();
+}
+
+/** Creates a new progress bar:
+	@param o {Object} Options : {small:false}
+*/
+hui.ui.ProgressIndicator.create = function(options) {
+	options = options || {};
+	options.element = hui.build('div',{'class':'hui_progressindicator',style:'display: inline-block; vertical-align: middle; width:'+options.size+'px;height:'+options.size+'px;'});
+	return new hui.ui.ProgressIndicator(options);
+}
+	
+hui.ui.ProgressIndicator.prototype = {
+	_init : function() {
+		this.drawing = hui.ui.Drawing.create({parent:this.element,width:this.size,height:this.size});
+		this.arc = this.drawing.addArc({
+			center : {x:this.size/2,y:this.size/2},
+	  		startDegrees : -90,
+			endDegrees : -90,
+	  		innerRadius : this.size/4, 
+			outerRadius : this.size/2,
+			fill : 'rgba(0,0,0,.1)'
+		})
+	},
+	setValue : function(value) {
+		if (value==this.value) {
+			return;
+		}
+		var start = this._renderedValue;
+		var dur = Math.abs(value-start)*2000;
+		hui.animate({
+			node : this.element,
+			duration : dur,
+			ease:hui.ease.slowFastSlow,
+			callback : function(node,pos) {
+				var p = start+(value-start)*pos;
+				this._renderedValue = p;
+				this._draw(p);
+			}.bind(this)
+		});
+		this.value = value;
+	},
+	_draw : function(value) {
+		this.arc.update({
+			center : {x:this.size/2,y:this.size/2},
+	  		startDegrees : -90,
+			endDegrees : Math.min(-90 + value * 360, 269.9999),
+	  		innerRadius : this.size/4, 
+			outerRadius : this.size/2,
+			fill : '#eee'
+		})		
+	},
+	destroy : function() {
+		hui.ui.destroy(this);
+		hui.dom.remove(this.element);
+	},
+	reset : function() {
+		var start = this._renderedValue;
+		this._renderedValue = this.value = 0;
+		hui.animate({
+			node : this.element,
+			duration : 900,
+			ease:hui.ease.fastSlow,
+			callback : function(node,pos) {
+				var x = 1 - pos;
+				this.arc.update({
+					center : {x:this.size/2,y:this.size/2},
+			  		startDegrees : -90,
+					endDegrees : Math.min(-90 + (start+(1-start)*pos) * 360, 269.9999),
+			  		innerRadius : this.size/4 * x, 
+					outerRadius : this.size/2 * x,
+					fill : '#eee'
+				})		
+			}.bind(this)
+		});		
+	}
+}
+
+/** @namespace */
+hui.test = {
+	status : null,
+	busy : 0,
+	run : function(recipe) {
+		this.errorHandler = hui.listen(window,'error',function(e) {
+			hui.log(e)
+			hui.ui.showMessage({text:'Error ('+e.message+') ['+e.lineno+']',icon:'common/warning'});
+			throw e;
+		});
+		this.status = {failures:0,successes:0};
+		this.busy = 0;
+		hui.ui.showMessage({text:'Running test',busy:true});
+		this._next(0,recipe);
+		
+	},
+	_next : function(num,recipe) {
+		if (recipe[num]===undefined) {
+			this._stop();
+			return;
+		}
+		hui.ui.showMessage({text:'Running test ('+num+')',busy:true});
+		if(typeof(recipe[num])=='function') {
+			recipe[num]();
+			this._next(num+1,recipe);
+		} else {
+			window.setTimeout(function(){this._next(num+1,recipe)}.bind(this),recipe[num]);
+		}
+	},
+	_stop : function() {
+		if (this.busy>0) {
+			window.setTimeout(this._stop.bind(this),100);
+			return;
+		}
+		if (this.status.failures>0) {
+			hui.ui.showMessage({text:'Failure',icon:'common/warning',duration:2000});
+		} else {
+			hui.ui.showMessage({text:'Success',icon:'common/success',duration:2000});
+		}
+		hui.unListen(window,'error',this.errorHandler);
+	},
+	click : function(node,func) {
+		this.busy++;
+		Syn.click(node,function() {
+			if (func) {func()};
+			this.busy--;
+		}.bind(this));
+	},
+	type : function(node,text,func) {
+		this.busy++;
+		Syn.type(node,text,function() {
+			if (func) {func()};
+			this.busy--;
+		}.bind(this));
+	},
+	_succeed : function(msg) {
+		if (window.console) {
+			console.info(msg);
+		}	
+		this._log(msg);
+		this.status.successes++;
+	},
+	_fail : function(msg,obj1,obj2) {
+		if (window.console) {
+			console.error(msg);
+			console.info('Object 1:');
+			console.info(obj1);
+		}
+			console.info('Object 2:');
+			console.info(obj2);
+		this._log(msg,true);
+		this.status.failures++;
+	},
+	_log : function(msg,fail) {
+		if (!this.log) {
+			var log = this.log = hui.build('div',{parent:document.body,style:'border: 1px solid #eee; padding: 5px; position: fixed; bottom:20px;right:20px; width: 200px; max-height: 200px; overflow: auto; white-space: nowrap; font-family: Monaco, monospace; font-size: 9px; color: #00ff00; background: #000'});
+			hui.listen(this.log,'click',function() {
+				if (log.style.left=='20px') {
+					log.style.left='';
+					log.style.top='';
+					log.style.width='200px';
+					log.style.maxHeight='200px';
+				} else {
+					log.style.left='20px';
+					log.style.top='20px';
+					log.style.width='';
+					log.style.maxHeight='';
+				}
+			});
+		}
+		hui.build('div',{parent:this.log,text:msg,style:fail?'color:red;':''});
+	},
+	
+	// Assertion...
+	
+	assert : {
+		equals : function(obj1,obj2,msg) {
+			return hui.test.assertEquals(obj1,obj2,msg);
+		},
+		notEquals : function(obj1,obj2,msg) {
+			return hui.test.assertNotEquals(obj1,obj2,msg);
+		},
+		'false' : function(value,msg) {
+			return hui.test.assertFalse(value,msg)
+		},
+		'true' : function(value,msg) {
+			return hui.test.assertTrue(value,msg)
+		},
+		'defined' : function(value,msg) {
+			return hui.test.assertDefined(value,msg)
+		}
+	},
+	
+	assertTrue : function(value,msg) {
+		if (value!==true) {
+			this._fail('Failure ('+msg+'), not true...',value);
+		} else {
+			this._succeed('Success, true'+(msg ? ': '+msg : ''));
+		}
+	},
+	assertFalse : function(value,msg) {
+		if (value!==false) {
+			this._fail('Failure ('+msg+'), not false...',value);
+		} else {
+			this._succeed('Success, false'+(msg ? ': '+msg : ''));
+		}
+	},
+	assertDefined : function(value,msg) {
+		if (value===null || value===undefined) {
+			this._fail('Failure ('+msg+'), defined...',value);
+		} else {
+			this._succeed('Success, defined: '+msg);
+		}
+	},
+	assertEquals : function(obj1,obj2,msg) {
+		if (obj1!==obj2) {
+			this._fail('Failure ('+msg+') - '+obj1+'!=='+obj2+', not equal...',obj1,obj2);
+		} else {
+			this._succeed('Success, equal: '+obj1+'==='+obj2+(msg ? ', '+msg : ''));
+		}
+	},
+	assertNotEquals : function(obj1,obj2,msg) {
+		if (obj1===obj2) {
+			this._fail('Failure ('+msg+'), not not equal...',obj1,obj2);
+		} else {
+			this._succeed('Success, not equal: '+obj1+'!=='+obj2+', '+msg);
+		}
+	},
+	assertVisible : function(node,msg) {
+		if (node.style.display==='none') {
+			this._fail('Failure ('+msg+'), not visible...',node);
+		} else {
+			this._succeed('Success, visible: '+msg);
+		}
+	},
+	assertNotVisible : function(node,msg) {
+		if (node.style.display!=='none') {
+			this._fail('Failure ('+msg+'), visible...',node);
+		} else {
+			this._succeed('Success, not visible: '+msg);
+		}
+	}
+}
+
+/**
+ * Tiles
+ * @constructor
+ */
+hui.ui.Tiles = function(options) {
+	this.options = options || {};
+	this.element = hui.get(options.element);
+	this.name = options.name;
+	this.tiles = hui.get.children(this.element);
+	hui.ui.extend(this);
+	this._addBehavior();
+	if (this.options.reveal) {
+		hui.onReady(this._reveal.bind(this));
+	}
+}
+
+hui.ui.Tiles.prototype = {
+	_addBehavior : function() {
+	},
+	_reveal : function() {
+		for (var i=0; i < this.tiles.length; i++) {
+			var tile = this.tiles[i];
+			this._bounce(tile);
+		};
+	},
+	_bounce : function(tile) {
+		hui.effect.fadeIn({element:tile,delay:Math.random()*500});		
+	}
+}
+
+hui.ui.Tile = function(options) {
+	this.options = options || {};
+	this.element = hui.get(options.element);
+	this.name = options.name;
+	hui.ui.extend(this);
+	this.fullScreen = false;
+	this.initial = {
+		width : this.element.style.width,
+		height : this.element.style.height,
+		top : this.element.style.top,
+		left : this.element.style.left
+	}
+	this._addBehavior();
+}
+
+hui.ui.Tile._zIndex = 0;
+
+hui.ui.Tile.prototype = {
+	_addBehavior : function() {
+		hui.listen(this.element,'click',function(e) {
+			e = hui.event(e);
+			if (hui.cls.has(e.element,'hui_tile_icon')) {
+				var key = e.element.getAttribute('data-hui-key');
+				this.fire('clickIcon',{key:key,tile:this});
+			}
+		}.bind(this))
+	},
+	isFullScreen : function() {
+		return this.fullScreen;
+	},
+	toggleFullScreen : function() {
+		if (this.fullScreen) {
+			hui.animate({
+				node : this.element,
+				css : this.initial,
+				duration : 1000,
+				ease : hui.ease.elastic,
+				onComplete : function() {
+					hui.ui.reLayout()
+				}
+			});			
+		} else {
+			hui.ui.Tile._zIndex++;
+			this.element.style.zIndex = hui.ui.Tile._zIndex;
+			hui.animate({
+				node : this.element,
+				css : {top:'0%',left:'0%',width:'100%',height:'100%'},
+				duration : 1000,
+				ease : hui.ease.elastic,
+				onComplete : function() {
+					hui.ui.reLayout()
+				}
+			});			
+		}
+		this.fullScreen = !this.fullScreen;
+	}
+}
+
+/**
+ * A timeline showing events over time
+ * @constructor
+ * @param {Object} options { element «Node | id», name: «String» }
+ */
+hui.ui.TimeLine = function(options) {
+	this.name = options.name;
+	this.options = options || {};
+	this.element = hui.get(options.element);
+	hui.ui.extend(this);
+	hui.onReady(this._start.bind(this));
+}
+
+hui.ui.TimeLine.prototype = {
+	_attach : function() {
+		
+	},
+	_start : function() {
+		this.startTime = new Date().getTime();
+		this.background = hui.build('div',{'class':'hui_timeline_bg',parent:this.element});
+		this._next();
+		window.setTimeout(this.pause.bind(this),20000);
+		window.setTimeout(this._addLine.bind(this),2000);
+		window.setTimeout(this._addLine.bind(this),4000);
+		window.setTimeout(this._addBlock.bind(this),Math.random()*4000);
+		window.setTimeout(this._addBlock.bind(this),Math.random()*4000);
+		window.setTimeout(this._addBlock.bind(this),Math.random()*4000);
+		window.setTimeout(this._addBlock.bind(this),Math.random()*4000);
+	},
+	_next : function() {
+		if (this.paused) return;
+		var width = this._getNow();
+		this.background.style.width = width+'px';
+		this.element.scrollLeft = Math.max(0,width-this.element.clientWidth);
+		window.setTimeout(this._next.bind(this),500);
+	},
+	_setData : function() {
+		
+	},
+	_addLine : function() {
+		var line = hui.build('div',{'class':'hui_timeline_line',parent:this.element});
+		line.style.left=this._getNow()+'px';
+	},
+	_addBlock : function() {
+		var line = hui.build('div',{'class':'hui_timeline_block',text:'New word',parent:this.element});
+		line.style.left=this._getNow()+'px';
+		line.style.width=Math.round(30+Math.random()*100)+'px';
+	},
+	_getNow : function() {
+		return Math.round((new Date().getTime() - this.startTime)/10);
+	},
+	pause : function() {
+		this.paused = true;
+	}
+}
+
+/* EOF */
+
+/**
+ * Help stuff
+ * @namespace 
+ */
+hui.ui.Debugger = {
+	showList : function() {
+		var win = hui.ui.Window.create({title:'Debugger'});
+		var list = hui.ui.List.create();
+		win.show();
+	}
+}
+
+/**
+ * A dock
+ * @constructor
+ */
+hui.ui.FlashChart = function(element,name,options) {
+	this.options = N2i.override({},options);
+	this.element = $(element);
+	this.name = name;
+	hui.ui.extend(this);
+}
+
+hui.ui.FlashChart.prototype = {
+	load : function(url) {
+		var self = this;
+		var flash = this.findSWF(this.element.id+'_chart');
+		new Ajax.Request(url,{onSuccess:function(t) {
+			flash.load(t.responseText);
+		}});
+	},
+	findSWF : function(movieName) {
+		if (window[movieName]) {
+			return window[movieName];
+		} else {
+			return document[movieName];
+		}
+	}
+}
+
+/* EOF */
+
+/** Grphviz viewer
  * @constructor
  */
 hui.ui.Graphviz = function(element,name,options) {
@@ -19523,1462 +23239,38 @@ hui.ui.Graphviz.colors={
 	yellow3:[205,205,0],
 	yellow4:[139,139,0],
 	yellowgreen:[154,205,50]
-};/** @namespace */
-hui.test = {
-	status : null,
-	busy : 0,
-	run : function(recipe) {
-		this.errorHandler = hui.listen(window,'error',function(e) {
-			hui.log(e)
-			hui.ui.showMessage({text:'Error ('+e.message+') ['+e.lineno+']',icon:'common/warning'});
-			throw e;
-		});
-		this.status = {failures:0,successes:0};
-		this.busy = 0;
-		hui.ui.showMessage({text:'Running test',busy:true});
-		this._next(0,recipe);
-		
-	},
-	_next : function(num,recipe) {
-		if (recipe[num]===undefined) {
-			this._stop();
-			return;
-		}
-		hui.ui.showMessage({text:'Running test ('+num+')',busy:true});
-		if(typeof(recipe[num])=='function') {
-			recipe[num]();
-			this._next(num+1,recipe);
-		} else {
-			window.setTimeout(function(){this._next(num+1,recipe)}.bind(this),recipe[num]);
-		}
-	},
-	_stop : function() {
-		if (this.busy>0) {
-			window.setTimeout(this._stop.bind(this),100);
-			return;
-		}
-		if (this.status.failures>0) {
-			hui.ui.showMessage({text:'Failure',icon:'common/warning',duration:2000});
-		} else {
-			hui.ui.showMessage({text:'Success',icon:'common/success',duration:2000});
-		}
-		hui.unListen(window,'error',this.errorHandler);
-	},
-	click : function(node,func) {
-		this.busy++;
-		Syn.click(node,function() {
-			if (func) {func()};
-			this.busy--;
-		}.bind(this));
-	},
-	type : function(node,text,func) {
-		this.busy++;
-		Syn.type(node,text,function() {
-			if (func) {func()};
-			this.busy--;
-		}.bind(this));
-	},
-	_succeed : function(msg) {
-		if (window.console) {
-			console.info(msg);
-		}	
-		this._log(msg);
-		this.status.successes++;
-	},
-	_fail : function(msg,obj1,obj2) {
-		if (window.console) {
-			console.error(msg);
-			console.info('Object 1:');
-			console.info(obj1);
-		}
-			console.info('Object 2:');
-			console.info(obj2);
-		this._log(msg,true);
-		this.status.failures++;
-	},
-	_log : function(msg,fail) {
-		if (!this.log) {
-			var log = this.log = hui.build('div',{parent:document.body,style:'border: 1px solid #eee; padding: 5px; position: fixed; bottom:20px;right:20px; width: 200px; max-height: 200px; overflow: auto; white-space: nowrap; font-family: Monaco, monospace; font-size: 9px; color: #00ff00; background: #000'});
-			hui.listen(this.log,'click',function() {
-				if (log.style.left=='20px') {
-					log.style.left='';
-					log.style.top='';
-					log.style.width='200px';
-					log.style.maxHeight='200px';
-				} else {
-					log.style.left='20px';
-					log.style.top='20px';
-					log.style.width='';
-					log.style.maxHeight='';
-				}
-			});
-		}
-		hui.build('div',{parent:this.log,text:msg,style:fail?'color:red;':''});
-	},
-	
-	// Assertion...
-	
-	assert : {
-		equals : function(obj1,obj2,msg) {
-			return hui.test.assertEquals(obj1,obj2,msg);
-		},
-		notEquals : function(obj1,obj2,msg) {
-			return hui.test.assertNotEquals(obj1,obj2,msg);
-		},
-		'false' : function(value,msg) {
-			return hui.test.assertFalse(value,msg)
-		},
-		'true' : function(value,msg) {
-			return hui.test.assertTrue(value,msg)
-		},
-		'defined' : function(value,msg) {
-			return hui.test.assertDefined(value,msg)
-		}
-	},
-	
-	assertTrue : function(value,msg) {
-		if (value!==true) {
-			this._fail('Failure ('+msg+'), not true...',value);
-		} else {
-			this._succeed('Success, true'+(msg ? ': '+msg : ''));
-		}
-	},
-	assertFalse : function(value,msg) {
-		if (value!==false) {
-			this._fail('Failure ('+msg+'), not false...',value);
-		} else {
-			this._succeed('Success, false'+(msg ? ': '+msg : ''));
-		}
-	},
-	assertDefined : function(value,msg) {
-		if (value===null || value===undefined) {
-			this._fail('Failure ('+msg+'), defined...',value);
-		} else {
-			this._succeed('Success, defined: '+msg);
-		}
-	},
-	assertEquals : function(obj1,obj2,msg) {
-		if (obj1!==obj2) {
-			this._fail('Failure ('+msg+') - '+obj1+'!=='+obj2+', not equal...',obj1,obj2);
-		} else {
-			this._succeed('Success, equal: '+obj1+'==='+obj2+(msg ? ', '+msg : ''));
-		}
-	},
-	assertNotEquals : function(obj1,obj2,msg) {
-		if (obj1===obj2) {
-			this._fail('Failure ('+msg+'), not not equal...',obj1,obj2);
-		} else {
-			this._succeed('Success, not equal: '+obj1+'!=='+obj2+', '+msg);
-		}
-	},
-	assertVisible : function(node,msg) {
-		if (node.style.display==='none') {
-			this._fail('Failure ('+msg+'), not visible...',node);
-		} else {
-			this._succeed('Success, visible: '+msg);
-		}
-	},
-	assertNotVisible : function(node,msg) {
-		if (node.style.display!=='none') {
-			this._fail('Failure ('+msg+'), visible...',node);
-		} else {
-			this._succeed('Success, not visible: '+msg);
-		}
-	}
-}/**
- * Editing of documents composed of different parts
- *
- * <pre>
- * <strong>Events</strong>
- * $partWasMoved : function(info)
- * $addPart
- * </pre>
- * @constructor
+};
+
+/**
+ * Help stuff
+ * @namespace
  */
-hui.ui.Editor = function() {
-	this.name = 'huiEditor';
-	this.options = {rowClass:'row',columnClass:'column',partClass:'part'};
-	this.parts = [];
-	this.rows = [];
-	this.partControllers = [];
-	this.activePart = null;
-	this.active = false;
-	this.live = true;
-	hui.ui.extend(this);
-}
-
-hui.ui.Editor.get = function() {
-	if (!hui.ui.Editor.instance) {
-		hui.ui.Editor.instance = new hui.ui.Editor();
-	}
-	return hui.ui.Editor.instance;
-}
-
-hui.ui.Editor.prototype = {
-	/** Start the editor */
-	ignite : function() {
-		hui.listen(window,'keydown',this._onKeyDown.bind(this));
-		hui.listen(window,'keyup',this._onKeyUp.bind(this));
-		this.reload();
-	},
-	_onKeyDown : function(e) {
-		e = hui.event(e);
-		//this.live = e.altKey;
-	},
-	_onKeyUp : function(e) {
-		//this.live = false;
-	},
-	
-	addPartController : function(key,title,controller) {
-		this.partControllers.push({key:key,'title':title,'controller':controller});
-	},
-	setOptions : function(options) {
-		hui.override(this.options,options);
-	},
-	_getPartController : function(key) {
-		var ctrl = null;
-		hui.each(this.partControllers,function(item) {
-			if (item.key==key) {ctrl=item};
+hui.ui.help = {
+	bubble : function(options) {
+		var bubble = hui.build('div',{
+			style : 'display: none; border: 1px solid #aaa; box-shadow: 0px 2px 8px rgba(0, 0, 0, .2),inset 0px 0px 50px rgba(255, 255, 255, 1),inset 0px 0px 50px rgba(255, 255, 255, 1),inset 0px 0px 20px rgba(255, 255, 255, 1); position: absolute;',
+			parent : document.body
 		});
-		return ctrl;
-	},
-	reload : function() {
-		if (this.partControls) {
-			this.partControls.hide();
-		}
-		var self = this;
-		this.parts = [];
-		var rows = hui.get.byClass(document.body,this.options.rowClass);
-		hui.each(rows,function(row,i) {
-			var columns = hui.get.byClass(row,self.options.columnClass);
-			self._reloadColumns(columns,i);
-			hui.each(columns,function(column,j) {
-				var parts = hui.get.byClass(column,self.options.partClass);
-				self._reloadParts(parts,i,j);
-			});
-		});
-		/*
-		var parts = hui.get.byClass(document.body,this.options.partClass);
-		hui.each(this.parts,function(part) {
-			var i = parts.indexOf(part.element);
-			if (i!=-1) {
-				delete(parts[i]);
-			}
-		});
-		this._reloadParts(parts,-1,-1);
-		*/
-	},
-	_reloadColumns : function(columns,rowIndex) {
-		var self = this;
-		hui.each(columns,function(column,columnIndex) {
-			hui.listen(column,'mouseover',function() {
-				self._onHoverColumn(column);
-			});
-			hui.listen(column,'mouseout',function(e) {
-				self._onBlurColumn(e);
-			});
-			/*
-			hui.listen(column,'contextmenu',function(e) {
-				self.contextColumn(column,rowIndex,columnIndex,e);
-			});*/
-		});
-	},
-	_reloadParts : function(parts,row,column) {
-		var self = this;
-		var reg = new RegExp(this.options.partClass+"_([\\w]+)","i");
-		hui.each(parts,function(element,partIndex) {
-			if (!element) return;
-			var match = element.className.match(reg);
-			if (match && match[1]) {
-				var handler = self._getPartController(match[1]);
-				if (handler) {
-					var part = new handler.controller({element:element});
-					part.type = match[1];
-					hui.listen(element,'click',function(e) {
-						e = hui.event(e);
-						if (!e.findByTag('a') && e.altKey) {
-							self._editPart(part);
-						}
-					});
-					hui.listen(element,'mouseover',function(e) {
-						self.hoverPart(part);
-					});
-					hui.listen(element,'mouseout',function(e) {
-						self.blurPart(e);
-					});
-					self.parts.push(part);
-				}
-				hui.listen(element,'mousedown',function(e) {
-					self._startPartDrag({
-						element : element,
-						event : e
-					});
-				});
-			}
-		});
-	},
-	activate : function() {
-		this.active = true;
-	},
-	deactivate : function() {
-		this.active = false;
-		if (this.activePart) {
-			this._deactivatePart(this.activePart);
-		}
-		if (this.partControls) {
-			this.partControls.hide();
-		}
-	},
-	
-	
-	///////////////////////// Columns ////////////////////////
-	
-	_onHoverColumn : function(column) {
-		if (this.hoveredColumn) {
-			hui.cls.remove(this.hoveredColumn,'hui_editor_column_hover');
-		}
-		this.hoveredColumn = column;
-		if (!this.active || this.activePart) {
-			return;
-		}
-		hui.cls.add(column,'hui_editor_column_hover');
-	},
-	
-	_onBlurColumn : function(e) {
-		if (!this.active || !this.hoveredColumn || hui.ui.isWithin(e,this.hoveredColumn)) return;
-		hui.cls.remove(this.hoveredColumn,'hui_editor_column_hover');
-	},
-	
-	contextColumn : function(column,rowIndex,columnIndex,e) {
-		if (!this.active || this.activePart) return;
-		if (!this.columnMenu) {
-			var menu = hui.ui.Menu.create({name:'huiEditorColumnMenu'});
-			menu.addItem({title:'Rediger kolonne',value:'editColumn'});
-			menu.addItem({title:'Slet kolonne',value:'removeColumn'});
-			menu.addItem({title:'Tilføj kolonne',value:'addColumn'});
-			menu.addDivider();
-			for (var i=0; i < this.partControllers.length; i++) {
-				var ctrl = this.partControllers[i];
-				menu.addItem({title:ctrl.title,value:ctrl.key});
-			};
-			this.columnMenu = menu;
-			menu.listen(this);
-		}
-		this.hoveredRow=rowIndex;
-		this.hoveredColumnIndex=columnIndex;
-		this.columnMenu.showAtPointer(e);
-	},
-	/** @private */
-	$itemWasClicked$huiEditorColumnMenu : function(value) {
-		if (value=='removeColumn') {
-			this.fire('removeColumn',{'row':this.hoveredRow,'column':this.hoveredColumnIndex});
-		} else if (value=='editColumn') {
-			this.editColumn(this.hoveredRow,this.hoveredColumnIndex);
-		} else if (value=='addColumn') {
-			this.fire('addColumn',{'row':this.hoveredRow,'position':this.hoveredColumnIndex+1});
-		} else {
-			this.fire('addPart',{'row':this.hoveredRow,'column':this.hoveredColumnIndex,'position':0,type:value});
-		}
-	},
-	
-	///////////////////// Column editor //////////////////////
-	
-	editColumn : function(rowIndex,columnIndex) {
-		this.closeColumn();
-		var row = hui.get.byClass(document.body,'row')[rowIndex];
-		var c = this.activeColumn = hui.get.byClass(row,'column')[columnIndex];
-		hui.cls.add(c,'hui_editor_column_edit');
-		this.showColumnWindow();
-		this.columnEditorForm.setValues({width:hui.style.get(c,'width'),paddingLeft:hui.style.get(c,'padding-left')});
-	},
-	closeColumn : function() {
-		if (this.activeColumn) {
-			hui.cls.remove(this.activeColumn,'hui_editor_column_edit');
-		}
-	},
-	showColumnWindow : function() {
-		if (!this.columnEditor) {
-			var w = this.columnEditor = hui.ui.Window.create({name:'columnEditor',title:'Rediger kolonne',width:200});
-			var f = this.columnEditorForm = hui.ui.Formula.create();
-			var g = f.createGroup();
-			var width = hui.ui.TextField.create({label:'Bredde',key:'width'});
-			width.listen({$valueChanged:function(v) {this.changeColumnWidth(v)}.bind(this)})
-			g.add(width);
-			var marginLeft = hui.ui.TextField.create({label:'Venstremargen',key:'left'});
-			marginLeft.listen({$valueChanged:function(v) {this.changeColumnLeftMargin(v)}.bind(this)})
-			g.add(marginLeft);
-			var marginRight = hui.ui.TextField.create({label:'Højremargen',key:'right'});
-			marginRight.listen({$valueChanged:this.changeColumnRightMargin.bind(this)})
-			g.add(marginRight);
-			w.add(f);
-			w.listen(this);
-		}
-		this.columnEditor.show();
-	},
-	/** @private */
-	$userClosedWindow$columnEditor : function() {
-		this.closeColumn();
-		var values = this.columnEditorForm.getValues();
-		values.row=this.hoveredRow;
-		values.column=this.hoveredColumnIndex;
-		this.fire('updateColumn',values);
-	},
-	changeColumnWidth : function(width) {
-		this.activeColumn.style.width=width;
-	},
-	changeColumnLeftMargin : function(margin) {
-		this.activeColumn.setStyle({'paddingLeft':margin});
-	},
-	changeColumnRightMargin : function(margin) {
-		this.activeColumn.setStyle({'paddingRight':margin});
-	},
-	///////////////////////// Parts //////////////////////////
-	
-	hoverPart : function(part,event) {
-		if (!this.active || this.activePart || !this.live || this.dragging || this.busy) {
-			return;
-		}
-		this.hoveredPart = part;
-		hui.cls.add(part.element,'hui_editor_part_hover');
-		var self = this;
-		this.partControlTimer = window.setTimeout(function() {self.showPartControls()},200);
-	},
-	blurPart : function(e) {
-		window.clearTimeout(this.partControlTimer);
-		if (hui.ui.isWithin(e,this.hoveredPart.element)) {
-			return;
-		}
-		if (!this.active) return;
-		if (this.partControls && !hui.ui.isWithin(e,this.partControls.element)) {
-			this._hidePartControls();
-			hui.cls.remove(this.hoveredPart.element,'hui_editor_part_hover');
-		}
-		if (!this.partControls && this.hoveredPart) {
-			hui.cls.remove(this.hoveredPart.element,'hui_editor_part_hover');			
-		}
-	},
-	showPartEditControls : function() {
-		if (!this.partEditControls) {
-			this.partEditControls = hui.ui.Overlay.create({name:'huiEditorPartEditActions',variant:'light'});
-			this.partEditControls.addIcon('save','common/ok');
-			this.partEditControls.addIcon('cancel','common/stop');
-			this.partEditControls.addIcon('info','common/info_small');
-			this.partEditControls.listen(this);
-		}
-		this.partEditControls.showAtElement(this.activePart.element,{'horizontal':'right','vertical':'topOutside'});
-	},
-	showPartControls : function() {
-		if (!this.partControls) {
-			this.partControls = hui.ui.Overlay.create({name:'huiEditorPartActions',variant:'light'});
-			this.partControls.addIcon('edit','common/edit');
-			this.partControls.addIcon('new','common/new');
-			this.partControls.addIcon('delete','common/delete');
-			var self = this;
-			hui.listen(this.partControls.getElement(),'mouseout',this._blurControls.bind(this));
-			hui.listen(this.partControls.getElement(),'mouseover',this._hoverControls.bind(this));
-			this.partControls.listen(this);
-		}
-		if (this.hoveredPart.column==-1 || true) {
-			this.partControls.hideIcons(['new','delete']);
-		} else {
-			this.partControls.showIcons(['new','delete']);
-		}
-		this.partControls.showAtElement(this.hoveredPart.element,{'horizontal':'right'});
-	},
-	_hoverControls : function(e) {
-		hui.cls.add(this.hoveredPart.element,'hui_editor_part_hover');
-	},
-	_blurControls : function(e) {
-		hui.cls.remove(this.hoveredPart.element,'hui_editor_part_hover');
-		if (!hui.ui.isWithin(e,this.hoveredPart.element)) {
-			this._hidePartControls();
-		}
-	},
-	/** @private */
-	$iconWasClicked$huiEditorPartActions : function(key,event) {
-		if (key=='delete') {
-			this.deletePart(this.hoveredPart);
-		} else if (key=='new') {
-			this.newPart(event);
-		} else if (key=='edit') {
-			this._editPart(this.hoveredPart);
-		}
-	},
-	/** @private */
-	$iconWasClicked$huiEditorPartEditActions : function(key,event) {
-		if (key=='cancel') {
-			this.cancelPart(this.activePart);
-		} else if (key=='save') {
-			this.savePart(this.activePart);
-		} else if (key=='info') {
-			this.fire('toggleInfo');
-		}
-	},
-	_hidePartControls : function() {
-		if (this.partControls) {
-			this.partControls.hide();
-		}
-	},
-	_hidePartEditControls : function() {
-		if (this.partEditControls) {
-			this.partEditControls.hide();
-		}
-	},
-	_editPart : function(part) {
-		if (!this.active || this.activePart) return;
-		if (this.activePart) {
-			this._deactivatePart(this.activePart);
-		}
-		if (this.hoveredPart) {
-			hui.cls.remove(this.hoveredPart.element,'hui_editor_part_hover');
-		}
-		this.activePart = part;
-		this.showPartEditControls();
-		hui.cls.add(part.element,'hui_editor_part_active');
-		hui.ui.msg({text:{en:'Loading...',da:'Indlæser...'},delay:300,busy:true});
-		part.activate(function() {
-			hui.ui.hideMessage();
-		});
-		window.clearTimeout(this.partControlTimer);
-		this._hidePartControls();
-		if (this.hoveredColumn) {
-			hui.cls.remove(this.hoveredColumn,'hui_editor_column_hover');
-		}
-		this.fire('editPart',part);
-	},
-	cancelPart : function(part) {
-		part.cancel();
-		this._deactivatePart(this.activePart);
-		this.activePart = null;
-		this.fire('cancelPart',part);
-	},
-	savePart : function(part) {
-		this.busy = true;
-		hui.ui.msg({text:{en:'Saving...',da:'Gemmer...'},delay:300,busy:true});
-		part.save({
-			callback : function() {
-				hui.ui.hideMessage();
-				this.activePart = null;
-				this.busy = false;
-				this._deactivatePart(part);
-				this.partChanged(part);
-				this.fire('savePart',part);
-			}.bind(this)
-		});
-	},
-	getEditorForElement : function(element) {
-		for (var i=0; i < this.parts.length; i++) {
-			if (this.parts[i].element==element) {
-				return this.parts[i];
-			}
-		};
-		return null;
-	},
-	_deactivatePart : function(part) {
-		part.deactivate(function() {
-			this.partDidDeactivate(part);
-			this.fire('deactivatePart',part);
-		}.bind(this))
-	},
-	partDidDeactivate : function(part) {
-		hui.cls.remove(part.element,'hui_editor_part_active');
-		this.activePart = null;
-		this._hidePartEditControls();
-	},
-	partChanged : function(part) {
-		hui.ui.callDelegates(part,'partChanged');
-	},
-	deletePart : function(part) {
-		hui.ui.callDelegates(part,'deletePart');
-		this.partControls.hide();
-	},
-	newPart : function(e) {
-		if (!this.newPartMenu) {
-			var menu = hui.ui.Menu.create({name:'huiEditorNewPartMenu'});
-			hui.each(this.partControllers,function(item) {
-				menu.addItem({title:item.title,value:item.key});
-			});
-			menu.listen(this);
-			this.newPartMenu=menu;
-		}
-		this.newPartMenu.showAtPointer(e);
-	},
-	$itemWasClicked$huiEditorNewPartMenu : function(value) {
-		var info = {row:this.hoveredPart.row,column:this.hoveredPart.column,position:this.hoveredPart.position+1,type:value};
-		hui.ui.callDelegates(this,'addPart',info);
-	},
-	
-	
-	
-	
-	
-	
-	/**** Dragging ****/
-	
-	_dragInfo : null,
-	
-	_dropInfo : null,
-	
-	dragProxy : null,
-	
-	_startPartDrag : function(info) {
-		if (!this.active || this.activePart || !this.live) {
-			return true;
-		}
-		var e = hui.event(info.event),
-			element = info.element;
-		if (!e.altKey) {
-			return;
-		}
-		e.stop();
-		
-		if (!this.dragProxy) {
-			this.dragProxy = hui.build('div',{'class':'hui_editor_dragproxy',parent:document.body,style:'display:none;'});
-		}
-		var proxy = this.dragProxy;
-		proxy.innerHTML = element.innerHTML;
-		
-		var pos = this._getPartPosition(element);
-		if (!pos) {
-			return;
-		}
-		
-		this._dragInfo = {
-			diffLeft : e.getLeft() - hui.position.getLeft(element),
-			diffTop : e.getTop() - hui.position.getTop(element),
-			draggedElement : element,
-			partIndex : pos.partIndex,
-			rowIndex : pos.rowIndex,
-			columnIndex : pos.columnIndex,
-			initialHeight : element.clientHeight
-		}
-		hui.log('startDrag')
-		hui.drag.start({
-			element : proxy,
-			onBeforeMove : this._onBeforeDrag.bind(this),
-			onMove : this._onDrag.bind(this),
-			onAfterMove : this._onAfterDrag.bind(this),
-			onEnd : function() {
-				
-			}
-		})
-	},
-	_onBeforeDrag : function() {
-		var dragged = this._dragInfo.draggedElement,
-			proxy = this.dragProxy;
-		
-		
-		this._insertDropPlaceholders();
-		
-		hui.style.set(proxy,{
+		var target = hui.get(options.target);
+		var size = Math.max(target.clientWidth,target.clientHeight)+20;
+		hui.style.set(bubble,{
+			width : size+'px',
+			height : size+'px',
 			display : 'block',
-			visibility : 'visible',
-			height  : dragged.clientHeight+'px',
-			width  : dragged.clientWidth+'px',
-			transform : 'scale(1)',
-			background : 'rgba(255,255,255,.5)',
-			padding : '1px',
-			opacity: 1
+			visibility : 'hidden',
+			borderRadius: size+'px'
 		});
-		
-		//hui.animate({node:this.dragProxy,css:{transform:'scale(1.1)'},duration:1000,ease:hui.ease.slowFastSlow});
-		
-		hui.style.setOpacity(dragged,0.5);
-		
-		this._dragging = true;
-		
-		if (!this._dropMarker) {
-			this._dropMarker = hui.build('div',{'class':'hui_editor_dropmarker',parent:document.body});
-		}
-	},
-	_onDrag : function(e) {
-		var left = e.getLeft();
-		var top = e.getTop();
-		this.dragProxy.style.left = (left - this._dragInfo.diffLeft) + 'px';
-		this.dragProxy.style.top = (top - this._dragInfo.diffTop) + 'px';
-		for (var i=0; i < this.dropTargets.length; i++) {
-			var info = this.dropTargets[i];
-			if (info.left<left && info.right>left && info.top<top && info.bottom>top) {
-				//if (info.placeholder!=this._activeDragPlaceholder) {
-					var h = this._dragColumnHeights[info.rowIndex+'-'+info.columnIndex];
-					//hui.log(info.columnIndex+': '+h)
-					//info.debug.style.borderColor='blue'
-					//hui.animate({node:info.placeholder,css:{height : h+'px'},duration:500,ease:hui.ease.slowFastSlow});
-					if (this._latestProxyColumn!=info.columnIndex || this._latestProxyRow!=info.rowIndex) {
-						hui.animate({node:this.dragProxy,css:{width:(info.right-info.left)+'px'},duration:300,ease:hui.ease.fastSlow});
-						this._latestProxyColumn = info.columnIndex;
-						this._latestProxyrow = info.rowIndex;
-					}
-					//this._activeDragPlaceholder = info.placeholder;
-					this._dropInfo = info;
-					hui.style.set(this._dropMarker,{width:(info.right-info.left)+'px',left:info.left+'px',top:info.position+'px',display:'block'});
-				//}	
-				break;
-			}
-		};
-	},
-	_onAfterDrag : function(e) {
-		var proxy = this.dragProxy,
-			dragInfo = this._dragInfo,
-			dragged = this._dragInfo.draggedElement,
-			dropInfo = this._dropInfo;
-		
-		if (dropInfo) {
-			var newHeight = this._dragColumnHeights[dropInfo.rowIndex+'-'+dropInfo.columnIndex];
-			
-			var top = dropInfo.position,
-				left = dropInfo.left;
-				
-			if ((dragInfo.columnIndex == dropInfo.columnIndex && dragInfo.partIndex < dropInfo.partIndex) || dragInfo.rowIndex < dropInfo.rowIndex) {
-				top = top - dragInfo.initialHeight;
-			}
-			//top+=3;
-			left++;
-			// Move the proxy to new position
-			hui.animate({
-				node : proxy,
-				css : {
-					left : left+'px',
-					top : top+'px',
-					opacity : 0.5
-					},
-				duration : 500,
-				ease : hui.ease.slowFastSlow
-			});
-			
-			var column = this._getColumn(dropInfo.rowIndex,dropInfo.columnIndex);
-			
-			var parts = hui.get.byClass(column,this.options.partClass);
-			
-			if (parts[dropInfo.partIndex] != dragged) {
-				this.fire('partWasMoved',{dragged:dragged,rowIndex : dropInfo.rowIndex,columnIndex : dropInfo.columnIndex,partIndex : dropInfo.partIndex, 
-					onSuccess : function() {
-						dragged.style.webkitTransformOrigin='0 0';
-						var dummy = hui.build('div');
-						if (dropInfo.partIndex>=parts.length) {
-							hui.animate({node:dragged,css:{height:'0px'},duration:500,ease:hui.ease.slowFastSlow,onComplete:function() {
-								hui.dom.remove(dragged);
-								column.appendChild(dragged);
-								hui.animate({node:dragged,css:{transform:'scale(1)',height:newHeight+'px'},duration:500,ease:hui.ease.slowFastSlow,onComplete:function() {
-									dragged.style.height='';
-								}});
-							}});
-						} else {
-							hui.dom.insertBefore(parts[dropInfo.partIndex],dummy);
-							hui.animate({node:dummy,css:{height:newHeight+'px'},duration:600,ease:hui.ease.slowFastSlow,onComplete:function() {
-								hui.dom.remove(dragged);
-								hui.dom.replaceNode(dummy,dragged);
-								hui.style.set(dragged,{transform:'scale(1)',opacity:0,height:''})
-								hui.animate({node:dragged,css:{opacity:1},duration:500,ease:hui.ease.slowFastSlow});
-							}});
-							hui.animate({node:dragged,css:{transform:'scale(0)',height:'0px'},duration:500,ease:hui.ease.slowFastSlow});
-						}
-						this._cleanDrag();
-					}.bind(this),
-					onFailure : function() {
-						this._cleanDrag();
-					}.bind(this)
-				});
-			} else {	
-				this._cleanDrag();
-			}
-		}
-	},
-	_cleanDrag : function() {
-		var proxy = this.dragProxy;
-		hui.animate({node:proxy,css:{opacity:0},duration:500,delay:500,ease:hui.ease.slowFastSlow,onComplete:function() {
-				proxy.style.display='none';
-			}
+		hui.position.place({
+			source : {element:bubble,vertical:.5,horizontal:.5},
+			target : {element:target,vertical:.5,horizontal:.5}
 		});
-		hui.style.setOpacity(this._dragInfo.draggedElement,1);
-		var p = hui.get.byClass(document.body,'hui_editor_drop_placeholder');
-		for (var i=0; i < p.length; i++) {
-			hui.dom.remove(p[i]);
-		};
-		this.dropTargets = [];
-		this._dragging = false;
-		if (this._dropMarker) {
-			this._dropMarker.style.display='none'
-		}
-	},
-	_getColumn : function(rowIndex,columnIndex) {
-		var rows = hui.get.byClass(document.body,this.options.rowClass);
-		var row = rows[rowIndex];
-		var columns = hui.get.byClass(row,this.options.columnClass);
-		return columns[columnIndex];
-	},
-	_getPartPosition : function(element) {
-		var rows = hui.get.byClass(document.body,this.options.rowClass);
-		for (var i=0; i < rows.length; i++) {
-			
-			var columns = hui.get.byClass(rows[i],this.options.columnClass);
-			for (var j=0; j < columns.length; j++) {
-				var parts = hui.get.byClass(columns[j],this.options.partClass);
-				for (var k=0; k < parts.length; k++) {
-					if (element===parts[k]) {
-						return {rowIndex:i,columnIndex:j,partIndex:k};
-					}
-				};
-			};
-		};
-		return null;
-	},
-	
-	
-	_activeDragPlaceholder : null,
-	
-	_dragInfo : null,
-	
-	_dragColumnHeights : null,
-	
-	_insertDropPlaceholders : function() {
-		var infos = this.dropTargets = [];
-		var colHeights = this._dragColumnHeights = {}
-		var proxy = this.dragProxy;
-		var draggedPart = this._dragInfo.draggedElement;
-		var rows = hui.get.byClass(document.body,this.options.rowClass);
-		for (var i=0; i < rows.length; i++) {
-			var row = rows[i]
-			var columns = hui.get.byClass(row,this.options.columnClass);
-			for (var j=0; j < columns.length; j++) {
-				var column = columns[j];
-				hui.style.set(proxy,{
-					width : column.clientWidth+'px',
-					height : '',
-					visibility : 'hidden',
-					display : 'block'
-				});
-				var height = colHeights[i+'-'+j] = proxy.clientHeight;
-				var parts = hui.get.byClass(column,this.options.partClass);
-				var min = hui.position.getTop(column);
-				var max = min+column.clientHeight;
-				var current = min;
-				var k=0;
-				var previous = null;
-				for (; k < parts.length; k++) {
-					var part = parts[k],
-						next = parts[k+1],
-						previous = parts[k-1]
-					var left = hui.position.getLeft(part);
-					var right = left + part.clientWidth;
-					var top = previous ? hui.position.getTop(previous)+previous.clientHeight/2 : min;
-					var bottom = hui.position.getTop(part)+part.clientHeight/2;
-					
-					var info = {
-						rowIndex : i,
-						columnIndex : j,
-						partIndex : k,
-						part : part,
-						left : left,
-						right : right,
-						top : top,
-						bottom : bottom,
-						position : hui.position.getTop(part)
-					}
-					current += part.clientHeight;
-					infos.push(info);
-					previous = part;
-				};
-				var last = parts.length>0 ? parts[parts.length-1] : null;
-				if (last) {
-					var top = hui.position.getTop(last)+last.clientHeight/2;
-					var position = hui.position.getTop(last)+last.clientHeight;
-				} else {
-					var top = min;
-					var position = min;
-					var left = hui.position.getLeft(column);
-					var right = left + column.clientWidth;
-				}
-				var info = {
-					rowIndex : i,
-					columnIndex : j,
-					partIndex : k+1,
-					part : part,
-					left : left,
-					right : right,
-					top : top,
-					position : position,
-					bottom : max-top > 20 ? max : top+20
-				}
-				if (part) {
-					current += part.clientHeight;
-				}
-				infos.push(info);
-			}
-		}
-		for (var i=0; i < infos.length; i++) {
-			var info = infos[i]
-			//info.debug = hui.build('div',{style:'border: 1px solid red; position: absolute; top:'+info.top+'px;left:'+(info.left)+'px; height: '+(info.bottom-info.top)+'px; width:'+(info.right-info.left)+'px',parent:document.body})
-		};
-	}
-}
-
-hui.ui.Editor.getPartId = function(element) {
-	if (!element.id) return;
-	var m = element.id.match(/part\-([\d]+)/i);
-	if (m && m.length>0) return m[1];
-}
-
-////////////////////////////////// Header editor ////////////////////////////////
-
-/**
- * @constructor
- */
-hui.ui.Editor.Header = function(options) {
-	this.element = hui.get(options.element);
-	this.id = hui.ui.Editor.getPartId(this.element);
-	this.header = hui.get.firstByTag(this.element,'*');
-	this.field = null;
-}
-
-hui.ui.Editor.Header.prototype = {
-	activate : function(callback) {
-		this.value = this.header.innerHTML;
-		this.field = hui.build('textarea',{className:'hui_editor_header'});
-		this.field.value = this.value;
-		this.header.style.visibility='hidden';
-		this.updateFieldStyle();
-		this.element.insertBefore(this.field,this.header);
-		this.field.focus();
-		this.field.select();
-		hui.listen(this.field,'keydown',function(e) {
-			if (e.keyCode==Event.KEY_RETURN) {
-				this.save();
-			}
-		}.bind(this));
-        callback();
-	},
-	save : function(options) {
-		var value = this.field.value;
-		this.header.innerHTML = value;
-		if (value!=this.value) {
-			this.value = value;
-		}
-        options.callback();
-	},
-	cancel : function() {
-		
-	},
-	deactivate : function(callback) {
-		this.header.style.visibility='';
-		this.element.removeChild(this.field);
-        callback();
-	},
-	updateFieldStyle : function() {
-		hui.style.set(this.field,{width:this.header.clientWidth+'px',height:this.header.clientHeight+'px'});
-		hui.style.copy(this.header,this.field,['font-size','line-height','margin-top','font-weight','font-family','text-align','color','font-style']);
-	},
-	getValue : function() {
-		return this.value;
-	}
-}
-
-////////////////////////////////// Html editor ////////////////////////////////
-
-/**
- * @constructor
- */
-hui.ui.Editor.Html = function(options) {
-	this.element = hui.get(options.element);
-	this.id = hui.ui.Editor.getPartId(this.element);
-	this.field = null;
-}
-
-hui.ui.Editor.Html.prototype = {
-	activate : function(callback) {
-		this.value = this.element.innerHTML;
-		this.element.innerHTML='';
-		var style = this.buildStyle();
-		this.editor = hui.ui.MarkupEditor.create({autoHideToolbar:false,style:style});
-		this.element.appendChild(this.editor.getElement());
-		this.editor.listen(this);
-		this.editor.setValue(this.value);
-		this.editor.focus();
-		callback();
-	},
-	buildStyle : function() {
-		return {
-			'textAlign':hui.style.get(this.element,'text-align')
-			,'fontFamily':hui.style.get(this.element,'font-family')
-			,'fontSize':hui.style.get(this.element,'font-size')
-			,'fontWeight':hui.style.get(this.element,'font-weight')
-			,'color':hui.style.get(this.element,'color')
-		}
-	},
-	cancel : function() {
-		this.element.innerHTML = this.value;
-	},
-	save : function(options) {
-		var value = this.editor.getValue();
-		if (value!=this.value) {
-			this.value = value;
-		}
-		this.element.innerHTML = this.value;
-        options.callback();
-	},
-	deactivate : function(callback) {
-		if (this.editor) {
-			this.editor.destroy();
-			this.element.innerHTML = this.value;
-		}
-		callback();
-	},
-	richTextDidChange : function() {
-		//this.deactivate();
-	},
-	getValue : function() {
-		return this.value;
-	}
-}
-
-/* EOF *//**
- * A dock
- * @constructor
- */
-hui.ui.FlashChart = function(element,name,options) {
-	this.options = N2i.override({},options);
-	this.element = $(element);
-	this.name = name;
-	hui.ui.extend(this);
-}
-
-hui.ui.FlashChart.prototype = {
-	load : function(url) {
-		var self = this;
-		var flash = this.findSWF(this.element.id+'_chart');
-		new Ajax.Request(url,{onSuccess:function(t) {
-			flash.load(t.responseText);
-		}});
-	},
-	findSWF : function(movieName) {
-		if (window[movieName]) {
-			return window[movieName];
-		} else {
-			return document[movieName];
-		}
-	}
-}
-
-/* EOF *//**
- * @constructor
- */
-hui.ui.Drawing = function(options) {
-	this.options = hui.override({width:200,height:200},options);
-	this.element = hui.get(options.element);
-	hui.log({width:options.width,height:options.height})
-	this.svg = hui.ui.Drawing._build({tag:'svg',parent:this.element,attributes:{width:options.width,height:options.height}});
-	this.element.appendChild(this.svg);
-	this.name = options.name;
-	hui.ui.extend(this);
-}
-
-hui.ui.Drawing.create = function(options) {
-	options = options || {};
-	var e = options.element = hui.build('div',{'class':'hui_drawing',style:'position: relative; overflow: hidden;'});
-	if (options.height) {
-		e.style.height = options.height+'px';
-	}
-	if (options.width) {
-		e.style.width = options.width+'px';
-	}
-	if (options.parent) {
-		hui.get(options.parent).appendChild(e);
-	}
-	return new hui.ui.Drawing(options);
-}
-
-hui.ui.Drawing.prototype = {
-	setSize : function(width,height) {
-		this.svg.setAttribute('width',width);
-		this.svg.setAttribute('height',height);
-		this.svg.style.width = width+'px';
-		this.svg.style.height = height+'px';
-		this.element.style.width = width+'px';
-		this.element.style.height = height+'px';
-	},
-	clear : function() {
-		hui.dom.clear(this.svg);
-	},
-	addLine : function(options) {
-		options.parent = this.svg;
-		return hui.ui.Drawing.Line.create(options);
-	},
-	addRect : function(options) {
-		options.parent = this.svg;
-		return hui.ui.Drawing.Rect.create(options);
-	},
-	addCircle : function(options) {
-		options.parent = this.svg;
-		return hui.ui.Drawing.Circle.create(options);
-	},
-	addArc : function(options) {
-		options.parent = this.svg;
-		return hui.ui.Drawing.Arc.create(options);
-	},
-	addElement : function(options) {
-		var node = hui.build('div',{style:'position:absolute;left:0;top:0;',parent:this.element,html:options.html}),
-			element = new hui.ui.Drawing.Element(node);
-		if (options.movable) {
-			hui.drag.register({
-				element : node,
-				onBeforeMove : function(e) {
-					this.fire('shapeWillMove',{shape:element,event:e});
-				}.bind(this),
-				onMove : function(e) {
-					node.style.left = e.getLeft()+'px';
-					node.style.top = e.getTop()+'px';
-					this.fire('shapeMoved',{shape:element,event:e});
-				}.bind(this),
-				onAfterMove : function(e) {
-					this.fire('shapeWasMoved',{shape:element,event:e});
-				}.bind(this)
-			})
-		}
-		return element;
-	}
-}
-
-hui.ui.Drawing._build = function(options) {
-	if (false && (hui.browser.msie8 || hui.browser.msie7 || hui.browser.msie6)) {
-		var line = document.createElement("v:line");
-		line.setAttribute('from','0 0');
-		line.setAttribute('to','100 100');
-		line.setAttribute("fillcolor","#FF0000");
-		line.setAttribute("strokeweight","2pt");
-		return line;
-			
-		var frag = document.createDocumentFragment();
-		frag.insertAdjacentHTML('beforeEnd',
-			'<v:rect id="myRect" fillcolor="blue" style="top:10px;left:15px;width:50px;height:30px;position:absolute;"></biv:rect>'
-		);
-		document.body.appendChild(frag);
-		return document.getElementById('myRect');
-	} else {
-		var node = document.createElementNS('http://www.w3.org/2000/svg',options.tag);
-	}
-	if (options.attributes) {
-		for (att in options.attributes) {
-			node.setAttribute(att,options.attributes[att]);
-		}
-	}
-	if (options.parent) {
-		options.parent.appendChild(node);
-	}
-	return node;
-}
-
-if (hui.browser.msie8) {
-	document.namespaces.add('v', 'urn:schemas-microsoft-com:vml', "#default#VML");
-}
-
-
-
-// Line
-
-hui.ui.Drawing.Line = function(options) {
-	this.node = options.node;
-	this.endNode = options.endNode;
-	this.from = options.from;
-	this.to = options.to;
-	this._updateEnds();
-}
-
-hui.ui.Drawing.Line.create = function(options) {
-	if (!options.from) {
-		options.from = {x:options.x1,y:options.y1};
-	}
-	if (!options.to) {
-		options.to = {x:options.x2,y:options.y2};
-	}
-	
-	var attributes = {
-		x1 : options.from.x.toFixed(10),
-		y1 : options.from.y.toFixed(10),
-		x2 : options.to.x.toFixed(10),
-		y2 : options.to.y.toFixed(10),
-		style : 'stroke:'+(options.color || '#000')+';stroke-width:'+(options.width || 1)
-	};
-		
-	options.node = hui.ui.Drawing._build({
-		tag : 'line',
-		parent : options.parent,
-		attributes : attributes
-	});
-	if (options.end) {
-		options.endNode = hui.ui.Drawing._build({
-			tag : 'path',
-			parent : options.parent,
-			attributes : {d:'M 0 -1 L 5 10 L -5 10',fill:options.color || '#000'}
+		hui.effect.bounceIn({element:bubble})
+		hui.listen(bubble,'click',function() {
+			hui.dom.remove(bubble);
 		})
 	}
-	return new hui.ui.Drawing.Line(options);
 }
 
-hui.ui.Drawing.Line.prototype = {
-	setFrom : function(point) {
-		this.from = point;
-		this.node.setAttribute('x1',point.x.toFixed(10));
-		this.node.setAttribute('y1',point.y.toFixed(10));
-		this._updateEnds();
-	},
-	getFrom : function() {
-		return this.from;
-	},
-	setTo : function(point) {
-		this.to = point;
-		this.node.setAttribute('x2',point.x.toFixed(10));
-		this.node.setAttribute('y2',point.y.toFixed(10));
-		this._updateEnds();
-	},
-	getTo : function() {
-		return this.to;
-	},
-	_updateEnds : function() {
-		//var deg = Math.atan((this.from.y-this.to.y) / (this.from.x-this.to.x)) * 180/Math.PI;
-		if (this.endNode) {
-			var deg = -90+Math.atan2(this.from.y-this.to.y, this.from.x-this.to.x)*180/Math.PI
-			this.endNode.setAttribute('transform','translate('+(this.to.x.toFixed(10))+','+(this.to.y.toFixed(10))+') rotate('+(deg)+')')
-
-		}
-	},
-	getDegree : function() {
-		return Math.atan((this.from.y-this.to.y) / (this.from.x-this.to.x)) * 180/Math.PI;
-	}
-}
-
-
-
-// Circle
-
-hui.ui.Drawing.Circle = function(options) {
-	this.node = options.node;
-	this.properties = {};
-}
-
-hui.ui.Drawing.Circle.create = function(options) {
-	var css = [];
-	if (options.stroke) {
-		if (options.stroke.color) {
-			css.push('stroke:'+options.stroke.color);
-		}
-		if (options.stroke.width) {
-			css.push('stroke-width:'+options.stroke.width);
-		}
-	}
-	if (options.fill) {
-		css.push('fill:'+options.fill);
-	}
-	options.node = hui.ui.Drawing._build({
-		tag : 'circle',
-		parent : options.parent,
-		attributes : {
-			cx : options.cx,
-			cy : options.cy,
-			r : options.r,
-			style : css.join(';')
-		}
-	});
-	return new hui.ui.Drawing.Circle(options);
-};
-
-hui.ui.Drawing.Circle.prototype = {
-	setRadius : function(radius) {
-		this.node.setAttribute("r",radius);
-	},
-	
-	setCenter : function(point) {
-		this.node.setAttribute('cx',point.x);
-		this.node.setAttribute('cy',point.y);
-	}
-}
-
-
-
-// Rect
-
-hui.ui.Drawing.Rect = function(options) {
-	this.node = options.node;
-}
-
-hui.ui.Drawing.Rect.create = function(options) {
-	var css = [];
-	if (options.stroke) {
-		if (options.stroke.color) {
-			css.push('stroke:'+options.stroke.color);
-		}
-		if (options.stroke.width) {
-			css.push('stroke-width:'+options.stroke.width);
-		}
-	}
-	if (options.fill) {
-		css.push('fill:'+options.fill);
-	}
-	options.node = hui.ui.Drawing._build({
-		tag : 'rect',
-		parent : options.parent,
-		attributes : {
-			x : options.x,
-			y : options.y,
-			width : options.width,
-			height : options.height,
-			style : css.join(';')
-		}
-	});
-	return new hui.ui.Drawing.Circle(options);
-};
-
-hui.ui.Drawing.Rect.prototype = {
-	setPosition : function(point) {
-		this.node.setAttribute('x',point.x);
-		this.node.setAttribute('y',point.y);
-	}
-}
-
-
-// Arc
-hui.ui.Drawing.Arc = function(options) {
-	this.node = options.node;
-	this.options = hui.override({
-		center : {x:100,y:100},
-  		startDegrees : 0,
-		endDegrees : 0,
-  		innerRadius : 0, 
-		outerRadius : 0,
-		fill : '#eee'
-	},options);
-	this._redraw();
-}
-
-hui.ui.Drawing.Arc.create = function(options) {
-	var css = [];
-	if (options.stroke) {
-		if (options.stroke.color) {
-			css.push('stroke:'+options.stroke.color);
-		}
-		if (options.stroke.width) {
-			css.push('stroke-width:'+options.stroke.width);
-		}
-	}
-	options.node = hui.ui.Drawing._build({ tag : 'path' ,parent : options.parent, attributes : {fill : options.fill || '#000', style:css.join(';')}});
-	var arc = new hui.ui.Drawing.Arc(options);
-	return arc;
-}
-
-hui.ui.Drawing.Arc.prototype = {
-	
-	update : function(options) {
-		this.options = hui.override(this.options,options);
-		this._redraw();
-	},
-	_redraw : function() {
-		var o = this.options,
-			cx = o.center.x,
-			cy = o.center.y,
-			startRadians = (o.startDegrees || 0) * Math.PI/180,
-			closeRadians = (o.endDegrees   || 0) * Math.PI/180,
-			r1 = o.innerRadius,
-			r2 = o.outerRadius;
-		
-		var points = [
-			[
-				cx + r2 * Math.cos(startRadians),
-				cy + r2 * Math.sin(startRadians)
-			],
-			[
-				cx + r2 * Math.cos(closeRadians),
-				cy + r2 * Math.sin(closeRadians)
-			],
-			[
-				cx + r1 * Math.cos(closeRadians),
-				cy + r1 * Math.sin(closeRadians)
-			],
-			[
-				cx + r1 * Math.cos(startRadians),
-				cy + r1 * Math.sin(startRadians)
-			]
-		];
-
-		var angleDiff = closeRadians - startRadians;
-		var largeArc = (angleDiff % (Math.PI*2)) > Math.PI ? 1 : 0;
-		var cmds = [
-			"M"+points[0].join(),									// Move to P0
-			"A"+[r2,r2,0,largeArc,1,points[1]].join(),				// Arc to  P1
-			"L"+points[2].join(),									// Line to P2
-			"A"+[r1,r1,0,largeArc,0,points[3]].join(),				// Arc to  P3
-			"z" 		                               				// Close path (Line to P0)
-		];		
-		this.node.setAttribute('d',cmds.join(' '));
-	}
-}
-
-
-
-// Element
-
-hui.ui.Drawing.Element = function(node) {
-	this.node = node;
-}
-
-hui.ui.Drawing.Element.prototype = {
-	setPosition : function(point) {
-		this.node.style.left = point.x+'px';
-		this.node.style.top = point.y+'px';
-	},
-	setCenter : function(point) {
-		this.node.style.left = (point.x - this.node.clientWidth/2)+'px';
-		this.node.style.top = (point.y - this.node.clientHeight/2)+'px';
-	}
-}
-
-
-hui.geometry = {
-	intersectLineLine : function(a1, a2, b1, b2) {
-    
-	    var ua_t = (b2.x - b1.x) * (a1.y - b1.y) - (b2.y - b1.y) * (a1.x - b1.x);
-	    var ub_t = (a2.x - a1.x) * (a1.y - b1.y) - (a2.y - a1.y) * (a1.x - b1.x);
-	    var u_b  = (b2.y - b1.y) * (a2.x - a1.x) - (b2.x - b1.x) * (a2.y - a1.y);
-
-	    if ( u_b != 0 ) {
-	        var ua = ua_t / u_b;
-	        var ub = ub_t / u_b;
-
-	        if ( 0 <= ua && ua <= 1 && 0 <= ub && ub <= 1 ) {
-				return {
-	                    x : a1.x + ua * (a2.x - a1.x),
-	                    y : a1.y + ua * (a2.y - a1.y)
-	               }
-	        }
-	    }
-
-	    return null;
-	},
-	intersectLineRectangle : function(a1, a2, r1, r2) {
-	    var min        = {x : Math.min(r1.x,r2.x),y : Math.min(r1.y,r2.y)};
-	    var max        = {x : Math.max(r1.x,r2.x),y : Math.max(r1.y,r2.y)};
-	    var topRight   = {x: max.x, y: min.y };
-	    var bottomLeft = {x: min.x, y: max.y };
-    
-	    var inter1 = hui.geometry.intersectLineLine(min, topRight, a1, a2);
-	    var inter2 = hui.geometry.intersectLineLine(topRight, max, a1, a2);
-	    var inter3 = hui.geometry.intersectLineLine(max, bottomLeft, a1, a2);
-	    var inter4 = hui.geometry.intersectLineLine(bottomLeft, min, a1, a2);
-    
-	    var result = [];
-
-		if (inter1!=null) result.push(inter1);
-		if (inter2!=null) result.push(inter2);
-		if (inter3!=null) result.push(inter3);
-		if (inter4!=null) result.push(inter4);
-	    return result;
-	},
-	distance : function( point1, point2 ) {
-		var xs = point2.x - point1.x;
-
-		var ys = point2.y - point1.y;
-
-		return Math.sqrt( xs * xs + ys * ys );
-	}
-}
 /**
  * Image pasting madness
  * @constructor
@@ -21104,1672 +23396,9 @@ hui.ui.ImagePaster.prototype = {
 			this.preview = hui.build('img',{src:'data:image/png;base64,'+this.data,parent:container});
 		}
 	}
-}/**
- * Tiles
- * @constructor
- */
-hui.ui.Tiles = function(options) {
-	this.options = options || {};
-	this.element = hui.get(options.element);
-	this.name = options.name;
-	this.tiles = hui.get.children(this.element);
-	hui.ui.extend(this);
-	this._addBehavior();
-	if (this.options.reveal) {
-		hui.onReady(this._reveal.bind(this));
-	}
-}
-
-hui.ui.Tiles.prototype = {
-	_addBehavior : function() {
-	},
-	_reveal : function() {
-		for (var i=0; i < this.tiles.length; i++) {
-			var tile = this.tiles[i];
-			this._bounce(tile);
-		};
-	},
-	_bounce : function(tile) {
-		hui.effect.fadeIn({element:tile,delay:Math.random()*500});		
-	}
-}
-
-hui.ui.Tile = function(options) {
-	this.options = options || {};
-	this.element = hui.get(options.element);
-	this.name = options.name;
-	hui.ui.extend(this);
-	this.fullScreen = false;
-	this.initial = {
-		width : this.element.style.width,
-		height : this.element.style.height,
-		top : this.element.style.top,
-		left : this.element.style.left
-	}
-	this._addBehavior();
-}
-
-hui.ui.Tile._zIndex = 0;
-
-hui.ui.Tile.prototype = {
-	_addBehavior : function() {
-		hui.listen(this.element,'click',function(e) {
-			e = hui.event(e);
-			if (hui.cls.has(e.element,'hui_tile_icon')) {
-				var key = e.element.getAttribute('data-hui-key');
-				this.fire('clickIcon',{key:key,tile:this});
-			}
-		}.bind(this))
-	},
-	isFullScreen : function() {
-		return this.fullScreen;
-	},
-	toggleFullScreen : function() {
-		if (this.fullScreen) {
-			hui.animate({
-				node : this.element,
-				css : this.initial,
-				duration : 1000,
-				ease : hui.ease.elastic,
-				onComplete : function() {
-					hui.ui.reLayout()
-				}
-			});			
-		} else {
-			hui.ui.Tile._zIndex++;
-			this.element.style.zIndex = hui.ui.Tile._zIndex;
-			hui.animate({
-				node : this.element,
-				css : {top:'0%',left:'0%',width:'100%',height:'100%'},
-				duration : 1000,
-				ease : hui.ease.elastic,
-				onComplete : function() {
-					hui.ui.reLayout()
-				}
-			});			
-		}
-		this.fullScreen = !this.fullScreen;
-	}
-}/**
- * Pages
- * @constructor
- */
-hui.ui.Pages = function(options) {
-	this.options = options || {};
-	this.element = hui.get(options.element);
-	this.name = options.name;
-	this.pages = hui.get.children(this.element);
-	this.index = 0;
-	this.fixedHeight = hui.cls.has(this.element,'hui_pages_full');
-	this.expanded = false;
-	hui.ui.extend(this);
-	//hui.listen(this.element,'click',this.next.bind(this));
-}
-
-hui.ui.Pages.create = function(options) {
-	options = options || {};
-	options.element = hui.build('div',{'class':'hui_pages'});
-	return new hui.ui.Pages(options);
-}
-
-hui.ui.Pages.prototype = {
-	add : function(widgetOrElement) {
-		var element = hui.dom.isElement(widgetOrElement) ? element : widgetOrElement.element;
-		var page = hui.build('div',{'class':'hui_pages_page'});
-		page.appendChild(element);
-		this.element.appendChild(page);
-		if (this.pages.length>0) {
-			page.style.display = 'none';
-		}
-		this.pages = hui.get.children(this.element);
-	},
-	next : function() {
-		if (this.expanded) {return}
-		var current = this.pages[this.index];
-		this.index = this.pages.length <= this.index+1 ? 0 : this.index+1;
-		this._transition({hide:current,show:this.pages[this.index]});
-	},
-	previous : function() {
-		if (this.expanded) {return}
-		var current = this.pages[this.index];
-		this.index = this.index == 0 ? this.pages.length-1 : this.index-1;
-		this._transition({hide:current,show:this.pages[this.index]});
-	},
-	goTo : function(key) {
-		for (var i=0; i < this.pages.length; i++) {
-			if (this.pages[i].getAttribute('data-key')==key && i!=this.index) {
-				var current = this.pages[this.index];
-				this.index = i;
-				this._transition({hide:current,show:this.pages[i]});
-				return;
-			}
-		};
-	},
-	getPageKey : function() {
-		return this.pages[this.index].getAttribute('data-key');
-	},
-	expand : function() {
-		var l = this.pages.length;
-		for (var i=0; i < l; i++) {
-			if (!this.expanded) {
-				hui.style.set(this.pages[i],{
-					width : (100 / l)+'%',
-					display : 'block',
-					'float' : 'left',
-					opacity: 1
-				});
-			} else {
-				hui.style.set(this.pages[i],{
-					width : '',
-					display : i==this.index ? 'block' : 'none',
-					'float' : ''
-				});
-			}
-		};
-		hui.ui.callVisible(this);
-		this.expanded = !this.expanded;
-	},
-	_transition : function(options) {
-		var hide = options.hide,
-			show = options.show,
-			e = this.element;
-		if (this.fixedHeight) {
-			hui.style.set(hide,{position:'absolute',width:e.clientWidth+'px',height:this.element.clientHeight+'px'});
-			hui.style.set(show,{position:'absolute',width:e.clientWidth+'px',display:'block',opacity:0,height:this.element.clientHeight+'px'});			
-		} else {
-			hui.style.set(hide,{position:'absolute',width:e.clientWidth+'px'});
-			hui.style.set(show,{position:'absolute',width:e.clientWidth+'px',display:'block',opacity:0});
-			hui.style.set(e,{height:hide.offsetHeight+'px',overflow:'hidden',position:'relative'});
-			hui.animate({
-        node : e,
-        css : {height:show.offsetHeight+'px'},
-        duration : 500,
-        ease : hui.ease.slowFastSlow
-      })
-		}
-		hui.ui.reLayout();
-		
-		hui.effect.fadeOut({
-      element : hide,
-      duration : 500,
-      $complete : function() {
-			  hui.style.set(hide,{width : '',position:'',height:''});
-        window.setTimeout(function() {
-          hide.style.display = 'none';
-        })
-		  }
-    });
-		
-		hui.effect.fadeIn({
-      element : show,
-      duration : 500,
-      $complete:function() {
-  			hui.style.set(show,{width : '',position:'',height:''});
-        if (!this.fixedHeight) {
-          hui.style.set(e,{height:'',overflow:'',position:''});          
-        }
-  			hui.ui.reLayout();
-  			hui.ui.callVisible(this);
-      }.bind(this)
-    });
-	}
-}hui.ui.Chart = function(options) {
-	this.options = options = options || {};
-	this.element = hui.get(options.element);
-	this.body  = { width: undefined, height: undefined, paddingTop: 10, paddingBottom: 30, paddingLeft: 10, paddingRight: 10, innerPaddingVertical: 10, innerPaddingHorizontal: 10 };
-	this.style = { border:true, background:true, colors:['#36a','#69d','#acf']};
-	this.style.legends = { position: 'right' , left: 0, top: 0 };
-	this.style.pie = { radiusFactor: .9 , valueInLegend: false , left: 0, top: 0 };
-	this.xAxis = { labels:[], grid:true, concentration:.8 , maxLabels:12};
-	this.yAxis = { min:0, max:0, steps:8, above:false , factor: 10};
-	this.dataSets = [];
-	this.data = null;
-	hui.ui.extend(this);
-	if (this.options.source) {
-		this.options.source.listen(this);
-	}
-}
-
-hui.ui.Chart.create = function(options) {	
-	options.element = hui.build('div',{'class':'hui_chart',parent:hui.get(options.parent),style:'width: 100%; height: 100%;'});
-	return new hui.ui.Chart(options);
-}
-
-hui.ui.Chart.prototype = {
-	addDataSet : function(dataSet) {
-		this.dataSets[this.dataSets.length] = dataSet;
-	},
-	setXaxisLabels : function(labels) {
-		for (var i=0; i < labels.length; i++) {
-			this.xAxis.labels[this.xAxis.labels.length] = {key:labels[i],label:labels[i]};
-		}
-	},
-	setData : function(data) {
-		if (!data.dataSets) {
-			this.data = hui.ui.Chart.Util.convertData(data);
-		} else {
-			this.data = data;
-		}
-	},
-	render : function() {
-		var renderer = new hui.ui.Chart.Renderer(this);
-		renderer.render();
-	},
-	$$layout : function() {
-		this.render();
-	},
-	$objectsLoaded : function(data) {
-		this.setData(data);
-		this.render();
-	}
-}
-
-
-//////////////////////// Data ////////////////////
-
-hui.ui.Chart.Data = function(options) {
-	this.xAxis = hui.override({ labels:[], grid:true, concentration:.8 , maxLabels:12},options.xAxis);
-	this.yAxis = hui.override({ min:0, max:0, steps:8, above:false , factor: 10},options.yAxis);
-	this.dataSets = [];
-}
-
-hui.ui.Chart.Data.prototype = {
-	addDataSet : function(set) {
-		this.dataSets.push(set);
-	}
-}
-
-
-///////////////////// Data set ////////////////////
-
-hui.ui.Chart.DataSet = function(options) {
-	options = options || {};
-	this.dataSets = [];
-	this.entries = options.entries || [];
-	this.legend = null;
-	this.style = {type:options.type || 'line'};
-}
-
-hui.ui.Chart.DataSet.prototype = {
-	
-	addDataSet : function(dataSet) {
-		this.dataSets[this.dataSets.length] = dataSet;
-	},
-	setLegend : function(legend) {
-		this.legend = legend;
-	},
-	isMultiDimensional : function() {
-		return this.dataSets.length>0;
-	},
-	addEntry : function(key,value) {
-		this.entries[this.entries.length] = {key:key,value:value};
-	},
-	setValues : function(graph,values) {
-		for (var i=0; i < graph.xAxis.labels.length; i++) {
-			if (values[i]) {
-				this.addEntry(graph.xAxis.labels[i].key,values[i])
-			}
-		};
-	},
-	getEntryValue : function(key) {
-		var value = 0;
-		for (var i=0;i<this.entries.length;i++) {
-			if (this.entries[i].key==key) {
-				return this.entries[i].value;
-			}
-		}
-		return value;
-	},
-	getEntryValue2D : function(key) {
-		var value = [];
-		for (var i=0;i<this.dataSets.length;i++) {
-			var set = this.dataSets[i];
-			for (var j=0;j<set.entries.length;j++) {
-				if (set.entries[j].key==key) {
-					value[i] = set.entries[j].value;
-				}
-			}
-			if (!value[i]) {
-				value[i]=0;
-			}
-		}
-		return value;
-	},
-	keysToValues : function(keys) {
-		var values = [];
-		for (var i=0;i<keys.length;i++) {
-			values[i] = this.getEntryValue(keys[i].key);
-		}
-		return values;
-	},
-	keysToValues2D : function(keys) {
-		var values = [];
-		for (var i=0;i<keys.length;i++) {
-			values[i] = this.getEntryValue2D(keys[i].key);
-		}
-		return values;
-	},
-	getValueRange : function(keys) {
-		var vals = [];
-		if (this.isMultiDimensional()) {
-			var vals2D = this.keysToValues2D(keys);
-			for (var i=0;i<vals2D.length;i++) {
-				var sum = 0;
-				for (var j=0;j<vals2D[i].length;j++) {
-					sum+=vals2D[i][j];
-				}
-				vals[i] = sum;
-			}
-		} else {
-			vals = this.keysToValues(keys);
-		}
-		var min = Number.MAX_VALUE,
-			max = Number.MIN_VALUE;
-		for (var i=0;i<vals.length;i++) {
-			min = Math.min(min,vals[i]);
-			max = Math.max(max,vals[i]);
-		}
-		return {min:min,max:max};
-	},
-	getSubLegends : function() {
-		var value = [];
-		for (var i=0;i<this.dataSets.length;i++) {
-			value[i] = this.dataSets[i].legend;
-		}
-		return value;
-	}
-}
-
-/*********************************************************************/
-/*                             Renderer                              */
-/*********************************************************************/
-
-hui.ui.Chart.Renderer = function(chart) {
-	this.chart = chart;
-	this.crisp = false;
-	this.legends = [];
-	this.state = { numColumns:0, currColumn:0, xLabels:[], yLabels:[], body:{left:0}, innerBody:{}, coordinateSystem: false, currColor:0 };
-	this.width = null;
-	this.height = null;
-}
-
-hui.ui.Chart.Renderer.prototype = {
-	_registerLegend : function(color,label) {
-		this.legends[this.legends.length] = {color:color,label:label};
-	},
-	_buildInnerBody : function() {
-		var body = this.chart.body;
-		var xLabels = this.state.xLabels;
-		var space = 0;
-		if (this.state.numColumns>0) {
-			space = ( this.width - 2 * body.innerPaddingHorizontal - body.paddingLeft - body.paddingRight ) / xLabels.length;
-		}
-		var innerBody = {
-			left : (body.innerPaddingHorizontal + this.state.body.left + space/2),
-			top : (body.paddingTop + body.innerPaddingVertical),
-			width : (this.state.body.width-2 * body.innerPaddingHorizontal - space),
-			height : (this.state.body.height - body.innerPaddingVertical * 2 )
-		};
-		return innerBody;
-	},
-	_buildBody : function() {
-		var body = this.chart.body,
-			left = body.paddingLeft + this.state.yLabelWidth
-		return {
-			left : left,
-			top : body.paddingTop,
-			width : this.width - left - body.paddingRight,
-			height : this.height - body.paddingTop - body.paddingBottom,
-			right : this.width - body.paddingRight,
-			bottom : this.height - body.paddingBottom
-		}
-	}
-}
-
-hui.ui.Chart.Renderer.prototype.render = function() {
-	
-	this.width = this.chart.body.width || this.chart.element.clientWidth;
-	this.height = this.chart.body.height || this.chart.element.clientHeight;
-	
-	hui.dom.clear(this.chart.element);
-	this.canvas = hui.build('canvas',{parent:this.chart.element,width:this.width,height:this.height});
-	if (!this.canvas.getContext) {
-		return;
-	}
-	this.ctx = this.canvas.getContext("2d");
-	
-	if (this.chart.data==null) {
-		return;
-	}
-	
-	// Extract basic info about the chart
-	for (var i=0;i<this.chart.data.dataSets.length;i++) {
-		var set = this.chart.data.dataSets[i];
-		if (set.style.type=='line' || set.style.type=='column') {
-			this.state.coordinateSystem = true;
-		}
-		if (set.style.type=='column') {
-			this.state.numColumns++;
-		}
-	}
-	
-	this.state.xLabels = this.chart.data.xAxis.labels;
-	this.state.yLabels = hui.ui.Chart.Util.generateYLabels(this.chart);
-	this.state.yLabelWidth = 0;
-	for (var i=0; i < this.state.yLabels.length; i++) {
-		this.state.yLabelWidth = Math.max(this.state.yLabelWidth,new String(this.state.yLabels[i]).length*5);
-	};
-	this.state.yLabelWidth+=5;
-	this.state.body = this._buildBody();
-	this.state.innerBody = this._buildInnerBody();
-
-	// Render the coordinate system (below)
-	if (this.state.coordinateSystem) {
-		this.renderBody();
-	}
-	
-	// Loop through data sets and render them
-	var xLabels = this.state.xLabels;
-	for (var i=0;i<this.chart.data.dataSets.length;i++) {
-		var set = this.chart.data.dataSets[i];
-		if (set.style.type=='line') {
-			var values = set.keysToValues(xLabels);
-			this.renderLineGraph( { values:values, style:set.style , legend:set.legend } );
-		} else if (set.style.type=='column') {
-			if (set.isMultiDimensional()) {
-				var values = set.keysToValues2D(xLabels);
-				var legend = set.getSubLegends();
-			} else {
-				var values = set.keysToValues(xLabels);
-				var legend = set.legend;
-			}
-			this.renderColumnGraph( { values:values, style:set.style , legend: legend} );	
-		} else if (set.style.type=='pie') {
-			var values = set.keysToValues(xLabels);
-			this.renderPie( { values:values, style:set.style } );
-		}
-	}
-	
-	// Render the coordinate system (above)
-	if (this.shouldRenderCoordinateSystem) {
-		this.renderPostBody();
-	}
-	
-	// Render possible lengends
-	this.renderLegends();
 }
 
 /**
- * Renders a legend box
- */
-hui.ui.Chart.Renderer.prototype.renderLegends = function() {
-	if (this.legends.length>0) {
-		var position = this.chart.style.legends.position;
-		var box = hui.build('div',{style:{position:'absolute',zIndex:5,width:this.width+'px'}});
-		
-		var html='<div class="hui_chart_legends" style="margin-right: '+(5-this.chart.style.legends.left)+'px; margin-top: '+(5+this.chart.style.legends.top)+'px;">';
-		for (var i=0;i<this.legends.length;i++) {
-			if (position=='bottom') {
-				var style = 'padding: 2px; padding-right: 8px; float: left; white-space: nowrap;';
-				if (i==this.legends.length-1) {
-					style+='padding-right: 3px';
-				}
-			} else {
-				var style = 'padding: 2px;';
-			}
-			html+='<div class="hui_chart_legend" style="'+style+'"><em style="background: '+this.legends[i].color+';"></em><span>'+this.legends[i].label+'</span></div>'
-		}
-		html+='</div>';
-		box.innerHTML = html;
-		if (position=='right') {
-			this.canvas.parentNode.insertBefore(box,this.canvas);
-		} else if (position=='bottom') {
-			this.canvas.parentNode.appendChild(box);
-			var y = document.createElement('div');
-			y.appendChild(box);
-			this.canvas.parentNode.appendChild(y);
-		}
-	}
-}
-
-/**
- * Renders the body of the chart
- */
-hui.ui.Chart.Renderer.prototype.renderBody = function() {
-	
-	var body = this.chart.body,
-		stroke = 'rgb(255,255,255)',
-		background = 'rgb(240,240,240)',
-		state = this.state,
-		innerBody = this.state.innerBody;	
-
-	if (this.chart.style.background) {
-		this.ctx.fillStyle = background;
-		this.ctx.fillRect(
-			state.body.left,
-			state.body.top,
-			state.body.width,
-			state.body.height
-		);
-	}
-	
-	var mod = 1;
-	/* Build X-axis*/
-	var xLabels = this.state.xLabels;
-	if (xLabels.length>this.chart.data.xAxis.maxLabels) {
-		mod = Math.ceil(xLabels.length/this.chart.data.xAxis.maxLabels);
-	}
-	this.ctx.strokeStyle=stroke;
-	for (var i=0;i<xLabels.length;i++) {
-		var left = i*((innerBody.width)/(xLabels.length-1))+innerBody.left;
-		var left = Math.round(left);
-
-		if (mod<10 || (i % mod) ==0) {
-			// Draw grid
-			if (this.chart.data.xAxis.grid) {
-				this.ctx.beginPath();
-				this.ctx.moveTo(.5+left,state.body.top+.5);
-				this.ctx.lineTo(.5+left,state.body.top+.5+state.body.height);
-				this.ctx.stroke();
-				this.ctx.closePath();
-			}
-		}
-		if ((i % mod) ==0) {
-			// Draw label
-			var label = hui.build('span',{
-				'class' : 'hui_chart_label',
-				text : xLabels[i].label,
-				before : this.canvas,
-				style : {
-					marginLeft : left-25+'px',
-					marginTop : state.body.bottom + 4 + 'px'
-				}
-			});
-		}
-	}
-	this.ctx.strokeStyle=stroke;
-	
-	/* Build Y-axis*/
-	var yLabels = this.state.yLabels.concat();
-	yLabels.reverse();
-	for (var i=0; i < yLabels.length ; i++) {
-		// Draw grid
-		var top = i*((state.body.height-body.innerPaddingVertical*2)/(yLabels.length-1))+body.paddingTop+body.innerPaddingVertical;
-		top = Math.round(top);
-		if (!this.chart.data.yAxis.above) {
-			this.ctx.beginPath();
-			this.ctx.moveTo(.5+state.body.left,top+.5);
-			this.ctx.lineTo(.5+state.body.right,top+.5);
-			this.ctx.stroke();
-			this.ctx.closePath();
-		}
-		// Draw label
-		var label = hui.build('span',{text:yLabels[i],style:{
-			position: 'absolute',
-			textAlign : 'right',
-			width : this.state.yLabelWidth-5+'px',
-			font : '9px Tahoma',
-			marginTop : top-5+'px',
-			marginLeft : body.paddingLeft+'px'
-		}});
-		this.canvas.parentNode.insertBefore(label,this.canvas);
-	}
-	
-	// Draw a line at 0 if 
-	if (!this.chart.data.yAxis.above && yLabels[0] > 0 && yLabels[yLabels.length-1] < 0) {
-		var top = (state.body.height - body.innerPaddingVertical*2) * yLabels[0] / (yLabels[0] - yLabels[yLabels.length-1]) + body.paddingTop + body.innerPaddingVertical;
-		top = Math.round(top);
-		this.ctx.lineWidth = 2;
-		this.ctx.strokeStyle=stroke;
-		this.ctx.beginPath();
-		this.ctx.moveTo(.5+state.body.left,top);
-		this.ctx.lineTo(.5+state.body.right,top);
-		this.ctx.stroke();
-		this.ctx.closePath();
-	}
-}
-
-hui.ui.Chart.Renderer.prototype.renderPostBody = function() {
-	var body = this.chart.body;
-	if (this.chart.data.yAxis.above) {
-
-		this.ctx.strokeStyle='rgb(240,240,240)';
-		var yLabels = this.state.yLabels.concat();
-		yLabels.reverse();
-		for (var i=0;i<yLabels.length;i++) {
-			var top = i*((this.height-body.innerPaddingVertical*2-body.paddingTop-body.paddingBottom)/(yLabels.length-1))+body.paddingTop+body.innerPaddingVertical;
-			top = Math.round(top);
-			this.ctx.lineWidth = 1;
-			this.ctx.beginPath();
-			this.ctx.moveTo(.5+body.paddingLeft,top+.5);
-			this.ctx.lineTo(.5+this.width-body.paddingRight,top+.5);
-			this.ctx.stroke();
-			this.ctx.closePath();
-		}
-		if (yLabels[0]>0 && yLabels[yLabels.length-1]<0) {
-			var top = (this.height-body.innerPaddingVertical*2-body.paddingTop-body.paddingBottom)*yLabels[0]/(yLabels[0]-yLabels[yLabels.length-1])+body.paddingTop+body.innerPaddingVertical;
-			top = Math.round(top);
-			this.ctx.lineWidth = 2;
-			this.ctx.strokeStyle='rgb(255,255,255)';
-			this.ctx.beginPath();
-			this.ctx.moveTo(.5+body.paddingLeft,top);
-			this.ctx.lineTo(.5+this.width-body.paddingRight,top);
-			this.ctx.stroke();
-			this.ctx.closePath();
-		}
-	}
-	if (this.chart.style.border) {
-		this.ctx.lineWidth = 1;
-		this.ctx.strokeStyle='rgb(230,230,230)';
-		this.ctx.strokeRect(body.paddingLeft+.5,body.paddingTop+.5,this.width-body.paddingLeft-body.paddingRight,this.height-body.paddingTop-body.paddingBottom);
-	}
-}
-
-hui.ui.Chart.Renderer.prototype.renderLineGraph = function(data) {
-	var values = data.values;
-	var xLabels = this.state.xLabels;
-	var yLabels = this.state.yLabels;
-	var yMin = yLabels[0];
-	var yMax = yLabels[yLabels.length-1];
-	var body = this.chart.body;
-	var innerBody = this.state.innerBody;
-	if (data.style.colors) {
-		var color = data.style.colors[0];
-	} else {
-		var color = this.chart.style.colors[this.state.currColor];
-		if (this.state.currColor+2>this.chart.style.colors.length) {
-			this.state.currColor = 0;
-		} else {
-			this.state.currColor++;
-		}
-	}
-	this.ctx.strokeStyle = color;
-	this.ctx.lineWidth = data.width ? data.width : 3;
-	this.ctx.lineCap = this.ctx.lineJoin = 'round';
-	this.ctx.beginPath();
-	for (var i=0;i<xLabels.length;i++) {
-		var amount = (values[i] == undefined ? 0 : values[i]);
-		var value = (amount-yMin)/(yMax-yMin);
-		var top = this.height-value*(innerBody.height)-body.innerPaddingVertical-body.paddingBottom;
-		var left = i*(innerBody.width/(xLabels.length-1))+innerBody.left;
-		if (i==0) {
-			this.ctx.moveTo(left+.5,top+.5);
-		} else {
-			this.ctx.lineTo(left+.5,top+.5);
-		}
-	}
-	this.ctx.stroke();
-	this.ctx.closePath();
-	
-	if (data.legend) {
-		this._registerLegend(color,data.legend);
-	}
-}
-
-
-hui.ui.Chart.Renderer.prototype.renderColumnGraph = function(data) {
-	var values = data.values;
-	var xLabels = this.state.xLabels;
-	var yLabels = this.state.yLabels;
-	var yMin = yLabels[0];
-	var yMax = yLabels[yLabels.length-1];
-	var body = this.chart.body;
-	var colors = data.style.colors ? data.style.colors : this.chart.style.colors;
-	this.state.currColumn++;
-	var innerBody = this.state.innerBody;
-	var space = (this.width-body.paddingLeft-body.paddingRight)/xLabels.length*this.chart.data.xAxis.concentration;
-	var thickness = space/this.state.numColumns;
-	this.ctx.lineCap = this.ctx.lineJoin = 'round';
-	this.ctx.beginPath();
-	for (var i=0;i<xLabels.length;i++) {
-		if (values[i]) {
-			var colorIndex = 0;
-			var currTop = 0;
-			if (values[i] instanceof Array) {
-				for (var j=0;j<values[i].length;j++) {
-					var val = values[i][j];
-					currTop+=this.renderOneColumn(val,colors[colorIndex],body,innerBody,yMin,yMax,currTop,i,xLabels,space,thickness);
-					
-					if (colorIndex+2>colors.length) {
-						colorIndex = 0;
-					} else {
-						colorIndex++;
-					}
-				}
-			} else {
-				currTop+=this.renderOneColumn(values[i],colors[colorIndex],body,innerBody,yMin,yMax,currTop,i,xLabels,space,thickness);
-			}
-		}
-	}
-	this.ctx.stroke();
-	this.ctx.closePath();
-	
-	if (data.legend && data.legend instanceof Array) {
-		for (var i=0; i < data.legend.length; i++) {
-			this._registerLegend(colors[i],data.legend[i]);
-		};
-	} else if (data.legend) {
-		this._registerLegend(colors[0],data.legend);
-	}
-}
-
-hui.ui.Chart.Renderer.prototype.renderOneColumn = function(val,color,body,innerBody,yMin,yMax,currTop,i,xLabels,space,thickness) {
-	var value = (val-yMin)/(yMax-yMin);
-	if (yMin<=0 && val<=0) {
-		var top = innerBody.top+(innerBody.height)*yMax/(yMax-yMin)+currTop;
-		var height = innerBody.height*Math.abs(val)/(yMax-yMin);
-	} else if (yMin<=0) {
-		var top = this.height-body.innerPaddingVertical-body.paddingBottom-value*(innerBody.height)-currTop;
-		var height = (innerBody.height)*Math.abs(val)/(yMax-yMin);
-	}
-	else {
-		var top = this.height-value*(this.height-body.innerPaddingVertical*2-body.paddingTop-body.paddingBottom)-body.innerPaddingVertical-body.paddingBottom-currTop;
-		var height = (this.height-body.paddingBottom-top);
-	}
-	var left = i*((innerBody.width)/(xLabels.length-1))+innerBody.left;
-	
-	this.ctx.fillStyle = color;
-	if (this.crisp) {
-		this.ctx.fillRect(Math.round(left-space/2+thickness*(this.state.currColumn-1)),Math.floor(top),Math.ceil(thickness),Math.ceil(height));
-	} else {
-		this.ctx.fillRect(left-space/2+thickness*(this.state.currColumn-1),top,thickness,height);
-	}
-	return height;
-}
-
-hui.ui.Chart.Renderer.prototype.renderPie = function(data) {
-	
-	var values = data.values;
-	var colors = data.style.colors ? data.style.colors : this.chart.style.colors;
-	var total = hui.ui.Chart.Util.arraySum(values);
-
-	var colorIndex = 0;
-	var current = Math.PI*1.5;
-	var cTop = this.height/2+this.chart.style.pie.top;
-	var cLeft = this.width/2+this.chart.style.pie.left;
-	var radius = this.height/2*this.chart.style.pie.radiusFactor;
-
-	for (var i=0;i<values.length;i++) {
-		this.ctx.beginPath();
-		var color = colors[colorIndex]
-		this.ctx.fillStyle = color;
-		var rads = values[i]/total*(Math.PI*2);
-		this.ctx.moveTo(cLeft,cTop);
-		this.ctx.arc(cLeft,cTop,radius,current,current+rads,false);
-		this.ctx.lineTo(cLeft,cTop);
-		this.ctx.fill();
-		this.ctx.closePath();
-		current+=rads;
-		
-		if (!true) {
-			this._registerLegend(color,this.state.xLabels[i].label);
-		} else {
-			this._registerLegend(color,values[i]+' '+this.state.xLabels[i].label);
-		}
-		if (colorIndex+2>colors.length) {
-			colorIndex = 0;
-		} else {
-			colorIndex++;
-		}
-	}
-	
-}
-
-
-
-
-
-/*********************************************************************/
-/*                           Utitlities                              */
-/*********************************************************************/
-
-hui.ui.Chart.Util = function() {}
-
-hui.ui.Chart.Util.generateYLabels = function(graph) {
-	var range = hui.ui.Chart.Util.getYrange(graph);
-	var labels = [];
-	for (var i=0;i<=graph.yAxis.steps;i++) {
-		labels[labels.length] = Math.round(range.min+(range.max-range.min)/graph.yAxis.steps*i);
-	}
-	return labels;
-}
-
-hui.ui.Chart.Util.getYrange = function(graph) {
-	var min = graph.yAxis.min,
-		max = graph.yAxis.max,
-		data = graph.data;
-	for (var i=0;i<data.dataSets.length;i++) {
-		var range = data.dataSets[i].getValueRange(data.xAxis.labels);
-		min = Math.min(min,range.min);
-		max = Math.max(max,range.max);
-	}
-	var factor = max/graph.yAxis.steps;
-	if (factor < graph.yAxis.factor) {
-		factor = Math.ceil(factor);
-	} else {
-		factor = graph.yAxis.factor;
-	}
-	if (max != Number.MIN_VALUE) {
-		max = Math.ceil(max/factor/graph.yAxis.steps)*factor*graph.yAxis.steps;
-	} else {
-		max = graph.yAxis.steps;
-	}
-	return {min:min,max:max};
-}
-
-hui.ui.Chart.Util.arraySum = function(values) {
-	var total = 0;
-	for (var i=0;i<values.length;i++) {
-		total+=values[i];
-	}
-	return total;
-}
-
-/** Converts a simple data-representation into a class-based stucture */
-hui.ui.Chart.Util.convertData = function(obj) {
-	var labels = [],keys = [];
-	for (var i=0; i < obj.sets.length; i++) {
-		var set = obj.sets[i];
-		if (hui.isArray(set.entries)) {
-			for (var j=0; j < set.entries.length; j++) {
-				var entry = set.entries[j];
-				if (!hui.array.contains(keys,entry.key)) {
-					keys.push(entry.key)
-					labels.push({key:entry.key,label:entry.label || entry.key});					
-				}
-			}
-		} else {
-			for (key in set.entries) {
-				if (!hui.array.contains(keys,key)) {
-					keys.push(key)
-					labels.push({key:key,label:key});
-				}
-			}
-		}
-	};
-	var options = {xAxis:{labels:labels}};
-	if (obj.axis && obj.axis.x && obj.axis.x.time===true) {
-		options.xAxis.resolution = 'time';
-	}
-	var data = new hui.ui.Chart.Data(options);
-		
-	for (var i=0; i < obj.sets.length; i++) {
-		var set = obj.sets[i];
-		var dataSet = new hui.ui.Chart.DataSet({type:set.type});
-		if (hui.isArray(set.entries)) {
-			for (var j=0; j < set.entries.length; j++) {
-				var entry = set.entries[j];
-				dataSet.addEntry(entry.key,entry.value);
-			};
-		} else {
-			for (key in set.entries) {
-				dataSet.addEntry(key,set.entries[key]);
-			}
-		}
-		data.addDataSet(dataSet);
-	}
-	hui.log(data)
-	return data;
-}/** A diagram
- * @constructor
- */
-hui.ui.Diagram = function(options) {
-	this.options = hui.override({layout:'D3'},options);;
-	this.name = options.name;
-	this.nodes = [];
-	this.lines = [];
-	this.data = {};
-	this.translation = {x:0,y:0};
-	this.element = hui.get(options.element);
-	this.width = this.element.clientWidth;	
-	this.height = this.element.clientHeight;
-	this.layout = hui.ui.Diagram[this.options.layout];
-	//this.layout = hui.ui.Diagram.Springy;
-	this.layout.diagram = this;
-	hui.ui.extend(this);
-	if (options.source) {
-		options.source.listen(this);
-	}
-	this._init();
-}
-
-hui.ui.Diagram.create = function(options) {
-	options = hui.override({width:null,height:null},options);
-	
-	options.element = hui.build('div',{'class':'hui_diagram',parent:options.parent,style:{height:options.height+'px'}});
-	
-	return new hui.ui.Diagram(options);
-}
-
-hui.ui.Diagram.prototype = {
-	_init : function() {
-		this.background = hui.ui.Drawing.create({
-			width: this.width || 0,
-			height: this.height || 0
-		});
-		this.element.appendChild(this.background.element);
-		this.fire('added');
-	},
-	$$layout : function() {
-		this.width = this.element.clientWidth;	
-		this.height = this.element.clientHeight;
-		hui.log(this.width,this.height)
-		this.background.setSize(this.width,this.height);
-		this.layout.resize();
-		this.layout.resume();
-	},
-	_getMagnet : function(from,to,node) {
-		var margin = 1;
-		var size = node.getSize();
-		var center = node.getCenter();
-		var topLeft = {
-				x : center.x - size.width/2 - margin,
-				y : center.y - size.height/2 - margin
-			},
-			bottomRight = {
-				x : topLeft.x + size.width + margin * 2,
-				y : topLeft.y + size.height + margin * 2
-			};
-		var hits = [];
-		hits = hui.geometry.intersectLineRectangle(from,to,topLeft,bottomRight);
-		if (hits.length>0) {
-			return hits[0];
-		}
-		return to;
-	},
-	
-	// Data ...
-	
-	/** @private */
-	$objectsLoaded : function(data) {
-		this.setData(data);
-	},
-	setData : function(data) {
-		this.data = data;
-		this.clear();
-		var nodes = data.nodes,
-			lines = data.lines || data.edges;
-		if (!nodes || !lines) {
-			return;
-		}
-		for (var i=0; i < nodes.length; i++) {
-			if (nodes[i].type=='icon') {
-				this.addIcon(nodes[i]);
-			} else {
-				this.addBox(nodes[i]);				
-			}
-		};
-		for (var i=0; i < lines.length; i++) {
-			this.addLine(lines[i]);
-		};
-		if (this.layout.loaded) {
-			this.layout.populate();
-		} else {
-			this.play();
-		}
-	},
-	/** Deprecated */
-	play : function() {
-		this.layout.start();
-	},
-	resume : function() {
-		if (this.layout.resume) { this.layout.resume() }
-	},
-	expand : function() {
-		if (this.layout.expand) { this.layout.expand() }
-	},
-	contract : function() {
-		if (this.layout.contract) { this.layout.contract() }
-	},
-	/** @private */
-	$sourceShouldRefresh : function() {
-		return hui.dom.isVisible(this.element);
-	},
-	/** @private */
-	$visibilityChanged : function() {
-		if (hui.dom.isVisible(this.element)) {
-			this.width = this.element.clientWidth;	
-			this.height = this.element.clientHeight;
-			this.background.setSize(this.width,this.height);
-			if (this.options.source) {
-				this.options.source.refreshFirst();
-			}
-		}
-	},
-	clear : function() {
-		this.layout.clear();
-		this.selection = null;
-		this.background.clear();
-		this.lines = [];
-		for (var i = this.nodes.length - 1; i >= 0; i--){
-			hui.dom.remove(this.nodes[i].element);
-		};
-		this.nodes = [];
-		var lines = hui.get.byClass(this.element,'hui_diagram_line_label');
-		for (var i = lines.length - 1; i >= 0; i--){
-			hui.dom.remove(lines[i]);
-		};
-	},
-	
-	addBox : function(options) {
-		var box = hui.ui.Diagram.Box.create(options,this);
-		this.add(box);
-	},
-	
-	addIcon : function(options) {
-		var box = hui.ui.Diagram.Icon.create(options,this);
-		this.add(box);
-	},
-	add : function(widget) {
-		var e = widget.element;
-		this.element.appendChild(e);
-		widget.setCenter({x:this.width/2,y:this.height/2});
-		this.nodes.push(widget);
-	},
-	addLine : function(options) {
-		var from = this.getNode(options.from),
-			to = this.getNode(options.to);
-		if (from==null || to==null) {
-			hui.log('Unable to build line...');
-			hui.log(options);
-			return;
-		}
-		var fromCenter = this._getCenter(from),
-			toCenter = this._getCenter(to);
-		var lineNode = this.background.addLine({ from: fromCenter, to: toCenter, color: options.color || '#999' ,end:{}}),
-			line = { from: options.from, fromNode : from, to: options.to, toNode : to, node: lineNode };
-		if (options.label) {
-			line.label = hui.build('span',{parent:this.element,'class':'hui_diagram_line_label',text:options.label});
-			this._updateLine(line);
-		}
-		//hui.listen(lineNode.node,'click',function() {alert(line)});
-		this.lines.push(line);
-	},
-	
-	
-	_getCenter : function(widget) {
-		return widget.getCenter();
-		var e = widget.element;
-		return {
-			x : Math.round(parseInt(e.style.left)+e.clientWidth/2),
-			y : Math.round(parseInt(e.style.top)+e.clientHeight/2)
-		};
-	},
-	getNode : function(id) {
-		return this._getNode(id,this.nodes);
-	},
-	getDataNode : function(id) {
-		return this._getNode(id,this.data.nodes);
-	},
-	_getNode : function(id,nodes) {
-		if (nodes) {
-			for (var i=0; i < nodes.length; i++) {
-				if (nodes[i].id == id) {
-					return nodes[i];
-				}
-			};
-		}
-		return null;		
-	},
-	
-	// Drawing...
-	
-	_updateLine : function(line) {
-		if (!line.label) {
-			return;
-		}
-		var from = line.node.getFrom(),
-			to = line.node.getTo(),
-			label = line.label;
-		var middle = { x : from.x+(to.x-from.x)/2, y : from.y+(to.y-from.y)/2 };
-		//var deg = Math.atan((from.y-to.y) / (from.x-to.x)) * 180/Math.PI;
-		line.label.style.webkitTransform='rotate('+line.node.getDegree()+'deg)';
-		//line.label.innerHTML = Math.round(hui.geometry.distance(from,to));
-		var width = Math.round(hui.geometry.distance(from,to)-30);
-		// TODO: cache width + height
-		var w = label.huiWidth = label.huiWidth || label.clientWidth;
-		var h = label.huiHeight = label.huiHeight || label.clientHeight;
-		w = Math.min(w,width);
-		hui.style.set(line.label,{
-			left : (middle.x-w/2)+'px',
-			top : (middle.y-h/2)+'px',
-			maxWidth : Math.max(0,width)+'px',
-			visibility : width>10 ? '' : 'hidden'
-		});
-	},
-	__nodeMoved : function(widget) {
-		var center = this._getCenter(widget);
-		for (var i=0; i < this.lines.length; i++) {
-			var line = this.lines[i];
-			if (line.from == widget.id) {
-				var magnet = this._getMagnet(line.node.getTo(),center,widget);
-				line.node.setFrom(magnet);
-				var magnet2 = this._getMagnet(center,this._getCenter(line.toNode),line.toNode);
-				line.node.setTo(magnet2);
-				this._updateLine(line);
-			}
-			else if (line.to == widget.id) {
-				var magnet = this._getMagnet(line.node.getFrom(),center,widget);
-				line.node.setTo(magnet);
-				var magnet2 = this._getMagnet(center,this._getCenter(line.fromNode),line.fromNode);
-				line.node.setFrom(magnet2);
-				this._updateLine(line);
-			}
-		};
-	},
-	__select : function(widget) {
-		if (this.selection) {
-			this.selection.setSelected(false);
-		}
-		this.selection = widget;
-		this.selection.setSelected(true);
-	},
-	__nodeOpen : function(widget) {
-		this.fire('open',this.getDataNode(widget.id));
-	}
-}
-
-
-hui.ui.Diagram.Arbor = {
-	running : false,
-	loaded : false,
-	diagram : null,
-
-	_load : function() {
-		hui.require(hui.ui.context+'/hui/lib/jquery.min.js',function() {
-			hui.require(hui.ui.context+'/hui/lib/arbor/lib/arbor.js',function() {
-				this.loaded = true;
-				this.start();
-			}.bind(this))
-		}.bind(this));		
-	},
-	
-	start : function() {
-		if (!this.loaded) {
-			this._load();
-			return;
-		}
-		if (window.arbor==undefined) {
-			hui.log('Arbor is not available!');
-			return;
-		}
-		
-		var repulsion = 50,
-			stiffness = 600,
-			friction = 0.5,
-			gravity = true,
-			fps = 40,
-			dt = 0.02 //0.02,			// timestep to use for stepping the simulation
-			precision = 0.6;	// accuracy vs. speed in force calculations
-		
-		var diagram = this.diagram;
-		
-		var renderer = {
-  			init:  function(system) {
-				hui.log("starting",system);
-			},
-  			redraw : function() {
-				var sel = diagram.selection ? diagram.selection.id : null;
-				system.eachNode(function(node,point) {
-					if (node.name!=sel) {
-						node.data.setCenter(point);						
-					}
-				});
-				system.eachEdge(function(edge,point1,point2) {
-					if (edge.target.name==sel) {
-						point2 = diagram._getCenter(diagram.selection)
-					}
-					if (edge.source.name==sel) {
-						point1 = diagram._getCenter(diagram.selection)
-					}
-					var line = edge.data.node;
-					if (edge.source.name!=sel) {
-						line.setFrom(diagram._getMagnet(point2,point1,edge.source.data));
-					}
-					if (edge.target.name!=sel) {
-						line.setTo(diagram._getMagnet(point1,point2,edge.target.data));						
-					}
-					diagram._updateLine(edge.data);
-				}.bind(this));
-			}.bind(this)
-		}
-		var system = this.particleSystem = arbor.ParticleSystem(repulsion, stiffness, friction, gravity, fps, dt, precision);
-		system.screenSize(diagram.element.clientWidth, diagram.element.clientHeight);
-		system.screenPadding(50,100);
-		system.renderer = renderer
-		
-		this.populate();
-	},
-	populate : function() {
-		var system = this.particleSystem,
-			nodes = this.diagram.nodes,
-			lines = this.diagram.lines;
-		
-		for (var i=0; i < nodes.length; i++) {
-			system.addNode(nodes[i].id, nodes[i]);
-		};
-		
-		hui.each(lines,function(line) {
-			system.addEdge(line.from, line.to, line);
-		})
-		
-		window.setTimeout(function() {
-			system.stop();
-		},6000)
-	},
-	clear : function() {
-		if (this.particleSystem) {
-			this.particleSystem.prune(function() {return true});
-			this.particleSystem.stop();
-		}
-	}
-}
-
-
-
-hui.ui.Diagram.D3 = {
-	loaded : false,
-	diagram : null,
-
-	_load : function() {
-		hui.require(hui.ui.context+'/hui/lib/d3.v3/d3.v3.min.js',function() {
-			this.loaded = true;
-			this.start();
-		}.bind(this))
-	},
-	
-	resize : function() {
-		if (this.layout) {
-			this.layout.size([this.diagram.width,this.diagram.height]);
-		}
-	},
-	
-	start : function() {
-		if (!this.loaded) {
-			this._load();
-			return;
-		}
-		var diagram = this.diagram,
-			nodes = diagram.nodes,
-			lines = diagram.lines,
-			width = diagram.element.clientWidth,
-			height = diagram.element.clientHeight;
-		
-		for (var i=0; i < lines.length; i++) {
-			lines[i].source = this._findById(nodes,lines[i].from);
-			lines[i].target = this._findById(nodes,lines[i].to);
-		};
-		
-		var force = this.layout = d3.layout.force()
-            .linkDistance(100)
-            .friction(0.9)
-            .gravity(0.1)
-            .theta(0.3)
-            .linkStrength(0.2)
-			.charge(-1000)
-			.distance(100)
-			.nodes(this.diagram.nodes)
-			.links(this.diagram.lines)
-			.size([width, height]);
-		
-		var ticker = function() {
-			var sel = diagram.selection ? diagram.selection.id : null;
-			var nodes = force.nodes(),
-				links = force.links();
-			for (var i=0; i < nodes.length; i++) {
-				var node = diagram.nodes[nodes[i].index];
-				if (node.id!=sel) {
-					node.setCenter(nodes[i]);
-				}
-			};
-			for (var i=0; i < links.length; i++) {
-				var link = links[i];
-				var source = link.source,
-					sourceCenter = link.source.center;
-				var target = link.target,
-					targetCenter = link.target;
-				if (source==diagram.selection) {
-					sourceCenter = diagram._getCenter(diagram.selection)
-				}
-				if (target==diagram.selection) {
-					targetCenter = diagram._getCenter(diagram.selection)
-				}
-				var from = diagram._getMagnet(sourceCenter,targetCenter,source)
-				var to = diagram._getMagnet(targetCenter,sourceCenter,target)
-				link.node.setFrom(from);
-				link.node.setTo(to);
-				diagram._updateLine(link);
-			};
-		};
-		force.start();
-		force.gravity(0.5);
-		for (var i=0; i < 10000; i++) {
-			force.tick()
-		};
-		force.gravity(0.1);
-		
-		force.on("tick", ticker);
-		
-		force.start()
-	},
-	
-	resume : function() {
-		if (this.layout) { this.layout.start(); }
-	},
-	expand : function() {
-		if (this.layout) {
-			this.layout.linkDistance(this.layout.linkDistance() * 1.3);
-			this.layout.charge(this.layout.charge() * 1.3);
-			this.layout.start();
-		}
-	},
-	contract : function() {
-		if (this.layout) {
-			this.layout.linkDistance(Math.max(0,this.layout.linkDistance() * 0.9));
-			this.layout.charge(Math.min(0,this.layout.charge() * 0.9));
-			this.layout.start();
-		}
-	},
-	
-	_findById : function(nodes,id) {
-		for (var i = nodes.length - 1; i >= 0; i--){
-			if (nodes[i].id===id) {
-				return i;
-			}
-		};
-		return null;
-	},
-	_convert : function(data) {
-		var nodes = data.nodes;
-		data.links = data.edges;
-		for (var i = data.links.length - 1; i >= 0; i--){
-			var link = data.links[i];
-			link.source = this._findById(nodes,link.from);
-			link.target = this._findById(nodes,link.to);
-		};
-		return data;		
-	},
-	populate : function() {
-		this.start();
-	},
-	clear : function() {
-		if (this.layout) {
-			this.layout.stop();
-		}
-	}
-	
-}
-
-
-
-hui.ui.Diagram.Springy = {
-	loaded : false,
-	diagram : null,
-
-	_load : function() {
-		hui.require(hui.ui.context+'/hui/lib/springy-master/springy.js',function() {
-			this.loaded = true;
-			this.start();
-		}.bind(this))
-	},
-	
-	start : function() {
-		if (!this.loaded) {
-			this._load();
-			return;
-		}
-		var diagram = this.diagram,
-			nodes = diagram.nodes,
-			lines = diagram.lines,
-			width = diagram.element.clientWidth,
-			height = diagram.element.clientHeight;
-		
-		var graph = new Graph();
-		var cachedNodes = {},
-			cachedLines = {};
-		for (var i=0; i < nodes.length; i++) {
-			cachedNodes[nodes[i].id] = graph.newNode(nodes[i]);
-		};
-		
-		for (var i=0; i < lines.length; i++) {
-			var edge = graph.newEdge(
-				cachedNodes[lines[i].from],
-				cachedNodes[lines[i].to]
-			);
-			cachedLines[edge.id] = lines[i];
-		};
-		
-		var layout = new Layout.ForceDirected(graph, width, height, 0.4);
-		
-		var toScreen = function(p) {
-			  return {
-				  x : (p.x*width/10)+width/2,
-				  y : (p.y*height/10)+height/2
-			  }
-		  }
-		
-		var renderer = new Renderer(layout,
-			function clear() {
-			  
-			},
-			function drawEdge(edge, p1, p2) {
-				var sel = diagram.selection ? diagram.selection.id : null;
-				p1 = toScreen(p1);
-				p2 = toScreen(p2);
-				var line = cachedLines[edge.id];
-				if (sel!=edge.source.data.id) {
-					var from = diagram._getMagnet(p1,p2,edge.source.data)
-					line.node.setFrom(from);
-				}
-				if (sel!=edge.target.data.id) {
-					var to = diagram._getMagnet(p1,p2,edge.target.data)
-					line.node.setTo(to);
-				}
-				diagram._updateLine(line);
-			},
-			function drawNode(node, p) {
-				var sel = diagram.selection ? diagram.selection.id : null;
-				if (node.data.id==sel) return;
-				node.data.setCenter(toScreen(p));
-			}
-		);
-		renderer.start();
-	},
-	_findById : function(nodes,id) {
-		for (var i = nodes.length - 1; i >= 0; i--){
-			if (nodes[i].id===id) {
-				return nodes[i];
-			}
-		};
-		return null;
-	},
-	populate : function() {
-		
-	},
-	clear : function() {
-		
-	}
-	
-}
-
-
-/** A box in a diagram
- * @constructor
- */
-hui.ui.Diagram.Box = function(options) {
-	this.options = options;
-	this.id = options.id;
-	this.name = options.name;
-	this.element = hui.get(options.element);	
-	this.center = {};
-	this.size = null;
-	hui.ui.extend(this);
-	hui.ui.Diagram.util.enableDragging(this)
-}
-
-hui.ui.Diagram.Box.create = function(options,diagram) {
-	options = hui.override({title:'Untitled',diagram:diagram},options);
-	var e = options.element = hui.build('div',{'class':'hui_diagram_box'});
-	hui.build('h1',{text:options.title,parent:e});
-	if (options.properties) {
-		var table = hui.build('table',{parent:e})
-		for (var i=0; i < options.properties.length; i++) {
-			var p = options.properties[i];
-			var tr = hui.build('tr',{parent:table});
-			hui.build('th',{parent:tr,text:p.label});
-			var td = hui.build('td',{parent:tr,text:p.value});
-			if (p.hint) {
-				hui.build('em',{parent:td,text:p.hint});
-			}
-		};
-	}
-	return new hui.ui.Diagram.Box(options);
-}
-
-hui.ui.Diagram.Box.prototype = {
-	_syncSize : function() {
-		if (this.size) {
-			return;
-		}
-		this.size = {
-			width : this.element.offsetWidth,
-			height : this.element.offsetHeight
-		};
-	},
-	getSize : function() {
-		this._syncSize();
-		return this.size;
-	},
-	getCenter : function() {
-		return this.center;
-	},
-	setCenter : function(point) {
-		this._syncSize();
-		this.center = {x : point.x, y : point.y};
-		this._updateCenter();
-	},
-	_updateCenter : function() {
-		this.element.style.top = Math.round(this.center.y - this.size.height/2)+'px';
-		this.element.style.left = Math.round(this.center.x - this.size.width/2)+'px';
-	},
-	setSelected : function(selected) {
-		hui.cls.set(this.element,'hui_diagram_box_selected',selected);
-	}
-}
-
-if (hui.browser.webkit) {
-	hui.ui.Diagram.Box.prototype._updateCenter = function() {
-		this.element.style.WebkitTransform = 'translate3d(' + Math.round(this.center.x - this.size.width/2) + 'px,' + Math.round(this.center.y - this.size.height/2) + 'px,0)';      
-	}
-}
-
-
-
-
-/** A box in a diagram
- * @constructor
- */
-hui.ui.Diagram.Icon = function(options) {
-	this.options = options;
-	this.id = options.id;
-	this.name = options.name;
-	this.element = hui.get(options.element);	
-	this.center = {};
-	hui.ui.extend(this);
-	hui.ui.Diagram.util.enableDragging(this)
-}
-
-hui.ui.Diagram.Icon.create = function(options,diagram) {
-	options = hui.override({icon:'common/folder',diagram:diagram},options);
-	var e = options.element = hui.build('div',{'class':'hui_diagram_icon'});
-	e.appendChild(hui.ui.createIcon(options.icon,32));
-	if (options.title) {
-		hui.build('strong',{parent:e,text:options.title})
-	}
-	return new hui.ui.Diagram.Icon(options);
-}
-
-hui.ui.Diagram.Icon.prototype = {
-	_syncSize : function() {
-		if (this.size) {
-			return;
-		}
-		this.size = {
-			width : this.element.offsetWidth,
-			height : this.element.offsetHeight
-		};
-	},
-	getSize : function() {
-		this._syncSize();
-		return this.size;
-	},
-	getCenter : function() {
-		return this.center;
-	},
-	setCenter : function(point) {
-		var e = this.element;
-		e.style.top = Math.round(point.y - e.clientHeight/2)+'px';
-		e.style.left = Math.round(point.x - e.clientWidth/2)+'px';
-		this.center = {x : point.x, y : point.y};
-	},
-	setSelected : function(selected) {
-		hui.cls.set(this.element,'hui_diagram_icon_selected',selected);
-	}
-}
-
-/** Utilities **/
-
-hui.ui.Diagram.util = {
-	enableDragging : function(obj) {
-		var diagram = obj.options.diagram;
-		hui.cls.add(obj.element,'hui_diagram_dragable');
-		var dragState = null;
-		hui.drag.register({
-			element : obj.element,
-			onStart : function() {
-				hui.cls.add(obj.element,'hui_diagram_dragging');
-				obj.fixed = true;
-			},
-			onNotMoved : function() {
-				diagram.__select(obj);
-				diagram.fire('select',obj.id);
-			},
-			onBeforeMove : function(e) {
-				diagram.__nodeMoved(obj);
-				e = hui.event(e);
-				obj.element.style.zIndex = hui.ui.nextPanelIndex();
-                var pos = obj.getCenter();
-				var size = obj.getSize();
-                pos = {left:pos.x - size.width/2,top:pos.y - size.height/2};
-				var diagramPosition = hui.position.get(diagram.element);
-				dragState = {
-					left : e.getLeft() - pos.left,
-					top : e.getTop()-pos.top
-				};
-				obj.element.style.right = 'auto';
-			},
- 			onMove : function(e) {
-				var top = (e.getTop()-dragState.top);
-				var left = (e.getLeft()-dragState.left);
-				var size = obj.getSize();
-				top += size.height/2;
-				left += size.width/2;
-				obj.setCenter({x:left,y:top});
-				obj.px = left;
-				obj.py = top;
-				diagram.__nodeMoved(obj);
- 			},
-			onEnd : function() {
-				hui.cls.remove(obj.element,'hui_diagram_dragging');
-				obj.fixed = false;
-				hui.log('end')
-			}
-		});
-		hui.listen(obj.element,'dblclick',function(e) {
-			diagram.__nodeOpen(obj);
-		});
-	}
-}/**
  * @constructor
  */
 hui.ui.RichText = function(options) {
@@ -23005,3 +23634,4 @@ hui.ui.RichText.stopEvent = function(e) {
 }
 
 /* EOF */
+

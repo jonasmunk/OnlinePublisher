@@ -38,7 +38,7 @@
 			<meta http-equiv="X-UA-Compatible" content="IE=edge" />
 			<xsl:choose>
 				<xsl:when test="$dev='true'">
-					<link rel="stylesheet" href="{$context}/hui/{$pathVersion}css/dev.css" type="text/css" media="screen" title="no title" charset="utf-8"/>
+					<link rel="stylesheet" href="{$context}/hui/{$pathVersion}bin/development.css" type="text/css" media="screen" title="no title" charset="utf-8"/>
 				</xsl:when>
 				<xsl:otherwise>
 					<link rel="stylesheet" href="{$context}/hui/{$pathVersion}bin/minimized.css" type="text/css" media="screen" title="no title" charset="utf-8"/>
@@ -80,76 +80,19 @@
 			<xsl:for-each select="//gui:style[@source]">
 				<link rel="stylesheet" href="{@source}" type="text/css" media="screen" title="no title" charset="utf-8"/>
 			</xsl:for-each>
-            <xsl:comment><xsl:value-of select="$dev" /></xsl:comment>
+			<xsl:for-each select="//gui:style[not[@source]]">
+				<style>
+					<xsl:value-of select="."/>
+				</style>
+			</xsl:for-each>
+			
+			
 			<xsl:choose>
 				<xsl:when test="$dev='true'">
-					<script src="{$context}/hui/lib/swfupload/swfupload.js" type="text/javascript" charset="utf-8"><xsl:comment/></script>
-					<script src="{$context}/hui/lib/date.js" type="text/javascript" charset="utf-8"><xsl:comment/></script>
-					<script src="{$context}/hui/lib/json2.js" type="text/javascript" charset="utf-8"><xsl:comment/></script>
-					<script src="{$context}/hui/js/hui.js" type="text/javascript" charset="utf-8"><xsl:comment/></script>
-					<script src="{$context}/hui/js/ui.js" type="text/javascript" charset="utf-8"><xsl:comment/></script>
-					<script src="{$context}/hui/js/hui_animation.js" type="text/javascript" charset="utf-8"><xsl:comment/></script>
-					<script src="{$context}/hui/js/hui_color.js" type="text/javascript" charset="utf-8"><xsl:comment/></script>
-					<script src="{$context}/hui/js/hui_color_table.js" type="text/javascript" charset="utf-8"><xsl:comment/></script>
-					<script src="{$context}/hui/js/hui_require.js" type="text/javascript" charset="utf-8"><xsl:comment/></script>
-					<script src="{$context}/hui/js/hui_store.js" type="text/javascript" charset="utf-8"><xsl:comment/></script>
-					<script src="{$context}/hui/js/Source.js" type="text/javascript" charset="utf-8"><xsl:comment/></script>
-					<script src="{$context}/hui/js/DragDrop.js" type="text/javascript" charset="utf-8"><xsl:comment/></script>
-					<script src="{$context}/hui/js/Window.js" type="text/javascript" charset="utf-8"><xsl:comment/></script>
-					<script src="{$context}/hui/js/Formula.js" type="text/javascript" charset="utf-8"><xsl:comment/></script>
-					<script src="{$context}/hui/js/List.js" type="text/javascript" charset="utf-8"><xsl:comment/></script>
-					<script src="{$context}/hui/js/Tabs.js" type="text/javascript" charset="utf-8"><xsl:comment/></script>
-					<script src="{$context}/hui/js/ObjectList.js" type="text/javascript" charset="utf-8"><xsl:comment/></script>
-					<script src="{$context}/hui/js/Alert.js" type="text/javascript" charset="utf-8"><xsl:comment/></script>
-					<script src="{$context}/hui/js/Button.js" type="text/javascript" charset="utf-8"><xsl:comment/></script>
-					<script src="{$context}/hui/js/Selection.js" type="text/javascript" charset="utf-8"><xsl:comment/></script>
-					<script src="{$context}/hui/js/Toolbar.js" type="text/javascript" charset="utf-8"><xsl:comment/></script>
-					<script src="{$context}/hui/js/ImageInput.js" type="text/javascript" charset="utf-8"><xsl:comment/></script>
-					<script src="{$context}/hui/js/BoundPanel.js" type="text/javascript" charset="utf-8"><xsl:comment/></script>
-					<script src="{$context}/hui/js/Picker.js" type="text/javascript" charset="utf-8"><xsl:comment/></script>
-					<script src="{$context}/hui/js/ImageViewer.js" type="text/javascript" charset="utf-8"><xsl:comment/></script>
-					<script src="{$context}/hui/js/ColorPicker.js" type="text/javascript" charset="utf-8"><xsl:comment/></script>
-					<script src="{$context}/hui/js/Upload.js" type="text/javascript" charset="utf-8"><xsl:comment/></script>
-					<script src="{$context}/hui/js/ProgressBar.js" type="text/javascript" charset="utf-8"><xsl:comment/></script>
-					<script src="{$context}/hui/js/ProgressIndicator.js" type="text/javascript" charset="utf-8"><xsl:comment/></script>
-					<script src="{$context}/hui/js/Gallery.js" type="text/javascript" charset="utf-8"><xsl:comment/></script>
-					<script src="{$context}/hui/js/Calendar.js" type="text/javascript" charset="utf-8"><xsl:comment/></script>
-					<script src="{$context}/hui/js/DatePicker.js" type="text/javascript" charset="utf-8"><xsl:comment/></script>
-					<script src="{$context}/hui/js/Layout.js" type="text/javascript" charset="utf-8"><xsl:comment/></script>
-					<script src="{$context}/hui/js/Dock.js" type="text/javascript" charset="utf-8"><xsl:comment/></script>
-					<script src="{$context}/hui/js/Box.js" type="text/javascript" charset="utf-8"><xsl:comment/></script>
-					<script src="{$context}/hui/js/Wizard.js" type="text/javascript" charset="utf-8"><xsl:comment/></script>
-					<script src="{$context}/hui/js/Input.js" type="text/javascript" charset="utf-8"><xsl:comment/></script>
-					<script src="{$context}/hui/js/SearchField.js" type="text/javascript" charset="utf-8"><xsl:comment/></script>
-					<script src="{$context}/hui/js/Overflow.js" type="text/javascript" charset="utf-8"><xsl:comment/></script>
-					<script src="{$context}/hui/js/Fragment.js" type="text/javascript" charset="utf-8"><xsl:comment/></script>
-					<script src="{$context}/hui/js/Bar.js" type="text/javascript" charset="utf-8"><xsl:comment/></script>
-					<script src="{$context}/hui/js/IFrame.js" type="text/javascript" charset="utf-8"><xsl:comment/></script>
-					<script src="{$context}/hui/js/Segmented.js" type="text/javascript" charset="utf-8"><xsl:comment/></script>
-					<script src="{$context}/hui/js/Flash.js" type="text/javascript" charset="utf-8"><xsl:comment/></script>
-					<script src="{$context}/hui/js/Overlay.js" type="text/javascript" charset="utf-8"><xsl:comment/></script>
-					<script src="{$context}/hui/js/Links.js" type="text/javascript" charset="utf-8"><xsl:comment/></script>
-					<script src="{$context}/hui/js/Link.js" type="text/javascript" charset="utf-8"><xsl:comment/></script>
-					<script src="{$context}/hui/js/LocationField.js" type="text/javascript" charset="utf-8"><xsl:comment/></script>
-					<script src="{$context}/hui/js/LocationPicker.js" type="text/javascript" charset="utf-8"><xsl:comment/></script>
-					<script src="{$context}/hui/js/DropDown.js" type="text/javascript" charset="utf-8"><xsl:comment/></script>
-					<script src="{$context}/hui/js/StyleLength.js" type="text/javascript" charset="utf-8"><xsl:comment/></script>
-					<script src="{$context}/hui/js/DateTimeField.js" type="text/javascript" charset="utf-8"><xsl:comment/></script>
-					<script src="{$context}/hui/js/TokenField.js" type="text/javascript" charset="utf-8"><xsl:comment/></script>
-					<script src="{$context}/hui/js/Checkboxes.js" type="text/javascript" charset="utf-8"><xsl:comment/></script>
-					<script src="{$context}/hui/js/Checkbox.js" type="text/javascript" charset="utf-8"><xsl:comment/></script>
-					<script src="{$context}/hui/js/Radiobuttons.js" type="text/javascript" charset="utf-8"><xsl:comment/></script>
-					<script src="{$context}/hui/js/NumberField.js" type="text/javascript" charset="utf-8"><xsl:comment/></script>
-					<script src="{$context}/hui/js/TextField.js" type="text/javascript" charset="utf-8"><xsl:comment/></script>
-					<script src="{$context}/hui/js/Icon.js" type="text/javascript" charset="utf-8"><xsl:comment/></script>
-					<script src="{$context}/hui/js/ColorInput.js" type="text/javascript" charset="utf-8"><xsl:comment/></script>
-					<script src="{$context}/hui/js/Structure.js" type="text/javascript" charset="utf-8"><xsl:comment/></script>
-					<script src="{$context}/hui/js/Slider.js" type="text/javascript" charset="utf-8"><xsl:comment/></script>
-					<script src="{$context}/hui/js/CodeInput.js" type="text/javascript" charset="utf-8"><xsl:comment/></script>
-					<script src="{$context}/hui/js/ObjectInput.js" type="text/javascript" charset="utf-8"><xsl:comment/></script>
-					<script src="{$context}/hui/js/FontPicker.js" type="text/javascript" charset="utf-8"><xsl:comment/></script>
-					<script src="{$context}/hui/js/FontInput.js" type="text/javascript" charset="utf-8"><xsl:comment/></script>
-					<script src="{$context}/hui/js/Split.js" type="text/javascript" charset="utf-8"><xsl:comment/></script>
+					<script type="text/javascript">
+						_context = '<xsl:value-of select="$context"/>/hui/';
+					</script>
+					<script src="{$context}/hui/bin/development.js" type="text/javascript" charset="utf-8"><xsl:comment/></script>
 				</xsl:when>
 				<xsl:otherwise>
 					<script src="{$context}/hui/{$pathVersion}bin/minimized.js" type="text/javascript" charset="utf-8"><xsl:comment/></script>
@@ -212,12 +155,6 @@
 			</script>
 	
 			<xsl:call-template name="dwr-setup"/>
-	
-			<xsl:for-each select="//gui:style[not[@source]]">
-				<style>
-					<xsl:value-of select="."/>
-				</style>
-			</xsl:for-each>
 		</head>
 		<body>
 			<xsl:attribute name="class">

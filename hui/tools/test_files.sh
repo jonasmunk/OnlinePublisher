@@ -2,9 +2,13 @@
 
 import os
 import re
+import sys
 import codecs
 import json
 from xml.sax.saxutils import escape
+
+pathname = os.path.dirname(sys.argv[0])
+base = os.path.abspath(pathname)+'/..'
 
 def hey(dir,title) :
 	xml ='    <item icon="common/folder" title="'+title+'" value="'+title+'">\n'
@@ -18,8 +22,6 @@ def hey(dir,title) :
 	xml+='    </item>\n'
 	return xml
 
-
-base = os.getcwd()+'/..'
 
 items = '<?xml version="1.0"?>\n<items>\n'
 items+='    <title title="Tests"/>\n'

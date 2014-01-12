@@ -2,16 +2,14 @@
 
 import os
 import re
+import sys
 import codecs
 from collections import deque
 from sets import Set
 from xml.sax.saxutils import escape
 
-
-
-#base = '/Users/jbm/Sites/onlinepublisher/hui'
-
-base = os.getcwd()+'/..'
+pathname = os.path.dirname(sys.argv[0])
+base = os.path.abspath(pathname)+'/..'
 
 start = re.compile('<!--doc*')
 end = re.compile('-->*')

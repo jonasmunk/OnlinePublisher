@@ -36,6 +36,7 @@ class In2iGui {
 		global $basePath;
 		
 		$xhtml = strpos($_SERVER['HTTP_ACCEPT'],'application/xhtml+xml')!==false;
+		$xhtml = false;
 		if (Request::exists('xhtml','false')) {
 			$xhtml = false;
 		}

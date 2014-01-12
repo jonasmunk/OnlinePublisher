@@ -266,7 +266,7 @@
     
 	<xsl:if test="$preview='true' and $mini!='true'">
 		<script src="editor.js?version={$timestamp}" type="text/javascript"><xsl:comment/></script>
-		<script src="{$path}Editor/Template/{$template}/js/editor.php?version={$timestamp}" type="text/javascript"><xsl:comment/></script>
+		<script src="{$path}{$timestamp-url}Editor/Template/{$template}/js/editor.php{$timestamp-query}" type="text/javascript"><xsl:comment/></script>
 	</xsl:if>
     
 	<xsl:if test="//movie:movie">
