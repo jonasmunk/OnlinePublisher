@@ -42,6 +42,8 @@ hui.browser.msie9 = navigator.userAgent.indexOf('MSIE 9') !== -1;
 hui.browser.msie9compat = hui.browser.msie7 && navigator.userAgent.indexOf('Trident/5.0') !== -1;
 /** If the browser is InternetExplorer 10 */
 hui.browser.msie10 = navigator.userAgent.indexOf('MSIE 10') !== -1;
+/** If the browser is InternetExplorer 11 */
+hui.browser.msie11 = navigator.userAgent.indexOf('Trident/7.0') !== -1;
 /** If the browser is WebKit based */
 hui.browser.webkit = navigator.userAgent.indexOf('WebKit') !== -1;
 /** If the browser is any version of Safari */
@@ -11524,7 +11526,7 @@ hui.ui.Upload.HTML5 = function(parent) {
 }
 
 hui.ui.Upload.HTML5.support = function() {
-	var supported = window.File!==undefined && (hui.browser.webkit || hui.browser.gecko);//(window.File!==undefined && window.FileReader!==undefined && window.FileList!==undefined && window.Blob!==undefined);
+	var supported = window.File!==undefined && (hui.browser.webkit || hui.browser.gecko || hui.browser.msie10 || hui.browser.msie11);//(window.File!==undefined && window.FileReader!==undefined && window.FileList!==undefined && window.Blob!==undefined);
 	hui.log('HTML5: supported='+supported);
 	//supported = !true;
 	return {

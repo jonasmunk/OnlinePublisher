@@ -732,7 +732,7 @@ hui.ui.Upload.HTML5 = function(parent) {
 }
 
 hui.ui.Upload.HTML5.support = function() {
-	var supported = window.File!==undefined && (hui.browser.webkit || hui.browser.gecko);//(window.File!==undefined && window.FileReader!==undefined && window.FileList!==undefined && window.Blob!==undefined);
+	var supported = window.File!==undefined && (hui.browser.webkit || hui.browser.gecko || hui.browser.msie10 || hui.browser.msie11);//(window.File!==undefined && window.FileReader!==undefined && window.FileList!==undefined && window.Blob!==undefined);
 	hui.log('HTML5: supported='+supported);
 	//supported = !true;
 	return {
