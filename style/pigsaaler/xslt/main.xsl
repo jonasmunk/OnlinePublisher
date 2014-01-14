@@ -56,7 +56,7 @@
 		</div>
 	</div>
 	<div class="layout_footer"><xsl:comment/></div>
-	<xsl:call-template name="util:googleanalytics"><xsl:with-param name="code" select="'UA-420000-9'"/></xsl:call-template>
+	<xsl:call-template name="util:googleanalytics"/>
 </body>
 </html>
 </xsl:template>

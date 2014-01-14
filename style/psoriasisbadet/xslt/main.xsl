@@ -59,9 +59,7 @@
 						</p>
 					</div>
 				</div>
-				<xsl:call-template name="util:googleanalytics">
-					<xsl:with-param name="code" select="'UA-420000-14'"/>
-				</xsl:call-template>
+				<xsl:call-template name="util:googleanalytics"/>
 			</body>
 		</html>
 	</xsl:template>

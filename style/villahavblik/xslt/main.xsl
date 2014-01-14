@@ -73,7 +73,7 @@
 		new op.Dissolver({elements:one.getElementsByTagName('div'),wait:5000,transition:3000,delay:4500});
 		new op.Dissolver({elements:two.getElementsByTagName('div'),wait:5000,transition:3000});
 	</script>
-	<xsl:call-template name="util:googleanalytics"><xsl:with-param name="code" select="'UA-420000-4'"/></xsl:call-template>
+	<xsl:call-template name="util:googleanalytics"/>
 </body>
 </html>
 </xsl:template>

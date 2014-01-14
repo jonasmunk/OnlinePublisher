@@ -51,7 +51,7 @@
 		<xsl:apply-templates select="f:frame/f:links/f:bottom"/>
 		<a class="chrome_design" href="http://www.in2isoft.dk/">Designet og udviklet af In2iSoft</a>
 	</div>
-	<xsl:call-template name="util:googleanalytics"><xsl:with-param name="code" select="'UA-420000-7'"/></xsl:call-template>
+	<xsl:call-template name="util:googleanalytics"/>
 </body>
 </html>
 </xsl:template>

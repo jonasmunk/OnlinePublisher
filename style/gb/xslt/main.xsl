@@ -88,9 +88,7 @@
 							<a href="http://www.in2isoft.dk/"><span>Designet og udviklet af In2iSoft</span></a>
 						</p>
 					</div>
-				<xsl:call-template name="util:googleanalytics">
-					<xsl:with-param name="code" select="'UA-420000-14'"/>
-				</xsl:call-template>
+				<xsl:call-template name="util:googleanalytics"/>
 			</body>
 		</html>
 	</xsl:template>
