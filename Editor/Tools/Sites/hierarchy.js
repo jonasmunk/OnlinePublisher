@@ -7,7 +7,7 @@ hui.ui.listen({
 	
 
 	$select$selector : function(item) {
-		newHierarchyItem.setEnabled(item.kind=='hierarchy' || item.kind=='hierarchyItem');
+		newHierarchyItem.setEnabled(item!=null && (item.kind=='hierarchy' || item.kind=='hierarchyItem'));
 	},
 	$open$selector : function(obj) {
 		if (obj.kind=='hierarchyItem') {

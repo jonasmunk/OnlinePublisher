@@ -1,3 +1,19 @@
+hui.ui.listen({
+    count : 0,
+    $ready : function() {
+        this._check();
+    },
+    $loaded$selector : function() {
+        this._check();
+    },
+    _check : function() {
+        this.count++;
+        if (this.count==2) {
+            mainController._restore();
+        }
+    }
+})
+
 var mainController = {
 	
 	activePage : 0,
@@ -12,28 +28,17 @@ var mainController = {
 		if (pageInfo) {
 			this.loadPage(pageInfo);
 		}
-		//window.setTimeout(this._restore.bind(this),2000)
-	},
-	$loaded$selector : function() {
-		this._restore();
 	},
 	_restore : function() {
-		return;
-		if (this._restored) {
-			return;
-		}
-		if(typeof(Storage)!=="undefined") {
-			if (localStorage['selector.value']) {
-				selector.setValue(localStorage['selector.value']);
-			}
-		}
-		this._restored = true;
+        return;
+        //hui.log('restoring: ',hui.store.get('search'))
+		search.setValue(hui.store.get('search'));
+		selector.setValue(hui.store.get('selector.value'));
 	},
-	_store : function(key,value) {
-		return;
-		if(typeof(Storage)!=="undefined") {
-			localStorage[key] = value;
-		}
+	_store : function() {
+        return;
+        hui.store.set('selector.value',selector.getValue().value);
+        hui.store.set('search',search.getValue());
 	},
 	
 	//////////////// Search //////////////
@@ -41,14 +46,17 @@ var mainController = {
 	$valueChanged$search : function() {
 		list.resetState();
 		var value = selector.getValue();
-		if (value.kind=='hierarchy' || value.kind=='hierarchyItem') {
-			selector.setValue('all');
-		}
+        if (value!=null) {
+    		if (value.kind=='hierarchy' || value.kind=='hierarchyItem') {
+    			selector.setValue('all');
+    		}
+        }
+		this._store();
 	},
 	
 	$select$selector : function(item) {
 		if (item) {
-			this._store('selector.value',item.value);
+			this._store();
 			list.resetState();
 			reviewBar.setVisible(item.value=='review');
 		}

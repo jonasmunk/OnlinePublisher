@@ -183,5 +183,11 @@ class In2iGui {
 		}
 		return $out;
 	}
+	
+	static function compile() {
+        global $basePath;
+        $cmd = $basePath."hui/tools/compile.sh";
+        return shell_exec($cmd);
+    }
 }
 ?>

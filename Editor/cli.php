@@ -5,54 +5,68 @@
  */
 require_once 'Include/Public.php';
 
+if (ini_get('display_errors')) {
+    ini_set('display_errors', 0);
+}
+error_reporting(E_ERROR | E_PARSE);
+
 Console::exitIfNotConsole();
 
 $args = Console::getArguments();
 
 if ($args[1]=='test') {
-  if (!Database::testConnection()) {
-    echo "No database - no testing!\n";
-    exit;
-  }
-  if (ini_get('display_errors')) {
-      ini_set('display_errors', 0);
-  }
-  error_reporting(E_ERROR | E_PARSE);
-  
-  if ($args[2]) {
-    TestService::runTest($args[2],new ConsoleReporter());
-  } else {
-    TestService::runAllTests(new ConsoleReporter());
-  }
-  
+    Commander::test($args);
 }
 else if ($args[1]=='style') {
-    DesignService::rebuild();
+    Commander::style();    
 }
 else if ($args[1]=='hui') {
-    hui();
+    Commander::hui();
+}
+else if ($args[1]=='classpath') {
+    Commander::classpath();
 }
 else if ($args[1]=='full') {
-    hui();
-    DesignService::rebuild();
+    Commander::classpath();
+    Commander::hui();
+    Commander::style();
+} else {
+    echo "Tell me what to do: \nstyle \nhui \nclasspath \nfull";
+    echo "\n: ";
+    $handle = fopen ("php://stdin","r");
+    $line = fgets($handle);
+    echo "Your choice: $line\n";
 }
 
-function hui() {
-    global $basePath;
-    $cmd = $basePath."hui/tools/compile.sh";
-    echo shell_exec($cmd);
+
+class Commander {
+	
+	static function test($args) {
+        if (!Database::testConnection()) {
+            echo "No database - no testing!\n";
+            exit;
+        }
+
+        if ($args[2]) {
+            TestService::runTest($args[2],new ConsoleReporter());
+        } else {
+            TestService::runAllTests(new ConsoleReporter());
+        }
+        
+    }
+
+	static function hui() {
+        echo In2iGui::compile();        
+    }
+
+	static function style() {
+        DesignService::rebuild();  
+    }
+
+	static function classpath() {
+        $success = ClassService::rebuildClassPaths();
+        echo $success ? 'Classpath successfully rebuild' : 'ERROR: Classpath could not be rebuild';
+        echo PHP_EOL;  
+    }
 }
-
-
-exit;
-
-echo "Are you sure you want to do this?  Type 'yes' to continue: ";
-$handle = fopen ("php://stdin","r");
-$line = fgets($handle);
-if(trim($line) != 'yes'){
-    echo "ABORTING!\n";
-    exit;
-}
-echo "\n";
-echo "Thank you, continuing...\n";
 ?>

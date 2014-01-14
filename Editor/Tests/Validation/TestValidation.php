@@ -46,7 +46,7 @@ class TestValidation extends UnitTestCase {
 				
 		$designs = DesignService::getAvailableDesigns();
 		foreach ($designs as $name => $info) {
-			$url = ConfigurationService::getCompleteBaseUrl().'?id='.$page->getId().'&design='.$name;
+			$url = ConfigurationService::getCompleteBaseUrl().'?id='.$page->getId().'&design='.$name.'&dev=false';
 			Log::debug('Checking: '.$url);
 			$file = new RemoteFile($url);
 			$html = $file->getData();
@@ -55,8 +55,13 @@ class TestValidation extends UnitTestCase {
 			$this->assertTrue(strpos($html, '<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">')!==false,'The design "'.$name.'" does not have correct html tag');
 			$this->assertFalse(strpos($html, 'http://uri.in2isoft.com')!==false,'The design "'.$name.'" may contain xml namespaces');
 			$this->assertTrue(strpos($html, 'Test page for validation')!==false,'The design "'.$name.'" does not contain the title');
-			$this->assertTrue(strpos($html, '/bin/minimized.site.js')!==false,'The design "'.$name.'" does include minimized site scripts');
-			$this->assertTrue(strpos($html, '/bin/minimized.site.css')!==false,'The design "'.$name.'" does include minimized site css');
+			if (isset($info->build)) {
+                $this->assertTrue(strpos($html, '/js/script.js')!==false,'The design "'.$name.'" does not include scripts');
+                $this->assertTrue(strpos($html, '/css/style.css')!==false,'The design "'.$name.'" does not include css');			  
+			} else {
+                $this->assertTrue(strpos($html, '/bin/minimized.site.js')!==false,'The design "'.$name.'" does not include minimized site scripts');
+                $this->assertTrue(strpos($html, '/bin/minimized.site.css')!==false,'The design "'.$name.'" does not include minimized site css');			    
+			}
 			$this->assertTrue(XmlService::validateSnippet($html),'The design "'.$name.'" is not valid xml');
 		}
 		

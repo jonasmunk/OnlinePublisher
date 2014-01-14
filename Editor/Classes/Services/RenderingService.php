@@ -93,6 +93,10 @@ class RenderingService {
 			$userName=$user['username'];
 			$userTitle=$user['title'];
 		}
+        $development = ConfigurationService::isDebug();
+        if (Request::exists('dev')) {
+            $development = Request::getBoolean('dev');
+        }
 		$mainPath = $incPath.'style/'.$mainDesign.'/xslt/'.$mainFile.'.xsl';
 		$templatePath = $incPath.'style/'.$contentDesign.'/xslt/'.$template.'.xsl';
         $encoding = ConfigurationService::isUnicode() ? 'UTF-8' : 'ISO-8859-1';
@@ -114,7 +118,7 @@ class RenderingService {
 		'<xsl:variable name="preview">'.($preview ? 'true' : 'false').'</xsl:variable>'.
 		'<xsl:variable name="editor">false</xsl:variable>'.
 		'<xsl:variable name="mini">'.(Request::getBoolean('mini') ? 'true' : 'false').'</xsl:variable>'.
-		'<xsl:variable name="development">'.(Request::getBoolean('dev') || ConfigurationService::isDebug() ? 'true' : 'false').'</xsl:variable>'.
+		'<xsl:variable name="development">'.($development ? 'true' : 'false').'</xsl:variable>'.
 		'<xsl:variable name="highquality">'.(Request::getBoolean('print') ? 'true' : 'false').'</xsl:variable>'.
 		'<xsl:variable name="urlrewrite">'.(ConfigurationService::isUrlRewrite() ? 'true' : 'false').'</xsl:variable>'.
 		'<xsl:variable name="timestamp">'.SystemInfo::getDate().'</xsl:variable>'.

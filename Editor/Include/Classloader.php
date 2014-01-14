@@ -5,15 +5,15 @@ if (!isset($GLOBALS['basePath'])) {
 }
 require_once $basePath.'Editor/Info/Classpaths.php';
 function __autoload($class_name) {
-	global $basePath,$HUI_EDITOR_CLASSES;
+	global $basePath,$HUMANISE_EDITOR_CLASSES;
 	
   // TODO : Is it necessary to check if it exists?
 	//if (class_exists($class_name)) {
 	//	return;
 	//}
-	if (is_array($HUI_EDITOR_CLASSES)) {
-		if (array_key_exists($class_name,$HUI_EDITOR_CLASSES)) {
-			require_once $basePath.'Editor/Classes/'.$HUI_EDITOR_CLASSES[$class_name];
+	if (is_array($HUMANISE_EDITOR_CLASSES)) {
+		if (array_key_exists($class_name,$HUMANISE_EDITOR_CLASSES)) {
+			require_once $basePath.'Editor/Classes/'.$HUMANISE_EDITOR_CLASSES[$class_name];
 			return;
 		}
 	}

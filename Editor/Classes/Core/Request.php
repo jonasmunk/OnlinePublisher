@@ -129,7 +129,7 @@ class Request {
 	 * @return boolean True if the value equals "true", false otherwise
 	 */
 	static function getBoolean($key) {
-    return Request::getString($key)=='true';
+        return Request::getString($key)=='true';
 	}
 
 	/**
