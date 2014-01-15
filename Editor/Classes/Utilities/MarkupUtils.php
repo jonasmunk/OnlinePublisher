@@ -40,14 +40,14 @@ class MarkupUtils {
 		
 		$moved = array();
 
-		preg_match_all("/<!--[if[\s\S]*endif]-->/uU", $html, $matches);
+  	preg_match_all("/<!--\\[if[\s\S]*endif\\]-->/uU", $html, $matches);
 		$found = $matches[0];
-		foreach ($found as $thing) {
-			if (strpos($thing,'<script')===FALSE) {
+		foreach ($found as $match) {
+			if (strpos($match,'<script')===FALSE) {
 				continue;
 			}
-			$html = str_replace($thing,'',$html);
-			$moved[] = $thing;
+			$html = str_replace($match,'',$html);
+			$moved[] = $match;
 		}
 		
 		
