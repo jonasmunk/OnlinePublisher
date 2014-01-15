@@ -46,13 +46,13 @@
 			</xsl:choose>
 	
 			<xsl:comment><![CDATA[[if IE 8]>
-				<link rel="stylesheet" type="text/css" href="]]><xsl:value-of select="$context"/><![CDATA[/hui/]]><xsl:value-of select="$pathVersion"/><![CDATA[css/msie8.css]]><xsl:value-of select="$version"/><![CDATA["> </link>
+				<link rel="stylesheet" type="text/css" href="]]><xsl:value-of select="$context"/><![CDATA[/hui/]]><xsl:value-of select="$pathVersion"/><![CDATA[css/msie8.css]]><![CDATA["> </link>
 			<![endif]]]></xsl:comment>
 			<xsl:comment><![CDATA[[if lt IE 7]>
-				<link rel="stylesheet" type="text/css" href="]]><xsl:value-of select="$context"/><![CDATA[/hui/]]><xsl:value-of select="$pathVersion"/><![CDATA[css/msie6.css]]><xsl:value-of select="$version"/><![CDATA["> </link>
+				<link rel="stylesheet" type="text/css" href="]]><xsl:value-of select="$context"/><![CDATA[/hui/]]><xsl:value-of select="$pathVersion"/><![CDATA[css/msie6.css]]><![CDATA["> </link>
 			<![endif]]]></xsl:comment>
 			<xsl:comment><![CDATA[[if IE 7]>
-				<link rel="stylesheet" type="text/css" href="]]><xsl:value-of select="$context"/><![CDATA[/hui/]]><xsl:value-of select="$pathVersion"/><![CDATA[css/msie7.css]]><xsl:value-of select="$version"/><![CDATA["> </link>
+				<link rel="stylesheet" type="text/css" href="]]><xsl:value-of select="$context"/><![CDATA[/hui/]]><xsl:value-of select="$pathVersion"/><![CDATA[css/msie7.css]]><![CDATA["> </link>
 			<![endif]]]></xsl:comment>
 	
 			<xsl:if test="//gui:graph">

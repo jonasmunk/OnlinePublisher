@@ -19,10 +19,15 @@ table.hui_layout
 	border-collapse: collapse;
 }
 
-a.hui_toolbar_icon_disabled
+a.hui_toolbar_icon_disabled span.hui_icon
 {
 	filter: alpha(opacity = 30);
 	background-color: #F2F2F3;
+}
+
+a.hui_toolbar_icon_disabled strong
+{
+    color: #999;
 }
 
 a.hui_button_disabled

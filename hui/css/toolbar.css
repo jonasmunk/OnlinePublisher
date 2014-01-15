@@ -96,6 +96,14 @@ a.hui_toolbar_icon
 	text-decoration: none;
 }
 
+a.hui_toolbar_icon:active
+{
+    -webkit-transform: scale(.9);
+    -moz-transform: scale(.9);
+    -ms-transform: scale(.9);
+    transform: scale(.9);
+}
+
 a.hui_toolbar_icon:focus
 {
 	background: url('../gfx/toolbar_bg.png') left 0 no-repeat;

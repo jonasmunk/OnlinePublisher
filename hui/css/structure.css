@@ -13,6 +13,9 @@ div.hui_structure_top
 	background: #fff;
 	background: #CCC -webkit-gradient(linear, 0% 0%, 0% 100% , from(white), to(#F0F0F0));
 	background: -moz-linear-gradient(top, white, #F0F0F0);
+	background: -webkit-linear-gradient(top, white, #F0F0F0);
+	background: -ms-linear-gradient(top, white, #F0F0F0);
+	background: linear-gradient(top, white, #F0F0F0);
 	filter: progid:DXImageTransform.Microsoft.gradient (GradientType=0, startColorstr=white, endColorstr=#F0F0F0);
 }
 
@@ -28,6 +31,9 @@ div.hui_structure_bottom
 	background: #fff;
 	background: #CCC -webkit-gradient(linear, 0% 0%, 0% 100% , from(white), to(#F0F0F0));
 	background: -moz-linear-gradient(top, white, #F0F0F0);
+	background: -webkit-linear-gradient(top, white, #F0F0F0);
+	background: -ms-linear-gradient(top, white, #F0F0F0);
+	background: linear-gradient(top, white, #F0F0F0);
 	filter: progid:DXImageTransform.Microsoft.gradient (GradientType=0, startColorstr=white, endColorstr=#F0F0F0);
 }
 

@@ -68,6 +68,8 @@ hui.browser.mediaQueries = hui.browser.opacity;
 /** If the browser supports CSS animations */
 hui.browser.animation = !hui.browser.msie6 && !hui.browser.msie7 && !hui.browser.msie8 && !hui.browser.msie9;
 
+hui.browser.wordbreak = !hui.browser.msie6 && !hui.browser.msie7 && !hui.browser.msie8;
+
 hui.browser.touch = "ontouchstart" in window || window.DocumentTouch && document instanceof DocumentTouch;
 
 (function() {

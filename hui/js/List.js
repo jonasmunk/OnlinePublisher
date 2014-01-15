@@ -590,7 +590,12 @@ hui.ui.List.prototype = {
 				button.click(this._buttonClick.bind(this))
 				cell.appendChild(button.getElement());
 			} else if (hui.dom.isElement(child,'wrap')) {
-				hui.dom.addText(cell,this._wrap(hui.dom.getText(child)));
+                if (hui.browser.wordbreak) {
+                    hui.cls.add(cell,'hui_list_wrap');
+                    hui.dom.addText(cell,hui.dom.getText(child));
+                } else {
+    				hui.dom.addText(cell,this._wrap(hui.dom.getText(child)));                    
+                }
 			} else if (hui.dom.isElement(child,'delete')) {
 				this._parseCell(child,hui.build('del',{parent:cell}));
 			} else if (hui.dom.isElement(child,'strong')) {

@@ -77,6 +77,11 @@ div.hui_list td
 	cursor: default;
 }
 
+.hui_list_wrap
+{
+    word-break: break-word;
+}
+
 .hui_list_object
 {
 	overflow: hidden;
