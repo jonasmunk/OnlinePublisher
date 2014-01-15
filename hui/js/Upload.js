@@ -408,7 +408,8 @@ hui.ui.Upload._buildForm = function(widget) {
 	var options = widget.options;
 
 	hui.ui.Upload._nameIndex++;
-	var frameName = 'hui_upload_'+hui.ui.Upload.Frame.nameIndex;
+	var frameName = 'hui_upload_'+hui.ui.Upload._nameIndex;
+    hui.log('Frame: name='+frameName);
 
 	var form = hui.build('form');
 	form.setAttribute('action',options.url || '');
@@ -458,9 +459,16 @@ hui.ui.Upload.Frame.prototype = {
 		var form = this.form = hui.ui.Upload._buildForm(this.parent);
 		var frameName = form.getAttribute('target');
 		
-		var iframe = this.iframe = hui.build('iframe',{name : frameName, id : frameName, src : hui.ui.context+'/hui/html/blank.html', style : 'display:none'});
+		var iframe = this.iframe = hui.build(
+            'iframe',{
+                name : frameName, 
+                id : frameName, 
+                src : hui.ui.context+'/hui/html/blank.html', 
+                style : 'display:none'
+            });
 		this.parent.element.appendChild(iframe);
-		hui.listen(this.iframe,'load',function() {this._uploadComplete()}.bind(this));
+        var self = this;
+		hui.listen(iframe,'load',function() {self._uploadComplete()});
 		
 		this.fileInput = hui.build('input',{'type':'file','name':options.fieldName});
 		hui.listen(this.fileInput,'change',this._onSubmit.bind(this));
@@ -509,10 +517,11 @@ hui.ui.Upload.Frame.prototype = {
 		this.item = this.parent.$_addItem({name:this._getFileName()});
 		this.item.setWaiting();
 		this._rebuildFileInput();
-		hui.log('Frame: Upload started');
+		hui.log('Frame: Upload started:'+this.uploading);
 	},
 	
 	_uploadComplete : function() {
+        hui.log('complete:'+this.uploading+' / '+this.parent.name);
 		if (!this.uploading) {
 			return;
 		}
