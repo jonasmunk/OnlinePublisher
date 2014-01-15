@@ -221,6 +221,9 @@ div.hui_bar_layout
 {
     background: #ccc -webkit-gradient(linear, 0% 0%, 0% 100% , from(#fff), to(rgb(240, 240, 240)));
 	background: -moz-linear-gradient(top, #fff, rgb(240,240,240));
+	background: -webkit-linear-gradient(top, #fff, rgb(240,240,240));
+	background: -ms-linear-gradient(top, #fff, rgb(240,240,240));
+	background: linear-gradient(top, #fff, rgb(240,240,240));
     filter: progid:DXImageTransform.Microsoft.gradient (GradientType=0, startColorstr=#ffffff, endColorstr=#eeeeee);
 	height: 28px;
 	border: none;
@@ -354,6 +357,9 @@ div.hui_bar_layout_mini
 {
     background: #ccc -webkit-gradient(linear, 0% 0%, 0% 100% , from(#fff), to(rgb(240, 240, 240)));
 	background: -moz-linear-gradient(top, #fff, rgb(240,240,240));
+	background: -webkit-linear-gradient(top, #fff, rgb(240,240,240));
+	background: -ms-linear-gradient(top, #fff, rgb(240,240,240));
+	background: linear-gradient(top, #fff, rgb(240,240,240));
     filter: progid:DXImageTransform.Microsoft.gradient (GradientType=0, startColorstr=#ffffff, endColorstr=#eeeeee);
 	height: 22px;
 	border-bottom: 1px solid #ddd;
@@ -404,6 +410,9 @@ div.hui_bar_layout_mini a.hui_bar_button_selected, div.hui_bar_layout_mini a.hui
 {
     background: #ccc -webkit-gradient(linear, 0% 0%, 0% 80% , from(#abc), to(#EBF0F7));
 	background: -moz-linear-gradient(top, #bbb, #ddd);
+	background: -ms-linear-gradient(top, #bbb, #ddd);
+	background: -webkit-linear-gradient(top, #bbb, #ddd);
+	background: linear-gradient(top, #bbb, #ddd);
     filter: progid:DXImageTransform.Microsoft.gradient (GradientType=0, startColorstr=#bbbbbb, endColorstr=#dddddd);
 	border-color: #bbb;
 }

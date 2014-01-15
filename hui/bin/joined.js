@@ -68,6 +68,8 @@ hui.browser.mediaQueries = hui.browser.opacity;
 /** If the browser supports CSS animations */
 hui.browser.animation = !hui.browser.msie6 && !hui.browser.msie7 && !hui.browser.msie8 && !hui.browser.msie9;
 
+hui.browser.wordbreak = !hui.browser.msie6 && !hui.browser.msie7 && !hui.browser.msie8;
+
 hui.browser.touch = "ontouchstart" in window || window.DocumentTouch && document instanceof DocumentTouch;
 
 (function() {
@@ -7403,7 +7405,12 @@ hui.ui.List.prototype = {
 				button.click(this._buttonClick.bind(this))
 				cell.appendChild(button.getElement());
 			} else if (hui.dom.isElement(child,'wrap')) {
-				hui.dom.addText(cell,this._wrap(hui.dom.getText(child)));
+                if (hui.browser.wordbreak) {
+                    hui.cls.add(cell,'hui_list_wrap');
+                    hui.dom.addText(cell,hui.dom.getText(child));
+                } else {
+    				hui.dom.addText(cell,this._wrap(hui.dom.getText(child)));                    
+                }
 			} else if (hui.dom.isElement(child,'delete')) {
 				this._parseCell(child,hui.build('del',{parent:cell}));
 			} else if (hui.dom.isElement(child,'strong')) {
@@ -11572,6 +11579,7 @@ hui.ui.Upload.HTML5.prototype = {
 	_submit : function(e) {
 		var files = this.fileInput.files;
 		this.parent._transferFiles(files);
+        // TODO: reset/replace input field in IE
 	}
 }
 
