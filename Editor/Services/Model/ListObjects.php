@@ -33,7 +33,7 @@ $writer->startList()->
 	if ($type=='') {
 		$writer->header(array('title'=>'Type','key'=>'type','sortable'=>true,'width'=>20));
 	}
-	$writer->header(array('title'=>array('Modified','da'=>'Ændret'),'key'=>'updated','sortable'=>true,'width'=>1));
+	$writer->header(array('title'=>array('Modified','da'=>'Ã†ndret'),'key'=>'updated','sortable'=>true,'width'=>1));
 	$writer->endHeaders();
 
 foreach ($objects as $object) {
@@ -41,7 +41,7 @@ foreach ($objects as $object) {
 		startCell(array('icon'=>$object->getIcon()))->
 			text($object->getTitle())->
 		endCell()->
-		cell($object->getNote());
+        startCell()->startWrap()->text($object->getNote())->endWrap()->endCell();
 		if ($type=='') {
 			$writer->cell($object->getType());
 		}

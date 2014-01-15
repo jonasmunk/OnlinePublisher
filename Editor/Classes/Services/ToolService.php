@@ -64,7 +64,7 @@ class ToolService {
 	static function getInfo($key) {
 		global $basePath;
 		$path = $basePath."Editor/Tools/".$key."/info.json";
-		return JsonService::readFile($path);
+		return Strings::toUnicode(JsonService::readFile($path));
 	}
 	
 	static function install($key) {

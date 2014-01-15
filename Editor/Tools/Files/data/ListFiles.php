@@ -34,7 +34,7 @@ if ($type) {
 	$query['mimetypes'] = FileService::kindToMimeTypes($type);
 }
 if ($main=='latest') {
-	$query['createdMin'] = Dates::addDays(mktime(),-1);
+	$query['createdMin'] = Dates::addDays(time(),-1);
 }
 
 $list = File::find($query);

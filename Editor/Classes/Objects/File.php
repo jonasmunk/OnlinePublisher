@@ -111,7 +111,7 @@ class File extends Object {
 		}
 	}
 	
-    function find($query = array()) {
+    static function find($query = array()) {
     	$parts = array();
 		$parts['columns'] = 'object.id';
 		$parts['tables'] = 'file,object';
@@ -152,7 +152,7 @@ class File extends Object {
 		return $list;
 	}
 	
-	function getTypeCounts() {
+	static function getTypeCounts() {
 		$sql="select type,count(object_id) as count from file group by type order by type";
 		return Database::selectAll($sql);
 	}

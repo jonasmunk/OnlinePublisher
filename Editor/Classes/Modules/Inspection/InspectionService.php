@@ -46,9 +46,9 @@ class InspectionService {
 			$ok = function_exists('curl_init');
 			$inspection = new Inspection();
 			$inspection->setCategory('environment');
-			$inspection->setEntity(array('type'=>'api','title'=>'Netværksklient (CURL)','id'=>'curl','icon'=>'common/object'));
+			$inspection->setEntity(array('type'=>'api','title'=>'NetvÃ¦rksklient (CURL)','id'=>'curl','icon'=>'common/object'));
 			$inspection->setStatus($ok ? 'ok' : 'error');
-			$inspection->setText($ok ? 'Netværksklient er installeret' : 'Netværksklient mangler');
+			$inspection->setText($ok ? 'NetvÃ¦rksklient er installeret' : 'NetvÃ¦rksklient mangler');
 			$inspections[] = $inspection;
 		}
 		{
@@ -73,9 +73,9 @@ class InspectionService {
 			$ok = function_exists('openssl_encrypt');
 			$inspection = new Inspection();
 			$inspection->setCategory('environment');
-			$inspection->setEntity(array('type'=>'api','title'=>'Krypteret netværk (OPENSSL)','id'=>'openssl','icon'=>'common/object'));
+			$inspection->setEntity(array('type'=>'api','title'=>'Krypteret netvÃ¦rk (OPENSSL)','id'=>'openssl','icon'=>'common/object'));
 			$inspection->setStatus($ok ? 'ok' : 'error');
-			$inspection->setText($ok ? 'Krypteret netværk er installeret' : 'Krypteret netværk mangler');
+			$inspection->setText($ok ? 'Krypteret netvÃ¦rk er installeret' : 'Krypteret netvÃ¦rk mangler');
 			$inspections[] = $inspection;
 		}
 		
@@ -126,7 +126,7 @@ class InspectionService {
 			$inspection->setCategory('model');
 			$inspection->setEntity($entity);
 			$inspection->setStatus('error');
-			$inspection->setText('Opsætningen har intet hierarki');
+			$inspection->setText('OpsÃ¦tningen har intet hierarki');
 			$inspections[] = $inspection;
 		}
 		Database::free($result);

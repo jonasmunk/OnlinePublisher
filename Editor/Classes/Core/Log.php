@@ -11,7 +11,6 @@ if (!isset($GLOBALS['basePath'])) {
 class Log {
 	
 	static function debug($first,$second=null) {
-    return;
 		if (ConfigurationService::isDebug()) {
 			if ($second!=null) {
 				error_log($first . ': ' . print_r($second,true));				

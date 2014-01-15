@@ -232,7 +232,7 @@ class ListWriter {
 	}
 
 	function button($options=array()) {
-		echo '<button text="'.Strings::escapeXML(GuiUtils::getTranslated($options['text'])).'"';
+		echo '<button text="'.Strings::escapeEncodedXML(GuiUtils::getTranslated($options['text'])).'"';
 		if (isset($options['data'])) {
 			echo ' data="'.Strings::escapeXML(Strings::toJSON($options['data'])).'"';
 		}
