@@ -40,7 +40,7 @@ foreach ($result->getList() as $row) {
 	$writer->startCell()->text($row['category'])->endCell();
 	$writer->startCell()->text($row['event'])->endCell();
 	$writer->startCell()->text($row['entity'])->endCell();
-	$writer->startCell()->text($row['message'])->endCell();
+	$writer->startCell()->startWrap()->text($row['message'])->endWrap()->endCell();
 	$writer->startCell()->text($row['username'])->endCell();
 	if ($showIpSession) {
 		$writer->startCell()->text($row['ip'])->endCell();

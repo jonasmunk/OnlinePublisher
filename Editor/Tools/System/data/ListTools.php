@@ -12,8 +12,8 @@ $writer = new ListWriter();
 
 $writer->startList(array('unicode'=>true))->
 	startHeaders()->
-		header(array('title'=>array('Tool','da'=>'Værktøj'),'width'=>40))->
-		header(array('title'=>array('Key','da'=>'Nøgle'),'width'=>30))->
+		header(array('title'=>array('Tool','da'=>'VÃ¦rktÃ¸j'),'width'=>40))->
+		header(array('title'=>array('Key','da'=>'NÃ¸gle'),'width'=>30))->
 		header(array('title'=>'','width'=>1))->
 	endHeaders();
 
@@ -32,11 +32,11 @@ foreach ($available as $key) {
 		startCell()->text($key)->endCell();
 		if (in_array($key,$installed)) {
 			$writer->startCell()->
-				button(array('text'=>array('Uninstall','da'=>'Afinstallér'),'data'=>array('action'=>'uninstallTool','key'=>$key)))->
+				button(array('text'=>array('Remove','da'=>'Fjern'),'data'=>array('action'=>'uninstallTool','key'=>$key)))->
 			endCell();
 		} else {
 			$writer->startCell()->
-				button(array('text'=>array('Install','da'=>'Installér'),'data'=>array('action'=>'installTool','key'=>$key)))->
+				button(array('text'=>array('Add','da'=>'TilfÃ¸j'),'data'=>array('action'=>'installTool','key'=>$key)))->
 			endCell();
 		}
 	$writer->endRow();
