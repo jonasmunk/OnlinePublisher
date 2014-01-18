@@ -227,7 +227,7 @@ class Database {
 	 * @return string The formattet string
 	 */
 	static function text($text) {
-		return "'".mysql_escape_string($text)."'";
+		return "'".mysql_real_escape_string($text)."'";
 	}
 
 	/**
@@ -295,7 +295,7 @@ class Database {
 	 * @return string The formattet string
 	 */
 	static function search($text) {
-		return "'%".mysql_escape_string($text)."%'";
+		return "'%".mysql_real_escape_string($text)."%'";
 	}
 	
 	static function buildUpdateSql($arr) {
