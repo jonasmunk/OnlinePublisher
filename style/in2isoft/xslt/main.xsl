@@ -140,8 +140,80 @@
 				padding-top: 10px;
 				border-left: 1px solid #ddd;
 			}
+			
+			ul.layout_navigation
+			{
+				float: left;
+				margin: 0px;
+				padding: 5px 0 0 6px;
+				display: block;
+				overflow: hidden;
+				height: 44px;
+				cursor: default;
+				font-size: 0;
+			}
+
+			ul.layout_navigation li
+			{
+				float: left;
+				list-style: none;
+				height: 30px;
+				padding-top: 5px;
+			}
+
+			ul.layout_navigation li a
+			{
+				display: inline-block;
+				color: #333;
+				text-decoration: none;
+				font-size: 13pt;
+				height: 30px;
+				line-height: 30px;
+				margin-right: 5px;
+				cursor: pointer;
+				border-radius: 3px;
+				font-weight: 200;
+			}
+			
+
+			form.search
+			{
+				margin-top: 13px;
+				position: absolute;
+				right: 0;
+			}
+
+
+			form.search .submit
+			{
+				position: absolute;
+				top: 0px;
+				left: -1000px;
+				width: 1px;
+				display: none;
+			}
+			
+			ul.layout_sub_navigation
+			{
+				margin: 0;
+				padding: 3px 0 3px 3px;
+				display: block;
+				overflow: hidden;
+				height: 28px;
+				line-height: 24px;
+				list-style: none;
+				font-size: 10pt;
+				cursor: default;
+			}
+
+			ul.layout_sub_navigation li
+			{
+				float: left;
+			}
 		</style>
+		
 		<xsl:call-template name="util:style-build"/>
+			
 		<xsl:call-template name="util:style-ie6"/>
 		<xsl:call-template name="util:style-lt-ie9"/>
 		<xsl:call-template name="util:lazy-style">
