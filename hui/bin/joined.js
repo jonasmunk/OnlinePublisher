@@ -11567,7 +11567,8 @@ hui.ui.Upload.HTML5.prototype = {
 	initialize : function() {
 		var options = this.parent.options;
 		var span = hui.build('span',{'class':'hui_upload_button_input'});
-		var ps = {'type':'file','name':options.fieldName,parent:span};
+        this.form = hui.build('form',{'style':'display: inline-block; margin:0;',parent:span});
+		var ps = {'type':'file','name':options.fieldName,parent:this.form};
 		if (options.multiple) {
 			ps.multiple = 'multiple';
 		}
@@ -11580,7 +11581,11 @@ hui.ui.Upload.HTML5.prototype = {
 		var files = this.fileInput.files;
 		this.parent._transferFiles(files);
         // TODO: reset/replace input field in IE
-	}
+        this._resetInput();
+	},
+    _resetInput : function() {
+        this.form.reset();
+    }
 }
 
 /* EOF */
