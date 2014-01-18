@@ -5,6 +5,7 @@ CVS
 .settings
 .cvsignore
 files/*
+public/*
 !files/.htaccess
 images/*
 !images/.htaccess
