@@ -205,6 +205,7 @@
 
 <xsl:template name="util:scripts-build">
     <xsl:call-template name="util:_scripts-errorhandler"/>
+    <xsl:call-template name="util:_scripts-msie"/>
 	<xsl:choose>
 		<xsl:when test="$preview='true'">
 			<script src="{$path}{$timestamp-url}hui/bin/minimized.js{$timestamp-query}" type="text/javascript"><xsl:comment/></script>
@@ -214,7 +215,7 @@
             <xsl:call-template name="util:_scripts-config"/>
 		</xsl:when>
 		<xsl:when test="$development='true'">
-			<script src="{$path}{$timestamp-url}hui/bin/minimized.site.js{$timestamp-query}" type="text/javascript"><xsl:comment/></script>
+			<script src="{$path}{$timestamp-url}hui/bin/joined.site.js{$timestamp-query}" type="text/javascript"><xsl:comment/></script>
 			<script src="{$path}{$timestamp-url}style/basic/js/OnlinePublisher.js{$timestamp-query}" type="text/javascript"><xsl:comment/></script>
             <xsl:call-template name="util:_scripts-config"/>
 			<script src="{$path}{$timestamp-url}style/{$design}/js/script.dev.js{$timestamp-query}" type="text/javascript"><xsl:comment/></script>
@@ -229,6 +230,7 @@
 
 <xsl:template name="util:scripts">
     <xsl:call-template name="util:_scripts-errorhandler"/>
+    <xsl:call-template name="util:_scripts-msie"/>
 	<xsl:choose>
 		<xsl:when test="$preview='true'">
 			<xsl:choose>
