@@ -1,5 +1,18 @@
 {
 	"name" : "Lotte Munk",
 	"description" : "Design for lottemunk.dk",
-	"owner" : "Property of Lotte Munk"
+	"owner" : "Property of Lotte Munk",
+    "build" : {
+        "js" : [
+            "style/lottemunk/js/lottemunk.js"
+        ],
+        "css" : [
+            "style/basic/css/shared.css",
+            "@parts",
+            "style/lottemunk/css/overwrite.css",
+            "style/lottemunk/css/main.css",
+            "style/lottemunk/css/front.css",
+            "style/lottemunk/css/front_adaption.css"
+        ]
+    }
 }

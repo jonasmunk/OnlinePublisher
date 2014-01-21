@@ -638,7 +638,55 @@ ul.icons a
 	border: 1px solid rgba(255,255,255,.3);
 }
 
+#video_poster {
+	width: 852px;
+	height: 100%;
+	background: url('../gfx/poster-halftone.jpg') 50% 50%;
+	-webkit-background-size: cover;
+	-moz-background-size: cover;
+	background-size: cover;
+	position: relative;
+	cursor: pointer;
+}
 
+#video_poster a {
+	display: block;
+	border-radius: 50%;
+	background: rgba(0,0,0,.4);
+	border: 3px solid rgba(255,255,255,.8);
+	width: 100px;
+	height: 100px;
+	position: absolute;
+	left: 50%;
+	top: 45%;
+	margin: -50px 0 0 -50px;
+	text-align: center;
+	line-height: 100px;
+	font-size: 64px;
+	text-indent: 23px;
+	color: rgba(255,255,255,.8);
+	text-shadow: 0 0 10px rgba(0,0,0,.2);
+	box-shadow: 0 0 10px rgba(0,0,0,.2);
+}
+
+#video_poster:hover a {
+	color: #fff;
+	border-color: #fff;
+	background: rgba(0,0,0,.5);
+}
+
+#video_poster p {
+	position: absolute;
+	top: 70%;
+	left: 0;
+	right: 0;
+	color: #fff;
+	text-align: center;
+	font-size: 18pt;
+	text-shadow: 0 0 6px rgba(0,0,90,.6);
+	font-family: Cinzel;
+	font-weight: bold;
+}
 
 
 /*************** Reel ****************/
