@@ -5,10 +5,10 @@
  */
 require_once 'Include/Public.php';
 
-if (ini_get('display_errors')) {
-    ini_set('display_errors', 0);
-}
-error_reporting(E_ERROR | E_PARSE);
+error_reporting(E_ALL);
+ini_set("log_errors" , "1");
+ini_set("error_log" , $basePath."local/test.log");
+ini_set("display_errors" , "0");
 
 Console::exitIfNotConsole();
 
@@ -47,8 +47,12 @@ class Commander {
             exit;
         }
 
-        if ($args[2]) {
-            TestService::runTest($args[2],new ConsoleReporter());
+        if (isset($args[2])) {
+            if (strpos($args[2],'/')!==false) {
+                TestService::runTest($args[2],new ConsoleReporter());
+            } else {
+                TestService::runTestsInGroup($args[2],new ConsoleReporter());                
+            }
         } else {
             TestService::runAllTests(new ConsoleReporter());
         }
