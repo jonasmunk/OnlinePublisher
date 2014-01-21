@@ -39,13 +39,15 @@ class MarkupUtils {
 		}
 		
 		$moved = array();
-
-  	preg_match_all("/<!--\\[if[\s\S]*endif\\]-->/uU", $html, $matches);
+        preg_match_all("/<!--\\[if[\s\S]*endif\\]-->/uU", $html, $matches);
 		$found = $matches[0];
 		foreach ($found as $match) {
 			if (strpos($match,'<script')===FALSE) {
 				continue;
 			}
+            if (strpos($match,'html5shim')!==false) {
+                continue;
+            }
 			$html = str_replace($match,'',$html);
 			$moved[] = $match;
 		}
@@ -53,10 +55,17 @@ class MarkupUtils {
 		
 		preg_match_all("/<script[^>]+\\/>|<script[^>]*>[\s\S]*<\\/script>/uU", $html, $matches);
 		$found = $matches[0];
-		$html = str_replace($found,'',$html);
+        $filtered = array();
+        foreach ($found as $script) {
+            if (strpos($script,'html5shim')===false) {
+                $filtered[] = $script;
+            }
+        }
+        
+		$html = str_replace($filtered,'',$html);
 		$pos = strpos($html,'</body>');
 		
-		$moved = array_merge($moved,$found);
+		$moved = array_merge($moved,$filtered);
 		
 		$html = substr($html,0,$pos) . join($moved,'') . substr($html,$pos);
 		return $html;

@@ -26,7 +26,7 @@ class ConfigurationService {
 	
 	static function isOptimizeHTML() {
 		global $CONFIG;
-        if ((isset($CONFIG) && (isset($CONFIG['optimize']))) {
+        if (isset($CONFIG) && isset($CONFIG['optimize'])) {
             return $CONFIG['optimize'];
         }
 		return true;
