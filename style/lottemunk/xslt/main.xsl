@@ -29,12 +29,28 @@
 				<xsl:value-of select="f:frame/@title"/>
 			</title>
 			<xsl:call-template name="util:metatags"/>
-			<xsl:call-template name="util:style"/>
-			<link rel="stylesheet" href="{$path}style/lottemunk{$timestamp-url}/fonts/Lotte-Munk/style.css{$timestamp-query}" type="text/css" media="screen" title="no title" charset="utf-8"/>
+			<xsl:call-template name="util:style-build"/>
 			<xsl:call-template name="util:style-ie6"/>
 			<xsl:call-template name="util:style-ie7"/>
 			<xsl:call-template name="util:style-ie8"/>
-			<xsl:call-template name="util:scripts"/>
+			<xsl:call-template name="util:lazy-style">
+	            <xsl:with-param name="href">
+					<xsl:value-of select="$path"/><xsl:value-of select="$timestamp-url"/><xsl:text>style/lottemunk/fonts/Lotte-Munk/style.css</xsl:text>
+				</xsl:with-param>
+	        </xsl:call-template>
+			<xsl:call-template name="util:lazy-style">
+	            <xsl:with-param name="href" select="'http://fonts.googleapis.com/css?family=Cinzel'"/>
+	        </xsl:call-template>
+			<xsl:call-template name="util:lazy-style">
+	            <xsl:with-param name="href" select="'http://fonts.googleapis.com/css?family=Cinzel'"/>
+	        </xsl:call-template>
+			<xsl:call-template name="util:lazy-style">
+	            <xsl:with-param name="href" select="'http://fonts.googleapis.com/css?family=Merriweather:400,300,300italic,400italic,700'"/>
+	        </xsl:call-template>
+			<xsl:call-template name="util:lazy-style">
+	            <xsl:with-param name="href" select="'http://fonts.googleapis.com/css?family=Gloria+Hallelujah'"/>
+	        </xsl:call-template>
+			<xsl:call-template name="util:scripts-build"/>
 			<xsl:if test="//p:page/p:context/p:home[@page=//p:page/@id]">
 				<script src="{$path}style/lottemunk{$timestamp-url}/js/script.js{$timestamp-query}" type="text/javascript"><xsl:comment/></script>
 			<meta name="viewport" content="user-scalable=yes, width=device-width, initial-scale = 1, maximum-scale = 10, minimum-scale = 0.2"/>
