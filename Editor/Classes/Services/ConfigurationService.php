@@ -14,10 +14,22 @@ class ConfigurationService {
 		global $CONFIG;
 		return (isset($CONFIG) && isset($CONFIG['debug']) && $CONFIG['debug']==true);
 	}
+	
+	private static function _getConfig($name,$default = null) {
+		global $CONFIG;
+		if (isset($CONFIG) && isset($CONFIG[$name])) {
+			return $CONFIG[$name];
+		}
+		return $default;
+	}
 
 	static function isUnicode() {
 		global $CONFIG;
 		return (isset($CONFIG) && (!isset($CONFIG['unicode']) || $CONFIG['unicode']==true));
+	}
+
+	static function isGatherStatistics() {
+		return ConfigurationService::_getConfig('statistics',true);
 	}
 	
 	static function isUrlRewrite() {

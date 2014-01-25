@@ -100,6 +100,9 @@ class RenderingService {
 		$mainPath = $incPath.'style/'.$mainDesign.'/xslt/'.$mainFile.'.xsl';
 		$templatePath = $incPath.'style/'.$contentDesign.'/xslt/'.$template.'.xsl';
         $encoding = ConfigurationService::isUnicode() ? 'UTF-8' : 'ISO-8859-1';
+		
+		$statistics = ConfigurationService::isGatherStatistics();
+		
 		$xslData='<?xml version="1.0" encoding="'.$encoding.'"?>'.
 		'<xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" version="1.0">'.
 		'<xsl:output method="html" indent="no" encoding="'.$encoding.'"/>'.
@@ -123,6 +126,7 @@ class RenderingService {
 		'<xsl:variable name="urlrewrite">'.(ConfigurationService::isUrlRewrite() ? 'true' : 'false').'</xsl:variable>'.
 		'<xsl:variable name="timestamp">'.SystemInfo::getDate().'</xsl:variable>'.
 		'<xsl:variable name="language">'.$language.'</xsl:variable>'.
+		'<xsl:variable name="statistics">'.($statistics ? 'true' : 'false').'</xsl:variable>'.
 		'<xsl:template match="/"><xsl:apply-templates/></xsl:template>'.
 		'</xsl:stylesheet>';
 		return XslService::transform($xmlData,$xslData);
@@ -504,7 +508,7 @@ class RenderingService {
 			}
 			return $html;
 		}
-		Log::debug('Unable to query: '.$pageId);
+		Log::debug('Unable to find page: '.$pageId);
 		Log::debug($sql);
 		return null;
 	}
