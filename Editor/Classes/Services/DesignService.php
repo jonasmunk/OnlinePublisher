@@ -221,7 +221,11 @@ class DesignService {
 		$valid = $valid && file_exists($basePath."style/".$name."/info/Preview128.png");
 		$valid = $valid && file_exists($basePath."style/".$name."/info/Preview64.png");
 		$valid = $valid && file_exists($basePath."style/".$name."/xslt/main.xsl");
-		$valid = $valid && file_exists($basePath."style/".$name."/css/style.php");
+		if ($info!==null && !isset($info->build)) {
+		    $valid = $valid && file_exists($basePath."style/".$name."/css/style.php");
+        } else {
+            $valid = $valid && !file_exists($basePath."style/".$name."/css/style.php");
+        }
 		$valid = $valid && file_exists($basePath."style/".$name."/css/overwrite.css");
 		return $valid;
 	}

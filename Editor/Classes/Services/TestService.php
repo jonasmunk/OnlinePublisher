@@ -8,7 +8,7 @@ if (!isset($GLOBALS['basePath'])) {
 	exit;
 }
 require_once($basePath.'Editor/Libraries/simpletest/unit_tester.php');
-require_once($basePath.'Editor/Libraries/simpletest/web_tester.php');
+//require_once($basePath.'Editor/Libraries/simpletest/web_tester.php');
 require_once($basePath.'Editor/Libraries/simpletest/reporter.php');
 require_once($basePath.'Editor/Classes/Tests/AbstractObjectTest.php');
 
@@ -80,8 +80,6 @@ class TestService {
 				$paths[] = $basePath.'Editor/Tests/'.$group.'/'.$test;
 			}
 		}
-		require_once($basePath.'Editor/Libraries/simpletest/unit_tester.php');
-		require_once($basePath.'Editor/Libraries/simpletest/reporter.php');
 		$test = new TestSuite('All tests');
 		foreach ($paths as $path) {
 			$test->addFile($path);

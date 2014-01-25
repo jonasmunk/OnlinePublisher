@@ -19,7 +19,7 @@ class OnlineObjectsService {
 		if (!$response->isSuccess()) {
 			return null;
 		}
-		return Strings::fromJSON($response->getData());
+		return Strings::fromJSON($response->getBody());
 	}
 	
 	static function getServiceUrl($service,$method,$baseUrl=null) {

@@ -9,12 +9,15 @@ if (!isset($GLOBALS['basePath'])) {
 	exit;
 }
 
-class TestLogin extends WebTestCase {
+class TestLogin extends UnitTestCase {
     
-    function testLogin() {
+    function testNotAllowed() {
         global $baseUrl, $basePath;
-        //$this->get(ConfigurationService::getCompleteBaseUrl().'Editor/Services/Core/Authentication.php');
-        //$this->assertResponse(200);
+        $url = ConfigurationService::getCompleteBaseUrl().'Editor/Services/Core/Authentication.php';
+        $response = HttpClient::send(new WebRequest($url));
+        $this->assertEqual(200,$response->getStatusCode());
+        $obj = Strings::fromJSON($response->getBody());
+        $this->assertFalse($obj->success);
     }
 }
 ?>

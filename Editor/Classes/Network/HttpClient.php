@@ -23,21 +23,20 @@ class HttpClient {
 		curl_setopt($session, CURLOPT_POSTFIELDS, $body);
 		curl_setopt($session, CURLOPT_FOLLOWLOCATION, 1);
 		curl_setopt($session, CURLOPT_RETURNTRANSFER, 1);
-		$data = curl_exec ($session);
-		$info = null;
+		curl_setopt($session, CURLOPT_HEADER, 1);
+        
+		$data = curl_exec($session);
+		$statusCode = null;
 		$errorNumber = curl_errno($session);
 		if(!$errorNumber) {
 			$info = curl_getinfo($session);
+            $statusCode = $info['http_code'];
 		} else {
 			Log::debug('Error number: '.$errorNumber.' / URL: '.$request->getUrl());
 		}
-		curl_close ($session);
-		$response = new WebResponse();
-		$response->setData($data);
-		if ($info!==null) {
-			$response->setStatusCode($info['http_code']);
-		} else {
-		}
-		return $response;
+		curl_close($session);
+		$response = WebResponse::newFromData($data);
+		$response->setStatusCode($statusCode);
+        return $response;
 	}
 }
