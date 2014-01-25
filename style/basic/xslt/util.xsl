@@ -324,6 +324,21 @@
 				})
 			} catch (ignore) {}
 		}
+        
+        window._editor = {
+            deferred : [],
+            
+            defer : function(func) {
+                deferred[deferred.length+1] = func;
+            },
+            loadCSS : function(href) {
+                var e = document.createElement('link');
+                e.setAttribute('rel','stylesheet');
+                e.setAttribute('type','text/css');
+                e.setAttribute('href',href);
+                document.getElementsByTagName('head')[0].appendChild(e);
+            }
+        }
 	</script>    
 </xsl:template>
 
@@ -426,17 +441,8 @@
 
 <xsl:template name="util:lazy-style">
     <xsl:param name="href"/>
-    <!--
-    <link rel="stylesheet" type="text/css" href="{$href}"/>-->
-    <script type="text/javascript">
-        (function() {
-            var e = document.createElement('link');
-            e.setAttribute('rel','stylesheet');
-            e.setAttribute('type','text/css');
-            e.setAttribute('href','<xsl:value-of select="$href"/>');
-            document.getElementsByTagName('head')[0].appendChild(e);
-        })()
-    </script>
+    <!--<link rel="stylesheet" type="text/css" href="{$href}"/>-->
+    <script type="text/javascript">_editor.loadCSS('<xsl:value-of select="$href"/>');</script>
     <noscript>
     <link rel="stylesheet" type="text/css" href="{$href}"/>
     </noscript>
