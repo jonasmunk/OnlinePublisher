@@ -341,5 +341,30 @@ class Database {
 		$sql.=")";
 		return $sql;
 	}
+
+
+    static function compile($sql,$vars) {
+  		$replacements = array();
+  		if (preg_match_all("/@[a-z]+\\([a-z]+\\)/u", $sql,$matches) > 0) {
+  			foreach ($matches[0] as $expression) {
+  				$pos = strpos($expression,'(');
+  				$type = substr($expression,1,$pos-1);
+  				$name = substr($expression,$pos+1,-1);
+  				if (array_key_exists($name,$vars)) {
+  					$value = $vars[$name];
+  					if ($type=='int') {
+  						$value = Database::int($value);
+  					} else if ($type=='text') {
+  						$value = Database::text($value);
+  					} else {
+  						continue;
+  					}
+  					$replacements[$expression] = $value;
+  				}
+  			}
+  		}
+  		$sql = str_replace(array_keys($replacements),$replacements,$sql);
+  		return $sql;
+  	}
 }
 ?>

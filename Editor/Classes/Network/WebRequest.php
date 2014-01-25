@@ -12,6 +12,7 @@ class WebRequest {
 	
 	private $url;
 	private $parameters = array();
+	private $headers = array();
 	private $unicode;
 	
 	function WebRequest($url=null) {
@@ -30,12 +31,20 @@ class WebRequest {
 		$this->parameters[$name] = $value;
 	}
 
+	function addHeader($name,$value) {
+		$this->headers[] = ['name'=>$name,'value'=>$value];
+	}
+
 	function setParameters($parameters) {
 		$this->parameters = $parameters;
 	}
 	
 	function getParameters() {
 		return $this->parameters;
+	}
+
+	function getHeaders() {
+		return $this->headers;
 	}
 	
 	function setUnicode($unicode) {

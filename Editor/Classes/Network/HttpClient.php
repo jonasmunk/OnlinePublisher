@@ -13,15 +13,17 @@ class HttpClient {
 	static function send($request) {
 		$body = http_build_query($request->getParameters(),'','&');
 		$session = curl_init($request->getUrl());
+        $headers = [];
 		if ($request->getUnicode()) {
-			$headers = array(
-				"Content-Type: application/x-www-form-urlencoded; charset=UTF-8"
-			);
-			curl_setopt($session, CURLOPT_HTTPHEADER, $headers);
+			$headers[] = "Content-Type: application/x-www-form-urlencoded; charset=UTF-8";
 		}
+        foreach ($request->getHeaders() as $header) {
+            $headers[] = $header['name'] . ": " . $header['value'];
+        }
+		curl_setopt($session, CURLOPT_HTTPHEADER, $headers);
 		curl_setopt($session, CURLOPT_POST, 1);
 		curl_setopt($session, CURLOPT_POSTFIELDS, $body);
-		curl_setopt($session, CURLOPT_FOLLOWLOCATION, 1);
+		curl_setopt($session, CURLOPT_FOLLOWLOCATION, 0);
 		curl_setopt($session, CURLOPT_RETURNTRANSFER, 1);
 		curl_setopt($session, CURLOPT_HEADER, 1);
         

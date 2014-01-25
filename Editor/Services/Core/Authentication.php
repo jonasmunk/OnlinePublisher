@@ -6,6 +6,8 @@
 require_once '../../Include/Public.php';
 
 if (Request::isPost()) {
+    session_set_cookie_params(0);
+    session_start();
 	
 	$page = Request::getInt('page');
 	$username = Request::getString('username');

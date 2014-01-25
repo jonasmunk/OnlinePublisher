@@ -12,6 +12,7 @@ class WebResponse {
 	
 	private $statusCode;
 	private $headerRaw;
+	private $headers = [];
 	private $body;
     private $httpVersion;
 	
@@ -29,6 +30,15 @@ class WebResponse {
                 list($header, $body) = explode("\r\n\r\n", $parts, 2);
                 $response->setBody($body);
                 $response->setHeaderRaw($header);
+                
+                $headers = [];
+        		$lines = explode("\r\n",$header);
+        		foreach ($lines as $line) {
+        			if ($pos = strpos($line,':')) {
+        				$headers[] = ['name' => substr($line,0,$pos), 'value' => ltrim(substr($line,$pos+1))];
+        			}
+        		}
+                $response->setHeaders($headers);
             }
         }
         
@@ -58,7 +68,24 @@ class WebResponse {
 	function getHeaderRaw() {
 	    return $this->headerRaw;
 	}
-	
+
+	function setHeaders($headers) {
+	    $this->headers = $headers;
+	}
+
+	function getHeaders() {
+	    return $this->headers;
+	}
+    
+	function getHeader($name) {
+        foreach ($this->headers as $header) {
+            if ($name == $header['name']) {
+                return $header['value'];
+            }
+        }
+	    return null;
+	}
+    
 	function setHttpVersion($httpVersion) {
 	    $this->httpVersion = $httpVersion;
 	}

@@ -52,5 +52,7 @@ class TestRequest extends UnitTestCase {
         $this->assertEqual('<!DOCTYPE html>',$response->getBody());
         $this->assertEqual(1.1,$response->getHttpVersion());
         $this->assertEqual(200,$response->getStatusCode());
+        $this->assertEqual("PHPSESSID=67prn9qe5q354olm2pv22v5hj6; path=/",$response->getHeader('Set-Cookie'));
+        $this->assertEqual("public",$response->getHeader('Cache-Control'));
     }
 }
