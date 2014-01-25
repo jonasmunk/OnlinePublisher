@@ -1,7 +1,7 @@
 <?php
 /**
  * @package OnlinePublisher
- * @subpackage Classes
+ * @subpackage Classes.Core
  */
 
 if (!isset($GLOBALS['basePath'])) {
@@ -11,34 +11,34 @@ if (!isset($GLOBALS['basePath'])) {
 class Database {
 		
 	static function testConnection() {
-		if (!function_exists('mysql_connect')) {
+		if (!function_exists('mysqli_connect')) {
 			return false;
 		}
 		return Database::getConnection()!==false;
 	}
 	
 	static function testServerConnection($host,$user,$password) {
-		if (!function_exists('mysql_connect')) {
+		if (!function_exists('mysqli_connect')) {
 			return false;
 		}
 		
-		$con = mysql_connect($host, $user,$password);
+		$con = mysqli_connect($host, $user,$password);
 		if (!$con) {
 			return false;
 		}
-		if (mysql_errno($con)>0) {
+		if (mysqli_errno($con)>0) {
 			return false;
 		}
 		return true;
 	}
 	
 	static function testDatabaseConnection($host,$user,$password,$name) {
-		$con = mysql_connect($host, $user,$password);
+		$con = mysqli_connect($host, $user,$password);
 		if (!$con) {
 			return false;
 		}
-		mysql_select_db($name,$con);
-		if (mysql_errno($con)>0) {
+		mysqli_select_db($con,$name);
+		if (mysqli_errno($con)>0) {
 			return false;
 		}
 		return true;
@@ -53,17 +53,17 @@ class Database {
 	static function getConnection() {
 		$config = ConfigurationService::getDatabase();
 		if (!isset($GLOBALS['OP_CON'])) {
-			$con = mysql_connect($config['host'], $config['user'],$config['password'],false);
+			$con = mysqli_connect($config['host'], $config['user'],$config['password'],false);
 			if (!$con) {
 				return false;
 			}
             if (ConfigurationService::isUnicode()) {
-                mysql_set_charset('utf8',$con);
+                mysqli_set_charset($con,'utf8');
             } else {
-                mysql_set_charset('latin1',$con);
+                mysqli_set_charset($con,'latin1');
             }
-			mysql_select_db($config['database'],$con);
-			if (mysql_errno($con)>0) {
+			mysqli_select_db($con,$config['database']);
+			if (mysqli_errno($con)>0) {
 				return false;
 			}
 			$GLOBALS['OP_CON'] = $con;
@@ -78,9 +78,9 @@ class Database {
 			return false;
 		}
 		Database::debug($sql);
-		$result = mysql_query($sql,$con);
-		if (mysql_errno($con)>0) {
-			error_log(mysql_error($con).': '.$sql);
+		$result = mysqli_query($con,$sql);
+		if (mysqli_errno($con)>0) {
+			error_log(mysqli_error($con).': '.$sql);
 			return false;
 		}
 		else {
@@ -113,7 +113,7 @@ class Database {
 	}
 	
 	static function size($result) {
-		return mysql_num_rows($result);
+		return mysqli_num_rows($result);
 	}
 	
 	static function isEmpty($sql) {
@@ -131,16 +131,16 @@ class Database {
 			$sql = Database::buildUpdateSql($sql);
 		}
 		$con = Database::getConnection();
-		mysql_query($sql,$con);
+		mysqli_query($con,$sql);
 		return Database::_checkError($sql,$con);
 	}
 	
 	static function delete($sql) {
 		Database::debug($sql);
 		$con = Database::getConnection();
-		mysql_query($sql,$con);
+		mysqli_query($con,$sql);
 		Database::_checkError($sql,$con);
-		return mysql_affected_rows($con);
+		return mysqli_affected_rows($con);
 	}
 
 	static function insert($sql) {
@@ -149,8 +149,8 @@ class Database {
 		}
 		Database::debug($sql);
 		$con = Database::getConnection();
-		mysql_query($sql,$con);
-		$id=mysql_insert_id();
+		mysqli_query($con,$sql);
+		$id = mysqli_insert_id($con);
 		if (Database::_checkError($sql,$con)) {
 			return $id;
 		} else {
@@ -159,8 +159,8 @@ class Database {
 	}
 	
 	static function _checkError($sql,&$con) {
-		if (mysql_errno($con)>0) {
-			error_log(mysql_error($con).': '.$sql);
+		if (mysqli_errno($con)>0) {
+			error_log(mysqli_error($con).': '.$sql);
 			return false;
 		}
 		else {
@@ -169,11 +169,11 @@ class Database {
 	}
 	
 	static function next($result) {
-		return mysql_fetch_array($result);
+		return mysqli_fetch_array($result);
 	}
 	
 	static function free($result) {
-		mysql_free_result($result);
+		mysqli_free_result($result);
 	}
 	
 	static function selectArray($sql) {
@@ -227,7 +227,7 @@ class Database {
 	 * @return string The formattet string
 	 */
 	static function text($text) {
-		return "'".mysql_real_escape_string($text,Database::getConnection())."'";
+		return "'".mysqli_real_escape_string(Database::getConnection(),$text)."'";
 	}
 
 	/**
@@ -295,7 +295,7 @@ class Database {
 	 * @return string The formattet string
 	 */
 	static function search($text) {
-		return "'%".mysql_real_escape_string($text,Database::getConnection())."%'";
+		return "'%".mysqli_real_escape_string(Database::getConnection(),$text)."%'";
 	}
 	
 	static function buildUpdateSql($arr) {
