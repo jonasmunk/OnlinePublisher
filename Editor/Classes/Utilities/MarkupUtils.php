@@ -45,7 +45,7 @@ class MarkupUtils {
 			if (strpos($match,'<script')===FALSE) {
 				continue;
 			}
-            if (strpos($match,'html5shim')!==false) {
+            if (strpos($match,'data-movable="false"')!==false) {
                 continue;
             }
 			$html = str_replace($match,'',$html);
@@ -57,7 +57,7 @@ class MarkupUtils {
 		$found = $matches[0];
         $filtered = array();
         foreach ($found as $script) {
-            if (strpos($script,'html5shim')===false) {
+            if (strpos($script,'data-movable="false"')===false) {
                 $filtered[] = $script;
             }
         }
