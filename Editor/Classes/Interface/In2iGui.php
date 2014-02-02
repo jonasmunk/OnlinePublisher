@@ -18,10 +18,10 @@ class In2iGui {
 		$context = substr(ConfigurationService::getBaseUrl(),0,-1);
 		$pathVersion = ConfigurationService::isUrlRewrite() ? 'version'.SystemInfo::getDate().'/' : '';
 		
-    if (true && ConfigurationService::isUrlRewrite()) {
-      $context.= '/'.'version'.SystemInfo::getDate();
-      $pathVersion = '';
-    }
+	    if (true && ConfigurationService::isUrlRewrite()) {
+			$context.= '/'.'version'.SystemInfo::getDate();
+			$pathVersion = '';
+	    }
     
 		return '<xsl:variable name="dev">'.($dev ? 'true' : 'false').'</xsl:variable>'.
 		'<xsl:variable name="profile">'.$profile.'</xsl:variable>'.
