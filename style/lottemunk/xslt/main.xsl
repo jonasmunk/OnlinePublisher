@@ -29,11 +29,11 @@
 				<xsl:value-of select="f:frame/@title"/>
 			</title>
 			<xsl:call-template name="util:metatags"/>
-			<xsl:call-template name="util:style-build"/>
 			<xsl:call-template name="util:style-ie6"/>
 			<xsl:call-template name="util:style-ie7"/>
 			<xsl:call-template name="util:style-ie8"/>
 			<xsl:call-template name="util:scripts-build"/>
+			<xsl:call-template name="util:style-build"/>
 			<xsl:call-template name="util:lazy-style">
 	            <xsl:with-param name="href">
 					<xsl:value-of select="$path"/><xsl:value-of select="$timestamp-url"/><xsl:text>style/lottemunk/fonts/Lotte-Munk/style.css</xsl:text>
@@ -70,12 +70,7 @@
 	<div class="layout">
 		<header id="head">
 			<h1 id="title">Lotte Munk</h1>
-			<p>
-			<xsl:choose>
-				<xsl:when test="//p:page/p:meta/p:language='en'"><xsl:text>Actress</xsl:text></xsl:when>
-				<xsl:otherwise><xsl:text>Skuespiller</xsl:text></xsl:otherwise>
-			</xsl:choose>
-			</p>
+			<p>Skuespiller</p>
 			<nav id="navigation">
 				<ul>
 					<xsl:apply-templates select="f:frame/h:hierarchy/h:item"/>
