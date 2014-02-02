@@ -587,7 +587,9 @@
 <!-- Languages -->
 
 <xsl:template name="util:languages">
-	<span class="layout_languages">
+	<xsl:param name="tag" select="'span'"/>
+	<xsl:element name="{$tag}">
+		<xsl:attribute name="class">layout_languages</xsl:attribute>
 		<xsl:for-each select="//p:page/p:context/p:home[@language and @language!=$language and not(@language=//p:page/p:context/p:translation/@language)]">
 			<xsl:call-template name="util:language"/>
 		</xsl:for-each>
@@ -595,11 +597,11 @@
 			<xsl:call-template name="util:language"/>
 		</xsl:for-each>
 		<xsl:comment/>
-	</span>
+	</xsl:element>
 </xsl:template>
 
 <xsl:template name="util:language">
-	<a class="layout_language_{@language}">
+	<a class="layout_language layout_language_{@language}">
 		<xsl:call-template name="util:link"/>
 		<span>
 		<xsl:choose>

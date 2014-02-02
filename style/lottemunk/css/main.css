@@ -119,11 +119,32 @@ header nav a:hover
 
 div.layout_content
 {
-	padding: 60px 0;
+	padding: 60px 10px;
 	width: 900px;
 	margin: 0 auto;
+	position: relative;
 }
 
+.layout_languages {
+	position: absolute;
+	right: 10px;
+	margin: 0;
+}
+
+.layout_language {
+	color: #333;
+	text-decoration: none;
+	font-size: 12pt;
+	display: block;
+	background: url('../gfx/flags.png') 0 0 no-repeat;
+	line-height: 39px;
+	height: 39px;
+	padding-left: 45px;
+}
+
+.layout_language_da {
+	background-position: 0 -39px;
+}
 
 footer
 {

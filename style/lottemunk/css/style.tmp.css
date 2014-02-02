@@ -3334,11 +3334,32 @@ header nav a:hover
 
 div.layout_content
 {
-	padding: 60px 0;
+	padding: 60px 10px;
 	width: 900px;
 	margin: 0 auto;
+	position: relative;
 }
 
+.layout_languages {
+	position: absolute;
+	right: 10px;
+	margin: 0;
+}
+
+.layout_language {
+	color: #333;
+	text-decoration: none;
+	font-size: 12pt;
+	display: block;
+	background: url('../gfx/flags.png') 0 0 no-repeat;
+	line-height: 39px;
+	height: 39px;
+	padding-left: 45px;
+}
+
+.layout_language_da {
+	background-position: 0 -39px;
+}
 
 footer
 {
@@ -3362,17 +3383,17 @@ footer a span
 }
 /* style/lottemunk/css/front.css */
 
-body.front
+.front
 {
 	background-color: #fff;
 }
 
-body.dark
+.dark
 {
 	background-color: #000;
 }
 
-html.desktop body.front {
+.desktop .front {
 	background: url('../gfx/bg.jpg') 50% 50%;
 	background-attachment: fixed;
 	-webkit-background-size: cover;
@@ -3383,15 +3404,15 @@ html.desktop body.front {
 	-moz-transition: background-color 1s ease-out;
 }
 
-body.front h1, 
-body.front h2
+.front h1, 
+.front h2
 {
 	font-family: Cinzel;
 	margin: 0;
 	font-weight: normal;
 }
 
-body.front header
+.front header
 {
 	height: 246px;
 	z-index: 3;
@@ -3409,29 +3430,29 @@ body.front header
 
 
 
-html.desktop body.full header
+.desktop .full header
 {
 	-webkit-transform: translate3d(0,-100px,0);
 	-moz-transform: translate3d(0,-100px,0);
 }
 
-html.desktop body.full header nav a
+.desktop .full header nav a
 {
 	color: #aaa;
 }
 
-body.front header h1
+.front header h1
 {
 	font-size: 80px;
 }
 
-body.front header p
+.front header p
 {
 	left: 10px;
 	top: 170px;
 }
 
-body.front footer
+.front footer
 {
 	padding: 100px 0;
 	background: #fff;
@@ -3444,7 +3465,7 @@ section
 	overflow: hidden;
 }
 
-div.col40
+.col40
 {
 	vertical-align: top;
 	display: inline-block;
@@ -3452,7 +3473,7 @@ div.col40
 	height: 100%;
 }
 
-div.col30
+.col30
 {
 	vertical-align: top;
 	display: inline-block;
@@ -3460,7 +3481,7 @@ div.col30
 	height: 100%;
 }
 
-div.vert50
+.vert50
 {
 	height: 50%;
 }
@@ -3527,7 +3548,7 @@ a.button:hover
 }
 
 
-div.broen_text h2
+.broen_text h2
 {
 	font-size: 4em;
 	text-align: center;
@@ -3537,7 +3558,7 @@ div.broen_text h2
 	line-height: 1em;
 }
 
-div.broen_text p
+.broen_text p
 {
 	padding: 0 20px;
 	font-size: 1em;
@@ -3547,7 +3568,7 @@ div.broen_text p
 	color: rgba(255,255,255,.5);
 }
 
-div.broen_text a.button
+.broen_text a.button
 {
 	margin-top: 20px;
 	color: #fff;
@@ -3556,7 +3577,7 @@ div.broen_text a.button
 	border: 1px solid rgba(255,255,255,.2);
 }
 
-div.broen_text a.button:hover
+.broen_text a.button:hover
 {
 	background: rgba(255,255,255,.1);
 	border: 1px solid rgba(255,255,255,.2);
@@ -3590,6 +3611,12 @@ div.broen_photo3
 
 
 /************ Om mig ************/
+
+
+.front .layout_languages {
+	margin-top: 10px;
+	right: 20px;
+}
 
 #about
 {
@@ -4668,6 +4695,21 @@ body.small #video article p
 		display: none;
 	}
 	
+	
+	/** Broen **/
+	
+	#broen {
+		height: auto;
+	}
+	
+	.broen_text {
+		padding: 20px 0;
+	}
+	
+	.broen_text h2 {
+		margin: 0;
+	}
+	
 	#broen div.left {
 		float: none;
 		width: auto;
@@ -4687,6 +4729,17 @@ body.small #video article p
 		line-height: 1.3em;
 	}
 	
+	
+	/* Languages */
+	
+	.front .layout_languages {
+		position: static;
+		text-align: center;
+	}
+	
+	.front .layout_language {
+		display: inline-block;
+	}
 	
 	/* About */
 	
@@ -4790,6 +4843,10 @@ body.small #video article p
 	#video_poster {
 		height: 240px;
 		width: 100%;
+	}
+	
+	#video_poster p span {
+		display: block;
 	}
 
 

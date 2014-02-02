@@ -70,7 +70,12 @@
 	<div class="layout">
 		<header id="head">
 			<h1 id="title">Lotte Munk</h1>
-			<p>Skuespiller</p>
+			<p id="job">
+				<xsl:choose>
+					<xsl:when test="//p:page/p:meta/p:language='en'"><xsl:text>Actress</xsl:text></xsl:when>
+					<xsl:otherwise><xsl:text>Skuespiller</xsl:text></xsl:otherwise>
+				</xsl:choose>
+			</p>
 			<nav id="navigation">
 				<ul>
 					<xsl:apply-templates select="f:frame/h:hierarchy/h:item"/>
@@ -78,6 +83,7 @@
 			</nav>
 		</header>
 		<div class="layout_content">
+			<xsl:call-template name="util:languages"><xsl:with-param name="tag" select="'p'"/></xsl:call-template>
 			<xsl:apply-templates select="p:content"/>
 			<xsl:comment/>
 		</div>

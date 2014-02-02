@@ -185,6 +185,21 @@ body.small #video article p
 		display: none;
 	}
 	
+	
+	/** Broen **/
+	
+	#broen {
+		height: auto;
+	}
+	
+	.broen_text {
+		padding: 20px 0;
+	}
+	
+	.broen_text h2 {
+		margin: 0;
+	}
+	
 	#broen div.left {
 		float: none;
 		width: auto;
@@ -204,6 +219,17 @@ body.small #video article p
 		line-height: 1.3em;
 	}
 	
+	
+	/* Languages */
+	
+	.front .layout_languages {
+		position: static;
+		text-align: center;
+	}
+	
+	.front .layout_language {
+		display: inline-block;
+	}
 	
 	/* About */
 	
@@ -307,6 +333,10 @@ body.small #video article p
 	#video_poster {
 		height: 240px;
 		width: 100%;
+	}
+	
+	#video_poster p span {
+		display: block;
 	}
 
 

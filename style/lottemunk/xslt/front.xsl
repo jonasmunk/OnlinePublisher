@@ -68,6 +68,7 @@
 	
 	<section id="about">
 		<a name="about"><xsl:comment/></a>
+		<xsl:call-template name="util:languages"><xsl:with-param name="tag" select="'p'"/></xsl:call-template>
 		<h2><xsl:value-of select="//header:header[1]"/></h2>
 		<div class="text">
 		<p class="text">
@@ -196,10 +197,10 @@
 			<a class="icon-play"><xsl:comment/></a>
 			<xsl:choose>
 				<xsl:when test="//p:page/p:meta/p:language='en'">
-					<p>Clip from The Killing II</p>
+					<p>Clip from <span>The Killing II</span></p>
 				</xsl:when>
 				<xsl:otherwise>
-					<p>Klip fra Forbrydelsen II</p>
+					<p>Klip fra <span>Forbrydelsen II</span></p>
 				</xsl:otherwise>
 			</xsl:choose>
 		</div>
