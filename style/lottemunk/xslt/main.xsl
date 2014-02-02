@@ -33,6 +33,7 @@
 			<xsl:call-template name="util:style-ie6"/>
 			<xsl:call-template name="util:style-ie7"/>
 			<xsl:call-template name="util:style-ie8"/>
+			<xsl:call-template name="util:scripts-build"/>
 			<xsl:call-template name="util:lazy-style">
 	            <xsl:with-param name="href">
 					<xsl:value-of select="$path"/><xsl:value-of select="$timestamp-url"/><xsl:text>style/lottemunk/fonts/Lotte-Munk/style.css</xsl:text>
@@ -41,7 +42,6 @@
 			<xsl:call-template name="util:lazy-style">
 	            <xsl:with-param name="href" select="'http://fonts.googleapis.com/css?family=Cinzel|Merriweather:400,300,300italic,400italic,700|Gloria+Hallelujah'"/>
 	        </xsl:call-template>
-			<xsl:call-template name="util:scripts-build"/>
 			<xsl:if test="//p:page/p:context/p:home[@page=//p:page/@id]">
 			<meta name="viewport" content="user-scalable=yes, width=device-width, initial-scale = 1, maximum-scale = 10, minimum-scale = 0.2"/>
 			<meta name="viewport" content="user-scalable=yes, initial-scale = 1, maximum-scale = 10, minimum-scale = 0.2"/>
@@ -70,7 +70,12 @@
 	<div class="layout">
 		<header id="head">
 			<h1 id="title">Lotte Munk</h1>
-			<p>Skuespiller</p>
+			<p>
+			<xsl:choose>
+				<xsl:when test="//p:page/p:meta/p:language='en'"><xsl:text>Actress</xsl:text></xsl:when>
+				<xsl:otherwise><xsl:text>Skuespiller</xsl:text></xsl:otherwise>
+			</xsl:choose>
+			</p>
 			<nav id="navigation">
 				<ul>
 					<xsl:apply-templates select="f:frame/h:hierarchy/h:item"/>

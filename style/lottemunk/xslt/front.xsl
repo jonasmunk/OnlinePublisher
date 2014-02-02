@@ -118,20 +118,17 @@
 			<div class="press_left"><xsl:comment/></div>
 			<article>
 				<h2><xsl:value-of select="//header:header[@level=2]"/><xsl:comment/></h2>
-				<p>
-					<xsl:choose>
-						<xsl:when test="//p:page/p:meta/p:language='en'">
-							<a href="{$path}en/photos/"><span>More photos &#8250;</span></a>
-						</xsl:when>
-						<xsl:otherwise>
-							<a href="{$path}fotografier/"><span>Flere fotos &#8250;</span></a>
-						</xsl:otherwise>
-					</xsl:choose>
-				</p>
-				<!--
-				<p><a href="{$path}?file=493"><span>Hent pressekit &#8250;</span></a></p>
-				-->
-				<p><a href="javascript://" onclick="photoGallery.show();"><span>Lysbilleder &#8250;</span></a></p>
+				
+				<xsl:choose>
+					<xsl:when test="//p:page/p:meta/p:language='en'">
+						<p><a href="{$path}en/photos/"><span>More photos &#8250;</span></a></p>
+						<p><a href="javascript://" onclick="photoGallery.show();"><span>Slide show &#8250;</span></a></p>
+					</xsl:when>
+					<xsl:otherwise>
+						<p><a href="{$path}fotografier/"><span>Flere fotos &#8250;</span></a></p>
+						<p><a href="javascript://" onclick="photoGallery.show();"><span>Lysbilleder &#8250;</span></a></p>
+					</xsl:otherwise>
+				</xsl:choose>
 			</article>
 			<div class="press_right"><xsl:comment/></div>
 		</div>
@@ -219,7 +216,7 @@
 			<xsl:choose>
 				<xsl:when test="//p:page/p:meta/p:language='en'">
 					<h2>Theater</h2>
-					<p>Kunsten kan fortælle indviklede historier om menneskets væsen og vilkår i verden, den kan drømme stort og skandaløst, folde eksistensen ud i al sin storhed og gru.</p>
+					<p>Art can express complicated stories concerning the essence of humanity, and of our terms of life on earth, art can dream big and scandalously, unfold existence in all its grandeur and horror.</p>
 				</xsl:when>
 				<xsl:otherwise>
 					<h2>Teater</h2>
@@ -253,9 +250,9 @@
 
 				<xsl:choose>
 					<xsl:when test="//p:page/p:meta/p:language='en'">
-						<h2>Communication training</h2>
-						<p>Skuespillerteknikken anvender jeg også som kommunikationsrådgiver, hvor jeg bruger <strong>teaterets redskaber</strong> til at give en <strong>oplevelsesbaseret læring</strong>.  Jeg prøver altid  at formidle en indsigt i det enkelte menneskes måde at kommunikere på. At give en meget personlig og <strong>konstruktiv feedback</strong>, er noget jeg vægter meget højt.</p>
-						<p class="link"><a class="button" href="{$path}en/communication-training/"><span>About communication training &#8250;</span></a></p>
+						<h2>Coaching</h2>
+						<p>I also use the technique of acting in my work as communication coach, where I utilise the <strong>tools of theatrical work</strong> to give participants the opportunity to <strong>learn by doing</strong>. It is always my goal to bring forward personal insights for the individual person, and an awareness of their own means of communication. Giving very personal and <strong>constructive feedback</strong> is of very high priority for me.</p>
+						<p class="link"><a class="button" href="{$path}en/communication-training/"><span>About Coaching &#8250;</span></a></p>
 					</xsl:when>
 					<xsl:otherwise>
 						<h2>Kommunikations<span>træning</span></h2>
