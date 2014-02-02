@@ -176,6 +176,30 @@ span.shared_frame_shadow_slant_bottom span span
 	padding-left: 1px;
 	right: 0;
 }
+
+.shared_frame_polaroid
+{
+    background: url('../../basic/gfx/backgrounds/lightpaperfibers.png');
+    display: inline-block;
+    padding: 10px 10px 40px;
+    box-shadow: 0 2px 5px rgba(0,0,0,.2); 
+}
+
+.shared_frame_polaroid_content
+{
+    display: inline-block;
+    font-size: 0;
+    position: relative;
+    background: #fafafa;
+}
+
+.shared_frame_polaroid_content:before
+{
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    box-shadow: inset 0 0 3px rgba(0,0,0,.5);
+}
 /* style/basic/css/document.css */
 table.document_row
 {
@@ -827,25 +851,32 @@ div.part_mailinglist input.text
 	padding: 2px 0px;
 }
 /* style/basic/css/part_map.css */
-span.part_map
+.part_map
 {
 	font-size: 0;
 }
 
-span.part_map_static
+.part_map_static
 {
 	position: relative;
 	display: inline-block;
+    font-size: 0;
 }
 
-span.part_map_static_effect
+/*
+.part_map_static_effect
 {
-	position: absolute; width: 100%; height: 100%;
+	position: absolute;
+    width: 100%;
+    height: 100%;
 	background-size: 33.33333% 33.33333%;
-	background: -webkit-linear-gradient(330deg,transparent 50%,rgba(0,0,0,0.15) 100%), -webkit-linear-gradient(300deg,rgba(255,255,255,.4) 0%,rgba(255,255,255,0) 50%);
-}
+	background-image: linear-gradient(330deg,transparent 50%,rgba(0,0,0,0.15) 100%),      linear-gradient(300deg,rgba(255,255,255,.4) 0%,rgba(255,255,255,0) 50%);
+	background-image: -webkit-linear-gradient(330deg,transparent 50%,rgba(0,0,0,0.15) 100%),      -webkit-linear-gradient(300deg,rgba(255,255,255,.4) 0%,rgba(255,255,255,0) 50%);
+	background-image: -moz-linear-gradient(330deg,transparent 50%,rgba(0,0,0,0.15) 100%),      -moz-linear-gradient(300deg,rgba(255,255,255,.4) 0%,rgba(255,255,255,0) 50%);
+	background-image: -ms-linear-gradient(330deg,transparent 50%,rgba(0,0,0,0.15) 100%),      -ms-linear-gradient(300deg,rgba(255,255,255,.4) 0%,rgba(255,255,255,0) 50%);
+}*/
 
-a.part_map_static_pin
+.part_map_static_pin
 {
 	background: url('../../basic/gfx/part_map_pin.png');
 	position: absolute;
@@ -856,13 +887,13 @@ a.part_map_static_pin
 	margin: -15px 0 0 -15px;
 }
 
-span.part_map_static_content
+.part_map_static_content
 {
 	display: inline-block;
 	overflow: hidden;
 }
 
-span.part_map_static_text
+.part_map_static_text
 {
 	position: absolute;
 	white-space: pre;
@@ -876,12 +907,12 @@ span.part_map_static_text
 
 /** Interactive */
 
-span.part_map_interactive
+.part_map_interactive
 {
 	display: inline-block;
 }
 
-div.part_map_bubble
+.part_map_bubble
 {
 	font-size: 12px;
 	white-space: pre;

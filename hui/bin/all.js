@@ -973,6 +973,9 @@ hui.position = {
 	      top += element.scrollTop  || 0;
 	      left += element.scrollLeft || 0;
 	      element = element.parentNode;
+		  if (element.tagName=='HTML') {
+			  break; // TODO Temporary hack - Chrome has the same scrollTop on html as on body
+		  }
 	    } while (element);
 		return {top:top,left:left};
 	},
