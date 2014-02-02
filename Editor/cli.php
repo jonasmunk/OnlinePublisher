@@ -14,28 +14,19 @@ Console::exitIfNotConsole();
 
 $args = Console::getArguments();
 
-if ($args[1]=='test') {
-    Commander::test($args);
-}
-else if ($args[1]=='style') {
-    Commander::style();    
-}
-else if ($args[1]=='hui') {
-    Commander::hui();
-}
-else if ($args[1]=='classpath') {
-    Commander::classpath();
-}
-else if ($args[1]=='full') {
-    Commander::classpath();
-    Commander::hui();
-    Commander::style();
+if (method_exists('Commander',$args[1])) {
+    Commander::$args[1]($args);
 } else {
-    echo "Tell me what to do: \nstyle \nhui \nclasspath \nfull";
+    $methods = get_class_methods('Commander');
+    echo "Tell me what to do: ".join(', ',$methods);
     echo "\n: ";
     $handle = fopen ("php://stdin","r");
-    $line = fgets($handle);
-    echo "Your choice: $line\n";
+    $cmd = trim(fgets($handle));
+    if (method_exists('Commander',$cmd)) {
+        Commander::$cmd();
+    } else {
+        echo "No action: ".$cmd;
+    }
 }
 
 
@@ -71,6 +62,12 @@ class Commander {
         $success = ClassService::rebuildClassPaths();
         echo $success ? 'Classpath successfully rebuild' : 'ERROR: Classpath could not be rebuild';
         echo PHP_EOL;  
+    }
+
+	static function full() {
+        Commander::classpath();
+        Commander::hui();
+        Commander::style();
     }
 }
 ?>
