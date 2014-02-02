@@ -205,6 +205,7 @@
 
 <xsl:template name="util:scripts-build">
     <xsl:call-template name="util:_scripts-errorhandler"/>
+    <xsl:call-template name="util:_scripts-msie"/>
 	<xsl:choose>
 		<xsl:when test="$preview='true'">
 			<script src="{$path}{$timestamp-url}hui/bin/minimized.js{$timestamp-query}" type="text/javascript"><xsl:comment/></script>
@@ -214,7 +215,7 @@
             <xsl:call-template name="util:_scripts-config"/>
 		</xsl:when>
 		<xsl:when test="$development='true'">
-			<script src="{$path}{$timestamp-url}hui/bin/minimized.site.js{$timestamp-query}" type="text/javascript"><xsl:comment/></script>
+			<script src="{$path}{$timestamp-url}hui/bin/joined.site.js{$timestamp-query}" type="text/javascript"><xsl:comment/></script>
 			<script src="{$path}{$timestamp-url}style/basic/js/OnlinePublisher.js{$timestamp-query}" type="text/javascript"><xsl:comment/></script>
             <xsl:call-template name="util:_scripts-config"/>
 			<script src="{$path}{$timestamp-url}style/{$design}/js/script.dev.js{$timestamp-query}" type="text/javascript"><xsl:comment/></script>
@@ -229,6 +230,7 @@
 
 <xsl:template name="util:scripts">
     <xsl:call-template name="util:_scripts-errorhandler"/>
+    <xsl:call-template name="util:_scripts-msie"/>
 	<xsl:choose>
 		<xsl:when test="$preview='true'">
 			<xsl:choose>
@@ -278,7 +280,7 @@
 <xsl:template name="util:_scripts-msie">
 	<!-- html5 -->
 	<xsl:comment><![CDATA[[if lt IE 9]>
-    <script src="//html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <script src="//html5shim.googlecode.com/svn/trunk/html5.js" data-movable="false"></script>
 	<![endif]]]></xsl:comment>
 	<xsl:comment><![CDATA[[if lt IE 8]>
 	<script type="text/javascript" src="]]><xsl:value-of select="$path"/><xsl:value-of select="$timestamp-url"/>hui/lib/json2.js<xsl:value-of select="$timestamp-query"/><![CDATA["></script>
@@ -322,6 +324,21 @@
 				})
 			} catch (ignore) {}
 		}
+        
+        window._editor = {
+            deferred : [],
+            
+            defer : function(func) {
+                deferred[deferred.length+1] = func;
+            },
+            loadCSS : function(href) {
+                var e = document.createElement('link');
+                e.setAttribute('rel','stylesheet');
+                e.setAttribute('type','text/css');
+                e.setAttribute('href',href);
+                document.getElementsByTagName('head')[0].appendChild(e);
+            }
+        }
 	</script>    
 </xsl:template>
 
@@ -424,17 +441,8 @@
 
 <xsl:template name="util:lazy-style">
     <xsl:param name="href"/>
-    <!--
-    <link rel="stylesheet" type="text/css" href="{$href}"/>-->
-    <script type="text/javascript">
-        (function() {
-            var e = document.createElement('link');
-            e.setAttribute('rel','stylesheet');
-            e.setAttribute('type','text/css');
-            e.setAttribute('href','<xsl:value-of select="$href"/>');
-            document.getElementsByTagName('head')[0].appendChild(e);
-        })()
-    </script>
+    <!--<link rel="stylesheet" type="text/css" href="{$href}"/>-->
+    <script type="text/javascript">_editor.loadCSS('<xsl:value-of select="$href"/>');</script>
     <noscript>
     <link rel="stylesheet" type="text/css" href="{$href}"/>
     </noscript>
@@ -712,7 +720,36 @@
 	</xsl:if>
 </xsl:template>
 
-                                               
+
+
+
+<!-- Shared -->
+
+
+
+<xsl:template name="util:wrap-in-frame">
+    <xsl:param name="variant"/>
+    <xsl:param name="content"/>
+    
+	<xsl:choose>
+		<xsl:when test="$variant!=''">
+			<span class="shared_frame_{$variant}">
+				<span class="shared_frame_{$variant}_top"><span><span><xsl:comment/></span></span></span>
+				<span class="shared_frame_{$variant}_middle">
+					<span class="shared_frame_{$variant}_middle">
+						<span class="shared_frame_{$variant}_content">
+							<xsl:copy-of select="$content"/>
+						</span>
+					</span>
+				</span>
+				<span class="shared_frame_{$variant}_bottom"><span><span><xsl:comment/></span></span></span>
+			</span>
+		</xsl:when>
+		<xsl:otherwise>
+			<xsl:copy-of select="$content"/>
+		</xsl:otherwise>
+	</xsl:choose>
+</xsl:template>
                                                
 
 

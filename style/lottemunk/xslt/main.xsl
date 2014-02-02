@@ -39,20 +39,10 @@
 				</xsl:with-param>
 	        </xsl:call-template>
 			<xsl:call-template name="util:lazy-style">
-	            <xsl:with-param name="href" select="'http://fonts.googleapis.com/css?family=Cinzel'"/>
-	        </xsl:call-template>
-			<xsl:call-template name="util:lazy-style">
-	            <xsl:with-param name="href" select="'http://fonts.googleapis.com/css?family=Cinzel'"/>
-	        </xsl:call-template>
-			<xsl:call-template name="util:lazy-style">
-	            <xsl:with-param name="href" select="'http://fonts.googleapis.com/css?family=Merriweather:400,300,300italic,400italic,700'"/>
-	        </xsl:call-template>
-			<xsl:call-template name="util:lazy-style">
-	            <xsl:with-param name="href" select="'http://fonts.googleapis.com/css?family=Gloria+Hallelujah'"/>
+	            <xsl:with-param name="href" select="'http://fonts.googleapis.com/css?family=Cinzel|Merriweather:400,300,300italic,400italic,700|Gloria+Hallelujah'"/>
 	        </xsl:call-template>
 			<xsl:call-template name="util:scripts-build"/>
 			<xsl:if test="//p:page/p:context/p:home[@page=//p:page/@id]">
-				<script src="{$path}style/lottemunk{$timestamp-url}/js/script.js{$timestamp-query}" type="text/javascript"><xsl:comment/></script>
 			<meta name="viewport" content="user-scalable=yes, width=device-width, initial-scale = 1, maximum-scale = 10, minimum-scale = 0.2"/>
 			<meta name="viewport" content="user-scalable=yes, initial-scale = 1, maximum-scale = 10, minimum-scale = 0.2"/>
 			</xsl:if>

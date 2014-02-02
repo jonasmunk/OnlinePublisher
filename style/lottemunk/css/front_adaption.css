@@ -69,6 +69,12 @@ body.small #video article
 	background: #000;
 }
 
+body.small #video_poster {
+    height: 480px;
+    width: 100%;
+}
+
+
 body.small #video article h2 span
 {
 	display: inline;
@@ -111,7 +117,7 @@ body.small #video article p
 	
 	body.front header h1,
 	body.front header p {
-		width: 300px;
+		width: 340px;
 	}
 	
 	#pressphotos h2 {

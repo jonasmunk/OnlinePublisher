@@ -8,6 +8,7 @@ if (!isset($GLOBALS['basePath'])) {
 	exit;
 }
 require_once($basePath.'Editor/Libraries/simpletest/unit_tester.php');
+//require_once($basePath.'Editor/Libraries/simpletest/web_tester.php');
 require_once($basePath.'Editor/Libraries/simpletest/reporter.php');
 require_once($basePath.'Editor/Classes/Tests/AbstractObjectTest.php');
 
@@ -41,15 +42,15 @@ class TestService {
 	static function runTest($test,$reporter = null) {
 		global $basePath;
 		$path = $basePath.'Editor/Tests/'.$test.'.php';
-		$test = new GroupTest($test);
-		$test->addTestFile($path);
-    if ($reporter==null) {
-      $reporter = new HtmlReporter();
-    }
+		$test = new TestSuite($test);
+		$test->addFile($path);
+        if ($reporter==null) {
+          $reporter = new HtmlReporter();
+        }
 		$test->run($reporter);
 	}
 	
-	static function runTestsInGroup($group) {
+	static function runTestsInGroup($group,$reporter = null) {
 		global $basePath;
 		$paths = array();
 		
@@ -57,12 +58,15 @@ class TestService {
 		foreach ($tests as $test) {
 			$paths[] = $basePath.'Editor/Tests/'.$group.'/'.$test;
 		}
+        if ($reporter==null) {
+          $reporter = new HtmlReporter();
+        }
 		
-		$test = new GroupTest($group);
+		$test = new TestSuite($group);
 		foreach ($paths as $path) {
-			$test->addTestFile($path);
+			$test->addFile($path);
 		}
-		$test->run(new HtmlReporter());
+		$test->run($reporter);
 	}
 	
 	static function runAllTests($reporter = null) {
@@ -76,11 +80,9 @@ class TestService {
 				$paths[] = $basePath.'Editor/Tests/'.$group.'/'.$test;
 			}
 		}
-		require_once($basePath.'Editor/Libraries/simpletest/unit_tester.php');
-		require_once($basePath.'Editor/Libraries/simpletest/reporter.php');
-		$test = new GroupTest('All tests');
+		$test = new TestSuite('All tests');
 		foreach ($paths as $path) {
-			$test->addTestFile($path);
+			$test->addFile($path);
 		}
     if ($reporter==null) {
       $reporter = new HtmlReporter();

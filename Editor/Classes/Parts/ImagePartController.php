@@ -313,7 +313,7 @@ class ImagePartController extends PartController
 					</field>
 					<field label="{Frame; da:Ramme}:">
 						<dropdown key="frame">
-							'.$this->getFrameOptions().'
+							'.DesignService::getFrameOptions().'
 						</dropdown>
 					</field>
 					<buttons>

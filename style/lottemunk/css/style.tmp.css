@@ -3996,6 +3996,7 @@ ul.icons a
 	line-height: 100px;
 	font-size: 64px;
 	text-indent: 23px;
+    color: #fff;
 	color: rgba(255,255,255,.8);
 	text-shadow: 0 0 10px rgba(0,0,0,.2);
 	box-shadow: 0 0 10px rgba(0,0,0,.2);
@@ -4520,6 +4521,12 @@ body.small #video article
 	background: #000;
 }
 
+body.small #video_poster {
+    height: 480px;
+    width: 100%;
+}
+
+
 body.small #video article h2 span
 {
 	display: inline;
@@ -4562,7 +4569,7 @@ body.small #video article p
 	
 	body.front header h1,
 	body.front header p {
-		width: 300px;
+		width: 340px;
 	}
 	
 	#pressphotos h2 {

@@ -205,6 +205,17 @@ class DesignService {
 		$design->publish();
 		Log::debug($design);
 	}
+    
+
+	
+	static function getFrameOptions() {
+		return '
+			<item title="{None; da:Ingen}" value=""/>
+			<item title="{Light; da:Let}" value="light"/>
+			<item title="Elegant" value="elegant"/>
+			<item title="{Shaddow; da:Skygge}" value="shadow_slant"/>
+			<item title="Polaroid" value="polaroid"/>';
+	}
 	
 	static function validate($name) {
 		global $basePath;
@@ -221,7 +232,11 @@ class DesignService {
 		$valid = $valid && file_exists($basePath."style/".$name."/info/Preview128.png");
 		$valid = $valid && file_exists($basePath."style/".$name."/info/Preview64.png");
 		$valid = $valid && file_exists($basePath."style/".$name."/xslt/main.xsl");
-		$valid = $valid && file_exists($basePath."style/".$name."/css/style.php");
+		if ($info!==null && !isset($info->build)) {
+		    $valid = $valid && file_exists($basePath."style/".$name."/css/style.php");
+        } else {
+            $valid = $valid && !file_exists($basePath."style/".$name."/css/style.php");
+        }
 		$valid = $valid && file_exists($basePath."style/".$name."/css/overwrite.css");
 		return $valid;
 	}
