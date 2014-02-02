@@ -4735,6 +4735,8 @@ body.small #video article p
 	.front .layout_languages {
 		position: static;
 		text-align: center;
+		margin-top: 20px;
+		margin-bottom: -10px;
 	}
 	
 	.front .layout_language {
