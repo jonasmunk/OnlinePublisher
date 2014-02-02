@@ -280,7 +280,7 @@
 <xsl:template name="util:_scripts-msie">
 	<!-- html5 -->
 	<xsl:comment><![CDATA[[if lt IE 9]>
-    <script src="//html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <script src="//html5shim.googlecode.com/svn/trunk/html5.js" data-movable="false"></script>
 	<![endif]]]></xsl:comment>
 	<xsl:comment><![CDATA[[if lt IE 8]>
 	<script type="text/javascript" src="]]><xsl:value-of select="$path"/><xsl:value-of select="$timestamp-url"/>hui/lib/json2.js<xsl:value-of select="$timestamp-query"/><![CDATA["></script>
@@ -720,7 +720,36 @@
 	</xsl:if>
 </xsl:template>
 
-                                               
+
+
+
+<!-- Shared -->
+
+
+
+<xsl:template name="util:wrap-in-frame">
+    <xsl:param name="variant"/>
+    <xsl:param name="content"/>
+    
+	<xsl:choose>
+		<xsl:when test="$variant!=''">
+			<span class="shared_frame_{$variant}">
+				<span class="shared_frame_{$variant}_top"><span><span><xsl:comment/></span></span></span>
+				<span class="shared_frame_{$variant}_middle">
+					<span class="shared_frame_{$variant}_middle">
+						<span class="shared_frame_{$variant}_content">
+							<xsl:copy-of select="$content"/>
+						</span>
+					</span>
+				</span>
+				<span class="shared_frame_{$variant}_bottom"><span><span><xsl:comment/></span></span></span>
+			</span>
+		</xsl:when>
+		<xsl:otherwise>
+			<xsl:copy-of select="$content"/>
+		</xsl:otherwise>
+	</xsl:choose>
+</xsl:template>
                                                
 
 

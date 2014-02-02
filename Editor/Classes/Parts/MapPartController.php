@@ -161,7 +161,7 @@ class MapPartController extends PartController
 					</field>
 					<field label="Ramme">
 						<dropdown key="frame">
-							'.$this->getFrameOptions().'
+							'.DesignService::getFrameOptions().'
 						</dropdown>
 					</field>
 					<field label="Bredde">

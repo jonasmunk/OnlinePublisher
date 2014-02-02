@@ -6,6 +6,7 @@
  xmlns:img="http://uri.in2isoft.com/onlinepublisher/part/image/1.0/"
  xmlns:o="http://uri.in2isoft.com/onlinepublisher/class/object/1.0/"
  xmlns:i="http://uri.in2isoft.com/onlinepublisher/class/image/1.0/"
+ xmlns:util="http://uri.in2isoft.com/onlinepublisher/util/"
  exclude-result-prefixes="img o i"
  >
 
@@ -85,24 +86,13 @@
 	<xsl:variable name="src"><xsl:call-template name="img:buildsrc"/></xsl:variable>
 	<xsl:variable name="width"><xsl:call-template name="img:buildwidth"/></xsl:variable>
 	<xsl:variable name="height"><xsl:call-template name="img:buildheight"/></xsl:variable>
-	<xsl:choose>
-		<xsl:when test="img:style/@frame">
-			<span class="shared_frame_{img:style/@frame}">
-				<span class="shared_frame_{img:style/@frame}_top"><span><span><xsl:comment/></span></span></span>
-				<span class="shared_frame_{img:style/@frame}_middle">
-					<span class="shared_frame_{img:style/@frame}_middle">
-						<span class="shared_frame_{img:style/@frame}_content">
-							<img src="{$src}" width="{$width}"  height="{$height}" alt="" id="part_image_{generate-id()}"/>
-						</span>
-					</span>
-				</span>
-				<span class="shared_frame_{img:style/@frame}_bottom"><span><span><xsl:comment/></span></span></span>
-			</span>
-		</xsl:when>
-		<xsl:otherwise>
-			<img src="{$src}" width="{$width}"  height="{$height}" alt="" id="part_image_{generate-id()}"/>
-		</xsl:otherwise>
-	</xsl:choose>
+    
+    <xsl:call-template name="util:wrap-in-frame">
+        <xsl:with-param name="variant" select="img:style/@frame"/>
+        <xsl:with-param name="content">
+            <img src="{$src}" width="{$width}"  height="{$height}" alt="" id="part_image_{generate-id()}"/>
+        </xsl:with-param>
+    </xsl:call-template>
 </xsl:template>
 
 <xsl:template match="img:text">

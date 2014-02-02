@@ -202,13 +202,5 @@ class PartController
 	function getToolbars() {
 		return null;
 	}
-	
-	function getFrameOptions() {
-		return '
-			<item title="{None; da:Ingen}" value=""/>
-			<item title="{Light; da:Let}" value="light"/>
-			<item title="Elegant" value="elegant"/>
-			<item title="{Shaddow; da:Skygge}" value="shadow_slant"/>';
-	}
 }
 ?>

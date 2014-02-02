@@ -3,6 +3,7 @@
 <xsl:stylesheet version="1.0"
  xmlns="http://www.w3.org/1999/xhtml"
  xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
+ xmlns:util="http://uri.in2isoft.com/onlinepublisher/util/"
  xmlns:map="http://uri.in2isoft.com/onlinepublisher/part/map/1.0/"
  exclude-result-prefixes="map"
  >
@@ -15,15 +16,14 @@
 					<xsl:text> shared_frame_adaptive</xsl:text>
 				</xsl:if>
 			</xsl:attribute>
-			<span class="shared_frame_{@frame}_top"><span><span><xsl:comment/></span></span></span>
-			<span class="shared_frame_{@frame}_middle">
-				<span class="shared_frame_{@frame}_middle">
-					<span class="shared_frame_{@frame}_content">
-						<xsl:call-template name="map:internal"/>
-					</span>
-				</span>
-			</span>
-			<span class="shared_frame_{@frame}_bottom"><span><span><xsl:comment/></span></span></span>
+            
+    
+            <xsl:call-template name="util:wrap-in-frame">
+                <xsl:with-param name="variant" select="@frame"/>
+                <xsl:with-param name="content">
+                    <xsl:call-template name="map:internal"/>
+                </xsl:with-param>
+            </xsl:call-template>            
 		</span>
 	</xsl:template>
 
