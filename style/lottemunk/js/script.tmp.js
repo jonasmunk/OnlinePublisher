@@ -5981,10 +5981,14 @@ op.part.ImageGallery.prototype = {
 
 op.part.ImageGallery.changing = {
 	init : function(element) {
-		var nodes = element.getElementsByTagName('a');
+		var nodes = hui.get.byClass(element,'part_imagegallery_item');
 		if (nodes.length==0) {
 			return;
 		}
+        element.style.height = element.clientHeight+'px';
+        for (var i = 0; i < nodes.length; i++) {
+            nodes[i].style.position = 'absolute';
+        }
 		var timer;
 		var index = -1;
 		var zIndex = 1;
@@ -5998,9 +6002,11 @@ op.part.ImageGallery.changing = {
 				index = 0;
 			}
 			if (!first) {
-				hui.style.setOpacity(nodes[index],0)
-				nodes[index].style.zIndex=zIndex;
-				nodes[index].style.display='block';
+                hui.style.set(nodes[index],{
+                    opacity: 0,
+                    zIndex : zIndex,
+                    display : 'block'
+                })
 				hui.animate(nodes[index],'opacity',1,1000,{ease:hui.ease.slowFastSlow});
 			}
 			window.setTimeout(timer,3000);
