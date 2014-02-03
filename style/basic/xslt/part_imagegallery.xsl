@@ -18,13 +18,6 @@
 				<xsl:if test="ig:display/@framed='true'"><xsl:text> part_imagegallery_framed</xsl:text></xsl:if>
 				<xsl:if test="ig:display/@variant='changing'"><xsl:text> part_imagegallery_changing</xsl:text></xsl:if>
 			</xsl:attribute>
-            <!--
-			<xsl:if test="ig:display/@variant='changing'">
-				<xsl:attribute name="style">
-					height: <xsl:value-of select="ig:display/@height+10"/>px;
-				</xsl:attribute>
-			</xsl:if>
-                -->
 			<xsl:apply-templates select="o:object[@type='image']"/>
 			<xsl:comment/>
 		</div>
