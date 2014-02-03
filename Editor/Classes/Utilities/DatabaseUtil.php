@@ -296,8 +296,8 @@ class DatabaseUtil {
 			$log[] = "Command: ";
 			$log[] = $action;
 			$con = Database::getConnection();
-			mysql_query($action,$con);
-			$error = mysql_error($con);
+			mysqli_query($con,$action);
+			$error = mysqli_error($con);
 			if (strlen($error)>0) {
 				$log[] = "!!!Error: ".$error;
 			}
@@ -313,8 +313,8 @@ class DatabaseUtil {
 					$log[] = "Command: ";
 					$log[] = $action;
 					$con = Database::getConnection();
-					mysql_query($action,$con);
-					$error = mysql_error($con);
+					mysqli_query($con,$action);
+					$error = mysqli_error($con);
 					if (strlen($error)>0) {
 						$log[] = "!!!Error: ".$error;
 					}

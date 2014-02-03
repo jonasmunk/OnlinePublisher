@@ -100,4 +100,33 @@ class SchemaService {
 		}
 		return $sql;
 	}
+    
+    static function getDatabaseSchema() {
+        $schema = ['tables' => []];
+        
+        $tables = DatabaseUtil::getTables();
+        
+        foreach ($tables as $table) {
+            $tableInfo = [];
+            $tableInfo['name'] = $table;
+            $columns = DatabaseUtil::getTableColumns($table);
+            $columnsInfo = [];
+            foreach ($columns as $column) {
+                $columnsInfo[$column['Field']] = [
+                    'type' => $column['Type'],
+                    'collation' => $column['Collation'],
+                    'null' => $column['Null'],
+                    'default' => $column['Default'],
+                    'key' => $column['Key'],
+                    'extra' => $column['Extra'],
+                ];
+            }
+            
+            $tableInfo['columns'] = $columnsInfo;
+            $schema['tables'][] = $tableInfo;
+            
+        }
+        
+        return $schema;
+    }
 }

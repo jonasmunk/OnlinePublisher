@@ -58,6 +58,12 @@ class Commander {
         DesignService::rebuild();  
     }
 
+	static function schema() {
+        $schema = SchemaService::getDatabaseSchema();
+                
+        echo json_encode(SchemaService::getDatabaseSchema(),JSON_PRETTY_PRINT);
+    }
+
 	static function classpath() {
         $success = ClassService::rebuildClassPaths();
         echo $success ? 'Classpath successfully rebuild' : 'ERROR: Classpath could not be rebuild';
