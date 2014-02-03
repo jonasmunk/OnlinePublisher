@@ -12,9 +12,10 @@ Part::$schema['imagegallery'] = array(
 	'fields' => array(
 		'variant'   	=> array( 'type' => 'text' ),
 		'height'		=> array( 'type' => 'int' ),
-		'width'		=> array( 'type' => 'int' ),
+		'width'		    => array( 'type' => 'int' ),
 		'imageGroupId'	=> array( 'type' => 'int', 'column' => 'imagegroup_id' ),
 		'framed'		=> array( 'type' => 'boolean' ),
+		'frame'         => array( 'type' => 'text' ),
 		'showTitle'		=> array( 'type' => 'boolean', 'column' => 'show_title' )
 	)
 );
@@ -32,6 +33,7 @@ class ImagegalleryPart extends Part
 	var $width;
 	var $imageGroupId;
 	var $framed;
+	var $frame;
 	var $showTitle;
 	
 	function ImagegalleryPart() {
@@ -77,6 +79,18 @@ class ImagegalleryPart extends Part
 	function setFramed($framed) {
 	    $this->framed = $framed;
 	}
+
+	function getFramed() {
+	    return $this->framed;
+	}
+	
+	function setFrame($frame) {
+	    $this->frame = $frame;
+	}
+
+	function getFrame() {
+	    return $this->frame;
+	}
 	
 	function setShowTitle($showTitle) {
 	    $this->showTitle = $showTitle;
@@ -84,10 +98,6 @@ class ImagegalleryPart extends Part
 
 	function getShowTitle() {
 	    return $this->showTitle;
-	}
-
-	function getFramed() {
-	    return $this->framed;
 	}
 }
 ?>

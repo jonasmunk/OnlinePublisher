@@ -22,6 +22,7 @@ class ImagegalleryPartController extends PartController
 		$part->setFramed(Request::getBoolean('framed'));
 		$part->setShowTitle(Request::getBoolean('showTitle'));
 		$part->setVariant(Request::getString('variant'));
+		$part->setFrame(Request::getString('frame'));
 		return $part;
 	}
 	
@@ -46,6 +47,7 @@ class ImagegalleryPartController extends PartController
 	    '<input type="hidden" name="framed" value="'.Strings::toBoolean($part->getFramed()).'"/>'.
 	    '<input type="hidden" name="showTitle" value="'.Strings::toBoolean($part->getShowTitle()).'"/>'.
 	    '<input type="hidden" name="variant" value="'.$part->getVariant().'"/>'.
+	    '<input type="hidden" name="frame" value="'.$part->getFrame().'"/>'.
 		'<script src="'.ConfigurationService::getBaseUrl().'Editor/Parts/imagegallery/editor.js" type="text/javascript" charset="utf-8"></script>'.
 		'<div id="part_imagegallery_container">'.$this->render($part,$context).'</div>';
 	}
@@ -59,6 +61,9 @@ class ImagegalleryPartController extends PartController
 		}
 		$data.= ' variant="'.Strings::escapeXML($part->getVariant()).'"';
 		$data.= ' framed="'.Strings::toBoolean($part->getFramed()).'"';
+		if ($part->getFrame()) {
+			$data.= ' frame="'.Strings::escapeXML($part->getFrame()).'"';			
+		}
 		$data.= ' show-title="'.Strings::toBoolean($part->getShowTitle()).'"/>';
 		if ($part->getImageGroupId()) {
 			$sql="SELECT object.data from object,imagegroup_image where imagegroup_image.image_id = object.id and imagegroup_image.imagegroup_id=".Database::int($part->getImageGroupId())." order by object.title";
@@ -81,6 +86,7 @@ class ImagegalleryPartController extends PartController
 				$part->setHeight(intval($display->getAttribute('height')));
 				$part->setWidth(intval($display->getAttribute('width')));
 				$part->setVariant($display->getAttribute('variant'));
+				$part->setFrame($display->getAttribute('frame'));
 				$part->setFramed($display->getAttribute('framed')=='true' ? true : false);
 			}
 		}
@@ -106,6 +112,11 @@ class ImagegalleryPartController extends PartController
 					<dropdown name="variant">
 						<item value="floating" title="{Floating; da:Flydende}"/>
 						<item value="changing" title="{Shifting; da:Skiftende}"/>
+					</dropdown>
+				</field>
+				<field label="{Frame; da:Ramme}">
+					<dropdown name="imageFrame">
+						'.DesignService::getFrameOptions().'
 					</dropdown>
 				</field>
 				<grid>

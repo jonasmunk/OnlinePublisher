@@ -6,6 +6,7 @@ hui.ui.listen({
 		showTitle.setValue(partToolbar.partForm.showTitle.value);
 		framed.setValue(partToolbar.partForm.framed.value);
 		variant.setValue(partToolbar.partForm.variant.value);
+		imageFrame.setValue(partToolbar.partForm.frame.value);
 	},
 	$valueChanged$height : function() {
 		this.update();
@@ -25,6 +26,9 @@ hui.ui.listen({
 	$valueChanged$variant : function() {
 		this.update();
 	},
+	$valueChanged$imageFrame : function() {
+		this.update();
+	},
 	update : function() {
 		partToolbar.partForm.height.value = height.getValue();
 		partToolbar.partForm.imageWidth.value = width.getValue();
@@ -32,6 +36,7 @@ hui.ui.listen({
 		partToolbar.partForm.framed.value = framed.getValue();
 		partToolbar.partForm.group.value = group.getValue();
 		partToolbar.partForm.variant.value = variant.getValue();
+		partToolbar.partForm.frame.value = imageFrame.getValue();
 		partToolbar.preview();
 	}
 });

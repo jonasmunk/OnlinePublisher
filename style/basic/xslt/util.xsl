@@ -735,7 +735,7 @@
     
 	<xsl:choose>
 		<xsl:when test="$variant!=''">
-			<span class="shared_frame_{$variant}">
+			<span class="shared_frame shared_frame_{$variant}">
 				<span class="shared_frame_{$variant}_top"><span><span><xsl:comment/></span></span></span>
 				<span class="shared_frame_{$variant}_middle">
 					<span class="shared_frame_{$variant}_middle">

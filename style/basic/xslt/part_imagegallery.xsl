@@ -6,6 +6,7 @@
  xmlns:ig="http://uri.in2isoft.com/onlinepublisher/part/imagegallery/1.0/"
  xmlns:o="http://uri.in2isoft.com/onlinepublisher/class/object/1.0/"
  xmlns:i="http://uri.in2isoft.com/onlinepublisher/class/image/1.0/"
+ xmlns:util="http://uri.in2isoft.com/onlinepublisher/util/"
  exclude-result-prefixes="o i ig"
  >
 
@@ -17,12 +18,14 @@
 				<xsl:if test="ig:display/@framed='true'"><xsl:text> part_imagegallery_framed</xsl:text></xsl:if>
 				<xsl:if test="ig:display/@variant='changing'"><xsl:text> part_imagegallery_changing</xsl:text></xsl:if>
 			</xsl:attribute>
+            <!--
 			<xsl:if test="ig:display/@variant='changing'">
 				<xsl:attribute name="style">
 					height: <xsl:value-of select="ig:display/@height+10"/>px;
 				</xsl:attribute>
 			</xsl:if>
-			<xsl:apply-templates/>
+                -->
+			<xsl:apply-templates select="o:object[@type='image']"/>
 			<xsl:comment/>
 		</div>
 		<script type="text/javascript">
@@ -72,18 +75,29 @@
 				<xsl:otherwise><xsl:value-of select="$path"/>services/images/?id=<xsl:value-of select="@id"/></xsl:otherwise>
 			</xsl:choose>
 		</xsl:variable>
-
-		<a href="{$url}">
-			<xsl:if test="../ig:display/@variant='changing' and position()=2">
-				<xsl:attribute name="style">
-					display: inline-block;
-				</xsl:attribute>
-			</xsl:if>
-			<xsl:if test="../ig:display/@show-title='true'">
-				<span class="common_font"><xsl:value-of select="o:title"/></span>
-			</xsl:if>
-			<img src="{$path}services/images/?id={@id}&amp;height={$height}&amp;width={$width}&amp;method={$method}" style="height: {$height}px; width: {$width}px;" alt="" id="part_imagegallery_{generate-id()}"/>
-		</a>
+        <xsl:variable name="style">
+        </xsl:variable>
+        <span class="part_imagegallery_item">
+            <xsl:if test="../ig:display/@variant='changing' and position()>1">
+                <xsl:attribute name="style">display: none;</xsl:attribute>
+            </xsl:if>
+            <xsl:call-template name="util:wrap-in-frame">
+                <xsl:with-param name="variant" select="../ig:display/@frame"/>
+                <xsl:with-param name="content">
+            		<a href="{$url}">
+            			<xsl:if test="../ig:display/@variant='changing' and position()=2">
+            				<xsl:attribute name="style">
+            					display: inline-block;
+            				</xsl:attribute>
+            			</xsl:if>
+            			<xsl:if test="../ig:display/@show-title='true'">
+            				<span class="part_imagegallery_title common_font"><xsl:value-of select="o:title"/></span>
+            			</xsl:if>
+            			<img src="{$path}services/images/?id={@id}&amp;height={$height}&amp;width={$width}&amp;method={$method}" style="height: {$height}px; width: {$width}px;" alt="" class="part_imagegallery_image" id="part_imagegallery_{generate-id()}"/>
+            		</a>
+                </xsl:with-param>
+            </xsl:call-template>
+        </span>
 	</xsl:template>
 
 </xsl:stylesheet>
