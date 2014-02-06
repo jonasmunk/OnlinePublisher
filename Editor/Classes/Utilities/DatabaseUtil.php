@@ -116,22 +116,22 @@ class DatabaseUtil {
 	 */
 	static function updateTable($table,$columns) {
 		global $databaseTables;
-		$errors = array();
+		$commands = array();
 		if (array_key_exists($table,$databaseTables)) {
 			$expectedColumns = $databaseTables[$table];
 		
 			// Search for unknown columns
 			foreach ($columns as $col) {
 				if(!DatabaseUtil::findColumnInColumns($col[0],$expectedColumns)) {
-					$errors[] = "alter table `".$table."` DROP `".$col[0]."`";
+					$commands[] = "alter table `".$table."` DROP `".$col[0]."`";
 				}
 			}
 		
 			foreach ($expectedColumns as $col) {
 				if ($fields = DatabaseUtil::findColumnInColumns($col[0],$columns)) {
-					if ($fields['Type']!=$col[1] || $fields['Null']!=$col[2] || $fields['Default']!=$col[4]) {
+					if ($fields['Type']!=$col[1] || ($fields['Null']=='YES' && $col[2]!='YES') || $fields['Default']!=$col[4]) {
 						$sql="ALTER TABLE `".$table."` CHANGE `".$col[0]."` `".$col[0]."` ".$col[1]." ".($col[2]=='YES' ? "NULL" : "NOT NULL")." DEFAULT ".($col[4]=='' ? "NULL" : "'".$col['4']."'");
-						$errors[] = $sql;
+						$commands[] = $sql;
 					}
 				}
 				else {
@@ -151,14 +151,14 @@ class DatabaseUtil {
 					if ($col[3]!='') {
 						$sql.=" PRIMARY KEY";
 					}
-					$errors[] = $sql;
+					$commands[] = $sql;
 				}
 			}
 		}
 		else {
-			$errors[] = "DROP TABLE `".$table."`";
+			$commands[] = "DROP TABLE `".$table."`";
 		}
-		return $errors;
+		return $commands;
 	}
 	
 
@@ -260,13 +260,40 @@ class DatabaseUtil {
 	}
 	
 	static function update() {
-		$tables = DatabaseUtil::getTables();
 
 		$log = array();
 		$log[] = "== Starting update ==";
+		$tables = DatabaseUtil::getTables();
+
+        $sqls = DatabaseUtil::buildUpdateSQL();
+		$con = Database::getConnection();
+        foreach ($sqls as $command) {
+			$log[] = "";
+			$log[] = "> " . $command;
+			mysqli_query($con,$command);
+			$error = mysqli_error($con);
+			if (strlen($error)>0) {
+				$log[] = "!!!Error: ".$error;
+			}
+            
+        }
+        if (ConfigurationService::isUnicode()) {
+            DatabaseUtil::convertAllTablesToUnicode($log);            
+        }
+		DatabaseUtil::setAsUpToDate();
+		$log[] = "";
+		$log[] = "== Update finished ==";
+        
+        return $log;
+	}
+    
+
+	
+	static function buildUpdateSQL() {
+		$tables = DatabaseUtil::getTables();
+
+		$commands = array();
 		$missingTables = DatabaseUtil::findMissingTables($tables);
-		Log::debug($tables);
-		Log::debug($missingTables);
 		foreach ($missingTables as $table) {
 			$action = "CREATE TABLE `".$table."` (";
 			$columns = DatabaseUtil::getExpectedColumns($table);
@@ -292,49 +319,25 @@ class DatabaseUtil {
 			}
 			$action.= $keys;
 			$action.= ")";
-			$log[] = "";
-			$log[] = "Command: ";
-			$log[] = $action;
-			$con = Database::getConnection();
-			mysqli_query($con,$action);
-			$error = mysqli_error($con);
-			if (strlen($error)>0) {
-				$log[] = "!!!Error: ".$error;
-			}
+            $commands[] = $action;
 		}
 
 		foreach ($tables as $table) {
 			$columns = DatabaseUtil::getTableColumns($table);
 			$errors = DatabaseUtil::checkTable($table,$columns);
 			if (count($errors)>0) {
-				$sql=DatabaseUtil::updateTable($table,$columns);
-				foreach ($sql as $action) {
-					$log[] = "";
-					$log[] = "Command: ";
-					$log[] = $action;
-					$con = Database::getConnection();
-					mysqli_query($con,$action);
-					$error = mysqli_error($con);
-					if (strlen($error)>0) {
-						$log[] = "!!!Error: ".$error;
-					}
-				}
+				$sql = DatabaseUtil::updateTable($table,$columns);
+                $commands = array_merge($commands,$sql);
 			}
 		}
-        if (ConfigurationService::isUnicode()) {
-            DatabaseUtil::convertAllTablesToUnicode($log);            
-        }
-		DatabaseUtil::setAsUpToDate();
-		$log[] = "";
-		$log[] = "== Update finished ==";
-		return $log;
+		return $commands;
 	}
     
     static function convertAllTablesToUnicode(&$log) {
         $tables = DatabaseUtil::getTables();
         foreach ($tables as $table) {
             $sql = 'ALTER TABLE `'.$table.'` CONVERT TO CHARACTER SET utf8 COLLATE utf8_danish_ci';
-            $log[] = $sql;
+            $log[] = "> " . $sql;
             Database::update($sql);
         }
     }

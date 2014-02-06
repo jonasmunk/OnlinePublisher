@@ -148,7 +148,7 @@ $databaseTables = array(
 			array("object_id","int(11)","YES","","",""),
 			array("name","varchar(255)","","","",""),
 			array("email","varchar(255)","","","",""),
-			array("message","text","","","","")
+			array("message","mediumtext","","","","")
 		),
 	'file' => array(
 			array("object_id","int(11)","YES","","",""),
@@ -218,7 +218,7 @@ $databaseTables = array(
 	'guestbook' => array(
 			array("page_id","int(11)","","","0",""),
 			array("title","varchar(255)","","","",""),
-			array("text","text","","","","")
+			array("text","mediumtext","","","","")
 		),
 	'guestbook_item' => array(
 			array("id","int(11)","","PRI","","auto_increment"),
@@ -251,7 +251,7 @@ $databaseTables = array(
 		),
 	'html' => array(
 			array("page_id","int(11)","","","0",""),
-			array("html","text","","","",""),
+			array("html","text","YES","","",""),
 			array("valid","tinyint(4)","","","1",""),
 			array("title","varchar(255)","YES","","","")
 		),
@@ -266,7 +266,7 @@ $databaseTables = array(
 	'imagegallery' => array(
 			array("page_id","int(11)","","PRI","0",""),
 			array("title","varchar(255)","","","",""),
-			array("text","text","","","",""),
+			array("text","text","YES","","",""),
             array("imagesize","int(11)","","","48",""),
             array("showtitle","tinyint(1)","","","1",""),
             array("shownote","tinyint(1)","","","1",""),
@@ -386,7 +386,7 @@ $databaseTables = array(
 	'page' => array(
 			array("id","int(11)","","PRI","","auto_increment"),
 			array("title","varchar(100)","","","",""),
-			array("description","text","","","",""),
+			array("description","text","YES","","",""),
 			array("keywords","varchar(255)","","","",""),
 			array("template_id","int(11)","","","0",""),
 			array("data","longtext","YES","","",""),
@@ -409,7 +409,7 @@ $databaseTables = array(
 	'page_cache' => array(
 			array("page_id","int(11)","YES","","",""),
 			array("stamp","datetime","YES","","",""),
-			array("html","varchar(50000)","YES","","",""),
+			array("html","mediumtext","YES","","",""),
 			array("path","varchar(1024)","YES","","","")
 	),
 	'pageblueprint' => array(

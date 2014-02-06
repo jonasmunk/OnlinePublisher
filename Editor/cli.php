@@ -59,15 +59,42 @@ class Commander {
     }
 
 	static function schema() {
+        global $basePath;
         $schema = SchemaService::getDatabaseSchema();
                 
-        echo json_encode(SchemaService::getDatabaseSchema(),JSON_PRETTY_PRINT);
+        $schema = var_export(SchemaService::getDatabaseSchema(),true);
+
+        $file = $basePath."Editor/Info/Schema.php";
+        
+        $data = "<?php
+/**
+ * @package OnlinePublisher
+ * @subpackage Info
+ */
+
+if (!isset(\$GLOBALS['basePath'])) {
+	header('HTTP/1.1 403 Forbidden');
+	exit;
+}
+\$HUMANISE_EDITOR_SCHEMA = " . $schema . "
+?>";
+        FileSystemService::writeStringToFile($data,$file);
+        echo $schema . PHP_EOL;
     }
 
 	static function classpath() {
         $success = ClassService::rebuildClassPaths();
         echo $success ? 'Classpath successfully rebuild' : 'ERROR: Classpath could not be rebuild';
         echo PHP_EOL;  
+    }
+
+	static function check() {
+        if (DatabaseUtil::isCorrect()) {
+            echo "The database schema is correct" . PHP_EOL;
+        } else {
+            echo "The database schema is NOT correct" . PHP_EOL;
+        }
+        echo join(PHP_EOL,DatabaseUtil::buildUpdateSQL()) . PHP_EOL;
     }
 
 	static function full() {
