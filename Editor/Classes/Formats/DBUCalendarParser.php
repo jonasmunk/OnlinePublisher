@@ -19,7 +19,7 @@ class DBUCalendarParser {
 		$cal = new DBUCalendar();
 		$string = Strings::toUnicode($string);
 		$table = HtmlTableParser::parseUsingHeader($string);
-        Log::debug(count($table));
+
 		$first = $table[0];
 		if (is_array($first)) {			
 			foreach ($first as $row) {
