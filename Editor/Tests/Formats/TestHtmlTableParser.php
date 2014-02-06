@@ -40,6 +40,7 @@ class TestHtmlTableParser extends UnitTestCase {
 		$path = $basePath.'Editor/Tests/Resources/Kampprogram_haandbold.xls';
 		$this->assertTrue(file_exists($path),'File does not exist: '.$path);
 		$html = file_get_contents($path);
+        $html = Strings::toUnicode($html);
 		$this->assertTrue(Strings::isNotBlank($html));
 
 		$parser = new HtmlTableParser();
@@ -56,7 +57,7 @@ class TestHtmlTableParser extends UnitTestCase {
 		$second = $table[1];
 		$this->assertEqual($second[0],'256835');
 		$this->assertEqual($second[1],'2');
-		$this->assertEqual($second[2],Strings::fromUnicode('Søn'));
+		$this->assertEqual($second[2],'Søn');
 
 	}
 
@@ -64,6 +65,7 @@ class TestHtmlTableParser extends UnitTestCase {
 		global $basePath;
 		$path = $basePath.'Editor/Tests/Resources/Kampprogram_haandbold.xls';
 		$html = file_get_contents($path);
+        $html = Strings::toUnicode($html);
 
 		$parser = new HtmlTableParser();
 		$parsed = $parser->parseUsingHeader($html);
@@ -72,9 +74,9 @@ class TestHtmlTableParser extends UnitTestCase {
 		$this->assertEqual(count($table),90);
 		$firstRow = $table[0];
 		$this->assertEqual($firstRow['Kampnr.'],'256835');
-		$this->assertEqual($firstRow['Hjemmehold'],Strings::fromUnicode('Dybvad Håndbold Flauenskjold IF'));
+		$this->assertEqual($firstRow['Hjemmehold'],'Dybvad Håndbold Flauenskjold IF');
 
 		$secondRow = $table[1];
-		$this->assertEqual($secondRow['Udehold'],Strings::fromUnicode('Bindslev/Tversted IF'));
+		$this->assertEqual($secondRow['Udehold'],'Bindslev/Tversted IF');
 	}
 }

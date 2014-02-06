@@ -55,7 +55,7 @@ class TestDBUCalendar extends UnitTestCase {
 		$this->assertEqual(count($events),62,'There must be 62 events, there are: '.count($events));
 		$first = $events[0];
 		$this->assertEqual("Flauenskjoldhallen",$first->getLocation());
-		$this->assertEqual("Dybvad Håndbold Flauenskjold IF",$first->getHomeTeam());
+		$this->assertEqual("Dybvad HÃ¥ndbold Flauenskjold IF",$first->getHomeTeam());
 		$this->assertEqual("Vestbjerg IF",$first->getGuestTeam());
 		$this->assertEqual(1317556200,$first->getStartDate());
 		$this->assertEqual(1317559500,$first->getEndDate());
@@ -63,7 +63,7 @@ class TestDBUCalendar extends UnitTestCase {
 		$this->assertEqual(' 2. Okt 2011 kl. 13:50',Dates::formatLongDateTime($first->getStartDate()));
 		$this->assertEqual(' 2. Okt 2011 kl. 14:45',Dates::formatLongDateTime($first->getEndDate()));
     }
-
+    
     function testU19drenge() {
 
 		$url = TestService::getResourceUrl('Kampprogram_U19drenge.xls');
@@ -74,7 +74,7 @@ class TestDBUCalendar extends UnitTestCase {
 		$first = $events[0];
 		$this->assertEqual("Holtet Stadion",$first->getLocation());
 		$this->assertEqual("VHG/GS/UB/HIF/HFS",$first->getHomeTeam());
-		$this->assertEqual("Støvring IF",$first->getGuestTeam());
+		$this->assertEqual("StÃ¸vring IF",$first->getGuestTeam());
 		$this->assertEqual(1334334600,$first->getStartDate());
 		$this->assertEqual(1334339100,$first->getEndDate());
 

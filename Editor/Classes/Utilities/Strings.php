@@ -366,20 +366,19 @@ class Strings {
 		return $str1.'/'.$str2;		
 	}
 	
-	static function extract($str,$start,$stop) {
+	static function extract($str,$start,$stop,$encoding='UTF-8') {
 		$extracted = array();
 		$pos = 0;
 		while ($pos!==false) {
-			$from = strpos($str,$start,$pos);
+			$from = mb_strpos($str,$start,$pos,$encoding);
 			if ($from===false) {
 				$pos = false;
 				continue;
 			}
-			$to = strpos($str,$stop,$from+strlen($start));
+			$to = mb_strpos($str,$stop,$from+strlen($start),$encoding);
 			if ($to!==false) {
-				$to+=strlen($stop);
-				//Log::debug('From '.$from.' to '.$to);
-				$extracted[] = substr($str,$from,$to-$from);
+				$to+=mb_strlen($stop,'UTF-8');
+				$extracted[] = mb_substr($str,$from,$to-$from,$encoding);
 				$pos = $to;
 			} else {
 				$pos = false;
