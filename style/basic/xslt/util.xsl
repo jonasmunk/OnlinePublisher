@@ -332,6 +332,14 @@
                 deferred[deferred.length+1] = func;
             },
             loadCSS : function(href) {
+                if (!true) {
+                    var self = this;
+                    window.setTimeout(function() {self._loadCSS(href)},2000);
+                    return;
+                }
+                this._loadCSS(href);
+            },
+            _loadCSS : function(href) {
                 var e = document.createElement('link');
                 e.setAttribute('rel','stylesheet');
                 e.setAttribute('type','text/css');

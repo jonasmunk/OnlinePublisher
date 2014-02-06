@@ -12,5 +12,6 @@ images/*
 local/cache/images/*
 local/cache/temp/*
 local/cache/urls/*
+local/logs/*
 .svn
 .htaccess

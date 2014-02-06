@@ -31,8 +31,8 @@ class TablePartController extends PartController
 		
 	function editor($part,$context) {
 		return
-		'<div id="part_table" class="part_table common_font" style="min-height: 20px;">'.Strings::toUnicode($part->getHtml()).'</div>'.
-		'<input type="hidden" name="html" value="'.Strings::toUnicode(Strings::escapeXML($part->getHtml())).'"/>'.
+		'<div id="part_table" class="part_table common_font" style="min-height: 20px;">'.$part->getHtml().'</div>'.
+		'<input type="hidden" name="html" value="'.Strings::escapeSimpleXML($part->getHtml()).'"/>'. // Important not to use Strings::escapeXML since it messes with unicode chars
 		'<script src="'.ConfigurationService::getBaseUrl().'Editor/Parts/table/script.js" type="text/javascript" charset="utf-8"></script>';
 	}
 	

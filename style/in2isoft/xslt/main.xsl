@@ -46,6 +46,7 @@
 				margin: 0px;
 				background: #fafafa;
 				text-align: center;
+                font-family: Arial,'Helvetica',sans-serif;
 			}
 
 			body,html
@@ -210,13 +211,103 @@
 			{
 				float: left;
 			}
+            
+            ul.layout_navigation li span
+            {
+            	display: inline-block;
+            	height: 30px;
+            	padding: 0px 8px;
+            }
+
+            ul.layout_navigation_selected li span
+            {
+            	color: #8f99aa;
+            	font-weight: 300;
+            }
+
+            body.windows ul.layout_navigation_selected li span
+            {
+            	font-weight: 400;
+            }
+
+
+            ul.layout_navigation_selected:hover li span
+            {
+            	color: #333;
+            }
+
+            ul.layout_navigation li.normal a:hover
+            {
+            	background: #eee;
+            	background: -moz-linear-gradient(top, #ffffff 0%, #eeeeee 100%); /* FF3.6+ */
+            	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#ffffff), color-stop(100%,#eeeeee)); /* Chrome,Safari4+ */
+            	background: -webkit-linear-gradient(top, #ffffff 0%,#eeeeee 100%); /* Chrome10+,Safari5.1+ */
+            	background: -o-linear-gradient(top, #ffffff 0%,#eeeeee 100%); /* Opera11.10+ */
+            	background: -ms-linear-gradient(top, #ffffff 0%,#eeeeee 100%); /* IE10+ */
+            	background: linear-gradient(top, #ffffff 0%,#eeeeee 100%); /* W3C */
+            	box-shadow: inset 0px 0px 2px rgba(0,0,0,.15);
+            }
+
+
+
+            body.msie ul.layout_navigation li.normal a:hover
+            {
+            	box-shadow: inset 0px 0px 6px rgba(0,0,0,.1);
+            }
+
+            ul.layout_navigation li.normal a:hover span
+            {
+            	color: #000;
+            }
+
+            ul.layout_navigation li.selected a, ul.layout_navigation li.highlighted a
+            {
+            	box-shadow: inset 0 1px 4px rgba(0,0,0,.15);
+            	background: #eee;
+            	background: -webkit-linear-gradient(top, #dedfe0 0%,#f4f4f4 100%); /* Chrome10+,Safari5.1+ */
+            	background: -moz-linear-gradient(top, #dedfe0 0%,#f4f4f4 100%);
+            }
+
+            body.msie ul.layout_navigation li.selected a, 
+            body.msie ul.layout_navigation li.highlighted a
+            {
+            	box-shadow: inset 0 1px 6px rgba(0,0,0,.15);
+            }
+
+            ul.layout_navigation li.selected a
+            {
+            	color: #0072bc;
+            }
+
+            ul.layout_navigation li.selected a span, ul.layout_navigation li.highlighted a span
+            {
+            	color: #0072BC;
+            	font-weight: 400;
+            }
+
+            ul.layout_navigation li.first a
+            {
+            	width: 125px;
+            	height: 51px;
+            	margin: -5px 10px 0 0;
+            	border-radius: 0;
+            	box-shadow: none;
+            	-webkit-box-shadow: none;
+            }
+
+
+
+            ul.layout_navigation li.first span
+            {
+            	display: none;
+            }
 		</style>
 		
-		<xsl:call-template name="util:style-build"/>
 			
 		<xsl:call-template name="util:style-ie6"/>
 		<xsl:call-template name="util:style-lt-ie9"/>
 		<xsl:call-template name="util:scripts-build"/>
+		<xsl:call-template name="util:style-build"/>
 		<xsl:call-template name="util:lazy-style">
             <xsl:with-param name="href" select="'http://fonts.googleapis.com/css?family=Lato:300,400,700'"/>
         </xsl:call-template>

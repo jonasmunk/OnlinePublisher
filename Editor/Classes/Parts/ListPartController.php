@@ -307,71 +307,71 @@ class ListPartController extends PartController
 }
 	
 
-	class PartListItem {
-	
-		var $title;
-		var $text;
-		var $date;
-		var $startDate;
-		var $endDate;
-		var $source;
-		var $url;
-	
-		function setTitle($title) {
-		    $this->title = $title;
-		}
+class PartListItem {
 
-		function getTitle() {
-		    return $this->title;
-		}
-	
-		function setText($text) {
-		    $this->text = $text;
-		}
+	var $title;
+	var $text;
+	var $date;
+	var $startDate;
+	var $endDate;
+	var $source;
+	var $url;
 
-		function getText() {
-		    return $this->text;
-		}
-	
-		function setStartDate($startDate) {
-		    $this->startDate = $startDate;
-		}
-
-		function getStartDate() {
-		    return $this->startDate;
-		}
-	
-		function setEndDate($endDate) {
-		    $this->endDate = $endDate;
-		}
-
-		function getEndDate() {
-		    return $this->endDate;
-		}
-		
-		function setDate($date) {
-		    $this->date = $date;
-		}
-
-		function getDate() {
-		    return $this->date;
-		}
-		
-	
-		function setSource($source) {
-		    $this->source = $source;
-		}
-
-		function getSource() {
-		    return $this->source;
-		}
-		
-		function setUrl($url) {
-		    $this->url = $url;
-		}
-
-		function getUrl() {
-		    return $this->url;
-		}
-		
+	function setTitle($title) {
+	    $this->title = $title;
 	}
+
+	function getTitle() {
+	    return $this->title;
+	}
+
+	function setText($text) {
+	    $this->text = $text;
+	}
+
+	function getText() {
+	    return $this->text;
+	}
+
+	function setStartDate($startDate) {
+	    $this->startDate = $startDate;
+	}
+
+	function getStartDate() {
+	    return $this->startDate;
+	}
+
+	function setEndDate($endDate) {
+	    $this->endDate = $endDate;
+	}
+
+	function getEndDate() {
+	    return $this->endDate;
+	}
+	
+	function setDate($date) {
+	    $this->date = $date;
+	}
+
+	function getDate() {
+	    return $this->date;
+	}
+	
+
+	function setSource($source) {
+	    $this->source = $source;
+	}
+
+	function getSource() {
+	    return $this->source;
+	}
+	
+	function setUrl($url) {
+	    $this->url = $url;
+	}
+
+	function getUrl() {
+	    return $this->url;
+	}
+	
+}
