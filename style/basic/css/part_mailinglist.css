@@ -59,7 +59,7 @@ div.part_mailinglist p.buttons
 
 div.part_mailinglist input.text
 {
-	background: none;
+	background: #fff;
 	font-size: 10pt;
 	border: 1px solid #ddd;
 	width: 100%;
