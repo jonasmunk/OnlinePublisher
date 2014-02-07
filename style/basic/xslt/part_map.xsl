@@ -11,7 +11,6 @@
 	<xsl:template match="map:map[@frame]">
 		<span>
 			<xsl:attribute name="class">
-				<xsl:text>part_map shared_frame_</xsl:text><xsl:value-of select="@frame"/>
 				<xsl:if test="not(@width) and @provider='google-interactive'">
 					<xsl:text> shared_frame_adaptive</xsl:text>
 				</xsl:if>
