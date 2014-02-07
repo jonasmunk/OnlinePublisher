@@ -121,7 +121,7 @@ class PosterPartController extends PartController
 					<icon icon="common/move_left" text="{Move left; da:Flyt til venstre}" name="moveLeft"/>
 					<icon icon="common/move_right" text="{Move right; da:Flyt til højre}" name="moveRight"/>
 					<right>
-						<icon icon="common/Delete" text="{Delete; da:Slet}" name="deletePage">
+						<icon icon="common/delete" text="{Delete; da:Slet}" name="deletePage">
 							<confirm text="{Are you sure?; da:Er du sikker?}" ok="{Yes, delete; da:Ja, slet}" cancel="{No; da:Nej}"/>
 						</icon>
 						<icon icon="common/new" text="{Add; da:Tilføj}" name="addPage"/>
