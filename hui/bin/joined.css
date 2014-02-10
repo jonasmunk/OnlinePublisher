@@ -2088,7 +2088,7 @@ a.hui_toolbar_icon
 	text-decoration: none;
 }
 
-a.hui_toolbar_icon:active
+a.hui_toolbar_icon:active span.hui_icon
 {
     -webkit-transform: scale(.9);
     -moz-transform: scale(.9);
