@@ -287,14 +287,13 @@
 
             ul.layout_navigation li.first a
             {
-            	width: 125px;
-            	height: 51px;
-            	margin: -5px 10px 0 0;
+            	width: 170px;
+            	height: 40px;
+            	margin: -7px 10px 0 -6px;
             	border-radius: 0;
             	box-shadow: none;
             	-webkit-box-shadow: none;
             }
-
 
 
             ul.layout_navigation li.first span
