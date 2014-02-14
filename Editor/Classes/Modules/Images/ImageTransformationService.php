@@ -205,7 +205,7 @@ class ImageTransformationService {
 		} else if ($format=='gif') {
 			@imagegif($image,$recipe['destination']);
 		} else {
-      imageinterlace($image,1);
+            //imageinterlace($image,1); TODO Maybe interlace JPEGs
 			if (isset($recipe['quality'])) {
 				@imagejpeg($image,$recipe['destination'],$recipe['quality']);
 			} else {
