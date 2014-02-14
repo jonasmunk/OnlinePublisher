@@ -1,22 +1,53 @@
+/**
+ * A chart (line / column etc.)
+ * <pre><strong>options:</strong> {
+ *  element : «Element | ID»,
+ *  name : «String»,
+ *  (TODO many more)
+ * }
+ * </pre>
+ * @constructor
+ * @param {Object} options The options
+ */
 hui.ui.Chart = function(options) {
 	this.options = options = options || {};
 	this.element = hui.get(options.element);
-	this.body  = { width: undefined, height: undefined, paddingTop: 10, paddingBottom: 30, paddingLeft: 10, paddingRight: 10, innerPaddingVertical: 10, innerPaddingHorizontal: 10 };
-	this.style = { border:true, background:true, colors:['#36a','#69d','#acf']};
-	this.style.legends = { position: 'right' , left: 0, top: 0 };
-	this.style.pie = { radiusFactor: .9 , valueInLegend: false , left: 0, top: 0 };
+	this.body  = {
+        width : undefined, 
+        height : undefined, 
+        paddingTop : 10, 
+        paddingBottom : 30, 
+        paddingLeft : 10, 
+        paddingRight : 10, 
+        innerPaddingVertical : 10, 
+        innerPaddingHorizontal : 10 
+    };
+	this.style = {
+        border : true, 
+        background : true, 
+        colors : ['#36a','#69d','#acf'],
+        legends : { position: 'right' , left: 0, top: 0 },
+        pie : { radiusFactor: .9 , valueInLegend: false , left: 0, top: 0 }
+    };
 	this.xAxis = { labels:[], grid:true, concentration:.8 , maxLabels:12};
 	this.yAxis = { min:0, max:0, steps:8, above:false , factor: 10};
-	this.dataSets = [];
+	
+    this.dataSets = [];
 	this.data = null;
-	hui.ui.extend(this);
+	
+    hui.ui.extend(this);
+    
 	if (this.options.source) {
 		this.options.source.listen(this);
 	}
 }
 
 hui.ui.Chart.create = function(options) {	
-	options.element = hui.build('div',{'class':'hui_chart',parent:hui.get(options.parent),style:'width: 100%; height: 100%;'});
+	options.element = hui.build('div',{
+        'class' : 'hui_chart',
+        parent : hui.get(options.parent),
+        style : 'width: 100%; height: 100%;'
+    });
 	return new hui.ui.Chart(options);
 }
 
@@ -326,7 +357,11 @@ hui.ui.Chart.Renderer.prototype.renderBody = function() {
 		stroke = 'rgb(255,255,255)',
 		background = 'rgb(240,240,240)',
 		state = this.state,
-		innerBody = this.state.innerBody;	
+		innerBody = this.state.innerBody;
+    
+        stroke = '#eee'; // TODO Make this configurable
+        background = '#fff';
+    
 
 	if (this.chart.style.background) {
 		this.ctx.fillStyle = background;
@@ -367,7 +402,8 @@ hui.ui.Chart.Renderer.prototype.renderBody = function() {
 				before : this.canvas,
 				style : {
 					marginLeft : left-25+'px',
-					marginTop : state.body.bottom + 4 + 'px'
+					marginTop : state.body.bottom + 4 + 'px',
+                    color : '#999'
 				}
 			});
 		}
@@ -395,7 +431,8 @@ hui.ui.Chart.Renderer.prototype.renderBody = function() {
 			width : this.state.yLabelWidth-5+'px',
 			font : '9px Tahoma',
 			marginTop : top-5+'px',
-			marginLeft : body.paddingLeft+'px'
+			marginLeft : body.paddingLeft+'px',
+            color : '#999'
 		}});
 		this.canvas.parentNode.insertBefore(label,this.canvas);
 	}
@@ -675,6 +712,9 @@ hui.ui.Chart.Util.convertData = function(obj) {
 	var options = {xAxis:{labels:labels}};
 	if (obj.axis && obj.axis.x && obj.axis.x.time===true) {
 		options.xAxis.resolution = 'time';
+	}
+	if (obj.axis && obj.axis.x && hui.isArray(obj.axis.x.labels)) {
+		options.xAxis.labels = obj.axis.x.labels;
 	}
 	var data = new hui.ui.Chart.Data(options);
 		

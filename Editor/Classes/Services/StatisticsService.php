@@ -111,18 +111,22 @@ class StatisticsService {
 		$days = floor(($end-$start)/$patterns[$resolution]['div']);
 		
 		$rows = StatisticsService::_fillGaps($rows,$days,$patterns,$resolution);
-		$sets = array();
+		$sets = [];
 		$dimensions = array('sessions','ips','hits');
-
+        
+        $labels = [];
+		foreach ($rows as $row) {
+			$labels[] = ['key' => $row['key'], 'label' => $row['label']];
+		}
 
 		foreach ($dimensions as $dim) {
-			$entres = array();
+			$entres = [];
 			foreach ($rows as $row) {
 				$entries[$row['key']] = $row[$dim];
 			}
 			$sets[] = array('type'=>'line','entries'=>$entries);
 		}
-		return array('sets'=>$sets);
+		return ['sets' => $sets,'axis' => ['x' => ['labels' => $labels]]];
 	}
 	
 	static function getPagesChart($query) {
