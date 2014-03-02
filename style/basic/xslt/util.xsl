@@ -492,7 +492,18 @@ Q),q=q.replace(R,""),h.jsExtRegExp.test(q)&&(q=L),r.deps=r.deps?r.deps.concat(q)
 <xsl:template name="util:lazy-style">
     <xsl:param name="href"/>
     <!--<link rel="stylesheet" type="text/css" href="{$href}"/>-->
+    <!--
     <script type="text/javascript">_editor.loadCSS('<xsl:value-of select="$href"/>');</script>
+    -->
+    <script>
+        (function(d,href) {
+            var e = d.createElement('link');
+            e.setAttribute('rel','stylesheet');
+            e.setAttribute('type','text/css');
+            e.setAttribute('href',href);
+            d.getElementsByTagName('head')[0].appendChild(e);
+        })(document,'<xsl:value-of select="$href"/>')
+    </script>
     <noscript>
     <link rel="stylesheet" type="text/css" href="{$href}"/>
     </noscript>

@@ -305,11 +305,11 @@
 			
 		<xsl:call-template name="util:style-ie6"/>
 		<xsl:call-template name="util:style-lt-ie9"/>
-		<xsl:call-template name="util:scripts-build"/>
 		<xsl:call-template name="util:style-build"/>
 		<xsl:call-template name="util:lazy-style">
             <xsl:with-param name="href" select="'http://fonts.googleapis.com/css?family=Lato:300,400,700'"/>
         </xsl:call-template>
+		<xsl:call-template name="util:scripts-build"/>
 	</head>
 	<body>
 		<script type="text/javascript">
