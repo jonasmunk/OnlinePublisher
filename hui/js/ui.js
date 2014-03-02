@@ -31,12 +31,6 @@ hui.ui = {
 }
 
 hui.onReady(function() {
-	if (window.dwr && window.dwr.engine && window.dwr.engine.setErrorHandler) {
-		window.dwr.engine.setErrorHandler(function(msg,e) {
-			hui.log(msg);
-			hui.log(e);
-		});
-	}
 	hui.listen(window,'resize',hui.ui._resize);
 	hui.ui.reLayout();
 	hui.ui.domReady = true;
