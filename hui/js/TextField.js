@@ -202,7 +202,7 @@ hui.ui.TextField.prototype = {
 		if (!this.multiline || !hui.dom.isVisible(this.element)) {
 			return
 		};
-		var textHeight = hui.ui.getTextAreaHeight(this.input);
+		var textHeight = this._getTextAreaHeight(this.input);
 		textHeight = Math.max(32,textHeight);
 		textHeight = Math.min(textHeight,this.options.maxHeight);
 		if (animate) {
@@ -216,6 +216,22 @@ hui.ui.TextField.prototype = {
 			this._updateOverflow();
 		}
 	},
+    _getTextAreaHeight = function(input) {
+    	var t = this.textAreaDummy;
+    	if (!t) {
+    		t = this.textAreaDummy = document.createElement('div');
+    		t.className='hui_textarea_dummy';
+    		document.body.appendChild(t);
+    	}
+    	var html = input.value;
+    	if (html[html.length-1]==='\n') {
+    		html+='x';
+    	}
+    	html = hui.string.escape(html).replace(/\n/g,'<br/>');
+    	t.innerHTML = html;
+    	t.style.width=(input.clientWidth)+'px';
+    	return t.clientHeight;
+    },
 	_updateOverflow : function() {
 		if (!this.multiline) {
 			return;

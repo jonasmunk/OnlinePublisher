@@ -660,23 +660,6 @@ hui.ui.positionAtElement = function(element,target,options) {
 	}
 };
 
-hui.ui.getTextAreaHeight = function(input) {
-	var t = this.textAreaDummy;
-	if (!t) {
-		t = this.textAreaDummy = document.createElement('div');
-		t.className='hui_textarea_dummy';
-		document.body.appendChild(t);
-	}
-	var html = input.value;
-	if (html[html.length-1]==='\n') {
-		html+='x';
-	}
-	html = hui.string.escape(html).replace(/\n/g,'<br/>');
-	t.innerHTML = html;
-	t.style.width=(input.clientWidth)+'px';
-	return t.clientHeight;
-}
-
 //////////////////// Delegating ////////////////////
 
 hui.ui.extend = function(obj,options) {
