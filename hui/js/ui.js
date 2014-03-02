@@ -261,6 +261,8 @@ hui.ui.reLayout = function() {
 	}
 }
 
+
+
 ///////////////////////////////// Indexes /////////////////////////////
 
 hui.ui.nextIndex = function() {
@@ -282,6 +284,8 @@ hui.ui.nextTopIndex = function() {
 	hui.ui.latestTopIndex++;
 	return 	hui.ui.latestTopIndex;
 };
+
+
 
 ///////////////////////////////// Curtain /////////////////////////////
 
@@ -346,8 +350,8 @@ hui.ui.hideCurtain = function(widget) {
 };
 
 
-///////////////////////////// Localization ////////////////////////////
 
+///////////////////////////// Localization ////////////////////////////
 
 /**
  * Get a localized text, defaults to english or the key
@@ -378,6 +382,8 @@ hui.ui.getTranslated = function(value) {
 		return value[key];
 	}
 }
+
+
 
 //////////////////////////////// Message //////////////////////////////
 
@@ -544,6 +550,8 @@ hui.ui.hideToolTip = function(options) {
 		}
 	}
 };
+
+
 
 /////////////////////////////// Utilities /////////////////////////////
 
@@ -847,6 +855,8 @@ hui.ui.include = function(options) {
 	})
 },
 
+
+
 ////////////////////////////// Bindings ///////////////////////////
 
 hui.ui.firePropertyChange = function(obj,name,value) {
@@ -873,6 +883,8 @@ hui.ui.bind = function(expression,delegate) {
 	}
 	return expression;
 };
+
+
 
 //////////////////////////////// Data /////////////////////////////
 
@@ -1051,4 +1063,5 @@ hui.ui.require = function(names,func) {
 	};
 	hui.require(names,func);
 }
+
 /* EOF */
