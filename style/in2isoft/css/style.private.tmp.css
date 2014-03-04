@@ -1822,7 +1822,19 @@ h1.common,h2.common,h3.common,h4.common,h5.common,h6.common,
 .part_text,
 div.part_richtext
 {
-	font-family: Lato,'Helvetica Neue','Helvetica',"Lucida Grande","Lucida Sans Unicode", sans-serif;
+	font-family: 'Helvetica Neue','Helvetica','Arial','Lucida Grande','Lucida Sans Unicode', sans-serif;
+}
+
+body.font,
+body.font .common_font,
+body.font p.common, 
+body.font ul.common,
+body.font h1.common,body.font h2.common,body.font h3.common,body.font h4.common,body.font h5.common,body.font h6.common,
+body.font .part_header,
+body.font .part_text,
+body.font div.part_richtext
+{
+	font-family: Lato,'Helvetica Neue','Helvetica','Arial','Lucida Grande','Lucida Sans Unicode', sans-serif;
 }
 
 
@@ -2385,9 +2397,6 @@ body.retina ul.layout_placards li span {
 }
 /* style/in2isoft/css/humanise.css */
 ul.layout_navigation li.first a {
-	width: 170px;
-	height: 40px;
-	margin: -7px 10px 0 -6px;
 	background: url('../gfx/graphics.png') -140px -637px;
 }
 
