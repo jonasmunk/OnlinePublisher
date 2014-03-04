@@ -1021,12 +1021,12 @@ hui.position = {
 		src.style.left = Math.round(left)+'px';
 	},
 	/** Get the remaining height within parent when all siblings has used their height */
-	getRemainingHeight : function(e) {
-		var height = e.parentNode.clientHeight;
-		var siblings = e.parentNode.childNodes;
+	getRemainingHeight : function(element) {
+		var height = element.parentNode.clientHeight;
+		var siblings = element.parentNode.childNodes;
 		for (var i=0; i < siblings.length; i++) {
 			var sib = siblings[i];
-			if (sib!==e && hui.dom.isElement(siblings[i])) {
+			if (sib!==element && hui.dom.isElement(siblings[i])) {
 				if (hui.style.get(sib,'position')!='absolute') {
 					height-=sib.offsetHeight;
 				}
@@ -1408,7 +1408,6 @@ hui.Event.prototype = {
 		return null;
 	},
 	find : function(func) {
-		
 		var parent = this.element;
 		while (parent) {
 			if (parent.tagName && parent.tagName.toLowerCase()==tag) {

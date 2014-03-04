@@ -211,7 +211,7 @@ hui.ui.BoundPanel.prototype = {
                 left : options.rect.left, 
                 top : options.rect.top,                
             }
-            node.scrollOffset = {left: 0, top: 0};
+            nodeScrollOffset = {left: 0, top: 0};
 		} else {
 			node = hui.get(options);
 		}

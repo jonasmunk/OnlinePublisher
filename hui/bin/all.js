@@ -1021,12 +1021,12 @@ hui.position = {
 		src.style.left = Math.round(left)+'px';
 	},
 	/** Get the remaining height within parent when all siblings has used their height */
-	getRemainingHeight : function(e) {
-		var height = e.parentNode.clientHeight;
-		var siblings = e.parentNode.childNodes;
+	getRemainingHeight : function(element) {
+		var height = element.parentNode.clientHeight;
+		var siblings = element.parentNode.childNodes;
 		for (var i=0; i < siblings.length; i++) {
 			var sib = siblings[i];
-			if (sib!==e && hui.dom.isElement(siblings[i])) {
+			if (sib!==element && hui.dom.isElement(siblings[i])) {
 				if (hui.style.get(sib,'position')!='absolute') {
 					height-=sib.offsetHeight;
 				}
@@ -1408,7 +1408,6 @@ hui.Event.prototype = {
 		return null;
 	},
 	find : function(func) {
-		
 		var parent = this.element;
 		while (parent) {
 			if (parent.tagName && parent.tagName.toLowerCase()==tag) {
@@ -5056,12 +5055,6 @@ hui.ui = {
 }
 
 hui.onReady(function() {
-	if (window.dwr && window.dwr.engine && window.dwr.engine.setErrorHandler) {
-		window.dwr.engine.setErrorHandler(function(msg,e) {
-			hui.log(msg);
-			hui.log(e);
-		});
-	}
 	hui.listen(window,'resize',hui.ui._resize);
 	hui.ui.reLayout();
 	hui.ui.domReady = true;
@@ -5292,6 +5285,8 @@ hui.ui.reLayout = function() {
 	}
 }
 
+
+
 ///////////////////////////////// Indexes /////////////////////////////
 
 hui.ui.nextIndex = function() {
@@ -5313,6 +5308,8 @@ hui.ui.nextTopIndex = function() {
 	hui.ui.latestTopIndex++;
 	return 	hui.ui.latestTopIndex;
 };
+
+
 
 ///////////////////////////////// Curtain /////////////////////////////
 
@@ -5377,8 +5374,8 @@ hui.ui.hideCurtain = function(widget) {
 };
 
 
-///////////////////////////// Localization ////////////////////////////
 
+///////////////////////////// Localization ////////////////////////////
 
 /**
  * Get a localized text, defaults to english or the key
@@ -5409,6 +5406,8 @@ hui.ui.getTranslated = function(value) {
 		return value[key];
 	}
 }
+
+
 
 //////////////////////////////// Message //////////////////////////////
 
@@ -5576,6 +5575,8 @@ hui.ui.hideToolTip = function(options) {
 	}
 };
 
+
+
 /////////////////////////////// Utilities /////////////////////////////
 
 /**
@@ -5684,23 +5685,6 @@ hui.ui.positionAtElement = function(element,target,options) {
 		hui.style.set(element,{'visibility':'visible','display':'none'});
 	}
 };
-
-hui.ui.getTextAreaHeight = function(input) {
-	var t = this.textAreaDummy;
-	if (!t) {
-		t = this.textAreaDummy = document.createElement('div');
-		t.className='hui_textarea_dummy';
-		document.body.appendChild(t);
-	}
-	var html = input.value;
-	if (html[html.length-1]==='\n') {
-		html+='x';
-	}
-	html = hui.string.escape(html).replace(/\n/g,'<br/>');
-	t.innerHTML = html;
-	t.style.width=(input.clientWidth)+'px';
-	return t.clientHeight;
-}
 
 //////////////////// Delegating ////////////////////
 
@@ -5895,6 +5879,8 @@ hui.ui.include = function(options) {
 	})
 },
 
+
+
 ////////////////////////////// Bindings ///////////////////////////
 
 hui.ui.firePropertyChange = function(obj,name,value) {
@@ -5921,6 +5907,8 @@ hui.ui.bind = function(expression,delegate) {
 	}
 	return expression;
 };
+
+
 
 //////////////////////////////// Data /////////////////////////////
 
@@ -6099,8 +6087,8 @@ hui.ui.require = function(names,func) {
 	};
 	hui.require(names,func);
 }
-/* EOF */
 
+/* EOF */
 
 /** A data source
  * @constructor
@@ -9705,7 +9693,7 @@ hui.ui.BoundPanel.prototype = {
                 left : options.rect.left, 
                 top : options.rect.top,                
             }
-            node.scrollOffset = {left: 0, top: 0};
+            nodeScrollOffset = {left: 0, top: 0};
 		} else {
 			node = hui.get(options);
 		}
@@ -16462,13 +16450,15 @@ hui.ui.TextField.prototype = {
 		if (!this.multiline || !hui.dom.isVisible(this.element)) {
 			return
 		};
-		var textHeight = hui.ui.getTextAreaHeight(this.input);
+		var textHeight = this._getTextAreaHeight(this.input);
 		textHeight = Math.max(32,textHeight);
 		textHeight = Math.min(textHeight,this.options.maxHeight);
 		if (animate) {
 			this._updateOverflow();
-			hui.animate(this.input,'height',textHeight+'px',300,{ease:hui.ease.slowFastSlow,onComplete:function() {
-				this._updateOverflow();
+			hui.animate(this.input,'height',textHeight+'px',300,{
+                ease : hui.ease.slowFastSlow,
+                $complete : function() {
+                    this._updateOverflow();
 				}.bind(this)
 			});
 		} else {
@@ -16476,6 +16466,22 @@ hui.ui.TextField.prototype = {
 			this._updateOverflow();
 		}
 	},
+    _getTextAreaHeight : function(input) {
+    	var t = this.textAreaDummy;
+    	if (!t) {
+    		t = this.textAreaDummy = document.createElement('div');
+    		t.className='hui_textarea_dummy';
+    		document.body.appendChild(t);
+    	}
+    	var html = input.value;
+    	if (html[html.length-1]==='\n') {
+    		html+='x';
+    	}
+    	html = hui.string.escape(html).replace(/\n/g,'<br/>');
+    	t.innerHTML = html;
+    	t.style.width=(input.clientWidth)+'px';
+    	return t.clientHeight;
+    },
 	_updateOverflow : function() {
 		if (!this.multiline) {
 			return;

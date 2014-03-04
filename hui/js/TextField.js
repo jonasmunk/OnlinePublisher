@@ -207,8 +207,10 @@ hui.ui.TextField.prototype = {
 		textHeight = Math.min(textHeight,this.options.maxHeight);
 		if (animate) {
 			this._updateOverflow();
-			hui.animate(this.input,'height',textHeight+'px',300,{ease:hui.ease.slowFastSlow,onComplete:function() {
-				this._updateOverflow();
+			hui.animate(this.input,'height',textHeight+'px',300,{
+                ease : hui.ease.slowFastSlow,
+                $complete : function() {
+                    this._updateOverflow();
 				}.bind(this)
 			});
 		} else {
@@ -216,7 +218,7 @@ hui.ui.TextField.prototype = {
 			this._updateOverflow();
 		}
 	},
-    _getTextAreaHeight = function(input) {
+    _getTextAreaHeight : function(input) {
     	var t = this.textAreaDummy;
     	if (!t) {
     		t = this.textAreaDummy = document.createElement('div');
