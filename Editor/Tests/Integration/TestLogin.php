@@ -24,7 +24,8 @@ class TestLogin extends UnitTestCase {
         $request = new WebRequest($url);
         
         $response = HttpClient::send($request);
-        $this->assertNotEqual(200,$response->getStatusCode());        
+        $this->assertEqual(302,$response->getStatusCode());
+  
     }
     
     function testSuccess() {
@@ -60,6 +61,20 @@ class TestLogin extends UnitTestCase {
         
         $response = HttpClient::send($request);
         $this->assertEqual(200,$response->getStatusCode());
+        
+        
+        // Try loading the user
+        
+        $url = ConfigurationService::getCompleteBaseUrl().'Editor/Services/Model/LoadObject.php';
+        $request = new WebRequest($url);
+        $request->addHeader('Cookie',$cookie);
+        $request->addParameter('id',$user->getId());
+        
+        $response = HttpClient::send($request);
+        $this->assertEqual(200,$response->getStatusCode());
+        $obj = Strings::fromJSON($response->getBody());
+        $this->assertEqual($user->getUsername(),$obj->username);
+        
 
         $user->remove();
     }
