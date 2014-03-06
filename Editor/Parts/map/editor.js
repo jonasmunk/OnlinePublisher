@@ -57,7 +57,6 @@ var partController = {
 		});
 	},
 	setMarkers : function(markers) {
-		hui.log(markers)
 		this.markers = markers;
 	}
 };
