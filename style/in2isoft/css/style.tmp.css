@@ -3684,14 +3684,27 @@ div.part_richtext
 	font-family: 'Helvetica Neue','Helvetica','Arial','Lucida Grande','Lucida Sans Unicode', sans-serif;
 }
 
-body.font,
-body.font .common_font,
-body.font p.common, 
-body.font ul.common,
-body.font h1.common,body.font h2.common,body.font h3.common,body.font h4.common,body.font h5.common,body.font h6.common,
-body.font .part_header,
-body.font .part_text,
-body.font div.part_richtext
+
+.wf-active body,
+.wf-active .common_font,
+.wf-active p.common, 
+.wf-active ul.common,
+.wf-active h1.common,.wf-active h2.common,.wf-active h3.common,.wf-active h4.common,.wf-active h5.common,.wf-active h6.common,
+.wf-active .part_header,
+.wf-active .part_text,
+.wf-active div.part_richtext
+{
+	font-family: Lato,'Helvetica Neue','Helvetica','Arial','Lucida Grande','Lucida Sans Unicode', sans-serif;
+}
+
+.editor body,
+.editor .common_font,
+.editor p.common, 
+.editor ul.common,
+.editor h1.common,.editor h2.common,.editor h3.common,.editor h4.common,.editor h5.common,.editor h6.common,
+.editor .part_header,
+.editor .part_text,
+.editor div.part_richtext
 {
 	font-family: Lato,'Helvetica Neue','Helvetica','Arial','Lucida Grande','Lucida Sans Unicode', sans-serif;
 }
