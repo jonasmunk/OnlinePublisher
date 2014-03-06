@@ -130,17 +130,26 @@ op.Editor = {
 		
 		for (var i=0; i < parameters.length; i++) {
 			var parm = parameters[i];
-			if (parm.type=='text' || parm.type=='color') {
+			if (parm.type=='text') {
 				var field = hui.ui.TextField.create({key:parm.key,label:parm.label,value:parm.value});
 				this.designGroup.add(field);
 			}
-			if (parm.type=='selection') {
+			else if (parm.type=='color') {
+				var field = hui.ui.ColorInput.create({key:parm.key,value:parm.value});
+				this.designGroup.add(field,parm.label);
+            }
+			else if (parm.type=='selection') {
 				parm.options.unshift({});
 				var field = hui.ui.DropDown.create({key:parm.key,label:parm.label,value:parm.value,items:parm.options});
 				this.designGroup.add(field);
 			}
-			if (parm.type=='image') {
-				var field = hui.ui.DropDown.create({key:parm.key,label:parm.label,value:parm.value,url:'../../Model/Items.php?type=image&includeEmpty=true'});
+			else if (parm.type=='image') {
+				var field = hui.ui.DropDown.create({
+                    key : parm.key,
+                    label : parm.label,
+                    value : parm.value,
+                    url : '../../Model/Items.php?type=image&includeEmpty=true'
+                });
 				this.designGroup.add(field);
 			}
 		};
