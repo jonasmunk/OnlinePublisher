@@ -8,12 +8,12 @@ if (!isset($GLOBALS['basePath'])) {
 	exit;
 }
 
-Object::$schema['address'] = array(
-	'street' => array('type'=>'string'),
-	'zipcode' => array('type'=>'string'),
-	'city' => array('type'=>'string'),
-	'country' => array('type'=>'string')
-);
+Object::$schema['address'] = [
+	'street' => ['type'=>'string'],
+	'zipcode' => ['type'=>'string'],
+	'city' => ['type'=>'string'],
+	'country' => ['type'=>'string']
+];
 class Address extends Object {
 	var $street;
 	var $zipcode;
