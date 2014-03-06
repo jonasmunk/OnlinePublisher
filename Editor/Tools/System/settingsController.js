@@ -9,7 +9,6 @@ hui.ui.listen({
 	},
 	_reloadSettings : function() {
 		hui.ui.request({url:'data/LoadSettings.php',$object : function(data) {
-			hui.log(data)
 			emailFormula.setValues(data.email);
 			onlineobjectsFormula.setValues(data.onlineobjects);
 			analyticsFormula.setValues(data.analytics);
