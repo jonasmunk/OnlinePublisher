@@ -8,6 +8,11 @@ session_start();
 date_default_timezone_set('Europe/Copenhagen');
 $basePath = substr(__FILE__, 0,strpos(__FILE__,'Editor'));
 
+// Load stuff we know we need
+require_once($basePath."Editor/Classes/Core/Request.php");
+require_once($basePath."Editor/Classes/Core/Response.php");
+require_once($basePath."Editor/Classes/Core/InternalSession.php");
+require_once($basePath."Editor/Classes/Services/ConfigurationService.php");
 require_once($basePath."Editor/Include/Classloader.php");
 
 if (@$_SESSION['core.debug.simulateLatency']) {
