@@ -53,7 +53,7 @@ op.DocumentEditor = {
 	},
 	$valuesChanged$layoutFormula : function(values) {
 		this._updateSection(values);
-		this.section = values;
+		hui.override(this.section,values);
 	},
 	_updateSection : function(values) {
 		hui.style.set(this.part.element,{
@@ -66,13 +66,20 @@ op.DocumentEditor = {
 		});
 	},
 	$toggleInfo$huiEditor : function() {
+        if (this._loadingPartWindow) {
+            return;
+        }
 		if (hui.ui.get('partWindow')) {
 			this._initiatePartWindow();
 			return;
 		}
+        this._loadingPartWindow = true;
 		hui.ui.include({
 			url : op.context+'Editor/Template/document/live/gui/properties.php?type=' + this.part.type,
-			$success : this._initiatePartWindow.bind(this)
+			$success : function() {
+                this._initiatePartWindow();
+                this._loadingPartWindow = false;
+            }.bind(this)
 		})		
 	},
 	
@@ -102,7 +109,6 @@ op.DocumentEditor = {
 			type : options.part.type,
 			section : hui.string.toJSON(this.section)
 		},options.parameters);
-		hui.log(this.section)
 		hui.ui.request({
 			url : op.context+'Editor/Template/document/live/SavePart.php',
 			parameters : parameters,
@@ -154,7 +160,6 @@ op.FieldResizer.prototype = {
 		this.options.field.style.webkitTransform = 'scale(1)';
 		this.dummy.style.width=this.options.field.clientWidth+'px';
 		var height = Math.max(50,this.dummy.clientHeight)+'px';
-		hui.log(height)
 		if (instantly) {
 			this.options.field.style.height=height;
 		} else {
