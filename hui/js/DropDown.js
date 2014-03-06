@@ -276,5 +276,11 @@ hui.ui.DropDown.prototype = {
 		hui.ui.callAncestors(this,'childValueChanged',this.value);
 		this.fire('valueChanged',this.value);
 		hui.ui.firePropertyChange(this,'value',this.value);
-	}
+	},
+    destroy : function() {
+        hui.dom.remove(this.element);
+        if (this.selector) {
+            hui.dom.remove(this.selector);
+        }
+    }
 }

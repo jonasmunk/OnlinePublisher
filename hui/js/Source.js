@@ -116,7 +116,6 @@ hui.ui.Source.prototype = {
 			args[args.length-1]=function(r) {self.parseDWR(r)};
 			this.busy=true;
 			hui.ui.callDelegates(this,'sourceIsBusy');
-			hui.log(args)
 			facade[method].apply(facade,args);
 		}
 	},

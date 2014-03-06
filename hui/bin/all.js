@@ -2390,10 +2390,22 @@ hui.xml = {
 		} else if (document.implementation && document.implementation.createDocument) {
 			try {
 			  	var pro = new XSLTProcessor();
-			  	pro.importStylesheet(xsl);	
+                pro.setParameter(null,'dev','true');
+                pro.setParameter(null,'profile','true');
+                pro.setParameter(null,'version','true');
+                pro.setParameter(null,'pathVersion','true');
+                pro.setParameter(null,'context','true');
+                pro.setParameter(null,'language','true');
+			  	pro.importStylesheet(xsl);
+/*		'<xsl:variable name="profile">'.$profile.'</xsl:variable>'.
+		'<xsl:variable name="version">'.SystemInfo::getDate().'</xsl:variable>'.
+		'<xsl:variable name="pathVersion">'.$pathVersion.'</xsl:variable>'.
+		'<xsl:variable name="context">'.$context.'</xsl:variable>'.
+		'<xsl:variable name="language">'.InternalSession::getLanguage().'</xsl:variable>';)*/
 				var ownerDocument = document;//.implementation.createDocument("", "test", null); 
 			    return pro.transformToFragment(xml,ownerDocument);				
 			} catch (e) {
+				hui.log('Transform exception...');
 				hui.log(e);
 				throw e;
 			}
@@ -5176,18 +5188,17 @@ hui.ui.confirmOverlay = function(options) {
  * @param widget {Widget} The widget to destroy 
  */
 hui.ui.destroy = function(widget) {
-	var objects = hui.ui.objects;
-	delete(objects[widget.name]);
+    if (typeof(widget.destroy)=='function') {
+        widget.destroy();
+    }
+	delete(hui.ui.objects[widget.name]);
 }
 
 hui.ui.destroyDescendants = function(widgetOrElement) {
 	var desc = hui.ui.getDescendants(widgetOrElement);
 	var objects = hui.ui.objects;
 	for (var i=0; i < desc.length; i++) {
-		var obj  = delete(objects[desc[i].name]);
-		if (!obj) {
-			hui.log('not found: '+desc[i].name);
-		}
+        hui.ui.destroy(desc[i]);
 	};
 }
 
@@ -5734,6 +5745,13 @@ hui.ui.extend = function(obj,options) {
 			return this.element;
 		}
 	}
+	if (!obj.destroy) {
+		obj.destroy = function() {
+            if (this.element) {
+                hui.dom.remove(this.element)
+            }
+		}
+	}
 	if (!obj.valueForProperty) {
 		obj.valueForProperty = function(p) {return this[p]};
 	}
@@ -6208,7 +6226,6 @@ hui.ui.Source.prototype = {
 			args[args.length-1]=function(r) {self.parseDWR(r)};
 			this.busy=true;
 			hui.ui.callDelegates(this,'sourceIsBusy');
-			hui.log(args)
 			facade[method].apply(facade,args);
 		}
 	},
@@ -6598,7 +6615,10 @@ hui.ui.Window.prototype = {
 	_onAfterMove : function() {
 		hui.ui.callDescendants(this,'$$parentMoved');
 		hui.cls.remove(this.element,'hui_window_dragging');
-	}
+	},
+    destroy : function() {
+        hui.dom.remove(this.element);
+    }
 }
 
 /* EOF */
@@ -8330,7 +8350,13 @@ hui.ui.DropDown.prototype = {
 		hui.ui.callAncestors(this,'childValueChanged',this.value);
 		this.fire('valueChanged',this.value);
 		hui.ui.firePropertyChange(this,'value',this.value);
-	}
+	},
+    destroy : function() {
+        hui.dom.remove(this.element);
+        if (this.selector) {
+            hui.dom.remove(this.selector);
+        }
+    }
 }
 
 /**
@@ -9800,7 +9826,11 @@ hui.ui.BoundPanel.prototype = {
 			this.element.style.top=top+'px';
 			this.element.style.left=left+'px';
 		}
-	}
+	},
+    destroy : function() {
+		hui.ui.hideCurtain(this);
+        hui.dom.remove(this.element);
+    }
 }
 
 /* EOF */
@@ -11695,7 +11725,6 @@ hui.ui.Gallery.prototype = {
 		this.element.style.display='none';
 	},
 	show : function() {
-		hui.log('show');
 		this.element.style.display='';
 		if (this.options.source) {
 			this.options.source.refresh();
@@ -11752,7 +11781,6 @@ hui.ui.Gallery.prototype = {
 	},
 	/** @private */
 	_render : function() {
-		hui.log('render')
 		this.nodes = [];
 		this.maxRevealed = 0;
 		this.body.innerHTML = '';
@@ -11787,7 +11815,6 @@ hui.ui.Gallery.prototype = {
 		this.fireSizeChange();
 	},
 	_reveal : function() {
-		hui.log('reveal');		
 		if (!this.revealing) {
 			return;
 		}
@@ -13300,7 +13327,7 @@ hui.ui.Bar = function(options) {
 	this.options = hui.override({},options);
 	this.name = options.name;
 	this.element = hui.get(options.element);
-	this.visible = this.element.style.display=='none' ? false : null;
+	this.visible = this.element.style.display=='none' ? false : true;
 	this.body = hui.get.firstByClass(this.element,'hui_bar_left');
 	hui.ui.extend(this);
 };
@@ -14274,7 +14301,6 @@ hui.ui.MarkupEditor.prototype = {
 	/** Remove the widget from the DOM */
 	destroy : function() {
 		hui.dom.remove(this.element);
-		hui.ui.destroy(this);
 		if (this.options.replace) {
 			this.options.replace.style.display='';
 		}
@@ -16647,7 +16673,13 @@ hui.ui.ColorInput.prototype = {
 	},
 	reset : function() {
 		this.setValue('');
-	}
+	},
+    destroy : function() {
+        hui.dom.remove(this.element);
+        if (this.panel) {
+            this.panel.destroy();
+        }
+    }
 }
 
 /* EOF */
@@ -16841,7 +16873,6 @@ hui.ui.Finder.prototype = {
 		
 		var listSource = this.options.list.source;
 		if (listSource) {
-			hui.log(parameters)
 			for (var i=0; i < parameters.length; i++) {
 				listSource.addParameter(parameters[i]);
 			};
@@ -17401,7 +17432,14 @@ hui.ui.FontInput.prototype = {
 	},
 	reset : function() {
 		this.setValue('');
-	}
+	},
+    destroy : function() {
+        hui.dom.remove(this.element);
+        if (this.panel) {
+            this.panel.destroy();
+            this.picker.destroy();
+        }
+    }
 }
 
 /* EOF */
@@ -17530,7 +17568,13 @@ hui.ui.FontPicker.prototype = {
 		win.add(e);
 		this.previews[font.text] = win;
 		win.show();
-	}
+	},
+    destroy : function() {
+		hui.each(this.previews,function(key,value) {
+			value.destroy();
+		})
+        hui.dom.remove(this.element);
+    }
 }
 
 /* EOF */
@@ -21217,7 +21261,6 @@ hui.ui.Pages = function(options) {
 	this.fixedHeight = hui.cls.has(this.element,'hui_pages_full');
 	this.expanded = false;
 	hui.ui.extend(this);
-	//hui.listen(this.element,'click',this.next.bind(this));
 }
 
 hui.ui.Pages.create = function(options) {
@@ -21286,46 +21329,60 @@ hui.ui.Pages.prototype = {
 	_transition : function(options) {
 		var hide = options.hide,
 			show = options.show,
-			e = this.element;
+			e = this.element,
+            duration = 300;
 		if (this.fixedHeight) {
-			hui.style.set(hide,{position:'absolute',width:e.clientWidth+'px',height:this.element.clientHeight+'px'});
-			hui.style.set(show,{position:'absolute',width:e.clientWidth+'px',display:'block',opacity:0,height:this.element.clientHeight+'px'});			
+			hui.style.set(hide,{
+                position:'absolute',
+                width:e.clientWidth+'px',
+                height:this.element.clientHeight+'px'
+            });
+			hui.style.set(show,{
+                position:'absolute',
+                display:'block',opacity:0,
+                width:e.clientWidth+'px',
+                height:this.element.clientHeight+'px'
+            });
 		} else {
-			hui.style.set(hide,{position:'absolute',width:e.clientWidth+'px'});
-			hui.style.set(show,{position:'absolute',width:e.clientWidth+'px',display:'block',opacity:0});
+			hui.style.set(hide,{
+                position:'absolute',width:e.clientWidth+'px'
+            });
+			hui.style.set(show,{
+                position:'absolute',width:e.clientWidth+'px',display:'block',opacity:0
+            });
 			hui.style.set(e,{height:hide.offsetHeight+'px',overflow:'hidden',position:'relative'});
 			hui.animate({
-        node : e,
-        css : {height:show.offsetHeight+'px'},
-        duration : 500,
-        ease : hui.ease.slowFastSlow
-      })
+                node : e,
+                css : {height:show.offsetHeight+'px'},
+                duration : duration,
+                ease : hui.ease.slowFastSlow
+            })
 		}
 		hui.ui.reLayout();
 		
 		hui.effect.fadeOut({
-      element : hide,
-      duration : 500,
-      $complete : function() {
-			  hui.style.set(hide,{width : '',position:'',height:''});
-        window.setTimeout(function() {
-          hide.style.display = 'none';
-        })
-		  }
-    });
+            element : hide,
+            duration : duration,
+            $complete : function() {
+                hui.style.set(hide,{width : '',position:'',height:''});
+                window.setTimeout(function() {
+                    hide.style.display = 'none';
+                })
+            }
+        });
 		
 		hui.effect.fadeIn({
-      element : show,
-      duration : 500,
-      $complete:function() {
-  			hui.style.set(show,{width : '',position:'',height:''});
-        if (!this.fixedHeight) {
-          hui.style.set(e,{height:'',overflow:'',position:''});          
-        }
-  			hui.ui.reLayout();
-  			hui.ui.callVisible(this);
-      }.bind(this)
-    });
+            element : show,
+            duration : duration,
+            $complete : function() {
+  			    hui.style.set(show,{width : '',position:'',height:''});
+                if (!this.fixedHeight) {
+                    hui.style.set(e,{height:'',overflow:'',position:''});          
+                }
+                hui.ui.reLayout();
+                hui.ui.callVisible(this);
+            }.bind(this)
+        });
 	}
 }
 

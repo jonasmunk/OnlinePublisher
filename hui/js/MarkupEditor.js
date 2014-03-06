@@ -87,7 +87,6 @@ hui.ui.MarkupEditor.prototype = {
 	/** Remove the widget from the DOM */
 	destroy : function() {
 		hui.dom.remove(this.element);
-		hui.ui.destroy(this);
 		if (this.options.replace) {
 			this.options.replace.style.display='';
 		}

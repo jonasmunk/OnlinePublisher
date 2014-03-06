@@ -196,7 +196,10 @@ hui.ui.Window.prototype = {
 	_onAfterMove : function() {
 		hui.ui.callDescendants(this,'$$parentMoved');
 		hui.cls.remove(this.element,'hui_window_dragging');
-	}
+	},
+    destroy : function() {
+        hui.dom.remove(this.element);
+    }
 }
 
 /* EOF */

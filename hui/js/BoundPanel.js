@@ -318,7 +318,11 @@ hui.ui.BoundPanel.prototype = {
 			this.element.style.top=top+'px';
 			this.element.style.left=left+'px';
 		}
-	}
+	},
+    destroy : function() {
+		hui.ui.hideCurtain(this);
+        hui.dom.remove(this.element);
+    }
 }
 
 /* EOF */

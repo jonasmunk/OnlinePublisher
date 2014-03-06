@@ -124,7 +124,6 @@ hui.ui.Finder.prototype = {
 		
 		var listSource = this.options.list.source;
 		if (listSource) {
-			hui.log(parameters)
 			for (var i=0; i < parameters.length; i++) {
 				listSource.addParameter(parameters[i]);
 			};

@@ -11,7 +11,6 @@ hui.ui.Pages = function(options) {
 	this.fixedHeight = hui.cls.has(this.element,'hui_pages_full');
 	this.expanded = false;
 	hui.ui.extend(this);
-	//hui.listen(this.element,'click',this.next.bind(this));
 }
 
 hui.ui.Pages.create = function(options) {
@@ -80,45 +79,59 @@ hui.ui.Pages.prototype = {
 	_transition : function(options) {
 		var hide = options.hide,
 			show = options.show,
-			e = this.element;
+			e = this.element,
+            duration = 300;
 		if (this.fixedHeight) {
-			hui.style.set(hide,{position:'absolute',width:e.clientWidth+'px',height:this.element.clientHeight+'px'});
-			hui.style.set(show,{position:'absolute',width:e.clientWidth+'px',display:'block',opacity:0,height:this.element.clientHeight+'px'});			
+			hui.style.set(hide,{
+                position:'absolute',
+                width:e.clientWidth+'px',
+                height:this.element.clientHeight+'px'
+            });
+			hui.style.set(show,{
+                position:'absolute',
+                display:'block',opacity:0,
+                width:e.clientWidth+'px',
+                height:this.element.clientHeight+'px'
+            });
 		} else {
-			hui.style.set(hide,{position:'absolute',width:e.clientWidth+'px'});
-			hui.style.set(show,{position:'absolute',width:e.clientWidth+'px',display:'block',opacity:0});
+			hui.style.set(hide,{
+                position:'absolute',width:e.clientWidth+'px'
+            });
+			hui.style.set(show,{
+                position:'absolute',width:e.clientWidth+'px',display:'block',opacity:0
+            });
 			hui.style.set(e,{height:hide.offsetHeight+'px',overflow:'hidden',position:'relative'});
 			hui.animate({
-        node : e,
-        css : {height:show.offsetHeight+'px'},
-        duration : 500,
-        ease : hui.ease.slowFastSlow
-      })
+                node : e,
+                css : {height:show.offsetHeight+'px'},
+                duration : duration,
+                ease : hui.ease.slowFastSlow
+            })
 		}
 		hui.ui.reLayout();
 		
 		hui.effect.fadeOut({
-      element : hide,
-      duration : 500,
-      $complete : function() {
-			  hui.style.set(hide,{width : '',position:'',height:''});
-        window.setTimeout(function() {
-          hide.style.display = 'none';
-        })
-		  }
-    });
+            element : hide,
+            duration : duration,
+            $complete : function() {
+                hui.style.set(hide,{width : '',position:'',height:''});
+                window.setTimeout(function() {
+                    hide.style.display = 'none';
+                })
+            }
+        });
 		
 		hui.effect.fadeIn({
-      element : show,
-      duration : 500,
-      $complete:function() {
-  			hui.style.set(show,{width : '',position:'',height:''});
-        if (!this.fixedHeight) {
-          hui.style.set(e,{height:'',overflow:'',position:''});          
-        }
-  			hui.ui.reLayout();
-  			hui.ui.callVisible(this);
-      }.bind(this)
-    });
+            element : show,
+            duration : duration,
+            $complete : function() {
+  			    hui.style.set(show,{width : '',position:'',height:''});
+                if (!this.fixedHeight) {
+                    hui.style.set(e,{height:'',overflow:'',position:''});          
+                }
+                hui.ui.reLayout();
+                hui.ui.callVisible(this);
+            }.bind(this)
+        });
 	}
 }
