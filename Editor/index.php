@@ -30,7 +30,8 @@ $lang = InternalSession::getLanguage();
 
 $gui='
 <gui xmlns="uri:hui" title="Humanise Editor">
-	<source name="searchSource" url="Services/Base/data/Search.php">
+	
+    <source name="searchSource" url="Services/Base/data/Search.php">
 		<parameter key="text" value="@search.value"/>
 	</source>
 	<source name="hierarchySource" url="Services/Base/data/Hierarchy.php"/>
@@ -38,7 +39,9 @@ $gui='
 	<source name="reviewSource" url="Services/Base/data/ListReview.php">
 		<parameter key="subset" value="@reviewSubset.value"/>
 	</source>
-	<controller source="Services/Base/controller.js"/>
+	
+    <controller source="Services/Base/controller.js"/>
+    
 	<dock url="'.$start.'" name="dock" position="bottom" frame-name="Desktop">
 		<sidebar collapsed="true">
 			<bar variant="layout_mini">
@@ -71,6 +74,7 @@ $gui='
 				</selection>
 			</overflow>
 		</sidebar>
+        
 		<tabs small="true">';
 			$tabs = array('edit'=>'{ Editing ; da: Redigering }','analyse'=>'{Analysis ; da:Analyse}','setup'=>'{ Setup ; da:Opsætning }');
 			foreach ($tabs as $tab => $tabTitle) {
