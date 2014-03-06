@@ -158,7 +158,9 @@
 			<span class="hui_field_top"><span><span><xsl:comment/></span></span></span>
 			<span class="hui_field_middle"><span class="hui_field_middle"><span class="hui_field_content">
 				<span class="hui_formula_text_multiline">
-				<textarea class="hui_formula_text" rows="{@lines}"><xsl:value-of select="@value"/><xsl:text></xsl:text></textarea>
+				<xsl:text disable-output-escaping='yes'>
+				<![CDATA[<textarea class="hui_formula_text" rows="]]></xsl:text><xsl:value-of select="@lines"/><xsl:text disable-output-escaping='yes'><![CDATA[">]]></xsl:text><xsl:value-of select="@value"/><xsl:text disable-output-escaping='yes'><![CDATA[</textarea>]]>
+				</xsl:text>
 				</span>
 			</span></span></span>
 			<span class="hui_field_bottom"><span><span><xsl:comment/></span></span></span>
@@ -699,8 +701,7 @@
 -->
 <xsl:template match="gui:code-input">
 	<div class="hui_codeinput" id="{generate-id()}">
-		<textarea spellcheck="false"><xsl:text></xsl:text></textarea>
-		<xsl:comment/>
+		<xsl:text disable-output-escaping='yes'><![CDATA[<textarea spellcheck="false"></textarea>]]></xsl:text>
 	</div>
 	<script type="text/javascript">
 		var <xsl:value-of select="generate-id()"/>_obj = new hui.ui.CodeInput({

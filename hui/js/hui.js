@@ -1419,6 +1419,17 @@ hui.Event.prototype = {
 		}
 		return null;
 	},
+	isDescendantOf : function(node) {
+		
+		var parent = this.element;
+		while (parent) {
+			if (parent===node) {
+				return true;
+			}
+			parent = parent.parentNode;
+		}
+		return false;
+	},
 	/** Stops the event from propagating */
 	stop : function() {
 		hui.stop(this.event);
@@ -1841,7 +1852,10 @@ hui.selection = {
 		doc = doc || document;
 		if (doc.getSelection) {
 			var range = doc.getSelection().getRangeAt(0);
-			return range.commonAncestorContainer();
+			if (typeof(range.commonAncestorContainer) == 'function') {
+				return range.commonAncestorContainer(); // TODO Not sure why?
+			}
+			return range.commonAncestorContainer;
 		}
 		return null;
 	},

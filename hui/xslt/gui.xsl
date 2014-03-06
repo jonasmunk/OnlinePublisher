@@ -384,7 +384,7 @@
 		</div>
 		<div class="hui_dock_body">			
 			<div class="hui_dock_progress"><xsl:comment/></div>
-			<iframe src="{@url}" frameborder="0" name="{@frame-name}"/>
+			<iframe src="{@url}" frameborder="0" name="{@frame-name}"><xsl:comment/></iframe>
 		</div>
 	</div>
 </xsl:template>
@@ -623,7 +623,7 @@
 		<xsl:if test="@state and (not(//gui:gui/@state) or @state!=//gui:gui/@state) or @visible='false'">
 			<xsl:attribute name="style">display:none</xsl:attribute>
 		</xsl:if>
-		<div class="hui_list_progress"></div>
+		<div class="hui_list_progress"><xsl:comment/></div>
 		<div class="hui_list_navigation">
 			<div class="hui_list_selection window_page"><div><div class="window_page_body"><xsl:comment/></div></div></div>
 			<span class="hui_list_count"><xsl:comment/></span>

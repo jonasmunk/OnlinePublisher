@@ -18,7 +18,7 @@ hui.ui.DropDown = function(options) {
 	if (options.listener) {
 		this.listen(options.listener);
 	}
-	this._addBehavior();
+	this._attach();
 	this._updateIndex();
 	this._updateUI();
 	if (this.options.url) {
@@ -42,7 +42,7 @@ hui.ui.DropDown.create = function(options) {
 }
 
 hui.ui.DropDown.prototype = {
-	_addBehavior : function() {
+	_attach : function() {
 		hui.ui.addFocusClass({element:this.element,'class':'hui_dropdown_focused'});
 		hui.listen(this.element,'click',this._click.bind(this));
 		hui.listen(this.element,'blur',this._hideSelector.bind(this));
@@ -92,7 +92,14 @@ hui.ui.DropDown.prototype = {
 			this._hideSelector();
 			//this.element.blur();
 		} else {
-			this._showSelector();			
+			this._showSelector();
+			this._hider = function(e) {
+				e = hui.event(e);
+				if (!e.isDescendantOf(this.element)) {
+					this._hideSelector();
+				}
+			}.bind(this);
+			hui.listen(document.body,'mousedown',this._hider);
 		}
 	},
 	_showSelector : function() {
@@ -125,6 +132,7 @@ hui.ui.DropDown.prototype = {
 		this._selectorVisible = true;
 	},
 	_hideSelector : function() {
+		hui.unListen(document.body,'mousedown',this._hider);					
 		if (!this.selector) {return}
 		this.selector.style.display = 'none';
 		this._selectorVisible = false;

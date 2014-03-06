@@ -244,6 +244,7 @@
 			</xsl:attribute>
 		</xsl:if>
 		<xsl:apply-templates/>
+		<xsl:comment/>
 	</div>
 </xsl:template>
 
