@@ -439,84 +439,6 @@ hui.ui.List.prototype = {
 		}
 		this.fireSizeChange();
 	},
-	
-	/** @private */
-	$objectsLoaded : function(data) {
-		var hadSelection = this.selected.length>0 || this.checked.length>0;
-		this._setError(false);
-		if (data==null) {
-			// NOOP
-		} else if (data.constructor == Array) {
-			this.setObjects(data);
-		} else {
-			this.setData(data);
-		}
-		this.fire('selectionReset');
-		if (hadSelection) {
-			this.fire('select');
-		}
-		this.fireSizeChange();
-	},
-	/** @private */
-	$sourceIsBusy : function() {
-		this._debug('$sourceIsBusy');
-		this._setBusy(true);
-	},
-	/** @private */
-	$sourceIsNotBusy : function() {
-		this._debug('$sourceIsNotBusy');
-		this._setBusy(false);
-	},
-	/** @private */
-	$sourceFailed : function() {
-		hui.log('The source failed!');
-		this._setError(true);
-	},
-	_setError : function(error) {
-		hui.cls.set(this.element,'hui_list_error',error);
-	},
-	_setBusy : function(busy) {
-		this.busy = busy;
-		window.clearTimeout(this.busytimer);
-		if (busy) {
-			var e = this.element;
-			this.busytimer = window.setTimeout(function() {
-				hui.cls.add(e,'hui_list_busy');
-				if (e.parentNode.className=='hui_overflow') {
-					hui.cls.add(e,'hui_list_busy_large');
-				}
-			},300);
-		} else {
-			hui.cls.remove(this.element,'hui_list_busy');
-			if (this.element.parentNode.className=='hui_overflow') {
-				hui.cls.remove(this.element,'hui_list_busy_large');
-			}
-		}
-	},
-	_setEmpty : function(empty) {
-		var lmnt = hui.get.firstByClass(this.element,'hui_list_empty');
-		if (lmnt) {
-			lmnt.style.display = empty ? 'block' : '';
-		}
-	},
-	
-	_wrap : function(str) {
-		var out = '';
-		var count = 0;
-		for (var i=0; i < str.length; i++) {
-			if (str[i]===' ' || str[i]==='-') {
-				count=0;
-			} else {
-				count++;
-			}
-			out+=str[i];
-			if (count>10) {
-				out+='\u200B';
-				count=0;
-			}
-		};
-		return out;
-	},
 	_parseCell : function(node,cell) {
 		var variant = node.getAttribute('variant');
 		if (variant!=null && variant!='') {
@@ -615,6 +537,84 @@ hui.ui.List.prototype = {
 				}
 			}
 		};
+	},
+	
+	/** @private */
+	$objectsLoaded : function(data) {
+		var hadSelection = this.selected.length>0 || this.checked.length>0;
+		this._setError(false);
+		if (data==null) {
+			// NOOP
+		} else if (data.constructor == Array) {
+			this.setObjects(data);
+		} else {
+			this.setData(data);
+		}
+		this.fire('selectionReset');
+		if (hadSelection) {
+			this.fire('select');
+		}
+		this.fireSizeChange();
+	},
+	/** @private */
+	$sourceIsBusy : function() {
+		this._debug('$sourceIsBusy');
+		this._setBusy(true);
+	},
+	/** @private */
+	$sourceIsNotBusy : function() {
+		this._debug('$sourceIsNotBusy');
+		this._setBusy(false);
+	},
+	/** @private */
+	$sourceFailed : function() {
+		hui.log('The source failed!');
+		this._setError(true);
+	},
+	_setError : function(error) {
+		hui.cls.set(this.element,'hui_list_error',error);
+	},
+	_setBusy : function(busy) {
+		this.busy = busy;
+		window.clearTimeout(this.busytimer);
+		if (busy) {
+			var e = this.element;
+			this.busytimer = window.setTimeout(function() {
+				hui.cls.add(e,'hui_list_busy');
+				if (e.parentNode.className=='hui_overflow') {
+					hui.cls.add(e,'hui_list_busy_large');
+				}
+			},300);
+		} else {
+			hui.cls.remove(this.element,'hui_list_busy');
+			if (this.element.parentNode.className=='hui_overflow') {
+				hui.cls.remove(this.element,'hui_list_busy_large');
+			}
+		}
+	},
+	_setEmpty : function(empty) {
+		var lmnt = hui.get.firstByClass(this.element,'hui_list_empty');
+		if (lmnt) {
+			lmnt.style.display = empty ? 'block' : '';
+		}
+	},
+	
+	_wrap : function(str) {
+		var out = '';
+		var count = 0;
+		for (var i=0; i < str.length; i++) {
+			if (str[i]===' ' || str[i]==='-') {
+				count=0;
+			} else {
+				count++;
+			}
+			out+=str[i];
+			if (count>10) {
+				out+='\u200B';
+				count=0;
+			}
+		};
+		return out;
 	},
 	_getData : function(node) {
 		var data = node.getAttribute('data');

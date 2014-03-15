@@ -8,7 +8,7 @@ op.Editor.Header = function(options) {
 	this.style = {};
 	this.field = null;
 	this.originalStyle = null;
-	this.originalTag = null;
+	this.originalLevel = null;
 }
 
 op.Editor.Header.prototype = {
@@ -46,9 +46,9 @@ op.Editor.Header.prototype = {
 		this._changeSectionClass(this.originalLevel);
 	},
 	deactivate : function(callback) {
-		this.header.style.visibility='';
+		this.header.style.display='block';
 		if (this.field) {
-			this.element.removeChild(this.field);
+			hui.dom.remove(this.field);
 		}
 		hui.ui.unListen(this);
 		callback();
@@ -97,6 +97,7 @@ op.Editor.Header.prototype = {
 		}
 		if (this.part.level!=values.level) {
 			this.header = hui.dom.changeTag(this.header,'h'+values.level);
+			this.header.style.display = 'none'; // TODO: not sure why
 			this._changeSectionClass(values.level);
 			this.part.level = values.level;
 		}

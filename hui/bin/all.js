@@ -1419,6 +1419,17 @@ hui.Event.prototype = {
 		}
 		return null;
 	},
+	isDescendantOf : function(node) {
+		
+		var parent = this.element;
+		while (parent) {
+			if (parent===node) {
+				return true;
+			}
+			parent = parent.parentNode;
+		}
+		return false;
+	},
 	/** Stops the event from propagating */
 	stop : function() {
 		hui.stop(this.event);
@@ -1841,7 +1852,10 @@ hui.selection = {
 		doc = doc || document;
 		if (doc.getSelection) {
 			var range = doc.getSelection().getRangeAt(0);
-			return range.commonAncestorContainer();
+			if (typeof(range.commonAncestorContainer) == 'function') {
+				return range.commonAncestorContainer(); // TODO Not sure why?
+			}
+			return range.commonAncestorContainer;
 		}
 		return null;
 	},
@@ -7265,84 +7279,6 @@ hui.ui.List.prototype = {
 		}
 		this.fireSizeChange();
 	},
-	
-	/** @private */
-	$objectsLoaded : function(data) {
-		var hadSelection = this.selected.length>0 || this.checked.length>0;
-		this._setError(false);
-		if (data==null) {
-			// NOOP
-		} else if (data.constructor == Array) {
-			this.setObjects(data);
-		} else {
-			this.setData(data);
-		}
-		this.fire('selectionReset');
-		if (hadSelection) {
-			this.fire('select');
-		}
-		this.fireSizeChange();
-	},
-	/** @private */
-	$sourceIsBusy : function() {
-		this._debug('$sourceIsBusy');
-		this._setBusy(true);
-	},
-	/** @private */
-	$sourceIsNotBusy : function() {
-		this._debug('$sourceIsNotBusy');
-		this._setBusy(false);
-	},
-	/** @private */
-	$sourceFailed : function() {
-		hui.log('The source failed!');
-		this._setError(true);
-	},
-	_setError : function(error) {
-		hui.cls.set(this.element,'hui_list_error',error);
-	},
-	_setBusy : function(busy) {
-		this.busy = busy;
-		window.clearTimeout(this.busytimer);
-		if (busy) {
-			var e = this.element;
-			this.busytimer = window.setTimeout(function() {
-				hui.cls.add(e,'hui_list_busy');
-				if (e.parentNode.className=='hui_overflow') {
-					hui.cls.add(e,'hui_list_busy_large');
-				}
-			},300);
-		} else {
-			hui.cls.remove(this.element,'hui_list_busy');
-			if (this.element.parentNode.className=='hui_overflow') {
-				hui.cls.remove(this.element,'hui_list_busy_large');
-			}
-		}
-	},
-	_setEmpty : function(empty) {
-		var lmnt = hui.get.firstByClass(this.element,'hui_list_empty');
-		if (lmnt) {
-			lmnt.style.display = empty ? 'block' : '';
-		}
-	},
-	
-	_wrap : function(str) {
-		var out = '';
-		var count = 0;
-		for (var i=0; i < str.length; i++) {
-			if (str[i]===' ' || str[i]==='-') {
-				count=0;
-			} else {
-				count++;
-			}
-			out+=str[i];
-			if (count>10) {
-				out+='\u200B';
-				count=0;
-			}
-		};
-		return out;
-	},
 	_parseCell : function(node,cell) {
 		var variant = node.getAttribute('variant');
 		if (variant!=null && variant!='') {
@@ -7441,6 +7377,84 @@ hui.ui.List.prototype = {
 				}
 			}
 		};
+	},
+	
+	/** @private */
+	$objectsLoaded : function(data) {
+		var hadSelection = this.selected.length>0 || this.checked.length>0;
+		this._setError(false);
+		if (data==null) {
+			// NOOP
+		} else if (data.constructor == Array) {
+			this.setObjects(data);
+		} else {
+			this.setData(data);
+		}
+		this.fire('selectionReset');
+		if (hadSelection) {
+			this.fire('select');
+		}
+		this.fireSizeChange();
+	},
+	/** @private */
+	$sourceIsBusy : function() {
+		this._debug('$sourceIsBusy');
+		this._setBusy(true);
+	},
+	/** @private */
+	$sourceIsNotBusy : function() {
+		this._debug('$sourceIsNotBusy');
+		this._setBusy(false);
+	},
+	/** @private */
+	$sourceFailed : function() {
+		hui.log('The source failed!');
+		this._setError(true);
+	},
+	_setError : function(error) {
+		hui.cls.set(this.element,'hui_list_error',error);
+	},
+	_setBusy : function(busy) {
+		this.busy = busy;
+		window.clearTimeout(this.busytimer);
+		if (busy) {
+			var e = this.element;
+			this.busytimer = window.setTimeout(function() {
+				hui.cls.add(e,'hui_list_busy');
+				if (e.parentNode.className=='hui_overflow') {
+					hui.cls.add(e,'hui_list_busy_large');
+				}
+			},300);
+		} else {
+			hui.cls.remove(this.element,'hui_list_busy');
+			if (this.element.parentNode.className=='hui_overflow') {
+				hui.cls.remove(this.element,'hui_list_busy_large');
+			}
+		}
+	},
+	_setEmpty : function(empty) {
+		var lmnt = hui.get.firstByClass(this.element,'hui_list_empty');
+		if (lmnt) {
+			lmnt.style.display = empty ? 'block' : '';
+		}
+	},
+	
+	_wrap : function(str) {
+		var out = '';
+		var count = 0;
+		for (var i=0; i < str.length; i++) {
+			if (str[i]===' ' || str[i]==='-') {
+				count=0;
+			} else {
+				count++;
+			}
+			out+=str[i];
+			if (count>10) {
+				out+='\u200B';
+				count=0;
+			}
+		};
+		return out;
 	},
 	_getData : function(node) {
 		var data = node.getAttribute('data');
@@ -8092,7 +8106,7 @@ hui.ui.DropDown = function(options) {
 	if (options.listener) {
 		this.listen(options.listener);
 	}
-	this._addBehavior();
+	this._attach();
 	this._updateIndex();
 	this._updateUI();
 	if (this.options.url) {
@@ -8116,7 +8130,7 @@ hui.ui.DropDown.create = function(options) {
 }
 
 hui.ui.DropDown.prototype = {
-	_addBehavior : function() {
+	_attach : function() {
 		hui.ui.addFocusClass({element:this.element,'class':'hui_dropdown_focused'});
 		hui.listen(this.element,'click',this._click.bind(this));
 		hui.listen(this.element,'blur',this._hideSelector.bind(this));
@@ -8166,7 +8180,14 @@ hui.ui.DropDown.prototype = {
 			this._hideSelector();
 			//this.element.blur();
 		} else {
-			this._showSelector();			
+			this._showSelector();
+			this._hider = function(e) {
+				e = hui.event(e);
+				if (!e.isDescendantOf(this.element)) {
+					this._hideSelector();
+				}
+			}.bind(this);
+			hui.listen(document.body,'mousedown',this._hider);
 		}
 	},
 	_showSelector : function() {
@@ -8199,6 +8220,7 @@ hui.ui.DropDown.prototype = {
 		this._selectorVisible = true;
 	},
 	_hideSelector : function() {
+		hui.unListen(document.body,'mousedown',this._hider);					
 		if (!this.selector) {return}
 		this.selector.style.display = 'none';
 		this._selectorVisible = false;
