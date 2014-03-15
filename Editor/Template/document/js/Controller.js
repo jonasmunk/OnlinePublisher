@@ -1,3 +1,9 @@
+var _editor = {
+  defer : function(func) {
+    func();
+  }
+}
+
 var controller = {
 	pageId : 0,
 	activeSection : null,

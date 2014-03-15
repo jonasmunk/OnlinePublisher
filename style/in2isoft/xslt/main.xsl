@@ -317,24 +317,23 @@
           WebFont.load({
             google: {
               families: ['Lato:300,400,700']
-            },
-            active : function() {
-                hui.cls.add(document.body,'font');
             }
           });
         </script>
 	</head>
 	<body>
 		<script type="text/javascript">
-			if (hui.browser.windows) {
-				hui.cls.add(document.body,'windows');
-			}
-			if (hui.browser.msie) {
-				hui.cls.add(document.body,'msie');
-			}
-			if (window.devicePixelRatio==2) {
-				hui.cls.add(document.body,'retina');
-			}
+            _editor.defer(function() {
+    			if (hui.browser.windows) {
+    				hui.cls.add(document.body,'windows');
+    			}
+    			if (hui.browser.msie) {
+    				hui.cls.add(document.body,'msie');
+    			}
+    			if (window.devicePixelRatio==2) {
+    				hui.cls.add(document.body,'retina');
+    			}            
+            })
 		</script>
 		<div class="layout">
 			<div class="layout_head">
@@ -365,7 +364,7 @@
 							</div>
 						</div>
                         <script type="text/javascript">
-                            hui.ui.onReady(function() {new Poster();});
+                            _editor.defer(function() {new Poster();});
                         </script>
 					</xsl:if>
 					<xsl:apply-templates select="p:content"/>
@@ -727,7 +726,9 @@
 			<div>
 				<span class="hui_searchfield" id="search"><em class="hui_searchfield_placeholder">Søg her...</em><a href="javascript:void(0);" class="hui_searchfield_reset" tabindex="-1"><xsl:comment/></a><span><span><input type="text" class="text" name="query"/></span></span></span>
 				<script type="text/javascript">
-					new hui.ui.SearchField({element:'search',expandedWidth:200});
+                    _editor.defer(function() {
+                        new hui.ui.SearchField({element:'search',expandedWidth:200});                    
+                    })
 				</script>
 				<input type="hidden" name="id" value="{f:frame/f:search/@page}"/>
 				<xsl:for-each select="f:frame/f:search/f:types/f:type">

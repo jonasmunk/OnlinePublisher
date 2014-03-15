@@ -34,7 +34,7 @@
 	</div>
 	<xsl:if test="@dirty='true' and $editor!='true'">
 		<script type="text/javascript">
-			hui.onReady(function() {
+			_editor.defer(function() {
 				var id = <xsl:value-of select="../../@id"/>;
 				var node = hui.get('part_list_'+id);
 				hui.cls.add(node,'part_list_busy');

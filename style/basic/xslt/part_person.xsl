@@ -32,14 +32,16 @@
 					</xsl:attribute>
 					<img src="{$path}services/images/?id={p:image/o:object/@id}&amp;width=60&amp;height=80&amp;method=crop" alt="" id="{generate-id(p:image/o:object)}"/>
 			<script type="text/javascript">
-				try {
-					op.registerImageViewer('<xsl:value-of select="generate-id(p:image/o:object)"/>',{
-						id : <xsl:value-of select="p:image/o:object/@id"/>,
-						width : <xsl:value-of select="p:image/o:object/o:sub/i:image/i:width"/>,
-						height : <xsl:value-of select="p:image/o:object/o:sub/i:image/i:height"/>
-					});
-					hui.get('<xsl:value-of select="generate-id(p:image/o:object)"/>').onerror=function() {this.style.display='none'}
-				} catch (ignore) {}
+                _editor.defer(function() {
+    				try {
+    					op.registerImageViewer('<xsl:value-of select="generate-id(p:image/o:object)"/>',{
+    						id : <xsl:value-of select="p:image/o:object/@id"/>,
+    						width : <xsl:value-of select="p:image/o:object/o:sub/i:image/i:width"/>,
+    						height : <xsl:value-of select="p:image/o:object/o:sub/i:image/i:height"/>
+    					});
+    					hui.get('<xsl:value-of select="generate-id(p:image/o:object)"/>').onerror=function() {this.style.display='none'}
+    				} catch (ignore) {}                
+                })
 			</script>
 					</xsl:if>
 				</a>

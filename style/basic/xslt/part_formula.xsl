@@ -18,7 +18,7 @@
 			<xsl:call-template name="p:content"/>
 		</form>
 		<script type="text/javascript">
-			(function() {
+			_editor.defer(function() {
 				var inputs = [];
 				<xsl:for-each select="descendant::p:input">
 					inputs.push({
@@ -40,7 +40,7 @@
 					id : <xsl:value-of select="../../@id"/>,
 					inputs : inputs
 				});
-			})()
+			});
 		</script>
 	</xsl:if>
 		</div>

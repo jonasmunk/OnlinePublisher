@@ -107,7 +107,7 @@
 			<span class="part_map_text"><xsl:value-of select="map:text"/></span>
 		</xsl:if>
 		<script type="text/javascript">
-			(function() {
+			_editor.defer(function() {
 				var options = {
 					element : 'map_<xsl:value-of select="../../@id"/>',
 					markers : [],
@@ -125,7 +125,7 @@
 					})
 				</xsl:for-each>
 				new op.part.Map(options);
-			})()
+			})
 		</script>
 	</xsl:template>
 
