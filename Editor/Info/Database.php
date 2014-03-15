@@ -569,7 +569,10 @@ $databaseTables = array(
 	'part_movie' => array(
 			array("part_id","int(11)","","","0",""),
 			array("file_id","int(11)","","","0",""),
-			array("text","varchar(255)","YES","","","")
+			array("image_id","int(11)","","","0",""),
+			array("text","text","YES","","",""),
+			array("code","text","YES","","",""),
+			array("url","text","YES","","","")
 		),
 	'part_news' => array(
 			array("part_id","int(11)","","","0",""),
