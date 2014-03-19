@@ -282,7 +282,9 @@
 	</xsl:if>
     
 	<xsl:if test="//movie:movie">
+        <!--
 		<script src="http://vjs.zencdn.net/4.1/video.js"><xsl:comment/></script>
+            -->
 	</xsl:if>
     
 </xsl:template>
@@ -511,9 +513,11 @@
 </xsl:template>
 
 <xsl:template name="util:_style-dynamic">
+    <!--
 	<xsl:if test="//movie:movie">
 		<link href="http://vjs.zencdn.net/4.1/video-js.css" rel="stylesheet"/>
 	</xsl:if>
+        -->
 	<xsl:if test="//header:style[contains(@font-family,'Cabin Sketch')] or //text:style[contains(@font-family,'Cabin Sketch')]">
 		<link href='http://fonts.googleapis.com/css?family=Cabin+Sketch:bold' rel='stylesheet' type='text/css'/>
 	</xsl:if>

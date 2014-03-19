@@ -17,6 +17,8 @@ class MoviePartController extends PartController
 	function createPart() {
 		$part = new MoviePart();
 		$part->setFileId(FileService::getLatestFileId());
+        $part->setHeight('300px');
+        $part->setWidth('100%');
 		$part->save();
 		return $part;
 	}
@@ -28,16 +30,28 @@ class MoviePartController extends PartController
 	function editor($part,$context) {
 		return '<div id="part_movie_container">'.$this->render($part,$context).'</div>'.
 
-		$this->buildHiddenFields(array(
+        $this->buildHiddenFields([
 			'fileId' => $part->getFileId(),
-			'text' => $part->getText())).
+			'imageId' => $part->getImageId(),
+			'text' => $part->getText(),
+			'url' => $part->getUrl(),
+			'code' => $part->getCode(),
+			'movieWidth' => $part->getWidth(),
+			'movieHeight' => $part->getHeight()
+        ]).
 		'<script src="'.ConfigurationService::getBaseUrl().'Editor/Parts/movie/script.js" type="text/javascript" charset="utf-8"></script>';
 	}
 	
 	function getFromRequest($id) {
 		$part = MoviePart::load($id);
 		$part->setFileId(Request::getInt('fileId'));
+		$part->setImageId(Request::getInt('imageId'));
 		$part->setText(Request::getString('text'));
+		$part->setUrl(Request::getString('url'));
+		$part->setCode(Request::getString('code'));
+		$part->setWidth(Request::getString('movieWidth'));
+		$part->setHeight(Request::getString('movieHeight'));
+        Log::debug($part);
 		return $part;
 	}
 	
@@ -46,6 +60,14 @@ class MoviePartController extends PartController
 		$sql="select object.data,file.type from object,file where file.object_id = object.id and object.id=".Database::int($part->getFileId());
 		if ($row = Database::selectFirst($sql)) {
 			$xml.='<info type="'.FileService::mimeTypeToLabel($row['type']).'"/>';
+			$xml.='<style';
+            if (Strings::isNotBlank($part->getWidth())) {
+                $xml.=' width="'.Strings::escapeXML($part->getWidth()).'"';
+            }
+            if (Strings::isNotBlank($part->getHeight())) {
+                $xml.=' height="'.Strings::escapeXML($part->getHeight()).'"';
+            }
+            $xml.='/>';
 			if (Strings::isNotBlank($part->getText())) {
 				$xml.='<text>'.Strings::escapeXML($part->getText()).'</text>';
 			}
@@ -69,8 +91,8 @@ class MoviePartController extends PartController
 	
 	function getToolbars() {
 		return array(
-			GuiUtils::getTranslated(array('File','ad'=>'Fil')) =>
-			'<script source="../../Parts/file/toolbar.js"/>
+			GuiUtils::getTranslated(array('File','da'=>'Fil')) =>
+			'<script source="../../Parts/movie/toolbar.js"/>
 			<icon icon="common/new" title="{Add file; da:Tilføj fil}" name="addFile"/>
 			<icon icon="common/search" title="{Select file; da:Vælg fil}" name="chooseFile"/>
 			<divider/>
@@ -80,24 +102,46 @@ class MoviePartController extends PartController
 		'
 		);
 	}
-	
-	
-	
+
 	function editorGui($part,$context) {
 		$gui='
 		<window title="{Add file; da:Tilføj fil}" name="fileUploadWindow" width="300" padding="10">
 			<upload name="fileUpload" url="../../Parts/file/Upload.php" widget="upload">
 				<placeholder 
 					title="{Select a file on your computer; da:Vælg en fil på din computer...}" 
-					text="{The file size can at most be; da:Filens størrelse må højest være} '.GuiUtils::bytesToString(FileSystemService::getMaxUploadSize()).'."/>
+					text="{The file size can at most be; da:Filens størrelse må højest være} '.GuiUtils::bytesToString(FileSystemService::getMaxUploadSize()).'."
+                />
 			</upload>
 			<buttons align="center" top="10">
 				<button name="cancelUpload" title="{Close; da:Luk}"/>
 				<button name="upload" title="{Select file...; da:Vælg fil...}" highlighted="true"/>
 			</buttons>
 		</window>
+
+		<window title="{Info; da:Info}" name="movieInfoWindow" width="300" padding="10">
+            <formula name="movieInfoFormula">
+                <fields>
+                    <field label="Poster">
+                        <image-input key="image" source="../../Services/Model/ImagePicker.php">
+                        <finder title="{Select file; da:Vælg fil}" 
+                            list-url="../../Services/Finder/ImagesList.php"
+                            selection-url="../../Services/Finder/ImagesSelection.php"
+                            selection-value="all"
+                            selection-parameter="group"
+                            search-parameter="query"
+                        />
+                        </image-input>
+                    </field>
+                    <field label="Address"><text-input key="address"/></field>
+                    <field label="Code"><text-input breaks="true" key="code"/></field>
+                    <field label="Width"><style-length-input key="movieWidth"/></field>
+                    <field label="Height"><style-length-input key="movieHeight"/></field>
+                    <field label="Text"><text-input breaks="true" key="text"/></field>
+                </fields>
+            </formula>
+		</window>
 		';
-		return In2iGui::renderFragment($gui);
+		return UI::renderFragment($gui);
 	}
 	
 	function setLatestUploadId($id) {

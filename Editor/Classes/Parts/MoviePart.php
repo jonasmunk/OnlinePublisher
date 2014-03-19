@@ -8,15 +8,17 @@ if (!isset($GLOBALS['basePath'])) {
 	exit;
 }
 
-Part::$schema['movie'] = array(
-	'fields' => array(
-		'fileId' => array( 'type' => 'int', 'column' => 'file_id' ),
-		'imageId' => array( 'type' => 'int', 'column' => 'image_id' ),
-		'text' => array( 'type' => 'text' ),
-		'url' => array( 'type' => 'text' ),
-		'code' => array( 'type' => 'text' )
-	)
-);
+Part::$schema['movie'] = [
+	'fields' => [
+		'fileId' => [ 'type' => 'int', 'column' => 'file_id'],
+		'imageId' => [ 'type' => 'int', 'column' => 'image_id' ],
+		'text' => [ 'type' => 'text' ],
+		'url' => [ 'type' => 'text' ],
+		'code' => [ 'type' => 'text' ],
+		'width' => [ 'type' => 'text' ],
+		'height' => [ 'type' => 'text' ]
+  ]
+];
 
 class MoviePart extends Part
 {
@@ -25,6 +27,8 @@ class MoviePart extends Part
 	var $text;
 	var $url;
 	var $code;
+    var $width;
+    var $height;
 	
 	function MoviePart() {
 		parent::Part('movie');
@@ -73,5 +77,22 @@ class MoviePart extends Part
 	function getCode() {
 	    return $this->code;
 	}
+  
+	function setWidth($width) {
+	    $this->width = $width;
+	}
+
+	function getWidth() {
+	    return $this->width;
+	}
+  
+	function setHeight($height) {
+	    $this->height = $height;
+	}
+
+	function getHeight() {
+	    return $this->height;
+	}
+  
 }
 ?>

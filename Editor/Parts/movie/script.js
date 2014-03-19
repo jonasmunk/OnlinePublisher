@@ -1,13 +1,20 @@
 var partController = {
+    form : null,
+    
 	$ready : function() {
-
 		fileUpload.addDropTarget({
-			element : hui.get('part_file_container'),
+			element : hui.get('part_movie_container'),
 			hoverClass : 'editor_drop',
 			$drop : function() {
 				fileUploadWindow.show();
 			}
 		});
+        this.form = document.forms.PartForm;
+        movieInfoWindow.show();
+        movieInfoFormula.setValues(hui.form.getValues(this.form));
+	},
+	$resolveImageUrl : function(img,width,height) {
+		return '../../../services/images/?id='+img.id+'&width='+width+'&height='+height+'&format=jpg';
 	},
 	showFinder : function() {
 		if (!this.finder) {
@@ -19,7 +26,7 @@ var partController = {
 			});
 			this.finder.listen({
 				$select : function(obj) {
-					document.forms.PartForm.fileId.value = obj.id;
+					this.form.fileId.value = obj.id;
 					this.preview();
 				}.bind(this)
 			})
@@ -29,7 +36,7 @@ var partController = {
 	preview : function(delayed) {
 		op.part.utils.updatePreview({
 			node : 'part_movie_container',
-			form : document.forms.PartForm,
+			form : this.form,
 			type : 'movie',
 			delay : delayed ? 300 : 0
 		});
@@ -52,7 +59,16 @@ var partController = {
 	},
 	$click$cancelUpload : function() {
 		fileUploadWindow.hide();
-	}
+	},
+  
+    /////////////////// Info /////////////////////
+
+    $valuesChanged$movieInfoFormula : function(values) {
+        this.form.movieWidth.value = values.movieWidth;
+        this.form.movieHeight.value = values.movieHeight;
+        this.form.text.value = values.text;
+        this.preview(true);
+    }
 }
 
 hui.ui.listen(partController);

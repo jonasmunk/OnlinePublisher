@@ -572,7 +572,9 @@ $databaseTables = array(
 			array("image_id","int(11)","","","0",""),
 			array("text","text","YES","","",""),
 			array("code","text","YES","","",""),
-			array("url","text","YES","","","")
+			array("url","text","YES","","",""),
+  		array("width","varchar(20)","YES","","",""),
+			array("height","varchar(20)","YES","","","")
 		),
 	'part_news' => array(
 			array("part_id","int(11)","","","0",""),

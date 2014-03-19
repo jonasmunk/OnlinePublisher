@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="ISO-8859-1"?>
+<?xml version="1.0" encoding="UTF-8"?>
 
 <xsl:stylesheet version="1.0"
  xmlns="http://www.w3.org/1999/xhtml"
@@ -10,36 +10,38 @@
  >
 
 <xsl:template match="p:movie">
+    <xsl:variable name="size">
+        <xsl:if test="p:style/@width">
+            <xsl:text>width:</xsl:text><xsl:value-of select="p:style/@width"/><xsl:text>;</xsl:text>                            
+        </xsl:if>
+        <xsl:if test="p:style/@height">
+            <xsl:text>height:</xsl:text><xsl:value-of select="p:style/@height"/><xsl:text>;</xsl:text>
+        </xsl:if>
+    </xsl:variable>
 	<div class="part_movie" id="{generate-id()}">
-		<xsl:choose>
-			<xsl:when test="$editor='true'">
-				<div style="width: 640px; height: 480px; background: #eee;">
-					<xsl:choose>
-						<xsl:when test="p:text">
-							<xsl:value-of select="p:text"/>
-						</xsl:when>
-						<xsl:otherwise>
-							<xsl:value-of select=".//o:title"/>
-						</xsl:otherwise>
-					</xsl:choose>
-					<xsl:comment/>
-				</div>
-			</xsl:when>
-			<xsl:otherwise>
-				<video id="{generate-id()}_video" class="video-js vjs-default-skin"
-					controls="true" preload="auto" width="640" height="480"
-					poster="http://video-js.zencoder.com/oceans-clip.png">
-					<xsl:attribute name="data-setup">
-						<xsl:text>{"example_option":true}</xsl:text>
-					</xsl:attribute>
-					<source type='video/mp4'>
-						<xsl:attribute name="src">
-							<xsl:value-of select="$path"/><xsl:text>files/</xsl:text><xsl:value-of select=".//f:file/f:filename"/>
-						</xsl:attribute>
-					</source>
-				</video>
-			</xsl:otherwise>
-		</xsl:choose>
+        <div class="part_movie_body" style="{$size}background: #eee;">
+            <xsl:if test="$editor!='true'">
+                <xsl:choose>
+                    <xsl:when test=".//f:file">
+          				<video id="{generate-id()}_video" controls="true" preload="auto" style="{$size}">
+          					<source type="video/mp4"><!--{.//f:file/f:mimetype}-->
+          						<xsl:attribute name="src">
+          							<xsl:value-of select="$path"/>
+                                      <xsl:text>files/</xsl:text>
+                                      <xsl:value-of select=".//f:file/f:filename"/>
+          						</xsl:attribute>
+          					</source>
+                        </video>                    
+                    </xsl:when>
+                    <xsl:when test="p:code">
+                        <xsl:value-of select="p:code"/>
+                    </xsl:when>
+                    <xsl:otherwise>
+
+                    </xsl:otherwise>
+                </xsl:choose>
+            </xsl:if>
+        </div>
 	</div>
 </xsl:template>
 

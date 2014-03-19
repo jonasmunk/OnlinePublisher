@@ -87,6 +87,10 @@ class FileService {
 			'mimetypes' => array('video/mp4'),
 			'extensions'=>array('mp4')
 		),
+		array('kind' => 'video.quicktime', 'category' => 'video', 'label' => 'QuickTime film',
+			'mimetypes' => array('video/quicktime'),
+			'extensions'=>array('mov')
+		),
 		array('kind' => 'document.ibooks', 'category' => 'document', 'label' => 'iBooks bog',
 			'mimetypes' => array('application/x-ibooks+zip'),
 			'extensions'=>array('ibooks')
