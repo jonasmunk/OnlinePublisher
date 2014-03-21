@@ -6256,6 +6256,28 @@ op.part.Map.prototype = {
 	}
 }
 
+
+
+////////////////////// Movie ////////////////////////
+
+op.part.Movie = function(options) {
+	this.options = options;
+	this.element = hui.get(options.element);
+    this._attach();
+}
+
+op.part.Movie.prototype = {
+    _attach : function() {
+        var body = hui.get.firstByClass(this.element,'part_movie_body');
+        var code = hui.get.firstByClass(this.element,'part_movie_code');
+        if (code) {
+            body.innerHTML = hui.dom.getText(code);
+        }
+    }
+}
+
+
+
 // Stuff...
 
 hui.transition = function(options) {

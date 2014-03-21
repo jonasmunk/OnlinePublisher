@@ -202,6 +202,7 @@ $HUMANISE_EDITOR_CLASSES = array (
   'In2iGui' => 'Interface/In2iGui.php',
   'ItemsWriter' => 'Interface/ItemsWriter.php',
   'ListWriter' => 'Interface/ListWriter.php',
+  'UI' => 'Interface/UI.php',
   'GoogleAnalytics' => 'Integration/GoogleAnalytics.php',
   'CSVWriter' => 'Formats/CSVWriter.php',
   'DBUCalendar' => 'Formats/DBUCalendar.php',

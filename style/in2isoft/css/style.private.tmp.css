@@ -1294,6 +1294,43 @@ div.layout_links a span
 	color: #666;
 }
 
+
+/*********** EXPERIMENT *****/
+/*
+div.layout_footer
+{
+    position: fixed;
+    margin: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 1;
+}
+
+body, html {
+    height: auto;
+}
+
+div.layout {
+    z-index: 2;
+    background: inherit;
+    margin-bottom: 220px;
+}
+
+div.layout_base {
+    padding-bottom: 0;
+}
+
+div.layout::after {
+    content: '';
+    background: -webkit-linear-gradient(rgba(250, 250, 250,1),rgba(250, 250, 250,0));
+    height: 20px;
+    width: 100%;
+    position: absolute;
+}*/
+
+
+
 /***************** Top navigation *************/
 
 

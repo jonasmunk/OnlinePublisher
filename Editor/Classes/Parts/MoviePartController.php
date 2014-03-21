@@ -32,7 +32,7 @@ class MoviePartController extends PartController
 
         $this->buildHiddenFields([
 			'fileId' => $part->getFileId(),
-			'imageId' => $part->getImageId(),
+			'imageId' => $part->getImageId() || '',
 			'text' => $part->getText(),
 			'url' => $part->getUrl(),
 			'code' => $part->getCode(),
@@ -57,20 +57,28 @@ class MoviePartController extends PartController
 	
 	function buildSub($part,$context) {
 		$xml='<movie xmlns="'.$this->getNamespace().'">';
+		$xml.='<style';
+        if (Strings::isNotBlank($part->getWidth())) {
+            $xml.=' width="'.Strings::escapeXML($part->getWidth()).'"';
+        }
+        if (Strings::isNotBlank($part->getHeight())) {
+            $xml.=' height="'.Strings::escapeXML($part->getHeight()).'"';
+        }
+        $xml.='/>';
+		if (Strings::isNotBlank($part->getText())) {
+			$xml.='<text>' . Strings::escapeXML($part->getText()) . '</text>';
+		}
+		if (Strings::isNotBlank($part->getCode())) {
+			$xml.='<code><![CDATA[' . $part->getCode() . ']]></code>';
+		}
+        if ($part->getImageId() > 0) {
+            if ($image = ObjectService::getObjectData($part->getImageId())) {
+                $xml.= '<poster>' . $image . '</poster>';
+            }
+        }
 		$sql="select object.data,file.type from object,file where file.object_id = object.id and object.id=".Database::int($part->getFileId());
 		if ($row = Database::selectFirst($sql)) {
 			$xml.='<info type="'.FileService::mimeTypeToLabel($row['type']).'"/>';
-			$xml.='<style';
-            if (Strings::isNotBlank($part->getWidth())) {
-                $xml.=' width="'.Strings::escapeXML($part->getWidth()).'"';
-            }
-            if (Strings::isNotBlank($part->getHeight())) {
-                $xml.=' height="'.Strings::escapeXML($part->getHeight()).'"';
-            }
-            $xml.='/>';
-			if (Strings::isNotBlank($part->getText())) {
-				$xml.='<text>'.Strings::escapeXML($part->getText()).'</text>';
-			}
 			$xml.=$row['data'];
 		}
 		$xml.='</movie>';
@@ -132,7 +140,7 @@ class MoviePartController extends PartController
                         />
                         </image-input>
                     </field>
-                    <field label="Address"><text-input key="address"/></field>
+                    <field label="Address"><text-input key="url"/></field>
                     <field label="Code"><text-input breaks="true" key="code"/></field>
                     <field label="Width"><style-length-input key="movieWidth"/></field>
                     <field label="Height"><style-length-input key="movieHeight"/></field>

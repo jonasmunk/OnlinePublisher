@@ -123,7 +123,7 @@ class DesignService {
                     $data = '';
                     $jsFile = $basePath."style/".$key."/js/script.dev.js";
                     foreach ($imports as $path) {
-                        $data.= 'document.write(\'<script type="text/javascript" src="\' + op.context + \'' . $path . '"></script>\')';
+                        $data.= 'document.write(\'<script type="text/javascript" src="\' + _editor.context + \'' . $path . '"></script>\')';
                     }
                     FileSystemService::writeStringToFile($data,$jsFile);
                 }

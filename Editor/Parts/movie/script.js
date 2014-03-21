@@ -11,7 +11,11 @@ var partController = {
 		});
         this.form = document.forms.PartForm;
         movieInfoWindow.show();
-        movieInfoFormula.setValues(hui.form.getValues(this.form));
+        var values = hui.form.getValues(this.form);
+        if (values.imageId) {
+            values.image = {id:values.imageId}
+        }
+        movieInfoFormula.setValues(values);
 	},
 	$resolveImageUrl : function(img,width,height) {
 		return '../../../services/images/?id='+img.id+'&width='+width+'&height='+height+'&format=jpg';
@@ -67,6 +71,11 @@ var partController = {
         this.form.movieWidth.value = values.movieWidth;
         this.form.movieHeight.value = values.movieHeight;
         this.form.text.value = values.text;
+        this.form.code.value = values.code;
+        if (values.image) {
+            this.form.imageId.value = values.image.id;
+        }
+        this.form.url.value = values.url;
         this.preview(true);
     }
 }

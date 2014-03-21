@@ -1,0 +1,7 @@
+.part_movie_body
+{
+    text-align: center;
+    background-size: cover;
+    background-position: 50% 50%;
+    cursor: pointer;
+}
