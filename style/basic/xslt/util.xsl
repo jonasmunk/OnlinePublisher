@@ -486,8 +486,9 @@
 <xsl:template name="util:lazy-style">
     <xsl:param name="href"/>
     <!--<link rel="stylesheet" type="text/css" href="{$href}"/>-->
+	<!--
     <script type="text/javascript">_editor.loadCSS('<xsl:value-of select="$href"/>');</script>
-    <!--
+	-->
     <script>
         (function(d,href) {
             var e = d.createElement('link');
@@ -497,7 +498,6 @@
             d.getElementsByTagName('head')[0].appendChild(e);
         })(document,'<xsl:value-of select="$href"/>')
     </script>
-    -->
     <noscript>
     <link rel="stylesheet" type="text/css" href="{$href}"/>
     </noscript>
