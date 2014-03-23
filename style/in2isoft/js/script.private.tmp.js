@@ -563,15 +563,20 @@ op.part.Map.prototype = {
 op.part.Movie = function(options) {
 	this.options = options;
 	this.element = hui.get(options.element);
-    this._attach();
+    hui.listen(this.element,'click',this._activate.bind(this));
 }
 
 op.part.Movie.prototype = {
-    _attach : function() {
+    _activate : function() {
         var body = hui.get.firstByClass(this.element,'part_movie_body');
         var code = hui.get.firstByClass(this.element,'part_movie_code');
         if (code) {
             body.innerHTML = hui.dom.getText(code);
+        } else {
+            var video = hui.get.firstByClass(this.element,'part_movie_video');
+            if (video) {
+                body.innerHTML = hui.dom.getText(video);
+            }
         }
     }
 }

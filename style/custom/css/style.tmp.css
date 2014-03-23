@@ -2958,7 +2958,13 @@ div.part_mailinglist input.text
 	white-space: pre;
 }
 /* style/basic/css/part_movie.css */
-
+.part_movie_body
+{
+    text-align: center;
+    background-size: cover;
+    background-position: 50% 50%;
+    cursor: pointer;
+}
 /* style/basic/css/part_news.css */
 .part_news_box_top
 {
