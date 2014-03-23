@@ -503,6 +503,26 @@
     </noscript>
 </xsl:template>
 
+<xsl:template name="util:lazy-fonts">
+    <xsl:param name="google"/>
+	<script>
+	  WebFontConfig = {
+        google: {
+          families: ['<xsl:value-of select="$google"/>']
+        }
+	  };
+	  (function() {
+	    var wf = document.createElement('script');
+	    wf.src = ('https:' == document.location.protocol ? 'https' : 'http') +
+	              '://ajax.googleapis.com/ajax/libs/webfont/1.4.7/webfont.js';
+	    wf.type = 'text/javascript';
+	    wf.async = 'true';
+	    var s = document.getElementsByTagName('script')[0];
+	    s.parentNode.insertBefore(wf, s);
+	  })();
+	</script>
+</xsl:template>
+
 <xsl:template name="util:_style-hui-msie">
 	<xsl:comment><![CDATA[[if lt IE 7]>
 	<link rel="stylesheet" type="text/css" href="]]><xsl:value-of select="$path"/><xsl:value-of select="$timestamp-url"/>hui/css/msie6.css<xsl:value-of select="$timestamp-query"/><![CDATA["></link>
