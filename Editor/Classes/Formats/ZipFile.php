@@ -12,7 +12,7 @@ class ZipFile {
 	
 	var $delegate = null;
 	
-	function ZipArchive($delegate) {
+	function ZipFile($delegate) {
 		$this->delegate = $delegate;
 	}
 	
@@ -23,7 +23,7 @@ class ZipFile {
 		foreach ($list as $file) {
 			$base = basename($file['filename']);
 			if ($base{0}!='.' && !$file['folder']) {
-				$files[] = new ZipArchiveItem($file,$this->delegate);
+				$files[] = new ZipFileItem($file,$this->delegate);
 			}
 		}
 		return $files;
