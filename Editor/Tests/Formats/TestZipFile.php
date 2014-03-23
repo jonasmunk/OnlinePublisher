@@ -9,7 +9,7 @@ if (!isset($GLOBALS['basePath'])) {
 	exit;
 }
 
-class TestZipArchive extends UnitTestCase {
+class TestZipFile extends UnitTestCase {
 		
 	function testParseFile() {
 		global $basePath;

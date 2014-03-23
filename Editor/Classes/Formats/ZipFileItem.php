@@ -8,12 +8,12 @@ if (!isset($GLOBALS['basePath'])) {
 	exit;
 }
 
-class ZipArchiveItem {
+class ZipFileItem {
 	
 	var $info = null;
 	var $delegate = null;
 	
-	function ZipArchiveItem(&$info,&$delegate) {
+	function ZipFileItem(&$info,&$delegate) {
 		$this->info = $info;
 		$this->delegate = $delegate;
 	}

@@ -18,7 +18,7 @@ class ZipService {
 	
 	static function getArchive($path) {
 		$zip = new PclZip($path);
-		return new ZipArchive($zip);
+		return new ZipFile($zip);
 	}
 
 	static function getUploadedZip($name='file') {

@@ -8,7 +8,7 @@ if (!isset($GLOBALS['basePath'])) {
 	exit;
 }
 
-class ZipArchive {
+class ZipFile {
 	
 	var $delegate = null;
 	
