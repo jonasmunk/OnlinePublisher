@@ -135,7 +135,7 @@
 		</div>
 		
 		<script type="text/javascript">
-			hui.onReady(function() {
+			_editor.defer(function() {
 				var images = [];
 				<xsl:for-each select="//imagegallery:imagegallery//o:object">
 					images.push({
