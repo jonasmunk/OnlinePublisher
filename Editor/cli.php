@@ -12,6 +12,8 @@ ini_set("display_errors" , "0");
 
 Console::exitIfNotConsole();
 
+echo "base : " . $basePath . "\n";
+
 $args = Console::getArguments();
 
 if (method_exists('Commander',$args[1])) {

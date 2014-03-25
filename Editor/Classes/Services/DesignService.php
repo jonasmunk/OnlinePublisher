@@ -81,7 +81,7 @@ class DesignService {
                     DesignService::_compress($cssFile,$basePath."style/".$key."/css/style.private.css");
                 }
                 {
-        			$huiCss = DesignService::_read('hui/bin/combined.site.css');
+        			$huiCss = DesignService::_read('hui/bin/joined.site.css');
                     $huiCss = preg_replace("/(url\\(['\"]?)(..\/gfx\/)([^\\)]+\\))/u", "$1../../../hui/gfx/$3", $huiCss);
                     $data = $huiCss . $data;
                     $cssFile = $basePath."style/".$key."/css/style.tmp.css";
@@ -115,7 +115,7 @@ class DesignService {
                 }
                 {
                     $jsFile = $basePath."style/".$key."/js/script.tmp.js";
-                    $data = DesignService::_read('hui/bin/combined.site.js') . $data;
+                    $data = DesignService::_read('hui/bin/joined.site.js') . $data;
                     FileSystemService::writeStringToFile($data,$jsFile);
                     DesignService::_compress($jsFile,$basePath."style/".$key."/js/script.js");
                 }

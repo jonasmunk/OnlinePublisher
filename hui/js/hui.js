@@ -1448,6 +1448,26 @@ hui.stop = function(event) {
     event.stopped = true;
 }
 
+hui._defered = [];
+
+hui._ready = document.readyState == 'complete' || document.readyState == 'interactive';
+
+hui.ready = function(func) {
+	if (hui._ready) {
+		func();
+	} else {
+		hui._defered.push(func);
+	}
+	if (hui._defered.length==1) {
+		hui._ready = true;
+		hui.onReady(function() {
+			for (var i = 0; i < hui._defered.length; i++) {
+				hui._defered[i]();
+			}
+		})
+	}
+}
+
 /**
  * Execute a function when the DOM is ready
  * @param delegate The function to execute

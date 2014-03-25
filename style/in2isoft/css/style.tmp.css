@@ -1,5 +1,5 @@
 
-/* hui/bin/combined.site.css */
+/* hui/bin/joined.site.css */
 span.hui_icon_1, span.hui_icon_16, a.hui_icon_16
 {
 	display: inline-block;
@@ -83,7 +83,9 @@ a.hui_icon_labeled:hover span.hui_icon_64
 a.hui_icon_labeled:hover span.hui_icon_128
 {
 	background-position: 0 -128px;
-}div.hui_curtain
+}
+
+div.hui_curtain
 {
 	width: 100%;
 	background: #000;
@@ -91,6 +93,8 @@ a.hui_icon_labeled:hover span.hui_icon_128
 	top: 0px;
 	left: 0px;
 }
+
+
 .hui_imageviewer
 {
 	background: #fff;
@@ -203,7 +207,9 @@ div.hui_imageviewer_zoomer
 	z-index: 100;
 	cursor: crosshair;
 	background: url('../../../hui/gfx/spinner.gif') center center no-repeat;
-}textarea.hui_editor_header
+}
+
+textarea.hui_editor_header
 {
 	background: none;
 	border: none;
@@ -283,7 +289,9 @@ div.hui_editor_dropmarker
 	background: #ABF;
 	box-shadow: 0 0 4px 1px #abf;
 	z-index: 1000;
-}div.hui_overlay
+}
+
+div.hui_overlay
 {
 	display: none;
 	position: absolute;
@@ -369,7 +377,9 @@ div.hui_overlay_light div.hui_inner_overlay
 div.hui_overlay_light div.hui_overlay_icon
 {
 	margin-top: 2px;
-}/************************** Box *************************/
+}
+
+/************************** Box *************************/
 
 div.hui_box
 {
@@ -585,6 +595,8 @@ div.hui_box_rounded div.hui_box_body
 	padding: 1px 0;
 	overflow: hidden;
 }
+
+
 div.hui_buttons
 {
 	overflow: hidden;
@@ -1111,6 +1123,8 @@ a.hui_button_small_bar span span
 	line-height: 17px;
 	text-shadow: 0 1px 0 #fff;
 }
+
+
 form.hui_formula
 {
 	padding: 0px;
@@ -1599,6 +1613,8 @@ body .hui_context_dark label.hui_formula_field,
 {
 	color: #fff;
 }
+
+
 div.hui_message
 {
 	position: absolute;
@@ -1643,7 +1659,9 @@ div.hui_message span.hui_icon
 	margin-left: -5px;
 	margin-top: -4px;
 	margin-right: 4px;
-}span.hui_searchfield
+}
+
+span.hui_searchfield
 {
 	display: inline-block;
 	height: 25px;
@@ -1781,7 +1799,9 @@ span.hui_searchfield_focus_dirty span
 span.hui_searchfield_focus_dirty span span
 {
 	background-position: 0 -275px;
-}a.hui_checkbox
+}
+
+a.hui_checkbox
 {
 	overflow: hidden;
 	font-size: 10pt;
@@ -1842,7 +1862,9 @@ a.hui_checkbox_selected:hover span span
 a.hui_checkbox_selected:active span span
 {
 	background-position: 0px -100px;
-}div.hui_checkboxes
+}
+
+div.hui_checkboxes
 {
 	margin-bottom: 5px;
 	font-size: 0;
@@ -1857,7 +1879,9 @@ div.hui_checkboxes_vertical a.hui_checkbox
 {
 	display: block;
 	padding: 1px 5px 0px 0px;
-}/* ["style\/basic\/css\/shared.css","@parts","style\/in2isoft\/css\/main.css","style\/in2isoft\/css\/front.css","style\/in2isoft\/css\/overwrite.css","style\/in2isoft\/css\/adaption.css","style\/in2isoft\/css\/humanise.css"] */
+}
+
+/* ["style\/basic\/css\/shared.css","@parts","style\/in2isoft\/css\/main.css","style\/in2isoft\/css\/front.css","style\/in2isoft\/css\/overwrite.css","style\/in2isoft\/css\/adaption.css","style\/in2isoft\/css\/humanise.css"] */
 /* style/basic/css/shared.css */
 span.shared_frame_adaptive
 {

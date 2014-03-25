@@ -918,9 +918,9 @@ var ctrl = {
 	}
 }
 
-hui.onReady(ctrl.attach.bind(ctrl))
-
 hui.between = function(min,value,max) {
 	var result = Math.min(max,Math.max(min,value));
 	return isNaN(result) ? min : result;
 }
+
+hui.ready(ctrl.attach.bind(ctrl));
