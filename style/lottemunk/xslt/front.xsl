@@ -197,10 +197,10 @@
 			<a class="icon-play"><xsl:comment/></a>
 			<xsl:choose>
 				<xsl:when test="//p:page/p:meta/p:language='en'">
-					<p>Clip from <span>The Killing II</span></p>
+					<p>Clip from <span>The Bridge II</span></p>
 				</xsl:when>
 				<xsl:otherwise>
-					<p>Klip fra <span>Forbrydelsen II</span></p>
+					<p>Klip fra <span>Broen II</span></p>
 				</xsl:otherwise>
 			</xsl:choose>
 		</div>

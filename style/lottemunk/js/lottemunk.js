@@ -61,7 +61,7 @@ var ctrl = {
 		
 		
 		hui.listen('video_poster','click',function() {
-			hui.get('video_poster').innerHTML = '<iframe width="640" height="480" src="http://www.youtube.com/embed/9q-HBMSSbp4?autoplay=1" frameborder="0" allowfullscreen="allowfullscreen"><xsl:comment/></iframe>';
+			hui.get('video_poster').innerHTML = '<iframe width="640" height="480" src="http://www.youtube.com/embed/2k5DfFfNcO8?autoplay=1" frameborder="0" allowfullscreen="allowfullscreen"><xsl:comment/></iframe>';
 		});
 
 		// The rest is just non-touch...
