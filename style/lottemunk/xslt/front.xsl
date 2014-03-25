@@ -96,7 +96,14 @@
 		</div>
 		<ul class="icons">
 			<li><a href="http://dk.linkedin.com/pub/lotte-munk/18/473/554" class="icon-linkedin"><xsl:comment/></a></li>
-			<li><a href="http://da.wikipedia.org/wiki/Lotte_Munk" class="icon-wikipedia"><xsl:comment/></a></li>
+			<xsl:choose>
+				<xsl:when test="//p:page/p:meta/p:language='en'">
+					<li><a href="http://da.wikipedia.org/wiki/Lotte_Munk" class="icon-wikipedia"><xsl:comment/></a></li>
+				</xsl:when>
+				<xsl:otherwise>
+					<li><a href="http://en.wikipedia.org/wiki/Lotte_Munk" class="icon-wikipedia"><xsl:comment/></a></li>
+				</xsl:otherwise>
+			</xsl:choose>
 			<li><a href="https://www.facebook.com/Lottemunk69" class="icon-facebook"><xsl:comment/></a></li>
 		</ul>
 		<div class="contact">
