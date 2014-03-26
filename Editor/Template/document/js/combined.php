@@ -9,7 +9,7 @@ header('Content-type: text/javascript');
 Response::setExpiresInHours(16);
 
 if (Request::getBoolean('dev')) {
-	require_once('../../../../hui/bin/combined.js');
+	require_once('../../../../hui/bin/joined.js');
 	echo "\n";
 	require_once('../../../../hui/js/Menu.js');
 	echo "\n";

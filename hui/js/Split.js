@@ -22,10 +22,27 @@ hui.ui.Split = function(options) {
 	};
 	this._buildSizes();
 	hui.ui.extend(this);
-	this._addBehavior()
+	this._attach()
 }
 
 hui.ui.Split.prototype = {
+    _attach : function() {
+        hui.each(this.handles,function(handle) {
+    		hui.drag.register({
+    			element : handle,
+    			//onStart : this._onDragStart.bind(this) ,
+    			onBeforeMove : function(e) {
+    			    hui.log('before')
+    			},
+    			onMove : function(e) {
+    			    hui.log('moving')
+    			},
+     			//onMove : this._onMove.bind(this),
+    			//onAfterMove : this._onAfterMove.bind(this)
+    		});            
+        })
+    },
+  
 	_buildSizes : function() {
 		this.sizes = [];
 		for (var i=0; i < this.rows.length; i++) {
@@ -55,9 +72,6 @@ hui.ui.Split.prototype = {
 			return parseInt(str)/100;
 		}
 		return parseInt(str)/this.element.clientHeight;
-	},
-	_addBehavior : function() {
-		
 	},
 	$$layout : function() {
 		this._layout();

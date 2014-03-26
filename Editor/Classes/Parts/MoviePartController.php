@@ -94,6 +94,9 @@ class MoviePartController extends PartController
 		if ($text = DOMUtils::getFirstDescendant($node,'text')) {
 			$part->setText(DOMUtils::getText($text));
 		}
+		if ($code = DOMUtils::getFirstDescendant($node,'code')) {
+			$part->setCode(DOMUtils::getText($code));
+		}
 	}
 	
 	

@@ -41,9 +41,9 @@
 						</overflow>
 					</row>
 					<row height="10%">
-						<overflow>
-							<list source="listSource"/>
-						</overflow>
+						<html xmlns="http://www.w3.org/1999/xhtml">
+                            <div style="height: 100%; background: #666;"></div>
+                        </html>
 					</row>
 				</split>
 			</center>

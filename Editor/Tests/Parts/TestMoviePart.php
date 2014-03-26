@@ -29,10 +29,12 @@ class TestMoviePart extends UnitTestCase {
 	function testProperties() {
 		$obj = new MoviePart();
 		$obj->setFileId(10);
+		$obj->setImageId(4);
 		$obj->save();
 		
 		$obj2 = MoviePart::load($obj->getId());
 		$this->assertEqual($obj2->getFileId(),10);
+		$this->assertEqual($obj2->getImageId(),4);
 		
 		$obj2->remove();
 	}
@@ -46,6 +48,8 @@ class TestMoviePart extends UnitTestCase {
 		}
 		$obj->setFileId($latest);
 		$obj->setText('Get me back!');
+		$obj->setCode('<iframe src="http://get.me/back"></iframe>');
+
 		$ctrl = new MoviePartController();
 		
 		$xml = $ctrl->build($obj,new PartContext());
@@ -57,6 +61,7 @@ class TestMoviePart extends UnitTestCase {
 		$this->assertNotNull($imported);
 		$this->assertIdentical($imported->getFileId(),$obj->getFileId());
 		$this->assertIdentical($imported->getText(),$obj->getText());
+		$this->assertIdentical($imported->getCode(),$obj->getCode());
 	}
 }
 ?>

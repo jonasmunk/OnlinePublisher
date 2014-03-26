@@ -245,7 +245,7 @@
 		<xsl:when test="$preview='true'">
 			<xsl:choose>
 				<xsl:when test="$development='true'">
-					<script src="{$path}{$timestamp-url}hui/bin/combined.js{$timestamp-query}" type="text/javascript"><xsl:comment/></script>
+					<script src="{$path}{$timestamp-url}hui/bin/joined.js{$timestamp-query}" type="text/javascript"><xsl:comment/></script>
 				</xsl:when>
 				<xsl:otherwise>
 					<script src="{$path}{$timestamp-url}hui/bin/minimized.js{$timestamp-query}" type="text/javascript"><xsl:comment/></script>

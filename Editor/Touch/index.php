@@ -14,7 +14,7 @@ header("Content-Type: text/html; charset=UTF-8");
 	<link type="text/css" rel="stylesheet" href="css/base.css"/>
 	<link type="text/css" rel="stylesheet" href="css/login.css"/>
 	<link type="text/css" rel="stylesheet" href="../../hui/css/dev.css"/>
-	<script src="../../hui/bin/combined.js"></script>
+	<script src="../../hui/bin/joined.js"></script>
 </head>
 
 <body style="overflow: hidden;">

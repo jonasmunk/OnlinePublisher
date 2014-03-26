@@ -32,6 +32,9 @@ div.hui_buttons_center a.hui_button
 	margin: 0px 1px 0px 1px;
 }
 
+
+/**************** Standard button ************/
+
 a.hui_button
 {
 	background: url('../gfx/button.png') top left no-repeat;
