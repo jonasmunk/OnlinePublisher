@@ -30,20 +30,6 @@ hui.ui = {
 	}
 }
 
-hui.onReady(function() {
-	hui.listen(window,'resize',hui.ui._resize);
-	hui.ui.reLayout();
-	hui.ui.domReady = true;
-	if (window.parent && window.parent.hui && window.parent.hui.ui) {
-		window.parent.hui.ui._frameLoaded(window);
-	}
-	for (var i=0; i < hui.ui.delayedUntilReady.length; i++) {
-		hui.ui.delayedUntilReady[i]();
-	};
-	// Call super delegates after delayedUntilReady...
-	hui.ui.callSuperDelegates(this,'ready');
-});
-
 /**
  * Get a widget by name
  * @param nameOrWidget {Widget | String} Get a widget by name, if the parameter is already a widget it is returned
@@ -1069,5 +1055,21 @@ hui.ui.require = function(names,func) {
 	};
 	hui.require(names,func);
 }
+
+
+
+hui.onReady(function() {
+	hui.listen(window,'resize',hui.ui._resize);
+	hui.ui.reLayout();
+	hui.ui.domReady = true;
+	if (window.parent && window.parent.hui && window.parent.hui.ui) {
+		window.parent.hui.ui._frameLoaded(window);
+	}
+	for (var i=0; i < hui.ui.delayedUntilReady.length; i++) {
+		hui.ui.delayedUntilReady[i]();
+	};
+	// Call super delegates after delayedUntilReady...
+	hui.ui.callSuperDelegates(this,'ready');
+});
 
 /* EOF */
