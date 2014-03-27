@@ -90,7 +90,7 @@
 			<xsl:choose>
 				<xsl:when test="$dev='true'">
 					<script type="text/javascript">
-						_context = '<xsl:value-of select="$context"/>/hui/';
+						_context = '<xsl:value-of select="$context"/>/hui';
 					</script>
 					<script src="{$context}/hui/bin/development.js" type="text/javascript" charset="utf-8"><xsl:comment/></script>
 				</xsl:when>

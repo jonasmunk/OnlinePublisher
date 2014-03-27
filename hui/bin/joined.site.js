@@ -1464,8 +1464,8 @@ hui.onReady = function(func) {
 		hui._defered.push(func);
 	}
 	if (hui._defered.length==1) {
-		hui.onReady(function() {
-  		hui._ready = true;
+		hui._onReady(function() {
+  			hui._ready = true;
 			for (var i = 0; i < hui._defered.length; i++) {
 				hui._defered[i]();
 			}
