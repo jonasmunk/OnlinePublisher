@@ -229,8 +229,10 @@
 		<xsl:otherwise>
             <xsl:call-template name="util:_scripts-config"/>
             <script type="text/javascript">
-                $script('<xsl:value-of select="$path"/><xsl:value-of select="$timestamp-url"/>style/<xsl:value-of select="$design"/>/js/script.js<xsl:value-of select="$timestamp-query"/>',function() {
-                    _editor.$scriptReady();
+                _editor.ready(function() {
+                    $script('<xsl:value-of select="$path"/><xsl:value-of select="$timestamp-url"/>style/<xsl:value-of select="$design"/>/js/script.js<xsl:value-of select="$timestamp-query"/>',function() {
+                        _editor.$scriptReady();
+                    })
                 })
             </script>
 		</xsl:otherwise>
@@ -346,7 +348,33 @@
         window._editor = {
             deferred : [],
             scriptLoaded : false,
-            
+            ready : function(delegate) {
+                if (document.readyState == 'complete' || document.readyState == 'interactive') {
+                    delegate();
+                    return;
+                }
+            	if (window.addEventListener) {
+            		window.addEventListener('DOMContentLoaded',delegate,false);
+            	}
+                else if(document.addEventListener) {
+            		document.addEventListener('load', delegate, false);
+            	}
+            	else if(typeof window.attachEvent != 'undefined') {
+            		window.attachEvent('onload', delegate);
+            	}
+            	else {
+            		if(typeof window.onload == 'function') {
+            			var existing = window.onload;
+            			window.onload = function() {
+            				existing();
+            				delegate();
+            			};
+            		} else {
+            			window.onload = delegate;
+            		}
+            	}
+    
+            },
             defer : function(func) {
                 if (this.scriptLoaded) {
                     func();
@@ -490,13 +518,13 @@
     <script type="text/javascript">_editor.loadCSS('<xsl:value-of select="$href"/>');</script>
 	-->
     <script>
-        (function(d,href) {
-            var e = d.createElement('link');
+        _editor.ready(function() {
+            var e = document.createElement('link');
             e.setAttribute('rel','stylesheet');
             e.setAttribute('type','text/css');
-            e.setAttribute('href',href);
-            d.getElementsByTagName('head')[0].appendChild(e);
-        })(document,'<xsl:value-of select="$href"/>')
+            e.setAttribute('href','<xsl:value-of select="$href"/>');
+            document.getElementsByTagName('head')[0].appendChild(e);
+        });
     </script>
     <noscript>
     <link rel="stylesheet" type="text/css" href="{$href}"/>
@@ -511,7 +539,7 @@
           families: ['<xsl:value-of select="$google"/>']
         }
 	  };
-	  (function() {
+	  _editor.ready(function() {
 	    var wf = document.createElement('script');
 	    wf.src = ('https:' == document.location.protocol ? 'https' : 'http') +
 	              '://ajax.googleapis.com/ajax/libs/webfont/1.4.7/webfont.js';
@@ -519,7 +547,7 @@
 	    wf.async = 'true';
 	    var s = document.getElementsByTagName('script')[0];
 	    s.parentNode.insertBefore(wf, s);
-	  })();
+	  });
 	</script>
 </xsl:template>
 

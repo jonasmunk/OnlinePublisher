@@ -176,6 +176,11 @@ hui.intOrString = function(str) {
 	return str;
 }
 
+hui.between = function(min,value,max) {
+	var result = Math.min(max,Math.max(min,value));
+	return isNaN(result) ? min : result;
+}
+
 /**
  * Checks if a string has non-whitespace characters
  * @param {String} str The string
@@ -1452,18 +1457,19 @@ hui._defered = [];
 
 hui._ready = document.readyState == 'complete' || document.readyState == 'interactive';
 
-hui.ready = function(func) {
+hui.onReady = function(func) {
 	if (hui._ready) {
 		func();
 	} else {
 		hui._defered.push(func);
 	}
 	if (hui._defered.length==1) {
-		hui._ready = true;
 		hui.onReady(function() {
+  		hui._ready = true;
 			for (var i = 0; i < hui._defered.length; i++) {
 				hui._defered[i]();
 			}
+            hui._defered = null;
 		})
 	}
 }
@@ -1472,7 +1478,7 @@ hui.ready = function(func) {
  * Execute a function when the DOM is ready
  * @param delegate The function to execute
  */
-hui.onReady = function(delegate) {
+hui._onReady = function(delegate) {
 	if(window.addEventListener) {
 		window.addEventListener('DOMContentLoaded',delegate,false);
 	}
