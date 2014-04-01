@@ -2,8 +2,6 @@
 <gui xmlns="uri:hui" title="{Security; da:Sikkerhed}" padding="10" state="list">
 
 	<controller source="controller.js"/>
-	
-	<source name="selectionSource" url="data/Selection.php"/>
 		
 	<source name="listSource" url="data/ListUsers.php">
 		<parameter key="windowPage" value="@list.window.page"/>
@@ -34,7 +32,6 @@
 				<overflow>
 				<selection value="overview" name="selector" top="5">
 					<item icon="common/files" title="{Overview; da:Oversigt}" value="overview"/>
-					<items source="selectionSource"/>
 				</selection>
 				</overflow>
 			</left>
@@ -49,7 +46,6 @@
 	
 	<window name="userWindow" width="300" title="{User; da:Bruger}" padding="5">
 		<formula name="userFormula">
-			<overflow height="200">
 			<fields>
 				<field label="{Title; da:Titel}:">
 					<text-input key="title"/>
@@ -82,7 +78,6 @@
 					<checkbox key="administrator"/>
 				</field>
 			</fields>
-			</overflow>
 			<fields>
 				<buttons>
 					<button name="cancelUser" title="{Cancel; da:Annuller}"/>

@@ -10,6 +10,26 @@ hui.ui.listen({
 			this._loadUser(obj.id);
 		}
 	},
+	$select$list : function(obj) {
+		deleteItem.setEnabled(obj!==null);
+		editItem.setEnabled(obj!==null);
+	},
+	
+	// Toolbar
+	
+	$click$editItem : function() {
+		var obj = list.getFirstSelection();
+		if (obj) {
+			this._loadUser(obj.id);
+		}
+	},
+	
+	$click$deleteItem : function() {
+		var obj = list.getFirstSelection();
+		if (obj) {
+			this._deleteUser(obj.id);
+		}
+	},
 	
 	////////////////////////////// Users /////////////////////////////
 	
@@ -64,8 +84,11 @@ hui.ui.listen({
 		});
 	},
 	$click$deleteUser : function() {
+		this._deleteUser(this.userId);
+	},
+	_deleteUser : function(id) {
 		hui.ui.request({
-			json : {data:{id:this.userId}},
+			json : {data:{id:id}},
 			url : '../../Services/Model/DeleteObject.php',
 			$success:function() {
 				userWindow.hide();

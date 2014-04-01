@@ -21,7 +21,7 @@ class InternalSession {
     		$_SESSION['core.user.id'] = $user->getId();
     		$_SESSION['core.user.username'] = $user->getUsername();
     		$_SESSION['core.user.administrator'] = $user->getAdministrator();
-    		$_SESSION['core.user.language'] = $user->getLanguage() | 'da';
+			InternalSession::setLanguage($user->getLanguage());
     		InternalSession::registerActivity();
     		Log::logUser('login','');
     		return true;
@@ -54,6 +54,8 @@ class InternalSession {
 	static function setLanguage($language) {
 		if ($language=='da' || $language=='en') {
 			$_SESSION['core.user.language'] = $language;
+		} else {
+			$_SESSION['core.user.language'] = 'da';
 		}
 	}
 
