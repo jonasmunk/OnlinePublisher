@@ -1,46 +1,8 @@
-div.part_list_box_top
-{
-	background: url('../../basic/gfx/box.png') left top repeat-x;
-	height: 5px;
-	font-size: 0px;
-}
-
-div.part_list_box_top div
-{
-	background: url('../../basic/gfx/box.png') left -5px no-repeat;
-	height: 5px;
-	font-size: 0px;
-}
-
-div.part_list_box_top div div
-{
-	background: url('../../basic/gfx/box.png') right -10px no-repeat;
-}
-
-div.part_list_box_bottom
-{
-	background: url('../../basic/gfx/box.png') left -15px repeat-x;
-	height: 5px;
-	font-size: 0px;
-}
-
-div.part_list_box_bottom div
-{
-	background: url('../../basic/gfx/box.png') left -20px no-repeat;
-	height: 5px;
-	font-size: 0px;
-}
-
-div.part_list_box_bottom div div
-{
-	background: url('../../basic/gfx/box.png') right -25px no-repeat;
-}
-
-div.part_list_box_middle
+div.part_list_box
 {
 	border: 1px solid #e1e1e1;
-	border-width: 0px 1px;
-	padding: 0px 8px;
+	border-radius: 5px;
+	padding: 0 7px;
 }
 
 div.part_list_item

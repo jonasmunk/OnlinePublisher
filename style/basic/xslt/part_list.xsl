@@ -12,8 +12,6 @@
 <xsl:template match="l:list">
 	<div class="part_list common_font" id="part_list_{../../@id}">
 		<div class="part_list_box">
-		<div class="part_list_box_top"><div><div><xsl:comment/></div></div></div>
-		<div class="part_list_box_middle">
 		<xsl:apply-templates/>
 		<xsl:if test="not(l:item)">
 			<p class="part_list_nodata">				
@@ -28,8 +26,6 @@
 			</p>
 		</xsl:if>
 		<xsl:comment/>
-		</div>
-		<div class="part_list_box_bottom"><div><div><xsl:comment/></div></div></div>
 		</div>
 	</div>
 	<xsl:if test="@dirty='true' and $editor!='true'">

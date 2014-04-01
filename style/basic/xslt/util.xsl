@@ -274,6 +274,9 @@
 	<script src="{$path}{$timestamp-url}style/basic/js/OnlinePublisher.js{$timestamp-query}" type="text/javascript"><xsl:comment/></script>
     <xsl:call-template name="util:_scripts-config"/>
     <xsl:call-template name="util:_scripts-preview"/>
+	<script>
+		_editor.$scriptReady();
+	</script>
 </xsl:template>
 
 <xsl:template name="util:_scripts-preview">
