@@ -31,6 +31,10 @@ class ConfigurationService {
 	static function isGatherStatistics() {
 		return ConfigurationService::_getConfig('statistics',true);
 	}
+
+	static function isCachePages() {
+		return ConfigurationService::_getConfig('cachepages',true);
+	}
 	
 	static function isUrlRewrite() {
 		return isset($GLOBALS['CONFIG']) && @$GLOBALS['CONFIG']['urlrewrite'];

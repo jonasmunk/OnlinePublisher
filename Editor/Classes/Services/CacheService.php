@@ -27,11 +27,13 @@ class CacheService {
 	}
 	
 	static function sendCachedPage($id,$path) {
-		return false;
+        if (!ConfigurationService::isCachePages()) {
+    		return false;            
+        }
 		if (Request::getBoolean('viewsource') || Request::getBoolean('mini') || Request::getString('design') || @$_SESSION['debug.design']) {
 			return false;
 		}
-		$sql = "select page_cache.html,UNIX_TIMESTAMP(page.published) from page_cache,page,frame where page.secure=0 and page.dynamic=0 and page.id=page_cache.page_id and page.frame_id=frame.id and frame.dynamic=0";
+		$sql = "select page_cache.html,UNIX_TIMESTAMP(page.published) as published from page_cache,page,frame where page.secure=0 and page.dynamic=0 and page.id=page_cache.page_id and page.frame_id=frame.id and frame.dynamic=0";
 		if (strlen($path)>0) {
 			$sql.=" and page_cache.path=".Database::text($path);
 			$sql.=" and page.path=".Database::text($path);
@@ -51,6 +53,9 @@ class CacheService {
 	}
 	
 	static function createPageCache($id,$path,$html) {
+        if (!ConfigurationService::isCachePages()) {
+    		return false;            
+        }
 		if (Request::getBoolean('viewsource') || Request::getString('design') || @$_SESSION['debug.design']) {
 			return;
 		}
