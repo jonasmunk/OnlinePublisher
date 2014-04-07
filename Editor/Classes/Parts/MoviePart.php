@@ -9,17 +9,16 @@ if (!isset($GLOBALS['basePath'])) {
 }
 
 Part::$schema['movie'] = [
-	'fields' => [
-		'fileId' => [ 'type' => 'int', 'column' => 'file_id'],
-		'imageId' => [ 'type' => 'int', 'column' => 'image_id' ],
-		'text' => [ 'type' => 'text' ],
-		'url' => [ 'type' => 'text' ],
-		'code' => [ 'type' => 'text' ],
-		'width' => [ 'type' => 'text' ],
-		'height' => [ 'type' => 'text' ]
-  ]
+    'fields' => [
+    	'fileId' => [ 'type' => 'int', 'column' => 'file_id'],
+    	'imageId' => [ 'type' => 'int', 'column' => 'image_id' ],
+    	'text' => [ 'type' => 'text' ],
+    	'url' => [ 'type' => 'text' ],
+    	'code' => [ 'type' => 'text' ],
+    	'width' => [ 'type' => 'text' ],
+    	'height' => [ 'type' => 'text' ]
+    ]
 ];
-
 class MoviePart extends Part
 {
 	var $fileId;

@@ -15,7 +15,7 @@ Entity::$schema['Frame'] = array(
 		'hierarchyId' => array('type'=>'int','relation'=>array('class'=>'Hierarchy','property'=>'id'))
 	)
 );
-class Frame extends Entity {
+class Frame extends Entity implements Loadable {
        
 	var $title;
 	var $name;
