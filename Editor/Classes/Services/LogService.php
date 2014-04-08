@@ -31,6 +31,12 @@ class LogService {
 			}
 			$where.=" `event`=".Database::text($query['event']);
 		}
+		if (isset($query['text']) && Strings::isNotBlank($query['text'])) {
+			if ($where) {
+				$where.=' and ';
+			}
+			$where.=" `message` like ".Database::search($query['text']);
+		}
 		if ($where!='') {
 			$sql.=' where '.$where;
 		}

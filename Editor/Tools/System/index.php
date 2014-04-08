@@ -24,7 +24,7 @@ $gui='
 		<parameter key="windowPage" value="@list.window.page"/>
 		<parameter key="sort" value="@list.sort.key"/>
 		<parameter key="direction" value="@list.sort.direction"/>
-		<parameter key="query" value="@searchField.value"/>
+		<parameter key="text" value="@searchField.value"/>
 		<parameter key="showIpSession" value="@logIpSession.value"/>
 		<parameter key="category" value="@logCategory.value"/>
 		<parameter key="event" value="@logEvent.value"/>
@@ -42,7 +42,7 @@ $gui='
 				<icon icon="common/color" title="{New design; da:Nyt design}" name="newDesign" overlay="new"/>
 				<right>
 					<field label="{Search; da:Søgning}">
-						<searchfield name="searchField"/>
+						<searchfield name="searchField" expanded-width="200"/>
 					</field>
 				</right>
 			</toolbar>
