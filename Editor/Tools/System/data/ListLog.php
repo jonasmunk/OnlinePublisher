@@ -13,7 +13,8 @@ $result = LogService::getEntries(array(
 	'page' => $page,
 	'size' => $size,
 	'category' => Request::getString('category'),
-	'event' => Request::getString('event')
+	'event' => Request::getString('event'),
+  'text' => Request::getString('text')
 ));
 
 $writer = new ListWriter();

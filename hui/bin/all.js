@@ -9625,16 +9625,17 @@ hui.ui.BoundPanel.prototype = {
 	show : function(options) {
 		options = options || {};
 		var target = options.target || this.options.target;
-		if (this.visible) {
-			this.element.style.zIndex = hui.ui.nextPanelIndex();
-			return;
-		}
+
 		if (target) {
 			if (target.nodeName) {
 				this.position(target);
 			} else {
 				this.position(hui.ui.get(target));
 			}
+		}
+		if (this.visible) {
+			this.element.style.zIndex = hui.ui.nextPanelIndex();
+			return;
 		}
 		if (hui.browser.opacity) {
 			hui.style.setOpacity(this.element,0);
@@ -9653,9 +9654,6 @@ hui.ui.BoundPanel.prototype = {
 			vert = true;
 			this.element.style.marginTop='-30px';
 		}
-		hui.style.set(this.element,{
-			visibility : 'hidden', display : 'block'
-		})
 		this.element.style.visibility = 'visible';
 		this.element.style.display = 'block';
 		var index = hui.ui.nextPanelIndex();
@@ -21020,6 +21018,36 @@ hui.ui.Graph.Raphael = {
 			connections.push(r.connection(idsToShape[edge.from], idsToShape[edge.to], "#fff",null,edge.label));
 		};
 	}
+}
+
+if (window.hui===undefined) {
+    hui = {};
+}
+
+hui._ready = false;
+
+hui.ready = function(delegate) {
+	if (window.addEventListener) {
+		window.addEventListener('DOMContentLoaded',delegate,false);
+	}
+    else if(document.addEventListener) {
+		document.addEventListener('load', delegate, false);
+	}
+	else if(typeof window.attachEvent != 'undefined') {
+		window.attachEvent('onload', delegate);
+	}
+	else {
+		if(typeof window.onload == 'function') {
+			var existing = window.onload;
+			window.onload = function() {
+				existing();
+				delegate();
+			};
+		} else {
+			window.onload = delegate;
+		}
+	}
+    
 }
 
 hui.Color.table = {

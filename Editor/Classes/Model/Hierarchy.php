@@ -8,7 +8,7 @@ if (!isset($GLOBALS['basePath'])) {
 	exit;
 }
 
-class Hierarchy extends Entity {
+class Hierarchy extends Entity implements Loadable {
     
     var $name;
     var $language;

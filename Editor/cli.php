@@ -84,9 +84,9 @@ if (!isset(\$GLOBALS['basePath'])) {
         echo $schema . PHP_EOL;
     }
 
-	static function classpath() {
-        $success = ClassService::rebuildClassPaths();
-        echo $success ? 'Classpath successfully rebuild' : 'ERROR: Classpath could not be rebuild';
+	static function classes() {
+        $success = ClassService::rebuildClasses();
+        echo $success ? 'Classes successfully rebuild' : 'ERROR: Classes could not be rebuild';
         echo PHP_EOL;  
     }
 
@@ -100,7 +100,7 @@ if (!isset(\$GLOBALS['basePath'])) {
     }
 
 	static function full() {
-        Commander::classpath();
+        Commander::classes();
         Commander::hui();
         Commander::style();
     }

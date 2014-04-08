@@ -4,6 +4,7 @@
 	<title>HUI</title>
 	<!--<link charset="utf-8" title="front" media="screen" type="text/css" href="../../css/dev.css" rel="stylesheet" />-->
 	<link charset="utf-8" title="front" media="screen" type="text/css" href="../../css/dev.css" rel="stylesheet" />
+    <!--
 	<link charset="utf-8" title="front" media="screen" type="text/css" href="../../css/window.css" rel="stylesheet" />
 	<link charset="utf-8" title="front" media="screen" type="text/css" href="../../css/markupeditor.css" rel="stylesheet" />
 	<link charset="utf-8" title="front" media="screen" type="text/css" href="../../css/button.css" rel="stylesheet" />
@@ -11,6 +12,7 @@
 	<link charset="utf-8" title="front" media="screen" type="text/css" href="../../css/bar.css" rel="stylesheet" />
 	<link charset="utf-8" title="front" media="screen" type="text/css" href="../../css/formula.css" rel="stylesheet" />
 	<link charset="utf-8" title="front" media="screen" type="text/css" href="../../css/colorpicker.css" rel="stylesheet" />
+        -->
 	<!--[if lt IE 7]>
 		<link rel="stylesheet" type="text/css" href="../../css/msie6.css"> </link>
 	<![endif]-->
@@ -38,6 +40,23 @@
 </head>
 
 <body>
+    <div id="dummy" style="display: none">
+        <h1 style="text-align: center;">Lorem ipsum</h1>
+        <p>Lorem ipsum</p>
+        <p>Lorem ipsum dolor sit amet, <a href="#" data=\'{"page":"1"}\'>consectetur adipisicing</a> elit, 
+            sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis
+             nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure
+              dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur
+               sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+        </p>
+        <ul>
+            <li>Purus Mollis Amet Ipsum</li>
+            <li>Ipsum Fringilla Pharetra</li>
+            <li>Porta Parturient Ridiculus Ipsum</li>
+            <li>Elit Adipiscing</li>
+        </ul>
+    </div>
+    
 <script type="text/javascript" charset="utf-8">
 	hui.ui.listen({
 		$valueChanged$linkAddress : function() {
@@ -126,12 +145,12 @@
 		var win = hui.ui.Window.create({width:'500'});
 		var editor = hui.ui.MarkupEditor.create({
 			name : 'markupEditor',
-			value : '<h1 style="text-align: center;">Lorem ipsum</h1><p>Lorem ipsum</p><p>Lorem ipsum dolor sit amet, <a href="#" data=\'{"page":"1"}\'>consectetur adipisicing</a> elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>',
+			value : hui.get('dummy').innerHTML,
             style : {fontFamily: 'Georgia',padding:'20px'},
 			linkDelegate : linkDelegate
 		});
         editor.listen(linkDelegate);
-		var source = hui.ui.CodeInput.create({height:50});
+		var source = hui.ui.CodeInput.create({height:250});
 		var view = hui.ui.Button.create({text:'View source'}).listen({
 			$click:function() {
 				source.setValue(editor.getValue());
@@ -148,11 +167,16 @@
 			}
 		})
 		win.add(editor);
-		win.add(source);
-		win.add(view);
-		win.add(hui.ui.Button.create({text:'Set markup',name:'setMarkup'}))
 		win.show();
 		editor.focus();
+        hui.log(editor.focus);
+        
+        var testWin = hui.ui.Window.create({width:'500',title:'Source'});
+		testWin.add(source);
+		testWin.add(view);
+		testWin.add(hui.ui.Button.create({text:'Set markup',name:'setMarkup'}))
+		testWin.show();
+        testWin.move({top:400,left:600});
 	})
 </script>
 </body>

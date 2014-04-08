@@ -431,12 +431,15 @@ class RenderingService {
             header('Pragma: cache');
 			header("Content-Type: text/html; charset=UTF-8");   
             header('X-UA-Compatible: IE=edge');
+            header('hey: hey');
 			if (ConfigurationService::isOptimizeHTML()) {
 				$html = MarkupUtils::moveScriptsToBottom($html);				
 			}
 			echo $html;
 			if (!$page['secure'] && !$page['dynamic'] && !$page['framedynamic']) {
 				CacheService::createPageCache($page['id'],$path,$html);
+			} else {
+			    Log::debug('secure: '.$page['secure'].' ,dynamic'.$page['dynamic'].',framedynamic'.$page['framedynamic']);
 			}
 		}
 	}

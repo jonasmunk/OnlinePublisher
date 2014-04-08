@@ -5,7 +5,7 @@
  */
 require_once '../../../Include/Private.php';
 
-$success = ClassService::rebuildClassPaths();
+$success = ClassService::rebuildClasses();
 if (!$success) {
 	Response::internalServerError();
 }

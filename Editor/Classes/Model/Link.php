@@ -20,7 +20,7 @@ Entity::$schema['Link'] = array(
 		)
 	)
 );
-class Link extends Entity {
+class Link extends Entity implements Loadable {
     
     var $text;
 	var $alternative;

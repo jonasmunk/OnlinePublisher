@@ -83,12 +83,16 @@ class PartService {
 			}
 		}
 	}
+    
+    static private function getSchema(Part $part) {
+        return Part::$schema[$part->getType()];
+    }
 	
 	static function save($part) {
 		if ($part->isPersistent()) {
 			PartService::update($part);
 		} else {
-			$schema = Part::$schema[$part->getType()];
+			$schema = PartServce::getSchema($part);
 			
 			$sql = "insert into part (type,dynamic,created,updated) values (".
 			Database::text($part->getType()).",".

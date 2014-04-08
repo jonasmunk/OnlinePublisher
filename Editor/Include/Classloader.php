@@ -3,17 +3,13 @@ if (!isset($GLOBALS['basePath'])) {
 	header('HTTP/1.1 403 Forbidden');
 	exit;
 }
-require_once $basePath.'Editor/Info/Classpaths.php';
+require_once $basePath.'Editor/Info/Classes.php';
 function __autoload($class_name) {
 	global $basePath,$HUMANISE_EDITOR_CLASSES;
 	
-  // TODO : Is it necessary to check if it exists?
-	//if (class_exists($class_name)) {
-	//	return;
-	//}
-	if (is_array($HUMANISE_EDITOR_CLASSES)) {
-		if (array_key_exists($class_name,$HUMANISE_EDITOR_CLASSES)) {
-			require_once $basePath.'Editor/Classes/'.$HUMANISE_EDITOR_CLASSES[$class_name];
+	if (is_array($HUMANISE_EDITOR_CLASSES) && is_array($HUMANISE_EDITOR_CLASSES['all'])) {
+		if (array_key_exists($class_name,$HUMANISE_EDITOR_CLASSES['all'])) {
+			require_once $basePath.'Editor/Classes/'.$HUMANISE_EDITOR_CLASSES['all'][$class_name];
 			return;
 		}
 	}
@@ -31,6 +27,8 @@ function __autoload($class_name) {
 		}
 	}
 	
+    // Fall back to scanning (dev mode)
+    // TODO: more dynamic
 	$folders = array('', 'Templates/', 'Services/', 'Utilities/', 'Objects/', 'Parts/', 'Core/', 'Model/', 'Network/', 'Interface/', 'Modules/News/', 'Modules/Images/', 'Modules/Links/', 'Modules/Graphs/', 'Modules/Review/', 'Modules/Statistics/', 'Modules/Water/', 'Formats/', 'Integration/', 'Modules/Inspection/'/*,'Tests/'*/);
 	foreach ($folders as $folder) {
 		$path = $basePath.'Editor/Classes/'.$folder.$class_name . '.php';

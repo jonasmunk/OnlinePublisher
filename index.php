@@ -40,9 +40,9 @@ if (Request::getBoolean('logout')) {
 
 //Log::debug('Path : "'.$path.'", id : "'.$id.'"');
 
-//if (CacheService::sendCachedPage($id,$path)) {
-//	exit;
-//}
+if (CacheService::sendCachedPage($id,$path)) {
+	exit;
+}
 
 if (strlen($path)>1) {
 	$relative = str_repeat('../',substr_count($path,'/'));

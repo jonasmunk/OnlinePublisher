@@ -110,6 +110,27 @@ class ClassService {
 		));
 		return $files;
 	}
+    
+    static function getByInterface($interface) {
+		global $basePath;
+        require_once $basePath.'Editor/Info/Classes.php';
+        if (is_array($HUMANISE_EDITOR_CLASSES['interfaces'][$interface])) {
+            return $HUMANISE_EDITOR_CLASSES['interfaces'][$interface];
+        }
+        return [];
+    }
+    
+    static function getBySuper($name) {
+		global $HUMANISE_EDITOR_CLASSES;
+        if (is_array($HUMANISE_EDITOR_CLASSES['parents'][$name])) {
+            return $HUMANISE_EDITOR_CLASSES['parents'][$name];
+        }
+        return [];
+    }
+
+    static function load($name) {
+		__autoload($name);
+    }
 	
 	static function getClasses() {
 		global $basePath;
@@ -139,26 +160,43 @@ class ClassService {
 		}
 		return $classes;
 	}
-	
-	static function rebuildClassPaths() {
+
+	static function rebuildClasses() {
 		global $basePath;
-        $cache = array();
+        $cache = [ 'all' => [], 'interfaces' => [], 'parents' => [] ];
 
         $list = ClassService::getClasses();
         foreach ($list as $item) {
-        	$cache[$item['name']] = $item['relativePath'];
+            $className = $item['name'];
+        	$cache['all'][$className] = $item['relativePath'];
+            $interfaces = class_implements($className);
+            foreach ($interfaces as $interface) {
+                if (!is_array($cache['interfaces'][$interface])) {
+                    $cache['interfaces'][$interface] = [];
+                }
+                $cache['interfaces'][$interface][] = $className;
+            }
+            $parent = get_parent_class($className);
+    		while ($parent) {
+                if (!is_array($cache['parents'][$parent])) {
+                    $cache['parents'][$parent] = [];
+                }                
+                $cache['parents'][$parent][] = $className;
+                
+    			$parent = get_parent_class($parent);
+            }
         }
 
         $text = var_export($cache,true);
 
-        $text = "<?php
-        if (!isset(\$GLOBALS['basePath'])) {
-        	header('HTTP/1.1 403 Forbidden');
-        	exit;
-        }
-        \n\$HUMANISE_EDITOR_CLASSES = ".$text."\n?>";
+        $text = "<?php\n" .
+        "if (!isset(\$GLOBALS['basePath'])) {\n" .
+        "   header('HTTP/1.1 403 Forbidden');\n" .
+        "	exit;\n" .
+        "}\n\n" .
+        "\$HUMANISE_EDITOR_CLASSES = ".$text."\n?>";
 
-        $success = FileSystemService::writeStringToFile($text,$basePath.'Editor/Info/Classpaths.php');
+        $success = FileSystemService::writeStringToFile($text,$basePath.'Editor/Info/Classes.php');
         return $success;
 	}
 }
