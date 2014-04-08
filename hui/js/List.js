@@ -78,8 +78,12 @@ hui.ui.List = function(options) {
  */
 hui.ui.List.create = function(options) {
 	options = options || {};
+	var cls = 'hui_list';
+	if (options.variant) {
+		cls+=' hui_list_'+options.variant;
+	}
 	options.element = hui.build('div',{
-		'class':'hui_list',
+		'class' : cls,
 		html: '<div class="hui_list_progress"></div><div class="hui_list_navigation"><div class="hui_list_selection window_page"><div><div class="window_page_body"></div></div></div><span class="hui_list_count"></span></div><div class="hui_list_body"'+(options.maxHeight>0 ? ' style="max-height: '+options.maxHeight+'px; overflow: auto;"' : '')+'><table cellspacing="0" cellpadding="0"><thead><tr></tr></thead><tbody></tbody></table></div>'});
 	return new hui.ui.List(options);
 }

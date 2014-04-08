@@ -171,14 +171,14 @@ class ClassService {
         	$cache['all'][$className] = $item['relativePath'];
             $interfaces = class_implements($className);
             foreach ($interfaces as $interface) {
-                if (!is_array($cache['interfaces'][$interface])) {
+                if (!isset($cache['interfaces'][$interface])) {
                     $cache['interfaces'][$interface] = [];
                 }
                 $cache['interfaces'][$interface][] = $className;
             }
             $parent = get_parent_class($className);
     		while ($parent) {
-                if (!is_array($cache['parents'][$parent])) {
+                if (!isset($cache['parents'][$parent])) {
                     $cache['parents'][$parent] = [];
                 }                
                 $cache['parents'][$parent][] = $className;

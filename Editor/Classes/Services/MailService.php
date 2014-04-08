@@ -7,7 +7,7 @@ if (!isset($GLOBALS['basePath'])) {
 	header('HTTP/1.1 403 Forbidden');
 	exit;
 }
-require_once($basePath.'Editor/Classes/Libraries/Zend.php');
+require_once($basePath.'Editor/Include/Zend.php');
 require_once($basePath.'Editor/Libraries/Zend/Mail.php');
 require_once($basePath.'Editor/Libraries/Zend/Mail/Transport/Smtp.php');
 

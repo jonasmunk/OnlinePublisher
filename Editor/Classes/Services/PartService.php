@@ -92,7 +92,7 @@ class PartService {
 		if ($part->isPersistent()) {
 			PartService::update($part);
 		} else {
-			$schema = PartServce::getSchema($part);
+			$schema = PartService::getSchema($part);
 			
 			$sql = "insert into part (type,dynamic,created,updated) values (".
 			Database::text($part->getType()).",".

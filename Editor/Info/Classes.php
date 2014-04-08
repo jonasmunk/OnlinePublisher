@@ -197,7 +197,6 @@ $HUMANISE_EDITOR_CLASSES = array (
     'PartLink' => 'Model/PartLink.php',
     'SpecialPage' => 'Model/SpecialPage.php',
     'Template' => 'Model/Template.php',
-    'Zend' => 'Libraries/Zend.php',
     'DiagramData' => 'Interface/DiagramData.php',
     'DiagramEdge' => 'Interface/DiagramEdge.php',
     'DiagramNode' => 'Interface/DiagramNode.php',
