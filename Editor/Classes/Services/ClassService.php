@@ -199,27 +199,4 @@ class ClassService {
         $success = FileSystemService::writeStringToFile($text,$basePath.'Editor/Info/Classes.php');
         return $success;
 	}
-
-	
-	static function rebuildClassPaths() {
-		global $basePath;
-        $cache = array();
-
-        $list = ClassService::getClasses();
-        foreach ($list as $item) {
-        	$cache[$item['name']] = $item['relativePath'];
-        }
-
-        $text = var_export($cache,true);
-
-        $text = "<?php
-        if (!isset(\$GLOBALS['basePath'])) {
-        	header('HTTP/1.1 403 Forbidden');
-        	exit;
-        }
-        \n\$HUMANISE_EDITOR_CLASSES = ".$text."\n?>";
-
-        $success = FileSystemService::writeStringToFile($text,$basePath.'Editor/Info/Classpaths.php');
-        return $success;
-	}
 }
