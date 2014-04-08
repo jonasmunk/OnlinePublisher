@@ -12,7 +12,7 @@ hui.ui.Bar = function(options) {
 	this.options = hui.override({},options);
 	this.name = options.name;
 	this.element = hui.get(options.element);
-	this.visible = this.element.style.display=='none' ? false : true;
+	this.visible = hui.cls.has(this.element,'hui_bar_absolute') || this.element.style.display=='none' ? false : true;
 	this.body = hui.get.firstByClass(this.element,'hui_bar_left');
 	hui.ui.extend(this);
 };

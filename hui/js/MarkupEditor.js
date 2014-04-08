@@ -412,6 +412,7 @@ hui.ui.MarkupEditor.webkit = {
 	focus : function() {
 		this.element.focus();
         this._selectionChanged();
+        this.controller.implFocused();
 	},
 	format : function(info) {
 		if (info.key=='strong' || info.key=='em') {
