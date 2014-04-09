@@ -23,7 +23,7 @@
         <div class="part_movie_body">
             <xsl:attribute name="style">
                 <xsl:if test="$editor='true'">
-                    <xsl:text>background: #eee;</xsl:text>
+                    <xsl:text>background-color: #eee;</xsl:text>
                 </xsl:if>
                 <xsl:value-of select="$size"/>
                 <xsl:if test="p:poster//img:image">
