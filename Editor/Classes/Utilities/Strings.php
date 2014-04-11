@@ -295,29 +295,14 @@ class Strings {
 	}
 	
 	static function toJSON($obj) {
-		global $basePath;
-		if (function_exists('json_encode')) {
-			return json_encode($obj);
-		}
-		require_once($basePath.'Editor/Libraries/json/JSON2.php');
-		$json = new Services_JSON();
-		return $json->encode($obj);
+		return json_encode($obj);
 	}
 	
 	static function fromJSON($str) {
-		global $basePath;
-		if (function_exists('json_decode')) {
-			return json_decode($str);
-		}
-		require_once($basePath.'Editor/Libraries/json/JSON2.php');
-		$json = new Services_JSON();
-		return $json->decode($str);
+		return json_decode($str);
 	}
 	
 	static function toString($val) {
-		if ($val===0) {
-			//return '0';
-		}
 		return strval($val);
 	}
 	

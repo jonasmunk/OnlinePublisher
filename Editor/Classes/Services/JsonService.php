@@ -11,9 +11,7 @@ if (!isset($GLOBALS['basePath'])) {
 class JsonService {
 	
 	static function decode($data) {
-		global $basePath;
-		require_once($basePath.'Editor/Libraries/json/JSON2.php');
-		return json_decode($data);
+		return Strings::fromJSON($data);
 	}
 	
 	static function readFile($path) {
