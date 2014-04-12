@@ -54,13 +54,35 @@ hui.ui.Finder.prototype = {
 		this.list.clearSelection();
 	},
 	_build : function() {
-		var win = this.window = hui.ui.Window.create({title:this.options.title,icon:'common/search',width:600});
+		var win = this.window = hui.ui.Window.create({title:this.options.title,icon:'common/search',width:600,height:400});
+        win.listen({
+            $userClosedWindow : function() {
+                this.fire('cancel');
+            }.bind(this)
+        })
+        if (this.options.url) {
+            win.setBusy(true);
+            hui.ui.request({
+                url : this.options.url,
+                $object : function(config) {
+                    hui.override(this.options,config);
+                    if (config.title) {
+                        win.setTitle(config.title);
+                    }
+                    win.setBusy(false);
+                    this._buildBody();
+                }.bind(this)
+            })
+            return;
+        }
+        this._buildBody();
+	},
+    _buildBody : function() {
 
-		
 		var layout = hui.ui.Layout.create();
-		win.add(layout);
+		this.window.add(layout);
 
-		var left = hui.ui.Overflow.create({height:400});
+		var left = hui.ui.Overflow.create({dynamic:true});
 		layout.addToLeft(left);
 		
 		var list = this.list = hui.ui.List.create();
@@ -85,7 +107,7 @@ hui.ui.Finder.prototype = {
 			bar.addToRight(search);
 			layout.addToCenter(bar);
 		}
-		var right = hui.ui.Overflow.create({height:400});
+		var right = hui.ui.Overflow.create({dynamic:true});
 		layout.addToCenter(right);
 		right.add(this.list);
 		
@@ -137,7 +159,8 @@ hui.ui.Finder.prototype = {
 		this.list.setSource(listSource);
 		
 		src.refresh();
-	},
+        hui.ui.reLayout();
+    },
 	
 	_selectionChanged : function() {
 		var row = this.list.getFirstSelection();

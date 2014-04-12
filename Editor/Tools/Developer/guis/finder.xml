@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<gui xmlns="uri:hui" title="{Security; da:Sikkerhed}" padding="10" state="list">
+
+	<controller source="../guis/finder.js"/>
+	
+	<structure>
+		<top>
+			<toolbar>
+				<icon icon="file/generic" overlay="search" title="Find file" name="findFile"/>
+				<icon icon="file/generic" overlay="search" title="Find file by config" name="findFileConfig"/>
+			</toolbar>
+		</top>
+		<middle>
+			<left>
+				<overflow>
+				<selection value="overview" name="selector" top="5">
+					<item icon="common/files" title="{Overview; da:Oversigt}" value="overview"/>
+				</selection>
+				</overflow>
+			</left>
+			<center>
+                <overflow>
+            		<formula name="userFormula" padding="20">
+            			<fields>
+            				<field label="{Title; da:Titel}:">
+            					<text-input key="title"/>
+            				</field>
+            				<field label="{Title; da:Titel}:">
+            					<image-input key="title"/>
+            				</field>
+            			</fields>
+            			<fields>
+            				<buttons>
+            					<button name="cancelUser" title="{Cancel; da:Annuller}"/>
+            					<button name="deleteUser" title="{Delete; da:Slet}">
+            						<confirm text="{Are you sure?; da:Er du sikker?}" ok="{Yes, delete user; da:Ja, slet brugeren}" cancel="{No; da:Nej}"/>
+            					</button>
+            					<button name="saveUser" title="{Save; da:Gem}" highlighted="true"/>
+            				</buttons>
+            			</fields>
+            		</formula>
+                </overflow>
+			</center>
+		</middle>
+		<bottom/>
+	</structure>
+	
+	<window name="userWindow" width="300" title="{User; da:Bruger}" padding="5">
+
+	</window>
+	
+</gui>

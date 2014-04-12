@@ -43,8 +43,6 @@ strong.hui_selection_badge
 	color: #fff;
 	font-size: 11px;
 	padding: 0 4px;
-	-moz-border-radius: 8px;
-	-webkit-border-radius: 7px;
 	border-radius: 7px;
 	min-width: 10px;
 	text-align: center;

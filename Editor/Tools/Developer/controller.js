@@ -41,6 +41,9 @@ hui.ui.listen({
 		} else if (item.value=='report') {
 			iframe.clear();
 			iframe.setUrl('data/Report.php');
+		} else if (item.value=='finders') {
+			iframe.clear();
+			iframe.setUrl('data/UI.php?file=finder.xml');
 		} else if (item.kind=='test') {
 			iframe.clear();
 			iframe.setUrl('data/RunTest.php?test='+item.value);

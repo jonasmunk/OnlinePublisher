@@ -28,6 +28,7 @@ hui.ui.Window.create = function(options) {
 	html+='<span class="hui_window_title">'+hui.ui.getTranslated(options.title)+'</span></div></div></div>'+
 		'<div class="hui_window_content"><div class="hui_window_content"><div class="hui_window_body" style="'+
 		(options.width ? 'width:'+options.width+'px;':'')+
+		(options.height ? 'height:'+options.height+'px;':'')+
 		(options.padding ? 'padding:'+options.padding+'px;':'')+
 		(options.padding ? 'padding-bottom:'+Math.max(0,options.padding-2)+'px;':'')+
 		'">'+
@@ -66,7 +67,7 @@ hui.ui.Window.prototype = {
 		});
 	},
 	setTitle : function(title) {
-		hui.dom.setText(this.title,title);
+		hui.dom.setText(this.title,hui.ui.getTranslated(title));
 	},
 	_positionInView : function() {
 		var scrollTop = hui.window.getScrollTop();

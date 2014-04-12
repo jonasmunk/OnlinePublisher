@@ -119,11 +119,9 @@ table.hui_calendar_weekview div.hui_calendar_event
 	border: 1px solid #acbbd4;
 	width: 100%;
 	margin-left: -1px;
-	/*-moz-box-sizing: border-box;
-	-webkit-box-sizing: border-box;*/
+	-moz-box-sizing: border-box;
 	box-sizing: border-box;
-	-moz-border-radius: 5px;
-	-webkit-border-radius: 5px;
+	border-radius: 5px;
 	color: #112039;
 	font-size: 9pt;
 	line-height: 12px;

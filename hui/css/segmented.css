@@ -12,8 +12,6 @@ span.hui_segmented a
 	text-decoration: none;
 	color: #333;
 	padding: 0 3px;
-	-moz-border-radius: 2px;
-	-webkit-border-radius: 2px;
 	border-radius: 2px;
 	outline: none;
 }

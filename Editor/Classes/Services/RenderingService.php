@@ -431,7 +431,6 @@ class RenderingService {
             header('Pragma: cache');
 			header("Content-Type: text/html; charset=UTF-8");   
             header('X-UA-Compatible: IE=edge');
-            header('hey: hey');
 			if (ConfigurationService::isOptimizeHTML()) {
 				$html = MarkupUtils::moveScriptsToBottom($html);				
 			}

@@ -15,9 +15,9 @@ input.hui_tokenfield_token
 	width: 50px;
 	margin: 0 5px 5px 0;
 	padding: 1px 0px;
-	-moz-border-radius: 2px;
-	-webkit-border-radius: 2px;
+    border-radius: 2px;
 	-webkit-box-shadow: inset 0 1px 3px #ddd;
+    box-shadow: inset 0 1px 3px #ddd;
 	font-size: 9pt;
 	text-indent: 2px;
 }

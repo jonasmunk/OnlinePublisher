@@ -194,7 +194,7 @@ textarea.hui_formula_text::-webkit-scrollbar
 textarea.hui_formula_text::-webkit-scrollbar-thumb
 {
     background: #ccc -webkit-gradient(linear, 0% 0%, 100% 0%, from(#fff), to(rgb(240, 240, 240)));  
-    -webkit-border-radius: 7px;
+    border-radius: 7px;
 	border: 1px solid #ddd;
 }
 

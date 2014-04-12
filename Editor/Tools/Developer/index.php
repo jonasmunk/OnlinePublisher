@@ -8,7 +8,7 @@ require_once '../../Include/Private.php';
 $gui='
 <gui xmlns="uri:hui" padding="10" title="Developer" state="settings">
 	<controller source="controller.js"/>
-	<source name="testsSource" url="data/ListTests.php"/>
+	<source name="testsSource" url="data/TestSelection.php"/>
 	<source name="graphSource" url="data/GraphData.php"/>
 	<source name="diagramSource" url="data/DiagramData.php">
 		<parameter key="parent" value="@diagramSubset.value"/>
@@ -28,9 +28,11 @@ $gui='
 						<item icon="common/time" title="Session" value="session"/>
 						<item icon="common/time" title="Report" value="report"/>
 						<item icon="common/tools" title="Settings" value="settings"/>
+						<item icon="common/object" title="Classes" value="classes"/>
+						<title>UI</title>
+						<item icon="common/search" title="Finders" value="finders"/>
 						<item icon="monochrome/nuclear" title="Graph" value="graph"/>
 						<item icon="common/hierarchy" title="Diagram" value="diagram"/>
-						<item icon="common/object" title="Classes" value="classes"/>
 						<title>Tests</title>
 						<items name="testSelection" source="testsSource"/>
 					</selection>

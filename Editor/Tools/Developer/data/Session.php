@@ -13,7 +13,7 @@ header('Content-Type: text/html; charset=iso-8859-1');
 </head>
 <body>
 <pre>
-<?
+<?php
 $s = $_SESSION;
 ksort($s);
 print_r($s);

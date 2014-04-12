@@ -62,10 +62,15 @@ hui.ui.Overflow.prototype = {
 			this._checkShadows();
 			return
 		}
-		hui.log(this.element.parentNode.clientHeight)
 		this.element.style.height = hui.position.getRemainingHeight(this.element)+'px';
 		this._checkShadows();
-	}
+	},
+	/** @private */
+	$visibilityChanged : function() {
+		if (hui.dom.isVisible(this.element)) {
+            this.$$layout();
+        }
+    }
 }
 
 /* EOF */
