@@ -1253,7 +1253,7 @@ doc title:'Rich text' class:'hui.ui.RichText'
 					<xsl:text> hui_segmented_</xsl:text><xsl:value-of select="@variant"/>
 				</xsl:if>
 				<xsl:if test="not(@variant)">
-					<xsl:text> hui_segmented_standard</xsl:text><xsl:value-of select="@variant"/>
+					<xsl:text> hui_segmented_standard</xsl:text>
 				</xsl:if>
 			</xsl:attribute>
 			<xsl:for-each select="gui:item">
