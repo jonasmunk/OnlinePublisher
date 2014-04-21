@@ -32,7 +32,7 @@ class MoviePartController extends PartController
 
         $this->buildHiddenFields([
 			'fileId' => $part->getFileId(),
-			'imageId' => $part->getImageId() || '',
+			'imageId' => $part->getImageId()>0 ? $part->getImageId() : '',
 			'text' => $part->getText(),
 			'url' => $part->getUrl(),
 			'code' => $part->getCode(),
@@ -102,14 +102,12 @@ class MoviePartController extends PartController
 	
 	function getToolbars() {
 		return array(
-			GuiUtils::getTranslated(array('File','da'=>'Fil')) =>
+			GuiUtils::getTranslated(array('Movie','da'=>'Film')) =>
 			'<script source="../../Parts/movie/toolbar.js"/>
 			<icon icon="common/new" title="{Add file; da:Tilføj fil}" name="addFile"/>
 			<icon icon="common/search" title="{Select file; da:Vælg fil}" name="chooseFile"/>
 			<divider/>
-			<field label="{Text; da:Tekst}">
-				<text-input name="text" width="200"/>
-			</field>
+			<icon icon="common/info" title="{Info; da:Info}" name="info"/>
 		'
 		);
 	}
@@ -129,18 +127,12 @@ class MoviePartController extends PartController
 			</buttons>
 		</window>
 
-		<window title="{Info; da:Info}" name="movieInfoWindow" width="300" padding="10">
+		<window title="{Info; da:Info}" icon="common/info" name="movieInfoWindow" width="300" padding="10">
             <formula name="movieInfoFormula">
                 <fields>
                     <field label="Poster">
-                        <image-input key="image" source="../../Services/Model/ImagePicker.php">
-                        <finder title="{Select file; da:Vælg fil}" 
-                            list-url="../../Services/Finder/ImagesList.php"
-                            selection-url="../../Services/Finder/ImagesSelection.php"
-                            selection-value="all"
-                            selection-parameter="group"
-                            search-parameter="query"
-                        />
+                        <image-input key="image">
+                            <finder url="../../Services/Finder/Images.php"/>
                         </image-input>
                     </field>
                     <field label="Address"><text-input key="url"/></field>

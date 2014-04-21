@@ -5,7 +5,7 @@
 	<source name="itemsSource" url="data/source_items.xml"/>
 	<box width="600" variant="textured">
 		<toolbar>
-			<field label="Style length:">
+			<field label="Number input:">
 				<number-input key="style" value="15"/>
 			</field>
 			<field label="Style length:">
@@ -34,7 +34,7 @@
 							<style-length-input key="style" value="15px"/>
 						</field>
 						<field label="Color">
-							<colorfield key="color" value="red"/>
+							<color-input key="color" value="red"/>
 						</field>
 					</fields>
 					<buttons top="10">

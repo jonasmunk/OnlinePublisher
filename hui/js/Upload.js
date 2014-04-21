@@ -46,8 +46,8 @@ hui.ui.Upload.create = function(options) {
 		html : '<div class="hui_upload_items"></div>'+
 		'<div class="hui_upload_status"></div>'+
 		(options.placeholder ? '<div class="hui_upload_placeholder"><span class="hui_upload_icon"></span>'+
-			(options.placeholder.title ? '<h2>'+hui.string.escape(options.placeholder.title)+'</h2>' : '')+
-			(options.placeholder.text ? '<p>'+hui.string.escape(options.placeholder.text)+'</p>' : '')+
+			(options.placeholder.title ? '<h2>'+hui.string.escape(hui.ui.getTranslated(options.placeholder.title))+'</h2>' : '')+
+			(options.placeholder.text ? '<p>'+hui.string.escape(hui.ui.getTranslated(options.placeholder.text))+'</p>' : '')+
 		'</div>' : '')
 	});
 	return new hui.ui.Upload(options);
@@ -272,7 +272,7 @@ hui.ui.Upload.prototype = {
 			w.element.parentNode.removeChild(w.element);
 			buttonContainer.appendChild(w.element);
 		} else {
-			buttonContainer.innerHTML='<a href="javascript:void(0);" class="hui_button"><span><span>'+this.options.chooseButton+'</span></span></a>';
+			buttonContainer.innerHTML='<a href="javascript:void(0);" class="hui_button"><span><span>'+hui.string.escape(hui.ui.getTranslated(this.options.chooseButton))+'</span></span></a>';
 			this.element.appendChild(buttonContainer);
 		}
 		return buttonContainer;

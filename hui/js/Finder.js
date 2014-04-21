@@ -7,6 +7,7 @@
 hui.ui.Finder = function(options) {
 	this.options = hui.override({title:'Finder',selection:{},list:{}},options);
 	this.name = options.name;
+    this.uploader = null; // hui.ui.Upload
 	hui.ui.extend(this);
 	if (options.listener) {
 		this.listen(options.listener);
@@ -95,30 +96,34 @@ hui.ui.Finder.prototype = {
 			$select : this._selectionChanged.bind(this)
 		})
 		
+        var showBar = this.options.search || this.options.gallery;
 		
-		if (this.options.search) {
+		if (showBar) {
 			var bar = hui.ui.Bar.create({variant:'layout'});
-			var search = hui.ui.SearchField.create({expandedWidth:200});
-			search.listen({
-				$valueChanged : function() {
-					list.resetState();
-				}
-			})
-			bar.addToRight(search);
 			layout.addToCenter(bar);
+            if (this.options.search) {
+    			var search = hui.ui.SearchField.create({expandedWidth:200});
+    			search.listen({
+    				$valueChanged : function() {
+    					list.resetState();
+    				}
+    			})
+    			bar.addToRight(search);
+            }
 		}
 		var right = hui.ui.Overflow.create({dynamic:true});
 		layout.addToCenter(right);
 		right.add(this.list);
 		
+        
 		this.selection = hui.ui.Selection.create({value : this.options.selection.value});
 		this.selection.listen({
 			$select : function() {
 				list.resetState();
 			}
 		})
-		var src = new hui.ui.Source({url : this.options.selection.url});
-		this.selection.addItems({source:src})
+		var selectionSource = new hui.ui.Source({url : this.options.selection.url});
+		this.selection.addItems({source:selectionSource})
 		left.add(this.selection);
 		
 		var parameters = [];
@@ -158,8 +163,50 @@ hui.ui.Finder.prototype = {
 		}
 		this.list.setSource(listSource);
 		
-		src.refresh();
+        if (this.options.gallery) {
+            var viewChanger = hui.ui.Segmented.create({
+                value : 'gallery',
+                items : [{icon:'view/list',value:'list'},{icon:'view/gallery',value:'gallery'}]
+            })
+            viewChanger.listen({
+                $valueChanged : this.changeView.bind(this)
+            })                
+            bar.add(viewChanger);
+            var gallerySource = new hui.ui.Source({
+				url : this.options.gallery.url,
+				parameters : parameters
+		    });
+            var gallery = this.gallery = hui.ui.Gallery.create({
+                source : gallerySource
+            })
+            this.list.hide();
+    		right.add(gallery);
+            gallery.listen({
+                $select : function(value) {
+                    this.fire('select',gallery.getFirstSelection());
+                }.bind(this)
+            });
+            gallerySource.refresh();
+        }
+        if (this.options.upload && hui.ui.Upload.HTML5.support().supported) {
+            var uploadButton = hui.ui.Button.create({text:'Add...',small:true});
+            uploadButton.listen({
+                $click : this._showUpload.bind(this)
+            })
+            bar.add(uploadButton);
+            
+        }
+		selectionSource.refresh();
         hui.ui.reLayout();
+    },
+    changeView : function(value) {
+        if (value=='gallery') {
+            this.list.hide();
+            this.gallery.show();
+        } else {
+            this.list.show();
+            this.gallery.hide();
+        }
     },
 	
 	_selectionChanged : function() {
@@ -167,6 +214,29 @@ hui.ui.Finder.prototype = {
 		if (row!=null) {
 			this.fire('select',row);
 		}
-	}
+	},
+    
+    _showUpload : function(button) {
+        if (!this.uploadPanel) {
+            var options = this.options.upload;
+            var panel = this.uploadPanel = hui.ui.BoundPanel.create({padding:5,width:300,modal:true});
+            this.uploader = hui.ui.Upload.create({
+                url : options.url,
+                placeholder : options.placeholder,
+                chooseButton : {en:'Choose file...',da:'Vælg fil...'}
+            });
+            this.uploader.listen({
+                $uploadDidComplete : function(file) {
+                    this._uploadSuccess(hui.string.fromJSON(file.request.responseText));
+                }.bind(this)
+            })
+            panel.add(this.uploader);
+        }
+        this.uploadPanel.show({target:button});
+    },
+    _uploadSuccess : function(obj) {
+        this.uploadPanel.hide();
+		this.fire('select',obj);
+    }
 }
 

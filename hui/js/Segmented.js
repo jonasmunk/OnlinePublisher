@@ -11,6 +11,26 @@ hui.ui.Segmented = function(options) {
 	hui.listen(this.element,'mousedown',this._click.bind(this));
 }
 
+hui.ui.Segmented.create = function(options) {
+    var e = options.element = hui.build('span',{'class':'hui_segmented hui_segmented_standard'});
+    if (options.items) {
+        for (var i = 0; i < options.items.length; i++) {
+            var item = options.items[i];
+            var a = hui.build('a',{parent:e,href:'javascript://','rel':item.value});
+            if (item.icon) {
+                a.appendChild(hui.ui.createIcon(item.icon,16));
+            }
+            if (item.text) {
+                hui.build('span',{'class':'hui_segmented_text',text:item.text,parent:a});
+            }
+            if (options.value!==undefined && options.value == item.value) {
+                hui.cls.add(a,'hui_segmented_selected');
+            }
+        }
+    }
+    return new hui.ui.Segmented(options);
+}
+
 hui.ui.Segmented.prototype = {
 	_click : function(e) {
 		e = new hui.Event(e);

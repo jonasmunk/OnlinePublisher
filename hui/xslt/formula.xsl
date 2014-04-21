@@ -678,6 +678,7 @@
 			</xsl:if>
 			<xsl:if test="gui:finder">
 				,finder : {
+                    url : '<xsl:value-of select="gui:finder/@url"/>',
 					title : '<xsl:value-of select="gui:finder/@title"/>',
 					list : {url:'<xsl:value-of select="gui:finder/@list-url"/>'},
 					selection : {

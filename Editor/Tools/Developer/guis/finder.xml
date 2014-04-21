@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<gui xmlns="uri:hui" title="{Security; da:Sikkerhed}" padding="10" state="list">
+<gui xmlns="uri:hui" title="Finder" padding="10" state="list">
 
 	<controller source="../guis/finder.js"/>
 	
@@ -8,6 +8,8 @@
 			<toolbar>
 				<icon icon="file/generic" overlay="search" title="Find file" name="findFile"/>
 				<icon icon="file/generic" overlay="search" title="Find file by config" name="findFileConfig"/>
+                <divider/>
+				<icon icon="common/image" overlay="search" title="Find image by config" name="findImageConfig"/>
 			</toolbar>
 		</top>
 		<middle>
@@ -26,7 +28,9 @@
             					<text-input key="title"/>
             				</field>
             				<field label="{Title; da:Titel}:">
-            					<image-input key="title"/>
+            					<image-input key="title">
+                                    <finder url="../../../Services/Finder/Images.php"/>
+                                </image-input>
             				</field>
             			</fields>
             			<fields>

@@ -5430,7 +5430,7 @@ hui.ui.getText = function(key) {
 }
 
 hui.ui.getTranslated = function(value) {
-	if (!hui.isDefined(value) || hui.isString(value)) {
+	if (!hui.isDefined(value) || hui.isString(value) || typeof(value) == 'number') {
 		return value;
 	}
 	if (value[hui.ui.language]) {
@@ -6157,7 +6157,12 @@ hui.ui.Source = function(options) {
 	this.options = hui.override({url:null,dwr:null,parameters:[],lazy:false},options);
 	this.name = options.name;
 	this.data = null;
-	this.parameters = this.options.parameters;
+	this.parameters = [];
+    // Clone parameters so the can be reused
+    for (var i = 0; i < this.options.parameters.length; i++) {
+        var p = this.options.parameters[i]
+        this.parameters.push({key:p.key,value:p.value});
+    }
 	hui.ui.extend(this);
 	if (options.delegate) {
 		this.listen(options.delegate);
@@ -6489,6 +6494,7 @@ hui.ui.Window.create = function(options) {
 	html+='<span class="hui_window_title">'+hui.ui.getTranslated(options.title)+'</span></div></div></div>'+
 		'<div class="hui_window_content"><div class="hui_window_content"><div class="hui_window_body" style="'+
 		(options.width ? 'width:'+options.width+'px;':'')+
+		(options.height ? 'height:'+options.height+'px;':'')+
 		(options.padding ? 'padding:'+options.padding+'px;':'')+
 		(options.padding ? 'padding-bottom:'+Math.max(0,options.padding-2)+'px;':'')+
 		'">'+
@@ -6527,7 +6533,7 @@ hui.ui.Window.prototype = {
 		});
 	},
 	setTitle : function(title) {
-		hui.dom.setText(this.title,title);
+		hui.dom.setText(this.title,hui.ui.getTranslated(title));
 	},
 	_positionInView : function() {
 		var scrollTop = hui.window.getScrollTop();
@@ -9440,10 +9446,12 @@ hui.ui.ImageInput.prototype = {
 	_addBehavior : function() {
 		hui.listen(this.element,'click',this._showPicker.bind(this));
 	},
+    /** @Deprecated */
 	setObject : function(obj) {
 		this.value = obj;
 		this._updateUI();
 	},
+    /** @Deprecated */
 	getObject : function() {
 		return this.value;
 	},
@@ -9517,7 +9525,7 @@ hui.ui.ImageInput.prototype = {
 	_hidePicker : function() {
 		this.picker.hide();
 	},
-		/** @private */
+    /** @private */
 	$visibilityChanged : function() {
 		if (this.picker && !hui.dom.isVisible(this.element)) {
 			this.picker.hide();
@@ -9546,7 +9554,10 @@ hui.ui.ImageInput.prototype = {
 			var id = parseInt(images[i].getAttribute('id'));
 			var img = {id:id};
 			var url = hui.ui.resolveImageUrl(this,img,48,48);
-			var thumb = hui.build('div',{'class':'hui_imageinput_thumbnail',style:'background-image:url('+url+')'});
+			var thumb = hui.build('div',{
+                'class' : 'hui_imageinput_thumbnail',
+                style : 'background-image:url('+url+')'
+            });
 			thumb.huiObject = {'id':id};
 			thumb.onclick = function() {
 				self.setObject(this.huiObject);
@@ -10932,8 +10943,8 @@ hui.ui.Upload.create = function(options) {
 		html : '<div class="hui_upload_items"></div>'+
 		'<div class="hui_upload_status"></div>'+
 		(options.placeholder ? '<div class="hui_upload_placeholder"><span class="hui_upload_icon"></span>'+
-			(options.placeholder.title ? '<h2>'+hui.string.escape(options.placeholder.title)+'</h2>' : '')+
-			(options.placeholder.text ? '<p>'+hui.string.escape(options.placeholder.text)+'</p>' : '')+
+			(options.placeholder.title ? '<h2>'+hui.string.escape(hui.ui.getTranslated(options.placeholder.title))+'</h2>' : '')+
+			(options.placeholder.text ? '<p>'+hui.string.escape(hui.ui.getTranslated(options.placeholder.text))+'</p>' : '')+
 		'</div>' : '')
 	});
 	return new hui.ui.Upload(options);
@@ -11158,7 +11169,7 @@ hui.ui.Upload.prototype = {
 			w.element.parentNode.removeChild(w.element);
 			buttonContainer.appendChild(w.element);
 		} else {
-			buttonContainer.innerHTML='<a href="javascript:void(0);" class="hui_button"><span><span>'+this.options.chooseButton+'</span></span></a>';
+			buttonContainer.innerHTML='<a href="javascript:void(0);" class="hui_button"><span><span>'+hui.string.escape(hui.ui.getTranslated(this.options.chooseButton))+'</span></span></a>';
 			this.element.appendChild(buttonContainer);
 		}
 		return buttonContainer;
@@ -13108,10 +13119,15 @@ hui.ui.Overflow.prototype = {
 			this._checkShadows();
 			return
 		}
-		hui.log(this.element.parentNode.clientHeight)
 		this.element.style.height = hui.position.getRemainingHeight(this.element)+'px';
 		this._checkShadows();
-	}
+	},
+	/** @private */
+	$visibilityChanged : function() {
+		if (hui.dom.isVisible(this.element)) {
+            this.$$layout();
+        }
+    }
 }
 
 /* EOF */
@@ -13862,6 +13878,26 @@ hui.ui.Segmented = function(options) {
 	this.value = this.options.value;
 	hui.ui.extend(this);
 	hui.listen(this.element,'mousedown',this._click.bind(this));
+}
+
+hui.ui.Segmented.create = function(options) {
+    var e = options.element = hui.build('span',{'class':'hui_segmented hui_segmented_standard'});
+    if (options.items) {
+        for (var i = 0; i < options.items.length; i++) {
+            var item = options.items[i];
+            var a = hui.build('a',{parent:e,href:'javascript://','rel':item.value});
+            if (item.icon) {
+                a.appendChild(hui.ui.createIcon(item.icon,16));
+            }
+            if (item.text) {
+                hui.build('span',{'class':'hui_segmented_text',text:item.text,parent:a});
+            }
+            if (options.value!==undefined && options.value == item.value) {
+                hui.cls.add(a,'hui_segmented_selected');
+            }
+        }
+    }
+    return new hui.ui.Segmented(options);
 }
 
 hui.ui.Segmented.prototype = {
@@ -16809,6 +16845,7 @@ hui.ui.Columns.prototype = {
 hui.ui.Finder = function(options) {
 	this.options = hui.override({title:'Finder',selection:{},list:{}},options);
 	this.name = options.name;
+    this.uploader = null; // hui.ui.Upload
 	hui.ui.extend(this);
 	if (options.listener) {
 		this.listen(options.listener);
@@ -16856,13 +16893,35 @@ hui.ui.Finder.prototype = {
 		this.list.clearSelection();
 	},
 	_build : function() {
-		var win = this.window = hui.ui.Window.create({title:this.options.title,icon:'common/search',width:600});
+		var win = this.window = hui.ui.Window.create({title:this.options.title,icon:'common/search',width:600,height:400});
+        win.listen({
+            $userClosedWindow : function() {
+                this.fire('cancel');
+            }.bind(this)
+        })
+        if (this.options.url) {
+            win.setBusy(true);
+            hui.ui.request({
+                url : this.options.url,
+                $object : function(config) {
+                    hui.override(this.options,config);
+                    if (config.title) {
+                        win.setTitle(config.title);
+                    }
+                    win.setBusy(false);
+                    this._buildBody();
+                }.bind(this)
+            })
+            return;
+        }
+        this._buildBody();
+	},
+    _buildBody : function() {
 
-		
 		var layout = hui.ui.Layout.create();
-		win.add(layout);
+		this.window.add(layout);
 
-		var left = hui.ui.Overflow.create({height:400});
+		var left = hui.ui.Overflow.create({dynamic:true});
 		layout.addToLeft(left);
 		
 		var list = this.list = hui.ui.List.create();
@@ -16875,30 +16934,34 @@ hui.ui.Finder.prototype = {
 			$select : this._selectionChanged.bind(this)
 		})
 		
+        var showBar = this.options.search || this.options.gallery;
 		
-		if (this.options.search) {
+		if (showBar) {
 			var bar = hui.ui.Bar.create({variant:'layout'});
-			var search = hui.ui.SearchField.create({expandedWidth:200});
-			search.listen({
-				$valueChanged : function() {
-					list.resetState();
-				}
-			})
-			bar.addToRight(search);
 			layout.addToCenter(bar);
+            if (this.options.search) {
+    			var search = hui.ui.SearchField.create({expandedWidth:200});
+    			search.listen({
+    				$valueChanged : function() {
+    					list.resetState();
+    				}
+    			})
+    			bar.addToRight(search);
+            }
 		}
-		var right = hui.ui.Overflow.create({height:400});
+		var right = hui.ui.Overflow.create({dynamic:true});
 		layout.addToCenter(right);
 		right.add(this.list);
 		
+        
 		this.selection = hui.ui.Selection.create({value : this.options.selection.value});
 		this.selection.listen({
 			$select : function() {
 				list.resetState();
 			}
 		})
-		var src = new hui.ui.Source({url : this.options.selection.url});
-		this.selection.addItems({source:src})
+		var selectionSource = new hui.ui.Source({url : this.options.selection.url});
+		this.selection.addItems({source:selectionSource})
 		left.add(this.selection);
 		
 		var parameters = [];
@@ -16938,15 +17001,81 @@ hui.ui.Finder.prototype = {
 		}
 		this.list.setSource(listSource);
 		
-		src.refresh();
-	},
+        if (this.options.gallery) {
+            var viewChanger = hui.ui.Segmented.create({
+                value : 'gallery',
+                items : [{icon:'view/list',value:'list'},{icon:'view/gallery',value:'gallery'}]
+            })
+            viewChanger.listen({
+                $valueChanged : this.changeView.bind(this)
+            })                
+            bar.add(viewChanger);
+            var gallerySource = new hui.ui.Source({
+				url : this.options.gallery.url,
+				parameters : parameters
+		    });
+            var gallery = this.gallery = hui.ui.Gallery.create({
+                source : gallerySource
+            })
+            this.list.hide();
+    		right.add(gallery);
+            gallery.listen({
+                $select : function(value) {
+                    this.fire('select',gallery.getFirstSelection());
+                }.bind(this)
+            });
+            gallerySource.refresh();
+        }
+        if (this.options.upload && hui.ui.Upload.HTML5.support().supported) {
+            var uploadButton = hui.ui.Button.create({text:'Add...',small:true});
+            uploadButton.listen({
+                $click : this._showUpload.bind(this)
+            })
+            bar.add(uploadButton);
+            
+        }
+		selectionSource.refresh();
+        hui.ui.reLayout();
+    },
+    changeView : function(value) {
+        if (value=='gallery') {
+            this.list.hide();
+            this.gallery.show();
+        } else {
+            this.list.show();
+            this.gallery.hide();
+        }
+    },
 	
 	_selectionChanged : function() {
 		var row = this.list.getFirstSelection();
 		if (row!=null) {
 			this.fire('select',row);
 		}
-	}
+	},
+    
+    _showUpload : function(button) {
+        if (!this.uploadPanel) {
+            var options = this.options.upload;
+            var panel = this.uploadPanel = hui.ui.BoundPanel.create({padding:5,width:300,modal:true});
+            this.uploader = hui.ui.Upload.create({
+                url : options.url,
+                placeholder : options.placeholder,
+                chooseButton : {en:'Choose file...',da:'Vælg fil...'}
+            });
+            this.uploader.listen({
+                $uploadDidComplete : function(file) {
+                    this._uploadSuccess(hui.string.fromJSON(file.request.responseText));
+                }.bind(this)
+            })
+            panel.add(this.uploader);
+        }
+        this.uploadPanel.show({target:button});
+    },
+    _uploadSuccess : function(obj) {
+        this.uploadPanel.hide();
+		this.fire('select',obj);
+    }
 }
 
 
@@ -16964,7 +17093,6 @@ hui.ui.Structure = function(options) {
 
 hui.ui.Structure.prototype = {
 	$$layout : function() {
-		hui.log('layout structure')
 		var t = hui.get.firstByClass(this.element,'hui_structure_top');
 		var b = hui.get.firstByClass(this.element,'hui_structure_bottom');
 		var m = hui.get.firstByClass(this.element,'hui_structure_middle');

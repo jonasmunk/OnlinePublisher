@@ -17,10 +17,12 @@ hui.ui.ImageInput.prototype = {
 	_addBehavior : function() {
 		hui.listen(this.element,'click',this._showPicker.bind(this));
 	},
+    /** @Deprecated */
 	setObject : function(obj) {
 		this.value = obj;
 		this._updateUI();
 	},
+    /** @Deprecated */
 	getObject : function() {
 		return this.value;
 	},
@@ -94,7 +96,7 @@ hui.ui.ImageInput.prototype = {
 	_hidePicker : function() {
 		this.picker.hide();
 	},
-		/** @private */
+    /** @private */
 	$visibilityChanged : function() {
 		if (this.picker && !hui.dom.isVisible(this.element)) {
 			this.picker.hide();
@@ -123,7 +125,10 @@ hui.ui.ImageInput.prototype = {
 			var id = parseInt(images[i].getAttribute('id'));
 			var img = {id:id};
 			var url = hui.ui.resolveImageUrl(this,img,48,48);
-			var thumb = hui.build('div',{'class':'hui_imageinput_thumbnail',style:'background-image:url('+url+')'});
+			var thumb = hui.build('div',{
+                'class' : 'hui_imageinput_thumbnail',
+                style : 'background-image:url('+url+')'
+            });
 			thumb.huiObject = {'id':id};
 			thumb.onclick = function() {
 				self.setObject(this.huiObject);

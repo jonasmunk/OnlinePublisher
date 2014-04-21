@@ -136,14 +136,8 @@ class PosterPartController extends PartController
 							<text-input multiline="true" key="text" max-height="500"/>
 						</field>
 						<field label="{Image; da:Billede}">
-							<image-input key="image" source="../../Services/Model/ImagePicker.php">
-								<finder title="{Select file; da:Vælg fil}" 
-									list-url="../../Services/Finder/ImagesList.php"
-									selection-url="../../Services/Finder/ImagesSelection.php"
-									selection-value="all"
-									selection-parameter="group"
-									search-parameter="query"
-								/>
+							<image-input key="image">
+                                <finder url="../../Services/Finder/Images.php"/>
 							</image-input>
 						</field>
 						<field label="{Link text; da:Link tekst}:">

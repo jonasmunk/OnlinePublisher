@@ -132,7 +132,9 @@ $gui='
 						</column>
 						<column width="60px">
 							<field label="{Image; da:Billede}:">
-								<image-input name="productImage" source="../../Services/Model/ImagePicker.php"/>
+								<image-input name="productImage">
+                                    <finder url="../../Services/Finder/Images.php"/>
+                                </image-input>
 							</field>
 						</column>
 					</columns>

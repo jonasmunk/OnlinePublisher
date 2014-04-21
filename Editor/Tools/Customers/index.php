@@ -111,13 +111,7 @@ $gui='
 						<column width="74px">
 							<field label="{Image; da:Billede}">
 								<image-input name="personImage" size="68">
-									<finder title="{Select image; da:Vælg billede}" 
-										list-url="../../Services/Finder/ImagesList.php"
-										selection-url="../../Services/Finder/ImagesSelection.php"
-										selection-value="all"
-										selection-parameter="group"
-										search-parameter="query"
-									/>
+                                    <finder url="../../Services/Finder/Images.php"/>
 								</image-input>
 							</field>
 						</column>

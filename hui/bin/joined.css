@@ -1090,7 +1090,7 @@ textarea.hui_formula_text::-webkit-scrollbar
 textarea.hui_formula_text::-webkit-scrollbar-thumb
 {
     background: #ccc -webkit-gradient(linear, 0% 0%, 100% 0%, from(#fff), to(rgb(240, 240, 240)));  
-    -webkit-border-radius: 7px;
+    border-radius: 7px;
 	border: 1px solid #ddd;
 }
 
@@ -3048,8 +3048,7 @@ div.hui_list_selection a
 	margin-top: 4px;
 	line-height: 16px;
 	padding: 0px 4px;
-	-webkit-border-radius: 4px;
-	-moz-border-radius: 4px;
+    border-radius: 4px;
 }
 
 div.hui_list_selection span
@@ -3446,8 +3445,6 @@ strong.hui_selection_badge
 	color: #fff;
 	font-size: 11px;
 	padding: 0 4px;
-	-moz-border-radius: 8px;
-	-webkit-border-radius: 7px;
 	border-radius: 7px;
 	min-width: 10px;
 	text-align: center;
@@ -4243,9 +4240,7 @@ div.hui_menu
 	background: #fff;
 	background: rgba(255,255,255,.95);
 	border: 1px solid #bbb;
-	-moz-border-radius: 5px;
-	-webkit-border-radius: 5px;
-	-ms-border-radius: 5px;
+    border-radius: 5px;
 	border-radius: 5px;
 	-webkit-box-shadow: 0px 2px 5px rgba(0,0,0,.15);
 	-moz-box-shadow: 0px 2px 5px rgba(0,0,0,.15);
@@ -4837,11 +4832,9 @@ table.hui_calendar_weekview div.hui_calendar_event
 	border: 1px solid #acbbd4;
 	width: 100%;
 	margin-left: -1px;
-	/*-moz-box-sizing: border-box;
-	-webkit-box-sizing: border-box;*/
+	-moz-box-sizing: border-box;
 	box-sizing: border-box;
-	-moz-border-radius: 5px;
-	-webkit-border-radius: 5px;
+	border-radius: 5px;
 	color: #112039;
 	font-size: 9pt;
 	line-height: 12px;
@@ -6326,8 +6319,6 @@ span.hui_segmented a
 	text-decoration: none;
 	color: #333;
 	padding: 0 3px;
-	-moz-border-radius: 2px;
-	-webkit-border-radius: 2px;
 	border-radius: 2px;
 	outline: none;
 }
@@ -6948,9 +6939,9 @@ input.hui_tokenfield_token
 	width: 50px;
 	margin: 0 5px 5px 0;
 	padding: 1px 0px;
-	-moz-border-radius: 2px;
-	-webkit-border-radius: 2px;
+    border-radius: 2px;
 	-webkit-box-shadow: inset 0 1px 3px #ddd;
+    box-shadow: inset 0 1px 3px #ddd;
 	font-size: 9pt;
 	text-indent: 2px;
 }

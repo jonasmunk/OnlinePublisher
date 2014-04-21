@@ -15,6 +15,7 @@ var partController = {
         if (values.imageId) {
             values.image = {id:values.imageId}
         }
+        hui.log(values);
         movieInfoFormula.setValues(values);
 	},
 	$resolveImageUrl : function(img,width,height) {
@@ -23,15 +24,13 @@ var partController = {
 	showFinder : function() {
 		if (!this.finder) {
 			this.finder = hui.ui.Finder.create({
-				title : {en:'Select file',da:'Vælg fil'},
-				list : {url : '../../Services/Finder/FilesList.php'},
-				selection : {value : 'all', parameter : 'group', url : '../../Services/Finder/FilesSelection.php'},
-				search : {parameter : 'query'}
+                url : '../../Services/Finder/Files.php'
 			});
 			this.finder.listen({
 				$select : function(obj) {
 					this.form.fileId.value = obj.id;
 					this.preview();
+                    this.finder.hide();
 				}.bind(this)
 			})
 		}
@@ -66,6 +65,10 @@ var partController = {
 	},
   
     /////////////////// Info /////////////////////
+
+    showInfo : function() {
+        movieInfoWindow.show();
+    },
 
     $valuesChanged$movieInfoFormula : function(values) {
         this.form.movieWidth.value = values.movieWidth;
