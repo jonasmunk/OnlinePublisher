@@ -57,6 +57,7 @@
         <item icon="common/page" title="upload_webkit" value="html/upload_webkit.html"/>
         <item icon="common/page" title="video" value="html/video.html"/>
         <item icon="common/page" title="window" value="html/window.html"/>
+        <item icon="common/page" title="xslt" value="html/xslt.html"/>
     </item>
     <item icon="common/folder" title="XML tests" value="XML tests">
         <item icon="common/page" title="bar" value="xml/bar.xml"/>

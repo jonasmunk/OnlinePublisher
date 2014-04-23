@@ -144,7 +144,7 @@ class PosterPartController extends PartController
 							<text-input key="linktext"/>
 						</field>
 						<field label="Link:">
-							<object-input key="link">
+							<link-input key="link">
 								<type key="url" label="{Address; da:Adresse}"/>
 								<type key="email" label="{E-mail; da:E-post}"/>
 								<type key="page" label="{Page; da:Side}" icon="common/page" lookup-url="../../Services/Model/LoadPage.php">
@@ -165,7 +165,7 @@ class PosterPartController extends PartController
 										search-parameter="query"
 									/>
 								</type>
-							</object-input>
+							</link-input>
 						</field>
 
 					</fields>

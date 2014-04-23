@@ -111,7 +111,7 @@ jsFiles = [
     'js/Structure.js',
     'js/Slider.js',
     'js/CodeInput.js',
-    'js/ObjectInput.js',
+    'js/LinkInput.js',
     'js/FontInput.js',
     'js/FontPicker.js',
     'js/Split.js',
@@ -123,7 +123,7 @@ jsFilesSite = [
 ]
 
 cssFiles = [
-    'body', 'dragproxy', 'link', 'text', 'bg', 'curtain', 'tooltip', 'disclosure', 'icon', 'button', 'tabbox', 'formula', 'dropdown', 'layout', 'overflow', 'alert', 'view', 'toolbar', 'window', 'list', 'selection', 'imageinput', 'boundpanel', 'panel', 'imageviewer', 'picker', 'editor', 'menu', 'overlay', 'upload', 'progressbar', 'gallery', 'calendar', 'datepicker', 'box', 'wizard', 'searchfield', 'dock', 'tabs', 'bar', 'videoplayer', 'message', 'segmented', 'links', 'effects', 'colorpicker', 'locationfield', 'tokenfield', 'checkbox', 'checkboxes', 'infoview', 'radiobutton', 'numberfield', 'rendering', 'colorinput', 'structure', 'slider', 'codeinput', 'objectinput', 'fontinput', 'fontpicker', 'split', 'columns', 'markupeditor'
+    'body', 'dragproxy', 'link', 'text', 'bg', 'curtain', 'tooltip', 'disclosure', 'icon', 'button', 'tabbox', 'formula', 'dropdown', 'layout', 'overflow', 'alert', 'view', 'toolbar', 'window', 'list', 'selection', 'imageinput', 'boundpanel', 'panel', 'imageviewer', 'picker', 'editor', 'menu', 'overlay', 'upload', 'progressbar', 'gallery', 'calendar', 'datepicker', 'box', 'wizard', 'searchfield', 'dock', 'tabs', 'bar', 'videoplayer', 'message', 'segmented', 'links', 'effects', 'colorpicker', 'locationfield', 'tokenfield', 'checkbox', 'checkboxes', 'infoview', 'radiobutton', 'numberfield', 'rendering', 'colorinput', 'structure', 'slider', 'codeinput', 'linkinput', 'fontinput', 'fontpicker', 'split', 'columns', 'markupeditor'
 ]
 
 cssFilesSite = [

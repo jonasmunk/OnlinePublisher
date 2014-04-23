@@ -7492,18 +7492,18 @@ div.hui_codeinput textarea:focus
 }
 
 
-div.hui_objectinput
+div.hui_linkinput
 {
 	position: relative;
 	font-family: "Lucida Sans Unicode", "Lucida Grande", sans-serif;
 }
 
-div.hui_objectinput_busy
+div.hui_linkinput_busy
 {
 	opacity: .5;
 }
 
-span.hui_objectinput_body
+span.hui_linkinput_body
 {
 	margin-left: 106px;
 	position: absolute;
@@ -7513,7 +7513,7 @@ span.hui_objectinput_body
 	height: 23px;
 }
 
-div.hui_objectinput input
+div.hui_linkinput input
 {
 	box-sizing: border-box;
 	-moz-box-sizing: border-box;
@@ -7532,18 +7532,18 @@ div.hui_objectinput input
 	width: 100%;
 }
 
-div.hui_objectinput a.hui_dropdown
+div.hui_linkinput a.hui_dropdown
 {
 	width: 100px;
 }
 
-span.hui_objectinput_object
+span.hui_linkinput_object
 {
 	margin-top: 3px;
 	display: inline-block;
 }
 
-span.hui_objectinput_title
+span.hui_linkinput_title
 {
 	font-size: 12px;
 	margin-left: 3px;
@@ -7729,7 +7729,17 @@ div.hui_markupeditor
 div.hui_markupeditor_path
 {
 	font-family: "Lucida Grande","Lucida Sans Unicode",sans-serif;
+    font-size: 0;
+}
+
+div.hui_markupeditor_path a {
+    display: inline-block;
+    height: 18px;
+    line-height: 18px;
+    padding: 0 3px;
     font-size: 12px;
+    color: #333;
+    text-decoration: none;
 }
 
 div.hui_markupeditor_inlinepanel a
