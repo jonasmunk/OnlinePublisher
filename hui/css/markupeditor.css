@@ -16,7 +16,17 @@ div.hui_markupeditor
 div.hui_markupeditor_path
 {
 	font-family: "Lucida Grande","Lucida Sans Unicode",sans-serif;
+    font-size: 0;
+}
+
+div.hui_markupeditor_path a {
+    display: inline-block;
+    height: 18px;
+    line-height: 18px;
+    padding: 0 3px;
     font-size: 12px;
+    color: #333;
+    text-decoration: none;
 }
 
 div.hui_markupeditor_inlinepanel a
