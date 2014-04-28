@@ -3893,7 +3893,7 @@ hui.ui.getText = function(key) {
 }
 
 hui.ui.getTranslated = function(value) {
-	if (!hui.isDefined(value) || hui.isString(value)) {
+	if (!hui.isDefined(value) || hui.isString(value) || typeof(value) == 'number') {
 		return value;
 	}
 	if (value[hui.ui.language]) {
@@ -6300,6 +6300,7 @@ op.part.Movie.prototype = {
                 body.innerHTML = hui.dom.getText(video);
             }
         }
+        body.style.background='';
     }
 }
 

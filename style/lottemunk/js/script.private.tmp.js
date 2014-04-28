@@ -578,6 +578,7 @@ op.part.Movie.prototype = {
                 body.innerHTML = hui.dom.getText(video);
             }
         }
+        body.style.background='';
     }
 }
 
