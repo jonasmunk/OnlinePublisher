@@ -371,7 +371,7 @@ hui.ui.MarkupEditor.Info.prototype = {
     updatePath : function(path) {
         var html = '';
         for (var i = path.length - 1; i >= 0; i--) {
-            html+='<a data-index="' + i + '">' + path[i].tagName + '<a> ';
+            html+='<a data-index="' + i + '" href="javascript://">' + path[i].tagName + '</a> ';
         }
         this._path.innerHTML = html;
         this.tag = path[0];

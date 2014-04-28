@@ -23,7 +23,7 @@
 					<image-input source="data/source_images.xml" key="photo"/>
 				</field>
 				<field label="Link:">
-					<object-input>
+					<link-input>
 						<type key="url" label="Adresse"/>
 						<type key="email" label="E-mail"/>
 						<type key="page" label="Side">
@@ -32,7 +32,7 @@
 						<type key="file" label="Fil">
 							<finder title="Vælg fil" list-url="data/list_news.xml"/>
 						</type>
-					</object-input>
+					</link-input>
 				</field>
 				<field label="Code">
 					<code-input name="code"/>

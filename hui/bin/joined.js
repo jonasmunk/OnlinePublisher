@@ -14673,7 +14673,7 @@ hui.ui.MarkupEditor.Info.prototype = {
     updatePath : function(path) {
         var html = '';
         for (var i = path.length - 1; i >= 0; i--) {
-            html+='<a data-index="' + i + '">' + path[i].tagName + '<a> ';
+            html+='<a data-index="' + i + '" href="javascript://">' + path[i].tagName + '</a> ';
         }
         this._path.innerHTML = html;
         this.tag = path[0];
@@ -17373,10 +17373,10 @@ hui.ui.CodeInput.prototype = {
 }
 
 /**
- * An input for objects
+ * An input for a link
  * @constructor
  */
-hui.ui.ObjectInput = function(options) {
+hui.ui.LinkInput = function(options) {
 	var e = this.element = hui.get(options.element);
 	this.options = hui.override({types:[]},options);
 	this.types = this.options.types;	
@@ -17386,7 +17386,7 @@ hui.ui.ObjectInput = function(options) {
 	this.input.listen({
 		$valueChanged : this._onInputChange.bind(this)
 	})
-	this.object = hui.get.firstByClass(e,'hui_objectinput_object')
+	this.object = hui.get.firstByClass(e,'hui_linkinput_object')
 	this.dropdown = new hui.ui.DropDown({
 		element : hui.get.firstByClass(e,'hui_dropdown'),
 		value : 'none',
@@ -17399,7 +17399,7 @@ hui.ui.ObjectInput = function(options) {
 	this._addBehavior();
 }
 
-hui.ui.ObjectInput.prototype = {
+hui.ui.LinkInput.prototype = {
 	_addBehavior : function() {
 		//hui.listen(this.textarea,'keydown',this._onKeyDown.bind(this));
 		//hui.listen(this.textarea,'keyup',this._onKeyUp.bind(this));
@@ -17481,8 +17481,8 @@ hui.ui.ObjectInput.prototype = {
 				if (!type.finderOptions) {
 					this.input.value = value.value;
 				} else {
-					var title = hui.get.firstByClass(this.element,'hui_objectinput_title'),
-						icon = hui.get.firstByClass(this.element,'hui_objectinput_icon');
+					var title = hui.get.firstByClass(this.element,'hui_linkinput_title'),
+						icon = hui.get.firstByClass(this.element,'hui_linkinput_icon');
 					if (!value.value) {
 						this.object.style.display = 'none';
 					} else {
@@ -17494,11 +17494,11 @@ hui.ui.ObjectInput.prototype = {
 							hui.ui.request({
 								url : type.lookupUrl,
 								parameters : {id:value.value.id},
-								onJSON : function(obj) {
+								$object : function(obj) {
 									hui.dom.setText(title,hui.string.shorten(obj.title,40));
 									this._setBusy(false);
 								}.bind(this),
-								onFailure : function() {
+								$failure : function() {
 									hui.dom.setText(title,'!!Error');
 									this._setBusy(false);
 								}.bind(this)
@@ -17512,7 +17512,7 @@ hui.ui.ObjectInput.prototype = {
 	},
 	_setBusy : function(busy) {
 		this.busy = busy;
-		hui.cls.set(this.element,'hui_objectinput_busy',busy)
+		hui.cls.set(this.element,'hui_linkinput_busy',busy)
 	},
 	
 	

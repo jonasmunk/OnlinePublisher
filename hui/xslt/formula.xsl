@@ -717,19 +717,23 @@
 
 
 
-<!--doc title:'Object input' class:'hui.ui.ObjectInput' module:'input'
-<object-input name="«text»"/>
+<!--doc title:'Object input' class:'hui.ui.LinkInput' module:'input'
+<link-input name="«text»" key="«text»">
+    <type···>
+        <finder···>
+    </type>
+</link-input>
 -->
-<xsl:template match="gui:object-input">
-	<div class="hui_objectinput" id="{generate-id()}">
+<xsl:template match="gui:link-input">
+	<div class="hui_linkinput" id="{generate-id()}">
 		<a id="{generate-id()}" href="javascript://" class="hui_dropdown">
 			<span><span><strong><xsl:comment/></strong></span></span>
 		</a>
-		<span class="hui_objectinput_body">
+		<span class="hui_linkinput_body">
 		<input spellcheck="false" style="display:none;"/>
-		<span class="hui_objectinput_object" style="display:none;">
-			<span class="hui_objectinput_icon hui_icon_16"><xsl:comment/></span>
-			<span class="hui_objectinput_title"><xsl:comment/></span>
+		<span class="hui_linkinput_object" style="display:none;">
+			<span class="hui_linkinput_icon hui_icon_16"><xsl:comment/></span>
+			<span class="hui_linkinput_title"><xsl:comment/></span>
 			<xsl:comment/>
 		</span>
 		</span>
@@ -745,6 +749,7 @@
 					lookupUrl : '<xsl:value-of select="@lookup-url"/>'
 					<xsl:if test="gui:finder">
 						,finderOptions : {
+							url : '<xsl:value-of select="gui:finder/@url"/>',
 							title : '<xsl:value-of select="gui:finder/@title"/>',
 							list : {url:'<xsl:value-of select="gui:finder/@list-url"/>'},
 							selection : {
@@ -757,7 +762,7 @@
 					</xsl:if>
 				})
 			</xsl:for-each>
-			var <xsl:value-of select="generate-id()"/>_obj = new hui.ui.ObjectInput({
+			var <xsl:value-of select="generate-id()"/>_obj = new hui.ui.LinkInput({
 				element : '<xsl:value-of select="generate-id()"/>',
 				name : '<xsl:value-of select="@name"/>',
 				key : '<xsl:value-of select="@key"/>',

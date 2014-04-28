@@ -16,7 +16,6 @@ class MoviePartController extends PartController
 	
 	function createPart() {
 		$part = new MoviePart();
-		$part->setFileId(FileService::getLatestFileId());
         $part->setHeight('300px');
         $part->setWidth('100%');
 		$part->save();

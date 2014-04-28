@@ -121,7 +121,7 @@ class SearchTemplateController extends TemplateController
 					}
 					$sql.=' order by page.title';
 					$result = Database::select($sql);
-					$num = mysql_num_rows($result);
+					$num = mysqli_num_rows($result);
 					$xml.='<group type="page" count="'.$num.'">';
 					while ($row = Database::next($result)) {
 						$xml.='<page id="'.$row['id'].'">';

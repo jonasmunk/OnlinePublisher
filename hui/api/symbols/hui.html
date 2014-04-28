@@ -402,6 +402,8 @@ ul.inheritsList
 	
 	<li><a href="../symbols/hui.ui.Link.html">hui.ui.Link</a></li>
 	
+	<li><a href="../symbols/hui.ui.LinkInput.html">hui.ui.LinkInput</a></li>
+	
 	<li><a href="../symbols/hui.ui.Links.html">hui.ui.Links</a></li>
 	
 	<li><a href="../symbols/hui.ui.List.html">hui.ui.List</a></li>
@@ -423,8 +425,6 @@ ul.inheritsList
 	<li><a href="../symbols/hui.ui.NumberField.html">hui.ui.NumberField</a></li>
 	
 	<li><a href="../symbols/hui.ui.NumberValidator.html">hui.ui.NumberValidator</a></li>
-	
-	<li><a href="../symbols/hui.ui.ObjectInput.html">hui.ui.ObjectInput</a></li>
 	
 	<li><a href="../symbols/hui.ui.ObjectList.html">hui.ui.ObjectList</a></li>
 	
@@ -595,6 +595,15 @@ ul.inheritsList
 						<tr>
 							<td class="attributes">&lt;static&gt; &nbsp;</td>
 							<td class="nameDescription">
+								<div class="fixedFont">hui.<b><a href="../symbols/hui.html#.between">between</a></b>(min, value, max)
+								</div>
+								<div class="description"></div>
+							</td>
+						</tr>
+					
+						<tr>
+							<td class="attributes">&lt;static&gt; &nbsp;</td>
+							<td class="nameDescription">
 								<div class="fixedFont">hui.<b><a href="../symbols/hui.html#.build">build</a></b>(name, options, doc)
 								</div>
 								<div class="description">Builds an element with the «name» and «options»
@@ -715,9 +724,9 @@ Additional properties will be set as attributes
 						<tr>
 							<td class="attributes">&lt;static&gt; &nbsp;</td>
 							<td class="nameDescription">
-								<div class="fixedFont">hui.<b><a href="../symbols/hui.html#.onReady">onReady</a></b>(delegate)
+								<div class="fixedFont">hui.<b><a href="../symbols/hui.html#.onReady">onReady</a></b>(func)
 								</div>
-								<div class="description">Execute a function when the DOM is ready</div>
+								<div class="description"></div>
 							</td>
 						</tr>
 					
@@ -727,6 +736,15 @@ Additional properties will be set as attributes
 								<div class="fixedFont">hui.<b><a href="../symbols/hui.html#.override">override</a></b>(original, subject)
 								</div>
 								<div class="description">Override the properties on the first argument with properties from the last object</div>
+							</td>
+						</tr>
+					
+						<tr>
+							<td class="attributes">&lt;static&gt; &nbsp;</td>
+							<td class="nameDescription">
+								<div class="fixedFont">hui.<b><a href="../symbols/hui.html#.ready">ready</a></b>(delegate)
+								</div>
+								<div class="description"></div>
 							</td>
 						</tr>
 					
@@ -900,6 +918,54 @@ Additional properties will be set as attributes
 									
 								</dt>
 								<dd>The options if first param is an element</dd>
+							
+							</dl>
+						
+						
+						
+						
+						
+						
+						
+
+					<hr />
+				
+					<a name=".between"> </a>
+					<div class="fixedFont">&lt;static&gt; 
+					
+					
+					<span class="light">hui.</span><b>between</b>(min, value, max)
+					
+					</div>
+					<div class="description">
+						
+						
+						
+					</div>
+					
+					
+					
+						
+							<dl class="detailList">
+							<dt class="heading">Parameters:</dt>
+							
+								<dt>
+									<b>min</b>
+									
+								</dt>
+								<dd></dd>
+							
+								<dt>
+									<b>value</b>
+									
+								</dt>
+								<dd></dd>
+							
+								<dt>
+									<b>max</b>
+									
+								</dt>
+								<dd></dd>
 							
 							</dl>
 						
@@ -1437,11 +1503,11 @@ If «items» is an object «func» is called with each (key,value)
 					<div class="fixedFont">&lt;static&gt; 
 					
 					
-					<span class="light">hui.</span><b>onReady</b>(delegate)
+					<span class="light">hui.</span><b>onReady</b>(func)
 					
 					</div>
 					<div class="description">
-						Execute a function when the DOM is ready
+						
 						
 						
 					</div>
@@ -1453,10 +1519,10 @@ If «items» is an object «func» is called with each (key,value)
 							<dt class="heading">Parameters:</dt>
 							
 								<dt>
-									<b>delegate</b>
+									<b>func</b>
 									
 								</dt>
-								<dd>The function to execute</dd>
+								<dd></dd>
 							
 							</dl>
 						
@@ -1512,6 +1578,42 @@ If «items» is an object «func» is called with each (key,value)
 								<dd><span class="light fixedFont">{Object}</span> The original</dd>
 							
 							</dl>
+						
+						
+						
+
+					<hr />
+				
+					<a name=".ready"> </a>
+					<div class="fixedFont">&lt;static&gt; 
+					
+					
+					<span class="light">hui.</span><b>ready</b>(delegate)
+					
+					</div>
+					<div class="description">
+						
+						
+						
+					</div>
+					
+					
+					
+						
+							<dl class="detailList">
+							<dt class="heading">Parameters:</dt>
+							
+								<dt>
+									<b>delegate</b>
+									
+								</dt>
+								<dd></dd>
+							
+							</dl>
+						
+						
+						
+						
 						
 						
 						
@@ -1736,7 +1838,7 @@ If «items» is an object «func» is called with each (key,value)
 <!-- ============================== footer ================================= -->
 		<div class="fineprint" style="clear:both">
 			
-			Documentation generated by <a href="http://code.google.com/p/jsdoc-toolkit/" target="_blank">JsDoc Toolkit</a> 2.4.0 on Wed Mar 05 2014 13:52:15 GMT+0100 (CET)
+			Documentation generated by <a href="http://code.google.com/p/jsdoc-toolkit/" target="_blank">JsDoc Toolkit</a> 2.4.0 on Wed Apr 23 2014 14:34:16 GMT+0200 (CEST)
 		</div>
 	</body>
 </html>

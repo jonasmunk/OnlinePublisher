@@ -67,7 +67,7 @@ document.write('<script type="text/javascript" src="'+_context+'/js/Finder.js"><
 document.write('<script type="text/javascript" src="'+_context+'/js/Structure.js"></script>');
 document.write('<script type="text/javascript" src="'+_context+'/js/Slider.js"></script>');
 document.write('<script type="text/javascript" src="'+_context+'/js/CodeInput.js"></script>');
-document.write('<script type="text/javascript" src="'+_context+'/js/ObjectInput.js"></script>');
+document.write('<script type="text/javascript" src="'+_context+'/js/LinkInput.js"></script>');
 document.write('<script type="text/javascript" src="'+_context+'/js/FontInput.js"></script>');
 document.write('<script type="text/javascript" src="'+_context+'/js/FontPicker.js"></script>');
 document.write('<script type="text/javascript" src="'+_context+'/js/Split.js"></script>');

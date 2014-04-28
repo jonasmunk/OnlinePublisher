@@ -24,25 +24,21 @@
                 <overflow>
             		<formula name="userFormula" padding="20">
             			<fields>
-            				<field label="{Title; da:Titel}:">
-            					<text-input key="title"/>
-            				</field>
-            				<field label="{Title; da:Titel}:">
+            				<field label="Image:">
             					<image-input key="title">
                                     <finder url="../../../Services/Finder/Images.php"/>
                                 </image-input>
             				</field>
-            			</fields>
-            			<fields>
-            				<buttons>
-            					<button name="cancelUser" title="{Cancel; da:Annuller}"/>
-            					<button name="deleteUser" title="{Delete; da:Slet}">
-            						<confirm text="{Are you sure?; da:Er du sikker?}" ok="{Yes, delete user; da:Ja, slet brugeren}" cancel="{No; da:Nej}"/>
-            					</button>
-            					<button name="saveUser" title="{Save; da:Gem}" highlighted="true"/>
-            				</buttons>
+            				<field label="Object:">
+            					<link-input key="title">
+                                    <type label="Image" key="image">
+                                        <finder url="../../../Services/Finder/Images.php"/>
+                                    </type>
+                                </link-input>
+            				</field>
             			</fields>
             		</formula>
+                    <code-input name="log"/>
                 </overflow>
 			</center>
 		</middle>
