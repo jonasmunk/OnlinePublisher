@@ -1324,7 +1324,7 @@ textarea.hui_formula_text::-webkit-scrollbar
 textarea.hui_formula_text::-webkit-scrollbar-thumb
 {
     background: #ccc -webkit-gradient(linear, 0% 0%, 100% 0%, from(#fff), to(rgb(240, 240, 240)));  
-    -webkit-border-radius: 7px;
+    border-radius: 7px;
 	border: 1px solid #ddd;
 }
 
@@ -3713,9 +3713,9 @@ h1.common,h2.common,h3.common,h4.common,h5.common,h6.common,
 .part_text,
 div.part_richtext
 {
-	font-family: 'Helvetica Neue','Helvetica','Arial','Lucida Grande','Lucida Sans Unicode', sans-serif;
+	font-family: Lato,'Helvetica Neue','Helvetica','Arial','Lucida Grande','Lucida Sans Unicode', sans-serif;
 }
-
+/*
 
 .wf-active body,
 .wf-active .common_font,
@@ -3741,7 +3741,7 @@ div.part_richtext
 	font-family: Lato,'Helvetica Neue','Helvetica','Arial','Lucida Grande','Lucida Sans Unicode', sans-serif;
 }
 
-
+*/
 
 
 /********************* Common *******************/
