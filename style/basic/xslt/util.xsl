@@ -135,6 +135,22 @@
 	<xsl:param name="code" select="//p:meta/p:analytics/@key"/>
 	<xsl:if test="not($preview='true') and $code!='' and $statistics='true'">
 		<script type="text/javascript">
+			(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+			(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+			m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+			})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+			ga('create', '<xsl:value-of select="$code"/>', 'auto');
+			ga('send', 'pageview');
+		</script>
+	</xsl:if>
+</xsl:template>
+
+<!--
+<xsl:template name="util:googleanalytics_old">
+	<xsl:param name="code" select="//p:meta/p:analytics/@key"/>
+	<xsl:if test="not($preview='true') and $code!='' and $statistics='true'">
+		<script type="text/javascript">
 		try {
 			if (document.location.hostname!=="localhost") {
 				//,'_trackPageLoadTime'
@@ -150,6 +166,7 @@
 		</script>
 	</xsl:if>
 </xsl:template>
+-->
 
 <xsl:template name="util:metatags">
 	<meta http-equiv="content-type" content="text/html; charset=utf-8"></meta>
