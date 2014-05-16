@@ -15,8 +15,10 @@ class TestTwig extends UnitTestCase {
     
         $loader = new Twig_Loader_String();
         $twig = new Twig_Environment($loader);
-
-        $result = $twig->render('Hello {{ name }}!', array('name' => 'John'));
-        $this->assertEqual('Hello John!',$result);
+        $person = new Person();
+        $person->setFirstname('John');
+        $person->setSurname('Lennon');
+        $result = $twig->render('Hello {{ person.firstname }} {{ person.surname }}!', array('person' => $person));
+        $this->assertEqual('Hello John Lennon!',$result);
 	}
 }

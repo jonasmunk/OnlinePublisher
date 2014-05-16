@@ -328,6 +328,26 @@
 
 
 
+
+<!--doc title:'Object input' class:'hui.ui.ObjectInput' module:'input'
+<object-input name="«text»" key="«text»"/>
+-->
+<xsl:template match="gui:object-input">
+	<span class="hui_objectinput" id="{generate-id()}">
+		<xsl:comment/>
+	</span>
+	<script type="text/javascript">
+		var <xsl:value-of select="generate-id()"/>_obj = new hui.ui.ObjectInput({
+			element:'<xsl:value-of select="generate-id()"/>'
+			<xsl:if test="@name">,name:'<xsl:value-of select="@name"/>'</xsl:if>
+			<xsl:if test="@key">,key:'<xsl:value-of select="@key"/>'</xsl:if>
+		});
+		<xsl:call-template name="gui:createobject"/>
+	</script>
+</xsl:template>
+
+
+
 <!--doc title:'Font input' class:'hui.ui.FontInput' module:'input'
 <font-input name="«text»" key="«text»" value="«css-color»"/>
 -->
