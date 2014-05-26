@@ -1,12 +1,16 @@
 hui.ui.listen({
     $ready : function() {
-        this.$click$findImageConfig();
+        //this.$click$findImageConfig();
     },
     $click$findFile : function() {
 		var finder = hui.ui.Finder.create({
 			title : {en:'Select file',da:'Vælg fil'},
 			list : {url : '../../../Services/Finder/FilesList.php'},
-			selection : {value : 'all', parameter : 'group', url : '../../../Services/Finder/FilesSelection.php'},
+			selection : {
+                value : 'all', 
+                parameter : 'group', 
+                url : '../../../Services/Finder/FilesSelection.php'
+            },
 			search : {parameter : 'query'}
 		});
 		finder.listen({

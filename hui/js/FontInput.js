@@ -1,5 +1,3 @@
-/////////////////////////// Color input /////////////////////////
-
 /**
  * A component for font input
  * @constructor

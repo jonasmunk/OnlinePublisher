@@ -29,12 +29,17 @@
                                     <finder url="../../../Services/Finder/Images.php"/>
                                 </image-input>
             				</field>
-            				<field label="Object:">
+            				<field label="Link:">
             					<link-input key="title">
-                                    <type label="Image" key="image">
+                                    <type label="Image" key="image" icon="common/image">
                                         <finder url="../../../Services/Finder/Images.php"/>
                                     </type>
                                 </link-input>
+            				</field>
+            				<field label="Object:">
+            					<object-input key="title">
+                                    <finder url="../../../Services/Finder/Images.php"/>
+                                </object-input>
             				</field>
             			</fields>
             		</formula>
