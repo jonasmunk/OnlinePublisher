@@ -28,6 +28,7 @@
     		<xsl:value-of select="f:frame/@title"/>
     	</title>
     	<xsl:call-template name="util:metatags"/>
+		<link href='http://fonts.googleapis.com/css?family=Playfair+Display:400,700,400italic,700italic' rel='stylesheet' type='text/css'/>
     	<xsl:call-template name="util:style"/>
     	<xsl:call-template name="util:style-ie6"/>
     	<xsl:call-template name="util:style-ie7"/>
@@ -36,22 +37,20 @@
 	
     </head>
     <body>
-    	<div class="layout_bg">
     	<div class="layout">
-    		<div class="layout_top">
-    			<div class="layout_top_fade"><xsl:comment/></div>
-    			<p>Østerlide ferielejlighed</p>
-    			<div class="layout_navigation">
-					<xsl:call-template name="util:navigation-first-level"/>
-    			</div>
-    			<xsl:call-template name="util:languages"/>
-    		</div>
+
+			<div class="layout_top">
+				<h1 class="title">Karenslyst <span class="title_more"> - et landsted til leje</span></h1>
+				<div class="layout_top_body"><div><xsl:comment/></div></div>
+			</div>
+				<xsl:if test="//p:page/@id=//p:context/p:home/@page">
+			</xsl:if>
+			<div class="layout_middle">
     		<xsl:apply-templates select="p:content"/>
+			</div>
     		<div class="layout_bottom">
-    			<div class="layout_bottom_effect"><xsl:comment/></div>
     			<p><a href="http://www.humanise.dk/" title="Humanise"><span>Designet og udviklet af Humanise</span></a></p>
     		</div>
-    	</div>
     	</div>
     	<xsl:call-template name="util:googleanalytics"/>
     </body>
