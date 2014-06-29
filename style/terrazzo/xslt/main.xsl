@@ -66,11 +66,12 @@
 		<h2><em>Terrazzo</em>Forum</h2>
 		<p>Produktionsvirksomhed med speciale i formstøbt terrazzo og beton.</p>
 		<address>
-			<strong>TerrazzoForum</strong>
-			<br/>Tagholm 2
-			<br/>9400 Nørresundby
-			<br/><a class="common" href="mailto:info@terrazzoforum.dk">info@terrazzoforum.dk</a>
-			<br/><strong class="phone">tlf: 98 31 40 96</strong>
+			<strong>Contec Prefab A/S</strong>
+			<br/>Dennis Rafn Serwin
+			<br/>Axel Kiers Vej 18 J
+			<br/>8270 Højbjerg - DK
+			<br/><a class="common" href="mailto:prefab@contec-aps.dk">prefab@contec-aps.dk</a>
+			<br/><strong class="phone">+45 23 999 367</strong>
 		</address>
 	</div>
 </div>
