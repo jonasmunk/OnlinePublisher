@@ -209,6 +209,8 @@ function buildHierarchySql($hierarchyId,$parent,$hierarchItemId=null) {
 function listPages() {
 	global $windowSize,$windowPage,$query,$sort,$kind,$value,$direction;
 	
+    $advanced = Request::getBoolean('advanced');
+  
 	if ($sort=='') $sort='page.title';
 
 
@@ -220,67 +222,76 @@ function listPages() {
 
 	$writer->startList()->
 		sort($sort,$direction)->
-		window(array( 'total' => $total['total'], 'size' => $windowSize, 'page' => $windowPage ))->
-		startHeaders()->
-			header(array('title'=>array('Title','da'=>'Titel'),'width'=>40,'key'=>'page.title','sortable'=>'true'))->
-			header(array('title'=>'Type','key'=>'template.unique','sortable'=>'true'));
+		window(['total' => $total['total'], 'size' => $windowSize, 'page' => $windowPage ])->
+		startHeaders();
+    $writer->header(['title'=>['Title','da'=>'Titel'],'width'=>40,'key'=>'page.title','sortable'=>'true']);
+    if ($advanced) {
+        $writer->header(['title'=>'Type','key'=>'template.unique','sortable'=>'true']);
+    }
+			
 
 	if ($kind=='subset' && $value=='news') {
-		$writer->header(array('title'=>array('News','da'=>'Nyhed')));
+		$writer->header(['title'=>['News','da'=>'Nyhed']]);
 	}
 	$writer->
-			header(array('title'=>array('Language','da'=>'Sprog'),'key'=>'page.language','sortable'=>'true'))->
-			header(array('title'=>array('Modified','da'=>'Ændret'),'width'=>1,'key'=>'page.changed','sortable'=>'true'))->
-			header(array('title'=>array('Hits','da'=>'Hits'),'width'=>1))->
-			header(array('width'=>1))->
-		endHeaders();
+		header(['title'=>array('Language','da'=>'Sprog'),'key'=>'page.language','sortable'=>'true'])->
+		header(['title'=>array('Modified','da'=>'Ændret'),'width'=>1,'key'=>'page.changed','sortable'=>'true'])->
+		header(['title'=>array('Hits','da'=>'Hits'),'width'=>1])->
+		header(['width'=>1])->
+	endHeaders();
 
 	$templates = TemplateService::getTemplatesKeyed();
 	$rows = Database::selectAll($sql['list']);
 	$hits = StatisticsService::getPageHits($rows);
 	foreach ($rows as $row) {
-		$writer->startRow(array('id' => $row['id'], 'title' => $row['title'], 'kind' => 'page', 'icon' => 'common/page'))->
-			startCell(array('icon' => 'common/page'))->
+		$writer->startRow(['id' => $row['id'], 'title' => $row['title'], 'kind' => 'page', 'icon' => 'common/page'])->
+			startCell(['icon' => 'common/page'])->
 			startLine()->text($row['title'])->endLine();
-			if ($row['path']) {
-				$writer->startLine(array('dimmed'=>true,'mini'=>true))->startWrap()->text($row['path'])->endWrap()->endLine();
+			if ($advanced && $row['path']) {
+				$writer->startLine(['dimmed'=>true,'mini'=>true])->startWrap()->text($row['path'])->endWrap()->endLine();
 			}
-			$writer->endCell()->
-			startCell(array('dimmed'=>true))->text($templates[$row['unique']]['name'])->endCell();
+			$writer->endCell();
+        if ($advanced) {
+            $writer->startCell(['dimmed'=>true])->text($templates[$row['unique']]['name'])->endCell();
+        }
+		if ($kind=='subset' && $value=='news') {
+			$news = News::load($row['news_id']);
+			if ($news) {
+				$writer->startCell([ 'icon' => $news->getIcon() ]);
+				$writer->text($news->getTitle());
 
-			if ($kind=='subset' && $value=='news') {
-				$news = News::load($row['news_id']);
-				if ($news) {
-					$writer->startCell(array('icon'=>$news->getIcon()));
-					$writer->text($news->getTitle());
-
-					$writer->startIcons()->
-						icon(array('icon'=>'monochrome/info','revealing'=>true,'action'=>true,'data'=>array('action'=>'newsInfo','id'=>$news->getId())))->
-					endIcons();
-				} else {
-					$writer->startCell();
-				}
-				$writer->endCell();
+				$writer->startIcons()->
+					icon([
+                        'icon' => 'monochrome/info',
+                        'revealing' => true,
+                        'action' => true,
+                        'data' => ['action'=>'newsInfo','id'=>$news->getId()]
+                    ])->
+				endIcons();
+			} else {
+				$writer->startCell();
 			}
-			$writer->
-			startCell(array('icon'=>GuiUtils::getLanguageIcon($row['language'])))->endCell()->
-			startCell(array('wrap'=>false,'dimmed'=>true))->text(Dates::formatFuzzy($row['changed']));
+			$writer->endCell();
+		}
+		$writer->
+		    startCell(['icon' => GuiUtils::getLanguageIcon($row['language'])])->endCell()->
+		    startCell(['wrap' => false,'dimmed' => true])->text(Dates::formatFuzzy($row['changed']));
 		if ($row['publishdelta']>0) {
-			$writer->startIcons(array('left'=>3))->icon(array('icon'=>'monochrome/warning','size'=>12))->endIcons();
+			$writer->startIcons(['left'=>3])->icon(['icon'=>'monochrome/warning','size'=>12])->endIcons();
 		}
 		$writer->startCell()->text(@$hits[$row['id']])->endCell();
 		$writer->endCell()->
 			startCell()->
 			startIcons()->
-				icon(array('icon'=>'monochrome/info','revealing'=>true,'action'=>true,'data'=>array('action'=>'pageInfo','id'=>$row['id'])))->
-				icon(array('icon'=>'monochrome/edit','revealing'=>true,'action'=>true,'data'=>array('action'=>'editPage','id'=>$row['id'])))->
-				icon(array('icon'=>'monochrome/view','revealing'=>true,'action'=>true,'data'=>array('action'=>'viewPage','id'=>$row['id'])))->
-				icon(array('icon'=>'monochrome/crosshairs','revealing'=>true,'action'=>true,'data'=>array('action'=>'previewPage','id'=>$row['id'])));
+				icon(['icon'=>'monochrome/info','revealing'=>true,'action'=>true,'data'=>['action'=>'pageInfo','id'=>$row['id']]])->
+				icon(['icon'=>'monochrome/edit','revealing'=>true,'action'=>true,'data'=>['action'=>'editPage','id'=>$row['id']]])->
+				icon(['icon'=>'monochrome/view','revealing'=>true,'action'=>true,'data'=>['action'=>'viewPage','id'=>$row['id']]])->
+				icon(['icon'=>'monochrome/crosshairs','revealing'=>true,'action'=>true,'data'=>['action'=>'previewPage','id'=>$row['id']]]);
 		if (!$row['searchable']) {
-			$writer->icon(array('icon'=>'monochrome/nosearch'));
+			$writer->icon(['icon'=>'monochrome/nosearch']);
 		}
 		if ($row['disabled']) {
-			$writer->icon(array('icon'=>'monochrome/invisible'));
+			$writer->icon(['icon'=>'monochrome/invisible']);
 		}
 		$writer->endIcons()->endCell();
 		$writer->endRow();

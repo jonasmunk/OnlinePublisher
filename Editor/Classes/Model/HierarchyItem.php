@@ -21,13 +21,14 @@ Entity::$schema['HierarchyItem'] = array(
 		)
 	)
 );
-class HierarchyItem extends Entity {
+class HierarchyItem extends Entity implements Loadable {
         
 	var $title;
 	var $hidden;
 	var $canDelete;
 	var $targetType;
 	var $targetValue;
+    var $hierarchyId;
 
     function HierarchyItem() {
     }
@@ -39,6 +40,15 @@ class HierarchyItem extends Entity {
 	function getTitle() {
 	    return $this->title;
 	}
+    
+    function setHierarchyId($hierarchyId) {
+        $this->hierarchyId = $hierarchyId;
+    }
+    
+    function getHierarchyId() {
+        return $this->hierarchyId;
+    }
+    
 
 	function setHidden($hidden) {
 	    $this->hidden = $hidden;
@@ -73,7 +83,7 @@ class HierarchyItem extends Entity {
 	}
 	
 	static function load($id) {
-		$sql = "select id,title,hidden,target_type,target_value,target_id from hierarchy_item where id=".Database::int($id);
+		$sql = "select id,title,hidden,target_type,target_value,target_id,hierarchy_id from hierarchy_item where id=".Database::int($id);
 		$result = Database::select($sql);
 		$item = null;
 		if ($row = Database::next($result)) {
@@ -82,6 +92,7 @@ class HierarchyItem extends Entity {
 			$item->setTitle($row['title']);
 			$item->setHidden($row['hidden']==1);
 			$item->setTargetType($row['target_type']);
+			$item->setHierarchyId(intval($row['hierarchy_id']));
 			if ($row['target_type']=='page' || $row['target_type']=='pageref' || $row['target_type']=='file') {
 				$item->setTargetValue($row['target_id']);
 			} else {
@@ -93,6 +104,15 @@ class HierarchyItem extends Entity {
 		Database::free($result);
 		return $item;
 	}
+    
+    static function loadByPageId($id) {
+        $sql = "select id from `hierarchy_item` where `target_type`='page' and target_id=@int(id)";
+        $result = Database::selectFirst($sql,['id'=>$id]);
+        if ($result) {
+            return HierarchyItem::load($result['id']);
+        }
+        return null;
+    }
 	
 	function save() {
 		if ($this->id>0) {
@@ -109,6 +129,7 @@ class HierarchyItem extends Entity {
 			",target_type=".Database::text($this->targetType).
 			",target_value=".Database::text($target_value).
 			",target_id=".Database::int($target_id).
+    	    ",hierarchy_id=".Database::int($this->hierarchyId).
 			" where id=".$this->id;
 			Database::update($sql);
 			Hierarchy::markHierarchyOfItemChanged($this->id);
