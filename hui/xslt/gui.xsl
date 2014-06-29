@@ -129,6 +129,10 @@
 				<link rel="stylesheet" href="{$context}/hui/{$pathVersion}css/pages.css" type="text/css" media="screen" title="no title" charset="utf-8"/>
 				<script src="{$context}/hui/{$pathVersion}js/Pages.js" type="text/javascript" charset="utf-8"><xsl:comment/></script>
 			</xsl:if>
+			<xsl:if test="//gui:object-input">
+				<link rel="stylesheet" href="{$context}/hui/{$pathVersion}css/objectinput.css" type="text/css" media="screen" title="no title" charset="utf-8"/>
+				<script src="{$context}/hui/{$pathVersion}js/ObjectInput.js" type="text/javascript" charset="utf-8"><xsl:comment/></script>
+			</xsl:if>
 	
 			<xsl:for-each select="gui:localize[@source]">
 				<script src="{@source}" type="text/javascript" charset="utf-8"><xsl:comment/></script>

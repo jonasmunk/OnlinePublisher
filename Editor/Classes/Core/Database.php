@@ -88,8 +88,11 @@ class Database {
 		}
 	}
 	
-	static function selectFirst($sql) {
+	static function selectFirst($sql,$parameters=null) {
 		$output = false;
+        if ($parameters!==null) {
+            $sql = Database::compile($sql,$parameters);
+        }
 		$result = Database::select($sql);
 		if ($row = Database::next($result)) {
 			$output = $row;

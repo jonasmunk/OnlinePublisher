@@ -24,6 +24,9 @@ $gui='
 					<icon icon="common/info" title="Info" name="properties"/>
 					<divider/>
 					<icon icon="common/internet" overlay="upload" title="{Publish; da:Udgiv}" name="publish" disabled="true"/>
+    				<more>
+                        <icon icon="common/page" title="{New page;da:Ny side}" overlay="new" name="newPage"/>
+                    </more>
 				</toolbar>
 			</tab>
 			<tab title="{Advanced; da:Avanceret}" background="light">
@@ -66,6 +69,27 @@ $gui='
 			<button text="{Accept; da:Godkend}" highlighted="true" name="reviewAccept"/>
 		</buttons>
 		<list name="reviewList"/>
+	</boundpanel>
+	
+	<boundpanel target="newPage" name="newPagePanel" width="300">
+    	<formula name="newPageFormula">
+    		<fields labels="above">
+    			<field label="{Title; da:Titel}:">
+    				<text-input key="title" value="{New page; da:Ny side}"/>
+    			</field>
+				<field label="{Placement; da:Placering}">
+					<radiobuttons value="below" key="placement">
+						<item value="below" text="{Below; da:Underpunkt}"/>
+						<item value="before" text="{Before; da:Før}"/>
+						<item value="after" text="{After; da:Efter}"/>
+					</radiobuttons>
+				</field>
+    		</fields>
+    		<buttons>
+    			<button text="{Cancel; da:Annuller}" name="cancelNewPage" small="true"/>
+    			<button text="{Create; da:Opret}" highlighted="true" submit="true" small="true"/>
+    		</buttons>
+    	</formula>
 	</boundpanel>
 </gui>';
 

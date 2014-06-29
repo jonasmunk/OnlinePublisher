@@ -36,7 +36,9 @@ $objects = $query->get();
 $out = [];
 
 foreach ($objects as $object) {
-	$out[] = [
+    $out[] = [
+        'title' => $object->getTitle(),
+        'icon' => $object->getIcon(),
         'id' => $object->getId(),
         'width' => $object->getWidth(),
         'height' => $object->getHeight()

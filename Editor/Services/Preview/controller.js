@@ -21,7 +21,7 @@ var controller = {
 		hui.ui.request({
 			url : 'data/LoadPageStatus.php',
 			parameters : {id:this.pageId},
-			onJSON : function(obj) {
+			$object : function(obj) {
 				publish.setEnabled(obj.changed);
 				var overlays = {none:null,accepted:'success',rejected:'stop'};
 				review.setOverlay(overlays[obj.review]);
@@ -54,7 +54,7 @@ var controller = {
 		hui.ui.request({
 			url : 'viewer/data/PublishPage.php',
 			parameters : {id:this.pageId},
-			onSuccess : function(obj) {
+			$success : function(obj) {
 				publish.setEnabled(false);
 				hui.ui.tellContainers('pageChanged',this.pageId);
 			}
@@ -86,7 +86,7 @@ var controller = {
 			message : {start:'Gemmer note...',delay:300},
 			url : 'data/CreateNote.php',
 			parameters : {pageId : this.pageId, text : values.text, kind : values.kind},
-			onSuccess : function() {
+			$success : function() {
 				hui.ui.showMessage({text:'Noten er gemt',icon:'common/success',duration:2000});
 				this._refreshBase();
 			}.bind(this)
@@ -115,14 +115,42 @@ var controller = {
 		hui.ui.request({
 			url : 'data/Review.php',
 			parameters : {pageId : this.pageId, accepted : accepted},
-			onSuccess : function() {
+			$success : function() {
 				hui.ui.showMessage({text:'Revisionen er gemt!',icon:'common/success',duration:2000});
 				reviewPanel.hide();
 				this._updateState();
 				this._refreshBase();
 			}.bind(this)
 		});
-	}
+	},
+    
+    ////////////////// New page /////////////////
+    
+    $click$newPage : function() {
+		newPagePanel.show();
+        newPageFormula.focus();
+    },
+    $click$cancelNewPage : function() {
+        newPagePanel.hide();
+    },
+    $submit$newPageFormula : function(form) {
+        var values = form.getValues();
+        if (hui.isBlank(values.title)) {
+            newPageFormula.focus();
+            return;
+        }
+		hui.ui.request({
+			url : 'data/CreatePage.php',
+			parameters : {
+                pageId : this.pageId, 
+                title : values.title, 
+                placement : values.placement
+            },
+			$object : function(response) {
+                document.location = 'index.php?id=' + response.id;
+            }
+        });
+    }
 };
 
 hui.ui.listen(controller);

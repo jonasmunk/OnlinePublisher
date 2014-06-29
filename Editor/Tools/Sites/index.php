@@ -51,6 +51,7 @@ $gui='
 		<parameter key="kind" value="@selector.kind"/>
 		<parameter key="value" value="@selector.value"/>
 		<parameter key="reviewSpan" value="@reviewSpan.value"/>
+        <parameter key="advanced" value="@advanced.value"/>
 	</source>
 	<source name="pageFinderListSource" url="data/PageFinderList.php">
 		<parameter key="windowPage" value="@pageFinderList.window.page"/>
@@ -130,7 +131,9 @@ $gui='
 			</center>
 		</middle>
 		<bottom>
-			
+            <div style="text-align: right; padding: 2px 10px 0 0">
+                <checkbox label="{Advanced; da:Avanceret}" name="advanced"/>
+            </div>
 		</bottom>
 	</structure>
 	
