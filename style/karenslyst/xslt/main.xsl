@@ -28,7 +28,7 @@
     		<xsl:value-of select="f:frame/@title"/>
     	</title>
     	<xsl:call-template name="util:metatags"/>
-		<link href='http://fonts.googleapis.com/css?family=Playfair+Display:400,700,400italic,700italic' rel='stylesheet' type='text/css'/>
+		<link href='http://fonts.googleapis.com/css?family=Playfair+Display:400,400italic' rel='stylesheet' type='text/css'/>
     	<xsl:call-template name="util:style"/>
     	<xsl:call-template name="util:style-ie6"/>
     	<xsl:call-template name="util:style-ie7"/>
