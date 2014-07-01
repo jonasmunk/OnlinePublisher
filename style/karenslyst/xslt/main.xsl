@@ -11,13 +11,15 @@
  xmlns:hr="http://uri.in2isoft.com/onlinepublisher/part/horizontalrule/1.0/"
  exclude-result-prefixes="p f h n o util hr"
  >
-<xsl:output encoding="UTF-8" method="xml" doctype-public="-//W3C//DTD XHTML 1.1//EN" doctype-system="http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd"/>
+<xsl:output encoding="UTF-8" method="xml" omit-xml-declaration="yes"/>
 
 <xsl:include href="../../basic/xslt/util.xsl"/>
 
 
 <xsl:template match="p:page">
-<html xmlns="http://www.w3.org/1999/xhtml">
+	<xsl:text disable-output-escaping='yes'>&lt;!DOCTYPE html&gt;
+</xsl:text>
+<html>
 	<xsl:call-template name="util:html-attributes"/>
     <head>
     	<title>
@@ -28,11 +30,13 @@
     		<xsl:value-of select="f:frame/@title"/>
     	</title>
     	<xsl:call-template name="util:metatags"/>
-		<link href='http://fonts.googleapis.com/css?family=Playfair+Display:400,400italic' rel='stylesheet' type='text/css'/>
+		<link href='http://fonts.googleapis.com/css?family=Playfair+Display:400,400italic|Annie+Use+Your+Telescope' rel='stylesheet' type='text/css'/>
     	<xsl:call-template name="util:style"/>
+		<!--
     	<xsl:call-template name="util:style-ie6"/>
     	<xsl:call-template name="util:style-ie7"/>
     	<xsl:call-template name="util:style-ie8"/>
+			-->
     	<xsl:call-template name="util:scripts"/>
 	
     </head>
@@ -48,9 +52,9 @@
 			<div class="layout_middle">
     		<xsl:apply-templates select="p:content"/>
 			</div>
-    		<div class="layout_bottom">
-    			<p><a href="http://www.humanise.dk/" title="Humanise"><span>Designet og udviklet af Humanise</span></a></p>
-    		</div>
+    		<footer class="layout_bottom">
+    			<p><a href="http://www.humanise.dk/" class="layout_humanise" title="Humanise">Designet og udviklet af Humanise</a></p>
+    		</footer>
     	</div>
     	<xsl:call-template name="util:googleanalytics"/>
     </body>

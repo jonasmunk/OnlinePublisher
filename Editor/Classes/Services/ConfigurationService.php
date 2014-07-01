@@ -33,7 +33,7 @@ class ConfigurationService {
 	}
 
 	static function isCachePages() {
-		return ConfigurationService::_getConfig('cachepages',true);
+		return ConfigurationService::_getConfig('cachepages',!true);
 	}
 	
 	static function isUrlRewrite() {

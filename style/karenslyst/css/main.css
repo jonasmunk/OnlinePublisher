@@ -1,13 +1,3 @@
-@font-face { 
-	font-family: 'Bell MT'; 
-	src: url('../../basic/fonts/Bell-met/bell_mt.eot'); 
-	src: url('../../basic/fonts/Bell-met/bell_mt.eot?#iefix') format('embedded-opentype'), 
-	url('../../basic/fonts/Bell-met/bell_mt.svg#Bell MT') format('svg'), 
-	url('../../basic/fonts/Bell-met/bell_mt.woff') format('woff'), 
-	url('../../basic/fonts/Bell-met/bell_mt.ttf') format('truetype'); 
-	font-weight: normal; 
-	font-style: normal;
-}
 
 body
 {
@@ -20,7 +10,7 @@ body
 
 
 .layout_content {
-	width: 940px;
+	max-width: 940px;
 	margin: 0 auto;
 }
 
@@ -33,6 +23,7 @@ body
 .layout_top > div {
 	background: url('../gfx/front.jpg');
 	background-size: cover;
+	background-position: 50% 50%;
 	height: 110%;
 	width: 110%;
     -webkit-animation-name: effect;
@@ -80,7 +71,25 @@ body
 	}
 }
 
-.layout_content {
-	position: relative;
-	z-index: 2;
+.layout_bottom {
+	text-align: center;
+	font-family: 'Annie Use Your Telescope', cursive;
+}
+
+.layout_bottom > p {
+	margin: 0;
+	padding: 20% 0;
+}
+
+.layout_humanise {
+	text-decoration: none;
+	font-size: 32pt;
+	color: #333;
+}
+
+
+@media screen and (max-width: 800px) {
+	.document_column {
+		display: block;
+	}
 }

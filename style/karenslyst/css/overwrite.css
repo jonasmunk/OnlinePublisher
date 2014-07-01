@@ -14,12 +14,17 @@ a.common:hover, a.common:hover span
 	color: #005aae;
 }
 
-h1.common,h2.common,h3.common,h4.common,h5.common,h6.common
+.part_header
 {
 	margin: 0px;
 	color: #000;
-	font-family: Georgia,"Book Antiqua", "Palatino",Times,serif;
+	font-family: 'Playfair Display', Georgia,"Book Antiqua", "Palatino",Times,serif;
 	font-weight: normal;
+}
+
+h2.part_header {
+	font-size: 32pt;
+	line-height: 1.1;
 }
 
 p.common, ul.common
@@ -37,7 +42,7 @@ p.common, ul.common
 
 .part_text
 {
-	font-size: 11pt;
+	font-size: 16px;
 }
 
 div.part_listing span.part_listing_first
@@ -50,9 +55,10 @@ div.part_listing, textarea.part_listing {
 	color: #333;
 }
 
-.part_header
-{
-	color: #000;
-	font-family: Georgia,"Book Antiqua", "Palatino",Times,serif;
-	font-weight: normal;
+.part_map_static_content {
+	-webkit-filter: saturate(1.5) contrast(1.5) brightness(1.5);
+}
+
+.part_map_static_pin {
+	z-index: 1;
 }
