@@ -8,23 +8,18 @@ if (!isset($GLOBALS['basePath'])) {
 	exit;
 }
 
-Part::$schema['imagegallery'] = array(
-	'fields' => array(
-		'variant'   	=> array( 'type' => 'text' ),
-		'height'		=> array( 'type' => 'int' ),
-		'width'		    => array( 'type' => 'int' ),
-		'imageGroupId'	=> array( 'type' => 'int', 'column' => 'imagegroup_id' ),
-		'framed'		=> array( 'type' => 'boolean' ),
-		'frame'         => array( 'type' => 'text' ),
-		'showTitle'		=> array( 'type' => 'boolean', 'column' => 'show_title' )
-	)
-);
-Entity::$schema['ImagegalleryPart'] = array(
+Entity::$schema['ImagegalleryPart'] = [
 	'table' => 'part_imagegallery',
-	'properties' => array(
-		'imageGroupId' => array('type'=>'int','relation'=>array('class'=>'Imagegroup','property'=>'id'))
-	)
-);
+	'properties' => [
+		'variant'   	=> [ 'type' => 'text' ],
+		'height'		=> [ 'type' => 'int' ],
+		'width'		    => [ 'type' => 'int' ],
+		'imageGroupId' => ['type'=>'int', 'column' => 'imagegroup_id','relation'=>['class'=>'Imagegroup','property'=>'id']],
+		'framed'		=> [ 'type' => 'boolean' ],
+		'frame'         => [ 'type' => 'text' ],
+		'showTitle'		=> [ 'type' => 'boolean', 'column' => 'show_title' ]
+	]
+];
 
 class ImagegalleryPart extends Part
 {

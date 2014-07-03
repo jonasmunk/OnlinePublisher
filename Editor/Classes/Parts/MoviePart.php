@@ -8,8 +8,9 @@ if (!isset($GLOBALS['basePath'])) {
 	exit;
 }
 
-Part::$schema['movie'] = [
-    'fields' => [
+Entity::$schema['MoviePart'] = [
+	'table' => 'part_movie',
+    'properties' => [
     	'fileId' => [ 'type' => 'int', 'column' => 'file_id'],
     	'imageId' => [ 'type' => 'int', 'column' => 'image_id' ],
     	'text' => [ 'type' => 'text' ],

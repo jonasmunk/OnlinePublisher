@@ -8,8 +8,9 @@ if (!isset($GLOBALS['basePath'])) {
 	exit;
 }
 
-Part::$schema['mailinglist'] = array(
-	'fields' => array(
+Entity::$schema['MailinglistPart'] = array(
+	'table' => 'part_mailinglist',
+	'properties' => array(
 	),
 	'relations' => array(
 		'mailinglistIds' => array( 'table' => 'part_mailinglist_mailinglist', 'fromColumn' => 'part_id', 'toColumn' => 'mailinglist_id' )

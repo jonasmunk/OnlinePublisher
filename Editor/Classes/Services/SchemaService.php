@@ -12,7 +12,10 @@ class SchemaService {
 	
 	static function buildSqlSetters($obj,$schema) {
 		$sql = '';
-		$fields = isset($schema['fields']) ? $schema['fields'] : $schema;
+		$fields = $schema;
+		if (isset($schema['properties'])) {
+			$fields = $schema['properties'];
+		}
 		if (!is_array($fields)) {
 			Log::debug('No fields found...');
 			Log::debug($schema);
@@ -68,7 +71,7 @@ class SchemaService {
 
 	static function buildSqlColumns($schema) {
 		$sql = '';
-		foreach ($schema['fields'] as $field => $info) {
+		foreach ($schema['properties'] as $field => $info) {
 			$column = $field;
 			if (isset($info['column'])) {
 				$column = $info['column'];
@@ -83,7 +86,7 @@ class SchemaService {
 	
 	static function buildSqlValues($obj,$schema) {
 		$sql = '';
-		foreach ($schema['fields'] as $field => $info) {
+		foreach ($schema['properties'] as $field => $info) {
 			$column = $field;
 			if (isset($info['column'])) {
 				$column = $info['column'];

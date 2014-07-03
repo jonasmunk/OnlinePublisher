@@ -8,8 +8,9 @@ if (!isset($GLOBALS['basePath'])) {
 	exit;
 }
 
-Part::$schema['map'] = array(
-	'fields' => array(
+Entity::$schema['MapPart'] = array(
+	'table' => 'part_map',
+	'properties' => array(
 		'provider' => array( 'type' => 'text' ),
 		'latitude' => array( 'type' => 'float' ),
 		'longitude' => array( 'type' => 'float' ),

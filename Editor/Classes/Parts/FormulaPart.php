@@ -8,13 +8,15 @@ if (!isset($GLOBALS['basePath'])) {
 	exit;
 }
 
-Part::$schema['formula'] = array(
-	'fields' => array(
-		'receiverName'   => array('type'=>'text','column'=>'receivername'),
-		'receiverEmail'   => array('type'=>'text','column'=>'receiveremail'),
-		'recipe' => array( 'type' => 'text' )
-	)
-);
+Entity::$schema['FormulaPart'] = [
+	'table' => 'part_formula',
+	'properties' => [
+		'receiverName'   => ['type'=>'text','column'=>'receivername'],
+		'receiverEmail'   => ['type'=>'text','column'=>'receiveremail'],
+		'recipe' => ['type' => 'text']
+	]
+];
+
 class FormulaPart extends Part
 {
 	var $receiverName;

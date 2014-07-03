@@ -8,33 +8,28 @@ if (!isset($GLOBALS['basePath'])) {
 	exit;
 }
 
-Part::$schema['news'] = array(
-	'fields' => array(
-		'align' => array( 'type' => 'text' ),
-		'width' => array( 'type' => 'text' ),
-		'newsId' => array( 'type' => 'int', 'column' => 'news_id' ),
-		'mode' => array( 'type' => 'text' ),
-  		'title' => array( 'type' => 'text' ),
-		'sortBy' => array( 'type' => 'text', 'column' => 'sortby' ),
-  		'sortDir' => array( 'type' => 'text', 'column' => 'sortdir' ),
-		'maxItems' => array( 'type' => 'int', 'column' => 'maxitems' ),
-		'timeType' => array( 'type' => 'text', 'column' => 'timetype' ),
-  		'timeCount' => array( 'type' => 'int', 'column' => 'timecount' ),
-		'startdate' => array( 'type' => 'datetime', 'column' => 'startdate' ),
-		'enddate' => array( 'type' => 'datetime', 'column' => 'enddate' ),
-		'variant' => array( 'type' => 'text' )
-	),
-	'relations' => array(
-		'newsGroupIds' => array( 'table' => 'part_news_newsgroup', 'fromColumn' => 'part_id', 'toColumn' => 'newsgroup_id' )
-	)
-);
-Entity::$schema['NewsPart'] = array(
+Entity::$schema['NewsPart'] = [
 	'table' => 'part_news',
-	'properties' => array(
-		'newsId' => array('type'=>'int','relation'=>array('class'=>'News','property'=>'id')),
-		'newsGroupIds' => array('type'=>'int','relation'=>array('class'=>'Newsgroup','property'=>'id'))
-	)
-);
+	'properties' => [
+		'align' => [ 'type' => 'text' ],
+		'width' => [ 'type' => 'text' ],
+		'newsId' => ['type'=>'int', 'column' => 'news_id','relation'=>['class'=>'News','property'=>'id']],
+		'mode' => [ 'type' => 'text' ],
+  		'title' => [ 'type' => 'text' ],
+		'sortBy' => [ 'type' => 'text', 'column' => 'sortby' ],
+  		'sortDir' => [ 'type' => 'text', 'column' => 'sortdir' ],
+		'maxItems' => [ 'type' => 'int', 'column' => 'maxitems' ],
+		'timeType' => [ 'type' => 'text', 'column' => 'timetype' ],
+  		'timeCount' => [ 'type' => 'int', 'column' => 'timecount' ],
+		'startDate' => [ 'type' => 'datetime', 'column' => 'startdate' ],
+		'endDate' => [ 'type' => 'datetime', 'column' => 'enddate' ],
+		'variant' => [ 'type' => 'text' ]
+	],
+	'relations' => [
+		'newsGroupIds' => [ 'table' => 'part_news_newsgroup', 'fromColumn' => 'part_id', 'toColumn' => 'newsgroup_id' ]
+	]
+];
+
 class NewsPart extends Part
 {
 	var $align;

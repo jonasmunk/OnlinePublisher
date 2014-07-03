@@ -79,7 +79,7 @@ class ObjectService {
 			$row = Database::delete($sql);
 			$sql = "delete from `relation` where (from_type='object' and from_object_id=".Database::int($object->getId()).") or (to_type='object' and to_object_id=".Database::int($object->getId()).")";
 			$row = Database::delete($sql);
-			$schema = @Object::$schema[$object->getType()];
+			$schema = ObjectService::_getSchema($object->getType());
 			if (is_array($schema)) {
 				$sql = "delete from `".$object->getType()."` where object_id=".Database::int($object->getId());
 				$row = Database::delete($sql);
@@ -135,7 +135,7 @@ class ObjectService {
 	
 	static function load($id,$type) {
 		ObjectService::importType($type);
-		$schema = Object::$schema[$type];
+		$schema = ObjectService::_getSchema($type);
 		if (is_array($schema)) {
 			
 			$sql = "select object.id,object.title,object.note,object.type as object_type,object.owner_id,UNIX_TIMESTAMP(object.created) as created,UNIX_TIMESTAMP(object.updated) as updated,UNIX_TIMESTAMP(object.published) as published,object.searchable";
@@ -186,6 +186,15 @@ class ObjectService {
 		return null;
 	}
 	
+	static function _getSchema($type) {
+		if (array_key_exists(ucfirst($type),Entity::$schema)) {
+			return Entity::$schema[ucfirst($type)]['properties'];
+		}
+		if (array_key_exists($type,Object::$schema)) {
+			return Object::$schema[$type];
+		}
+	}
+	
 	static function create($object) {
 		if ($object->isPersistent()) {
 			Log::debug('Tried creating object already persisted...');
@@ -206,7 +215,7 @@ class ObjectService {
 		Database::int($object->ownerId).
 		")";		
 		$object->id = Database::insert($sql);
-		$schema = @Object::$schema[$object->type];
+		$schema = ObjectService::_getSchema($object->getType());
 		if (is_array($schema)) {
 			$sql = "insert into `".$object->type."` (object_id";
 			foreach ($schema as $property => $info) {
@@ -260,7 +269,7 @@ class ObjectService {
 			" where id=".Database::int($object->id);
 		Database::update($sql);
 
-		$schema = Object::$schema[$object->type];
+		$schema = ObjectService::_getSchema($object->getType());
 		if (is_array($schema)) {
 			$sql = "update `".$object->type."` set object_id=".Database::int($object->id);
 			$setters = SchemaService::buildSqlSetters($object,$schema);
@@ -424,7 +433,7 @@ class ObjectService {
 		if (!$type) {
 			return null;
 		}
-		$schema = Object::$schema[$type];
+		$schema = ObjectService::_getSchema($type);
 		if (!is_array($schema)) {
 			Log::debug('Unable to find schema for: '.$type);
 		}

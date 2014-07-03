@@ -8,10 +8,10 @@ if (!isset($GLOBALS['basePath'])) {
 	exit;
 }
 
-Part::$schema['horizontalrule'] = array(
-	'fields' => array(
-	)
-);
+Entity::$schema['HorizontalrulePart'] = [
+	'table' => 'part_horizontalrule',
+	'properties' => []
+];
 
 class HorizontalrulePart extends Part
 {

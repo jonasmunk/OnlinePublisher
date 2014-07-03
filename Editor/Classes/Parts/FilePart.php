@@ -8,12 +8,13 @@ if (!isset($GLOBALS['basePath'])) {
 	exit;
 }
 
-Part::$schema['file'] = array(
-	'fields' => array(
-		'fileId' => array( 'type' => 'int', 'column' => 'file_id' ),
-		'text' => array( 'type' => 'text' )
-	)
-);
+Entity::$schema['FilePart'] = [
+	'table' => 'part_file',
+	'properties' => [
+		'fileId' => [ 'type' => 'int', 'column' => 'file_id' ],
+		'text' => [ 'type' => 'text' ]
+	]
+];
 
 class FilePart extends Part
 {

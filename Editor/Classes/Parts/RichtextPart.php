@@ -8,11 +8,12 @@ if (!isset($GLOBALS['basePath'])) {
 	exit;
 }
 
-Part::$schema['richtext'] = array(
-	'fields' => array(
-		'html' => array( 'type' => 'text' )
+Entity::$schema['RichtextPart'] = [
+	'table' => 'part_richtext',
+	'properties' => array(
+		'html' => array( 'type' => 'string' )
 	)
-);
+];
 
 class RichtextPart extends Part
 {

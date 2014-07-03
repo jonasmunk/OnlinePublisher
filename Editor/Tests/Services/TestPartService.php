@@ -10,6 +10,11 @@ if (!isset($GLOBALS['basePath'])) {
 }
 
 class TestPartService extends UnitTestCase {
+	
+	function testStuff() {
+		$this->assertEqual('HtmlPart',PartService::getClassName('html'));
+		$this->assertNull(PartService::getClassName(''));
+	}
     
 	/** Test link functionality of part service */
     function testLinks() {

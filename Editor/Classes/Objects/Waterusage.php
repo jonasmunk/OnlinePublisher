@@ -8,16 +8,17 @@ if (!isset($GLOBALS['basePath'])) {
 	exit;
 }
 
-Entity::$schema['Waterusage'] = array(
+Entity::$schema['Waterusage'] = [
 	'table' => 'waterusage',
-	'properties' => array(
-    	'watermeterId'   => array('type'=>'int','column'=>'watermeter_id','relation'=>array('class'=>'Watermeter','property'=>'id')),
-    	'value'  => array('type'=>'int'),
-    	'date'  => array('type'=>'datetime'),
-    	'status'  => array('type'=>'int'),
-    	'source'  => array('type'=>'int')
-	)
-);
+	'properties' => [
+    	'watermeterId'   => ['type'=>'int','column'=>'watermeter_id','relation'=> ['class'=>'Watermeter','property'=>'id']],
+    	'value'  => ['type'=>'int'],
+    	'date'  => ['type'=>'datetime'],
+    	'status'  => ['type'=>'int'],
+    	'source'  => ['type'=>'int']
+	]
+];
+
 Object::$schema['waterusage'] = array(
 	'watermeterId'   => array('type'=>'int','column'=>'watermeter_id','relation'=>array('class'=>'Watermeter','property'=>'id')),
 	'value'  => array('type'=>'int'),
@@ -25,6 +26,7 @@ Object::$schema['waterusage'] = array(
 	'status'  => array('type'=>'int'),
 	'source'  => array('type'=>'int')
 );
+
 class Waterusage extends Object {
 	
 	static $ADMIN = 0;

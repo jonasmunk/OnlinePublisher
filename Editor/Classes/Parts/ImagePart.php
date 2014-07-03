@@ -8,25 +8,20 @@ if (!isset($GLOBALS['basePath'])) {
 	exit;
 }
 
-Part::$schema['image'] = array(
-	'fields' => array(
-		'imageId' => array( 'type' => 'int', 'column' => 'image_id' ),
-		'text' => array( 'type' => 'text' ),
-		'align' => array( 'type' => 'text' ),
-		'frame' => array( 'type' => 'text' ),
-		'greyscale' => array( 'type' => 'boolean' ),
-		'scaleMethod' => array( 'type' => 'text', 'column' => 'scalemethod' ),
-		'scalePercent' => array( 'type' => 'int', 'column' => 'scalepercent' ),
-		'scaleWidth' => array( 'type' => 'int', 'column' => 'scalewidth' ),
-		'scaleHeight' => array( 'type' => 'int', 'column' => 'scaleHeight' )
-	)
-);
-Entity::$schema['ImagePart'] = array(
+Entity::$schema['ImagePart'] = [
 	'table' => 'part_image',
-	'properties' => array(
-		'imageId' => array('type'=>'int','relation'=>array('class'=>'Image','property'=>'id'))
-	)
-);
+	'properties' => [
+		'imageId' => ['type'=>'int', 'column' => 'image_id','relation'=>['class'=>'Image','property'=>'id']],
+		'text' => [ 'type' => 'text' ],
+		'align' => [ 'type' => 'text' ],
+		'frame' => [ 'type' => 'text' ],
+		'greyscale' => [ 'type' => 'boolean' ],
+		'scaleMethod' => [ 'type' => 'text', 'column' => 'scalemethod' ],
+		'scalePercent' => [ 'type' => 'int', 'column' => 'scalepercent' ],
+		'scaleWidth' => [ 'type' => 'int', 'column' => 'scalewidth' ],
+		'scaleHeight' => [ 'type' => 'int', 'column' => 'scaleHeight' ]
+	]
+];
 
 class ImagePart extends Part
 {

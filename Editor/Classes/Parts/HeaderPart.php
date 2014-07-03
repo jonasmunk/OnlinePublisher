@@ -8,8 +8,9 @@ if (!isset($GLOBALS['basePath'])) {
 	exit;
 }
 
-Part::$schema['header'] = array(
-	'fields' => array(
+Entity::$schema['HeaderPart'] = array(
+	'table' => 'part_header',
+	'properties' => array(
 		'text'   => array('type'=>'text'),
 		'level'   => array('type'=>'int' , 'column' => 'level'),
 		'textAlign' => array( 'type' => 'text', 'column' => 'textalign' ),

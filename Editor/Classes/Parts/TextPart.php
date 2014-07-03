@@ -8,8 +8,9 @@ if (!isset($GLOBALS['basePath'])) {
 	exit;
 }
 
-Part::$schema['text'] = array(
-	'fields' => array(
+Entity::$schema['TextPart'] = array(
+	'table' => 'part_text',
+	'properties' => array(
 		'text'   => array('type'=>'text'),
 		'textAlign' => array( 'type' => 'text', 'column' => 'textalign' ),
 		'fontFamily' => array( 'type' => 'text', 'column' => 'fontfamily' ),
@@ -24,18 +25,13 @@ Part::$schema['text'] = array(
 		'textTransform' => array( 'type' => 'text', 'column' => 'texttransform' ),
 		'fontStyle' => array( 'type' => 'text', 'column' => 'fontstyle' ),
 		'fontVariant' => array( 'type' => 'text', 'column' => 'fontvariant' ),
-		'imageId' => array( 'type' => 'int', 'column' => 'image_id' ),
+		'imageId' => array('type'=>'int', 'column' => 'image_id', 'relation'=>array('class'=>'Image','property'=>'id')),
 		'imageFloat' => array( 'type' => 'text', 'column' => 'imagefloat' ),
 		'imageWidth' => array( 'type' => 'int', 'column' => 'imagewidth' ),
 		'imageHeight' => array( 'type' => 'int', 'column' => 'imageheight' )
 	)
 );
-Entity::$schema['TextPart'] = array(
-	'table' => 'part_text',
-	'properties' => array(
-		'imageId' => array('type'=>'int','relation'=>array('class'=>'Image','property'=>'id'))
-	)
-);
+
 class TextPart extends Part
 {
 	var $text;

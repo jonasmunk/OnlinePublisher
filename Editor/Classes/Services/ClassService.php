@@ -86,7 +86,7 @@ class ClassService {
 				return $class;
 			}
 		}
-		return $null;
+		return null;
 	}
 	
 	static function _getHierarchy($name) {
@@ -129,7 +129,7 @@ class ClassService {
     }
 
     static function load($name) {
-		__autoload($name);
+		return class_exists($name, true);
     }
 	
 	static function getClasses() {

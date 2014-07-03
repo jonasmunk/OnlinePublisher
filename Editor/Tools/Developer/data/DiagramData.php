@@ -25,7 +25,11 @@ foreach ($classes as $class) {
 
 	foreach ($class->getProperties() as $property) {
 		if ($property->getOrigin()==$class->getName()) {
-			$properties[] = array('label'=>$property->getName(),'value'=>$property->getValue(),'hint'=>$property->getType());
+			$properties[] = [
+				'label' => $property->getName(),
+				'value' => $property->getType(),
+				'hint' => $property->getValue()
+			];
 		}
 	}
 

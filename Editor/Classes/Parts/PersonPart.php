@@ -8,10 +8,13 @@ if (!isset($GLOBALS['basePath'])) {
 	exit;
 }
 
-Part::$schema['person'] = array(
-	'fields' => array(
+Entity::$schema['PersonPart'] = array(
+	'table' => 'part_person',
+	'properties' => array(
 		'align' => array( 'type' => 'text' ),
-		'personId' => array( 'type' => 'int', 'column' => 'person_id' ),
+		'personId' => array( 'type' => 'int', 'column' => 'person_id',
+			'relation'=>['class'=>'Person','property'=>'id']
+		 ),
 		'showFirstName' => array( 'type' => 'boolean', 'column' => 'show_firstname' ),
 		'showMiddleName' => array( 'type' => 'boolean', 'column' => 'show_middlename' ),
 		'showLastName' => array( 'type' => 'boolean', 'column' => 'show_surname' ),

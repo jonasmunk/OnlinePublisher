@@ -8,9 +8,16 @@ if (!isset($GLOBALS['basePath'])) {
 	exit;
 }
 
+Entity::$schema['Part'] = [
+	'table' => 'part',
+	'properties' => [
+		'type' => ['type' => 'text'],
+		'dynamic' => ['type' => 'boolean']
+	]
+];
+
 class Part extends Entity
 {
-	static $schema = array();
 	var $type;
 	var $dynamic;
 	

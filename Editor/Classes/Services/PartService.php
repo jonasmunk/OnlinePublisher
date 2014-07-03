@@ -14,33 +14,30 @@ class PartService {
 		if (!$id) {
 			return null;
 		}
-		global $basePath;
 		$class = ucfirst($type).'Part';
-		if (!file_exists($basePath.'Editor/Classes/Parts/'.$class.'.php')) {
+		if (!ClassService::load($class)) {
 			return null;
 		}
-		require_once $basePath.'Editor/Classes/Parts/'.$class.'.php';
-		$sql = "select part.id";
-		$schema = Part::$schema[$type];
+		$schema = PartService::getSchema($type);
 		if (!$schema) {
 			Log::debug('No schema for '.$type);
 			return null;
 		}
-		if (isset($schema['fields']) && is_array($schema['fields'])) {
-			foreach ($schema['fields'] as $field => $info) {
-				$column = isset($info['column']) ? $info['column'] : $field;
-				if ($info['type']=='datetime') {
-					$sql.=",UNIX_TIMESTAMP(`part_$type`.`$column`) as `$column`";
-				} else {
-					$sql.=",`part_$type`.`$column`";
-				}
+		$sql = "select part.id";
+		$properties = isset($schema['properties']) ? $schema['properties'] : [];
+		foreach ($properties as $field => $info) {
+			$column = isset($info['column']) ? $info['column'] : $field;
+			if ($info['type']=='datetime') {
+				$sql.=",UNIX_TIMESTAMP(`part_$type`.`$column`) as `$column`";
+			} else {
+				$sql.=",`part_$type`.`$column`";
 			}
 		}
 		$sql.=" from part,part_".$type." where part.id=part_".$type.".part_id and part.id=".$id;
 		if ($row = Database::selectFirst($sql)) {
 			$part = new $class();
 			$part->setId($row['id']);
-			foreach ($schema['fields'] as $field => $info) {
+			foreach ($properties as $field => $info) {
 				$setter = 'set'.ucfirst($field);
 				$column = isset($info['column']) ? $info['column'] : $field;
 				$part->$setter($row[$column]);
@@ -75,7 +72,7 @@ class PartService {
 		Database::delete($sql);
 		
 		// Delete relations
-		$schema = Part::$schema[$part->getType()];
+		$schema = PartService::getSchema($part->getType());
 		if (isset($schema['relations']) && is_array($schema['relations'])) {
 			foreach ($schema['relations'] as $field => $info) {
 				$sql = "delete from ".$info['table']." where ".$info['fromColumn']."=".Database::int($part->getId());
@@ -84,15 +81,19 @@ class PartService {
 		}
 	}
     
-    static private function getSchema(Part $part) {
-        return Part::$schema[$part->getType()];
+    static private function getSchema($type) {
+		$class = PartService::getClassName($type);
+		if (array_key_exists($class,Entity::$schema)) {
+			return Entity::$schema[$class];
+		}
+		return null;
     }
 	
 	static function save($part) {
 		if ($part->isPersistent()) {
 			PartService::update($part);
 		} else {
-			$schema = PartService::getSchema($part);
+			$schema = PartService::getSchema($part->getType());
 			
 			$sql = "insert into part (type,dynamic,created,updated) values (".
 			Database::text($part->getType()).",".
@@ -135,7 +136,7 @@ class PartService {
 		Database::update($sql);
 		
 		
-		$schema = Part::$schema[$part->getType()];
+		$schema = PartService::getSchema($part->getType());
 		$setters = SchemaService::buildSqlSetters($part,$schema);
 		
 		if (Strings::isNotBlank($setters)) {
@@ -159,18 +160,22 @@ class PartService {
 			}
 		}
 	}
+
+	static function getClassName($type) {
+		if (Strings::isBlank($type)) {
+			return null;
+		}
+		return ucfirst($type).'Part';
+	}
 	
 	/**
 	 * Creates a new part based on the type
 	 */
 	static function newInstance($type) {
-		global $basePath;
-		$class = ucfirst($type).'Part';
-		$path = $basePath.'Editor/Classes/Parts/'.$class.'.php';
-		if (!file_exists($path)) {
+		$class = PartService::getClassName($type);
+		if (!ClassService::load($class)) {
 			return null;
 		}
-		require_once $path;
 		return new $class;
 	}
 	

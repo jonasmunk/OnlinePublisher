@@ -8,8 +8,9 @@ if (!isset($GLOBALS['basePath'])) {
 	exit;
 }
 
-Part::$schema['list'] = array(
-	'fields' => array(
+Entity::$schema['ListPart'] = array(
+	'table' => 'part_list',
+	'properties' => array(
 		'align' => array( 'type' => 'text' ),
 		'width' => array( 'type' => 'text' ),
 		'title' => array( 'type' => 'text' ),
@@ -19,7 +20,7 @@ Part::$schema['list'] = array(
 		'timeType' => array( 'type' => 'text', 'column' => 'time_type' ),
 		'showSource' => array( 'type' => 'boolean', 'column' => 'show_source' ),
 		'showText' => array( 'type' => 'boolean', 'column' => 'show_text' ),
-		'showTimezone' => array( 'type' => 'boolean', 'column' => 'show_timezone' ),
+		'showTimeZone' => array( 'type' => 'boolean', 'column' => 'show_timezone' ),
 		'timezone' => array( 'type' => 'text' ),
 		'maxTextLength' => array( 'type' => 'int', 'column' => 'maxtextlength' ),
 		'sortDirection' => array( 'type' => 'text', 'column' => 'sort_direction' )
