@@ -9,7 +9,7 @@ class ImportResult {
 	var $message = null;
 	var $object = null;
 	
-	function fail($message) {
+	static function fail($message) {
 		$result = new ImportResult();
 		$result->setMessage($message);
 		return $result;
