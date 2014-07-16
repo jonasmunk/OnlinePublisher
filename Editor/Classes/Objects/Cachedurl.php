@@ -8,11 +8,15 @@ if (!isset($GLOBALS['basePath'])) {
 	exit;
 }
 
-Object::$schema['cachedurl'] = array(
-	'url'			=> array('type'=>'text'),
-	'synchronized'	=> array('type'=>'datetime'),
-	'mimeType'		=> array('type'=>'text')
-);
+Entity::$schema['Cachedurl'] = [
+    'table' => 'cachedurl',
+    'properties' => [
+        'url'			=> array('type'=>'text'),
+        'synchronized'	=> array('type'=>'datetime'),
+        'mimeType'		=> array('type'=>'text')
+    ]
+];
+
 class Cachedurl extends Object {
 	var $url;
 	var $synchronized;

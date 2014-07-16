@@ -9,11 +9,15 @@ if (!isset($GLOBALS['basePath'])) {
 	exit;
 }
 
-Object::$schema['file'] = array(
-	'filename'	=> array('type'=>'string'),
-	'size'		=> array('type'=>'int'),
-	'mimetype'	=> array('type'=>'string','column'=>'type')
-);
+Entity::$schema['File'] = [
+    'table' => 'file',
+    'properties' => array(
+    	'filename'	=> array('type'=>'string'),
+    	'size'		=> array('type'=>'int'),
+    	'mimetype'	=> array('type'=>'string','column'=>'type')
+    )
+];
+
 class File extends Object {
 	var $filename;
 	var $size;

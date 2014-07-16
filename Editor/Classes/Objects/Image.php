@@ -8,13 +8,17 @@ if (!isset($GLOBALS['basePath'])) {
 	exit;
 }
 
-Object::$schema['image'] = array(
-	'filename'   => array('type'=>'text'),
-	'size'  => array('type'=>'int'),
-	'width'  => array('type'=>'int'),
-	'height'  => array('type'=>'int'),
-	'mimetype'  => array('type'=>'text', 'column' => 'type')
-);
+Entity::$schema['Image'] = [
+    'table' => 'image',
+    'properties' => array(
+    	'filename'   => array('type'=>'text'),
+    	'size'  => array('type'=>'int'),
+    	'width'  => array('type'=>'int'),
+    	'height'  => array('type'=>'int'),
+    	'mimetype'  => array('type'=>'text', 'column' => 'type')
+    )
+];
+
 class Image extends Object {
 	
 	var $filename;

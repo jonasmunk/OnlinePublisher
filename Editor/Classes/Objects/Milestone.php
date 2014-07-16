@@ -8,11 +8,15 @@ if (!isset($GLOBALS['basePath'])) {
 	exit;
 }
 
-Object::$schema['milestone'] = array(
-	'deadline'  => array('type'=>'datetime'),
-	'completed'  => array('type'=>'boolean'),
-	'containingObjectId'  => array('type'=>'int','column'=>'containing_object_id')
-);
+Entity::$schema['Milestone'] = [
+    'table' => 'milestone',
+    'properties' => array(
+    	'deadline'  => array('type'=>'datetime'),
+    	'completed'  => array('type'=>'boolean'),
+    	'containingObjectId'  => array('type'=>'int','column'=>'containing_object_id')
+    )
+];
+
 class Milestone extends Object {
 	var $deadline;
 	var $containingObjectId;

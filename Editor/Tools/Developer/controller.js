@@ -26,6 +26,8 @@ hui.ui.listen({
 			hui.ui.changeState('diagram');
 		} else if (item.value=='classes') {
 			hui.ui.changeState('list');
+		} else if (item.value=='queries') {
+			hui.ui.changeState('queries');
 		} else {
 			hui.ui.changeState('frame');
 		}
@@ -73,5 +75,11 @@ hui.ui.listen({
 	},
 	$click$contractDiagram : function() {
 		diagram.contract();
-	}
+	},
+    
+    // Queries...
+    
+    $valueChanged$queryInput : function(value) {
+        queryOutput.setValue(value);
+    }
 });

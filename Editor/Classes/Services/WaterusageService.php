@@ -153,7 +153,7 @@ class WaterusageService {
 				$email->save();
 				$email->publish();
 			} else if (!Strings::isBlank($address)) {
-				$email = new EmailAddress();
+				$email = new Emailaddress();
 				$email->setAddress($address);
 				$email->save();
 				$email->publish();

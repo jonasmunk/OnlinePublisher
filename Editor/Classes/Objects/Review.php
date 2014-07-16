@@ -8,10 +8,14 @@ if (!isset($GLOBALS['basePath'])) {
 	exit;
 }
 
-Object::$schema['review'] = array(
-	'accepted' => array('type'=>'boolean'),
-	'date' => array('type'=>'datetime')
-);
+Entity::$schema['Review'] = [
+	'table' => 'review',
+	'properties' => [
+    	'accepted' => array('type'=>'boolean'),
+    	'date' => array('type'=>'datetime')
+	]
+];
+
 class Review extends Object {
 
     var $accepted;

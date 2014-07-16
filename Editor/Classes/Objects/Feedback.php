@@ -8,11 +8,14 @@ if (!isset($GLOBALS['basePath'])) {
 	exit;
 }
 
-Object::$schema['feedback'] = array(
-	'name'   => array('type'=>'text'),
-	'email'  => array('type'=>'text'),
-	'message'  => array('type'=>'text')
-);
+Entity::$schema['Feedback'] = [
+    'table' => 'feedback',
+    'properties' => array(
+    	'name'   => array('type'=>'text'),
+    	'email'  => array('type'=>'text'),
+    	'message'  => array('type'=>'text')
+    )
+];
 
 class Feedback extends Object {
 	var $name;

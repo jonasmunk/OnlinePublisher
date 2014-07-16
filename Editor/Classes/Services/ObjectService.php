@@ -190,9 +190,6 @@ class ObjectService {
 		if (array_key_exists(ucfirst($type),Entity::$schema)) {
 			return Entity::$schema[ucfirst($type)]['properties'];
 		}
-		if (array_key_exists($type,Object::$schema)) {
-			return Object::$schema[$type];
-		}
 	}
 	
 	static function create($object) {

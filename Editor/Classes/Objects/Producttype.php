@@ -8,11 +8,14 @@ if (!isset($GLOBALS['basePath'])) {
 	exit;
 }
 
-Object::$schema['producttype'] = array();
+Entity::$schema['Producttype'] = [
+	'table' => 'producttype',
+	'properties' => []
+];
 
-class ProductType extends Object {
+class Producttype extends Object {
 
-	function ProductType() {
+	function Producttype() {
 		parent::Object('producttype');
 	}
 

@@ -8,9 +8,13 @@ if (!isset($GLOBALS['basePath'])) {
 	exit;
 }
 
-Object::$schema['project'] = array(
-	'parentProjectId' => array('type'=>'int','column'=>'parent_project_id')
-);
+Entity::$schema['Project'] = [
+	'table' => 'project',
+	'properties' => [
+	    'parentProjectId' => ['type'=>'int','column'=>'parent_project_id']
+	]
+];
+
 class Project extends Object {
 
 	var $parentProjectId = 0;
@@ -183,7 +187,7 @@ class Project extends Object {
             if ($row['id']!=$ignore) {
                 $title = $prefix.Strings::shortenString($row['title'],20);
             	$gui.='<option title="'.Strings::escapeEncodedXML($title).'" value="'.$row['id'].'"/>'.
-            	Project::optionSpider($prefix.'··',$row['id'],$ignore);
+            	Project::optionSpider($prefix.'Â·Â·',$row['id'],$ignore);
     	    }
         }
         Database::free($result);

@@ -8,12 +8,16 @@ if (!isset($GLOBALS['basePath'])) {
 	exit;
 }
 
-Object::$schema['product'] = array(
-	'number' => array('type'=>'string'),
-	'productTypeId' => array('type'=>'int','column'=>'producttype_id'),
-	'imageId' => array('type'=>'int','column'=>'image_id'),
-	'allowOffer' => array('type'=>'boolean','column'=>'allow_offer')
-);
+Entity::$schema['Product'] = [
+	'table' => 'product',
+	'properties' => array(
+    	'number' => array('type'=>'string'),
+    	'productTypeId' => array('type'=>'int','column'=>'producttype_id'),
+    	'imageId' => array('type'=>'int','column'=>'image_id'),
+    	'allowOffer' => array('type'=>'boolean','column'=>'allow_offer')
+    )
+];
+
 class Product extends Object {
 	var $number;
 	var $productTypeId;

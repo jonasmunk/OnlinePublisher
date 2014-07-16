@@ -32,7 +32,7 @@ $writer->startList()->
 	endHeaders();
 
 foreach ($products as $product) {
-	$type = ProductType::load($product->getProductTypeId());
+	$type = Producttype::load($product->getProductTypeId());
 	$writer->
 	startRow(array('id'=>$product->getId(),'kind'=>$product->getType(),'icon'=>'common/product','title'=>$product->getTitle()))->
 		startCell(array('icon'=>'common/product'))->text($product->getTitle())->endCell()->

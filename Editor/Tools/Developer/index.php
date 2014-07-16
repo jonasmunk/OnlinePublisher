@@ -29,6 +29,7 @@ $gui='
 						<item icon="common/time" title="Report" value="report"/>
 						<item icon="common/tools" title="Settings" value="settings"/>
 						<item icon="common/object" title="Classes" value="classes"/>
+						<item icon="common/search" title="Query" value="queries"/>
 						<title>UI</title>
 						<item icon="common/search" title="Finders" value="finders"/>
 						<item icon="monochrome/nuclear" title="Graph" value="graph"/>
@@ -64,6 +65,16 @@ $gui='
 				</bar>
 				<overflow state="graph">
 					<graph source="graphSource" name="graph" layout="d3"/>
+				</overflow> 
+				<overflow state="queries">
+					<split>
+            <row height="50%">
+              <code-input breaks="true" name="queryInput"/>
+            </row>
+            <row height="50%">
+              <code-input breaks="true" name="queryOutput"/>
+            </row>
+          </split>
 				</overflow> 
 				<bar variant="layout" state="diagram">
 					<segmented value="Entity" name="diagramSubset" variant="inset">

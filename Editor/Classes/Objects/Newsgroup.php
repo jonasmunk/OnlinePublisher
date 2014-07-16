@@ -8,7 +8,10 @@ if (!isset($GLOBALS['basePath'])) {
 	exit;
 }
 
-Object::$schema['newsgroup'] = array();
+Entity::$schema['Newsgroup'] = [
+    'table' => 'newsgroup',
+    'properties' => []
+];
 
 class Newsgroup extends Object {
 	

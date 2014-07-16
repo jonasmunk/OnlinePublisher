@@ -8,11 +8,14 @@ if (!isset($GLOBALS['basePath'])) {
 	exit;
 }
 
-Object::$schema['news'] = array(
-	'imageId'   => array('type'=>'int','column'=>'image_id'),
-	'startdate'  => array('type'=>'datetime'),
-	'enddate'  => array('type'=>'datetime')
-);
+Entity::$schema['News'] = [
+    'table' => 'news',
+    'properties' => array(
+    	'imageId'   => array('type'=>'int','column'=>'image_id'),
+    	'startdate'  => array('type'=>'datetime'),
+    	'enddate'  => array('type'=>'datetime')
+    )
+];
 
 class News extends Object {
 	var $startdate;

@@ -8,11 +8,15 @@ if (!isset($GLOBALS['basePath'])) {
 	exit;
 }
 
-Object::$schema['phonenumber'] = array(
-	'number' => array('type'=>'string'),
-	'context' => array('type'=>'string'),
-	'containingObjectId'   => array('type'=>'int','column'=>'containing_object_id')
-);
+Entity::$schema['Phonenumber'] = [
+	'table' => 'phonenumber',
+	'properties' => array(
+    	'number' => array('type'=>'string'),
+    	'context' => array('type'=>'string'),
+    	'containingObjectId'   => array('type'=>'int','column'=>'containing_object_id')
+    )
+];
+
 class Phonenumber extends Object {
 	var $number;
 	var $context;

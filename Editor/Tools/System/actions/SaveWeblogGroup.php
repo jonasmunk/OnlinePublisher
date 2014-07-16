@@ -8,9 +8,9 @@ require_once '../../../Include/Private.php';
 $data = Request::getObject('data');
 
 if ($data->id>0) {
-	$group = WeblogGroup::load($data->id);
+	$group = Webloggroup::load($data->id);
 } else {
-	$group = new WeblogGroup();
+	$group = new Webloggroup();
 }
 $group->setTitle($data->title);
 $group->setNote($data->note);

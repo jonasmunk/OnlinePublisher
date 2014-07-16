@@ -8,9 +8,13 @@ if (!isset($GLOBALS['basePath'])) {
 	exit;
 }
 
-Object::$schema['remotepublisher'] = array(
-	'url'			=> array('type'=>'text'),
-);
+Entity::$schema['Remotepublisher'] = [
+	'table' => 'remotepublisher',
+	'properties' => [
+	    'url' => ['type'=>'text'],
+	]
+];
+
 class Remotepublisher extends Object {
 	var $url;
 

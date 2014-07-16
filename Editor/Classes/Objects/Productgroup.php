@@ -8,11 +8,14 @@ if (!isset($GLOBALS['basePath'])) {
 	exit;
 }
 
-Object::$schema['productgroup'] = array();
+Entity::$schema['Productgroup'] = [
+	'table' => 'productgroup',
+	'properties' => []
+];
 
-class ProductGroup extends Object {
+class Productgroup extends Object {
 
-	function ProductGroup() {
+	function Productgroup() {
 		parent::Object('productgroup');
 	}
 

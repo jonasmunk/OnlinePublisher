@@ -8,16 +8,20 @@ if (!isset($GLOBALS['basePath'])) {
 	exit;
 }
 
-Object::$schema['user'] = array(
-	'username'   => array('type'=>'text'),
-	'password'  => array('type'=>'text'),
-	'email'  => array('type'=>'text'),
-	'language'  => array('type'=>'language'),
-	'internal'  => array('type'=>'boolean'),
-	'external'  => array('type'=>'boolean'),
-	'administrator'  => array('type'=>'boolean'),
-	'secure'  => array('type'=>'boolean')
-);
+Entity::$schema['User'] = [
+	'table' => 'user',
+	'properties' => [
+    	'username'   => array('type'=>'text'),
+    	'password'  => array('type'=>'text'),
+    	'email'  => array('type'=>'text'),
+    	'language'  => array('type'=>'language'),
+    	'internal'  => array('type'=>'boolean'),
+    	'external'  => array('type'=>'boolean'),
+    	'administrator'  => array('type'=>'boolean'),
+    	'secure'  => array('type'=>'boolean')	    
+	]
+];
+
 class User extends Object {
 	
 	var $username;

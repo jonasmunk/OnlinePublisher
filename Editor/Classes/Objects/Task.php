@@ -8,19 +8,23 @@ if (!isset($GLOBALS['basePath'])) {
 	exit;
 }
 
-Object::$schema['task'] = array(
-	'deadline' => array('type'=>'datetime'),
-	'completed' => array('type'=>'boolean'),
-	'containingObjectId' => array('type'=>'int','column'=>'containing_object_id'),
-	'milestoneId' => array('type'=>'int','column'=>'milestone_id'),
-	'priority' => array('type'=>'float')
-);
+Entity::$schema['Task'] = [
+	'table' => 'task',
+	'properties' => [
+    	'deadline' => array('type'=>'datetime'),
+    	'completed' => array('type'=>'boolean'),
+    	'containingObjectId' => array('type'=>'int','column'=>'containing_object_id'),
+    	'milestoneId' => array('type'=>'int','column'=>'milestone_id'),
+    	'priority' => array('type'=>'float')
+	]
+];
+
 class Task extends Object {
 
 	var $deadline;
-	var $completed=false;
-	var $containingObjectId=0;
-	var $milestoneId=0;
+	var $completed = false;
+	var $containingObjectId = 0;
+	var $milestoneId = 0;
 	var $priority;
 
 	function Task() {

@@ -142,7 +142,7 @@ class WeblogTemplateController extends TemplateController
 	function getBlueprint($id) {
 		$sql = "select pageblueprint_id from weblog where pageblueprint_id>0 and page_id = ".Database::int($id);
 		if ($row = Database::selectFirst($sql)) {
-			return PageBlueprint::load($row['pageblueprint_id']);
+			return Pageblueprint::load($row['pageblueprint_id']);
 		}
 		return null;
 	}

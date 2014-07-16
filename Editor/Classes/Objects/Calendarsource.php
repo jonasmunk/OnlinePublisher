@@ -8,13 +8,16 @@ if (!isset($GLOBALS['basePath'])) {
 	exit;
 }
 
-Object::$schema['calendarsource'] = array(
-	'url'				=> array('type'=>'string'),
-	'synchronized'		=> array('type'=>'datetime'),
-	'syncInterval'		=> array('type'=>'int','column'=>'sync_interval'),
-	'filter'			=> array('type'=>'string'),
-	'displayTitle'		=> array('type'=>'string','column'=>'display_title')
-);
+Entity::$schema['Calendarsource'] = [
+    'table' => 'calendarsource',
+    'properties' => array(
+    	'url'				=> array('type'=>'string'),
+    	'synchronized'		=> array('type'=>'datetime'),
+    	'syncInterval'		=> array('type'=>'int','column'=>'sync_interval'),
+    	'filter'			=> array('type'=>'string'),
+    	'displayTitle'		=> array('type'=>'string','column'=>'display_title')
+    )
+];
 class Calendarsource extends Object {
 	var $url;
 	var $synchronized;

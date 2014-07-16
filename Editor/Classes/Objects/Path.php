@@ -15,6 +15,7 @@ Entity::$schema['Path'] = [
     	'path'  => ['type'=>'string']
 	]
 ];
+
 class Path extends Object {
 	var $path;
 	var $pageId=0;

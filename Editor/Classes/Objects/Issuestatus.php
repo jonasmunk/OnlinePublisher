@@ -8,8 +8,11 @@ if (!isset($GLOBALS['basePath'])) {
 	exit;
 }
 
-Object::$schema['issuestatus'] = array(
-);
+Entity::$schema['Issuestatus'] = [
+    'table' => 'issuestatus',
+    'properties' => []
+];
+
 class Issuestatus extends Object {
     
     function Issuestatus() {

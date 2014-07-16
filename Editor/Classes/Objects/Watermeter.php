@@ -8,9 +8,13 @@ if (!isset($GLOBALS['basePath'])) {
 	exit;
 }
 
-Object::$schema['watermeter'] = array(
-	'number' => array('type'=>'string')
-);
+Entity::$schema['Watermeter'] = [
+	'table' => 'watermeter',
+	'properties' => [
+    	'number' => array('type'=>'string')
+	]
+];
+
 class Watermeter extends Object {
 	var $number;
 

@@ -8,11 +8,15 @@ if (!isset($GLOBALS['basePath'])) {
 	exit;
 }
 
-Object::$schema['newssource'] = array(
-	'url' => array('type'=>'text'),
-	'synchronized'		=> array('type'=>'datetime'),
-	'syncInterval'		=> array('type'=>'int','column'=>'sync_interval')
-);
+Entity::$schema['Newssource'] = [
+    'table' => 'newssource',
+    'properties' => array(
+    	'url' => array('type'=>'text'),
+    	'synchronized'		=> array('type'=>'datetime'),
+    	'syncInterval'		=> array('type'=>'int','column'=>'sync_interval')
+    )
+];
+
 class Newssource extends Object {
 	var $url;
 	var $synchronized;

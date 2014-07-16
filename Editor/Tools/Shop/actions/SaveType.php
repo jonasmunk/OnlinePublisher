@@ -8,9 +8,9 @@ require_once '../../../Include/Private.php';
 $data = Request::getObject('data');
 
 if ($data->id>0) {
-	$type = ProductType::load($data->id);
+	$type = Producttype::load($data->id);
 } else {
-	$type = new ProductType();
+	$type = new Producttype();
 }
 $type->setTitle($data->title);
 $type->setNote($data->note);

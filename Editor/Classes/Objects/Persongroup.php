@@ -8,10 +8,14 @@ if (!isset($GLOBALS['basePath'])) {
 	exit;
 }
 
-Object::$schema['persongroup'] = array();
-class PersonGroup extends Object {
+Entity::$schema['Persongroup'] = [
+	'table' => 'persongroup',
+	'properties' => []
+];
+
+class Persongroup extends Object {
 	
-	function PersonGroup() {
+	function Persongroup() {
 		parent::Object('persongroup');
 	}
 	

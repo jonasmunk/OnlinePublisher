@@ -8,7 +8,10 @@ if (!isset($GLOBALS['basePath'])) {
 	exit;
 }
 
-Object::$schema['calendar'] = array();
+Entity::$schema['Calendar'] = [
+    'table' => 'calendar',
+    'properties' => []
+];
 class Calendar extends Object {
 
 	function Calendar() {

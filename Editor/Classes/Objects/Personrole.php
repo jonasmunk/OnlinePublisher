@@ -8,9 +8,15 @@ if (!isset($GLOBALS['basePath'])) {
 	exit;
 }
 
-Object::$schema['personrole'] = array(
-	'personId'   => array('type'=>'int','column'=>'person_id')
-);
+Entity::$schema['Personrole'] = [
+	'table' => 'personrole',
+	'properties' => [
+    	'personId' => ['type' => 'int', 'column' => 'person_id', 'relation' => 
+            ['class' => 'Person', 'property' => 'id']
+        ]
+	]
+];
+
 class Personrole extends Object {
 	
 	var $personId;

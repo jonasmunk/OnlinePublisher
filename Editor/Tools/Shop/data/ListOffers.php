@@ -13,7 +13,7 @@ if ($sort=='') $sort='product';
 if ($direction=='') $direction='ascending';
 
 $query = array('windowSize' => $windowSize,'windowNumber' => $windowNumber,'sort' => $sort,'direction' => $direction);
-$list = ProductOffer::find($query);
+$list = Productoffer::find($query);
 $offers = $list['result'];
 
 $writer = new ListWriter();

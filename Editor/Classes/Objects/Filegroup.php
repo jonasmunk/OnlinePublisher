@@ -9,7 +9,10 @@ if (!isset($GLOBALS['basePath'])) {
 	exit;
 }
 
-Object::$schema['filegroup'] = array();
+Entity::$schema['Filegroup'] = [
+    'table' => 'filegroup',
+    'properties' => []
+];
 
 class Filegroup extends Object {
 

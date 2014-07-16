@@ -8,19 +8,23 @@ if (!isset($GLOBALS['basePath'])) {
 	exit;
 }
 
-Object::$schema['productoffer'] = array(
-	'offer' => array('type'=>'string'),
-	'productId' => array('type'=>'int','column'=>'product_id'),
-	'personId' => array('type'=>'int','column'=>'person_id'),
-	'expiry' => array('type'=>'datetime')
-);
-class ProductOffer extends Object {
+Entity::$schema['Productoffer'] = [
+	'table' => 'productoffer',
+	'properties' => array(
+    	'offer' => array('type'=>'string'),
+    	'productId' => array('type'=>'int','column'=>'product_id'),
+    	'personId' => array('type'=>'int','column'=>'person_id'),
+    	'expiry' => array('type'=>'datetime')
+    )
+];
+
+class Productoffer extends Object {
 	var $offer;
 	var $productId = 0;
 	var $personId = 0;
 	var $expiry;
 
-	function ProductOffer() {
+	function Productoffer() {
 		parent::Object('productoffer');
 	}
 
@@ -84,7 +88,7 @@ class ProductOffer extends Object {
 		
 		$list = array();
 		foreach ($ids as $id) {
-			$list[] = ProductOffer::load($id);
+			$list[] = Productoffer::load($id);
 		}
 		return $list;
 	}
@@ -114,7 +118,7 @@ class ProductOffer extends Object {
 		$list = ObjectService::_find($parts,$query);
 		$list['result'] = array();
 		foreach ($list['rows'] as $row) {
-			$list['result'][] = ProductOffer::load($row['id']);
+			$list['result'][] = Productoffer::load($row['id']);
 		}
 		return $list;
 	}

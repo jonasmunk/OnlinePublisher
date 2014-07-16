@@ -8,11 +8,15 @@ if (!isset($GLOBALS['basePath'])) {
 	exit;
 }
 
-Object::$schema['weblogentry'] = array(
-	'text' => array('type'=>'string'),
-	'date'  => array('type'=>'datetime'),
-	'pageId' => array('type'=>'int','column'=>'page_id')
-);
+Entity::$schema['Weblogentry'] = [
+	'table' => 'weblogentry',
+	'properties' => [
+    	'text' => array('type'=>'string'),
+    	'date'  => array('type'=>'datetime'),
+    	'pageId' => array('type'=>'int','column'=>'page_id')
+	]
+];
+
 class Weblogentry extends Object {
 	var $text;
 	var $date;

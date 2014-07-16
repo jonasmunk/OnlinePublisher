@@ -8,9 +8,9 @@ require_once '../../../Include/Private.php';
 $data = Request::getObject('data');
 
 if ($data->id>0) {
-	$group = ProductGroup::load($data->id);
+	$group = Productgroup::load($data->id);
 } else {
-	$group = new ProductGroup();
+	$group = new Productgroup();
 }
 $group->setTitle($data->title);
 $group->setNote($data->note);

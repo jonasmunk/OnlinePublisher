@@ -8,11 +8,15 @@ if (!isset($GLOBALS['basePath'])) {
 	exit;
 }
 
-Object::$schema['event'] = array(
-	'location'   => array('type'=>'string'),
-	'startdate'  => array('type'=>'datetime'),
-	'enddate'  => array('type'=>'datetime')
-);
+Entity::$schema['Event'] = [
+    'table' => 'event',
+    'properties' => array(
+    	'location'   => array('type'=>'string'),
+    	'startdate'  => array('type'=>'datetime'),
+    	'enddate'  => array('type'=>'datetime')
+    )
+];
+
 class Event extends Object {
 	var $startdate;
 	var $enddate;

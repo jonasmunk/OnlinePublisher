@@ -8,13 +8,17 @@ if (!isset($GLOBALS['basePath'])) {
 	exit;
 }
 
-Object::$schema['securityzone'] = array(
-	'authenticationPageId'   => array('type'=>'int','column'=>'authentication_page_id')
-);
-class SecurityZone extends Object {
+Entity::$schema['Securityzone'] = [
+	'table' => 'securityzone',
+	'properties' => [
+    	'authenticationPageId'   => array('type'=>'int','column'=>'authentication_page_id')
+	]
+];
+
+class Securityzone extends Object {
 	var $authenticationPageId;
 
-	function SecurityZone() {
+	function Securityzone() {
 		parent::Object('securityzone');
 	}
 	

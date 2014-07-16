@@ -8,7 +8,11 @@ if (!isset($GLOBALS['basePath'])) {
 	exit;
 }
 
-Object::$schema['mailinglist'] = array();
+Entity::$schema['Mailinglist'] = [
+    'table' => 'mailinglist',
+    'properties' => []
+];
+
 class Mailinglist extends Object {
 
 	function Mailinglist() {
@@ -38,7 +42,7 @@ class Mailinglist extends Object {
 		$result = Database::select($sql);
 		$list = array();
 		while ($row = Database::next($result)) {
-			$list[] = EmailAddress::load($row['id']);
+			$list[] = Emailaddress::load($row['id']);
 		}
 		Database::free($result);
 		return $list;

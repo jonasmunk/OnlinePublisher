@@ -15,10 +15,7 @@ Entity::$schema['Issue'] = array(
 		'statusId' => array('type'=>'int','column'=>'issuestatus_id','relation'=>array('class'=>'Issuestatus','property'=>'id'))
 	)
 );
-Object::$schema['issue'] = array(
-	'kind' => array('type'=>'string'),
-	'statusId' => array('type'=>'int','column'=>'issuestatus_id')
-);
+
 class Issue extends Object {
     
 	static $unknown = 'unknown';

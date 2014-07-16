@@ -8,9 +8,9 @@ require_once '../../../Include/Private.php';
 $data = Request::getObject('data');
 
 if ($data->id>0) {
-	$offer = ProductOffer::load($data->id);
+	$offer = Productoffer::load($data->id);
 } else {
-	$offer = new ProductOffer();
+	$offer = new Productoffer();
 }
 $offer->setOffer($data->offer);
 $offer->setNote($data->note);

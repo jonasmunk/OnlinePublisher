@@ -8,13 +8,17 @@ if (!isset($GLOBALS['basePath'])) {
 	exit;
 }
 
-Object::$schema['newssourceitem'] = array(
-	'text' => array('type'=>'text'),
-	'url' => array('type'=>'text'),
-	'newssourceId' => array('type' => 'int','column' => 'newssource_id'),
-	'date' => array('type'=>'datetime'),
-	'guid' => array('type'=>'text')
-);
+Entity::$schema['Newssourceitem'] = [
+    'table' => 'newssourceitem',
+    'properties' => array(
+    	'text' => array('type'=>'text'),
+    	'url' => array('type'=>'text'),
+    	'newssourceId' => array('type' => 'int','column' => 'newssource_id'),
+    	'date' => array('type'=>'datetime'),
+    	'guid' => array('type'=>'text')
+    )
+];
+
 class Newssourceitem extends Object {
 	var $text;
 	var $url;

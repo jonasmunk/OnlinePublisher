@@ -7,11 +7,14 @@ if (!isset($GLOBALS['basePath'])) {
 	header('HTTP/1.1 403 Forbidden');
 	exit;
 }
+Entity::$schema['Design'] = [
+    'table' => 'design',
+    'properties' => array(
+    	'unique' => array('type'=>'string'),
+    	'parameters' => array('type'=>'string')
+    )
+];
 
-Object::$schema['design'] = array(
-	'unique' => array('type'=>'string'),
-	'parameters' => array('type'=>'string')
-);
 class Design extends Object {
     
     var $unique;

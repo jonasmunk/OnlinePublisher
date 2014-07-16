@@ -8,15 +8,19 @@ if (!isset($GLOBALS['basePath'])) {
 	exit;
 }
 
-Object::$schema['emailaddress'] = array(
-	'address' => array('type'=>'string'),
-	'containingObjectId'   => array('type'=>'int','column'=>'containing_object_id')
-);
-class EmailAddress extends Object {
+Entity::$schema['Emailaddress'] = [
+    'table' => 'emailaddress',
+    'properties' => array(
+    	'address' => array('type'=>'string'),
+    	'containingObjectId'   => array('type'=>'int','column'=>'containing_object_id')
+    )
+];
+
+class Emailaddress extends Object {
 	var $address;
 	var $containingObjectId=0;
 
-	function EmailAddress() {
+	function Emailaddress() {
 		parent::Object('emailaddress');
 	}
 

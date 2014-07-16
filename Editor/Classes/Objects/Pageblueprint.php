@@ -8,17 +8,21 @@ if (!isset($GLOBALS['basePath'])) {
 	exit;
 }
 
-Object::$schema['pageblueprint'] = array(
-	'designId' => array('type' => 'int','column' => 'design_id'),
-	'frameId' => array('type' => 'int','column' => 'frame_id'),
-	'templateId' => array('type' => 'int','column' => 'template_id'),
-);
-class PageBlueprint extends Object {
+Entity::$schema['Pageblueprint'] = [
+    'table' => 'pageblueprint',
+    'properties' => array(
+    	'designId' => array('type' => 'int','column' => 'design_id'),
+    	'frameId' => array('type' => 'int','column' => 'frame_id'),
+    	'templateId' => array('type' => 'int','column' => 'template_id'),
+    )
+];
+
+class Pageblueprint extends Object {
 	var $designId;
 	var $frameId;
 	var $templateId;
 
-	function PageBlueprint() {
+	function Pageblueprint() {
 		parent::Object('pageblueprint');
 	}
 	

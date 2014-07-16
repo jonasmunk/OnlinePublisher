@@ -8,7 +8,10 @@ if (!isset($GLOBALS['basePath'])) {
 	exit;
 }
 
-Object::$schema['imagegroup'] = array();
+Entity::$schema['Imagegroup'] = [
+    'table' => 'imagegroup',
+    'properties' => []
+];
 
 class Imagegroup extends Object {
 

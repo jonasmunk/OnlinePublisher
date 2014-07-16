@@ -8,21 +8,25 @@ if (!isset($GLOBALS['basePath'])) {
 	exit;
 }
 
-Object::$schema['person'] = array(
-	'firstname' => array('type'=>'string'),
-	'middlename' => array('type'=>'string'),
-	'surname' => array('type'=>'string'),
-	'initials' => array('type'=>'string'),
-	'nickname' => array('type'=>'string'),
-	'jobtitle' => array('type'=>'string'),
-	'sex' => array('type'=>'string'),
-	'streetname' => array('type'=>'string'),
-	'zipcode' => array('type'=>'string'),
-	'city' => array('type'=>'string'),
-	'country' => array('type'=>'string'),
-	'webaddress' => array('type'=>'string'),
-	'imageId' => array('type'=>'int','column'=>'image_id')
-);
+Entity::$schema['Person'] = [
+    'table' => 'person',
+    'properties' => [
+    	'firstname' => array('type'=>'string'),
+    	'middlename' => array('type'=>'string'),
+    	'surname' => array('type'=>'string'),
+    	'initials' => array('type'=>'string'),
+    	'nickname' => array('type'=>'string'),
+    	'jobtitle' => array('type'=>'string'),
+    	'sex' => array('type'=>'string'),
+    	'streetname' => array('type'=>'string'),
+    	'zipcode' => array('type'=>'string'),
+    	'city' => array('type'=>'string'),
+    	'country' => array('type'=>'string'),
+    	'webaddress' => array('type'=>'string'),
+    	'imageId' => array('type'=>'int','column'=>'image_id')        
+    ]
+];
+
 class Person extends Object {
 	var $firstname;
 	var $middlename;
@@ -390,14 +394,14 @@ class Person extends Object {
 		$foundIds = array();
 		foreach ($new as $email) { 
 			if (isset($email->id) && $email->id>0) {
-				$old = EmailAddress::load($email->id);
+				$old = Emailaddress::load($email->id);
 				if ($old==null) {
-					$old = new EmailAddress();
+					$old = new Emailaddress();
 				} else {
 					$foundIds[] = $old->getId();
 				}
 			} else {
-				$old = new EmailAddress();
+				$old = new Emailaddress();
 			}
 			if (strlen($email->address)>0) {
 				$old->setAddress($email->address);

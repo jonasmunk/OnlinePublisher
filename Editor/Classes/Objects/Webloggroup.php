@@ -8,11 +8,14 @@ if (!isset($GLOBALS['basePath'])) {
 	exit;
 }
 
-Object::$schema['webloggroup'] = array();
+Entity::$schema['Webloggroup'] = [
+	'table' => 'webloggroup',
+	'properties' => []
+];
 
-class WeblogGroup extends Object {
+class Webloggroup extends Object {
 
-	function WeblogGroup() {
+	function Webloggroup() {
 		parent::Object('webloggroup');
 	}
 	
