@@ -11,7 +11,7 @@ if (!isset($GLOBALS['basePath'])) {
 Entity::$schema['PosterPart'] = array(
 	'table' => 'part_poster',
 	'properties' => array(
-		'recipe' => array( 'type' => 'text' )
+		'recipe' => array( 'type' => 'string' )
 	)
 );
 

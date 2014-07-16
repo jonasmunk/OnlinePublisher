@@ -12,7 +12,7 @@ Entity::$schema['FilePart'] = [
 	'table' => 'part_file',
 	'properties' => [
 		'fileId' => [ 'type' => 'int', 'column' => 'file_id' ],
-		'text' => [ 'type' => 'text' ]
+		'text' => [ 'type' => 'string' ]
 	]
 ];
 

@@ -11,19 +11,19 @@ if (!isset($GLOBALS['basePath'])) {
 Entity::$schema['NewsPart'] = [
 	'table' => 'part_news',
 	'properties' => [
-		'align' => [ 'type' => 'text' ],
-		'width' => [ 'type' => 'text' ],
+		'align' => [ 'type' => 'string' ],
+		'width' => [ 'type' => 'string' ],
 		'newsId' => ['type'=>'int', 'column' => 'news_id','relation'=>['class'=>'News','property'=>'id']],
-		'mode' => [ 'type' => 'text' ],
-  		'title' => [ 'type' => 'text' ],
-		'sortBy' => [ 'type' => 'text', 'column' => 'sortby' ],
-  		'sortDir' => [ 'type' => 'text', 'column' => 'sortdir' ],
+		'mode' => [ 'type' => 'string' ],
+  		'title' => [ 'type' => 'string' ],
+		'sortBy' => [ 'type' => 'string', 'column' => 'sortby' ],
+  		'sortDir' => [ 'type' => 'string', 'column' => 'sortdir' ],
 		'maxItems' => [ 'type' => 'int', 'column' => 'maxitems' ],
-		'timeType' => [ 'type' => 'text', 'column' => 'timetype' ],
+		'timeType' => [ 'type' => 'string', 'column' => 'timetype' ],
   		'timeCount' => [ 'type' => 'int', 'column' => 'timecount' ],
 		'startDate' => [ 'type' => 'datetime', 'column' => 'startdate' ],
 		'endDate' => [ 'type' => 'datetime', 'column' => 'enddate' ],
-		'variant' => [ 'type' => 'text' ]
+		'variant' => [ 'type' => 'string' ]
 	],
 	'relations' => [
 		'newsGroupIds' => [ 'table' => 'part_news_newsgroup', 'fromColumn' => 'part_id', 'toColumn' => 'newsgroup_id' ]

@@ -11,7 +11,7 @@ if (!isset($GLOBALS['basePath'])) {
 Entity::$schema['Part'] = [
 	'table' => 'part',
 	'properties' => [
-		'type' => ['type' => 'text'],
+		'type' => ['type' => 'string'],
 		'dynamic' => ['type' => 'boolean']
 	]
 ];

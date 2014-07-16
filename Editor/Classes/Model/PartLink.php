@@ -12,7 +12,7 @@ Entity::$schema['PartLink'] = array(
 	'table' => 'part_link',
 	'properties' => array(
 		'partId' => array('type'=>'int','relation'=>array('class'=>'Part','property'=>'id')),
-		'targetValue' => array('type'=>'text','relations'=>array(
+		'targetValue' => array('type'=>'string','relations'=>array(
 			array('class'=>'Page','property'=>'id'),
 			array('class'=>'File','property'=>'id')
 			)

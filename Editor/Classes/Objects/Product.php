@@ -79,7 +79,7 @@ class Product extends Object {
 		$result = Database::select($sql);
 		while ($row = Database::next($result)) {
 			$data.='<attribute name="'.Strings::escapeEncodedXML($row['name']).'">'.
-			Strings::escapeEncodedXMLBreak($row['value'],'<break/>').
+			Strings::escapeXMLBreak($row['value'],'<break/>').
 			'</attribute>';
 		}
 		Database::free($result);
@@ -180,7 +180,7 @@ class Product extends Object {
 		}
 	}
 
-    function find($query = array()) {
+    static function find($query = array()) {
     	$parts = array();
 		$parts['columns'] = 'object.id';
 		$parts['tables'] = 'product,object';

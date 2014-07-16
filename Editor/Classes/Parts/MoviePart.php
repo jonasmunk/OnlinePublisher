@@ -13,11 +13,11 @@ Entity::$schema['MoviePart'] = [
     'properties' => [
     	'fileId' => [ 'type' => 'int', 'column' => 'file_id'],
     	'imageId' => [ 'type' => 'int', 'column' => 'image_id' ],
-    	'text' => [ 'type' => 'text' ],
-    	'url' => [ 'type' => 'text' ],
-    	'code' => [ 'type' => 'text' ],
-    	'width' => [ 'type' => 'text' ],
-    	'height' => [ 'type' => 'text' ]
+    	'text' => [ 'type' => 'string' ],
+    	'url' => [ 'type' => 'string' ],
+    	'code' => [ 'type' => 'string' ],
+    	'width' => [ 'type' => 'string' ],
+    	'height' => [ 'type' => 'string' ]
     ]
 ];
 class MoviePart extends Part

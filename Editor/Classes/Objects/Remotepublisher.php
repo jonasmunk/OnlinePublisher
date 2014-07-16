@@ -11,7 +11,7 @@ if (!isset($GLOBALS['basePath'])) {
 Entity::$schema['Remotepublisher'] = [
 	'table' => 'remotepublisher',
 	'properties' => [
-	    'url' => ['type'=>'text'],
+	    'url' => ['type'=>'string'],
 	]
 ];
 

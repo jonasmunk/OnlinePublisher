@@ -11,16 +11,16 @@ if (!isset($GLOBALS['basePath'])) {
 Entity::$schema['MapPart'] = array(
 	'table' => 'part_map',
 	'properties' => array(
-		'provider' => array( 'type' => 'text' ),
+		'provider' => array( 'type' => 'string' ),
 		'latitude' => array( 'type' => 'float' ),
 		'longitude' => array( 'type' => 'float' ),
-		'text' => array( 'type' => 'text' ),
-		'maptype' => array( 'type' => 'text' ),
-		'markers' => array( 'type' => 'text' ),
+		'text' => array( 'type' => 'string' ),
+		'maptype' => array( 'type' => 'string' ),
+		'markers' => array( 'type' => 'string' ),
 		'zoom' => array( 'type' => 'int' ),
-		'width' => array( 'type' => 'text' ),
-		'height' => array( 'type' => 'text' ),
-		'frame' => array( 'type' => 'text' )
+		'width' => array( 'type' => 'string' ),
+		'height' => array( 'type' => 'string' ),
+		'frame' => array( 'type' => 'string' )
 	)
 );
 

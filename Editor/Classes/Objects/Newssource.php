@@ -11,7 +11,7 @@ if (!isset($GLOBALS['basePath'])) {
 Entity::$schema['Newssource'] = [
     'table' => 'newssource',
     'properties' => array(
-    	'url' => array('type'=>'text'),
+    	'url' => array('type'=>'string'),
     	'synchronized'		=> array('type'=>'datetime'),
     	'syncInterval'		=> array('type'=>'int','column'=>'sync_interval')
     )

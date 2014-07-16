@@ -11,11 +11,11 @@ if (!isset($GLOBALS['basePath'])) {
 Entity::$schema['Newssourceitem'] = [
     'table' => 'newssourceitem',
     'properties' => array(
-    	'text' => array('type'=>'text'),
-    	'url' => array('type'=>'text'),
+    	'text' => array('type'=>'string'),
+    	'url' => array('type'=>'string'),
     	'newssourceId' => array('type' => 'int','column' => 'newssource_id'),
     	'date' => array('type'=>'datetime'),
-    	'guid' => array('type'=>'text')
+    	'guid' => array('type'=>'string')
     )
 ];
 

@@ -11,21 +11,21 @@ if (!isset($GLOBALS['basePath'])) {
 Entity::$schema['ListingPart'] = array(
 	'table' => 'part_listing',
 	'properties' => array(
-		'text'   => array('type'=>'text'),
-		'listStyle'   => array('type'=>'text' , 'column' => 'type'),
-		'textAlign' => array( 'type' => 'text', 'column' => 'textalign' ),
-		'fontFamily' => array( 'type' => 'text', 'column' => 'fontfamily' ),
-		'fontSize' => array( 'type' => 'text', 'column' => 'fontsize' ),
-		'lineHeight' => array( 'type' => 'text', 'column' => 'lineheight' ),
-		'fontWeight' => array( 'type' => 'text', 'column' => 'fontweight' ),
-		'color' => array( 'type' => 'text', 'column' => 'color' ),
-		'wordSpacing' => array( 'type' => 'text', 'column' => 'wordspacing' ),
-		'letterSpacing' => array( 'type' => 'text', 'column' => 'letterspacing' ),
-		'textDecoration' => array( 'type' => 'text', 'column' => 'textdecoration' ),
-		'textIndent' => array( 'type' => 'text', 'column' => 'textindent' ),
-		'textTransform' => array( 'type' => 'text', 'column' => 'texttransform' ),
-		'fontStyle' => array( 'type' => 'text', 'column' => 'fontstyle' ),
-		'fontVariant' => array( 'type' => 'text', 'column' => 'fontvariant' )
+		'text'   => array('type'=>'string'),
+		'listStyle'   => array('type'=>'string' , 'column' => 'type'),
+		'textAlign' => array( 'type' => 'string', 'column' => 'textalign' ),
+		'fontFamily' => array( 'type' => 'string', 'column' => 'fontfamily' ),
+		'fontSize' => array( 'type' => 'string', 'column' => 'fontsize' ),
+		'lineHeight' => array( 'type' => 'string', 'column' => 'lineheight' ),
+		'fontWeight' => array( 'type' => 'string', 'column' => 'fontweight' ),
+		'color' => array( 'type' => 'string', 'column' => 'color' ),
+		'wordSpacing' => array( 'type' => 'string', 'column' => 'wordspacing' ),
+		'letterSpacing' => array( 'type' => 'string', 'column' => 'letterspacing' ),
+		'textDecoration' => array( 'type' => 'string', 'column' => 'textdecoration' ),
+		'textIndent' => array( 'type' => 'string', 'column' => 'textindent' ),
+		'textTransform' => array( 'type' => 'string', 'column' => 'texttransform' ),
+		'fontStyle' => array( 'type' => 'string', 'column' => 'fontstyle' ),
+		'fontVariant' => array( 'type' => 'string', 'column' => 'fontvariant' )
 	)
 );
 class ListingPart extends Part

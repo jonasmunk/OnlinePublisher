@@ -24,7 +24,7 @@ $products = $list['result'];
 $writer = new ListWriter();
 
 $writer->startList()->
-	window(array('total'=>$list['total'],'size'=>$list['windowSize'],'number'=>$list['windowNumber']))->
+	window(array('total'=>$list['total'],'size'=>$list['windowSize'],'page'=>$list['windowPage']))->
 	startHeaders()->
 		header(array('title'=>array('Product','da'=>'Produkt'),'width'=>40))->
 		header(array('title'=>array('Number','da'=>'Nummer'),'width'=>30))->

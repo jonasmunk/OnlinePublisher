@@ -12,11 +12,11 @@ Entity::$schema['ImagePart'] = [
 	'table' => 'part_image',
 	'properties' => [
 		'imageId' => ['type'=>'int', 'column' => 'image_id','relation'=>['class'=>'Image','property'=>'id']],
-		'text' => [ 'type' => 'text' ],
-		'align' => [ 'type' => 'text' ],
-		'frame' => [ 'type' => 'text' ],
+		'text' => [ 'type' => 'string' ],
+		'align' => [ 'type' => 'string' ],
+		'frame' => [ 'type' => 'string' ],
 		'greyscale' => [ 'type' => 'boolean' ],
-		'scaleMethod' => [ 'type' => 'text', 'column' => 'scalemethod' ],
+		'scaleMethod' => [ 'type' => 'string', 'column' => 'scalemethod' ],
 		'scalePercent' => [ 'type' => 'int', 'column' => 'scalepercent' ],
 		'scaleWidth' => [ 'type' => 'int', 'column' => 'scalewidth' ],
 		'scaleHeight' => [ 'type' => 'int', 'column' => 'scaleHeight' ]

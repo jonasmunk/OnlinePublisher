@@ -11,10 +11,10 @@ if (!isset($GLOBALS['basePath'])) {
 Entity::$schema['User'] = [
 	'table' => 'user',
 	'properties' => [
-    	'username'   => array('type'=>'text'),
-    	'password'  => array('type'=>'text'),
-    	'email'  => array('type'=>'text'),
-    	'language'  => array('type'=>'language'),
+    	'username'   => array('type'=>'string'),
+    	'password'  => array('type'=>'string'),
+    	'email'  => array('type'=>'string'),
+    	'language'  => array('type'=>'string'),
     	'internal'  => array('type'=>'boolean'),
     	'external'  => array('type'=>'boolean'),
     	'administrator'  => array('type'=>'boolean'),

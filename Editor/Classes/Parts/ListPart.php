@@ -11,19 +11,19 @@ if (!isset($GLOBALS['basePath'])) {
 Entity::$schema['ListPart'] = array(
 	'table' => 'part_list',
 	'properties' => array(
-		'align' => array( 'type' => 'text' ),
-		'width' => array( 'type' => 'text' ),
-		'title' => array( 'type' => 'text' ),
+		'align' => array( 'type' => 'string' ),
+		'width' => array( 'type' => 'string' ),
+		'title' => array( 'type' => 'string' ),
 		'maxItems' => array( 'type' => 'int', 'column' => 'maxitems' ),
-		'variant' => array( 'type' => 'text' ),
+		'variant' => array( 'type' => 'string' ),
 		'timeCount' => array( 'type' => 'int', 'column' => 'time_count' ),
-		'timeType' => array( 'type' => 'text', 'column' => 'time_type' ),
+		'timeType' => array( 'type' => 'string', 'column' => 'time_type' ),
 		'showSource' => array( 'type' => 'boolean', 'column' => 'show_source' ),
 		'showText' => array( 'type' => 'boolean', 'column' => 'show_text' ),
 		'showTimeZone' => array( 'type' => 'boolean', 'column' => 'show_timezone' ),
-		'timezone' => array( 'type' => 'text' ),
+		'timezone' => array( 'type' => 'string' ),
 		'maxTextLength' => array( 'type' => 'int', 'column' => 'maxtextlength' ),
-		'sortDirection' => array( 'type' => 'text', 'column' => 'sort_direction' )
+		'sortDirection' => array( 'type' => 'string', 'column' => 'sort_direction' )
 	),
 	'relations' => array(
 		'objectIds' => array( 'table' => 'part_list_object', 'fromColumn' => 'part_id', 'toColumn' => 'object_id' )

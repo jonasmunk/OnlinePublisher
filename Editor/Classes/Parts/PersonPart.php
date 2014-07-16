@@ -11,7 +11,7 @@ if (!isset($GLOBALS['basePath'])) {
 Entity::$schema['PersonPart'] = array(
 	'table' => 'part_person',
 	'properties' => array(
-		'align' => array( 'type' => 'text' ),
+		'align' => array( 'type' => 'string' ),
 		'personId' => array( 'type' => 'int', 'column' => 'person_id',
 			'relation'=>['class'=>'Person','property'=>'id']
 		 ),

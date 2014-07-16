@@ -11,7 +11,7 @@ if (!isset($GLOBALS['basePath'])) {
 Entity::$schema['TablePart'] = array(
 	'table' => 'part_table',
 	'properties' => array(
-		'html' => array( 'type' => 'text' )
+		'html' => array( 'type' => 'string' )
 	)
 );
 

@@ -11,11 +11,11 @@ if (!isset($GLOBALS['basePath'])) {
 Entity::$schema['Image'] = [
     'table' => 'image',
     'properties' => array(
-    	'filename'   => array('type'=>'text'),
+    	'filename'   => array('type'=>'string'),
     	'size'  => array('type'=>'int'),
     	'width'  => array('type'=>'int'),
     	'height'  => array('type'=>'int'),
-    	'mimetype'  => array('type'=>'text', 'column' => 'type')
+    	'mimetype'  => array('type'=>'string', 'column' => 'type')
     )
 ];
 

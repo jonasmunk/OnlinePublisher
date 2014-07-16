@@ -591,11 +591,13 @@ class ObjectService {
 		}
 		if (strlen($parts['ordering'])) {
 			$sql.=" order by ".$parts['ordering'];
-			if ($parts['direction']=='descending') {
-				$sql.=' desc';
-			} else if ($parts['direction']=='ascending') {
-				$sql.=' asc';
-			}
+            if (isset($parts['direction'])) {
+    			if ($parts['direction']=='descending') {
+    				$sql.=' desc';
+    			} else if ($parts['direction']=='ascending') {
+    				$sql.=' asc';
+    			}                
+            }
 		}
 		$start=0;
 		$end=1000;
