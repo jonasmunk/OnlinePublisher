@@ -11,6 +11,7 @@ if (!isset($GLOBALS['basePath'])) {
 Entity::$schema['Part'] = [
 	'table' => 'part',
 	'properties' => [
+		'id' => ['type' => 'int'],
 		'type' => ['type' => 'string'],
 		'dynamic' => ['type' => 'boolean']
 	]
@@ -28,6 +29,18 @@ class Part extends Entity
 	function getType() {
 	    return $this->type;
 	}
+    
+    function setType($type) {
+        $this->type = $type;
+    }
+    
+    function setDynamic($dynamic) {
+        $this->dynamic = $dynamic;
+    }
+    
+    function getDynamic() {
+        return $this->isDynamic();
+    }
 	
 	function save() {
 		PartService::save($this);

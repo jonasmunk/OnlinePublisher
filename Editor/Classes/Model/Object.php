@@ -11,6 +11,7 @@ if (!isset($GLOBALS['basePath'])) {
 Entity::$schema['Object'] = [
 	'table' => 'object',
 	'properties' => [
+		'id' => ['type' => 'int'],
 		'title' => ['type' => 'string'],
 		'created' => ['type' => 'datetime'],
 		'updated' => ['type' => 'datetime'],
@@ -42,6 +43,10 @@ class Object extends Entity {
 	function getType() {
 		return $this->type;
 	}
+
+	function setType($type) {
+		$this->type = $type;
+	}
 	
 	function setTitle($title) {
 		$this->title = $title;
@@ -71,12 +76,24 @@ class Object extends Entity {
 		return ($this->updated<=$this->published);
 	}
 	
+	function setPublished($published) {
+		$this->published = $published;
+	}
+
 	function getUpdated() {
 		return $this->updated;
 	}
 	
+	function setUpdated($updated) {
+		$this->updated = $updated;
+	}
+
 	function getCreated() {
 		return $this->created;
+	}
+    
+	function setCreated($created) {
+		$this->created = $created;
 	}
 	
 	function setOwnerId($ownerId) {

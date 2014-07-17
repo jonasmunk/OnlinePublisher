@@ -58,5 +58,6 @@ class TestFilePart extends UnitTestCase {
 		$this->assertIdentical($imported->getFileId(),$obj->getFileId());
 		$this->assertIdentical($imported->getText(),$obj->getText());
 	}
+        
 }
 ?>

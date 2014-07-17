@@ -199,12 +199,14 @@ class Database {
 		return $ids;
 	}
 	
-	static function getIds($sql) {
+	static function getIds($sql,$parameters=null) {
+        if ($parameters!==null) {
+            $sql = Database::compile($sql,$parameters);
+        }
 		$result = Database::select($sql);
-		$ids = array();
+		$ids = [];
 		while($row = Database::next($result)) {
-			// TODO intval this
-			$ids[] = $row['id'];
+			$ids[] = intval($row['id']);
 		}
 		Database::free($result);
 		return $ids;

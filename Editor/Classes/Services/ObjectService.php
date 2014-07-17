@@ -134,56 +134,7 @@ class ObjectService {
 
 	
 	static function load($id,$type) {
-		ObjectService::importType($type);
-		$schema = ObjectService::_getSchema($type);
-		if (is_array($schema)) {
-			
-			$sql = "select object.id,object.title,object.note,object.type as object_type,object.owner_id,UNIX_TIMESTAMP(object.created) as created,UNIX_TIMESTAMP(object.updated) as updated,UNIX_TIMESTAMP(object.published) as published,object.searchable";
-			foreach ($schema as $property => $info) {
-				$column = SchemaService::getColumn($property,$info);
-				if (@$info['type']=='datetime') {
-					$sql.=",UNIX_TIMESTAMP(`$type`.`$column`) as `$column`";
-				} else {
-					$sql.=",`$type`.`$column`";
-				}
-			}
-			$sql.=" from `object`,";
-			$sql.="`".$type."` where `".$type."`.object_id=object.id and object.id=".Database::int($id);
-		
-			if ($row = Database::selectFirst($sql)) {
-		    	$unique = ucfirst($row['object_type']);
-	    		$obj = new $unique;
-				$obj->id = intval($row['id']);
-				$obj->title = $row['title'];
-				$obj->created = intval($row['created']);
-				$obj->updated = intval($row['updated']);
-				$obj->published = intval($row['published']);
-				$obj->type = $row['object_type'];
-				$obj->note = $row['note'];
-				$obj->ownerId = intval($row['owner_id']);
-				$obj->searchable = ($row['searchable']==1);
-				foreach ($schema as $property => $info) {
-					$column = SchemaService::getColumn($property,$info);
-					if (@$info['type']=='int') {
-						$obj->$property = intval($row[$column]);
-					} else if (@$info['type']=='int') {
-						$obj->$property = floatval($row[$column]);
-					} else if (@$info['type']=='datetime') {
-						$obj->$property = $row[$column] ? intval($row[$column]) : null;
-					} else if (@$info['type']=='boolean') {
-						$obj->$property = $row[$column]==1 ? true : false;
-					} else {
-						$obj->$property = $row[$column];
-					}
-				}
-				return $obj;
-	    	} else {
-				Log::debug('Not found: '.$id);
-			}
-		} else {
-			Log::debug('No schema for: '.$type);
-		}
-		return null;
+        return ModelService::load(ucfirst($type),$id);
 	}
 	
 	static function _getSchema($type) {

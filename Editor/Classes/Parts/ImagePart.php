@@ -19,7 +19,7 @@ Entity::$schema['ImagePart'] = [
 		'scaleMethod' => [ 'type' => 'string', 'column' => 'scalemethod' ],
 		'scalePercent' => [ 'type' => 'int', 'column' => 'scalepercent' ],
 		'scaleWidth' => [ 'type' => 'int', 'column' => 'scalewidth' ],
-		'scaleHeight' => [ 'type' => 'int', 'column' => 'scaleHeight' ]
+		'scaleHeight' => [ 'type' => 'int', 'column' => 'scaleheight' ]
 	]
 ];
 

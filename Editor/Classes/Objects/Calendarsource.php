@@ -40,6 +40,15 @@ class Calendarsource extends Object {
 	function getUrl() {
 		return $this->url;
 	}
+    
+    function setSynchronized($synchronized) {
+        $this->synchronized = $synchronized;
+    }
+    
+    function getSynchronized() {
+        return $this->synchronized;
+    }
+    
 	
 	function setSyncInterval($syncInterval) {
 	    $this->syncInterval = $syncInterval;
@@ -68,11 +77,7 @@ class Calendarsource extends Object {
 	function getIcon() {
 		return 'common/internet';
 	}
-	
-	function getSynchronized() {
-		return $this->synchronized;
-	}
-	
+		
 	function removeMore() {
 		$sql = "delete from calendarsource_event where calendarsource_id=".Database::int($this->id);
 		Database::delete($sql);

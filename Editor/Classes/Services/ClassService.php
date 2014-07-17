@@ -11,7 +11,6 @@ if (!isset($GLOBALS['basePath'])) {
 class ClassService {
 	
 	static function getClassInfo() {
-		global $basePath;
 		$infos = array();
 		$files = ClassService::_getFiles();
 		foreach ($files as $path) {

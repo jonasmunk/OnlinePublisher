@@ -18,43 +18,7 @@ class PartService {
 		if (!ClassService::load($class)) {
 			return null;
 		}
-		$schema = PartService::getSchema($type);
-		if (!$schema) {
-			Log::debug('No schema for '.$type);
-			return null;
-		}
-		$sql = "select part.id";
-		$properties = isset($schema['properties']) ? $schema['properties'] : [];
-		foreach ($properties as $field => $info) {
-			$column = isset($info['column']) ? $info['column'] : $field;
-			if ($info['type']=='datetime') {
-				$sql.=",UNIX_TIMESTAMP(`part_$type`.`$column`) as `$column`";
-			} else {
-				$sql.=",`part_$type`.`$column`";
-			}
-		}
-		$sql.=" from part,part_".$type." where part.id=part_".$type.".part_id and part.id=".$id;
-		if ($row = Database::selectFirst($sql)) {
-			$part = new $class();
-			$part->setId($row['id']);
-			foreach ($properties as $field => $info) {
-				$setter = 'set'.ucfirst($field);
-				$column = isset($info['column']) ? $info['column'] : $field;
-				$part->$setter($row[$column]);
-			}
-			
-			if (isset($schema['relations']) && is_array($schema['relations'])) {
-				foreach ($schema['relations'] as $field => $info) {
-					$setter = 'set'.ucfirst($field);
-					$sql = "select `".$info['toColumn']."` as id from `".$info['table']."` where `".$info['fromColumn']."`=".Database::int($id);
-					$ids = Database::getIds($sql);
-					$part->$setter($ids);
-				}
-			}
-			
-			return $part;
-		}
-		return null;
+        return ModelService::load($class,$id);
 	}
 
 	static function remove($part) {

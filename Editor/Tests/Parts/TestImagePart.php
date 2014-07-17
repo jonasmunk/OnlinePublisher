@@ -56,7 +56,6 @@ class TestImagePart extends UnitTestCase {
 		$xml = $ctrl->build($obj,new PartContext());
 		
 		$this->assertNull($ctrl->importFromString(null));
-		
 		$imported = $ctrl->importFromString($xml);
 
 		$this->assertNotNull($imported);

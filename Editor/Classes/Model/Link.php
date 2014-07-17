@@ -8,18 +8,22 @@ if (!isset($GLOBALS['basePath'])) {
 	exit;
 }
 
-Entity::$schema['Link'] = array(
+Entity::$schema['Link'] = [
 	'table' => 'link',
-	'properties' => array(
-		'partId' => array('type'=>'int','relation'=>array('class'=>'Part','property'=>'id')),
-		'pageId' => array('type'=>'int','relation'=>array('class'=>'Page','property'=>'id')),
-		'targetId' => array('type'=>'int','relations'=>array(
-			array('class'=>'Page','property'=>'id'),
-			array('class'=>'File','property'=>'id')
-			)
-		)
-	)
-);
+	'properties' => [
+        'text' => ['type' => 'string'],
+        'alternative' => ['type' => 'string'],
+        'targetType' => ['type' => 'string'],
+        'targetValue' => ['type' => 'string'],
+		'partId' => ['type'=>'int','relation'=>['class'=>'Part','property'=>'id']],
+		'pageId' => ['type'=>'int','relation'=>['class'=>'Page','property'=>'id']],
+		'targetId' => ['type'=>'int','relations'=> [
+                ['class'=>'Page','property'=>'id'],
+                ['class'=>'File','property'=>'id']
+            ]
+        ]
+    ]
+];
 class Link extends Entity implements Loadable {
     
     var $text;
