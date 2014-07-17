@@ -53,6 +53,7 @@ $HUMANISE_EDITOR_CLASSES = array (
     'JsonService' => 'Services/JsonService.php',
     'LogService' => 'Services/LogService.php',
     'MailService' => 'Services/MailService.php',
+    'ModelService' => 'Services/ModelService.php',
     'NewsService' => 'Services/NewsService.php',
     'ObjectLinkService' => 'Services/ObjectLinkService.php',
     'ObjectService' => 'Services/ObjectService.php',
@@ -240,7 +241,8 @@ $HUMANISE_EDITOR_CLASSES = array (
     array (
       0 => 'Frame',
       1 => 'Hierarchy',
-      2 => 'Link',
+      2 => 'HierarchyItem',
+      3 => 'Link',
     ),
   ),
   'parents' => 
