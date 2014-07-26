@@ -16,6 +16,8 @@ div.hui_selection
 	min-height: 18px;
 	padding: 1px 5px 1px 6px;
 	overflow: hidden;
+	word-break: break-word;
+	word-wrap: break-word;
 }
 
 div.hui_selection span.hui_disclosure

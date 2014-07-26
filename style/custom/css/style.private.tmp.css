@@ -428,45 +428,30 @@ body.design_texture_lines
 	background-image: url('../gfx/texture/lines.png');
 }
 /* style/basic/css/document.css */
-table.document_row
+.document_row
 {
 	border-collapse: collapse;
 	border-spacing: 0;
-}
-
-td.document_column
-{
-	padding-left: 10px;
-}
-
-td.document_column_first
-{
-	padding-left: 0px;
-}
-
-div.document_row
-{
 	width: 100%;
 	display: table;
 }
 
-div.document_row_body
+.document_row_body
 {
 	display: table-row;
 }
 
-div.document_column
+.document_column
 {
 	display: table-cell;
 	padding-left: 10px;
 	vertical-align: top;
 }
 
-div.document_column_first
+.document_column_first
 {
 	padding-left: 0px;
 }
-
 /* style/basic/css/part_file.css */
 div.part_file
 {

@@ -17528,8 +17528,6 @@ hui.ui.LinkInput.prototype = {
 	}
 }
 
-/////////////////////////// Color input /////////////////////////
-
 /**
  * A component for font input
  * @constructor
