@@ -71,12 +71,15 @@ class Database {
 		return $GLOBALS['OP_CON'];
 	}
 	
-	static function select($sql) {
+	static function select($sql,$parameters=null) {
 		$con = Database::getConnection();
 		if (!$con) {
 			error_log('No database connection');
 			return false;
 		}
+        if ($parameters!==null) {
+            $sql = Database::compile($sql,$parameters);
+        }
 		Database::debug($sql);
 		$result = mysqli_query($con,$sql);
 		if (mysqli_errno($con)>0) {
@@ -129,16 +132,22 @@ class Database {
 		return $output;
 	}
 	
-	static function update($sql) {
+	static function update($sql,$parameters=null) {
 		if (is_array($sql)) {
 			$sql = Database::buildUpdateSql($sql);
 		}
+        if ($parameters!==null) {
+            $sql = Database::compile($sql,$parameters);
+        }
 		$con = Database::getConnection();
 		mysqli_query($con,$sql);
 		return Database::_checkError($sql,$con);
 	}
 	
-	static function delete($sql) {
+	static function delete($sql,$parameters=null) {
+        if ($parameters!==null) {
+            $sql = Database::compile($sql,$parameters);
+        }
 		Database::debug($sql);
 		$con = Database::getConnection();
 		mysqli_query($con,$sql);
@@ -146,10 +155,13 @@ class Database {
 		return mysqli_affected_rows($con);
 	}
 
-	static function insert($sql) {
+	static function insert($sql,$parameters=null) {
 		if (is_array($sql)) {
 			$sql = Database::buildInsertSql($sql);
 		}
+        if ($parameters!==null) {
+            $sql = Database::compile($sql,$parameters);
+        }
 		Database::debug($sql);
 		$con = Database::getConnection();
 		mysqli_query($con,$sql);

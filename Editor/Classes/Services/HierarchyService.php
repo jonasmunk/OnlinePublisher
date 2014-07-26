@@ -96,12 +96,26 @@ class HierarchyService {
 			}
 		}
 		// find index
-		$sql="select max(`index`) as `index` from hierarchy_item where parent=".Database::int($options['parent'])." and hierarchy_id=".Database::int($options['hierarchyId']);
-		if ($row = Database::selectFirst($sql)) {
-			$index=$row['index']+1;
+		if ($options['index']) {
+			$sql = "select id, `index` from hierarchy_item where `index` >= @int(index) and parent = @int(parent) and hierarchy_id = @int(hierarchy) order by `index`";
+			$result = Database::select($sql,['index'=>$options['index'],'parent'=>$options['parent'],'hierarchy'=>$options['hierarchyId']]);
+			while ($row = Database::next($result)) {
+				Database::update("update hierarchy_item set `index`=@int(index) where `id`=@int(id)",[
+					'id' => $row['id'],
+					'index' => intval($row['index'])+1
+				]);
+			}
+			Database::free($result);
+			$index = $options['index'];
 		} else {
-			$index=1;
+			$sql="select max(`index`) as `index` from hierarchy_item where parent=".Database::int($options['parent'])." and hierarchy_id=".Database::int($options['hierarchyId']);
+			if ($row = Database::selectFirst($sql)) {
+				$index=$row['index']+1;
+			} else {
+				$index=1;
+			}
 		}
+
 		$target_id = null;
 		$target_value = null;
 		if ($options['targetType']=='page' || $options['targetType']=='pageref' || $options['targetType']=='file') {
@@ -115,7 +129,7 @@ class HierarchyService {
 		",".Database::boolean($options['hidden']).
 		",'item'".
 		",".Database::int(@$options['hierarchyId']).
-		",".Database::int(@$options['parent']).
+		",".Database::int($options['parent']).
 		",".Database::int($index).
 		",".Database::text($options['targetType']).
 		",".Database::int($target_id).

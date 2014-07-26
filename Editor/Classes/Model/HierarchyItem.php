@@ -8,19 +8,20 @@ if (!isset($GLOBALS['basePath'])) {
 	exit;
 }
 
-Entity::$schema['HierarchyItem'] = array(
+Entity::$schema['HierarchyItem'] = [
 	'table' => 'hierarchy_item',
-	'properties' => array(
-		'title' => array('type'=>'string'),
-		'hidden' => array('type'=>'boolean'),
-		'targetType' => array('type'=>'string'),
-		'targetValue' => array('type'=>'int','relations'=>array(
-			array('class'=>'Page','property'=>'id'),
-			array('class'=>'File','property'=>'id')
-			)
-		)
-	)
-);
+	'properties' => [
+		'title' => ['type'=>'string'],
+		'hidden' => ['type'=>'boolean'],
+		'targetType' => ['type'=>'string'],
+		'parent' => ['type' => 'int'],
+		'targetValue' => ['type'=>'int','relations' => [
+			['class'=>'Page','property'=>'id'],
+			['class'=>'File','property'=>'id']
+			]
+		]
+	]
+];
 class HierarchyItem extends Entity implements Loadable {
         
 	var $title;
@@ -29,6 +30,8 @@ class HierarchyItem extends Entity implements Loadable {
 	var $targetType;
 	var $targetValue;
     var $hierarchyId;
+	var $parent;
+	var $index;
 
     function HierarchyItem() {
     }
@@ -49,6 +52,22 @@ class HierarchyItem extends Entity implements Loadable {
         return $this->hierarchyId;
     }
     
+	function setParent($parent) {
+	    $this->parent = $parent;
+	}
+	
+	function getParent() {
+	    return $this->parent;
+	}
+	
+	function setIndex($index) {
+	    $this->index = $index;
+	}
+	
+	function getIndex() {
+	    return $this->index;
+	}
+	
 
 	function setHidden($hidden) {
 	    $this->hidden = $hidden;
@@ -83,16 +102,18 @@ class HierarchyItem extends Entity implements Loadable {
 	}
 	
 	static function load($id) {
-		$sql = "select id,title,hidden,target_type,target_value,target_id,hierarchy_id from hierarchy_item where id=".Database::int($id);
+		$sql = "select id,title,hidden,target_type,target_value,target_id,hierarchy_id,parent,`index` from hierarchy_item where id=".Database::int($id);
 		$result = Database::select($sql);
 		$item = null;
 		if ($row = Database::next($result)) {
 			$item = new HierarchyItem();
-			$item->setId($row['id']);
+			$item->setId(intval($row['id']));
 			$item->setTitle($row['title']);
 			$item->setHidden($row['hidden']==1);
 			$item->setTargetType($row['target_type']);
 			$item->setHierarchyId(intval($row['hierarchy_id']));
+			$item->setParent(intval($row['parent']));
+			$item->setIndex(intval($row['index']));
 			if ($row['target_type']=='page' || $row['target_type']=='pageref' || $row['target_type']=='file') {
 				$item->setTargetValue($row['target_id']);
 			} else {
@@ -130,6 +151,8 @@ class HierarchyItem extends Entity implements Loadable {
 			",target_value=".Database::text($target_value).
 			",target_id=".Database::int($target_id).
     	    ",hierarchy_id=".Database::int($this->hierarchyId).
+    	    ",parent=".Database::int($this->parent).
+			",`index`=".Database::int($this->index).
 			" where id=".$this->id;
 			Database::update($sql);
 			Hierarchy::markHierarchyOfItemChanged($this->id);

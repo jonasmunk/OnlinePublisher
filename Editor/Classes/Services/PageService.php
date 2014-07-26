@@ -445,4 +445,58 @@ class PageService {
 		}
 		return false;
 	}
+	
+	/**
+	 * Creates a new page using the document template
+	 * @param $pageId The ID of the page to create the new page in relation to
+	 * @param $title The title of the page
+	 * @param $placement If the new page should be placed 'below', 'before' or 'after'
+	 */
+	static function createPageContextually($pageId,$title,$placement) {
+		if (!in_array($placement,['below', 'before', 'after'])) {
+	        Log::debug('Unsupported placement');
+	        return false;
+		}
+	    $context_page = Page::load($pageId);
+	    if (!$context_page) {
+	        Log::debug('No page');
+	        return false;
+	    }
+	    $context_item = HierarchyItem::loadByPageId($context_page->getId());
+	    $template = TemplateService::getTemplateByUnique('document');
+	    if ($context_item && $template) {
+	        $page = new Page();
+	        $page->setTitle($title);
+	        $page->setTemplateId($template->getId());
+	        $page->setDesignId($context_page->getDesignId());
+	        $page->setFrameId($context_page->getFrameId());
+	        $page->setLanguage($context_page->getLanguage());
+	        if ($page->create()) {
+	            $hierarchy = Hierarchy::load($context_item->getHierarchyId());
+	            if (!$hierarchy) {
+	                Log::debug('No hierarchy');
+	                return false;
+	            }
+
+				$recipe = array(
+	        		'title' => $title,
+	        		'targetType' => 'page',
+	                'hidden' => false,
+	        		'targetValue' => $page->getId()
+	        	);
+				if ($placement=='before') {
+					$recipe['parent'] = $context_item->getParent();
+					$recipe['index'] = $context_item->getIndex();
+				} else if ($placement=='after') {
+					$recipe['parent'] = $context_item->getParent();
+					$recipe['index'] = $context_item->getIndex() + 1;
+				} else { // below
+					$recipe['parent'] = $context_item->getId();
+				}
+	        	$success = $hierarchy->createItem($recipe); // TODO What if this fails
+	            return $page;            
+	        }
+	    }
+	    return false;    
+	}
 }
