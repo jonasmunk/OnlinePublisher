@@ -686,14 +686,16 @@
 <image-input name="«text»" source="«url»"/>
 -->
 <xsl:template match="gui:image-input">
-	<div class="hui_imageinput" id="{generate-id()}" tabindex="0">
+	<span class="hui_imageinput" id="{generate-id()}" tabindex="0">
 		<xsl:if test="@size">
 			<xsl:attribute name="style">
 				<xsl:text>width:</xsl:text><xsl:value-of select="@size"/><xsl:text>px; height:</xsl:text><xsl:value-of select="@size"/><xsl:text>px;</xsl:text>
 			</xsl:attribute>
 		</xsl:if>
+		<a href="javascript://" class="hui_imageinput_clear">
 		<xsl:comment/>
-	</div>
+		</a>
+	</span>
 	<script type="text/javascript">
 		var <xsl:value-of select="generate-id()"/>_obj = new hui.ui.ImageInput({
 			element : '<xsl:value-of select="generate-id()"/>',

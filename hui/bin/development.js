@@ -72,3 +72,4 @@ document.write('<script type="text/javascript" src="'+_context+'/js/FontInput.js
 document.write('<script type="text/javascript" src="'+_context+'/js/FontPicker.js"></script>');
 document.write('<script type="text/javascript" src="'+_context+'/js/Split.js"></script>');
 document.write('<script type="text/javascript" src="'+_context+'/js/NumberValidator.js"></script>');
+document.write('<script type="text/javascript" src="'+_context+'/js/ObjectInput.js"></script>');

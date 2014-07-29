@@ -380,4 +380,16 @@ class Strings {
 	    }
 	    return $randomString;
 	}
+    
+    static function analyzeMovieURL($url) {
+		if (!Strings::isBlank($url)) {
+			if (preg_match("/http:\/\/vimeo.com\/([0-9]+)/uim", $url,$matches)) {
+				return ['type' => 'vimeo', 'id'=>$matches[1]];
+			}
+			if (preg_match("/www.youtube.com\\/watch\\?v=([a-zA-Z0-9]+)/uim", $url,$matches)) {
+				return ['type' => 'youtube', 'id'=>$matches[1]];
+			}
+		}
+		return null;
+	}
 }

@@ -10,12 +10,13 @@ hui.ui.ImageInput = function(options) {
 	this.value = null;
 	this.thumbnailsLoaded = false;
 	hui.ui.extend(this);
-	this._addBehavior();
+	this._attach();
 }
 
 hui.ui.ImageInput.prototype = {
-	_addBehavior : function() {
+	_attach : function() {
 		hui.listen(this.element,'click',this._showPicker.bind(this));
+		hui.listen(hui.get.firstByTag(this.element,'a'),'click',this._clear.bind(this));
 	},
     /** @Deprecated */
 	setObject : function(obj) {
@@ -32,11 +33,16 @@ hui.ui.ImageInput.prototype = {
 	setValue : function(obj) {
 		this.setObject(obj);
 	},
+	_clear : function(e) {
+		hui.stop(e);
+		this.reset();
+	},
 	reset : function() {
 		this.value = null;
 		this._updateUI();
 	},
 	_updateUI : function() {
+		hui.cls.set(this.element,'hui_imageinput_full',this.value!==null);
 		if (this.value==null) {
 			this.element.style.backgroundImage = '';
 		} else {

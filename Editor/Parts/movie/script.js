@@ -15,6 +15,9 @@ var partController = {
         if (values.imageId) {
             values.image = {id:values.imageId}
         }
+        if (values.fileId) {
+            values.file = {id:values.fileId,title:'TODO'}
+        }
         hui.log(values);
         movieInfoFormula.setValues(values);
 	},
@@ -77,6 +80,9 @@ var partController = {
         this.form.code.value = values.code;
         if (values.image) {
             this.form.imageId.value = values.image.id;
+        }
+        if (values.file) {
+            this.form.fileId.value = values.file.id;
         }
         this.form.url.value = values.url;
         this.preview(true);

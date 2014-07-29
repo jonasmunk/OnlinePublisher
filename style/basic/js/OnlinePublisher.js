@@ -565,14 +565,9 @@ op.part.Movie = function(options) {
 op.part.Movie.prototype = {
     _activate : function() {
         var body = hui.get.firstByClass(this.element,'part_movie_body');
-        var code = hui.get.firstByClass(this.element,'part_movie_code');
+        var code = hui.get.firstByTag(this.element,'noscript');
         if (code) {
             body.innerHTML = hui.dom.getText(code);
-        } else {
-            var video = hui.get.firstByClass(this.element,'part_movie_video');
-            if (video) {
-                body.innerHTML = hui.dom.getText(video);
-            }
         }
         body.style.background='';
     }

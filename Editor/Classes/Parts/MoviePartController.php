@@ -30,7 +30,7 @@ class MoviePartController extends PartController
 		return '<div id="part_movie_container">'.$this->render($part,$context).'</div>'.
 
         $this->buildHiddenFields([
-			'fileId' => $part->getFileId(),
+			'fileId' => $part->getFileId()>0 ? $part->getFileId() : '',
 			'imageId' => $part->getImageId()>0 ? $part->getImageId() : '',
 			'text' => $part->getText(),
 			'url' => $part->getUrl(),
@@ -67,21 +67,38 @@ class MoviePartController extends PartController
 		if (Strings::isNotBlank($part->getText())) {
 			$xml.='<text>' . Strings::escapeXML($part->getText()) . '</text>';
 		}
-		if (Strings::isNotBlank($part->getCode())) {
-			$xml.='<code><![CDATA[' . $part->getCode() . ']]></code>';
+		if (Strings::isNotBlank($part->getUrl())) {
+			$xml.='<url>' . Strings::escapeXML($part->getUrl()) . '</url>';
 		}
         if ($part->getImageId() > 0) {
             if ($image = ObjectService::getObjectData($part->getImageId())) {
                 $xml.= '<poster>' . $image . '</poster>';
             }
         }
+		if (Strings::isNotBlank($part->getCode())) {
+			$xml.='<source type="code"><![CDATA[' . $part->getCode() . ']]></source>';
+		}
+		$analyzed = Strings::analyzeMovieURL($part->getUrl());
+		if ($analyzed) {
+			$xml.='<source type="' . $analyzed['type'] . '" id="' . $analyzed['id'] . '"/>';
+		}
 		$sql="select object.data,file.type from object,file where file.object_id = object.id and object.id=".Database::int($part->getFileId());
 		if ($row = Database::selectFirst($sql)) {
-			$xml.='<info type="'.FileService::mimeTypeToLabel($row['type']).'"/>';
+			$xml.='<source type="file">';
 			$xml.=$row['data'];
+			$xml.='</source>';
 		}
 		$xml.='</movie>';
 		return $xml;
+	}
+	
+	function _analyzeURL($url) {
+		if (!Strings::isBlank($url)) {
+			if (preg_match("/http://vimeo.com/([0-9]+)/uim", $url,$matches)) {
+				return ['type' => 'vimeo', 'id'=>$matches[1]];
+			}
+		}
+		return null;
 	}
 	
 	function importSub($node,$part) {
@@ -133,6 +150,11 @@ class MoviePartController extends PartController
                         <image-input key="image">
                             <finder url="../../Services/Finder/Images.php"/>
                         </image-input>
+                    </field>
+                    <field label="Movie">
+                        <object-input key="file">
+                            <finder url="../../Services/Finder/Files.php"/>
+                        </object-input>
                     </field>
                     <field label="Address"><text-input key="url"/></field>
                     <field label="Code"><text-input breaks="true" key="code"/></field>

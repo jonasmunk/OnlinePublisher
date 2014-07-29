@@ -3580,8 +3580,9 @@ div.hui_window_dark .hui_selection_item span
 	margin-top: 4px;
 }
 
-div.hui_imageinput
+.hui_imageinput
 {
+	display: inline-block;
 	width: 50px;
 	height: 50px;
 	border: 1px solid #ddd;
@@ -3589,6 +3590,33 @@ div.hui_imageinput
 	background: #fff center center no-repeat;
 	margin-top: 2px;
 	padding: 1px;
+	position: relative;
+}
+
+.hui_imageinput:focus
+{
+	outline: none;
+	border-color: #2678ff;
+	outline: 4px auto #2678ff;
+}
+
+.hui_imageinput_clear {
+	position: absolute;
+	width: 16px;
+	height: 16px;
+	background: url('../icons/common/delete16.png');
+	top:-8px;
+	right: -8px;
+	display: none;
+	outline: none;
+}
+
+.hui_imageinput_clear:hover {
+	background-position: 0 -16px;
+}
+
+.hui_imageinput_full:hover > .hui_imageinput_clear {
+	display: block;
 }
 
 .hui_imageinput_thumbs
@@ -7751,5 +7779,12 @@ div.hui_markupeditor_inlinepanel a
     display: inline-block;
     font-size: 12px;
     text-decoration: none;
+}
+
+.hui_objectinput_text {
+    font-size: 12px;
+    display: inline-block;
+    vertical-align: middle;
+	line-height: 16px;
 }
 

@@ -151,5 +151,23 @@ class TestStrings extends UnitTestCase {
 		$this->assertEqual(Strings::concatUrl('http://www.humanize.dk/','path/to/somewhere.html'),'http://www.humanize.dk/path/to/somewhere.html');
 		$this->assertEqual(Strings::concatUrl('http://www.humanize.dk/','/path/to/somewhere.html'),'http://www.humanize.dk/path/to/somewhere.html');
 	}
+	
+	function testAnalyzeMovieUrl() {
+		$this->assertNull(Strings::analyzeMovieURL(''));
+		$this->assertNull(Strings::analyzeMovieURL(null));
+
+		$result = Strings::analyzeMovieURL('http://vimeo.com/95415863');
+		$this->assertEqual('vimeo',$result['type']);
+		$this->assertEqual('95415863',$result['id']);
+		
+		$result = Strings::analyzeMovieURL('https://www.youtube.com/watch?v=cfOa1a8hYP8');
+		$this->assertEqual('youtube',$result['type']);
+		$this->assertEqual('cfOa1a8hYP8',$result['id']);
+		
+		$result = Strings::analyzeMovieURL('http://www.youtube.com/watch?v=cfOa1a8hYP8&jdskadjal');
+		$this->assertEqual('youtube',$result['type']);
+		$this->assertEqual('cfOa1a8hYP8',$result['id']);
+		
+	}
 }
 ?>
