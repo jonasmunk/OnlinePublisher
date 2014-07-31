@@ -41,14 +41,13 @@ class TestMoviePart extends UnitTestCase {
 
 	function testImport() {
 		$obj = new MoviePart();
-		$latest = FileService::getLatestFileId();
-		if ($latest==null) {
-			Log::debug('This test can only run with at least one file present');
-			return;
-		}
-		$obj->setFileId($latest);
+		$obj->setWidth('400px');
+		$obj->setHeight('40%');
+		$obj->setFileId(20);
+		$obj->setImageId(120);
 		$obj->setText('Get me back!');
 		$obj->setCode('<iframe src="http://get.me/back"></iframe>');
+		$obj->setUrl('http://get.me/back');
 
 		$ctrl = new MoviePartController();
 		
@@ -59,9 +58,13 @@ class TestMoviePart extends UnitTestCase {
 		$imported = $ctrl->importFromString($xml);
 		
 		$this->assertNotNull($imported);
+		$this->assertIdentical($imported->getWidth(),$obj->getWidth());
+		$this->assertIdentical($imported->getHeight(),$obj->getHeight());
 		$this->assertIdentical($imported->getFileId(),$obj->getFileId());
+		$this->assertIdentical($imported->getImageId(),$obj->getImageId());
 		$this->assertIdentical($imported->getText(),$obj->getText());
 		$this->assertIdentical($imported->getCode(),$obj->getCode());
+		$this->assertIdentical($imported->getUrl(),$obj->getUrl());
 	}
 }
 ?>

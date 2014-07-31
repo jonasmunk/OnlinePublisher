@@ -70,6 +70,15 @@ class MoviePartController extends PartController
 		if (Strings::isNotBlank($part->getUrl())) {
 			$xml.='<url>' . Strings::escapeXML($part->getUrl()) . '</url>';
 		}
+		if (Strings::isNotBlank($part->getCode())) {
+			$xml.='<code><![CDATA[' . $part->getCode() . ']]></code>';
+		}
+        if ($part->getImageId() > 0) {
+            $xml.='<image id="' . intval($part->getImageId()) . '"/>';
+        }
+        if ($part->getFileId() > 0) {
+            $xml.='<file id="' . intval($part->getFileId()) . '"/>';
+        }
         if ($part->getImageId() > 0) {
             if ($image = ObjectService::getObjectData($part->getImageId())) {
                 $xml.= '<poster>' . $image . '</poster>';
@@ -102,13 +111,25 @@ class MoviePartController extends PartController
 	}
 	
 	function importSub($node,$part) {
-		if ($object = DOMUtils::getFirstDescendant($node,'object')) {
-			if ($id = intval($object->getAttribute('id'))) {
+		if ($file = DOMUtils::getFirstDescendant($node,'file')) {
+			if ($id = intval($file->getAttribute('id'))) {
 				$part->setFileId($id);
 			}
 		}
+		if ($image = DOMUtils::getFirstDescendant($node,'image')) {
+			if ($id = intval($image->getAttribute('id'))) {
+				$part->setImageId($id);
+			}
+		}
+		if ($style = DOMUtils::getFirstDescendant($node,'style')) {
+			$part->setWidth($style->getAttribute('width'));
+			$part->setHeight($style->getAttribute('height'));
+		}
 		if ($text = DOMUtils::getFirstDescendant($node,'text')) {
 			$part->setText(DOMUtils::getText($text));
+		}
+		if ($url = DOMUtils::getFirstDescendant($node,'url')) {
+			$part->setUrl(DOMUtils::getText($url));
 		}
 		if ($code = DOMUtils::getFirstDescendant($node,'code')) {
 			$part->setCode(DOMUtils::getText($code));
