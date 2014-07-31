@@ -27,12 +27,10 @@ op.Editor.Richtext.prototype = {
 	},
 	_edit : function() {
 		this.original = this.container.innerHTML;
-		this.editor = new hui.ui.MarkupEditor({replace:this.container});
-		this.editor.listen({
-			$blur : function() {
-				
-			}
-		});
+		this.editor = new hui.ui.MarkupEditor({
+            replace : this.container,
+            linkDelegate : new op.Editor.Richtext.LinkDelegate();
+        });
 		this.editor.focus();
 		return;		
 	},
@@ -65,4 +63,88 @@ op.Editor.Richtext.prototype = {
 		hui.style.set(this.field,{width:this.header.clientWidth+'px',height:this.header.clientHeight+'px'});
 		hui.style.copy(this.header,this.field,['font-size','line-height','margin-top','font-weight','font-family','text-align','color','font-style']);
 	}
+}
+
+// Link delegate
+
+op.Editor.Richtext.LinkDelegate = function() {
+    
+}
+
+op.Editor.Richtext.LinkDelegate.prototype = {
+    _ensureUI : function() {
+        if (this.window) {
+            return;
+        }
+		var win = this.window = hui.ui.Window.create({padding:5,width:300,listener:{
+        	$userClosedWindow : this._closeWindow.bind(this)
+		}});
+		var form = this.form = hui.ui.Formula.create({listener : {
+        	$submit : this._submitForm.bind(this)
+		}});
+		win.add(form);
+		var group = form.buildGroup({},[
+			{type : 'TextField', options : {key:'url',label:'Address:',name:'linkAddress'}},
+			{type : 'DropDown', options : {
+				name : 'linkPage',
+				label : 'Page:',
+				key : 'page',
+				items : [
+					{value:1,text:'Front page'},
+					{value:2,text:'Search page'},
+					{value:3,text:'Overview'}
+				]
+			}}
+		]);
+		var buttons = group.createButtons();
+		buttons.add(hui.ui.Button.create({text:'Remove', listener : {
+		    $click : this._clickRemove.bind(this)
+		}}));
+		buttons.add(hui.ui.Button.create({text:'Cancel', listener : {
+		    $click : this._clickCancel.bind(this)
+		}}));
+		buttons.add(hui.ui.Button.create({text:'OK',submit:true}));
+		
+    }
+    
+	$editLink : function(options) {
+        this._ensureUI();
+		this.options = options;
+		this.form.reset();
+		var node = options.node;
+		var info = hui.string.fromJSON(node.getAttribute('data'));
+		if (info) {
+			this.form.setValues(info);
+		}
+		this.window.show();
+	},
+    $cancel : function() {
+		this.form.reset();
+		this.window.hide();                
+    },
+    
+    // UI listeners
+    
+    _clickCancel : function() {
+		this.form.reset();
+		this.window.hide();
+        this.options.$cancel();
+    },
+    
+    _clickRemove : function() {
+		this.form.reset();
+		this.window.hide();
+        this.options.$remove();
+    },
+    
+    _submitForm : function() {
+		this.options.node.setAttribute('data',hui.string.toJSON(this.form.getValues()));
+		this.form.reset();
+		this.window.hide();
+		this.options.$changed();
+    },
+    _closeWindow : function() {
+        this.options.$cancel();
+    }
+	
 }

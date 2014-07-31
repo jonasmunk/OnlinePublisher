@@ -6,6 +6,9 @@ hui.ui.Formula = function(options) {
 	this.options = options;
 	hui.ui.extend(this,options);
 	this.addBehavior();
+	if (options.listener) {
+		this.listen(options.listener);
+	}
 }
 
 /** @static Creates a new formula */

@@ -16,6 +16,9 @@ hui.ui.Window = function(options) {
 	this.visible = false;
 	hui.ui.extend(this);
 	this._addBehavior();
+	if (options.listener) {
+		this.listen(options.listener);
+	}
 }
 
 hui.ui.Window.create = function(options) {
@@ -51,7 +54,7 @@ hui.ui.Window.prototype = {
 		if (this.close) {
 			hui.listen(this.close,'click',function(e) {
 				this.hide();
-				this.fire('userClosedWindow');
+				this.fire('userClosedWindow'); // TODO maybe rename to closeByUser
 			}.bind(this));
 			hui.listen(this.close,'mousedown',function(e) {hui.stop(e)});
 		}

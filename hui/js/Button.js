@@ -9,7 +9,7 @@
  * }
  *
  * <strong>Events:</strong>
- * $click(button) - When the button is clicked (and possibly confirmed)
+ * $click(button) - When the button is clicked (and confirmed)
  * </pre>
  * @param options {Object} The options
  * @constructor
@@ -38,7 +38,9 @@ hui.ui.Button = function(options) {
  *  name : «String»,
  *  data : «Object»,
  *  confirm : {text : «String», okText : «String», cancelText : «String»},
- *  submit : «Boolean»
+ *  submit : «Boolean»,
+ *
+ *  listener : «Object»
  * }
  * </pre>
  */

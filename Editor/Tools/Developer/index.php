@@ -68,13 +68,13 @@ $gui='
 				</overflow> 
 				<overflow state="queries">
 					<split>
-            <row height="50%">
-              <code-input breaks="true" name="queryInput"/>
-            </row>
-            <row height="50%">
-              <code-input breaks="true" name="queryOutput"/>
-            </row>
-          </split>
+                        <row height="50%">
+                            <code-input breaks="true" name="queryInput"/>
+                        </row>
+                        <row height="50%">
+                            <code-input breaks="true" name="queryOutput"/>
+                        </row>
+                    </split>
 				</overflow> 
 				<bar variant="layout" state="diagram">
 					<segmented value="Entity" name="diagramSubset" variant="inset">
