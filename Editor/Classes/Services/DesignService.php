@@ -203,7 +203,6 @@ class DesignService {
 		$design->setParameters($xml);
 		$design->save();
 		$design->publish();
-		Log::debug($design);
 	}
     
 

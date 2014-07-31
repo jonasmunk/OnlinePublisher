@@ -96,7 +96,7 @@ class HierarchyService {
 			}
 		}
 		// find index
-		if ($options['index']) {
+		if (isset($options['index'])) {
 			$sql = "select id, `index` from hierarchy_item where `index` >= @int(index) and parent = @int(parent) and hierarchy_id = @int(hierarchy) order by `index`";
 			$result = Database::select($sql,['index'=>$options['index'],'parent'=>$options['parent'],'hierarchy'=>$options['hierarchyId']]);
 			while ($row = Database::next($result)) {
