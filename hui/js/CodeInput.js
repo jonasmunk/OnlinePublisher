@@ -75,7 +75,7 @@ hui.ui.CodeInput.prototype = {
 	                var post = t.value.slice(se,t.value.length); 
 	                if(e.shiftKey){ 
 	                    var a = sel.split("\n") 
-	                    for (i=0;i<a.length;i++){ 
+	                    for (var i=0;i<a.length;i++){ 
 	                        if(a[i].slice(0,1)==tab||a[i].slice(0,1)==' ' ){ 
 	                            a[i]=a[i].slice(1,a[i].length) 
 	                        } 
@@ -154,7 +154,7 @@ hui.ui.CodeInput.prototype = {
 	                            br.text = br.text.slice(0,p+2).concat(br.text.slice(p+3,br.text.length)); 
 	                        } 
 	                    } 
-	                    for (i=0;i<a.length;i++){ 
+	                    for (var i=0;i<a.length;i++){ 
 	                        var ch = a[i].length>0&&a[i].slice(0,1); 
 	                        if(ch==tab||ch==' '){ 
 	                            a[i]=a[i].slice(1,a[i].length) 

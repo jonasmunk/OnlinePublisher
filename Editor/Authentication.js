@@ -1,3 +1,5 @@
+"use strict";
+
 var controller = {
 	$ready : function() {
 		if (window.top!=window.self) {
@@ -29,14 +31,9 @@ var controller = {
 		hui.ui.request({
 			method : 'GET',
 			url : '../hui/info/preload.json',
-			onJSON : function(obj) {
+			$object : function(obj) {
 				var p = new hui.Preloader({context:hui.ui.context+'/hui'});
 				p.addImages(obj);
-				p.setDelegate({
-					imageDidLoad : function(count,total) {
-						hui.log(count/total);
-					}
-				});
 				p.load();
 			}
 		});

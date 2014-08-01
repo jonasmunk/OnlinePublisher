@@ -235,15 +235,6 @@ hui.ui.reLayout = function() {
 			obj['$$layout']();
 		}
 	};
-	return;
-	var all = hui.ui.objects,
-		obj;
-	for (key in all) {
-		obj = all[key];
-		if (obj['$$layout']) {
-			obj['$$layout']();
-		}
-	}
 }
 
 
@@ -363,7 +354,7 @@ hui.ui.getTranslated = function(value) {
 	if (value[null]) {
 		return value[null];
 	}
-	for (key in value) {
+	for (var key in value) {
 		return value[key];
 	}
 }
@@ -729,7 +720,7 @@ hui.ui.callDescendants = function(obj,method,value,event) {
 	var d = hui.ui.getDescendants(obj);
 	for (var i=0; i < d.length; i++) {
 		if (d[i][method]) {
-			thisResult = d[i][method](value,event);
+			d[i][method](value,event);
 		}
 	};
 };

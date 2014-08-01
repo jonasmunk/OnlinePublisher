@@ -35,7 +35,7 @@ hui.ui.Alert = function(options) {
  * @param {Object} options The options
  */
 hui.ui.Alert.create = function(options) {
-	options = hui.override({title:'',text:'',emotion:null,title:null},options);
+	options = hui.override({text:'',emotion:null,title:null},options);
 	
 	var element = options.element = hui.build('div',{'class':'hui_alert'});
 	var body = hui.build('div',{'class':'hui_alert_body',parent:element});

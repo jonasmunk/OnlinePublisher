@@ -71,7 +71,7 @@ hui.Color = function(str) {
 			processor = color_defs[i].process,
 			bits = re.exec(str);
         if (bits) {
-            channels = processor(bits);
+            var channels = processor(bits);
             this.r = channels[0];
             this.g = channels[1];
             this.b = channels[2];

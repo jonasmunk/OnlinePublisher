@@ -96,7 +96,7 @@ hui.ui.Drawing._build = function(options) {
 		var node = document.createElementNS('http://www.w3.org/2000/svg',options.tag);
 	}
 	if (options.attributes) {
-		for (att in options.attributes) {
+		for (var att in options.attributes) {
 			node.setAttribute(att,options.attributes[att]);
 		}
 	}

@@ -29,6 +29,7 @@ def joinScript(files,more='') :
     destination = codecs.open(base+'/bin/joined'+more+'.js', mode='w')
     dev = codecs.open(base+'/bin/development'+more+'.js', mode='w')
 
+    #destination.write('"use strict";\n\n')
     for name in files :
         path = base + '/' + name
         file = open(path,'rb')

@@ -124,7 +124,7 @@ hui.defer = function(func,bind) {
  */
 hui.override = function(original,subject) {
 	if (subject) {
-		for (prop in subject) {
+		for (var prop in subject) {
 			original[prop] = subject[prop];
 		}
 	}
@@ -895,7 +895,7 @@ hui.build = function(name,options,doc) {
 	var doc = doc || document,
 		e = doc.createElement(name);
 	if (options) {
-		for (prop in options) {
+		for (var prop in options) {
 			if (prop=='text') {
 				e.appendChild(doc.createTextNode(options.text));
 			} else if (prop=='html') {
@@ -1608,7 +1608,7 @@ hui.request = function(options) {
 			body = new FormData();
 			body.append('file', options.file);
 			if (options.parameters) {
-				for (param in options.parameters) {
+				for (var param in options.parameters) {
 					body.append(param, options.parameters[param]);
 				}
 			}
@@ -1637,7 +1637,7 @@ hui.request = function(options) {
 		body = '';
 	}
 	if (options.headers) {
-		for (name in options.headers) {
+		for (var name in options.headers) {
 			transport.setRequestHeader(name, options.headers[name]);
 		}
 	}
@@ -1674,7 +1674,7 @@ hui.request.isXMLResponse = function(t) {
 hui.request._buildPostBody = function(parameters) {
 	if (!parameters) return null;
 	var output = '';
-	for (param in parameters) {
+	for (var param in parameters) {
 		if (output.length>0) output+='&';
 		output+=encodeURIComponent(param)+'=';
 		if (parameters[param]!==undefined && parameters[param]!==null) {
@@ -1752,7 +1752,7 @@ hui.style = {
 		};
 	},
 	set : function(element,styles) {
-		for (style in styles) {
+		for (var style in styles) {
 			if (style==='transform') {
 				element.style['webkitTransform'] = styles[style];
 			} else if (style==='opacity') {

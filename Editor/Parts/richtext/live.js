@@ -29,7 +29,7 @@ op.Editor.Richtext.prototype = {
 		this.original = this.container.innerHTML;
 		this.editor = new hui.ui.MarkupEditor({
             replace : this.container,
-            linkDelegate : new op.Editor.Richtext.LinkDelegate();
+            linkDelegate : new op.Editor.Richtext.LinkDelegate()
         });
 		this.editor.focus();
 		return;		
@@ -105,7 +105,7 @@ op.Editor.Richtext.LinkDelegate.prototype = {
 		}}));
 		buttons.add(hui.ui.Button.create({text:'OK',submit:true}));
 		
-    }
+    },
     
 	$editLink : function(options) {
         this._ensureUI();

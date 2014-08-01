@@ -124,7 +124,7 @@ hui.defer = function(func,bind) {
  */
 hui.override = function(original,subject) {
 	if (subject) {
-		for (prop in subject) {
+		for (var prop in subject) {
 			original[prop] = subject[prop];
 		}
 	}
@@ -895,7 +895,7 @@ hui.build = function(name,options,doc) {
 	var doc = doc || document,
 		e = doc.createElement(name);
 	if (options) {
-		for (prop in options) {
+		for (var prop in options) {
 			if (prop=='text') {
 				e.appendChild(doc.createTextNode(options.text));
 			} else if (prop=='html') {
@@ -1608,7 +1608,7 @@ hui.request = function(options) {
 			body = new FormData();
 			body.append('file', options.file);
 			if (options.parameters) {
-				for (param in options.parameters) {
+				for (var param in options.parameters) {
 					body.append(param, options.parameters[param]);
 				}
 			}
@@ -1637,7 +1637,7 @@ hui.request = function(options) {
 		body = '';
 	}
 	if (options.headers) {
-		for (name in options.headers) {
+		for (var name in options.headers) {
 			transport.setRequestHeader(name, options.headers[name]);
 		}
 	}
@@ -1674,7 +1674,7 @@ hui.request.isXMLResponse = function(t) {
 hui.request._buildPostBody = function(parameters) {
 	if (!parameters) return null;
 	var output = '';
-	for (param in parameters) {
+	for (var param in parameters) {
 		if (output.length>0) output+='&';
 		output+=encodeURIComponent(param)+'=';
 		if (parameters[param]!==undefined && parameters[param]!==null) {
@@ -1752,7 +1752,7 @@ hui.style = {
 		};
 	},
 	set : function(element,styles) {
-		for (style in styles) {
+		for (var style in styles) {
 			if (style==='transform') {
 				element.style['webkitTransform'] = styles[style];
 			} else if (style==='opacity') {
@@ -2553,7 +2553,7 @@ hui.animate = function(options,property,value,duration,delegate) {
 			item.animate(null,'','',options.duration,options);
 		} else {
 			var o = options;
-			for (prop in options.css) {
+			for (var prop in options.css) {
 				item.animate(null,options.css[prop],prop,options.duration,o);
 				o = hui.override({},options);
 				o.$complete = undefined;
@@ -3193,7 +3193,7 @@ hui.Color = function(str) {
 			processor = color_defs[i].process,
 			bits = re.exec(str);
         if (bits) {
-            channels = processor(bits);
+            var channels = processor(bits);
             this.r = channels[0];
             this.g = channels[1];
             this.b = channels[2];
@@ -5311,15 +5311,6 @@ hui.ui.reLayout = function() {
 			obj['$$layout']();
 		}
 	};
-	return;
-	var all = hui.ui.objects,
-		obj;
-	for (key in all) {
-		obj = all[key];
-		if (obj['$$layout']) {
-			obj['$$layout']();
-		}
-	}
 }
 
 
@@ -5439,7 +5430,7 @@ hui.ui.getTranslated = function(value) {
 	if (value[null]) {
 		return value[null];
 	}
-	for (key in value) {
+	for (var key in value) {
 		return value[key];
 	}
 }
@@ -5805,7 +5796,7 @@ hui.ui.callDescendants = function(obj,method,value,event) {
 	var d = hui.ui.getDescendants(obj);
 	for (var i=0; i < d.length; i++) {
 		if (d[i][method]) {
-			thisResult = d[i][method](value,event);
+			d[i][method](value,event);
 		}
 	};
 };
@@ -6482,6 +6473,9 @@ hui.ui.Window = function(options) {
 	this.visible = false;
 	hui.ui.extend(this);
 	this._addBehavior();
+	if (options.listener) {
+		this.listen(options.listener);
+	}
 }
 
 hui.ui.Window.create = function(options) {
@@ -6517,7 +6511,7 @@ hui.ui.Window.prototype = {
 		if (this.close) {
 			hui.listen(this.close,'click',function(e) {
 				this.hide();
-				this.fire('userClosedWindow');
+				this.fire('userClosedWindow'); // TODO maybe rename to closeByUser
 			}.bind(this));
 			hui.listen(this.close,'mousedown',function(e) {hui.stop(e)});
 		}
@@ -6679,6 +6673,9 @@ hui.ui.Formula = function(options) {
 	this.options = options;
 	hui.ui.extend(this,options);
 	this.addBehavior();
+	if (options.listener) {
+		this.listen(options.listener);
+	}
 }
 
 /** @static Creates a new formula */
@@ -8456,7 +8453,7 @@ hui.ui.Alert = function(options) {
  * @param {Object} options The options
  */
 hui.ui.Alert.create = function(options) {
-	options = hui.override({title:'',text:'',emotion:null,title:null},options);
+	options = hui.override({text:'',emotion:null,title:null},options);
 	
 	var element = options.element = hui.build('div',{'class':'hui_alert'});
 	var body = hui.build('div',{'class':'hui_alert_body',parent:element});
@@ -8559,7 +8556,7 @@ hui.ui.Alert.prototype = {
  * }
  *
  * <strong>Events:</strong>
- * $click(button) - When the button is clicked (and possibly confirmed)
+ * $click(button) - When the button is clicked (and confirmed)
  * </pre>
  * @param options {Object} The options
  * @constructor
@@ -8588,7 +8585,9 @@ hui.ui.Button = function(options) {
  *  name : «String»,
  *  data : «Object»,
  *  confirm : {text : «String», okText : «String», cancelText : «String»},
- *  submit : «Boolean»
+ *  submit : «Boolean»,
+ *
+ *  listener : «Object»
  * }
  * </pre>
  */
@@ -17264,7 +17263,7 @@ hui.ui.CodeInput.prototype = {
 	                var post = t.value.slice(se,t.value.length); 
 	                if(e.shiftKey){ 
 	                    var a = sel.split("\n") 
-	                    for (i=0;i<a.length;i++){ 
+	                    for (var i=0;i<a.length;i++){ 
 	                        if(a[i].slice(0,1)==tab||a[i].slice(0,1)==' ' ){ 
 	                            a[i]=a[i].slice(1,a[i].length) 
 	                        } 
@@ -17343,7 +17342,7 @@ hui.ui.CodeInput.prototype = {
 	                            br.text = br.text.slice(0,p+2).concat(br.text.slice(p+3,br.text.length)); 
 	                        } 
 	                    } 
-	                    for (i=0;i<a.length;i++){ 
+	                    for (var i=0;i<a.length;i++){ 
 	                        var ch = a[i].length>0&&a[i].slice(0,1); 
 	                        if(ch==tab||ch==' '){ 
 	                            a[i]=a[i].slice(1,a[i].length) 

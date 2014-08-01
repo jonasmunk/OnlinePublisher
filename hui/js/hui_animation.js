@@ -29,7 +29,7 @@ hui.animate = function(options,property,value,duration,delegate) {
 			item.animate(null,'','',options.duration,options);
 		} else {
 			var o = options;
-			for (prop in options.css) {
+			for (var prop in options.css) {
 				item.animate(null,options.css[prop],prop,options.duration,o);
 				o = hui.override({},options);
 				o.$complete = undefined;

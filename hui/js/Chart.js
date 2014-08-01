@@ -701,7 +701,7 @@ hui.ui.Chart.Util.convertData = function(obj) {
 				}
 			}
 		} else {
-			for (key in set.entries) {
+			for (var key in set.entries) {
 				if (!hui.array.contains(keys,key)) {
 					keys.push(key)
 					labels.push({key:key,label:key});
@@ -727,7 +727,7 @@ hui.ui.Chart.Util.convertData = function(obj) {
 				dataSet.addEntry(entry.key,entry.value);
 			};
 		} else {
-			for (key in set.entries) {
+			for (var key in set.entries) {
 				dataSet.addEntry(key,set.entries[key]);
 			}
 		}
