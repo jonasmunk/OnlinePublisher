@@ -15,3 +15,4 @@ local/cache/urls/*
 local/logs/*
 .svn
 .htaccess
+style/karenslyst/.sass-cache
