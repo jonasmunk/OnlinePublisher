@@ -117,3 +117,23 @@
 .poster_link_vaerelserne:active {
   color: #ae57d7;
   background: #e4e7e7; }
+
+/** Skoven **/
+.poster_body_skoven {
+  background-image: url("../gfx/skoven.jpg"); }
+
+.poster_block_skoven {
+  background: rgba(207, 241, 180, 0.6);
+  left: 20%;
+  margin-right: -220px; }
+.poster_block_skoven .poster_title, .poster_block_skoven .poster_text {
+  color: #000; }
+
+.poster_link_skoven {
+  background: #C8DFAE;
+  color: #4E5200; }
+.poster_link_skoven:hover {
+  background: #d4e6c0; }
+.poster_link_skoven:active {
+  color: #afb800;
+  background: #e1edd3; }

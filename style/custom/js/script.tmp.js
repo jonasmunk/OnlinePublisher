@@ -126,7 +126,7 @@ hui.defer = function(func,bind) {
  */
 hui.override = function(original,subject) {
 	if (subject) {
-		for (prop in subject) {
+		for (var prop in subject) {
 			original[prop] = subject[prop];
 		}
 	}
@@ -897,7 +897,7 @@ hui.build = function(name,options,doc) {
 	var doc = doc || document,
 		e = doc.createElement(name);
 	if (options) {
-		for (prop in options) {
+		for (var prop in options) {
 			if (prop=='text') {
 				e.appendChild(doc.createTextNode(options.text));
 			} else if (prop=='html') {
@@ -1610,7 +1610,7 @@ hui.request = function(options) {
 			body = new FormData();
 			body.append('file', options.file);
 			if (options.parameters) {
-				for (param in options.parameters) {
+				for (var param in options.parameters) {
 					body.append(param, options.parameters[param]);
 				}
 			}
@@ -1639,7 +1639,7 @@ hui.request = function(options) {
 		body = '';
 	}
 	if (options.headers) {
-		for (name in options.headers) {
+		for (var name in options.headers) {
 			transport.setRequestHeader(name, options.headers[name]);
 		}
 	}
@@ -1676,7 +1676,7 @@ hui.request.isXMLResponse = function(t) {
 hui.request._buildPostBody = function(parameters) {
 	if (!parameters) return null;
 	var output = '';
-	for (param in parameters) {
+	for (var param in parameters) {
 		if (output.length>0) output+='&';
 		output+=encodeURIComponent(param)+'=';
 		if (parameters[param]!==undefined && parameters[param]!==null) {
@@ -1754,7 +1754,7 @@ hui.style = {
 		};
 	},
 	set : function(element,styles) {
-		for (style in styles) {
+		for (var style in styles) {
 			if (style==='transform') {
 				element.style['webkitTransform'] = styles[style];
 			} else if (style==='opacity') {
@@ -2555,7 +2555,7 @@ hui.animate = function(options,property,value,duration,delegate) {
 			item.animate(null,'','',options.duration,options);
 		} else {
 			var o = options;
-			for (prop in options.css) {
+			for (var prop in options.css) {
 				item.animate(null,options.css[prop],prop,options.duration,o);
 				o = hui.override({},options);
 				o.$complete = undefined;
@@ -3195,7 +3195,7 @@ hui.Color = function(str) {
 			processor = color_defs[i].process,
 			bits = re.exec(str);
         if (bits) {
-            channels = processor(bits);
+            var channels = processor(bits);
             this.r = channels[0];
             this.g = channels[1];
             this.b = channels[2];
@@ -3774,15 +3774,6 @@ hui.ui.reLayout = function() {
 			obj['$$layout']();
 		}
 	};
-	return;
-	var all = hui.ui.objects,
-		obj;
-	for (key in all) {
-		obj = all[key];
-		if (obj['$$layout']) {
-			obj['$$layout']();
-		}
-	}
 }
 
 
@@ -3902,7 +3893,7 @@ hui.ui.getTranslated = function(value) {
 	if (value[null]) {
 		return value[null];
 	}
-	for (key in value) {
+	for (var key in value) {
 		return value[key];
 	}
 }
@@ -4268,7 +4259,7 @@ hui.ui.callDescendants = function(obj,method,value,event) {
 	var d = hui.ui.getDescendants(obj);
 	for (var i=0; i < d.length; i++) {
 		if (d[i][method]) {
-			thisResult = d[i][method](value,event);
+			d[i][method](value,event);
 		}
 	};
 };
@@ -5516,7 +5507,7 @@ hui.ui.Overlay.prototype = {
  * }
  *
  * <strong>Events:</strong>
- * $click(button) - When the button is clicked (and possibly confirmed)
+ * $click(button) - When the button is clicked (and confirmed)
  * </pre>
  * @param options {Object} The options
  * @constructor
@@ -5545,7 +5536,9 @@ hui.ui.Button = function(options) {
  *  name : «String»,
  *  data : «Object»,
  *  confirm : {text : «String», okText : «String», cancelText : «String»},
- *  submit : «Boolean»
+ *  submit : «Boolean»,
+ *
+ *  listener : «Object»
  * }
  * </pre>
  */

@@ -1,4 +1,4 @@
-$serif-font: 'Playfair Display', serif;
+@import 'tools';
 
 .poster {
 	height: 500px;
@@ -162,5 +162,38 @@ $serif-font: 'Playfair Display', serif;
 	&:active {
 		color: lighten(#7A26A2,20%);
 		background: lighten(#C9CECF,10%);
+	}
+}
+
+
+
+/** Skoven **/
+
+.poster_body_skoven {
+	background-image: url('../gfx/skoven.jpg');
+}
+
+.poster_block_skoven {
+	background: rgba(207, 241, 180, 0.6);
+	left: 20%;
+	margin-right: -220px;
+	
+	.poster_title,
+	.poster_text {
+		color: #000;
+	}
+}
+
+.poster_link_skoven {
+	background: #C8DFAE;
+	color: #4E5200;
+	
+	&:hover {
+		background: lighten(#C8DFAE,5%);
+	}
+	
+	&:active {
+		color: lighten(#4E5200,20%);
+		background: lighten(#C8DFAE,10%);
 	}
 }
