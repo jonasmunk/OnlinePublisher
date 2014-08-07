@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+<abstract>
+    <text key="name" label="Name"/>
+    <boolean key="administrator" label="Administrator"/>
+    <single key="gender">
+        <option value="male" label="Male"/>
+        <option value="female" label="Female"/>
+        <option value="unknown" label="Unknown"/>
+    </single>
+    <multiple key="animals">
+        <option value="dog">Dog</option>
+        <option value="cat">Cat</option>
+    </multiple>
+    <object key="photo" label="Photo" type="Image"/>
+</abstract>

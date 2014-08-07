@@ -330,6 +330,11 @@ class FileService {
 		return null;
 	}
 	
+	static function getPath($path) {
+		global $basePath;
+		return Strings::concatUrl($basePath,$path);
+	}
+    
 	static function getFileFilename($id) {
 		$sql = "select filename from file where object_id=".Database::int($id);
 		if ($row = Database::selectFirst($sql)) {
