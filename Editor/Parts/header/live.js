@@ -88,6 +88,7 @@ op.Editor.Header.prototype = {
 		hui.style.copy(this.header,this.field,['font-size','line-height','margin-top','font-weight','font-family','text-align','color','font-style']);
 	},
 	$partWindowLoaded : function() {
+    this.part.level = String(this.part.level); // TODO: Segmented only supports strings - should be fixed in segmented
 		hui.ui.get('textFormula').setValues(this.part);
 	},
 	$valuesChanged$textFormula : function(values) {
