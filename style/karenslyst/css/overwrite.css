@@ -62,3 +62,15 @@ div.part_listing, textarea.part_listing {
 .part_map_static_pin {
 	z-index: 1;
 }
+
+.part_movie_text_inner {
+	background: #000;
+	background: rgba(0,0,0,.6);
+	color: #fff;
+	padding: 0 10px;
+	font-family: 'Playfair Display', Georgia,"Book Antiqua", "Palatino",Times,serif;
+	line-height: 40px;
+	display: inline-block;
+	font-size: 32px;
+	height: 44px;
+}

@@ -38,6 +38,9 @@
   .poster_text {
     font-size: 22pt; } }
 @media only screen and (max-width: 500px) {
+  .layout_content {
+    padding: 0 10px; }
+
   .poster {
     padding-bottom: 80%; }
 
@@ -53,4 +56,21 @@
     font-size: 24pt; }
 
   .poster_text {
-    font-size: 16pt; } }
+    font-size: 16pt; }
+
+  .part_movie_text {
+    margin-top: 50px; }
+
+  .part_movie_text_inner {
+    line-height: 30px;
+    font-size: 24px;
+    height: 34px; }
+
+  .part_movie_poster:before {
+    content: '\25B6';
+    font-size: 50px;
+    line-height: 90px;
+    text-indent: 12px;
+    width: 80px;
+    height: 80px;
+    margin: -40px 0 0 -40px; } }
