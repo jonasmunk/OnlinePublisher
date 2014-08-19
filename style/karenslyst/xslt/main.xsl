@@ -29,6 +29,7 @@
     		</xsl:if>
     		<xsl:value-of select="f:frame/@title"/>
     	</title>
+		<meta name="viewport" content="user-scalable=yes, initial-scale = 1, maximum-scale = 10, minimum-scale = 0.2"/>
     	<xsl:call-template name="util:metatags"/>
 		<link href='http://fonts.googleapis.com/css?family=Playfair+Display:400,400italic|Annie+Use+Your+Telescope' rel='stylesheet' type='text/css'/>
     	<xsl:call-template name="util:style"/>

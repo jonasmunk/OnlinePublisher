@@ -1,5 +1,19 @@
 {
 	"name" : "Karenslyst",
 	"description" : "Design for karenslyst.jonasmunk.dk",
-	"owner" : "Property of Marianne Elizabeth Hedvig Boller Laursen"
+	"owner" : "Property of Marianne Elisabeth Hedvig Boller Laursen",
+    "build" : {
+        "js" : [
+        ],
+        "css" : [
+            "style/basic/css/shared.css",
+            "@parts",
+            "style/in2isoft/css/main.css",
+            "style/in2isoft/css/front.css",
+            "style/in2isoft/css/overwrite.css",
+            "style/in2isoft/css/adaption.css",
+            "style/in2isoft/css/menu.css"
+            "style/in2isoft/css/poster.css"
+        ]
+    }
 }

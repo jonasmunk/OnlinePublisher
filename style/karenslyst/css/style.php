@@ -9,4 +9,5 @@ include 'overwrite.css';
 include 'main.css';
 include 'poster.css';
 include 'menu.css';
+include 'adaption.css';
 ?>
