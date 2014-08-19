@@ -12,6 +12,7 @@ body
 .layout_content {
 	max-width: 940px;
 	margin: 0 auto;
+	padding: 0 10px;
 }
 
 .layout_top {
