@@ -22,7 +22,7 @@
 
   .poster {
     height: auto;
-    margin: 0 -10px;
+    margin: 0 -20px;
     padding-bottom: 60%;
     position: relative; }
 
@@ -42,7 +42,8 @@
     padding: 0 10px; }
 
   .poster {
-    padding-bottom: 80%; }
+    padding-bottom: 80%;
+    margin: 0 -10px; }
 
   .poster_block {
     padding: 5px 10px;
