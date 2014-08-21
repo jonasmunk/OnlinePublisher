@@ -16,15 +16,14 @@ body
 }
 
 .layout_top {
-	height: 800px;
+	height: 736px;
 	overflow: hidden;
 	-webkit-transform: translate3d(0,0,0);
 }
 
 .layout_top > div {
-	background: url('../gfx/front.jpg');
-	background-size: cover;
-	background-position: 50% 50%;
+	background: url('../gfx/front.jpg') 50% 50% no-repeat;
+	//background-size: cover;
 	height: 110%;
 	width: 110%;
     -webkit-animation-name: effect;

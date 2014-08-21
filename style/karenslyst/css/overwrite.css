@@ -69,6 +69,7 @@ div.part_listing, textarea.part_listing {
 	color: #fff;
 	padding: 0 10px;
 	font-family: 'Playfair Display', Georgia,"Book Antiqua", "Palatino",Times,serif;
+    font-weight: normal;
 	line-height: 40px;
 	display: inline-block;
 	font-size: 32px;

@@ -38,6 +38,13 @@ op.ignite = function() {
 		hui.onReady(function() {
 			hui.cls.add(document.body.parentNode,'msie7');
 		});
+        // Fix frames
+        var frames = hui.get.byClass(document.body,'shared_frame');
+        for (var i = 0; i < frames.length; i++) {
+            frames[i].style.width = frames[i].clientWidth + 'px';
+            frames[i].style.display = 'block';
+        }
+        // TODO Fix document layout (turn into tables)
 	}
 }
 

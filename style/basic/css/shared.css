@@ -124,11 +124,6 @@
 	display: inline-block;
 }
 
-html.msie7 .shared_frame_shadow_slant
-{
-	display: block;
-}
-
 .shared_frame_shadow_slant_middle
 {
 	padding-left: 5px;
