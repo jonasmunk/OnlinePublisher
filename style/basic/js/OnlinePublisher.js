@@ -50,12 +50,12 @@ op.ignite = function() {
         // TODO Fix document layout (turn into tables)
         var rows = hui.get.byClass(document.body,'document_row');
 		for (var i = rows.length - 1; i >= 0; i--) {
-			var table = hui.build('table',{'class':rows[i].className,style:rows[i].getAttribute('style')});
+			var table = hui.build('table',{'class':rows[i].className,style:rows[i].style.cssText});
 			var tr = hui.build('tr',{parent:table});
 	        var columns = hui.get.byClass(rows[i],'document_column');
 			for (var j = 0; j < columns.length; j++) {
 				var col = columns[j];
-				var td = hui.build('td',{'class':col.className,parent:tr,style:col.getAttribute('style')});
+				var td = hui.build('td',{'class':col.className,parent:tr,style:col.style.cssText});
 				while (col.firstChild) {
 				    td.appendChild(col.firstChild); // *Moves* the child
 				}
