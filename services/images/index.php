@@ -45,10 +45,16 @@ foreach ($parameters as $parameter) {
 }
 // Bypass transformation if not required
 if ($recipe['width'] == null && $recipe['height'] == null && $recipe['scale'] == null && count($recipe['filters']) == 0 && !$recipe['format']) {
-	$sql = 'select `filename`,`type` from image where object_id='.Database::int($id);
+	$sql = 'select `filename`,`type`,`width`,`height` from image where object_id='.Database::int($id);
 	if ($row = Database::selectFirst($sql)) {
 		$path = $basePath.'images/'.$row['filename'];
-		ImageTransformationService::sendFile($path,$row['type']);
+        if (file_exists($path)) {
+    		ImageTransformationService::sendFile($path,$row['type']);            
+        } else if (ConfigurationService::isDebug()) {
+            Response::redirect(getPlaceholder($recipe,$row));
+        } else {
+		    Response::notFound();
+        }
 	}
 	exit;
 }
@@ -57,7 +63,7 @@ $cache = ImageTransformationService::buildCachePath($id,$recipe);
 if (file_exists($cache)) {
 	ImageTransformationService::sendFile($cache,$recipe['format']);
 } else {
-	$sql = 'select `filename`,`type` from image where object_id='.Database::int($id);
+	$sql = 'select `filename`,`type`,`width`,`height` from image where object_id='.Database::int($id);
 	if ($row = Database::selectFirst($sql)) {
 		$recipe['path'] = $basePath.'images/'.$row['filename'];
 		if (Request::getBoolean('nocache')) {
@@ -81,8 +87,8 @@ if (file_exists($cache)) {
 }
 
 function getPlaceholder($recipe,$row) {
-    $height = $recipe['height'] | $row['height'];
-    $width = $recipe['width'] | $row['height'];
-    return 'http://placeimg.com/' . $height . '/' . $width . '/arch/grayscale';
+    $height = isset($recipe['height']) ? $recipe['height'] : $row['height'];
+    $width = isset($recipe['width']) ? $recipe['width'] : $row['width'];
+    return 'http://placeimg.com/' . $width . '/' . $height . '/arch/grayscale';
 }
 ?>
