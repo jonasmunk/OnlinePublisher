@@ -5520,7 +5520,7 @@ hui.ui.Button = function(options) {
 	if (options.listener) {
 		this.listen(options.listener);
 	}
-}
+};
 
 /**
  * Creates a new button
@@ -5571,7 +5571,7 @@ hui.ui.Button.create = function(options) {
 		hui.dom.addText(inner,text);
 	}
 	return new hui.ui.Button(options);
-}
+};
 
 hui.ui.Button.prototype = {
 	_attach : function() {
@@ -5674,7 +5674,7 @@ hui.ui.Button.prototype = {
 	getData : function() {
 		return this.options.data;
 	}
-}
+};
 
 ////////////////////////////////// Buttons /////////////////////////////
 
@@ -5684,7 +5684,7 @@ hui.ui.Buttons = function(options) {
 	this.element = hui.get(options.element);
 	this.body = hui.get.firstByClass(this.element,'hui_buttons_body');
 	hui.ui.extend(this);
-}
+};
 
 hui.ui.Buttons.create = function(options) {
 	options = hui.override({top:0},options);
@@ -5700,14 +5700,14 @@ hui.ui.Buttons.create = function(options) {
 	}
 	hui.build('div',{'class':'hui_buttons_body',parent:e});
 	return new hui.ui.Buttons(options);
-}
+};
 
 hui.ui.Buttons.prototype = {
 	add : function(widget) {
 		this.body.appendChild(widget.element);
 		return this;
 	}
-}
+};
 
 /* EOF */
 

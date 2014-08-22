@@ -8436,7 +8436,7 @@ hui.ui.Alert = function(options) {
 	this.emotion = this.options.emotion;
 	this.title = hui.get.firstByTag(this.element,'h1');
 	hui.ui.extend(this);
-}
+};
 
 /**
  * Creates a new instance of an alert
@@ -8471,7 +8471,7 @@ hui.ui.Alert.create = function(options) {
 	}
 	
 	return obj;
-}
+};
 
 hui.ui.Alert.prototype = {
 	/** Shows the alert */
@@ -8541,7 +8541,7 @@ hui.ui.Alert.prototype = {
 		}
 		this.buttons.add(button);
 	}
-}
+};
 
 /* EOF */
 
@@ -8571,7 +8571,7 @@ hui.ui.Button = function(options) {
 	if (options.listener) {
 		this.listen(options.listener);
 	}
-}
+};
 
 /**
  * Creates a new button
@@ -8622,7 +8622,7 @@ hui.ui.Button.create = function(options) {
 		hui.dom.addText(inner,text);
 	}
 	return new hui.ui.Button(options);
-}
+};
 
 hui.ui.Button.prototype = {
 	_attach : function() {
@@ -8725,7 +8725,7 @@ hui.ui.Button.prototype = {
 	getData : function() {
 		return this.options.data;
 	}
-}
+};
 
 ////////////////////////////////// Buttons /////////////////////////////
 
@@ -8735,7 +8735,7 @@ hui.ui.Buttons = function(options) {
 	this.element = hui.get(options.element);
 	this.body = hui.get.firstByClass(this.element,'hui_buttons_body');
 	hui.ui.extend(this);
-}
+};
 
 hui.ui.Buttons.create = function(options) {
 	options = hui.override({top:0},options);
@@ -8751,14 +8751,14 @@ hui.ui.Buttons.create = function(options) {
 	}
 	hui.build('div',{'class':'hui_buttons_body',parent:e});
 	return new hui.ui.Buttons(options);
-}
+};
 
 hui.ui.Buttons.prototype = {
 	add : function(widget) {
 		this.body.appendChild(widget.element);
 		return this;
 	}
-}
+};
 
 /* EOF */
 
@@ -9595,7 +9595,7 @@ hui.ui.BoundPanel = function(options) {
 		this.arrowNarrow = 12;
 	}
 	hui.ui.extend(this);
-}
+};
 
 /**
  * Creates a new bound panel
@@ -9628,7 +9628,7 @@ hui.ui.BoundPanel.create = function(options) {
 		}
 	);
 	return new hui.ui.BoundPanel(options);
-}
+};
 
 /********************************* Public methods ***********************************/
 
@@ -9692,7 +9692,7 @@ hui.ui.BoundPanel.prototype = {
 				if (!hui.ui.isWithin(e,this.element)) {
 					this.hide();
 				}
-			}.bind(this))
+			}.bind(this));
 		}
 	},
 	/** @private */
@@ -9782,11 +9782,11 @@ hui.ui.BoundPanel.prototype = {
             node = {
                 offsetWidth : options.rect.width,
                 offsetHeight : options.rect.height
-            }
+            };
             nodeOffset = {
                 left : options.rect.left, 
                 top : options.rect.top,                
-            }
+            };
             nodeScrollOffset = {left: 0, top: 0};
 		} else {
 			node = hui.get(options);
@@ -9813,14 +9813,14 @@ hui.ui.BoundPanel.prototype = {
 		var arrowLeft, arrowTop, left, top;
 		var positionOnScreen = {
 			top : nodeOffset.top-windowScrollOffset.top-(nodeScrollOffset.top-windowScrollOffset.top)
-		}
+		};
 		var vertical = positionOnScreen.top / viewportHeight;
 		
 		if (position=='vertical') {
-			vertical = vertical>.5 ? .9 : .1;
+			vertical = vertical > 0.5 ? 0.9 : 0.1;
 		}
 		
-		if (vertical<=.1) {
+		if (vertical <= 0.1) {
 			this.relativePosition='top';
 			this.arrow.className = 'hui_boundpanel_arrow hui_boundpanel_arrow_top';
 			if (this.options.variant=='light') {
@@ -9832,7 +9832,7 @@ hui.ui.BoundPanel.prototype = {
 			arrowLeft = (nodeLeft+nodeWidth/2)-left-this.arrowNarrow;
 			top = nodeOffset.top+nodeHeight+8 - (nodeScrollOffset.top-windowScrollOffset.top);
 		}
-		else if (vertical>=.9) {
+		else if (vertical >= 0.9) {
 			this.relativePosition='bottom';
 			this.arrow.className='hui_boundpanel_arrow hui_boundpanel_arrow_bottom';
 			if (this.options.variant=='light') {
@@ -9842,64 +9842,64 @@ hui.ui.BoundPanel.prototype = {
 			}
 			left = Math.min(viewportWidth-panelDimensions.width-3,Math.max(3,nodeLeft+(nodeWidth/2)-((panelDimensions.width)/2)));
 			arrowLeft = (nodeLeft+nodeWidth/2)-left-this.arrowNarrow;
-			top = nodeOffset.top-panelDimensions.height-5 - (nodeScrollOffset.top-windowScrollOffset.top);
+			top = nodeOffset.top-panelDimensions.height - 5 - (nodeScrollOffset.top-windowScrollOffset.top);
 		}
-		else if ((nodeLeft+nodeWidth/2)/viewportWidth<.5) {
+		else if (( nodeLeft + nodeWidth / 2 ) / viewportWidth < 0.5) {
 			this.relativePosition='left';
 			left = nodeLeft + nodeWidth + 10;
 			this.arrow.className = 'hui_boundpanel_arrow hui_boundpanel_arrow_left';
-			top = nodeOffset.top+(nodeHeight-panelDimensions.height)/2;
+			top = nodeOffset.top+(nodeHeight-panelDimensions.height) / 2;
 			//top = Math.min(top,viewportHeight-panelDimensions.height+(windowScrollOffset.top+nodeScrollOffset.top));
 			top-= (nodeScrollOffset.top-windowScrollOffset.top);
-			var min = windowScrollOffset.top+3;
-			var max = windowScrollOffset.top+(viewportHeight-panelDimensions.height)-3;
+			var min = windowScrollOffset.top + 3;
+			var max = windowScrollOffset.top + (viewportHeight-panelDimensions.height) - 3;
 			top = Math.min(Math.max(top,min),max);
-			arrowTop = nodeOffset.top-top;
-			arrowTop-= (nodeScrollOffset.top-windowScrollOffset.top);
-			arrowTop-=this.arrowWide/2;
-			arrowTop+=nodeHeight/2;
-			if (this.options.variant=='light') {
-				arrowLeft=-11;
-				arrowTop+=2;
+			arrowTop = nodeOffset.top - top;
+			arrowTop -= (nodeScrollOffset.top-windowScrollOffset.top);
+			arrowTop -= this.arrowWide / 2;
+			arrowTop += nodeHeight / 2;
+			if (this.options.variant == 'light') {
+				arrowLeft= -11;
+				arrowTop += 2;
 			} else {
-				arrowLeft=-14;
+				arrowLeft = -14;
 			}
 		} else {
 			this.relativePosition = 'right';
-			left = nodeLeft-panelDimensions.width-10;
+			left = nodeLeft - panelDimensions.width - 10;
 			this.arrow.className = 'hui_boundpanel_arrow hui_boundpanel_arrow_right';
 			top = nodeOffset.top + (nodeHeight-panelDimensions.height) / 2;
 			//top = Math.min(top,viewportHeight-panelDimensions.height+(windowScrollOffset.top+nodeScrollOffset.top));
 			top-= (nodeScrollOffset.top-windowScrollOffset.top);
-			var min = windowScrollOffset.top+3;
-			var max = windowScrollOffset.top+(viewportHeight-panelDimensions.height)-3;
+			var min = windowScrollOffset.top + 3;
+			var max = windowScrollOffset.top + (viewportHeight - panelDimensions.height)-3;
 			top = Math.min(Math.max(top,min),max);
 			arrowTop = nodeOffset.top-top;
-			arrowTop-= (nodeScrollOffset.top-windowScrollOffset.top);
-				arrowTop-=this.arrowWide/2;
-				arrowTop+=nodeHeight/2;
-			if (this.options.variant=='light') {
-				arrowLeft=panelDimensions.width-1;
-				arrowTop+=2;
+			arrowTop -= (nodeScrollOffset.top - windowScrollOffset.top);
+				arrowTop -= this.arrowWide/2;
+				arrowTop += nodeHeight/2;
+			if (this.options.variant == 'light') {
+				arrowLeft = panelDimensions.width - 1;
+				arrowTop += 2;
 			} else {
-				arrowLeft=panelDimensions.width-4;
+				arrowLeft = panelDimensions.width - 4;
 			}
 		}
-		this.arrow.style.marginTop = arrowTop+'px';
-		this.arrow.style.marginLeft = arrowLeft+'px';
+		this.arrow.style.marginTop = arrowTop + 'px';
+		this.arrow.style.marginLeft = arrowLeft + 'px';
 		if (this.visible) {
 			hui.animate(this.element,'top',top+'px',500,{ease:hui.ease.fastSlow});
 			hui.animate(this.element,'left',left+'px',500,{ease:hui.ease.fastSlow});
 		} else {
-			this.element.style.top=top+'px';
-			this.element.style.left=left+'px';
+			this.element.style.top = top + 'px';
+			this.element.style.left = left + 'px';
 		}
 	},
     destroy : function() {
 		hui.ui.hideCurtain(this);
         hui.dom.remove(this.element);
     }
-}
+};
 
 /* EOF */
 
@@ -13433,7 +13433,7 @@ hui.ui.Bar.create = function(options) {
 	var body = hui.build('div',{'class':'hui_bar_body',parent:options.element});
 	hui.build('div',{'class':'hui_bar_left',parent:body});
 	return new hui.ui.Bar(options);
-}
+};
 
 hui.ui.Bar.prototype = {
 	/** Add the bar to the page */
@@ -13449,7 +13449,7 @@ hui.ui.Bar.prototype = {
 	},
 	/** Add a divider to the bar */
 	addDivider : function() {
-		hui.build('span',{'class':'hui_bar_divider',parent:this.body})
+		hui.build('span',{'class':'hui_bar_divider',parent:this.body});
 	},
 	addToRight : function(widget) {
 		var right = this._getRight();
@@ -13469,7 +13469,7 @@ hui.ui.Bar.prototype = {
 	 * @param {Boolean} visible If the bar should be visible
 	 */
 	setVisible : function(visible) {
-		if (this.visible===visible) {return}
+		if (this.visible===visible) {return;}
 		if (visible) {
 			this.show();
 		} else {
@@ -13478,7 +13478,7 @@ hui.ui.Bar.prototype = {
 	},
 	/** Show the bar */
 	show : function() {
-		if (this.visible) {return}
+		if (this.visible) {return;}
 		if (this.options.absolute) {
 			this.element.style.visibility='visible';
 		} else {
@@ -13490,7 +13490,7 @@ hui.ui.Bar.prototype = {
 	},
 	/** Hide the bar */
 	hide : function() {
-		if (!this.visible) {return}
+		if (!this.visible) {return;}
 		if (this.options.absolute) {
 			this.element.style.visibility='hidden';
 		} else {
@@ -13523,7 +13523,7 @@ hui.ui.Bar.prototype = {
 	$clickButton : function(button) {
 		this.fire('clickButton',button);
 	}
-}
+};
 
 /**
  * A bar button
@@ -13565,7 +13565,7 @@ hui.ui.Bar.Button.create = function(options) {
 		e.appendChild(hui.ui.createIcon(options.icon,16));
 	}
 	return new hui.ui.Bar.Button(options);
-}
+};
 
 hui.ui.Bar.Button.prototype = {
 	_mousedown : function(e) {
@@ -13590,7 +13590,7 @@ hui.ui.Bar.Button.prototype = {
 	getKey : function() {
 		return this.options.key;
 	}
-}
+};
 
 /**
  * A bar text
@@ -13616,7 +13616,7 @@ hui.ui.Bar.Text.prototype = {
 	setText : function(str) {
 		hui.dom.setText(this.element,hui.ui.getTranslated(str));
 	}
-}
+};
 
 /**
  * A dock

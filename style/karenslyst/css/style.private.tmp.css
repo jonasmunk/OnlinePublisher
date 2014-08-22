@@ -1301,7 +1301,7 @@ body
 
 .layout_top > div {
 	background: url('../gfx/front.jpg') 50% 50% no-repeat;
-	//background-size: cover;
+	background-size: cover;
 	height: 110%;
 	width: 110%;
     -webkit-animation-name: effect;
