@@ -19,6 +19,6 @@ class TestUI extends UnitTestCase {
         
         $result = UI::buildAbstractUI($xml);
         
-        print $result;
+        //print $result;
 	}
 }
