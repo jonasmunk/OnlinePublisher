@@ -5522,7 +5522,7 @@ hui.ui.Button = function(options) {
 	if (options.listener) {
 		this.listen(options.listener);
 	}
-}
+};
 
 /**
  * Creates a new button
@@ -5573,7 +5573,7 @@ hui.ui.Button.create = function(options) {
 		hui.dom.addText(inner,text);
 	}
 	return new hui.ui.Button(options);
-}
+};
 
 hui.ui.Button.prototype = {
 	_attach : function() {
@@ -5676,7 +5676,7 @@ hui.ui.Button.prototype = {
 	getData : function() {
 		return this.options.data;
 	}
-}
+};
 
 ////////////////////////////////// Buttons /////////////////////////////
 
@@ -5686,7 +5686,7 @@ hui.ui.Buttons = function(options) {
 	this.element = hui.get(options.element);
 	this.body = hui.get.firstByClass(this.element,'hui_buttons_body');
 	hui.ui.extend(this);
-}
+};
 
 hui.ui.Buttons.create = function(options) {
 	options = hui.override({top:0},options);
@@ -5702,14 +5702,14 @@ hui.ui.Buttons.create = function(options) {
 	}
 	hui.build('div',{'class':'hui_buttons_body',parent:e});
 	return new hui.ui.Buttons(options);
-}
+};
 
 hui.ui.Buttons.prototype = {
 	add : function(widget) {
 		this.body.appendChild(widget.element);
 		return this;
 	}
-}
+};
 
 /* EOF */
 
@@ -5757,6 +5757,32 @@ op.ignite = function() {
 		hui.onReady(function() {
 			hui.cls.add(document.body.parentNode,'msie7');
 		});
+	}
+	
+	if (hui.browser.msie7 || hui.browser.msie6) {
+        // Fix frames
+        var frames = hui.get.byClass(document.body,'shared_frame');
+        for (var i = 0; i < frames.length; i++) {
+            frames[i].style.width = frames[i].clientWidth + 'px';
+            frames[i].style.display = 'block';
+        }
+        // TODO Fix document layout (turn into tables)
+        var rows = hui.get.byClass(document.body,'document_row');
+		for (var i = rows.length - 1; i >= 0; i--) {
+			var table = hui.build('table',{'class':rows[i].className,style:rows[i].style.cssText});
+			var tbody = hui.build('tbody',{parent:table});
+			var tr = hui.build('tr',{parent:tbody});
+	        var columns = hui.get.byClass(rows[i],'document_column');
+			for (var j = 0; j < columns.length; j++) {
+				var col = columns[j];
+				var td = hui.build('td',{'class':col.className,parent:tr,style:col.style.cssText});
+				while (col.firstChild) {
+				    td.appendChild(col.firstChild); // *Moves* the child
+				}
+			}
+			rows[i].parentNode.insertBefore(table,rows[i]);
+			hui.dom.remove(rows[i]);
+		}
 	}
 }
 
