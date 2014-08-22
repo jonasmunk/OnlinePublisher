@@ -31,8 +31,13 @@
     	</title>
 		<meta name="viewport" content="user-scalable=yes, initial-scale = 1, maximum-scale = 10, minimum-scale = 0.2"/>
     	<xsl:call-template name="util:metatags"/>
+        <!--
 		<link href='http://fonts.googleapis.com/css?family=Playfair+Display:400,400italic|Annie+Use+Your+Telescope' rel='stylesheet' type='text/css'/>
+-->
 		<xsl:call-template name="util:scripts-build"/>
+        <xsl:call-template name="util:lazy-fonts">
+			<xsl:with-param name="google" select="'Playfair+Display:400,400italic|Annie+Use+Your+Telescope'"/>
+        </xsl:call-template>
 		<xsl:call-template name="util:style-build"/>
     	<xsl:call-template name="util:style-ie7"/>
 		<!--
