@@ -51,7 +51,8 @@ op.ignite = function() {
         var rows = hui.get.byClass(document.body,'document_row');
 		for (var i = rows.length - 1; i >= 0; i--) {
 			var table = hui.build('table',{'class':rows[i].className,style:rows[i].style.cssText});
-			var tr = hui.build('tr',{parent:table});
+			var tbody = hui.build('tbody',{parent:table});
+			var tr = hui.build('tr',{parent:tbody});
 	        var columns = hui.get.byClass(rows[i],'document_column');
 			for (var j = 0; j < columns.length; j++) {
 				var col = columns[j];
