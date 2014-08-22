@@ -45,7 +45,7 @@ hui.ui.Bar.create = function(options) {
 	var body = hui.build('div',{'class':'hui_bar_body',parent:options.element});
 	hui.build('div',{'class':'hui_bar_left',parent:body});
 	return new hui.ui.Bar(options);
-}
+};
 
 hui.ui.Bar.prototype = {
 	/** Add the bar to the page */
@@ -61,7 +61,7 @@ hui.ui.Bar.prototype = {
 	},
 	/** Add a divider to the bar */
 	addDivider : function() {
-		hui.build('span',{'class':'hui_bar_divider',parent:this.body})
+		hui.build('span',{'class':'hui_bar_divider',parent:this.body});
 	},
 	addToRight : function(widget) {
 		var right = this._getRight();
@@ -81,7 +81,7 @@ hui.ui.Bar.prototype = {
 	 * @param {Boolean} visible If the bar should be visible
 	 */
 	setVisible : function(visible) {
-		if (this.visible===visible) {return}
+		if (this.visible===visible) {return;}
 		if (visible) {
 			this.show();
 		} else {
@@ -90,7 +90,7 @@ hui.ui.Bar.prototype = {
 	},
 	/** Show the bar */
 	show : function() {
-		if (this.visible) {return}
+		if (this.visible) {return;}
 		if (this.options.absolute) {
 			this.element.style.visibility='visible';
 		} else {
@@ -102,7 +102,7 @@ hui.ui.Bar.prototype = {
 	},
 	/** Hide the bar */
 	hide : function() {
-		if (!this.visible) {return}
+		if (!this.visible) {return;}
 		if (this.options.absolute) {
 			this.element.style.visibility='hidden';
 		} else {
@@ -135,7 +135,7 @@ hui.ui.Bar.prototype = {
 	$clickButton : function(button) {
 		this.fire('clickButton',button);
 	}
-}
+};
 
 /**
  * A bar button
@@ -177,7 +177,7 @@ hui.ui.Bar.Button.create = function(options) {
 		e.appendChild(hui.ui.createIcon(options.icon,16));
 	}
 	return new hui.ui.Bar.Button(options);
-}
+};
 
 hui.ui.Bar.Button.prototype = {
 	_mousedown : function(e) {
@@ -202,7 +202,7 @@ hui.ui.Bar.Button.prototype = {
 	getKey : function() {
 		return this.options.key;
 	}
-}
+};
 
 /**
  * A bar text
@@ -228,4 +228,4 @@ hui.ui.Bar.Text.prototype = {
 	setText : function(str) {
 		hui.dom.setText(this.element,hui.ui.getTranslated(str));
 	}
-}
+};

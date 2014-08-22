@@ -18,7 +18,7 @@ hui.ui.Alert = function(options) {
 	this.emotion = this.options.emotion;
 	this.title = hui.get.firstByTag(this.element,'h1');
 	hui.ui.extend(this);
-}
+};
 
 /**
  * Creates a new instance of an alert
@@ -53,7 +53,7 @@ hui.ui.Alert.create = function(options) {
 	}
 	
 	return obj;
-}
+};
 
 hui.ui.Alert.prototype = {
 	/** Shows the alert */
@@ -123,6 +123,6 @@ hui.ui.Alert.prototype = {
 		}
 		this.buttons.add(button);
 	}
-}
+};
 
 /* EOF */
