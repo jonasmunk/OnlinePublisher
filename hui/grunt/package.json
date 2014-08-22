@@ -1,5 +1,5 @@
 {
-  "name": "HumaniseEditor",
+  "name": "HumaniseUI",
   "version": "1.0.0",
   "description": "CMS",
   "main": "index.js",
@@ -17,6 +17,7 @@
   },
   "homepage": "https://github.com/in2isoft/OnlinePublisher",
   "devDependencies": {
+    "grunt-contrib-jshint": "^0.10.0",
     "grunt-contrib-qunit": "^0.5.2"
   }
 }
