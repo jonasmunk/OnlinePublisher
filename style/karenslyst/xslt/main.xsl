@@ -31,9 +31,29 @@
     	</title>
 		<meta name="viewport" content="user-scalable=yes, initial-scale = 1, maximum-scale = 10, minimum-scale = 0.2"/>
     	<xsl:call-template name="util:metatags"/>
+        <style>
+            body { margin: 0; padding: 0; font-family: Georgia,Times,serif; }
+            .layout_content { max-width: 940px; margin: 0 auto; padding: 0 20px; }
+            .layout_top { height: 736px; background-color: #5784df; }
+            .title { font-family: 'Playfair Display', serif; font-weight: normal; color: #fff; font-size: 52pt; margin: 0; position: absolute; width: 960px;
+            	left: 50%;
+            	margin-left: -480px;
+            	top: 10px;
+            	z-index: 2;
+            	line-height: 1;
+            	text-rendering: geometricPrecision;
+            }
+
+            .title_more {
+            	font-style: italic;
+            	font-size: .5em;
+            	font-weight: normal;
+            }
+            
+        </style>
         <!--
 		<link href='http://fonts.googleapis.com/css?family=Playfair+Display:400,400italic|Annie+Use+Your+Telescope' rel='stylesheet' type='text/css'/>
--->
+        -->
 		<xsl:call-template name="util:scripts-build"/>
         <xsl:call-template name="util:lazy-fonts">
 			<xsl:with-param name="google" select="'Playfair+Display:400,400italic|Annie+Use+Your+Telescope'"/>
@@ -45,7 +65,7 @@
     	<xsl:call-template name="util:style-ie6"/>
     	<xsl:call-template name="util:style-ie8"/>
     	<xsl:call-template name="util:scripts"/>
-			-->
+		-->
 	
     </head>
     <body>

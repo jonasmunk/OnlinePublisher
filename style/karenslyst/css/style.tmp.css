@@ -3163,21 +3163,6 @@ div.part_listing, textarea.part_listing {
 }
 /* style/karenslyst/css/main.css */
 
-body
-{
-	margin: 0;
-	padding: 0;
-	font-family: Georgia,Times,serif;
-}
-
-
-
-
-.layout_content {
-	max-width: 940px;
-	margin: 0 auto;
-	padding: 0 20px;
-}
 
 .layout_top {
 	height: 736px;
@@ -3196,28 +3181,6 @@ body
     -webkit-animation-timing-function: ease-out;
 }
 
-.title {
-	font-family: 'Playfair Display', serif;
-	font-weight: normal;
-	color: #fff;
-	font-size: 52pt;
-	margin: 0;
-	position: absolute;
-	width: 960px;
-	left: 50%;
-	margin-left: -480px;
-	top: 10px;
-	z-index: 2;
-	line-height: 1;
-	/*text-shadow: 0 2px 4px rgba(2, 69, 143, 0.7);*/
-	text-rendering: geometricPrecision;
-}
-
-.title_more {
-	font-style: italic;
-	font-size: .5em;
-	font-weight: normal;
-}
 
 .layout_middle {
 	background: #fff;
