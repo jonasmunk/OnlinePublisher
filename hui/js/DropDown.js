@@ -262,6 +262,7 @@ hui.ui.DropDown.prototype = {
 			hui.listen(e,'mousedown',function(e) {
 				hui.stop(e);
 				self._itemClicked(item,i);
+				hui.listenOnce(document.body,'mouseup',function(e) {hui.stop(e)});
 			})
 			if (i==self.index) {
 				hui.cls.add(e,'hui_selected')

@@ -272,7 +272,7 @@ hui.ui.Editor.prototype = {
 	},
 	showPartEditControls : function() {
 		if (!this.partEditControls) {
-			this.partEditControls = hui.ui.Overlay.create({name:'huiEditorPartEditActions',variant:'light'});
+			this.partEditControls = hui.ui.Overlay.create({name:'huiEditorPartEditActions',variant:'light',zIndex:100});
 			this.partEditControls.addIcon('save','common/ok');
 			this.partEditControls.addIcon('cancel','common/stop');
 			this.partEditControls.addIcon('info','common/info_small');

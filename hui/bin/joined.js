@@ -8385,6 +8385,7 @@ hui.ui.DropDown.prototype = {
 			hui.listen(e,'mousedown',function(e) {
 				hui.stop(e);
 				self._itemClicked(item,i);
+				hui.listenOnce(document.body,'mouseup',function(e) {hui.stop(e)});
 			})
 			if (i==self.index) {
 				hui.cls.add(e,'hui_selected')
@@ -8740,10 +8741,10 @@ hui.ui.Buttons = function(options) {
 hui.ui.Buttons.create = function(options) {
 	options = hui.override({top:0},options);
 	var e = options.element = hui.build('div',{'class':'hui_buttons'});
-	if (options.align=='right') {
+	if (options.align==='right') {
 		hui.cls.add(e,'hui_buttons_right');
 	}
-	if (options.align=='center') {
+	if (options.align==='center') {
 		hui.cls.add(e,'hui_buttons_center');
 	}
 	if (options.top > 0) {
@@ -10832,7 +10833,7 @@ hui.ui.Overlay.prototype = {
 			hui.style.set(this.element,{display : 'block',opacity : 0});
 			hui.animate(this.element,'opacity',1,150);
 		}
-		var zIndex = hui.ui.nextAlertIndex();
+		var zIndex = options.zIndex === undefined ? options.zIndex : hui.ui.nextAlertIndex();
 		if (this.options.modal) {
 			this.element.style.zIndex = hui.ui.nextAlertIndex();
 			hui.ui.showCurtain({ widget : this, zIndex : zIndex });
@@ -14377,7 +14378,7 @@ hui.ui.MarkupEditor.prototype = {
 		this.temporaryLink = null;
 		this._valueChanged();
         this._refreshInfoWindow();
-        this.bar.setBlock(this._getFirstBlock());
+        this.bar && this.bar.setBlock(this._getFirstBlock());
     },
     _getFirstBlock : function() {
         var path = this.impl.getPath();
@@ -14455,6 +14456,7 @@ hui.ui.MarkupEditor.prototype = {
 		this._valueChanged();
         this._refreshInfoWindow();
 		this.impl.restoreSelection();
+		this.impl._selectionChanged();
 	},
     _changeBlock : function(tag) {
         var block = this._getFirstBlock();
@@ -14495,19 +14497,17 @@ hui.ui.MarkupEditor.prototype = {
 				$changed : function() {
 					this._highlightNode(null)
 					this.temporaryLink = null;
-					hui.log('success');
 					this._valueChanged();
 				}.bind(this),
 				$cancel : function() {
 					this._highlightNode(null)
-					hui.log('cancelled');
 					this.temporaryLink = null;
 					this._valueChanged();
 				}.bind(this),
                 $remove : function() {
                     // TODO: Standardise this
                     this.impl._unWrap(this.temporaryLink);
-                    this._refreshInfoWindow();
+					this.impl._selectionChanged();
                 }.bind(this)
 			});
 		} else if (!this.linkEditor) {
@@ -14750,6 +14750,7 @@ hui.ui.MarkupEditor.webkit = {
         		var selection = window.getSelection();
     			selection.selectAllChildren(node);
             }
+			this.controller._valueChanged();
 		}
         this._selectionChanged();
 	},
@@ -14759,6 +14760,7 @@ hui.ui.MarkupEditor.webkit = {
 			return node;
 		}
 		document.execCommand('createLink',null,'#');
+        this._selectionChanged();
 		return this._getSelectedNode();
 	},
 	_getSelectedNode : function() {
@@ -14785,6 +14787,7 @@ hui.ui.MarkupEditor.webkit = {
 	align : function(value) {
 		var x = {center:'justifycenter',justify:'justifyfull',left:'justifyleft',right:'justifyright'};
 		document.execCommand(x[value],null,null);
+        this._updateInlinePanel();
 	},
 	_keyUp : function() {
 		this.controller.implValueChanged();
@@ -14838,27 +14841,29 @@ hui.ui.MarkupEditor.webkit = {
 		}
         return ancestor;
     },
+	_buildInlinePanel : function() {
+        this._inlinePanel = hui.ui.BoundPanel.create({variant:'light'});
+        var content = hui.build('div',{
+            'class' : 'hui_markupeditor_inlinepanel',
+            html : '<a href="javascript://" data="bold"><strong>Bold</strong></a><a href="javascript://" data="italic"><em>Italic</em></a>'
+        });
+        hui.listen(content,'mousedown',function(e) {
+            e = hui.event(e);
+            e.stop();
+            var a = e.findByTag('a');
+            if (a) {
+                this.saveSelection();
+                this.format({key:a.getAttribute('data')})
+                this.restoreSelection();
+				this._selectionChanged();
+            }
+        }.bind(this))
+        this._inlinePanel.add(content);
+	},
     _updateInlinePanel : function() {
 		var selection = window.getSelection();
-        if(!this._inlinePanel) {
-            this._inlinePanel = hui.ui.BoundPanel.create({variant:'light'});
-            var content = hui.build('div',{
-                'class' : 'hui_markupeditor_inlinepanel',
-                html : '<a href="javascript://" data="bold"><strong>Bold</strong></a><a href="javascript://" data="italic"><em>Italic</em></a>'
-            });
-            hui.listen(content,'mousedown',function(e) {
-                e = hui.event(e);
-                e.stop();
-                var a = e.findByTag('a');
-                if (a) {
-                    this.saveSelection();
-                    this.format({key:a.getAttribute('data')})
-                    this.restoreSelection();
-                }
-            }.bind(this))
-            this._inlinePanel.add(content);
-        }
-		if (selection.rangeCount<1) {
+		this._inlinePanel || this._buildInlinePanel();
+		if (selection.rangeCount < 1) {
             this._inlinePanel.hide();
             return;
         }
@@ -14868,7 +14873,7 @@ hui.ui.MarkupEditor.webkit = {
             return;            
         }
         var rects = range.getClientRects();
-        if (rects.length>0) {
+        if (rects.length > 0) {
             var rect = rects[0];
             this._inlinePanel.position({rect:rect,position:'vertical'});
             this._inlinePanel.show();
@@ -14876,6 +14881,18 @@ hui.ui.MarkupEditor.webkit = {
         
     },
 	_selectionChanged : function() {
+		var sel = window.getSelection();
+		var hash = this._hash(sel);
+		var latest = this._latestSelection;
+		hui.log(sel);
+		hui.log(hash);
+		if (latest) {
+			if (sel.anchorNode.parentNode == latest.node && latest.hash == hash) {
+				return;
+			}
+		}
+		hui.log('Change');
+		this._latestSelection = {node:sel.anchorNode.parentNode,hash:hash};
         var path = [],
             tag = this._getAncestor();
         while (tag && tag !== this.element) {
@@ -14885,6 +14902,12 @@ hui.ui.MarkupEditor.webkit = {
         this.path = path;
         this.controller.implSelectionChanged();
         this._updateInlinePanel();
+	},
+	_storeSelection : function(selection) {
+		
+	},
+	_hash : function(sel) {
+		return sel.anchorOffset+':'+sel.baseOffset+':'+sel.extentOffset;
 	},
 	removeFormat : function() {
 		document.execCommand('removeFormat',null,null);

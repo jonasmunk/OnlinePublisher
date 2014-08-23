@@ -82,7 +82,7 @@ hui.ui.Overlay.prototype = {
 			hui.style.set(this.element,{display : 'block',opacity : 0});
 			hui.animate(this.element,'opacity',1,150);
 		}
-		var zIndex = hui.ui.nextAlertIndex();
+		var zIndex = options.zIndex === undefined ? options.zIndex : hui.ui.nextAlertIndex();
 		if (this.options.modal) {
 			this.element.style.zIndex = hui.ui.nextAlertIndex();
 			hui.ui.showCurtain({ widget : this, zIndex : zIndex });

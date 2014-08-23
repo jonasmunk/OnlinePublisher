@@ -5426,7 +5426,7 @@ hui.ui.Overlay.prototype = {
 			hui.style.set(this.element,{display : 'block',opacity : 0});
 			hui.animate(this.element,'opacity',1,150);
 		}
-		var zIndex = hui.ui.nextAlertIndex();
+		var zIndex = options.zIndex === undefined ? options.zIndex : hui.ui.nextAlertIndex();
 		if (this.options.modal) {
 			this.element.style.zIndex = hui.ui.nextAlertIndex();
 			hui.ui.showCurtain({ widget : this, zIndex : zIndex });
@@ -5689,10 +5689,10 @@ hui.ui.Buttons = function(options) {
 hui.ui.Buttons.create = function(options) {
 	options = hui.override({top:0},options);
 	var e = options.element = hui.build('div',{'class':'hui_buttons'});
-	if (options.align=='right') {
+	if (options.align==='right') {
 		hui.cls.add(e,'hui_buttons_right');
 	}
-	if (options.align=='center') {
+	if (options.align==='center') {
 		hui.cls.add(e,'hui_buttons_center');
 	}
 	if (options.top > 0) {
