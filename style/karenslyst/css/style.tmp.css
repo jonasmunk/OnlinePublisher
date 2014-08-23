@@ -3162,22 +3162,6 @@ div.part_listing, textarea.part_listing {
 	height: 44px;
 }
 /* style/karenslyst/css/main.css */
-
-
-.layout_top {
-	-webkit-transform: translate3d(0,0,0);
-}
-
-
-.layout_top_body-loaded {
-	-webkit-transform: scale(1);
-	background-image: url('../gfx/front.jpg');
-    -webkit-animation-name: effect;
-    -webkit-animation-duration: 10s;
-    -webkit-animation-iteration-count: 1;
-    -webkit-animation-timing-function: ease-out;    
-}
-
 .layout_middle {
 	background: #fff;
 	z-index: 1;
@@ -3185,14 +3169,6 @@ div.part_listing, textarea.part_listing {
 }
 
 
-@-webkit-keyframes effect {
-	0% {
-		-webkit-transform: scale(1.4);
-	}
-	100% {
-		-webkit-transform: scale(1);
-	}
-}
 
 .layout_bottom {
 	text-align: center;

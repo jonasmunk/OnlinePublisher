@@ -36,7 +36,7 @@
             .layout_content { max-width: 940px; margin: 0 auto; padding: 0 20px; }
 
 			<xsl:if test="//p:page/@id=//p:context/p:home/@page">
-            .layout_top { padding-bottom: 50%; overflow: hidden; position: relative;}
+            .layout_top { padding-bottom: 50%; overflow: hidden; position: relative; -webkit-transform: translate3d(0,0,0);}
             .layout_top_body {
                 top: 0;
                 position: absolute;
@@ -46,6 +46,14 @@
             	height: 110%;
             	width: 110%;
         		-webkit-transform: scale(1.4);
+            }
+            .layout_top_body-loaded {
+            	-webkit-transform: scale(1);
+            	background-image: url('<xsl:value-of select="$path"/><xsl:value-of select="$timestamp-url"/>style/karenslyst/gfx/front.jpg');
+                -webkit-animation-name: effect;
+                -webkit-animation-duration: 10s;
+                -webkit-animation-iteration-count: 1;
+                -webkit-animation-timing-function: ease-out;    
             }
             .title { font-family: 'Playfair Display', serif; font-weight: normal; color: #fff; font-size: 52pt; margin: 0; position: absolute; width: 960px;
             	left: 50%;
@@ -61,6 +69,17 @@
             	font-size: .5em;
             	font-weight: normal;
             }
+            @-webkit-keyframes effect {
+            	0% {
+            		-webkit-transform: scale(1.4);
+            	}
+            	100% {
+            		-webkit-transform: scale(1);
+            	}
+            }
+            .layout_top {
+            }
+            
             </xsl:if>
         </style>
         <!--
