@@ -1,22 +1,18 @@
 
 
 .layout_top {
-	height: 736px;
-	overflow: hidden;
 	-webkit-transform: translate3d(0,0,0);
 }
 
-.layout_top > div {
-	background: url('../gfx/front.jpg') 50% 50% no-repeat;
-	background-size: cover;
-	height: 110%;
-	width: 110%;
-    -webkit-animation-name: effect;
-    -webkit-animation-duration: 20s;
-    -webkit-animation-iteration-count: 1;
-    -webkit-animation-timing-function: ease-out;
-}
 
+.layout_top_body-loaded {
+	-webkit-transform: scale(1);
+	background-image: url('../gfx/front.jpg');
+    -webkit-animation-name: effect;
+    -webkit-animation-duration: 10s;
+    -webkit-animation-iteration-count: 1;
+    -webkit-animation-timing-function: ease-out;    
+}
 
 .layout_middle {
 	background: #fff;
@@ -27,7 +23,7 @@
 
 @-webkit-keyframes effect {
 	0% {
-		-webkit-transform: scale(1.2);
+		-webkit-transform: scale(1.4);
 	}
 	100% {
 		-webkit-transform: scale(1);

@@ -1,10 +1,10 @@
 .menu {
-  background: #000;
+  background: #2E3840;
   font-family: Georgia; }
 
 .menu_items {
   list-style: none;
-  padding: 0;
+  padding: 0 15px;
   margin: 0 auto;
   max-width: 960px; }
 
