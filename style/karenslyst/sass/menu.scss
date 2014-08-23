@@ -1,13 +1,13 @@
 @import 'tools';
 
 .menu {
-	background: #000;
+	background: #2E3840; //#31352F
 	font-family: Georgia;//$serif-font;
 }
 
 .menu_items {
 	list-style: none;
-	padding: 0;
+	padding: 0 15px;
 	margin: 0 auto;
 	max-width: 960px;
 }

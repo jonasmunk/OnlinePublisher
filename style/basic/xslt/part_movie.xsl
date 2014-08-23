@@ -34,7 +34,7 @@
 					</xsl:attribute>
             </xsl:if>
 				<xsl:if test="p:text">
-					<h2 class="part_movie_text"><xsl:value-of select="p:text"/></h2>
+					<h2 class="part_movie_text"><span class="part_movie_text_inner"><xsl:value-of select="p:text"/></span></h2>
 				</xsl:if>
 					<xsl:comment/>
 				</div>

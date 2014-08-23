@@ -39,6 +39,32 @@ op.ignite = function() {
 			hui.cls.add(document.body.parentNode,'msie7');
 		});
 	}
+	
+	if (hui.browser.msie7 || hui.browser.msie6) {
+        // Fix frames
+        var frames = hui.get.byClass(document.body,'shared_frame');
+        for (var i = 0; i < frames.length; i++) {
+            frames[i].style.width = frames[i].clientWidth + 'px';
+            frames[i].style.display = 'block';
+        }
+        // TODO Fix document layout (turn into tables)
+        var rows = hui.get.byClass(document.body,'document_row');
+		for (var i = rows.length - 1; i >= 0; i--) {
+			var table = hui.build('table',{'class':rows[i].className,style:rows[i].style.cssText});
+			var tbody = hui.build('tbody',{parent:table});
+			var tr = hui.build('tr',{parent:tbody});
+	        var columns = hui.get.byClass(rows[i],'document_column');
+			for (var j = 0; j < columns.length; j++) {
+				var col = columns[j];
+				var td = hui.build('td',{'class':col.className,parent:tr,style:col.style.cssText});
+				while (col.firstChild) {
+				    td.appendChild(col.firstChild); // *Moves* the child
+				}
+			}
+			rows[i].parentNode.insertBefore(table,rows[i]);
+			hui.dom.remove(rows[i]);
+		}
+	}
 }
 
 op.showLogin = function() {

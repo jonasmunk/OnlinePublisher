@@ -862,15 +862,15 @@
 	<xsl:choose>
 		<xsl:when test="$variant!=''">
 			<span class="shared_frame shared_frame_{$variant}">
-				<span class="shared_frame_{$variant}_top"><span><span><xsl:comment/></span></span></span>
+				<span class="shared_frame_{$variant}_top"><span class="shared_frame_{$variant}_top_inner"><span class="shared_frame_{$variant}_top_innermost"><xsl:comment/></span></span></span>
 				<span class="shared_frame_{$variant}_middle">
-					<span class="shared_frame_{$variant}_middle">
+					<span class="shared_frame_{$variant}_middle_inner">
 						<span class="shared_frame_{$variant}_content">
 							<xsl:copy-of select="$content"/>
 						</span>
 					</span>
 				</span>
-				<span class="shared_frame_{$variant}_bottom"><span><span><xsl:comment/></span></span></span>
+				<span class="shared_frame_{$variant}_bottom"><span class="shared_frame_{$variant}_bottom_inner"><span class="shared_frame_{$variant}_bottom_innermost"><xsl:comment/></span></span></span>
 			</span>
 		</xsl:when>
 		<xsl:otherwise>

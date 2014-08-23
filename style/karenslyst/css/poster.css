@@ -8,6 +8,7 @@
   left: 0;
   right: 0;
   background-size: cover;
+  background-repeat: no-repeat;
   background-position: 50% 50%; }
 
 .poster_title {
@@ -20,7 +21,8 @@
 
 .poster_block {
   position: absolute;
-  background: rgba(6, 21, 22, 0.6);
+  background: #061516;
+  background: rgba(6, 21, 22, 0.8);
   color: #fff;
   width: 400px;
   bottom: 20px;
@@ -67,7 +69,8 @@
 .poster_block_omraadet {
   left: auto;
   right: 5%;
-  background: rgba(26, 18, 12, 0.6); }
+  background: #1a120c;
+  background: rgba(26, 18, 12, 0.8); }
 
 .poster_link_omraadet {
   color: #E07133;
@@ -103,7 +106,8 @@
   background-image: url("../gfx/vaerelserne.jpg"); }
 
 .poster_block_vaerelserne {
-  background: rgba(222, 229, 231, 0.6);
+  background: #dee5e7;
+  background: rgba(222, 229, 231, 0.8);
   left: auto;
   right: 40%;
   margin-right: -220px; }
@@ -124,7 +128,8 @@
   background-image: url("../gfx/skoven.jpg"); }
 
 .poster_block_skoven {
-  background: rgba(207, 241, 180, 0.6);
+  background: #cff1b4;
+  background: rgba(207, 241, 180, 0.8);
   left: 20%;
   margin-right: -220px; }
 .poster_block_skoven .poster_title, .poster_block_skoven .poster_text {

@@ -1,3 +1,11 @@
+@media only screen and (max-width: 1000px) {
+    
+    .title {
+        margin-left: 0;
+        left: 20px;        
+    }
+}
+
 @media only screen and (max-width: 768px) {
   
   .title {
@@ -5,14 +13,127 @@
     margin-left: 0;
     left: 20px;
   }
-  
-  .layout_top {
-    height: auto;
-    padding-bottom: 60%;
+    
+  .document_column {
+	  width: auto !important;
+	  padding: 0 !important;
   }
   
-  .layout_top_body {
-    position: absolute;
-    top: 0;
+  .part_image img {
+	  max-width: 100%;
+	  height: auto;
   }
+  
+  .poster {
+	  height: auto;
+	  margin: 0 -20px;
+	  padding-bottom: 60%;
+	  position: relative;
+  }
+  
+  .poster_block {
+  	padding: 10px 20px;
+  }
+  
+  .poster_body {
+	  height: 100%;
+  }
+  
+  .poster_title {
+  	font-size: 36pt;
+  }
+  
+  .poster_text {
+	  font-size: 22pt;
+  }
+}
+
+@media only screen and (max-width: 500px) {
+	
+    .layout_top {
+      padding-bottom: 70%;
+    }
+    
+    .title {
+        text-align: center;
+        width: auto;
+        font-size: 34pt;
+        line-height: 1;
+        right: 0;
+        left: 0px;
+        top: 0px;
+    }
+    
+    .title_more {
+        display: none;
+    }
+    
+	.layout_content {
+        margin-top: -50px;
+		padding: 0 10px;
+	}
+	
+    .menu_items {
+        padding: 5px 0;
+        text-align: center;
+    }
+    
+    .menu_link {
+        font-size: 18px;
+        height: 28px;
+        line-height: 28px;
+    }
+    
+    .poster {
+		padding-bottom: 80%;
+		margin: 0 -10px;
+    }
+	
+	.poster_block {
+  		padding: 5px 10px;
+		width: 90%;
+		left: 5%;
+		box-sizing: border-box;
+		bottom: auto;
+		top: 5%;
+	}
+
+	.poster_block {
+        width: auto;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        top: auto;
+        margin: 0;
+    }
+  
+	.poster_title {
+		font-size: 24pt;
+	}
+
+	.poster_text {
+		font-size: 12pt;
+        font-family: Georgia;
+        line-height: 1.2;
+	}
+
+	.part_movie_text {
+		margin-top: 50px;
+	}
+
+	.part_movie_text_inner {
+		line-height: 30px;
+		font-size: 24px;
+		height: 34px;
+	}
+
+	.part_movie_poster:before {
+		content: '\25B6';
+		font-size: 50px;
+		line-height: 90px;
+		text-indent: 12px;
+		width: 80px;
+		height: 80px;
+		margin: -40px 0 0 -40px;
+	}
 }

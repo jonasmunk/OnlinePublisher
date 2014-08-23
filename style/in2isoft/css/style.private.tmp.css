@@ -1,6 +1,6 @@
 /* ["style\/basic\/css\/shared.css","@parts","style\/in2isoft\/css\/main.css","style\/in2isoft\/css\/front.css","style\/in2isoft\/css\/overwrite.css","style\/in2isoft\/css\/adaption.css","style\/in2isoft\/css\/humanise.css"] */
 /* style/basic/css/shared.css */
-span.shared_frame_adaptive
+.shared_frame_adaptive
 {
 	width: 100%;
 	box-sizing: border-box;
@@ -9,7 +9,7 @@ span.shared_frame_adaptive
 }
 
 
-span.shared_frame_light
+.shared_frame_light
 {
 	padding: 4px;
 	border: 1px solid #DDDDDD;
@@ -22,12 +22,12 @@ span.shared_frame_light
 
 /************************* Elegant ***************************/
 
-span.shared_frame_elegant
+.shared_frame_elegant
 {
 	display: inline-block;
 }
 
-span.shared_frame_elegant_top
+.shared_frame_elegant_top
 {
 	display: block;
 	height: 34px;
@@ -35,7 +35,7 @@ span.shared_frame_elegant_top
 	background: url('../../basic/gfx/frames/elegant.png') left top no-repeat;
 }
 
-span.shared_frame_elegant_top span
+.shared_frame_elegant_top_inner
 {
 	display: block;
 	height: 34px;
@@ -43,13 +43,14 @@ span.shared_frame_elegant_top span
 	background: url('../../basic/gfx/frames/elegant.png') right -34px no-repeat;
 }
 
-span.shared_frame_elegant_top span span
+.shared_frame_elegant_top_innermost
 {
+	display: block;
 	height: 34px;
 	background: url('../../basic/gfx/frames/elegant.png') left -68px repeat-x;
 }
 
-span.shared_frame_elegant_bottom
+.shared_frame_elegant_bottom
 {
 	display: block;
 	height: 34px;
@@ -57,7 +58,7 @@ span.shared_frame_elegant_bottom
 	background: url('../../basic/gfx/frames/elegant.png') left -102px no-repeat;
 }
 
-span.shared_frame_elegant_bottom span
+.shared_frame_elegant_bottom_inner
 {
 	display: block;
 	height: 34px;
@@ -65,14 +66,15 @@ span.shared_frame_elegant_bottom span
 	background: url('../../basic/gfx/frames/elegant.png') right -136px no-repeat;
 }
 
-span.shared_frame_elegant_bottom span span
+.shared_frame_elegant_bottom_innermost
 {
+	display: block;
 	height: 34px;
 	background: url('../../basic/gfx/frames/elegant.png') left -170px repeat-x;
 }
 
 
-span.shared_frame_elegant_middle
+.shared_frame_elegant_middle
 {
 	padding-left: 34px;
 	background: url('../../basic/gfx/frames/elegant.png') left -204px no-repeat;
@@ -80,7 +82,7 @@ span.shared_frame_elegant_middle
 	display: block;
 }
 
-span.shared_frame_elegant_middle span.shared_frame_elegant_middle
+.shared_frame_elegant_middle_inner
 {
 	padding-left: 0;
 	padding-right: 34px;
@@ -88,7 +90,7 @@ span.shared_frame_elegant_middle span.shared_frame_elegant_middle
 	display: block;
 }
 
-span.shared_frame_elegant_content
+.shared_frame_elegant_content
 {
 	display: block;
 }
@@ -96,7 +98,7 @@ span.shared_frame_elegant_content
 
 
 
-span.shared_frame_shadow_slant_top
+.shared_frame_shadow_slant_top
 {
 	display: block;
 	height: 4px;
@@ -104,7 +106,7 @@ span.shared_frame_shadow_slant_top
 	background: url('../../basic/gfx/frames/shadow.png') left top no-repeat;
 }
 
-span.shared_frame_shadow_slant_top span
+.shared_frame_shadow_slant_top_inner
 {
 	display: block;
 	height: 4px;
@@ -112,30 +114,26 @@ span.shared_frame_shadow_slant_top span
 	background: url('../../basic/gfx/frames/shadow.png') right -4px no-repeat;
 }
 
-span.shared_frame_shadow_slant_top span span
+.shared_frame_shadow_slant_top_innermost
 {
+	display: block;
 	height: 4px;
 	background: url('../../basic/gfx/frames/shadow.png') left -8px repeat-x;
 }
 
-span.shared_frame_shadow_slant
+.shared_frame_shadow_slant
 {
 	display: inline-block;
 }
 
-html.msie7 span.shared_frame_shadow_slant
-{
-	display: block;
-}
-
-span.shared_frame_shadow_slant_middle
+.shared_frame_shadow_slant_middle
 {
 	padding-left: 5px;
 	background: url('../../basic/gfx/frames/shadow.png') 0% -32px;
 	display: block;
 }
 
-span.shared_frame_shadow_slant_middle span.shared_frame_shadow_slant_middle
+.shared_frame_shadow_slant_middle_inner
 {
 	background: url('../../basic/gfx/frames/shadow.png') 100% -32px;
 	padding-right: 5px;
@@ -143,14 +141,14 @@ span.shared_frame_shadow_slant_middle span.shared_frame_shadow_slant_middle
 	display: block;
 }
 
-span.shared_frame_shadow_slant_content
+.shared_frame_shadow_slant_content
 {
 	padding: 4px;
 	display: block;
 	background: #fff;
 }
 
-span.shared_frame_shadow_slant_bottom
+.shared_frame_shadow_slant_bottom
 {
 	display: block;
 	position: relative;
@@ -158,7 +156,7 @@ span.shared_frame_shadow_slant_bottom
 	text-align: left; /* IE7 */
 }
 
-span.shared_frame_shadow_slant_bottom span
+.shared_frame_shadow_slant_bottom_inner
 {
 	background: url('../../basic/gfx/frames/shadow.png') 0% -12px;
 	width: 50%;
@@ -166,7 +164,7 @@ span.shared_frame_shadow_slant_bottom span
 	height: 10px;
 }
 
-span.shared_frame_shadow_slant_bottom span span
+.shared_frame_shadow_slant_bottom_innermost
 {
 	position: absolute;
 	background: #fff url('../../basic/gfx/frames/shadow.png') 100% -22px;
