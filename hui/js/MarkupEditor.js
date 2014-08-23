@@ -90,6 +90,12 @@ hui.ui.MarkupEditor.prototype = {
 		if (this.options.replace) {
 			this.options.replace.style.display='';
 		}
+        var dest = ['colorPicker','_infoWindow','bar','impl'];
+        for (var i = dest.length - 1; i >= 0; i--) {
+            if (this[dest[i]]) {
+                this[dest[i]].destroy();
+            }
+        }
 	},
     
 	/** Get the HTML value */
@@ -339,6 +345,9 @@ hui.ui.MarkupEditor.Bar.prototype = {
         if (value) {
             this.blockSelector.setValue(value.tagName.toLowerCase());            
         }
+    },
+    destroy : function() {
+        this.bar.destroy();
     }
 }
 
@@ -376,6 +385,9 @@ hui.ui.MarkupEditor.Info.prototype = {
         this._path.innerHTML = html;
         this.tag = path[0];
         this._css.setValue(this.tag.getAttribute('style'));
+    },
+    destroy : function() {
+        this._window.destroy();
     }
 }
 
@@ -559,7 +571,7 @@ hui.ui.MarkupEditor.webkit = {
 	_selectionChanged : function() {
         var path = [],
             tag = this._getAncestor();
-        while (tag !== this.element) {
+        while (tag && tag !== this.element) {
             path.push(tag);
             tag = tag.parentNode;
         }
@@ -580,6 +592,11 @@ hui.ui.MarkupEditor.webkit = {
 	},
     getPath : function() {
         return this.path;
+    },
+    destroy : function() {
+        if (this._inlinePanel) {
+            this._inlinePanel.destroy();
+        }
     }
 }
 
@@ -679,6 +696,9 @@ hui.ui.MarkupEditor.MSIE = {
 	},
     getPath : function() {
         return [];
+    },
+    destroy : function() {
+        
     }
 }
 

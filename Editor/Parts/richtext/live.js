@@ -89,11 +89,7 @@ op.Editor.Richtext.LinkDelegate.prototype = {
 				name : 'linkPage',
 				label : 'Page:',
 				key : 'page',
-				items : [
-					{value:1,text:'Front page'},
-					{value:2,text:'Search page'},
-					{value:3,text:'Overview'}
-				]
+				url : '../../Model/Items.php?type=page'
 			}}
 		]);
 		var buttons = group.createButtons();
@@ -113,16 +109,17 @@ op.Editor.Richtext.LinkDelegate.prototype = {
 		this.form.reset();
 		var node = options.node;
 		var info = hui.string.fromJSON(node.getAttribute('data'));
+        hui.log(info);
 		if (info) {
 			this.form.setValues(info);
 		}
 		this.window.show();
 	},
     $cancel : function() {
-		if (this.form) {
-			this.form.reset();
-			this.window.hide();
-		}
+        if (this.form) {
+    		this.form.reset();
+    		this.window.hide();            
+        }
     },
     
     // UI listeners
