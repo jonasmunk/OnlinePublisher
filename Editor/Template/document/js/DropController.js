@@ -38,14 +38,21 @@ hui.ui.listen({
 		overlay.add(hui.ui.Button.create({text:'Insæt billede',listener:{
 			$click : function() {
 				overlay.hide();
-				this._uploadUrl(url,info);
+				this._uploadUrl(url,info,'image');
+			}.bind(this)
+		}}))
+		overlay.add(hui.ui.Button.create({text:'Insæt video',listener:{
+			$click : function() {
+				overlay.hide();
+				this._uploadUrl(url,info,'movie');
 			}.bind(this)
 		}}))
 		overlay.show({element:this.latestAdder});
 		this._reset();
 	},
-	_uploadUrl : function(url,info) {
+	_uploadUrl : function(url,info,type) {
 		info.url = url;
+		info.type = type;
 		hui.ui.request({
 			url : 'actions/ImportUpload.php',
 			parameters : info,

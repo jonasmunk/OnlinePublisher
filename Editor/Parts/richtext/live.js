@@ -119,8 +119,10 @@ op.Editor.Richtext.LinkDelegate.prototype = {
 		this.window.show();
 	},
     $cancel : function() {
-		this.form.reset();
-		this.window.hide();                
+		if (this.form) {
+			this.form.reset();
+			this.window.hide();
+		}
     },
     
     // UI listeners

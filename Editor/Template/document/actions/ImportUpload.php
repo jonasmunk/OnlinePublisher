@@ -23,13 +23,19 @@ if (Strings::isNotBlank($text)) {
 	$part->setText($text);
 	$part->save();
 
-} else if (Strings::isNotBlank($url)) {
+} else if ($type=='image' && Strings::isNotBlank($url)) {
 	$response = ImageService::createImageFromUrl($url);
 	if ($response->getSuccess()) {
 		$image = $response->getObject();
 		$ctrl = new ImagePartController();
 		$part = $ctrl->createPart();
 	}	
+	
+} else if ($type=='movie' && Strings::isNotBlank($url)) {
+	$ctrl = new MoviePartController();
+	$part = $ctrl->createPart();
+	$part->setUrl($url);
+	$part->save();
 	
 } else if ($type=='image' && ImageService::isUploadedFileValid()) {
 	$response = ImageService::createUploadedImage();
