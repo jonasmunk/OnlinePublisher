@@ -153,7 +153,8 @@ hui.ui.MarkupEditor.prototype = {
     _changeBlock : function(tag) {
         var block = this._getFirstBlock();
         if (block) {
-            hui.dom.changeTag(block,tag);            
+            block = hui.dom.changeTag(block,tag);
+			this.impl.selectNode(block);
         }
     },
 	_showColorPicker : function() {
@@ -383,7 +384,7 @@ hui.ui.MarkupEditor.Info.prototype = {
         }
         this._path.innerHTML = html;
         this.tag = path[0];
-        this._css.setValue(this.tag.getAttribute('style'));
+        this._css.setValue(this.tag ? this.tag.getAttribute('style') : '');
     },
     destroy : function() {
         this._window.destroy();
@@ -410,8 +411,8 @@ hui.ui.MarkupEditor.webkit = {
 		hui.listen(this.element,'blur',function() {
 			ctrl.implBlurred();
 		});
-		hui.listen(this.element,'keyup',this._keyUp.bind(this));
-		hui.listen(this.element,'mouseup',this._selectionChanged.bind(this));
+		hui.listen(this.element,'keyup',this._change.bind(this));
+		hui.listen(this.element,'mouseup',this._change.bind(this));
 		options.$ready();
 	},
 	saveSelection : function() {
@@ -435,15 +436,17 @@ hui.ui.MarkupEditor.webkit = {
             var node = this._getSelectedNode();
             if (node.tagName=='B') {
                 node = hui.dom.changeTag(node,'strong');
-        		var selection = window.getSelection();
-    			selection.selectAllChildren(node);
+				this.selectNode(node);
             } else if (node.tagName=='I') {
                 node = hui.dom.changeTag(node,'em');
-        		var selection = window.getSelection();
-    			selection.selectAllChildren(node);
+				this.selectNode(node);
             }
 			this.controller._valueChanged();
 		}
+        this._selectionChanged();
+	},
+	selectNode : function(node) {
+		window.getSelection().selectAllChildren(node);
         this._selectionChanged();
 	},
 	getOrCreateLink : function() {
@@ -481,9 +484,9 @@ hui.ui.MarkupEditor.webkit = {
 		document.execCommand(x[value],null,null);
         this._updateInlinePanel();
 	},
-	_keyUp : function() {
+	_change : function() {
 		this.controller.implValueChanged();
-		this._selectionChanged();
+		this._selectionChanged();		
 	},
 	_wrapInTag : function(tag) {
 		var selection = window.getSelection();
@@ -575,13 +578,14 @@ hui.ui.MarkupEditor.webkit = {
 	_selectionChanged : function() {
 		var sel = window.getSelection();
 		var hash = this._hash(sel);
+		var node = sel.anchorNode ? sel.anchorNode.parentNode : null;
 		var latest = this._latestSelection;
 		if (latest) {
-			if (sel.anchorNode.parentNode == latest.node && latest.hash == hash) {
+			if (node == latest.node && latest.hash == hash) {
 				return;
 			}
 		}
-Â		this._latestSelection = {node:sel.anchorNode.parentNode,hash:hash};
+		this._latestSelection = {node:node,hash:hash};
         var path = [],
             tag = this._getAncestor();
         while (tag && tag !== this.element) {
