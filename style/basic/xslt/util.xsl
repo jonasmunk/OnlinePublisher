@@ -385,6 +385,36 @@
                     this.deferred[this.deferred.length] = func;
                 }
             },
+            _parts : {},
+            _loadPart : function(info) {
+                var name = info.name;
+                if (op.part[name]) {
+                    info.$ready();
+                } else {
+                    if (!this._parts[name]) {
+                        this._parts[name] = [info];
+                        $script(_editor.context+'style/basic/js/parts/' + name + '.js',function() {
+                            hui.each(_editor._parts[name],function(item) {
+                                item.$ready();
+                            })
+                            _editor._parts[name] = [];
+                        });
+                    } else {
+                        this._parts[name].push(info);
+                    }
+                }
+            },
+            loadPart : function(info) {
+                this.defer(function() {
+                    _editor._loadPart(info);
+                })
+                if (!window['op']) {
+                    this.defer
+                }
+                if (window['op'] && op.part[info.name]) {
+                    info.$ready();
+                }
+            },
             loadCSS : function(href) {
                 if (!true) {
                     var self = this;

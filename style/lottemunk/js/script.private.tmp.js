@@ -272,6 +272,18 @@ op.part.ImageGallery = function(options) {
 	this.options = options;
 	this.element = hui.get(options.element);
 	this.images = [];
+    if (options.variant=='masonry') {
+        var gor = function() {
+    		new op.part.ImageGallery.Masonry({
+    		    element : options.element
+    		});
+    	};
+        if (false && op.part.ImageGallery.Masonry!==undefined) {
+            gor();
+        } else {
+        	hui.require(op.context+'style/basic/js/masonry.js',gor)
+        }
+    }
 }
 
 op.part.ImageGallery.prototype = {
