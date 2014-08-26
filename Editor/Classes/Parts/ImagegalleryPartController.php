@@ -112,6 +112,7 @@ class ImagegalleryPartController extends PartController
 					<dropdown name="variant">
 						<item value="floating" title="{Floating; da:Flydende}"/>
 						<item value="changing" title="{Shifting; da:Skiftende}"/>
+						<item value="masonry" title="{Masonry; da:Murværk}"/>
 					</dropdown>
 				</field>
 				<field label="{Frame; da:Ramme}">

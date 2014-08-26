@@ -2467,6 +2467,33 @@ div.part_image p, div.part_image textarea
 {
 	margin: 4px;
 }
+
+/*** Masonry **/
+
+.part_imagegallery_masonry {
+    font-size: 0;
+    position: relative;    
+}
+
+.part_imagegallery_masonry_item {
+    display: inline-block;
+    background: #eee;
+    width: 200px;
+    height: 100px;
+    border: 1px solid #fff;
+    border-width: 1px 1px 0 0;
+    box-sizing: border-box;
+    font-size: 11px;
+    background-size: cover;
+    background-position: 50% 50%;
+    vertical-align: top;
+    cursor: pointer;
+    position: relative;
+}
+
+.part_imagegallery_masonry_item_last {
+    border-right: 0;
+}
 /* style/basic/css/part_list.css */
 div.part_list_box
 {
@@ -3366,7 +3393,11 @@ div.part_listing, textarea.part_listing {
 @media only screen and (max-width: 1000px) {
   .title {
     margin-left: 0;
-    left: 20px; } }
+    left: 20px; }
+
+  .part_imagegallery_item img {
+    max-width: 100%;
+    height: auto; } }
 @media only screen and (max-width: 768px) {
   .title {
     font-size: 32pt;

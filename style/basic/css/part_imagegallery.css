@@ -51,3 +51,30 @@
 {
 	margin: 4px;
 }
+
+/*** Masonry **/
+
+.part_imagegallery_masonry {
+    font-size: 0;
+    position: relative;    
+}
+
+.part_imagegallery_masonry_item {
+    display: inline-block;
+    background: #eee;
+    width: 200px;
+    height: 100px;
+    border: 1px solid #fff;
+    border-width: 1px 1px 0 0;
+    box-sizing: border-box;
+    font-size: 11px;
+    background-size: cover;
+    background-position: 50% 50%;
+    vertical-align: top;
+    cursor: pointer;
+    position: relative;
+}
+
+.part_imagegallery_masonry_item_last {
+    border-right: 0;
+}
