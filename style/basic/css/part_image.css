@@ -1,12 +1,21 @@
-div.part_image
+.part_image
 {
 	font-size: 0;
 }
 
-div.part_image img
+.part_image_container
+{
+	display: inline-block;
+	position: relative;
+	width: 100%;
+}
+
+.part_image_image
 {
 	border-width: 0;
-	display: inline-block;
+	position: absolute;
+	width: 100%;
+	height: auto;
 }
 
 div.part_image p, div.part_image textarea

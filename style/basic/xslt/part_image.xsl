@@ -86,11 +86,14 @@
 	<xsl:variable name="src"><xsl:call-template name="img:buildsrc"/></xsl:variable>
 	<xsl:variable name="width"><xsl:call-template name="img:buildwidth"/></xsl:variable>
 	<xsl:variable name="height"><xsl:call-template name="img:buildheight"/></xsl:variable>
+	<xsl:variable name="ratio"><xsl:value-of select="$height div $width * 100"/></xsl:variable>
     
     <xsl:call-template name="util:wrap-in-frame">
         <xsl:with-param name="variant" select="img:style/@frame"/>
         <xsl:with-param name="content">
-            <img src="{$src}" width="{$width}"  height="{$height}" alt="" id="part_image_{generate-id()}"/>
+			<span class="part_image_container" style="padding-bottom: {$ratio}%; width: {$width}px; text-align: left;">
+            <img src="{$src}" width="{$width}" ratio="{$ratio}"  height="{$height}" alt="" class="part_image_image" id="part_image_{generate-id()}"/>
+			</span>
         </xsl:with-param>
     </xsl:call-template>
 </xsl:template>

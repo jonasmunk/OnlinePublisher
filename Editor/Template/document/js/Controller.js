@@ -1,6 +1,9 @@
 var _editor = {
   defer : function(func) {
     func();
+  },
+  loadPart : function(info) {
+	  info.$ready();
   }
 }
 
