@@ -12,63 +12,57 @@
 
 
 	<xsl:template match="ig:imagegallery">
-		<div id="part_imagegallery_{generate-id()}">
-			<xsl:attribute name="class">
-				<xsl:text>part_imagegallery</xsl:text>
-				<xsl:if test="ig:display/@framed='true'"><xsl:text> part_imagegallery_framed</xsl:text></xsl:if>
-				<xsl:if test="ig:display/@variant='changing'"><xsl:text> part_imagegallery_changing</xsl:text></xsl:if>
-			</xsl:attribute>
-			<xsl:apply-templates select="o:object[@type='image']"/>
-			<xsl:comment/>
-		</div>
+		<xsl:choose>
+		  <xsl:when test="ig:display/@variant='masonry'">
+	  		<div id="part_imagegallery_{generate-id()}" class="part_imagegallery_masonry">
+	              <xsl:for-each select="o:object[@type='image']">
+	                  <a href="{$path}services/images/?id={@id}">
+	                      <xsl:attribute name="data">{"id" : <xsl:value-of select="@id"/>,
+	  						"width" : <xsl:value-of select="o:sub/i:image/i:width"/>,
+	  						"height" : <xsl:value-of select="o:sub/i:image/i:height"/>}</xsl:attribute>
+	                      <xsl:value-of select="o:title"/>
+	                  </a>
+	                  <xsl:text> </xsl:text>
+	              </xsl:for-each>
+	          </div>
+		  </xsl:when>
+		  <xsl:otherwise>
+			<div id="part_imagegallery_{generate-id()}">
+				<xsl:attribute name="class">
+					<xsl:text>part_imagegallery</xsl:text>
+					<xsl:if test="ig:display/@framed='true'"><xsl:text> part_imagegallery_framed</xsl:text></xsl:if>
+					<xsl:if test="ig:display/@variant='changing'"><xsl:text> part_imagegallery_changing</xsl:text></xsl:if>
+				</xsl:attribute>
+				<xsl:apply-templates select="o:object[@type='image']"/>
+				<xsl:comment/>
+			</div>
+		  </xsl:otherwise>
+		</xsl:choose>
 		<script type="text/javascript">
 			_editor.loadPart({
                 name : 'ImageGallery', 
                 $ready : function() {
-    				var part = new op.part.ImageGallery({
-    					element : 'part_imagegallery_<xsl:value-of select="generate-id()"/>',
-    					variant : '<xsl:value-of select="ig:display/@variant"/>',
-    					editor : <xsl:value-of select="$editor='true'"/>
-    				});
+					var images = [];
+
     				<xsl:for-each select="o:object">
-    					part.registerImage('part_imagegallery_<xsl:value-of select="generate-id()"/>',{
+    					images.push({
     						id : <xsl:value-of select="@id"/>,
     						width : <xsl:value-of select="o:sub/i:image/i:width"/>,
     						height : <xsl:value-of select="o:sub/i:image/i:height"/>,
     						text : '<xsl:value-of select="o:note"/>'
     					});
     				</xsl:for-each>
-                    part.init();
+					
+    				var part = new op.part.ImageGallery({
+    					element : 'part_imagegallery_<xsl:value-of select="generate-id()"/>',
+    					variant : '<xsl:value-of select="ig:display/@variant"/>',
+    					editor : <xsl:value-of select="$editor='true'"/>,
+						images : images
+    				});
     			}
             });
 		</script>
 	</xsl:template>
-    
-    <xsl:template match="ig:imagegallery[ig:display/@variant='masonry']">
-		<div id="part_imagegallery_{generate-id()}" class="part_imagegallery_masonry">
-            <xsl:for-each select="o:object[@type='image']">
-                <a href="{$path}services/images/?id={@id}">
-                    <xsl:attribute name="data">{"id" : <xsl:value-of select="@id"/>,
-						"width" : <xsl:value-of select="o:sub/i:image/i:width"/>,
-						"height" : <xsl:value-of select="o:sub/i:image/i:height"/>}</xsl:attribute>
-                    <xsl:value-of select="o:title"/>
-                </a>
-                <xsl:text> </xsl:text>
-            </xsl:for-each>
-        </div>
-		<script type="text/javascript">
-			_editor.loadPart({
-                name : 'ImageGallery', 
-                $ready : function() {
-    				var part = new op.part.ImageGallery({
-    					element : 'part_imagegallery_<xsl:value-of select="generate-id()"/>',
-    					variant : 'masonry',
-    					editor : <xsl:value-of select="$editor='true'"/>
-    				});
-                }
-            });
-        </script>
-    </xsl:template>
 
 	<xsl:template match="o:object[@type='image']">
 		<xsl:variable name="height">
@@ -106,7 +100,7 @@
             <xsl:call-template name="util:wrap-in-frame">
                 <xsl:with-param name="variant" select="../ig:display/@frame"/>
                 <xsl:with-param name="content">
-            		<a href="{$url}">
+            		<a href="{$url}" data-id="{@id}">
             			<xsl:if test="../ig:display/@variant='changing' and position()=2">
             				<xsl:attribute name="style">
             					display: inline-block;

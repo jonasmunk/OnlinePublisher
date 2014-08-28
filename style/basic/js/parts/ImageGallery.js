@@ -1,22 +1,29 @@
 op.part.ImageGallery = function(options) {
 	this.options = options;
 	this.element = hui.get(options.element);
-	this.images = [];
+	this.images = options.images;
     if (options.variant=='masonry') {
-        var gor = function() {
-    		new op.part.ImageGallery.Masonry({
-    		    element : options.element
-    		});
-    	};
-        if (true || op.part.ImageGallery.Masonry!==undefined) {
-            gor();
-        } else {
-        	hui.require(op.context+'style/basic/js/masonry.js',gor)
-        }
-    }
+		new op.part.ImageGallery.Masonry({
+		    element : options.element
+		});
+    } else if (options.variant=='changing') {
+		op.part.ImageGallery.changing.init(this.element);
+	}
+	this._attach();
 }
 
 op.part.ImageGallery.prototype = {
+	_attach : function() {
+		hui.listen(this.element,'click',this._click.bind(this));
+	},
+	_click : function(e) {
+		e = hui.event(e);
+		var a = e.findByTag('a');
+		if (a) {
+			e.stop();
+			this.showImage(a.getAttribute('data-id'));
+		}
+	},
 	registerImage : function(node,image) {
 		node = hui.get(node);
 		if (this.options.editor) {
@@ -38,12 +45,6 @@ op.part.ImageGallery.prototype = {
 		this.imageViewer.clearImages();
 		this.imageViewer.addImages(this.images);
 		this.imageViewer.showById(id);
-	},
-	init : function() {
-		if (this.options.variant=='changing') {
-			op.part.ImageGallery.changing.init(this.element);
-			//new op.Dissolver({elements:this.element.select('a')});
-		}
 	}
 }
 
@@ -165,12 +166,13 @@ op.part.ImageGallery.Masonry.prototype = {
 					item.element.style.height = height+'px';
 					item.element.className = cls;
 				} else {
-					item.element = hui.build('div',{
+					item.element = hui.build('a',{
 						'class' : cls,
 						style : {
 							width : percent+'%', 
 							height : height+'px'
 						},
+						'data-id' : item.id,
 						'data' : item.index,
 						parent : this.element
 					});
