@@ -100,7 +100,7 @@
             <xsl:call-template name="util:wrap-in-frame">
                 <xsl:with-param name="variant" select="../ig:display/@frame"/>
                 <xsl:with-param name="content">
-            		<a href="{$url}">
+            		<a href="{$url}" data-id="{@id}">
             			<xsl:if test="../ig:display/@variant='changing' and position()=2">
             				<xsl:attribute name="style">
             					display: inline-block;

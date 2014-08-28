@@ -13,9 +13,12 @@
 .part_image_image
 {
 	border-width: 0;
+}
+
+.part_image_adaptive {
 	position: absolute;
 	width: 100%;
-	height: auto;
+	height: auto;	
 }
 
 div.part_image p, div.part_image textarea

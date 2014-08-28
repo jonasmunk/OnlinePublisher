@@ -91,9 +91,16 @@
     <xsl:call-template name="util:wrap-in-frame">
         <xsl:with-param name="variant" select="img:style/@frame"/>
         <xsl:with-param name="content">
-			<span class="part_image_container" style="padding-bottom: {$ratio}%; width: {$width}px; text-align: left;">
-            <img src="{$src}" width="{$width}" ratio="{$ratio}"  height="{$height}" alt="" class="part_image_image" id="part_image_{generate-id()}"/>
-			</span>
+			<xsl:choose>
+			  <xsl:when test="img:style/@frame">
+				  <img src="{$src}" width="{$width}" ratio="{$ratio}"  height="{$height}" alt="" class="part_image_image" id="part_image_{generate-id()}"/>				
+			  </xsl:when>
+			  <xsl:otherwise>
+	  			<span class="part_image_container" style="padding-bottom: {$ratio}%; max-width: {$width}px; text-align: left;">
+  				  <img src="{$src}" width="{$width}" ratio="{$ratio}"  height="{$height}" alt="" class="part_image_image part_image_adaptive" id="part_image_{generate-id()}"/>				
+				</span>
+			  </xsl:otherwise>
+			</xsl:choose>
         </xsl:with-param>
     </xsl:call-template>
 </xsl:template>
