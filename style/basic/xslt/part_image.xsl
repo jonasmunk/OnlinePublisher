@@ -92,13 +92,13 @@
         <xsl:with-param name="variant" select="img:style/@frame"/>
         <xsl:with-param name="content">
 			<xsl:choose>
-			  <xsl:when test="img:style/@frame">
-				  <img src="{$src}" width="{$width}" ratio="{$ratio}"  height="{$height}" alt="" class="part_image_image" id="part_image_{generate-id()}"/>				
+			  <xsl:when test="img:style/@adaptive='true'">
+  	  			<span class="part_image_container" style="padding-bottom: {$ratio}%; max-width: {$width}px; text-align: left;">
+    				  <img src="{$src}" width="{$width}" ratio="{$ratio}"  height="{$height}" alt="" class="part_image_image part_image_adaptive" id="part_image_{generate-id()}"/>				
+  				</span>
 			  </xsl:when>
 			  <xsl:otherwise>
-	  			<span class="part_image_container" style="padding-bottom: {$ratio}%; max-width: {$width}px; text-align: left;">
-  				  <img src="{$src}" width="{$width}" ratio="{$ratio}"  height="{$height}" alt="" class="part_image_image part_image_adaptive" id="part_image_{generate-id()}"/>				
-				</span>
+				  <img src="{$src}" width="{$width}" ratio="{$ratio}"  height="{$height}" alt="" class="part_image_image" id="part_image_{generate-id()}"/>				
 			  </xsl:otherwise>
 			</xsl:choose>
         </xsl:with-param>

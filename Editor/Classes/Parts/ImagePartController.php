@@ -41,6 +41,7 @@ class ImagePartController extends PartController
 		$part->setScaleWidth(Request::getInt('scalewidth'));
 		$part->setScaleHeight(Request::getInt('scaleheight'));
 		$part->setGreyscale(Request::getBoolean('greyscale'));
+		$part->setAdaptive(Request::getBoolean('adaptive'));
 		$part->setFrame(Request::getString('frame'));
 		return $part;
 	}
@@ -78,6 +79,7 @@ class ImagePartController extends PartController
 			'imageId' => $part->getImageId(),
 			'align' => $part->getAlign(),
 			'greyscale' => $part->getGreyscale() ? 'true' : 'false',
+			'adaptive' => $part->getAdaptive() ? 'true' : 'false',
 			'linkType' => $link['target_type'],
 			'linkValue' => $link['target_value'],
 			'scalemethod' => $part->getScaleMethod(),
@@ -98,17 +100,16 @@ class ImagePartController extends PartController
 	
 	function buildSub($part,$context) {
 		$xml = '<image xmlns="'.$this->getNamespace().'">';
-		if ($part->getAlign()!='' || $part->getFrame()!='') {
-			$xml.='<style';
-			if ($part->getAlign()!='') {
-				$xml.=' align="'.Strings::escapeXML($part->getAlign()).'"';
-			}
-			if ($part->getFrame()!='') {
-				$xml.=' frame="'.Strings::escapeXML($part->getFrame()).'"';
-			}
-			$xml.='/>';
+		$xml.='<style';
+		if ($part->getAlign()!='') {
+			$xml.=' align="'.Strings::escapeXML($part->getAlign()).'"';
 		}
-		if ($part->getImageId()>0) {
+		if ($part->getFrame()!='') {
+			$xml.=' frame="'.Strings::escapeXML($part->getFrame()).'"';
+		}
+        $xml.=' adaptive="'.($part->getAdaptive() ? 'true' : 'false').'"';
+        $xml.='/>';
+        if ($part->getImageId()>0) {
 			$sql="select object.data,image.* from object,image where image.object_id = object.id and object.id=".Database::int($part->getImageId());
 			if ($image = Database::selectFirst($sql)) {
 				$xml.=$this->buildTransformTag($image,$part);
@@ -258,6 +259,10 @@ class ImagePartController extends PartController
 				$part->setImageId($imageId);
 			}
 		}
+		if ($style = DOMUtils::getFirstDescendant($node,'style')) {
+			$part->setAdaptive($style->getAttribute('adaptive')==='true');
+			$part->setFrame($style->getAttribute('frame'));
+        }
 		if ($transform = DOMUtils::getFirstDescendant($node,'transform')) {
 			$part->setGreyscale($transform->getAttribute('greyscale')==='true');
 			$part->setScaleMethod($transform->getAttribute('scale-method'));
@@ -310,6 +315,7 @@ class ImagePartController extends PartController
 					</field>
 					<field label="{Effects; da:Effekter}:">
 						<checkbox key="greyscale" label="{Grayscale; da:Gråtone}"/>
+						<checkbox key="adaptive" label="{Adaptive; da:Tilpasset}"/>
 					</field>
 					<field label="{Frame; da:Ramme}:">
 						<dropdown key="frame">

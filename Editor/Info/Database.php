@@ -479,6 +479,7 @@ $databaseTables = array(
 			array("image_id","int(11)","","","0",""),
 			array("align","varchar(10)","YES","","",""),
 			array("greyscale","tinyint(4)","","","0",""),
+			array("adaptive","tinyint(4)","","","0",""),
 			array("scalemethod","varchar(20)","YES","","",""),
 			array("scalewidth","int(11)","YES","","",""),
 			array("scaleheight","int(11)","YES","","",""),

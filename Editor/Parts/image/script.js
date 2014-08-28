@@ -7,7 +7,8 @@ var partController = {
 		imageAdvancedFormula.setValues({
 			text : form.text.value,
 			frame : form.frame.value,
-			greyscale : form.greyscale.value=='true'
+			greyscale : form.greyscale.value=='true',
+			adaptive : form.adaptive.value=='true'
 		});
 		imageUpload.addDropTarget({
 			element : hui.get('part_image_container'),
@@ -162,6 +163,7 @@ var partController = {
 	$valuesChanged$imageAdvancedFormula : function(values) {
 		document.forms.PartForm.text.value=values.text;
 		document.forms.PartForm.greyscale.value=values.greyscale;
+		document.forms.PartForm.adaptive.value=values.adaptive;
 		document.forms.PartForm.frame.value=values.frame;
 		this.preview();
 	}

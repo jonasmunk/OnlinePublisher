@@ -12,6 +12,9 @@
     margin-left: 0;
     left: 20px; }
 
+  .document_row:first-child {
+    margin-top: 0 !important; }
+
   .document_column {
     width: auto !important;
     padding: 0 !important; }
