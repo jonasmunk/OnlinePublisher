@@ -2,3 +2,10 @@ body .menu_item {
   display: inline;
 }
 
+body .part_imagegallery_masonry {
+    width: 100.5%;
+}
+
+body .part_imagegallery_masonry_item {
+    border: none;
+}
