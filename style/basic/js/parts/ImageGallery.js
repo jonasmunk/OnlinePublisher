@@ -158,6 +158,9 @@ op.part.ImageGallery.Masonry.prototype = {
 				pos+=percent;
 				if (last) {
 					percent+=100-pos;
+                    if (hui.browser.msie7 || hui.browser.msie6) {
+                        percent -= 0.1;
+                    }
 				}
 				var cls = last ? 'part_imagegallery_masonry_item part_imagegallery_masonry_item_last' : 'part_imagegallery_masonry_item';
 				var height = row.length==1 ? fullWidth/item.width * item.height : this.height;

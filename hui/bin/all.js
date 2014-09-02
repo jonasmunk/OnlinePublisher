@@ -14311,17 +14311,17 @@ hui.ui.Links.prototype = {
  */
 hui.ui.MarkupEditor = function(options) {
 	this.name = options.name;
-	this.options = hui.override({debug:false,value:'',autoHideToolbar:true},options);
-	if (this.options.replace) {
-		this.options.replace = hui.get(options.replace);
-		this.options.element = hui.build('div',{className:'hui_markupeditor '+this.options.replace.className});
-		this.options.replace.parentNode.insertBefore(this.options.element,this.options.replace);
-		this.options.replace.style.display='none';
-		this.options.value = this.options.replace.innerHTML;
+	this.options = options = hui.override({debug:false,value:'',autoHideToolbar:true},options);
+	if (options.replace) {
+		options.replace = hui.get(options.replace);
+		options.element = hui.build('div',{'class':'hui_markupeditor '+options.replace.className});
+		options.replace.parentNode.insertBefore(options.element,options.replace);
+		options.replace.style.display='none';
+		options.value = this.options.replace.innerHTML;
 	}
 	this.ready = false;
 	this.pending = [];
-	this.element = hui.get(this.options.element);
+	this.element = hui.get(options.element);
 	if (hui.browser.msie) {
 		this.impl = hui.ui.MarkupEditor.MSIE;
 	} else {
@@ -14332,8 +14332,8 @@ hui.ui.MarkupEditor = function(options) {
         controller : this,
         $ready : this._ready.bind(this)
     });
-	if (this.options.value) {
-		this.setValue(this.options.value);
+	if (options.value) {
+		this.setValue(options.value);
 	}
 	hui.ui.extend(this);
 }
