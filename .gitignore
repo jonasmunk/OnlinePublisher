@@ -4,10 +4,11 @@ CVS
 .project
 .settings
 .cvsignore
-files/*
+files
 public/*
 !files/.htaccess
-images/*
+images
+data
 !images/.htaccess
 local/cache/images/*
 local/cache/temp/*
