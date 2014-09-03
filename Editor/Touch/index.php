@@ -5,7 +5,6 @@ header("Content-Type: text/html; charset=UTF-8");
 ?><!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
 <head>
-	<!--<meta name = "viewport" content = "initial-scale = 1, user-scalable = no">-->
 	<meta http-equiv="content-type" content="text/html; charset=utf-8"></meta>
 	<meta name = "viewport" content = "user-scalable=no, width=device-width, initial-scale = 1, minimum-scale = 1, maximum-scale = 1"/>
 	<meta name="apple-mobile-web-app-capable" content="yes" />
@@ -23,9 +22,9 @@ header("Content-Type: text/html; charset=UTF-8");
 	if (!InternalSession::isLoggedIn()) {
 		?>
 		<div id="login">
-			<h1>OnlinePublisher</h1>
-			<p><label>Username</label><input class="text" autocapitalize="off" id="username"/></p>
-			<p><label>Password</label><input class="text" type="password" id="password"/></p>
+			<h1>Humanise<strong>Editor</strong></h1>
+			<p><label>Username</label><input class="text" autocapitalize="off" id="username" placeholder="Username"/></p>
+			<p><label>Password</label><input class="text" type="password" id="password" placeholder="Password"/></p>
 			<p><button>Log in</button></p>
 			<p><a onclick="document.location=document.location">Reload</a></p>
 		</div>
