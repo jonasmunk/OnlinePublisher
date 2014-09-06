@@ -17,7 +17,7 @@
 	margin-left: -495px;
 }
 
-#poster .left
+#poster_left
 {
 	float: left;
 	height: 310px;
@@ -25,7 +25,7 @@
 	overflow: hidden;
 }
 
-#poster .right
+#poster_right
 {
 	float: left;
 	height: 310px;
@@ -33,13 +33,14 @@
 	overflow: hidden;
 }
 
-#poster .left div
+#poster_left_inner
 {
 	width: 990px;
 	height: 310px;
 	background: 245px 0px no-repeat;
 }
-#poster .right div
+
+#poster_right_inner
 {
 	width: 990px;
 	height: 310px;

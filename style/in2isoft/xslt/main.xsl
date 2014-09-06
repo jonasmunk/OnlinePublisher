@@ -323,6 +323,9 @@
     			if (hui.browser.msie) {
     				hui.cls.add(document.body,'msie');
     			}
+    			if (hui.browser.webkit) {
+    				hui.cls.add(document.body,'webkit');
+    			}
     			if (window.devicePixelRatio==2) {
     				hui.cls.add(document.body,'retina');
     			}            
@@ -352,8 +355,8 @@
 						<div id="poster">
 							<div id="poster_body">
 							<div id="poster_loader">0%</div>
-							<div class="left" id="poster_left"><div id="poster_inner_left"><xsl:comment/></div></div>
-							<div class="right" id="poster_right"><div id="poster_inner_right"><xsl:comment/></div></div>
+							<div id="poster_left"><div id="poster_left_inner"><xsl:comment/></div></div>
+							<div id="poster_right"><div id="poster_right_inner"><xsl:comment/></div></div>
 							</div>
 						</div>
                         <script type="text/javascript">
