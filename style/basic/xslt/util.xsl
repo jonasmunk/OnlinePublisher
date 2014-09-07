@@ -176,7 +176,7 @@
 	<meta name="robots" content="index,follow"></meta>
 	<meta property="og:title" content="{//p:page/@title}"/>
 	<meta property="og:site_name" content="{//f:frame/@title}"/>
-	<meta property="og:url" content="{$absolute-path}" />
+	<meta property="og:url" content="{$absolute-page-path}" />
 	<xsl:if test="p:meta/p:description">
 		<meta property="og:description" content="{p:meta/p:description}" />
 		<meta name="Description" content="{p:meta/p:description}"></meta>

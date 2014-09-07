@@ -101,7 +101,9 @@ class RenderingService {
 		$templatePath = $incPath.'style/'.$contentDesign.'/xslt/'.$template.'.xsl';
         $encoding = ConfigurationService::isUnicode() ? 'UTF-8' : 'ISO-8859-1';
 		
-		$absolutePath = 'http://' . $_SERVER['SERVER_NAME'] . $_SERVER['REQUEST_URI'];
+		$absolutePath = 'http://' . $_SERVER['SERVER_NAME'];
+		$absolutePagePath = $absolutePath . $_SERVER['REQUEST_URI'];
+		$absolutePath .= '/';
 		
 		$statistics = ConfigurationService::isGatherStatistics();
 		
@@ -115,6 +117,7 @@ class RenderingService {
 		'<xsl:variable name="navigation-path">'.$navigationPath.'</xsl:variable>'.
 		'<xsl:variable name="page-path">'.$pagePath.'</xsl:variable>'.
 		'<xsl:variable name="absolute-path">'.$absolutePath.'</xsl:variable>'.
+		'<xsl:variable name="absolute-page-path">'.$absolutePagePath.'</xsl:variable>'.
 		'<xsl:variable name="template">'.$template.'</xsl:variable>'.
 		'<xsl:variable name="agent">'.Strings::escapeEncodedXML(RenderingService::_getAgent()).'</xsl:variable>'.
 		'<xsl:variable name="userid">'.Strings::escapeEncodedXML($userId).'</xsl:variable>'.
