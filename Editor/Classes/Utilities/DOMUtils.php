@@ -45,12 +45,30 @@ class DOMUtils {
 	
 	static function parseHTML($str) {
 		$doc = new DOMDocument();
+		$doc->recover = TRUE;
 		$success = @$doc->loadHtml($str);
 		if ($success) {
 			return $doc;
 		} else {
 			return null;
 		}
+	}
+	
+	static function parseHTMLFragment($str) {
+		$str = '<fragment>' . $str . '</fragment>';
+		$doc = new DOMDocument();
+		$doc->recover = TRUE;
+		$success = @$doc->loadHtml($str);
+		if ($success) {
+			$fragments = $doc->getElementsByTagName('fragment');
+			if ($fragments->length > 0) {
+				$fragment = $fragments->item(0);
+				$fragment->parentNode->removeChild($fragment);
+				$doc->replaceChild($fragment,$doc->documentElement);
+				return $doc;
+			}
+		}
+		return null;
 	}
 	
 	static function parseAnything($str) {

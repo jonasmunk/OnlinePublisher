@@ -74,7 +74,24 @@ class TestRichtextPart extends UnitTestCase {
 		$imported = $ctrl->importFromString($xml);
 		
 		$this->assertNotNull($imported);
-		$this->assertIdentical($imported->getHtml(),$obj->getHtml());
+		$this->assertIdentical('Im in<alid>&gt;</alid>',$imported->getHtml());
+	}
+
+	function testLinks() {
+		$tests = [
+			'<p><a data="{&quot;page&quot;:&quot;1&quot;}">My link</a></p>' =>
+			'<p><link page="1" data="{&quot;page&quot;:&quot;1&quot;}">My link</link></p>'
+		];
+		foreach ($tests as $html => $xml) {
+			$obj = new RichtextPart();
+			$obj->setHtml($html);
+			$ctrl = new RichtextPartController();
+		
+			$output = $ctrl->build($obj,new PartContext());
+			$expected = '<part xmlns="http://uri.in2isoft.com/onlinepublisher/part/1.0/" type="richtext" id=""><sub><richtext xmlns="http://uri.in2isoft.com/onlinepublisher/part/richtext/1.0/" valid="true">' . $xml . '</richtext></sub></part>';
+			$this->assertEqual($expected,$expected);
+			
+		}
 	}
 }
 ?>

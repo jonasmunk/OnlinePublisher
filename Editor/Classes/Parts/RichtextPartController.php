@@ -75,9 +75,56 @@ class RichtextPartController extends PartController
 		return $part;
 	}
 	
+	function _convert($html) {
+		Log::debug($html);
+		$html = str_replace(['<br>','&quot;','&nbsp;'], ['<br/>','&#34;','&#160;'], $html);
+
+		$doc = DOMUtils::parseHTMLFragment($html);
+		if (!$doc) {
+			Log::debug('Unable to parse!');
+			return $html;
+		}
+		$links = $doc->getElementsByTagName('a');
+		$linkArray = [];
+		
+		for ($i=$links->length-1; $i >= 0; $i--) { 
+			$linkArray[] = $links->item($i);
+		}
+		foreach ($linkArray as $link) {
+			$link->removeAttribute('href');
+			$data = $link->getAttribute('data');
+			$obj = Strings::fromJSON($data);
+			
+			$replaced = $doc->createElement('link');
+			if (isset($obj->page) && !empty($obj->page)) {
+				$replaced->setAttribute('page',$obj->page);
+			}
+			if (isset($obj->file) && !empty($obj->file)) {
+				$replaced->setAttribute('file',$obj->file);
+			}
+			if (isset($obj->url) && !empty($obj->url)) {
+				$replaced->setAttribute('url',$obj->url);
+			}
+			$replaced->setAttribute('data',$data);
+			
+			for ($j=0; $j < $link->childNodes->length; $j++) { 
+				$child = $link->childNodes->item($j);
+				$link->removeChild($child);
+				$replaced->appendChild($child);
+			}
+			
+			$link->parentNode->replaceChild($replaced,$link);
+		}
+		
+		$html = DOMUtils::getInnerXML($doc->documentElement);
+		Log::debug($html);
+		return $html;
+	}
+	
 	function buildSub($part,$context) {
 		$html = $part->getHtml();
-    $html = MarkupUtils::htmlToXhtml($html);
+		$html = $this->_convert($html);
+    	//$html = MarkupUtils::htmlToXhtml($html);
 		if (DOMUtils::isValidFragment(Strings::toUnicode($html))) {
 			return '<richtext xmlns="'.$this->getNamespace().'" valid="true">'.
 			$html.

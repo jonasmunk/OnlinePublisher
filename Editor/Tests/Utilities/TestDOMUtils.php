@@ -123,4 +123,16 @@ class TestDOMUtils extends UnitTestCase {
 		$this->assertNotNull($doc->documentElement);
 		$this->assertEqual("<?xml version=\"1.0\" standalone=\"yes\"?>\n<!DOCTYPE html PUBLIC \"-//W3C//DTD HTML 4.0 Transitional//EN\" \"http://www.w3.org/TR/REC-html40/loose.dtd\">\n<html><body><p>Hep hey</p></body></html>\n",$doc->saveXML());
 	}
+	
+	function testParseInvalidHTML() {
+		$doc = DOMUtils::parseHTML('<p data="x">Hep hey</blockquote>');
+		$this->assertNotNull($doc);
+		$this->assertNotNull($doc->documentElement);
+		$this->assertEqual("<?xml version=\"1.0\" standalone=\"yes\"?>\n<!DOCTYPE html PUBLIC \"-//W3C//DTD HTML 4.0 Transitional//EN\" \"http://www.w3.org/TR/REC-html40/loose.dtd\">\n<html><body><p data=\"x\">Hep hey</p></body></html>\n",$doc->saveXML());
+	}
+	
+	function testParseHTMLFrgament() {
+		$doc = DOMUtils::parseHTMLFragment('<p data="x">Hep hey</blockquote><p>fafaf</p>');
+		$this->assertEqual('<p data="x">Hep hey</p><p>fafaf</p>',DOMUtils::getInnerXML($doc->documentElement));
+	}
 }

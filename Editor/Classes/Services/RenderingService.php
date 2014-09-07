@@ -135,8 +135,6 @@ class RenderingService {
 		'<xsl:variable name="statistics">'.($statistics ? 'true' : 'false').'</xsl:variable>'.
 		'<xsl:template match="/"><xsl:apply-templates/></xsl:template>'.
 		'</xsl:stylesheet>';
-		Log::debug($_SERVER);
-		Log::debug($xslData);
 		return XslService::transform($xmlData,$xslData);
 	}
 	

@@ -76,7 +76,7 @@ op.Editor.Richtext.LinkDelegate.prototype = {
         if (this.window) {
             return;
         }
-		var win = this.window = hui.ui.Window.create({padding:5,width:300,listener:{
+		var win = this.window = hui.ui.Window.create({title:'Link',padding:5,width:300,listener:{
         	$userClosedWindow : this._closeWindow.bind(this)
 		}});
 		var form = this.form = hui.ui.Formula.create({listener : {
@@ -86,10 +86,14 @@ op.Editor.Richtext.LinkDelegate.prototype = {
 		var group = form.buildGroup({},[
 			{type : 'TextField', options : {key:'url',label:'Address:',name:'linkAddress'}},
 			{type : 'DropDown', options : {
-				name : 'linkPage',
 				label : 'Page:',
 				key : 'page',
 				url : '../../Model/Items.php?type=page'
+			}},
+			{type : 'DropDown', options : {
+				label : 'File:',
+				key : 'file',
+				url : '../../Model/Items.php?type=file'
 			}}
 		]);
 		var buttons = group.createButtons();
@@ -99,7 +103,7 @@ op.Editor.Richtext.LinkDelegate.prototype = {
 		buttons.add(hui.ui.Button.create({text:'Cancel', listener : {
 		    $click : this._clickCancel.bind(this)
 		}}));
-		buttons.add(hui.ui.Button.create({text:'OK',submit:true}));
+		buttons.add(hui.ui.Button.create({text:'OK',highlighted:true,submit:true}));
 		
     },
     

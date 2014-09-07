@@ -35,7 +35,9 @@ class MarkupUtils {
     
     // TODO Test and perfect this
     static function htmlToXhtml($html) {
-        return str_replace(['<br>','&quot;','&nbsp;'], ['<br/>','&#34;','&#160;'], $html);
+		$html = str_replace(['<br>','&quot;','&nbsp;'], ['<br/>','&#34;','&#160;'], $html);
+		$doc = DOMUtils::parseAnything($html);
+		return DOMUtils::getInnerXML($doc);
     }
   
 	static function moveScriptsToBottom($html) {

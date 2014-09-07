@@ -30,6 +30,17 @@ class TestMarkupUtils extends UnitTestCase {
         $expected = '<html><head></head><body><h1>Test</h1><script type="text/javascript" src="path.js"/><script type="text/javascript"></script><script>if (true) {alert(0)}</script></body></html>';
         $this->assertEqual($expected,$result);
     }
+  
+	function testConvertToXHTML() {
+		$tests = [
+			'<p><br></p>' => '<p><br/></p>',
+			'<p>' => '<p/>',
+			'<p>&nbsp;</p>' => '<p>&#xA0;</p>'
+		];
+		foreach ($tests as $html => $xhtml) {
+	        $this->assertEqual($xhtml,MarkupUtils::htmlToXhtml($html));
+		}
+    }
 	
 	function testMoveScriptsToBottomIgnoreIE() {
 		$html = '<html><head><!-- ignore me --><!--[if lt IE 7]><link rel="stylesheet" type="text/css" href="./style/version1386716400/in2isoft/css/msie6.css"> </link><![endif]--><!--[if lt IE 9]><script src="//html5shim.googlecode.com/svn/trunk/html5.js" data-movable="false"></script><![endif]--><!--[if lt IE 8]><script src="js/script.js"></script><![endif]--><script type="text/javascript" src="path.js"/><script type="text/javascript"></script></head><body><h1>Test</h1><script>if (true) {alert(0)}</script></body></html>';
