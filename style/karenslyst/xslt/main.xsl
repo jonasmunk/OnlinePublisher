@@ -31,6 +31,7 @@
     	</title>
 		<meta name="viewport" content="user-scalable=yes, initial-scale = 1, maximum-scale = 10, minimum-scale = 0.2"/>
     	<xsl:call-template name="util:metatags"/>
+		<meta property="og:image" content="{$path}{$timestamp-url}style/karenslyst/gfx/front.jpg" />
         <style>
             body { margin: 0; padding: 0; font-family: Georgia,Times,serif; }
             .layout_content { max-width: 940px; margin: 0 auto; padding: 0 20px; }
