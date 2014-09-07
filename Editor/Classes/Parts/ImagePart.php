@@ -16,6 +16,7 @@ Entity::$schema['ImagePart'] = [
 		'align' => [ 'type' => 'string' ],
 		'frame' => [ 'type' => 'string' ],
 		'greyscale' => [ 'type' => 'boolean' ],
+		'adaptive' => [ 'type' => 'boolean' ],
 		'scaleMethod' => [ 'type' => 'string', 'column' => 'scalemethod' ],
 		'scalePercent' => [ 'type' => 'int', 'column' => 'scalepercent' ],
 		'scaleWidth' => [ 'type' => 'int', 'column' => 'scalewidth' ],
@@ -29,6 +30,7 @@ class ImagePart extends Part
 	var $text;
 	var $align;
 	var $greyscale;
+	var $adaptive;
 	var $scaleMethod;
 	var $scalePercent;
 	var $scaleWidth;
@@ -75,6 +77,15 @@ class ImagePart extends Part
 	function getGreyscale() {
 	    return $this->greyscale;
 	}
+    
+    function setAdaptive($adaptive) {
+        $this->adaptive = $adaptive;
+    }
+    
+    function getAdaptive() {
+        return $this->adaptive;
+    }
+    
 	
 	function setScaleMethod($scaleMethod) {
 	    $this->scaleMethod = $scaleMethod;

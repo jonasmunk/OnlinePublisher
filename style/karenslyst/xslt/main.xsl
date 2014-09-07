@@ -31,6 +31,7 @@
     	</title>
 		<meta name="viewport" content="user-scalable=yes, initial-scale = 1, maximum-scale = 10, minimum-scale = 0.2"/>
     	<xsl:call-template name="util:metatags"/>
+		<meta property="og:image" content="{$absolute-path}{$timestamp-url}style/karenslyst/gfx/front.jpg" />
         <style>
             body { margin: 0; padding: 0; font-family: Georgia,Times,serif; }
             .layout_content { max-width: 940px; margin: 0 auto; padding: 0 20px; }
@@ -55,7 +56,8 @@
                 -webkit-animation-iteration-count: 1;
                 -webkit-animation-timing-function: ease-out;    
             }
-            .title { font-family: 'Playfair Display', serif; font-weight: normal; color: #fff; font-size: 52pt; margin: 0; position: absolute; width: 960px;
+            .title { 
+                font-family: 'Playfair Display', serif; font-weight: normal; color: #fff; font-size: 52pt; margin: 0; position: absolute; width: 960px;
             	left: 50%;
             	margin-left: -480px;
             	top: 10px;
@@ -77,10 +79,28 @@
             		-webkit-transform: scale(1);
             	}
             }
-            .layout_top {
-            }
             
             </xsl:if>
+            .layout_sub_top {
+            	background: #6A99DD url('<xsl:value-of select="$path"/><xsl:value-of select="$timestamp-url"/>style/karenslyst/gfx/top.jpg') 50%;
+                background-size: cover;
+                height: 200px;
+            }
+            .title_sub {
+                font-family: 'Playfair Display', serif;
+                margin: 0;
+                color: #fff;
+                font-weight: 400;
+                font-size: 42pt;
+                position: relative;
+                max-width: 940px;
+                padding: 0 20px;
+                margin: 0 auto;
+            }
+            .title_sub_more {
+                font-size: .5em;
+                font-style: italic;
+            }
         </style>
         <!--
 		<link href='http://fonts.googleapis.com/css?family=Playfair+Display:400,400italic|Annie+Use+Your+Telescope' rel='stylesheet' type='text/css'/>
@@ -97,26 +117,39 @@
     	<xsl:call-template name="util:style-ie8"/>
     	<xsl:call-template name="util:scripts"/>
 		-->
-	
+		<script type="text/javascript">
+            _editor.defer(function() {
+    			if (window.devicePixelRatio==2) {
+    				hui.cls.add(document.body,'retina');
+    			}            
+            })
+		</script>
     </head>
     <body>
     	<div class="layout">
-			<xsl:if test="//p:page/@id=//p:context/p:home/@page">
-			<header class="layout_top">
-				<h1 class="title">Karenslyst <span class="title_more"> ~ et landsted til leje</span></h1>
-				<div class="layout_top_body"><div><xsl:comment/></div></div>
-			</header>
-            <script>
-                _editor.defer(function() {
-                    var img = new Image();
-                    img.onload = function() {
-                        var x = hui.get.byClass(document.body,'layout_top_body')[0];
-                        hui.cls.add(x,'layout_top_body-loaded');
-                    }
-                    img.src = '<xsl:value-of select="$path"/><xsl:value-of select="$timestamp-url"/>style/karenslyst/gfx/front.jpg';
-                })
-            </script>
-			</xsl:if>
+            <xsl:choose>
+              <xsl:when test="//p:page/@id=//p:context/p:home/@page">
+      			<header class="layout_top">
+      				<h1 class="title">Karenslyst <span class="title_more"> ~ et landsted til leje</span></h1>
+      				<div class="layout_top_body"><div><xsl:comment/></div></div>
+      			</header>
+                <script>
+                    _editor.defer(function() {
+                        var img = new Image();
+                        img.onload = function() {
+                            var x = hui.get.byClass(document.body,'layout_top_body')[0];
+                            hui.cls.add(x,'layout_top_body-loaded');
+                        }
+                        img.src = '<xsl:value-of select="$path"/><xsl:value-of select="$timestamp-url"/>style/karenslyst/gfx/front.jpg';
+                    })
+                </script>                
+              </xsl:when>
+              <xsl:otherwise>
+    			<header class="layout_sub_top">
+    				<h1 class="title_sub">Karenslyst <span class="title_sub_more"> ~ et landsted til leje</span></h1>
+    			</header>                
+              </xsl:otherwise>
+            </xsl:choose>
 
 			<nav class="menu">
 				<ul class="menu_items">

@@ -35,4 +35,6 @@ if (Request::getBoolean('dev')) {
 	require_once('../../../Services/Parts/js/parts.js');
 	echo "\n";
 	require_once('../../../../style/basic/js/OnlinePublisher.js');
+	echo "\n";
+	require_once('../../../../style/basic/js/parts/ImageGallery.js');
 ?>

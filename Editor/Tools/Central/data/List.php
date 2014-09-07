@@ -15,9 +15,50 @@ if (!$order) {
 	$order = 'title';
 }
 
-$time = 60*60;
+$query = Query::after('remotepublisher');
+if ($order !== 'version') {
+  $query->orderBy($order)->withDirection($direction);
+}
+$objects = $query->get();
 
-$objects = Query::after('remotepublisher')->orderBy($order)->withDirection($direction)->get();
+
+
+$sites = [];
+
+$time = 60*60;
+foreach ($objects as $site) {
+	$data = RemoteDataService::getRemoteData($site->getUrl().'services/info/json/',$time);
+	$obj = null;
+  $date = 0;
+	if ($data->isHasData()) {
+		$str = file_get_contents($data->getFile());
+		$obj = Strings::fromJSON($str);
+		if ($obj) {
+			$version = Dates::formatLongDate($obj->date);
+      $date = $obj->date;
+		} else {
+			$version = 'Not set';
+		}
+	} else {
+		$version = 'Unknown';
+	}
+  $sites[] = ['site' => $site, 'object' => $obj,'version' => $version, 'date' => $date];
+}
+
+if ($order == 'version') {
+    function _comparator($a,$b) {
+        $a = $a['date'];
+        $b = $b['date'];
+        if ($a == $b) {
+            return 0;
+        }
+        return ($a < $b) ? -1 : 1;
+  }
+  usort($sites,'_comparator');
+  if ($direction=='descending') {
+    $sites = array_reverse($sites);
+  }
+}
 
 $writer = new ListWriter();
 
@@ -26,7 +67,7 @@ $writer->startList(array('unicode'=>true))->
 	startHeaders()->
 	header(array('title'=>array('Title','da'=>'Titel'),'key'=>'title','sortable'=>true))->
 	header(array('title'=>array('Address','da'=>'Adresse'),'key'=>'url','sortable'=>true));
-$writer->header(array('title'=>'Version'));
+$writer->header(array('title'=>'Version','key'=>'version','sortable'=>true));
 if ($showTools) {
 	$writer->header(array('title'=>array('Tools','da'=>'Værktøjer')));
 }
@@ -38,22 +79,10 @@ if ($showEmail) {
 }
 $writer->endHeaders();
 
-$sites = array();
-
-foreach ($objects as $site) {
-	$data = RemoteDataService::getRemoteData($site->getUrl().'services/info/json/',$time);
-	$obj = null;
-	if ($data->isHasData()) {
-		$str = file_get_contents($data->getFile());
-		$obj = Strings::fromJSON($str);
-		if ($obj) {
-			$version = Dates::formatLongDate($obj->date);			
-		} else {
-			$version = 'Not set';
-		}
-	} else {
-		$version = 'Unknown';
-	}
+foreach ($sites as $row) {
+	$site = $row['site'];
+	$obj = $row['object'];
+  $version = $row['version'];
 	$writer->startRow(array('kind'=>'remotepublisher','id'=>$site->getId()))->
 		startCell(array('wrap'=>false))->text($site->getTitle())->endCell()->
 		startCell()->text($site->getUrl())->endCell()->
@@ -75,6 +104,7 @@ foreach ($objects as $site) {
 	}
 	$writer->endRow();
 }
+
 $writer->endList();
 
 function writeTemplates($writer,$obj) {

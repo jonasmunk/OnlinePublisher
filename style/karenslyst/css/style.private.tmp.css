@@ -508,15 +508,27 @@ hr.part_horizontalrule
 	border-bottom: solid 2px #ddd;
 }
 /* style/basic/css/part_image.css */
-div.part_image
+.part_image
 {
 	font-size: 0;
 }
 
-div.part_image img
+.part_image_container
+{
+	display: inline-block;
+	position: relative;
+	width: 100%;
+}
+
+.part_image_image
 {
 	border-width: 0;
-	display: inline-block;
+}
+
+.part_image_adaptive {
+	position: absolute;
+	width: 100%;
+	height: auto;	
 }
 
 div.part_image p, div.part_image textarea
@@ -1518,6 +1530,17 @@ div.part_listing, textarea.part_listing {
     margin-left: 0;
     left: 20px; }
 
+  .layout_sub_top {
+    height: auto;
+    padding-bottom: 26.04167%; }
+
+  .title_sub {
+    font-size: 32pt;
+    position: absolute; }
+
+  .document_row:first-child {
+    margin-top: 0 !important; }
+
   .document_column {
     width: auto !important;
     padding: 0 !important; }
@@ -1556,11 +1579,23 @@ div.part_listing, textarea.part_listing {
     left: 0px;
     top: 0px; }
 
-  .title_more {
+  .layout_sub_top {
+    height: 130px;
+    padding: 0; }
+
+  .title_sub {
+    text-align: center;
+    width: auto;
+    font-size: 34pt;
+    line-height: 1;
+    right: 0;
+    left: 0px;
+    top: 0px; }
+
+  .title_more, .title_sub_more {
     display: none; }
 
   .layout_content {
-    margin-top: -50px;
     padding: 0 10px; }
 
   .menu_items {

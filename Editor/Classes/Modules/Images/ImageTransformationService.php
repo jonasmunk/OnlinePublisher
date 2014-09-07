@@ -172,6 +172,12 @@ class ImageTransformationService {
 					$originalHeight = $pos['height'];
 				}
 			}
+            // TODO Maybe detect if memory will get exhausted
+            if (false && !ImageTransformationService::_memoryCheck($finalWidth, $finalHeight)) {
+                Log::debug('Not enough memory: width='.$finalWidth.',height='.$finalHeight);
+                Log::debug($recipe);
+                return;
+            }
 			$thumb = @imagecreatetruecolor ($finalWidth, $finalHeight);
 			$white = @imagecolorallocate($thumb, 255, 255, 255);
 			@imagefill($thumb,0,0,$white);
@@ -214,7 +220,12 @@ class ImageTransformationService {
 		}
 		@imagedestroy($image);
 	}
-	
+    
+    static function _memoryCheck ($x, $y, $rgb=3) {
+        $maxmem = 32*1024*1024;
+        return ( $x * $y * $rgb * 1.7 < $maxmem - memory_get_usage() );
+    }
+    	
 	static function sendFile($path,$mimeType) {
 		if (!file_exists($path)) {
 			error_log('Cannot send image, path does not exist: '.$path);

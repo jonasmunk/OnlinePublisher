@@ -46,9 +46,11 @@ class TestImagePart extends UnitTestCase {
 		}
 		$obj->setImageId($latest);
 		$obj->setGreyscale(true);
+		$obj->setAdaptive(true);
 		$obj->setScaleMethod('max');
 		$obj->setScaleWidth(100);
 		$obj->setScaleHeight(200);
+		$obj->setFrame('elegant');
 		$obj->setAlign('center');
 		$obj->setText('This is the text');
 		$ctrl = new ImagePartController();
@@ -61,6 +63,8 @@ class TestImagePart extends UnitTestCase {
 		$this->assertNotNull($imported);
 		$this->assertIdentical($imported->getImageId(),$obj->getImageId());
 		$this->assertIdentical($imported->getGreyscale(),$obj->getGreyscale());
+		$this->assertIdentical($imported->getAdaptive(),$obj->getAdaptive());
+		$this->assertIdentical($imported->getFrame(),$obj->getFrame());
 		$this->assertIdentical($imported->getScaleMethod(),$obj->getScaleMethod());
 		$this->assertIdentical($imported->getScaleWidth(),$obj->getScaleWidth());
 		$this->assertIdentical($imported->getScaleHeight(),$obj->getScaleHeight());

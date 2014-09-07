@@ -30,11 +30,11 @@ Poster.prototype.start = function() {
 			if (self.leftPos>=self.leftImages.length) {
 				self.leftPos=0;
 			}
-			hui.get('poster_inner_left').style.backgroundImage='url(\''+base+self.leftImages[self.leftPos]+'\')';
+			hui.get('poster_left_inner').style.backgroundImage='url(\''+base+self.leftImages[self.leftPos]+'\')';
 
 			self.rightPos++;
 			if (self.rightPos>=self.rightImages.length) self.rightPos=0;
-			hui.get('poster_inner_right').style.backgroundImage='url(\''+base+self.rightImages[self.rightPos]+'\')';
+			hui.get('poster_right_inner').style.backgroundImage='url(\''+base+self.rightImages[self.rightPos]+'\')';
 		},
 		{duration:1000},
 		{element:this.left,property:'scrollLeft',value:'0',duration:1000,ease:hui.ease.fastSlow,wait:500},
