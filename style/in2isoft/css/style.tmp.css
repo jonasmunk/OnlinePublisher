@@ -3615,7 +3615,7 @@ p.layout_news_links
 	margin-left: -495px;
 }
 
-#poster .left
+#poster_left
 {
 	float: left;
 	height: 310px;
@@ -3623,7 +3623,7 @@ p.layout_news_links
 	overflow: hidden;
 }
 
-#poster .right
+#poster_right
 {
 	float: left;
 	height: 310px;
@@ -3631,13 +3631,14 @@ p.layout_news_links
 	overflow: hidden;
 }
 
-#poster .left div
+#poster_left_inner
 {
 	width: 990px;
 	height: 310px;
 	background: 245px 0px no-repeat;
 }
-#poster .right div
+
+#poster_right_inner
 {
 	width: 990px;
 	height: 310px;
@@ -3854,7 +3855,14 @@ p.common, ul.common
 	text-align: justify;
 }
 
+.retina.webkit a.common {
+    text-decoration: none;
 
+    background-image: -moz-linear-gradient(top, rgba(0, 0, 0, 0) 99%, rgba(0, 0, 0, 0.5) 99%);
+    background-image: -webkit-linear-gradient(top, rgba(0, 0, 0, 0) 98%, rgba(0, 0, 0, 0.5) 98%);
+    background-image: linear-gradient(top, rgba(0, 0, 0, 0) 98%, rgba(0, 0, 0, 0.5) 98%);
+    background-repeat: repeat-x
+}
 
 
 
