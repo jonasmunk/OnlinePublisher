@@ -77,6 +77,7 @@ class RichtextPartController extends PartController
 	
 	function buildSub($part,$context) {
 		$html = $part->getHtml();
+    $html = MarkupUtils::htmlToXhtml($html);
 		if (DOMUtils::isValidFragment(Strings::toUnicode($html))) {
 			return '<richtext xmlns="'.$this->getNamespace().'" valid="true">'.
 			$html.

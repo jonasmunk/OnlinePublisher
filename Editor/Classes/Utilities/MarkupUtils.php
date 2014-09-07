@@ -32,6 +32,11 @@ class MarkupUtils {
 		}
 		return $segments;
 	}
+    
+    // TODO Test and perfect this
+    static function htmlToXhtml($html) {
+        return str_replace(['<br>','&quot;','&nbsp;'], ['<br/>','&#34;','&#160;'], $html);
+    }
   
 	static function moveScriptsToBottom($html) {
 		if (strpos($html,'</body>')===FALSE) {
