@@ -100,42 +100,51 @@ class RenderingService {
 		$mainPath = $incPath.'style/'.$mainDesign.'/xslt/'.$mainFile.'.xsl';
 		$templatePath = $incPath.'style/'.$contentDesign.'/xslt/'.$template.'.xsl';
         $encoding = ConfigurationService::isUnicode() ? 'UTF-8' : 'ISO-8859-1';
-		
-		$absolutePath = 'http://' . $_SERVER['SERVER_NAME'];
-		$absolutePagePath = $absolutePath . $_SERVER['REQUEST_URI'];
+
+		$absolutePath = 'http://' . @$_SERVER['HTTP_HOST'];
+		$absolutePagePath = $absolutePath . @$_SERVER['REQUEST_URI'];
 		$absolutePath .= '/';
 		
 		$statistics = ConfigurationService::isGatherStatistics();
+        
+        $variables = [
+            'design' => $design,
+            'path' => $urlPath,
+            'navigation-path' => $navigationPath,
+            'page-path' => $pagePath,
+            'absolute-path' => $absolutePath,
+            'absolute-page-path' => $absolutePagePath,
+            'template' => $template,
+            'agent' => RenderingService::_getAgent(),
+            'userid' => $userId,
+            'username' => $userName,
+            'usertitle' => $userTitle,
+            'internal-logged-in' => InternalSession::isLoggedIn() ? 'true' : 'false',
+            'preview' => $preview ? 'true' : 'false',
+            'editor' => false,
+            'mini' => Request::getBoolean('mini') ? 'true' : 'false',
+            'development' => $development ? 'true' : 'false',
+            'highquality' => Request::getBoolean('print') ? 'true' : 'false',
+            'urlrewrite' => ConfigurationService::isUrlRewrite() ? 'true' : 'false',
+            'timestamp' => SystemInfo::getDate(),
+            'language' => $language,
+            'statistics' => ($statistics ? 'true' : 'false')
+        ];
 		
-		$xslData='<?xml version="1.0" encoding="'.$encoding.'"?>'.
+		$xsl = '<?xml version="1.0" encoding="'.$encoding.'"?>'.
 		'<xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" version="1.0">'.
 		'<xsl:output method="html" indent="no" encoding="'.$encoding.'"/>'.
 		'<xsl:include href="'.$templatePath.'"/>'.
-		'<xsl:include href="'.$mainPath.'"/>'.
-		'<xsl:variable name="design">'.$design.'</xsl:variable>'.
-		'<xsl:variable name="path">'.$urlPath.'</xsl:variable>'.
-		'<xsl:variable name="navigation-path">'.$navigationPath.'</xsl:variable>'.
-		'<xsl:variable name="page-path">'.$pagePath.'</xsl:variable>'.
-		'<xsl:variable name="absolute-path">'.$absolutePath.'</xsl:variable>'.
-		'<xsl:variable name="absolute-page-path">'.$absolutePagePath.'</xsl:variable>'.
-		'<xsl:variable name="template">'.$template.'</xsl:variable>'.
-		'<xsl:variable name="agent">'.Strings::escapeEncodedXML(RenderingService::_getAgent()).'</xsl:variable>'.
-		'<xsl:variable name="userid">'.Strings::escapeEncodedXML($userId).'</xsl:variable>'.
-		'<xsl:variable name="username">'.Strings::escapeEncodedXML($userName).'</xsl:variable>'.
-		'<xsl:variable name="usertitle">'.Strings::escapeEncodedXML($userTitle).'</xsl:variable>'.
-		'<xsl:variable name="internal-logged-in">'.(InternalSession::isLoggedIn() ? 'true' : 'false').'</xsl:variable>'.
-		'<xsl:variable name="preview">'.($preview ? 'true' : 'false').'</xsl:variable>'.
-		'<xsl:variable name="editor">false</xsl:variable>'.
-		'<xsl:variable name="mini">'.(Request::getBoolean('mini') ? 'true' : 'false').'</xsl:variable>'.
-		'<xsl:variable name="development">'.($development ? 'true' : 'false').'</xsl:variable>'.
-		'<xsl:variable name="highquality">'.(Request::getBoolean('print') ? 'true' : 'false').'</xsl:variable>'.
-		'<xsl:variable name="urlrewrite">'.(ConfigurationService::isUrlRewrite() ? 'true' : 'false').'</xsl:variable>'.
-		'<xsl:variable name="timestamp">'.SystemInfo::getDate().'</xsl:variable>'.
-		'<xsl:variable name="language">'.$language.'</xsl:variable>'.
-		'<xsl:variable name="statistics">'.($statistics ? 'true' : 'false').'</xsl:variable>'.
+		'<xsl:include href="'.$mainPath.'"/>';
+        foreach ($variables as $name => $value) {
+            $xsl .= '<xsl:variable name="' . Strings::escapeEncodedXML($name) . '">' . 
+                Strings::escapeEncodedXML($value) . 
+                '</xsl:variable>';
+        }
+        $xsl.=
 		'<xsl:template match="/"><xsl:apply-templates/></xsl:template>'.
 		'</xsl:stylesheet>';
-		return XslService::transform($xmlData,$xslData);
+		return XslService::transform($xmlData,$xsl);
 	}
 	
 	static function applyFrameDynamism($id,&$data) {
