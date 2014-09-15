@@ -15,6 +15,7 @@ class LinkView {
 	static $INVALID_ADDRESS = 'invalidaddress';
 	
 	private $id;
+	private $type;
 	
 	private $sourceType;
 	private $sourceId;
@@ -40,6 +41,14 @@ class LinkView {
 	    return $this->id;
 	}
 	
+    function setType($type) {
+        $this->type = $type;
+    }
+    
+    function getType() {
+        return $this->type;
+    }
+    
 	
 	function setSourceType($sourceType) {
 	    $this->sourceType = $sourceType;

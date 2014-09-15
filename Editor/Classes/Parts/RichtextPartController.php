@@ -13,22 +13,22 @@ class RichtextPartController extends PartController
 	function RichtextPartController() {
 		parent::PartController('richtext');
 	}
-	
+
 	function createPart() {
 		$part = new RichtextPart();
 		$part->setHtml('<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>');
 		$part->save();
 		return $part;
 	}
-	
+
 	function isLiveEnabled() {
 		return true;
 	}
-	
+
 	function display($part,$context) {
 		return $this->render($part,$context);
 	}
-		
+
 	function editor($part,$context) {
 		$modern = SettingService::getSetting('part','richtext','experimetal');
 		if ($modern) {
@@ -68,16 +68,64 @@ class RichtextPartController extends PartController
 			</script>';
 		}
 	}
-	
+
 	function getFromRequest($id) {
 		$part = RichtextPart::load($id);
 		$part->setHtml(Request::getString('html'));
 		return $part;
 	}
 	
+	function beforeSave($part) {
+        $existing = LinkService::getPartLinks($part->getId());
+        $linksFound = [];
+        $linksById = [];
+        foreach ($existing as $link) {
+            $linksById[$link->getId()] = $link;
+        }
+		$doc = DOMUtils::parseHTMLFragment($part->getHtml());
+		$tags = $doc->getElementsByTagName('a');
+		for ($i=$tags->length-1; $i >= 0; $i--) {
+			$tag = $tags->item($i);
+            $data = Strings::fromJSON($tag->getAttribute('data'));
+            if (isset($data->id) && isset($linksById[$data->id])) {
+                $link = $linksById[$data->id];
+                unset($linksById[$data->id]);
+            } else {
+                $link = new PartLink();
+            }
+            $link->setPartId($part->getId());
+            $link->setSourceText($tag->textContent);
+            if (isset($data->page)) {
+                $link->setTargetType('page');
+                $link->setTargetValue($data->page);
+            }
+            else if (isset($data->file)) {
+                $link->setTargetType('file');
+                $link->setTargetValue($data->file);
+            }
+            else if (isset($data->url)) {
+                $link->setTargetType('url');
+                $link->setTargetValue($data->url);
+            }
+            else if (isset($data->email)) {
+                $link->setTargetType('email');
+                $link->setTargetValue($data->email);
+            }
+            $link->save();
+            $data->id = $link->getId();
+            $tag->setAttribute('data',Strings::toJSON($data));
+		}
+        $html = DOMUtils::getInnerXML($doc->documentElement);
+        $part->setHtml($html);
+        
+        foreach ($linksById as $id => $link) {
+            $link->remove();
+        }
+        return true;
+	}
+
 	function _convert($html) {
-		Log::debug($html);
-		$html = str_replace(['<br>','&quot;','&nbsp;'], ['<br/>','&#34;','&#160;'], $html);
+		//$html = str_replace(['<br>','&quot;','&nbsp;'], ['<br/>','&#34;','&#160;'], $html);
 
 		$doc = DOMUtils::parseHTMLFragment($html);
 		if (!$doc) {
@@ -86,41 +134,53 @@ class RichtextPartController extends PartController
 		}
 		$links = $doc->getElementsByTagName('a');
 		$linkArray = [];
-		
-		for ($i=$links->length-1; $i >= 0; $i--) { 
+
+		for ($i=$links->length-1; $i >= 0; $i--) {
 			$linkArray[] = $links->item($i);
 		}
 		foreach ($linkArray as $link) {
 			$link->removeAttribute('href');
 			$data = $link->getAttribute('data');
 			$obj = Strings::fromJSON($data);
-			
+
 			$replaced = $doc->createElement('link');
 			if (isset($obj->page) && !empty($obj->page)) {
-				$replaced->setAttribute('page',$obj->page);
+                $pageId = intval($obj->page);
+                if ($pageId > 0) {
+                    $path = PageService::getPath($pageId);
+    				$replaced->setAttribute('page',$obj->page);
+                    if (!empty($path)) {
+        				$replaced->setAttribute('path',$path);
+                    }
+                }
 			}
 			if (isset($obj->file) && !empty($obj->file)) {
 				$replaced->setAttribute('file',$obj->file);
 			}
+			if (isset($obj->image) && !empty($obj->image)) {
+				$replaced->setAttribute('image',$obj->image);
+			}
 			if (isset($obj->url) && !empty($obj->url)) {
 				$replaced->setAttribute('url',$obj->url);
 			}
+			if (isset($obj->email) && !empty($obj->email)) {
+				$replaced->setAttribute('email',$obj->email);
+			}
 			$replaced->setAttribute('data',$data);
-			
-			for ($j=0; $j < $link->childNodes->length; $j++) { 
+
+			for ($j=0; $j < $link->childNodes->length; $j++) {
 				$child = $link->childNodes->item($j);
 				$link->removeChild($child);
 				$replaced->appendChild($child);
 			}
-			
+
 			$link->parentNode->replaceChild($replaced,$link);
 		}
-		
+
 		$html = DOMUtils::getInnerXML($doc->documentElement);
-		Log::debug($html);
 		return $html;
 	}
-	
+
 	function buildSub($part,$context) {
 		$html = $part->getHtml();
 		$html = $this->_convert($html);
@@ -132,13 +192,13 @@ class RichtextPartController extends PartController
 		} else {
 			Log::debug('RichtextPartController: The markup is invalid...');
 			Log::debug($html);
-			return 
+			return
 			'<richtext xmlns="'.$this->getNamespace().'" valid="false">'.
 			'<![CDATA['.$html.']]>'.
 			'</richtext>';
 		}
 	}
-	
+
 	function importSub($node,$part) {
 		if ($richtext = DOMUtils::getFirstDescendant($node,'richtext')) {
 			if ($richtext->getAttribute('valid')=='false') {
@@ -149,7 +209,7 @@ class RichtextPartController extends PartController
 				$part->setHtml($str);
 			}
 		}
-		
+
 	}
 }
 ?>

@@ -25,6 +25,20 @@ class LinkService {
 		return null;
 	}
 
+    // TODO : Make general search
+	static function getPartLinks($partId) {
+		$list = array();
+		$sql = "select part_link.id from part_link where part_id=@int(partId)";
+		$result = Database::select($sql,['partId'=>$partId]);
+		while ($row = Database::next($result)) {
+			$link = PartLink::load($row['id']);
+			$list[] = $link;
+		}
+		Database::free($result);
+		return $list;
+	}
+
+    // TODO : Make general search
 	static function getPageLinks($pageId) {
 		$list = array();
 		$sql = "select link.*,page.title as page_title,object.title as object_title from link left join page on link.target_id=page.id left join object on link.target_id=object.id where page_id=".Database::int($pageId)." order by link.source_text";
@@ -150,6 +164,7 @@ class LinkService {
 		if (!$pageId) {
 			$unions[] = "select 
 				object_link.id as id,
+                'object' as link_type,
 				
 				object.type as source_type,
 				object_link.object_id as source_id,
@@ -175,6 +190,7 @@ class LinkService {
 		$unions[] = "select 
 
 			link.id as id,
+            'link' as link_type,
 			
 			'page' as source_type,
 			page.id as source_id,
@@ -200,6 +216,7 @@ class LinkService {
 		
 		$unions[] = "select
 			part_link.id as id,
+            'part' as link_type,
 			
 			'page' as source_type,
 			page.id as source_id,
@@ -227,6 +244,7 @@ class LinkService {
 		if (!$pageId) {
 		$unions[] = "select
 			hierarchy_item.id as id,
+            'hierarchy' as link_type,
 			
 			'hierarchy' as source_type,
 			hierarchy.id as source_id,
@@ -288,6 +306,7 @@ class LinkService {
 	static function _buildView($row) {
 		$view = new LinkView();
 		$view->setId(intval($row['id']));
+		$view->setType($row['link_type']);
 		$view->setSourceType($row['source_type']);
 		$view->setSourceId(intval($row['source_id']));
 		if ($row['source_sub_id']) {

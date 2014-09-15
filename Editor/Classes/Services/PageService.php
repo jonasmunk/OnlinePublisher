@@ -32,6 +32,14 @@ class PageService {
 		return null;
 	}
 	
+	static function getPath($id) {
+		$sql = "SELECT path from page where id=@int(id)";
+		if ($row = Database::selectFirst($sql,['id'=>$id])) {
+			return trim($row['path']);
+		}
+		return null;
+	}
+	
 	static function getTotalPageCount() {
 		$sql = "SELECT count(id) as count from page";
 		$row = Database::selectFirst($sql);

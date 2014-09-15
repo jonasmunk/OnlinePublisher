@@ -142,6 +142,12 @@ class PartController
 		// Overwrite this
 	}
 	
+	function beforeSave($part) {
+        return false;
+		// Overwrite this - called before updating and after creation
+        // So the part will be persistent - if true is returned the part will be updated after saving
+	}
+	
 	// Overwrite this
 	function getSectionClass($part) {
 		return '';

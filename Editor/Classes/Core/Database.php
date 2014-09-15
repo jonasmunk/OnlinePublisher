@@ -201,8 +201,8 @@ class Database {
 		return $ids;
 	}
 	
-	static function selectIntArray($sql) {
-		$result = Database::select($sql);
+	static function selectIntArray($sql,$parameters=null) {
+		$result = Database::select($sql,$parameters);
 		$ids = array();
 		while($row = Database::next($result)) {
 			$ids[] = intval($row[0]);
@@ -362,7 +362,7 @@ class Database {
 
     static function compile($sql,$vars) {
   		$replacements = array();
-  		if (preg_match_all("/@[a-z]+\\([a-z]+\\)/u", $sql,$matches) > 0) {
+  		if (preg_match_all("/@[a-z]+\\([a-zA-Z]+\\)/u", $sql,$matches) > 0) {
   			foreach ($matches[0] as $expression) {
   				$pos = strpos($expression,'(');
   				$type = substr($expression,1,$pos-1);

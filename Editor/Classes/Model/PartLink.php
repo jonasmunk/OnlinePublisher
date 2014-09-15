@@ -8,17 +8,21 @@ if (!isset($GLOBALS['basePath'])) {
 	exit;
 }
 
-Entity::$schema['PartLink'] = array(
+Entity::$schema['PartLink'] = [
 	'table' => 'part_link',
-	'properties' => array(
-		'partId' => array('type'=>'int','relation'=>array('class'=>'Part','property'=>'id')),
-		'targetValue' => array('type'=>'string','relations'=>array(
-			array('class'=>'Page','property'=>'id'),
-			array('class'=>'File','property'=>'id')
-			)
-		)
-	)
-);
+	'properties' => [
+        'id' => ['type' => 'int'],
+		'partId' => ['type'=>'int','column'=>'part_id','relation'=>['class'=>'Part','property'=>'id']],
+        'sourceType' => ['type' => 'string','column'=>'source_type'],
+        'sourceText' => ['type' => 'string','column'=>'source_text'],
+		'targetValue' => ['type'=>'string','column'=>'target_value','relations'=>[
+			['class'=>'Page','property'=>'id'],
+			['class'=>'File','property'=>'id']
+            ]
+        ],
+        'targetType' => ['type' => 'string','column'=>'target_type']
+    ]
+];
 class PartLink extends Entity {
 	
 	var $partId;
@@ -34,6 +38,10 @@ class PartLink extends Entity {
 	function getPartId() {
 	    return $this->partId;
 	}
+    
+    static function load($id) {
+        return ModelService::load('PartLink',$id);
+    }
 	
 	
 	function setSourceType($sourceType) {
@@ -71,5 +79,9 @@ class PartLink extends Entity {
 	
 	function save() {
 		PartService::saveLink($this);
+	}
+
+	function remove() {
+		PartService::removeLink($this);
 	}
 }

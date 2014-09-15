@@ -30,7 +30,10 @@ foreach ($links as $link) {
 		if ($link->hasError(LinkView::$TEXT_NOT_FOUND)) {
 			$writer->icon(array('icon'=>'monochrome/warning','size'=>12,'hint'=>array('The text was not found','da'=>'Teksten findes ikke')));
 		}
-		$writer->icon(array('icon'=>'common/edit','revealing'=>true,'action'=>true,'data'=>array('action'=>'editLink')))->endIcons();
+    if ($link->getType()=='link') {
+  		$writer->icon(array('icon'=>'common/edit','revealing'=>true,'action'=>true,'data'=>array('action'=>'editLink')));      
+    }
+    $writer->endIcons();
 		
 
 		$writer->endLine();
