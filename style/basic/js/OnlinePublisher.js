@@ -39,7 +39,7 @@ op.ignite = function() {
 			hui.cls.add(document.body.parentNode,'msie7');
 		});
 	}
-	
+
 	if (hui.browser.msie7 || hui.browser.msie6) {
         // Fix frames
         var frames = hui.get.byClass(document.body,'shared_frame');
@@ -96,13 +96,13 @@ op.showLogin = function() {
 					{type:'TextField',options:{label:{en:'Password',da:'Kodeord'},key:'password',secret:true}}
 				]);
 				var b = g.createButtons();
-				
+
 				var forgot = hui.ui.Button.create({text:{en:'Forgot password?',da:'Glemt kode?'}})
 				forgot.listen({$click:function() {
 					document.location = op.context+'Editor/Authentication.php?forgot=true';
 				}});
 				b.add(forgot);
-				
+
 				var cancel = hui.ui.Button.create({text:{en:'Cancel',da:'Annuller'}})
 				cancel.listen({$click:function() {
 					form.reset();
@@ -110,7 +110,7 @@ op.showLogin = function() {
 					document.body.focus();
 				}});
 				b.add(cancel);
-				
+
 				b.add(hui.ui.Button.create({text:{en:'Log in',da:'Log ind'},highlighted:true,submit:true}));
 				this.loginBox.add(form);
 				this.loginBox.show();
@@ -152,7 +152,7 @@ op.login = function(username,password) {
 		return;
 	}
 
-	hui.ui.request({		
+	hui.ui.request({
 		message : {start:{en:'Logging in...',da:'Logger ind...'},delay:300},
 		url : op.context+'Editor/Services/Core/Authentication.php',
 		parameters : {username:username,password:password},
@@ -278,9 +278,9 @@ op.part.Formula = function(options) {
 op.part.Formula.prototype = {
 	_send : function(e) {
 		hui.stop(e);
-		
+
 		var fields = [];
-		
+
 		for (var i=0; i < this.inputs.length; i++) {
 			var info = this.inputs[i];
 			var input = hui.get(info.id);
@@ -305,7 +305,7 @@ op.part.Formula.prototype = {
 				value : input.value
 			})
 		};
-		
+
 		var url = op.page.path+'services/parts/formula/';
 		var data = {
 			id : this.id,
@@ -475,7 +475,7 @@ op.part.Map.prototype = {
 			options.center = new google.maps.LatLng(this.options.center.latitude, this.options.center.longitude);
 		}
 		this.map = new google.maps.Map(this.container,options);
-		
+
 		if (this.options.center) {
 		    var marker = new google.maps.Marker({
 		        position : new google.maps.LatLng(this.options.center.latitude, this.options.center.longitude),
@@ -493,7 +493,7 @@ op.part.Map.prototype = {
 						text : text.innerHTML,
 						'class' : 'part_map_bubble'
 					})
-				})				
+				})
 				info.open(this.map,marker);
 			}
 		return
@@ -512,10 +512,27 @@ op.part.Map.prototype = {
 op.part.Movie = function(options) {
 	this.options = options;
 	this.element = hui.get(options.element);
-    hui.listen(this.element,'click',this._activate.bind(this));
+    this._attach();
 }
 
 op.part.Movie.prototype = {
+    _attach : function() {
+        hui.listen(this.element,'click',this._activate.bind(this));
+        var poster = hui.get.firstByClass(this.element,'part_movie_poster');
+        if (poster) {
+            var id = poster.getAttribute('data-id');
+            if (id) {
+        		var x = window.devicePixelRatio==2 ? 2 : 1;
+        		var url = op.context + 'services/images/?id=' + id + '&width=' + (poster.clientWidth * x) + '&height=' + (poster.clientHeight * x);
+                poster.style.backgroundImage = 'url(' + url + ')';
+            } else {
+                var vimeoId = poster.getAttribute('data-vimeo-id');
+                if (vimeoId) {
+                    this._vimeo(vimeoId,poster);                    
+                }
+            }
+        }
+    },
     _activate : function() {
         var body = hui.get.firstByClass(this.element,'part_movie_body');
         var code = hui.get.firstByTag(this.element,'noscript');
@@ -523,6 +540,17 @@ op.part.Movie.prototype = {
             body.innerHTML = hui.dom.getText(code);
         }
         body.style.background='';
+    },
+    _vimeo : function(id,poster) {
+        var cb = 'callback_' + id;
+        
+        var url = "http://vimeo.com/api/v2/video/" + id + ".json?callback=" + cb;
+
+        window[cb] = function(data) {
+            hui.log(data)
+            poster.style.backgroundImage = 'url(' + data[0].thumbnail_large + ')';
+        }
+        var script = hui.build('script',{type:'text/javascript',src:url,parent:document.head});
     }
 }
 
@@ -535,11 +563,11 @@ hui.transition = function(options) {
 		show = options.show;
 	var showController = hui.transition[show.effect],
 		hideController = hui.transition[hide.effect];
-		
+
 	hui.style.set(options.container,{height:options.container.clientHeight+'px',position:'relative'})
 	hui.style.set(hide.element,{width:options.container.clientWidth+'px',position:'absolute',boxSizing:'border-box'})
 	hui.style.set(show.element,{width:options.container.clientWidth+'px',position:'absolute',display:'block',visibility:'hidden',boxSizing:'border-box'})
-	
+
 	hui.animate({
 		node : options.container,
 		css : {height:show.element.clientHeight+'px'},
@@ -553,7 +581,7 @@ hui.transition = function(options) {
 	hideController.hide(hide.element,options.duration,function() {
 		hui.style.set(hide.element,{display:'none',position:'static',width:''})
 	})
-	
+
 	showController.beforeShow(show.element);
 	hui.style.set(show.element,{display:'block',visibility:'visible'})
 	showController.show(show.element,options.duration,function() {

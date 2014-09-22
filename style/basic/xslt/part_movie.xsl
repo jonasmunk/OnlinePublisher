@@ -28,11 +28,23 @@
             </xsl:attribute>
 
 			<div class="part_movie_poster">
-            <xsl:if test="p:poster//img:image">
-            		<xsl:attribute name="style">
-                		background-image: url('<xsl:value-of select="$path"/>services/images/?id=<xsl:value-of select="p:poster//o:object/@id"/>');
-					</xsl:attribute>
-            </xsl:if>
+                <xsl:choose>
+                    <xsl:when test="p:poster//img:image">
+                		<xsl:attribute name="data-id">
+                            <xsl:value-of select="p:poster//o:object/@id"/>
+                        </xsl:attribute>
+                    </xsl:when>
+                    <xsl:when test="p:source[@type='youtube']">
+                		<xsl:attribute name="style">
+                    		background-image: url('http://img.youtube.com/vi/<xsl:value-of select="p:source/@id"/>/maxresdefault.jpg');
+        				</xsl:attribute>
+                    </xsl:when>
+                    <xsl:when test="p:source[@type='vimeo']">
+                		<xsl:attribute name="data-vimeo-id">
+                            <xsl:value-of select="p:source/@id"/>
+                        </xsl:attribute>
+                    </xsl:when>
+                </xsl:choose>
 				<xsl:if test="p:text">
 					<h2 class="part_movie_text"><span class="part_movie_text_inner"><xsl:value-of select="p:text"/></span></h2>
 				</xsl:if>
