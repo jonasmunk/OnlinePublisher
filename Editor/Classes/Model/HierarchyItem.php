@@ -127,12 +127,7 @@ class HierarchyItem extends Entity implements Loadable {
 	}
     
     static function loadByPageId($id) {
-        $sql = "select id from `hierarchy_item` where `target_type`='page' and target_id=@int(id)";
-        $result = Database::selectFirst($sql,['id'=>$id]);
-        if ($result) {
-            return HierarchyItem::load($result['id']);
-        }
-        return null;
+        return HierarchyService::getItemByPageId($id);
     }
 	
 	function save() {

@@ -567,6 +567,11 @@ $databaseTables = array(
 			array("height","varchar(11)","YES","","",""),
 			array("frame","varchar(50)","YES","","","")
 		),
+	'part_menu' => array(
+			array("part_id","int(11)","","","0",""),
+			array("hierarchy_id","int(11)","","","0",""),
+			array("variant","varchar(255)","YES","","","")
+		),
 	'part_movie' => array(
 			array("part_id","int(11)","","","0",""),
 			array("file_id","int(11)","","","0",""),
@@ -574,7 +579,7 @@ $databaseTables = array(
 			array("text","text","YES","","",""),
 			array("code","text","YES","","",""),
 			array("url","text","YES","","",""),
-  		array("width","varchar(20)","YES","","",""),
+            array("width","varchar(20)","YES","","",""),
 			array("height","varchar(20)","YES","","","")
 		),
 	'part_news' => array(

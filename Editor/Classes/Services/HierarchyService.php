@@ -52,6 +52,23 @@ class HierarchyService {
         }
         return false;
     }
+    
+	static function getLatestId() {
+		$sql = "select max(id) as id from hierarchy";
+		if ($row = Database::selectFirst($sql)) {
+			return intval($row['id']);
+		}
+		return null;
+	}
+    
+    static function getItemByPageId($id) {
+        $sql = "select id from `hierarchy_item` where `target_type`='page' and target_id=@int(id)";
+        $result = Database::selectFirst($sql,['id'=>$id]);
+        if ($result) {
+            return HierarchyItem::load($result['id']);
+        }
+        return null;
+    }
 
 	static function markHierarchyChanged($id) {
 		$sql="update hierarchy set changed=now() where id=".Database::int($id);

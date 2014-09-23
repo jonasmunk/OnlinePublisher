@@ -882,6 +882,14 @@ div.part_mailinglist input.text
     text-align: center;
 	top: 50%;
 	margin-top: 70px;
+    padding: 0 10px;
+    font-size: 18px;
+}
+
+.part_movie_text_inner {
+	background: rgba(0,0,0,.5);
+    color: #fff;
+    padding: 0 5px;
 }
 
 .part_movie_poster:before {
