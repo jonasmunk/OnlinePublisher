@@ -70,6 +70,7 @@ class Log {
 	}
 
 	static function _logAnything($category,$event,$message,$entity=0) {
+        // TODO Make this more robust / safe
 		$sql = "insert into `log` (`time`,`category`,`event`,`entity`,`message`,`user_id`,`ip`,`session`) values (now(),".Database::text($category).",".Database::text($event).",".$entity.",".Database::text($message).",".InternalSession::getUserId().",".Database::text(getenv("REMOTE_ADDR")).",".Database::text(session_id()).")";
 		if (!Database::insert($sql)) {
 			error_log("could not write to log: ".$sql);
