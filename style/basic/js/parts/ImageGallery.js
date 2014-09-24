@@ -185,7 +185,7 @@ op.part.ImageGallery.Masonry.prototype = {
 		this._reveal();
 	},
 	_getUrl : function(item,info) {
-		var x = window.devicePixelRatio==2 ? 2 : 1;
+		var x = window.devicePixelRatio || 1;
 		return op.context+'services/images/?id='+item.id+'&width='+(info.width*x)+'&height='+(info.height * x);
 	},
 	_reveal : function() {
