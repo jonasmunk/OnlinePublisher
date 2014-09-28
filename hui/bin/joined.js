@@ -900,7 +900,7 @@ hui.build = function(name,options,doc) {
 				e.appendChild(doc.createTextNode(options.text));
 			} else if (prop=='html') {
 				e.innerHTML=options.html;
-			} else if (prop=='parent') {
+			} else if (prop=='parent' && hui.isDefined(options.parent)) {
 				options.parent.appendChild(e);
 			} else if (prop=='parentFirst') {
 				if (options.parentFirst.childNodes.length==0) {
@@ -6196,8 +6196,17 @@ hui.ui.Source.prototype = {
 			this.refresh();
 		}.bind(this),100)
 	},
+	
 	/** Refreshes the data source */
 	refresh : function() {
+		if (this.options.delay<1) {
+			this._refresh();			
+		} else {
+			window.clearTimeout(this._refreshDelay);
+			this._refreshDelay = window.setTimeout(this._refresh.bind(this),this.options.delay);
+		}
+	},
+	_refresh : function() {
 		if (this.delegates.length==0) {
 			return;
 		}
@@ -7762,8 +7771,9 @@ hui.ui.List.prototype = {
 		if (a) {
 			var data = a.getAttribute('data');
 			if (data) {
-				this.fire('clickIcon',{row:this.rows[index],data:hui.string.fromJSON(data),node:a});
+				data = hui.string.fromJSON(data);
 			}
+			this.fire('clickIcon',{row:this.rows[index],data:data,node:a});
 		}
 	},
 	_onRowDown : function(index,event) {

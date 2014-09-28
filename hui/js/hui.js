@@ -900,7 +900,7 @@ hui.build = function(name,options,doc) {
 				e.appendChild(doc.createTextNode(options.text));
 			} else if (prop=='html') {
 				e.innerHTML=options.html;
-			} else if (prop=='parent') {
+			} else if (prop=='parent' && hui.isDefined(options.parent)) {
 				options.parent.appendChild(e);
 			} else if (prop=='parentFirst') {
 				if (options.parentFirst.childNodes.length==0) {

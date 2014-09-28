@@ -53,8 +53,17 @@ hui.ui.Source.prototype = {
 			this.refresh();
 		}.bind(this),100)
 	},
+	
 	/** Refreshes the data source */
 	refresh : function() {
+		if (this.options.delay<1) {
+			this._refresh();			
+		} else {
+			window.clearTimeout(this._refreshDelay);
+			this._refreshDelay = window.setTimeout(this._refresh.bind(this),this.options.delay);
+		}
+	},
+	_refresh : function() {
 		if (this.delegates.length==0) {
 			return;
 		}
