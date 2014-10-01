@@ -122,9 +122,9 @@ class Database {
 		return mysqli_num_rows($result);
 	}
 	
-	static function isEmpty($sql) {
+	static function isEmpty($sql,$parameters=null) {
 		$output = true;
-		$result = Database::select($sql);
+		$result = Database::select($sql,$parameters);
 		if ($row = Database::next($result)) {
 			$output = false;
 		}

@@ -5,4 +5,5 @@ Response::setExpiresInHours(24*7);
 
 
 include 'stylesheet.css';
+include 'parts.php';
 ?>

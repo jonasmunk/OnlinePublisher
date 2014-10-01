@@ -27,8 +27,8 @@ class HierarchyService {
     }
     
     static function getHierarchyItemForPage($page) {
-        $sql="select * from hierarchy_item where target_type='page' and target_id=".Database::int($page->getId());
-        return Database::selectFirst($sql);
+        $sql="select * from hierarchy_item where target_type='page' and target_id = @int(id)";
+        return Database::selectFirst($sql,['id' => $page->getId()]);
     }
 
     static function updateHierarchy($hierarchy) {
@@ -44,8 +44,8 @@ class HierarchyService {
     }
 
     static function canDeleteHierarchy($id) {
-        $sql="select count(id) as num from hierarchy_item where hierarchy_id=".Database::int($id);
-        if ($row = Database::selectFirst($sql)) {
+        $sql="select count(id) as num from hierarchy_item where hierarchy_id = @int(id)";
+        if ($row = Database::selectFirst($sql,['id' => $id])) {
             if ($row['num']==0) {
                 return true;
             }
@@ -68,6 +68,50 @@ class HierarchyService {
             return HierarchyItem::load($result['id']);
         }
         return null;
+    }
+    
+    static function findItems($query = array()) {
+        $params = [];
+		$sql = "SELECT id,title,hidden,target_type,target_value,target_id,hierarchy_id,parent,`index` from hierarchy_item";
+        if (isset($query['parent'])) {
+            $sql.=" where parent=@int(parent)";
+            $params['parent'] = $query['parent'];
+        }
+        $sql .= " order by `index`";
+        $items = [];
+		$result = Database::select($sql,$params);
+		while ($row = Database::next($result)) {
+            $items[] = HierarchyService::_rowToItem($row);
+        }
+		Database::free($result);
+        return $items;
+    }
+    
+	static function loadItem($id) {
+		$sql = "SELECT id,title,hidden,target_type,target_value,target_id,hierarchy_id,parent,`index` from hierarchy_item where id=@int(id)";
+		if ($row = Database::selectFirst($sql,['id' => $id])) {
+            return HierarchyService::_rowToItem($row);
+		}
+		return null;
+	}
+
+	static function _rowToItem($row) {
+		$item = new HierarchyItem();
+		$item->setId(intval($row['id']));
+		$item->setTitle($row['title']);
+		$item->setHidden($row['hidden']==1);
+		$item->setTargetType($row['target_type']);
+		$item->setHierarchyId(intval($row['hierarchy_id']));
+		$item->setParent(intval($row['parent']));
+		$item->setIndex(intval($row['index']));
+		if ($row['target_type']=='page' || $row['target_type']=='pageref' || $row['target_type']=='file') {
+			$item->setTargetValue($row['target_id']);
+		} else {
+			$item->setTargetValue($row['target_value']);
+		}
+		$sql = "SELECT * from hierarchy_item where parent=@int(id)";
+		$item->canDelete = Database::isEmpty($sql,['id' => $row['id']]);
+        return $item;
     }
 
 	static function markHierarchyChanged($id) {
@@ -197,6 +241,55 @@ class HierarchyService {
 	
 		EventService::fireEvent('update','hierarchy',null,$hierarchyId);
         return $hierarchyId;
+    }
+
+    static function hierarchyTraveller($id,$parent,$allowDisabled,$depth=100) {
+        if ($depth==0) {
+            return "";
+        }
+    	$output = "";
+    	$sql = "select hierarchy_item.*,page.disabled,page.path from hierarchy_item".
+    	" left join page on page.id = hierarchy_item.target_id and (hierarchy_item.target_type='page' or hierarchy_item.target_type='pageref')".
+    	" where parent=".Database::int($parent).
+    	" and hierarchy_id=".Database::int($id).
+    	" order by `index`";
+    	$result = Database::select($sql);
+    	while ($row = Database::next($result)) {
+    	    if ($row['disabled']!=1 || $allowDisabled) {
+        		$output.='<item title="'.Strings::escapeEncodedXML($row['title']).
+        					'" alternative="'.Strings::escapeEncodedXML($row['alternative']).'"';
+        		if ($row['target_type']=='page') {
+        			$output.=' page="'.$row['target_id'].'"';
+					if (strlen($row['path'])>0) {
+        				$output.=' path="'.Strings::escapeEncodedXML($row['path']).'"';
+					}
+        		}
+        		if ($row['target_type']=='pageref') {
+        			$output.=' page-reference="'.$row['target_id'].'"';
+					if (strlen($row['path'])>0) {
+        				$output.=' path="'.Strings::escapeEncodedXML($row['path']).'"';
+					}
+        		}
+        		else if ($row['target_type']=='file') {
+        			$output.=' file="'.$row['target_id'].'" filename="'.Strings::escapeEncodedXML(FileService::getFileFilename($row['target_id'])).'"';
+        		}
+        		else if ($row['target_type']=='url') {
+        			$output.=' url="'.Strings::escapeEncodedXML($row['target_value']).'"';
+        		}
+        		else if ($row['target_type']=='email') {
+        			$output.=' email="'.Strings::escapeEncodedXML($row['target_value']).'"';
+        		}
+        		if ($row['target']!='') {
+        			$output.=' target="'.Strings::escapeEncodedXML($row['target']).'"';
+        		}
+        		if ($row['hidden']) {
+        			$output.=' hidden="true"';
+        		}
+        		$output.='>'.HierarchyService::hierarchyTraveller($id,$row['id'],$allowDisabled,$depth-1).'</item>';
+		    }
+    	}
+    	Database::free($result);
+    	return $output;
     }
 	
 }

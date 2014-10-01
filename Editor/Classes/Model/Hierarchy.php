@@ -153,54 +153,8 @@ class Hierarchy extends Entity implements Loadable {
     
     static function build($id,$allowDisabled=true) {
     	return '<hierarchy xmlns="http://uri.in2isoft.com/onlinepublisher/publishing/hierarchy/1.0/">'.
-    	Hierarchy::hierarchyTraveller($id,0,$allowDisabled).
+    	HierarchyService::hierarchyTraveller($id,0,$allowDisabled).
     	'</hierarchy>';
-    }
-
-    static function hierarchyTraveller($id,$parent,$allowDisabled) {
-    	$output="";
-    	$sql="select hierarchy_item.*,page.disabled,page.path from hierarchy_item".
-    	" left join page on page.id = hierarchy_item.target_id and (hierarchy_item.target_type='page' or hierarchy_item.target_type='pageref')".
-    	" where parent=".Database::int($parent).
-    	" and hierarchy_id=".Database::int($id).
-    	" order by `index`";
-    	$result = Database::select($sql);
-    	while ($row = Database::next($result)) {
-    	    if ($row['disabled']!=1 || $allowDisabled) {
-        		$output.='<item title="'.Strings::escapeEncodedXML($row['title']).
-        					'" alternative="'.Strings::escapeEncodedXML($row['alternative']).'"';
-        		if ($row['target_type']=='page') {
-        			$output.=' page="'.$row['target_id'].'"';
-					if (strlen($row['path'])>0) {
-        				$output.=' path="'.Strings::escapeEncodedXML($row['path']).'"';
-					}
-        		}
-        		if ($row['target_type']=='pageref') {
-        			$output.=' page-reference="'.$row['target_id'].'"';
-					if (strlen($row['path'])>0) {
-        				$output.=' path="'.Strings::escapeEncodedXML($row['path']).'"';
-					}
-        		}
-        		else if ($row['target_type']=='file') {
-        			$output.=' file="'.$row['target_id'].'" filename="'.Strings::escapeEncodedXML(FileService::getFileFilename($row['target_id'])).'"';
-        		}
-        		else if ($row['target_type']=='url') {
-        			$output.=' url="'.Strings::escapeEncodedXML($row['target_value']).'"';
-        		}
-        		else if ($row['target_type']=='email') {
-        			$output.=' email="'.Strings::escapeEncodedXML($row['target_value']).'"';
-        		}
-        		if ($row['target']!='') {
-        			$output.=' target="'.Strings::escapeEncodedXML($row['target']).'"';
-        		}
-        		if ($row['hidden']) {
-        			$output.=' hidden="true"';
-        		}
-        		$output.='>'.Hierarchy::hierarchyTraveller($id,$row['id'],$allowDisabled).'</item>';
-		    }
-    	}
-    	Database::free($result);
-    	return $output;
     }
 
     

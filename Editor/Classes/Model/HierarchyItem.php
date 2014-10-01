@@ -102,28 +102,7 @@ class HierarchyItem extends Entity implements Loadable {
 	}
 	
 	static function load($id) {
-		$sql = "select id,title,hidden,target_type,target_value,target_id,hierarchy_id,parent,`index` from hierarchy_item where id=".Database::int($id);
-		$result = Database::select($sql);
-		$item = null;
-		if ($row = Database::next($result)) {
-			$item = new HierarchyItem();
-			$item->setId(intval($row['id']));
-			$item->setTitle($row['title']);
-			$item->setHidden($row['hidden']==1);
-			$item->setTargetType($row['target_type']);
-			$item->setHierarchyId(intval($row['hierarchy_id']));
-			$item->setParent(intval($row['parent']));
-			$item->setIndex(intval($row['index']));
-			if ($row['target_type']=='page' || $row['target_type']=='pageref' || $row['target_type']=='file') {
-				$item->setTargetValue($row['target_id']);
-			} else {
-				$item->setTargetValue($row['target_value']);
-			}
-			$sql="select * from hierarchy_item where parent=".Database::int($id);
-			$item->canDelete = Database::isEmpty($sql);
-		}
-		Database::free($result);
-		return $item;
+        return HierarchyService::loadItem($id);
 	}
     
     static function loadByPageId($id) {

@@ -69,7 +69,7 @@ class FilePartController extends PartController
 	
 	function getToolbars() {
 		return array(
-			GuiUtils::getTranslated(array('File','ad'=>'Fil')) =>
+			GuiUtils::getTranslated(array('File','da'=>'Fil')) =>
 			'<script source="../../Parts/file/toolbar.js"/>
 			<icon icon="common/new" title="{Add file; da:Tilføj fil}" name="addFile"/>
 			<icon icon="common/search" title="{Select file; da:Vælg fil}" name="chooseFile"/>
