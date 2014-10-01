@@ -87,12 +87,7 @@ class PartController
 	function isLiveEnabled() {
 		return false;
 	}
-	
-	function getNewPart() {
-		// TODO is this ever used?
-		Log::debug('You must override getNewPart');
-	}
-	
+		
 	function render($part,$context,$editor=true) {
 		global $basePath;
         $encoding = ConfigurationService::isUnicode() ? 'UTF-8' : 'ISO-8859-1';
