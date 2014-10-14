@@ -1197,7 +1197,7 @@ hui.cls = {
 		if (element.removeClassName) {
 			element.removeClassName(className);
 		}
-		if (element.className=='className') {
+		if (element.className==className) {
 			element.className='';
 			return;
 		}
