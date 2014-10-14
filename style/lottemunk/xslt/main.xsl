@@ -11,13 +11,13 @@
  xmlns:hr="http://uri.in2isoft.com/onlinepublisher/part/horizontalrule/1.0/"
  exclude-result-prefixes="p f h n o util hr"
  >
-<xsl:output encoding="UTF-8" method="xml"/>
+<xsl:output encoding="UTF-8" method="xml" omit-xml-declaration="yes"/>
 
 <xsl:include href="../../basic/xslt/util.xsl"/>
 <xsl:include href="front.xsl"/>
 
 <xsl:template match="p:page">
-	<xsl:text disable-output-escaping='yes'>&lt;!DOCTYPE html&gt;</xsl:text>
+	<xsl:call-template name="util:doctype"/>
 	<html>
 		<xsl:call-template name="util:html-attributes"/>
 		<head>

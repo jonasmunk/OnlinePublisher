@@ -10,24 +10,22 @@
  xmlns:util="http://uri.in2isoft.com/onlinepublisher/util/"
  exclude-result-prefixes="p f h n o"
  >
-	<xsl:output encoding="UTF-8" method="xml" doctype-public="-//W3C//DTD XHTML 1.1//EN" doctype-system="http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd"/>
+	<xsl:output encoding="UTF-8" method="xml" omit-xml-declaration="yes"/>
 
 	<xsl:include href="../../basic/xslt/util.xsl"/>
 
 	<xsl:template match="p:page">
-		<html xmlns="http://www.w3.org/1999/xhtml">
+		<xsl:call-template name="util:doctype"/>
+		<html>
 			<xsl:call-template name="util:html-attributes"/>
 			<head> 
-				<title>
-                    <xsl:if test="not(//p:page/@id=//p:context/p:home/@page)">
-                        <xsl:value-of select="@title"/>
-                        <xsl:text> - </xsl:text>
-                    </xsl:if>
-                    <xsl:value-of select="f:frame/@title"/>
-                </title>
+				<xsl:call-template name="util:title"/>
 				<xsl:call-template name="util:metatags"/>
 				<xsl:call-template name="util:scripts-build"/>
 				<xsl:call-template name="util:style-build"/>
+                <xsl:call-template name="util:google-font">
+                    <xsl:with-param name="family" select="'Open+Sans:400,600,700,300'"/>
+                </xsl:call-template>
 				<xsl:if test="//p:design/p:parameter[@key='background-color']">
 					<style>
 						body {
@@ -59,7 +57,7 @@
 							</xsl:choose>
 						<xsl:comment/></p>
 					<div class="layout_navigation">
-						<xsl:call-template name="util:hierarchy-first-level"/>
+						<xsl:call-template name="util:menu-top-level"/>
 					</div>
 					</div>
 					<div class="layout_sidebar">

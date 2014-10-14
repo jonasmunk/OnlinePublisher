@@ -168,6 +168,26 @@
 </xsl:template>
 -->
 
+<xsl:template name="util:doctype">
+    <xsl:text disable-output-escaping='yes'>&lt;!DOCTYPE html&gt;
+</xsl:text>
+</xsl:template>
+
+<xsl:template name="util:title">
+	<title>
+        <xsl:if test="not(//p:page/@id=//p:context/p:home/@page)">
+            <xsl:value-of select="//p:page/@title"/>
+            <xsl:text> - </xsl:text>
+        </xsl:if>
+        <xsl:value-of select="//f:frame/@title"/>
+    </title>
+</xsl:template>
+
+<xsl:template name="util:google-font">
+    <xsl:param name="family" />
+    <link href='http://fonts.googleapis.com/css?family={$family}' rel='stylesheet' type='text/css'/>
+</xsl:template>
+
 <xsl:template name="util:metatags">
 	<meta http-equiv="content-type" content="text/html; charset=utf-8"></meta>
     <!-- Set on server 
@@ -780,6 +800,37 @@
 
 
 <!-- Navigation -->
+
+<xsl:template name="util:menu-top-level">
+	<xsl:if test="//f:frame/h:hierarchy/h:item[not(@hidden='true')]">
+		<ul class="layout_menu_top">
+			<xsl:for-each select="//f:frame/h:hierarchy/h:item">
+				<xsl:if test="not(@hidden='true')">
+					<li>
+                        <xsl:attribute name="class">
+                            <xsl:text>layout_menu_top_item</xsl:text>
+    						<xsl:choose>
+    							<xsl:when test="//p:page/@id=@page"> layout_menu_top_item_selected</xsl:when>
+    							<xsl:when test="descendant-or-self::*/@page=//p:page/@id"> layout_menu_top_item_highlighted</xsl:when>
+    						</xsl:choose>
+                        </xsl:attribute>
+						<a>
+                            <xsl:attribute name="class">
+                                <xsl:text>layout_menu_top_link</xsl:text>
+        						<xsl:choose>
+        							<xsl:when test="//p:page/@id=@page"> layout_menu_top_link_selected</xsl:when>
+        							<xsl:when test="descendant-or-self::*/@page=//p:page/@id"> layout_menu_top_link_highlighted</xsl:when>
+        						</xsl:choose>
+                            </xsl:attribute>
+							<xsl:call-template name="util:link"/>
+							<span><xsl:value-of select="@title"/></span>
+						</a>
+					</li>
+				</xsl:if>
+			</xsl:for-each>
+		</ul>
+	</xsl:if>
+</xsl:template>
 
 <xsl:template name="util:navigation-first-level">
 	<xsl:if test="//f:frame/h:hierarchy/h:item[not(@hidden='true')]">

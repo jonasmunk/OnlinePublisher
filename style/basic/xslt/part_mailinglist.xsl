@@ -50,7 +50,7 @@
 						<input class="text" name="{../../../@id}_email" value="{ml:value[@key='email']/@value}"/>
 					</p>
 					<p class="buttons">
-						<input type="submit" class="submit" value="{$lang_subscribe}"/>
+						<input type="submit" class="submit common_button" value="{$lang_subscribe}"/>
 					</p>
 					</div>
 				</xsl:when>
@@ -74,7 +74,7 @@
 						<input class="text" name="{../../../@id}_email" value="{ml:value[@key='email']/@value}"/>
 					</p>
 					<p class="buttons">
-						<input type="submit" class="submit" value="{$lang_subscribe}"/>
+						<input type="submit" class="submit common_button" value="{$lang_subscribe}"/>
 					</p>
 					</div>
 					</form>
@@ -112,7 +112,7 @@
 						<label>E-mail:</label>
 						<input class="text" name="{../../../@id}_email" value="{ml:value[@key='email']/@value}"/>
 					</p>
-					<p class="buttons"><input type="submit" class="submit" value="{$lang_unsubscribe}"/></p>
+					<p class="buttons"><input type="submit" class="submit common_button" value="{$lang_unsubscribe}"/></p>
 					</div>
 				</xsl:when>
 				<xsl:otherwise>
@@ -130,7 +130,7 @@
 							<label>E-mail:</label>
 							<span class="common_field"><span><span><input class="text" name="{../../../@id}_email" value="{ml:value[@key='email']/@value}"/></span></span></span>
 						</p>
-						<p class="buttons"><input type="submit" class="submit" value="{$lang_unsubscribe}"/></p>
+						<p class="buttons"><input type="submit" class="submit common_button" value="{$lang_unsubscribe}"/></p>
 						</div>
 					</form>
 				</xsl:otherwise>

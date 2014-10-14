@@ -4,6 +4,7 @@ body
 	margin: 0;
 	padding: 20px;
 	text-align: center;
+	font-family: 'Open Sans', Arial, sans-serif;
 }
 
 div.layout
@@ -25,15 +26,6 @@ div.layout_content
 div.layout_header
 {
 	height: 110px;
-	/*
-	background: #434E59;
-    background: -webkit-gradient(linear,0 0,0 bottom,from(#eeeeee),to(#ffffff));
-    background: -moz-linear-gradient(#eeeeee, #ffffff);
-    background: gradient(linear,0 0,0 bottom,from(#eeeeee),to(#ffffff));
-    background: linear-gradient(#eeeeee, #ffffff);
-    -ms-filter: progid:DXImageTransform.Microsoft.gradient (GradientType=0, startColorstr=#eeeeee, endColorstr=#ffffff);
-    filter: progid:DXImageTransform.Microsoft.gradient (GradientType=0, startColorstr=#eeeeee, endColorstr=#ffffff);
-	*/
 }
 
 div.layout_header img
@@ -47,9 +39,8 @@ p.layout_logo
 	margin: 0;
 	font-size: 48px;
 	letter-spacing: -2px;
-	font-family: 'Trebuchet MS', Arial, sans-serif;
-	color: #1980AF;
-	font-weight: bold;
+	color: #333;
+	font-weight: 300;
 	padding-left: 30px;
 	height: 80px;
 	line-height: 80px;
@@ -57,45 +48,43 @@ p.layout_logo
 
 /************** Navigation ****************/
 
-div.layout_navigation ul
+.layout_menu_top
 {
-	font-family: 'Trebuchet MS', Arial, sans-serif;
 	margin: 0;
-	padding: 0;
+	padding: 0 0 0 20px;
 	list-style: none;
 	height: 30px;
 	font-size: 0;
 	border-bottom: 1px solid #eee;
 }
 
-div.layout_navigation li
+.layout_menu_top_item
 {
 	display: inline;
 	height: 30px;
 	border-right: 1px dotted #eee;
 }
 
-div.layout_navigation a
+.layout_menu_top_link
 {
 	line-height: 30px;
 	display: inline-block;
 	height: 30px;
-	padding: 0 30px;
+	padding: 0 10px;
 	font-size: 16px;
 	text-decoration: none;
 	color: #333;
 }
 
-div.layout_navigation li.selected a, div.layout_navigation li.highlighted a
+.layout_menu_top_link_highlighted > span,
+.layout_menu_top_link_selected > span
 {
-	background: #fafafa;
-	/*font-weight: bold;
-	color: #1980AF;*/
-	border-bottom: 5px solid #1980AF;
-	height: 26px;
+	border-bottom: 3px solid #666;
+	height: 28px;
+	display: inline-block;
 }
 
-div.layout_navigation li a:hover
+.layout_menu_top_link:hover
 {
 	background: #f8f8f8;
 	border-left: 1px solid #eee;
@@ -125,12 +114,11 @@ div.layout_sidebar li
 
 div.layout_sidebar li a
 {
-	border-bottom: 1px dotted #eee;
+	border-bottom: 1px solid #eee;
 	text-decoration: none;
 	color: #555;
 	padding-left: 10px;
 	font-size: 15px;
-	font-family: 'Trebuchet MS', Arial, sans-serif;
 	height: 30px;
 	line-height: 30px;
 	display: block;
@@ -138,9 +126,10 @@ div.layout_sidebar li a
 
 div.layout_sidebar a.selected, div.layout_sidebar a.highlighted
 {
-	background: #fafafa;
-	font-weight: bold;
-	color: #1980AF;
+	font-weight: 600;
+	color: #000;
+    border-left: 3px solid #666;
+	padding-left: 7px;
 }
 
 div.layout_sidebar li a:hover

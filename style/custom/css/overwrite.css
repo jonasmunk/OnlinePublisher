@@ -1,6 +1,6 @@
 body
 {
-	font-family: Helvetica,Arial,sans-serif;
+	font-family: 'Open Sans', Arial, sans-serif;
 }
 
 a.common
@@ -23,30 +23,54 @@ h1.common,h2.common,h3.common,h4.common,h5.common,h6.common
 {
 	margin: 0px;
 	color: #555;
-	font-family: Georgia,'Times New Roman',Palatino,Times,sans-serif;
-	/*font-family: Helvetica,Arial,sans-serif;*/
-	font-weight: normal;
+	font-weight: 600;
+}
+
+.common_button {
+    display: inline-block;
+    -webkit-appearance: none;
+    height: 24px;
+    font-family: inherit;
+    background: #ddd;
+    border: 1px solid #ccc;
+    border-radius: 3px;
 }
 
 p.common, ul.common
 {
-	font-family: 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;	font-size: 9pt;
 	line-height: 160%;
 	text-align: justify;
 }
 
-.common_font
+.part_richtext,
+.part_text,
+.part_listing,
+.part_listing_first
 {
-	font-family: 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+    font-size: 11pt;
+    line-height: 1.4em;
+}
+
+.part_richtext h1,
+.part_richtext h2,
+.part_richtext h3,
+.part_richtext h4,
+.part_richtext h5,
+.part_richtext h6 {
+    color: #555;
 }
 
 hr.part_horizontalrule
 {
-	border-bottom: 1px dotted #ccc;
+	border-bottom: 1px solid #ddd;
 }
 
 .part_header
 {
-	font-family: Georgia,'Times New Roman',Palatino,Times,sans-serif;
 	color: #555;
+}
+
+ {
+    font-size: 11pt;
+    line-height: 1.4em;
 }

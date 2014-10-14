@@ -15,8 +15,7 @@
 <xsl:include href="../../basic/xslt/util.xsl"/>
 
 <xsl:template match="p:page">
-	<xsl:text disable-output-escaping='yes'>&lt;!DOCTYPE html&gt;
-</xsl:text>
+<xsl:call-template name="util:doctype"/>
 <html>
 	<xsl:call-template name="util:html-attributes"/>
 	<head>

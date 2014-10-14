@@ -8,42 +8,44 @@
  >
 
 <xsl:template match="p:formula">
-		<div class="part_formula common_font">
-	<xsl:if test="$editor='true'">
-			<xsl:call-template name="p:content"/>
-	</xsl:if>
-	<xsl:if test="$editor!='true'">
-		<form id="{generate-id()}" onsubmit="return false">
-			<xsl:comment/>
-			<xsl:call-template name="p:content"/>
-		</form>
-		<script type="text/javascript">
-			_editor.defer(function() {
-				var inputs = [];
-				<xsl:for-each select="descendant::p:input">
-					inputs.push({
-						id : '<xsl:value-of select="generate-id()"/>',
-						label : '<xsl:value-of select="../@label"/>',
-						validation : {
-							message : '<xsl:value-of select="p:validation/@message"/>'
-							<xsl:if test="p:validation/@required='true'">
-								,required : true
-							</xsl:if>
-							<xsl:if test="p:validation/@syntax">
-								,syntax : '<xsl:value-of select="p:validation/@syntax"/>'
-							</xsl:if>
-						}
-					})
-				</xsl:for-each>
-				new op.part.Formula({
-					element : '<xsl:value-of select="generate-id()"/>',
-					id : <xsl:value-of select="../../@id"/>,
-					inputs : inputs
-				});
-			});
-		</script>
-	</xsl:if>
-		</div>
+    <div class="part_formula common_font">
+        <xsl:choose>
+          <xsl:when test="$editor='true'">
+  			<xsl:call-template name="p:content"/>            
+          </xsl:when>
+          <xsl:otherwise>
+      		<form id="{generate-id()}" onsubmit="return false" class="part_formula_form">
+      			<xsl:comment/>
+      			<xsl:call-template name="p:content"/>
+      		</form>
+      		<script type="text/javascript">
+      			_editor.defer(function() {
+      				var inputs = [];
+      				<xsl:for-each select="descendant::p:input">
+      					inputs.push({
+      						id : '<xsl:value-of select="generate-id()"/>',
+      						label : '<xsl:value-of select="../@label"/>',
+      						validation : {
+      							message : '<xsl:value-of select="p:validation/@message"/>'
+      							<xsl:if test="p:validation/@required='true'">
+      								,required : true
+      							</xsl:if>
+      							<xsl:if test="p:validation/@syntax">
+      								,syntax : '<xsl:value-of select="p:validation/@syntax"/>'
+      							</xsl:if>
+      						}
+      					})
+      				</xsl:for-each>
+      				new op.part.Formula({
+      					element : '<xsl:value-of select="generate-id()"/>',
+      					id : <xsl:value-of select="../../@id"/>,
+      					inputs : inputs
+      				});
+      			});
+      		</script>            
+          </xsl:otherwise>
+        </xsl:choose>
+	</div>
 </xsl:template>
 
 <xsl:template name="p:content">
@@ -67,7 +69,7 @@
 				<p class="part_formula_label"><label>Besked:</label></p>
 				<p><textarea class="part_formula_text" name="message"><xsl:text> </xsl:text></textarea></p>
 			</div>
-			<p><input type="submit" value="Afsend">
+			<p><input type="submit" value="Afsend" class="common_button">
 				<xsl:if test="$editor='true'">
 					<xsl:attribute name="disabled">disabled</xsl:attribute>
 				</xsl:if>
@@ -84,7 +86,7 @@
 	<div>
 		<xsl:apply-templates/>
 		<p class="part_formula_buttons">
-			<input type="submit">
+			<input type="submit" class="common_button">
 				<xsl:if test="p:submit[@text]">
 					<xsl:attribute name="value">
 						<xsl:value-of select="p:submit/@text"/>
@@ -121,7 +123,7 @@
 				<xsl:text> </xsl:text><span class="part_formula_required">*</span>
 			</xsl:if>
 		</p>
-		<p class="part_formula_input">
+		<p class="part_formula_field_content">
 			<xsl:if test="@prefix">
 				<span class="part_formula_prefix"><span><xsl:value-of select="@prefix"/></span></span>
 			</xsl:if>
@@ -144,7 +146,7 @@
 </xsl:template>
 
 <xsl:template match="p:input[@line-breaks='true']">
-	<textarea class="part_formula_input" id="{generate-id()}">
+	<textarea class="part_formula_input part_formula_input_lines" id="{generate-id()}">
 		<xsl:if test="@name">
 			<xsl:attribute name="name">
 				<xsl:value-of select="@name"/>
@@ -155,7 +157,7 @@
 </xsl:template>
 
 <xsl:template match="p:number">
-	<input class="part_formula_text" type="text" name="{@name}" data-label="{../@label}"/>
+	<input class="part_formula_input" type="text" name="{@name}" data-label="{../@label}"/>
 </xsl:template>
 
 <xsl:template match="p:space[@height]">
@@ -163,7 +165,7 @@
 </xsl:template>
 
 <xsl:template match="p:columns">
-	<table>
+	<table class="part_formula_columns">
 		<tr>
 			<xsl:apply-templates select="p:column"/>
 		</tr>

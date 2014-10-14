@@ -3,20 +3,20 @@
 	padding: 10px 0px;
 }
 
-div.part_listing, textarea.part_listing
+.part_listing
 {
 	font-size: 8pt;
 	color: #333;
 }
 
-div.part_listing ul
+.part_listing ul
 {
 	margin: 0px;
 	color: #bbb;
 	padding-left: 25px;
 }
 
-div.part_listing span.part_listing_first
+.part_listing_first
 {
 	font-size: 9pt;
 	font-weight: bold;
@@ -27,7 +27,7 @@ span.part_listing
 	color: #333;
 }
 
-div.part_listing li
+.part_listing li
 {
 	margin-bottom: 5px;
 }
