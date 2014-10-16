@@ -3,7 +3,7 @@
     <text key="name" label="Name"/>
     <boolean key="administrator" label="Administrator"/>
     <single key="gender">
-        <option value="male" label="Male"/>
+        <option value="male" label="{Male;da:Mand}"/>
         <option value="female" label="Female"/>
         <option value="unknown" label="Unknown"/>
     </single>
