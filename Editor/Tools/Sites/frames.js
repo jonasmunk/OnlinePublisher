@@ -75,7 +75,7 @@ hui.ui.listen({
 			},
 			url : 'actions/SaveFrame.php',
 			message : {start:{en:'Saving setup', da:'Gemmer opsætning...'},delay:300},
-			onSuccess : function() {
+			$success : function() {
 				listSource.refresh();
 			}.bind(this)
 		});
@@ -90,7 +90,7 @@ hui.ui.listen({
 			parameters : { id : this.frameId },
 			url : 'actions/DeleteFrame.php',
 			message : {start:{en:'Deleting setup...', da:'Sletter ramme...'},delay:300},
-			onSuccess : function() {
+			$success : function() {
 				listSource.refresh();
 			}.bind(this)
 		});

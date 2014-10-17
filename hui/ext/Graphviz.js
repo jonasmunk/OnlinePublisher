@@ -31,7 +31,7 @@ hui.ui.Graphviz.prototype = {
 	},
 	load: function(url) {
 		var self = this;
-		new hui.request({url:url,onSuccess:function(t) {self.parse(t)}});
+		new hui.request({url:url,$success:function(t) {self.parse(t)}});
 	},
 	zoom : function(zoom) {
 		this.scale=this.scale*zoom;

@@ -21,7 +21,7 @@ var controller = {
 		hui.ui.request({
 			url : 'data/Save.php',
 			json : {data:values},
-			onSuccess : function() {
+			$success : function() {
 				window.parent.frames[0].controller.markChanged();
 				hui.ui.showMessage({text:'Ændringerne er nu gemt',icon:'common/success',duration:2000});
 			}

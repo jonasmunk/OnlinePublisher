@@ -67,7 +67,7 @@ hui.ui.listen({
 		userFormula.reset();
 		deleteUser.setEnabled(false);
 		saveUser.setEnabled(false);
-		hui.ui.request({json:{data:data},url:'../../Services/Model/LoadObject.php',onSuccess:'loadUser'});
+		hui.ui.request({json:{data:data},url:'../../Services/Model/LoadObject.php',$success:'loadUser'});
 	},
 	$success$loadUser : function(data) {
 		this.userId = data.id;
@@ -97,7 +97,7 @@ hui.ui.listen({
 			return;
 		}
 		hui.log(data);
-		hui.ui.request({json:{data:data},url:'actions/SaveUser.php',onSuccess:'saveUser'});
+		hui.ui.request({json:{data:data},url:'actions/SaveUser.php',$success:'saveUser'});
 	},
 	$success$saveUser : function() {
 		userEditor.hide();
@@ -105,7 +105,7 @@ hui.ui.listen({
 		list.refresh();
 	},
 	$click$deleteUser : function() {
-		hui.ui.request({json:{data:{id:this.userId}},url:'../../Services/Model/DeleteObject.php',onSuccess:'deleteUser'});
+		hui.ui.request({json:{data:{id:this.userId}},url:'../../Services/Model/DeleteObject.php',$success:'deleteUser'});
 	},
 	$success$deleteUser : function() {
 		userEditor.hide();
@@ -130,7 +130,7 @@ hui.ui.listen({
 		weblogGroupFormula.reset();
 		deleteWeblogGroup.setEnabled(false);
 		saveWeblogGroup.setEnabled(false);
-		hui.ui.request({json:{data:data},url:'../../Services/Model/LoadObject.php',onSuccess:'loadWeblogGroup'});
+		hui.ui.request({json:{data:data},url:'../../Services/Model/LoadObject.php',$success:'loadWeblogGroup'});
 	},
 	$success$loadWeblogGroup : function(data) {
 		this.weblogGroupId = data.id;
@@ -145,7 +145,7 @@ hui.ui.listen({
 		weblogGroupFormula.reset();
 	},
 	$click$deleteWeblogGroup : function() {
-		hui.ui.request({json:{data:{id:this.weblogGroupId}},url:'../../Services/Model/DeleteObject.php',onSuccess:'deleteWeblogGroup'});
+		hui.ui.request({json:{data:{id:this.weblogGroupId}},url:'../../Services/Model/DeleteObject.php',$success:'deleteWeblogGroup'});
 	},
 	$success$deleteWeblogGroup : function() {
 		weblogGroupEditor.hide();
@@ -155,7 +155,7 @@ hui.ui.listen({
 	$click$saveWeblogGroup : function() {
 		var data = weblogGroupFormula.getValues();
 		data.id = this.weblogGroupId;
-		hui.ui.request({json:{data:data},url:'actions/SaveWeblogGroup.php',onSuccess:'saveWeblogGroup'});
+		hui.ui.request({json:{data:data},url:'actions/SaveWeblogGroup.php',$success:'saveWeblogGroup'});
 	},
 	$success$saveWeblogGroup : function() {
 		weblogGroupEditor.hide();
@@ -174,7 +174,7 @@ hui.ui.listen({
 	$click$savePath : function() {
 		var data = pathFormula.getValues();
 		data.id=this.pathId;
-		hui.ui.request({json:{data:data},url:'actions/SavePath.php',onSuccess:'savePath'});
+		hui.ui.request({json:{data:data},url:'actions/SavePath.php',$success:'savePath'});
 	},
 	$success$savePath : function() {
 		pathEditor.hide();
@@ -185,7 +185,7 @@ hui.ui.listen({
 		pathFormula.reset();
 		deletePath.setEnabled(false);
 		savePath.setEnabled(false);
-		hui.ui.request({json:{data:{id:id}},url:'../../Services/Model/LoadObject.php',onSuccess:'loadPath'});
+		hui.ui.request({json:{data:{id:id}},url:'../../Services/Model/LoadObject.php',$success:'loadPath'});
 	},
 	$success$loadPath : function(data) {
 		this.pathId = data.id;
@@ -195,7 +195,7 @@ hui.ui.listen({
 		deletePath.setEnabled(true);
 	},
 	$click$deletePath : function() {
-		hui.ui.request({json:{data:{id:this.pathId}},url:'../../Services/Model/DeleteObject.php',onSuccess:'deletePath'});
+		hui.ui.request({json:{data:{id:this.pathId}},url:'../../Services/Model/DeleteObject.php',$success:'deletePath'});
 	},
 	$success$deletePath : function() {
 		pathEditor.hide();
@@ -216,7 +216,7 @@ hui.ui.listen({
 				message : {start : 'Afinstallerer skabelon',delay:300},
 				parameters : {key:data.key},
 				url : 'actions/UninstallTemplate.php',
-				onSuccess : function() {
+				$success : function() {
 					list.refresh();
 				}
 			});
@@ -225,7 +225,7 @@ hui.ui.listen({
 				message : {start : 'Installerer skabelon',delay:300},
 				parameters : {key:data.key},
 				url : 'actions/InstallTemplate.php',
-				onSuccess : function() {
+				$success : function() {
 					list.refresh();
 				}
 			});
@@ -234,7 +234,7 @@ hui.ui.listen({
 				message : {start : 'Installerer værktøj',delay:300},
 				parameters : {key:data.key},
 				url : 'actions/InstallTool.php',
-				onSuccess : function() {
+				$success : function() {
 					list.refresh();
 				}
 			});
@@ -243,7 +243,7 @@ hui.ui.listen({
 				message : {start : 'Afinstallerer værktøj',delay:300},
 				parameters : {key:data.key},
 				url : 'actions/UninstallTool.php',
-				onSuccess : function() {
+				$success : function() {
 					list.refresh();
 				}
 			});
@@ -257,7 +257,7 @@ hui.ui.listen({
 			message : {start:'Rydder cache...',delay:300},
 			parameters : {type:info.button.getData().type},
 			url : 'actions/ClearCache.php',
-			onSuccess : function() {
+			$success : function() {
 				cachesList.refresh();
 			}
 		});

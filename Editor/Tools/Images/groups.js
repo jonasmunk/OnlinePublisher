@@ -26,7 +26,7 @@ hui.ui.listen({
 				json : {data:values},
 				url : 'actions/SaveGroup.php',
 				message : {start: {en:'Saving group...', da:'Gemmer gruppe...'},success:{en:'The group has been saved', da:'Gruppen er gemt'},delay:300},
-				onSuccess : function() {
+				$success : function() {
 					groupTitle.setText(values.title);
 					groupSource.refresh();
 					groupOptionsSource.refresh();
@@ -50,7 +50,7 @@ hui.ui.listen({
 		hui.ui.request({
 			parameters : {id:id},
 			url : '../../Services/Model/LoadObject.php',
-			onSuccess : 'loadGroup',
+			$success : 'loadGroup',
 			message : {start:{en:'Loading group...', da:'Åbner gruppe...'},delay:300}
 		});
 	},
@@ -66,7 +66,7 @@ hui.ui.listen({
 			message : {start: {en:'Deleting group...', da:'Sletter gruppe...'},success:{en:'The group has been deleted', da:'Gruppen er slettet'},delay:300},
 			json : {data:{id:this.groupId}},
 			url : '../../Services/Model/DeleteObject.php',
-			onSuccess : function() {
+			$success : function() {
 				selector.setValue('all')
 				groupSource.refresh();
 				groupOptionsSource.refresh();

@@ -8,7 +8,7 @@ var controller = {
 		hui.ui.request({
 			url : '../../Services/Model/PublishPage.php',
 			parameters : {id:this.pageId},
-			onSuccess : function() {
+			$success : function() {
 				publish.setEnabled(false);
 				hui.ui.tellContainers('pageChanged',this.pageId);
 			}.bind(this)

@@ -21,7 +21,7 @@ hui.ui.listen({
 	
 	$click$saveUI : function(value) {
 		var data = {'ui':uiFormula.getValues()};
-		hui.ui.request({json:{data:data},url:'actions/SaveSettings.php',onSuccess:function() {
+		hui.ui.request({json:{data:data},url:'actions/SaveSettings.php',$success:function() {
 			hui.ui.showMessage({text:'Gemt!',icon:'common/success',duration:2000})
 		}});
 	},
@@ -30,7 +30,7 @@ hui.ui.listen({
 	$click$saveOnlineObjects : function() {
 		saveOnlineObjects.setEnabled(false);
 		var data = {'onlineobjects':onlineobjectsFormula.getValues()};
-		hui.ui.request({json:{data:data},url:'actions/SaveSettings.php',onSuccess:'saveOnlineObjects'});
+		hui.ui.request({json:{data:data},url:'actions/SaveSettings.php',$success:'saveOnlineObjects'});
 	},
 	$success$saveOnlineObjects : function() {
 		saveOnlineObjects.setEnabled(true);
@@ -73,7 +73,7 @@ hui.ui.listen({
 	$click$saveEmail : function() {
 		saveEmail.setEnabled(false);
 		var data = {'email':emailFormula.getValues()};
-		hui.ui.request({json:{data:data},url:'actions/SaveSettings.php',onSuccess:'saveEmail'});
+		hui.ui.request({json:{data:data},url:'actions/SaveSettings.php',$success:'saveEmail'});
 	},
 	$success$saveEmail : function() {
 		saveEmail.setEnabled(true);
@@ -84,7 +84,7 @@ hui.ui.listen({
 	$click$testEmail : function() {
 		hui.ui.showMessage({text:'Sender e-mail...'});
 		var data = emailTestFormula.getValues();
-		hui.ui.request({json:{data:data},url:'actions/TestEmailSetup.php',onSuccess:'testEmail'});
+		hui.ui.request({json:{data:data},url:'actions/TestEmailSetup.php',$success:'testEmail'});
 	},
 	$success$testEmail : function(data) {
 		if (data.success) {

@@ -319,15 +319,15 @@ op.part.Formula.prototype = {
 		hui.ui.request({
 			url : url,
 			json : {data:data},
-			onSuccess : this._onSuccess.bind(this),
-			onFailure : this._onFailure.bind(this)
+			$success : this._success.bind(this),
+			$failure : this._failure.bind(this)
 		});
 	},
-	_onSuccess : function() {
+	_success : function() {
 		hui.ui.showMessage({text:'Beskeden er nu sendt',icon:'common/success',duration:2000});
 		this.element.reset();
 	},
-	_onFailure : function() {
+	_failure : function() {
 		hui.ui.showMessage({text:'Beskeden kunne desværre ikke afleveres',duration:5000});
 	}
 }
@@ -526,7 +526,7 @@ op.part.Movie.prototype = {
         if (poster) {
             var id = poster.getAttribute('data-id');
             if (id) {
-        		var x = window.devicePixelRatio==2 ? 2 : 1;
+        		var x = window.devicePixelRatio || 1;
         		var url = op.context + 'services/images/?id=' + id + '&width=' + (poster.clientWidth * x) + '&height=' + (poster.clientHeight * x);
                 poster.style.backgroundImage = 'url(' + url + ')';
             } else {

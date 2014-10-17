@@ -33,7 +33,7 @@ hui.ui.listen({
 			url : 'SaveUsage.php',
 			json : {data:data},
 			message : {start:'Gemmer aflæsning...',success:'Aflæsningen er gemt'},
-			onSuccess : 'usageUpdated',
+			$success : 'usageUpdated',
 			onFailure:function() {
 				hui.ui.showMessage({text:'Der skete desværre en fejl',icon:'common/warning',duration:4000});
 			}
@@ -96,7 +96,7 @@ hui.ui.listen({
 		hui.ui.request({
 			url : 'data/UpdateStatus.php',
 			parameters : {id:this._statusId,status:status},
-			onSuccess : function() {
+			$success : function() {
 				list.refresh();
 				filterSource.refresh();
 			}.bind(this)
@@ -116,7 +116,7 @@ hui.ui.listen({
 			message : {start : 'Åbner aflæsning...',delay:300},
 			json : {data:{id:id}},
 			url : 'LoadUsage.php',
-			onSuccess : 'loadUsage'
+			$success : 'loadUsage'
 		});
 
 	},
@@ -133,7 +133,7 @@ hui.ui.listen({
 			json : {data:{id:this.usageId}},
 			url : '../../Services/Model/DeleteObject.php',
 			message : {start:'Sletter aflæsning...',success:'Aflæsningen er slettet'},
-			onSuccess:'deleteUsage'
+			$success:'deleteUsage'
 		});
 	},
 	$success$deleteUsage : function() {
@@ -177,7 +177,7 @@ hui.ui.listen({
 			url:'SaveMeter.php',
 			json:{data:data},
 			message:{start:'Gemmer vandmåler',success:'Vandmåleren er gemt'},
-			onSuccess:function() {
+			$success:function() {
 				list.refresh();
 				meterFormula.reset();
 				meterWindow.hide();
@@ -214,7 +214,7 @@ hui.ui.listen({
 			onFailure : function() {
 				hui.ui.showMessage({text:'Der skete desværre en fejl',icon:'common/warning',duration:4000});
 			},
-			onSuccess : function() {
+			$success : function() {
 				saveMeter.setEnabled(true);
 			}
 		});
@@ -225,7 +225,7 @@ hui.ui.listen({
 			json:{data:{id:this.meterId}},
 			url:'DeleteMeter.php',
 			message : {start:'Sletter måler...',success:'Måleren er slettet'},
-			onSuccess:function() {
+			$success:function() {
 				list.refresh();
 				filterSource.refresh();
 				this.meterId = null;
@@ -264,7 +264,7 @@ hui.ui.listen({
 			json : {data:values},
 			url : 'SaveSubUsage.php',
 			message : {start:'Gemmer aflæsning...',success:'Informationen er gemt'},
-			onSuccess : function() {
+			$success : function() {
 				this._resetSubUsage();
 				subUsageList.refresh();
 			}.bind(this),
@@ -298,7 +298,7 @@ hui.ui.listen({
 			json : {data:{id:this.subUsageId}},
 			url : '../../Services/Model/DeleteObject.php',
 			message : {start:'Sletter aflæsning...',success:'Aflæsningen er slettet'},
-			onSuccess : function() {
+			$success : function() {
 				subUsageList.refresh();
 				this._resetSubUsage();
 			}.bind(this)

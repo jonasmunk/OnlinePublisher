@@ -63,7 +63,7 @@ hui.ui.listen({
 		hui.ui.showMessage({text:{en:'Fetching image...', da:'Henter billede...'},busy:true});
 		hui.ui.request({
 			url : 'actions/FetchImage.php',
-			onSuccess : 'imageFetched',
+			$success : 'imageFetched',
 			parameters : {url : url}
 		});
 	},

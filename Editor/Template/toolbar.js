@@ -8,7 +8,7 @@ var controller = {
 		window.parent.location='../Tools/Sites/';
 	},
 	$click$publish : function() {
-		hui.ui.request({url:'../Services/Model/PublishPage.php',parameters:{id:this.pageId},onSuccess:function() {
+		hui.ui.request({url:'../Services/Model/PublishPage.php',parameters:{id:this.pageId},$success:function() {
 			publish.disable();
 		}});
 	},

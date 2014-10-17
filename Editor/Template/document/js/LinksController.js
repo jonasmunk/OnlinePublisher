@@ -114,7 +114,7 @@ var linkController = {
 			url : 'data/SaveLink.php',
 			parameters : p,
 			message : {start:{en:'Inserting link...',da:'Indsætter link...'},delay:300},
-			onSuccess : function() {
+			$success : function() {
 				document.location='Editor.php';
 			}
 		});
@@ -214,7 +214,7 @@ var linkController = {
 			url : 'data/BindLinkToPart.php',
 			parameters : {linkId:this.clickedLinkInfo.id,partId:this.clickedLinkInfo.part},
 			message : {start:{en:'Saving link...',da:'Gemmer link...'},delay:300},
-			onSuccess : function() {
+			$success : function() {
 				document.location.reload();
 			}
 		});
@@ -234,7 +234,7 @@ var linkController = {
 			url : 'data/DeleteLink.php',
 			parameters : {id:id},
 			message : {start:{en:'Deleting link...',da:'Sletter link...'},delay:300},
-			onSuccess : function() {
+			$success : function() {
 				document.location.reload();
 			}
 		});

@@ -13,7 +13,7 @@ hui.ui.FlashChart.prototype = {
 	load : function(url) {
 		var self = this;
 		var flash = this.findSWF(this.element.id+'_chart');
-		new Ajax.Request(url,{onSuccess:function(t) {
+		hui.request({url:url,$success:function(t) {
 			flash.load(t.responseText);
 		}});
 	},

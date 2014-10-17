@@ -56,7 +56,7 @@ hui.ui.listen({
 				hui.ui.showMessage({text:'Det lykkedes desværre ikke at sende beskeden',icon:'common/warning',duration:3000})
 				sendFeedback.enable();
 			},
-			onSuccess : function() {
+			$success : function() {
 				feedbackForm.reset();
 				hui.ui.hideMessage();
 				sendFeedback.enable();
@@ -110,7 +110,7 @@ hui.ui.listen({
 				hui.ui.showMessage({text:'Det lykkedes desværre ikke at ændre kodeordet',icon:'common/warning',duration:3000})
 				submitPassword.enable();
 			},
-			onSuccess : function() {
+			$success : function() {
 				hui.ui.showMessage({text:'Kodeordet er nu ændret',icon:'common/success',duration:3000})
 				passwordFormula.reset();
 				submitPassword.enable();
@@ -126,7 +126,7 @@ hui.ui.listen({
 		hui.ui.request({
 			url : 'data/UpdateSettings.php',
 			parameters : values,
-			onSuccess : function() {
+			$success : function() {
 				if (window.parent) {
 					window.parent.location.reload();
 				} else {

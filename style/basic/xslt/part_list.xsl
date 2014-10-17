@@ -38,7 +38,7 @@
 				hui.request({
 					url:'<xsl:value-of select="$path"/>services/parts/render/',
 					parameters:{type:'list',id:id,synchronize:'true',pageId:op.page.id},
-					onSuccess : function(t) {
+					$success : function(t) {
 						node.parentNode.innerHTML = t.responseText;
 						hui.log('Finished list ('+id+')');
 					}

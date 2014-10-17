@@ -142,7 +142,7 @@ var mainController = {
 			message : { start : {en:'Deleting page...', da:'Sletter side...'}, delay : 300, success : {en:'The page has been deleted', da:'Siden er nu slettet'} },
 			url : 'actions/DeletePage.php',
 			parameters : { id : id },
-			onSuccess : function() {
+			$success : function() {
 				list.refresh();
 				selectionSource.refresh();
 			}
@@ -164,7 +164,7 @@ var mainController = {
 			message : {start:{en:'Changing language...', da:'Ændrer sprog...'},delay:300},
 			url : 'actions/ChangeLanguage.php',
 			json : {data : {id:dragged.id,language:dropped.value}},
-			onSuccess : function() {
+			$success : function() {
 				hui.ui.showMessage({text:{en:'The language is changed', da:'Sproget er ændret'},icon:'common/success',duration:2000});
 				list.refresh();
 				selectionSource.refresh();
@@ -178,7 +178,7 @@ var mainController = {
 		hui.ui.request({
 			message : {start : {en:'Loading page...', da:'Åbner side...'},delay:300},
 			url : 'data/LoadPage.php',
-			onSuccess : 'pageLoaded',
+			$success : 'pageLoaded',
 			parameters : {id:id}
 		});
 	},
@@ -209,7 +209,7 @@ var mainController = {
 			message : {start: {en:'Saving page..', da:'Gemmer side...'}, delay: 300, success: {en:'The page is saved', da:'Siden er gemt'}},
 			url : 'actions/SavePage.php',
 			json : {data:values},
-			onSuccess : function() {
+			$success : function() {
 				list.refresh();
 				selectionSource.refresh();			
 			}
@@ -247,7 +247,7 @@ var mainController = {
 				message : {start:{en:'Deleting translation...', da:'Sletter oversættelse...'},delay:300},
 				url : 'actions/DeletePageTranslation.php',
 				parameters : {id:info.row.id},
-				onSuccess : function() {
+				$success : function() {
 					pageTranslationList.refresh();
 					publishPage.enable();
 					list.refresh();
@@ -266,7 +266,7 @@ var mainController = {
 			message : {start:{en:'Adding translation...', da:'Tilføjer oversættelse...'},delay:300},
 			url : 'actions/AddPageTranslation.php',
 			parameters : {page:this.activePage,translation:row.id},
-			onSuccess : function() {
+			$success : function() {
 				pageTranslationList.refresh();
 				publishPage.enable();
 				list.refresh();
@@ -279,7 +279,7 @@ var mainController = {
 			message : {start:{en:'Publishing page...',da:'Udgiver side...'},delay:300},
 			url : '../../Services/Model/PublishPage.php',
 			parameters : {id:this.activePage},
-			onSuccess : function() {
+			$success : function() {
 				publishPage.disable();
 				list.refresh();
 			}
@@ -333,7 +333,7 @@ var mainController = {
 			hui.ui.request({
 				message : {start:{en:'Creating page', da:'Opretter side...'},delay:300},
 				url : 'actions/CreatePage.php',
-				onSuccess : 'pageCreated',
+				$success : 'pageCreated',
 				parameters : data
 			});
 		}

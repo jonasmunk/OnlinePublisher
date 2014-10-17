@@ -16,7 +16,7 @@ hui.ui.listen({
 					hui.ui.request({
 						url : 'data/DeleteLink.php',
 						parameters : {id:info.row.id},
-						onSuccess : function() {
+						$success : function() {
 							list.refresh();
 						}
 					});

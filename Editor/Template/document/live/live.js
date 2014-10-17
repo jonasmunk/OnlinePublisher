@@ -16,7 +16,7 @@ op.DocumentEditor = {
 			parameters : p,
 			message : {start:{en:'Moving...',da:'Flytter...'},delay:300},
 			$success : function() {
-				info.onSuccess();
+				info.$success();
 				op.Editor.signalChange();
 			}.bind(this)
 		})

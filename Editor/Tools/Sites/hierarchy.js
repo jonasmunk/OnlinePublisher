@@ -23,7 +23,7 @@ hui.ui.listen({
 				message : {start : {en:'Moving menu item...', da:'Flytter menupunkt...'},delay : 300},
 				url:'actions/MoveHierarchyItem.php',
 				parameters:{id:info.row.id,direction:info.data.direction},
-				onSuccess:function() {
+				$success:function() {
 					list.refresh();
 					selectionSource.refresh();
 					hui.ui.tellContainers('modelChanged');
@@ -96,7 +96,7 @@ hui.ui.listen({
 			message : {start:{en:'Saving hierarchy...',da:'Gemmer hierarki...'},delay:300},
 			json : {data:values},
 			url : 'actions/SaveHierarchy.php',
-			onSuccess : function() {
+			$success : function() {
 				list.refresh();
 				selectionSource.refresh();
 				hui.ui.showMessage({text:{en:'The hierarchy is saved', da:'Hierarkiet er gemt'},duration:2000,icon:'common/success'});
@@ -119,7 +119,7 @@ hui.ui.listen({
 			onFailure : function() {
 				hui.ui.showMessage({text : {en:'The hierarchy could not be deleted', da:'Hierarkiet kunne ikke slettes'},icon : 'common/warning',duration : 2000});
 			},
-			onSuccess : function() {
+			$success : function() {
 				list.refresh();
 				selectionSource.refresh();
 				hui.ui.showMessage({text : {en:'The hierarchy has been deleted', da:'Hierarkiet er slettet'},icon : 'common/success',duration : 2000});
@@ -176,7 +176,7 @@ hui.ui.listen({
 		hui.ui.request({
 			message : {start : {en:'Loading menu item...', da:'Åbner menupunkt...'},delay : 300},
 			url : 'data/LoadHierarchyItem.php',
-			onSuccess : 'hierarchyItemLoaded',
+			$success : 'hierarchyItemLoaded',
 			parameters : {id:id}
 		});
 	},
@@ -232,7 +232,7 @@ hui.ui.listen({
 			message : {start:{en:'Saving menu item...', da:'Gemmer menupunkt...'},delay:300},
 			json : {data:data},
 			url : 'actions/SaveHierarchyItem.php',
-			onSuccess : function() {
+			$success : function() {
 				list.refresh();
 				selectionSource.refresh();
 				hui.ui.showMessage({text:{en:'The menu item has been saved', da:'Menupunktet er gemt'},duration:2000,icon:'common/success'});
@@ -279,7 +279,7 @@ hui.ui.listen({
 			onFailure : function() {
 				hui.ui.showMessage({text : {en:'The menu item could not be deleted', da:'Menupunktet kunne ikke slettes'},icon : 'common/warning',duration : 2000});
 			},
-			onSuccess : function() {
+			$success : function() {
 				list.refresh();
 				selectionSource.refresh();
 				hui.ui.showMessage({text : {en:'The menu item has been deleted', da:'Menupunktet er slettet'},icon : 'common/success',duration : 2000});

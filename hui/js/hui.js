@@ -1541,7 +1541,7 @@ hui._onReady = function(delegate) {
  *  files : «HTML5-files»,
  *  parameters : {key : 'value'},
  *
- *  onSuccess : function(transport) {
+ *  $success : function(transport) {
  *    // when status is 200
  *  },
  *  onForbidden : function(transport) {
@@ -1574,8 +1574,8 @@ hui.request = function(options) {
 	transport.onreadystatechange = function() {
 		try {
 			if (transport.readyState == 4) {
-				if (transport.status == 200 && options.onSuccess) {
-					options.onSuccess(transport);
+				if (transport.status == 200 && options.$success) {
+					options.$success(transport);
 				} else if (transport.status == 403 && options.onForbidden) {
 					options.onForbidden(transport);
 				} else if (transport.status !== 0 && options.onFailure) {
@@ -1674,13 +1674,24 @@ hui.request.isXMLResponse = function(t) {
 hui.request._buildPostBody = function(parameters) {
 	if (!parameters) return null;
 	var output = '';
-	for (var param in parameters) {
-		if (output.length>0) output+='&';
-		output+=encodeURIComponent(param)+'=';
-		if (parameters[param]!==undefined && parameters[param]!==null) {
-			output+=encodeURIComponent(parameters[param]);
-		}
-	}
+    if (hui.isArray(parameters)) {
+        for (var i = 0; i < parameters.length; i++) {
+            var param = parameters[i];
+    		if (i > 0) {output += '&'};
+    		output+=encodeURIComponent(param.name)+'=';
+    		if (param.value!==undefined && param.value!==null) {
+    			output+=encodeURIComponent(param.value);
+    		}
+        }
+    } else {
+    	for (var param in parameters) {
+    		if (output.length > 0) {output += '&'};
+    		output+=encodeURIComponent(param)+'=';
+    		if (parameters[param]!==undefined && parameters[param]!==null) {
+    			output+=encodeURIComponent(parameters[param]);
+    		}
+    	}        
+    }
 	return output;
 }
 

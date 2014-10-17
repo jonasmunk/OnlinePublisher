@@ -21,7 +21,7 @@ var controller = {
 		hui.ui.request({
 			url : 'data/Save.php',
 			json : {data:values},
-			onSuccess : function(values) {
+			$success : function(values) {
 				window.parent.Toolbar.publish.enable();
 				hui.ui.showMessage({text:'Ændringerne er nu gemt',duration:2000});
 			}

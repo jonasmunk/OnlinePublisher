@@ -2,7 +2,7 @@ var controller = {
 	$ready : function() {
 		hui.ui.request({
 			url : document.location,
-			onSuccess : function(t) {
+			$success : function(t) {
 				code.setValue(t.responseText)
 			}
 		})

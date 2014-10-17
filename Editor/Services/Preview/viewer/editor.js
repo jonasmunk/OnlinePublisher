@@ -69,7 +69,7 @@ op.Editor = {
 			url : 'data/SavePageProperties.php',
 			parameters : values,
 			message : {start:this.language=='da' ? 'Gemmer info...' : 'Saving info...',delay:300},
-			onSuccess : function() {
+			$success : function() {
 				hui.ui.showMessage({text:this.language=='da' ? 'Informationen er gemt' : 'The information is saved',icon:'common/success',duration:2000});
 			}.bind(this)
 		});
@@ -112,7 +112,7 @@ op.Editor = {
 				hui.ui.request({
 					url : 'data/SaveDesignParameters.php',
 					parameters : {id:op.page.id,parameters:hui.string.toJSON(values)},
-					onSuccess : function() {
+					$success : function() {
 						hui.ui.showMessage({text:'Indstillingerne er gemt', duration:3000});
 						document.location.reload();
 					}

@@ -62,7 +62,7 @@ var rowsController = {
 			url : 'actions/UpdateRow.php',
 			parameters : values,
 			message : {start : {en:'Saving row...',da:'Gemmer række...'},delay:300},
-			onSuccess : function() {
+			$success : function() {
 				hui.ui.showMessage({text:{en:'The row is saved',da:'Rækken er gemt'},duration:2000,icon:'common/success'});
 				controller._markToolbarChanged();
 			}.bind(this)

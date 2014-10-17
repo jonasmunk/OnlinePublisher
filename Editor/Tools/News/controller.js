@@ -54,7 +54,7 @@ hui.ui.listen({
 			url : 'actions/AddNewsToGroup.php',
 			message : {start:{en:'Adding to group...', da:'Tilføjer til gruppe...'},delay:300,success:{en:'The news item has been added to the group',da:'Nyheden er blevet tilføjet til gruppen'}},
 			json : {data:{file:dragged.id,group:dropped.value}},
-			onSuccess : function() {
+			$success : function() {
 				newsSource.refresh();
 				groupSource.refresh();
 			}
@@ -70,7 +70,7 @@ hui.ui.listen({
 		}
 		hui.ui.request({
 			url : 'actions/DeleteNews.php',
-			onSuccess : 'fileDeleted',
+			$success : 'fileDeleted',
 			parameters : {id:obj.id},
 			message : {start:{en:'Deleting news item', da:'Sletter nyhed...'},delay:300}
 		});
@@ -95,7 +95,7 @@ hui.ui.listen({
 		var obj = list.getFirstSelection();
 		hui.ui.request({
 			url : 'data/LoadNews.php',
-			onSuccess : 'duplicateLoaded',
+			$success : 'duplicateLoaded',
 			parameters : {id:obj.id},
 			message : {start:{en:'Creating copy...',da:'Opretter kopi...'},delay:300}
 		});
@@ -125,7 +125,7 @@ hui.ui.listen({
 	loadNews : function(id) {
 		hui.ui.request({
 			url:'data/LoadNews.php',
-			onSuccess:'newsLoaded',
+			$success:'newsLoaded',
 			parameters:{id:id},
 			message:{start:{en:'Loading news item...',da:'Åbner nyhed...'},delay:300}
 		});
@@ -155,7 +155,7 @@ hui.ui.listen({
 		data.groups = newsGroups.getValue();
 		hui.ui.request({
 			url : 'actions/SaveNews.php',
-			onSuccess : 'newsUpdated',
+			$success : 'newsUpdated',
 			json : {data:data},
 			message : {start:{en:'Saving news item...',da:'Gemmer nyhed...'},delay:300}
 		});
@@ -170,7 +170,7 @@ hui.ui.listen({
 	$click$deleteNews : function() {
 		hui.ui.request({
 			url : 'actions/DeleteNews.php',
-			onSuccess : 'newsDeleted',
+			$success : 'newsDeleted',
 			parameters : {id:this.newsId},
 			message : {start:{en:'Deleting news item...',da:'Sletter nyhed...'},delay:300}
 		});
@@ -208,7 +208,7 @@ hui.ui.listen({
 			hui.ui.request({
 				json : {data:values},
 				url : 'actions/SaveGroup.php',
-				onSuccess : 'groupSaved',
+				$success : 'groupSaved',
 				message : {start:{en:'Saving group...',da:'Gemmer gruppe...'},delay:300}
 			});
 		}
@@ -235,7 +235,7 @@ hui.ui.listen({
 		hui.ui.request({
 			parameters:{id:id},
 			url:'../../Services/Model/LoadObject.php',
-			onSuccess:'loadGroup',
+			$success:'loadGroup',
 			message:{start:{en:'Loading group...',da:'Åbner gruppe...'},delay:300}
 		});
 	},
@@ -250,7 +250,7 @@ hui.ui.listen({
 		hui.ui.request({
 			json : {data:{id:this.groupId}},
 			url : '../../Services/Model/DeleteObject.php',
-			onSuccess : 'deleteGroup',
+			$success : 'deleteGroup',
 			message:{start:{en:'Deleting group...',da:'Sletter gruppe...'},delay:300}
 		});
 	},
@@ -297,7 +297,7 @@ hui.ui.listen({
 			json : {data:values},
 			url : 'actions/CreateArticle.php',
 			message : {start:{en:'Creating article',da:'Opretter artikel...'},success:{en:'The article has been created',da:'Artiklen er oprettet'}},
-			onSuccess : function() {
+			$success : function() {
 				articleFormula.reset();
 				newArticleBox.hide();
 				list.refresh();

@@ -166,7 +166,7 @@ var baseController = {
 			message : {start:'Gemmer note...',delay:300},
 			url : 'Services/Base/data/SaveIssue.php',
 			parameters : {id : this.issueId, text : values.text, kind : values.kind},
-			onSuccess : function() {
+			$success : function() {
 				list.refresh();
 			}
 		})
@@ -178,7 +178,7 @@ var baseController = {
 			message : {start:'Sletter note...',delay:300},
 			url : 'Services/Model/DeleteObject.php',
 			parameters : {id : this.issueId},
-			onSuccess : function() {
+			$success : function() {
 				list.refresh();
 			}.bind(this)
 		})

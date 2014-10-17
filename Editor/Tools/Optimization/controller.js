@@ -48,7 +48,7 @@ hui.ui.listen({
 						url : '../../Services/Model/DeleteObject.php',
 						message : {start:{en:'Deleting words...',da:'Sletter ord...'},delay:300,success:{en:'The word has been deleted',da:'Ordet er slettet'}},
 						parameters : {id:info.row.id},
-						onSuccess : function() {
+						$success : function() {
 							list.refresh();
 						}
 					})
@@ -66,7 +66,7 @@ hui.ui.listen({
 			url : 'actions/AddTestPhrase.php',
 			message : {start:{en:'Adding word...',da:'Tilføjer ord...'},delay:300,success:{en:'The word is added',da:'Ordet er tilføjet'}},
 			parameters : {word:word},
-			onSuccess : function() {
+			$success : function() {
 				list.refresh();
 				wordFormula.reset();
 				wordFormula.focus();
