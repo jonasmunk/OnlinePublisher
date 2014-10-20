@@ -891,8 +891,9 @@ hui.ui.List.prototype = {
 		if (a) {
 			var data = a.getAttribute('data');
 			if (data) {
-				this.fire('clickIcon',{row:this.rows[index],data:hui.string.fromJSON(data),node:a});
+				data = hui.string.fromJSON(data);
 			}
+			this.fire('clickIcon',{row:this.rows[index],data:data,node:a});
 		}
 	},
 	_onRowDown : function(index,event) {
