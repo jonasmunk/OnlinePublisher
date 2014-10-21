@@ -5,7 +5,7 @@ var controller = {
 		hui.ui.request({
 			url : 'data/Load.php',
 			parameters : {id:this.id},
-			onJSON : function(values) {
+			$object : function(values) {
 				formula.setValues(values);
 				formula.focus();
 			}.bind(this)
@@ -22,7 +22,7 @@ var controller = {
 		hui.ui.request({
 			url : 'data/Save.php',
 			parameters : values,
-			onJSON : function(obj) {
+			$object : function(obj) {
 				window.parent.frames[0].controller.markChanged();
 				hui.ui.showMessage({text:'Ændringerne er nu gemt'+(obj.valid ? ' (valid)' : ' (invalid)'),duration:2000});
 			}

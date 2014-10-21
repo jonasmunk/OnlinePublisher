@@ -1544,22 +1544,22 @@ hui._onReady = function(delegate) {
  *  $success : function(transport) {
  *    // when status is 200
  *  },
- *  onForbidden : function(transport) {
+ *  $forbidden : function(transport) {
  *    // when status is 403
  *  },
- *  onAbort : function(transport) {
+ *  $abort : function(transport) {
  *    // when request is aborted
  *  },
- *  onFailure : function(transport) {
- *    // when status is not 200 (if status is 403 and onForbidden is set then onFailure will not be called)
+ *  $failure : function(transport) {
+ *    // when status is not 200 (if status is 403 and $forbidden is set then $failure will not be called)
  *  },
- *  onException : function(exception,transport) {
+ *  $exception : function(exception,transport) {
  *    // When an exception has occurred while calling on«Something», If not set the exception will be thrown
  *  },
- *  onProgress : function(current,total) {
+ *  $progress : function(current,total) {
  *    // Progress for file uploads (maybe also other requests?)
  *  },
- *  onLoad : functon() {
+ *  $load : functon() {
  *    // When file upload is transfered?
  *  }
  *}
@@ -1576,12 +1576,12 @@ hui.request = function(options) {
 			if (transport.readyState == 4) {
 				if (transport.status == 200 && options.$success) {
 					options.$success(transport);
-				} else if (transport.status == 403 && options.onForbidden) {
-					options.onForbidden(transport);
-				} else if (transport.status !== 0 && options.onFailure) {
-					options.onFailure(transport);
-				} else if (transport.status == 0 && options.onAbort) {
-					options.onAbort(transport);
+				} else if (transport.status == 403 && options.$forbidden) {
+					options.$forbidden(transport);
+				} else if (transport.status !== 0 && options.$failure) {
+					options.$failure(transport);
+				} else if (transport.status == 0 && options.$abort) {
+					options.$abort(transport);
 				}
 				if (options['$finally']) {
 					options['$finally']();
@@ -1589,8 +1589,8 @@ hui.request = function(options) {
 			}
 			//hui.request._forget(transport);
 		} catch (e) {
-			if (options.onException) {
-				options.onException(e,transport)
+			if (options.$exception) {
+				options.$exception(e,transport)
 			} else {
 				throw e;
 			}
@@ -1613,15 +1613,14 @@ hui.request = function(options) {
 				}
 			}
 		}
-		var prog = options.onProgress || options.$progress;
-		if (prog) {
+		if (options.$progress) {
 			transport.upload.addEventListener("progress", function(e) {
-				prog(e.loaded,e.total);
+				options.$progress(e.loaded,e.total);
 			}, false);
 		}
-		if (options.onLoad) {
+		if (options.$load) {
 	        transport.upload.addEventListener("load", function(e) {
-				options.onLoad();
+				options.$load();
 			}, false); 
 		}
 	} else if (method=='POST' && options.files) {

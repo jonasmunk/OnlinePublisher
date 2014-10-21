@@ -23,7 +23,7 @@ hui.ui.listen({
 			parameters : {id:id},
 			url : 'data/LoadFrame.php',
 			message : {start:{en:'Loading setup...', da:'Åbner opsætning...'},delay:300},
-			onJSON : function(data) {
+			$object : function(data) {
 				frameFormula.setValues(data.frame);
 				searchFormula.setValues({
 					enabled : data.frame.searchEnabled,

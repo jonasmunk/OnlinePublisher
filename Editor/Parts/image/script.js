@@ -56,7 +56,7 @@ var partController = {
 	$uploadDidCompleteQueue$imageUpload : function() {
 		hui.ui.request({
 			'url' : '../../Parts/image/UploadStatus.php',
-			onJSON : function(status) {
+			$object : function(status) {
 				if (status.id) {
 					document.forms.PartForm.imageId.value = status.id;
 					this.preview();
@@ -93,7 +93,7 @@ var partController = {
 		hui.ui.request({
 			url : '../../Parts/image/Fetch.php',
 			parameters : {url:url},
-			onJSON : function(status) {
+			$object : function(status) {
 				if (status.success) {
 					urlForm.reset();
 					urlForm.focus();
@@ -147,10 +147,10 @@ var partController = {
 		hui.ui.request({
 			url : '../../Services/Images/Create.php',
 			parameters : {data:data,title:hui.ui.language=='da' ? 'Udklipsholder' : 'Clipboard'},
-			onFailure : function() {
+			$failure : function() {
 				hui.ui.showMessage({text:{en:'It was not possible to create an image from the clipboard',da:'Det lykkedes ikke at lave et billede fra udklipsholderen'},icon:'common/warning',duration:2000});
 			},
-			onJSON : function(response) {
+			$object : function(response) {
 				hui.ui.showMessage({text:{en:'The image has been inserted',da:'Billedet er nu indsat'},icon:'common/success',duration:2000});
 				document.forms.PartForm.imageId.value = response.id;
 				this.preview();

@@ -52,7 +52,7 @@ hui.ui.listen({
 		hui.ui.request({
 			url : 'data/SendFeedback.php',
 			parameters : values,
-			onFailure : function() {
+			$failure : function() {
 				hui.ui.showMessage({text:'Det lykkedes desværre ikke at sende beskeden',icon:'common/warning',duration:3000})
 				sendFeedback.enable();
 			},
@@ -106,7 +106,7 @@ hui.ui.listen({
 		hui.ui.request({
 			url : 'data/ChangePassword.php',
 			parameters : values,
-			onFailure : function() {
+			$failure : function() {
 				hui.ui.showMessage({text:'Det lykkedes desværre ikke at ændre kodeordet',icon:'common/warning',duration:3000})
 				submitPassword.enable();
 			},

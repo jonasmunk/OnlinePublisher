@@ -13,7 +13,7 @@ hui.ui.listen({
 			message : {start : 'Åbner site...',delay:300},
 			url : '../../Services/Model/LoadObject.php',
 			parameters : {id:id},
-			onJSON : function(data) {
+			$object : function(data) {
 				this.siteId = id;
 				siteFormula.setValues(data);
 				siteWindow.show();

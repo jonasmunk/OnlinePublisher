@@ -33,7 +33,7 @@ hui.ui.listen({
 		hui.ui.request({
 			url : 'data/Reconstruct.php',
 			parameters : {id : item.value},
-			onJSON : function(obj) {
+			$object : function(obj) {
 				if (obj.success) {
 					window.parent.location='../../Template/Edit.php';
 				} else {
@@ -54,7 +54,7 @@ hui.ui.listen({
 			message : {start:'Henter beskrivelse',delay:300},
 			url : 'data/LoadMessage.php',
 			parameters : {id: this.messageId},
-			onJSON : function(obj) {
+			$object : function(obj) {
 				messageFormula.setValues(obj);
 				messagePanel.position(info.node);
 				messagePanel.show();

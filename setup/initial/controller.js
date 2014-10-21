@@ -38,7 +38,7 @@ hui.ui.listen({
 		hui.ui.request({
 			url:'Build.php',
 			parameters:values,
-			onJSON : function(result) {
+			$object : function(result) {
 				if (result.failure) {
 					hui.ui.showMessage({text:result.failure,duration:2000,icon:'common/warning'});
 				} else {
@@ -46,7 +46,7 @@ hui.ui.listen({
 					window.setTimeout(function() {document.location='../../'},3000);
 				}
 			},
-			onFailure:function() {
+			$failure:function() {
 				hui.ui.showMessage({text:'An unexpected occurred :-(',duration:2000});
 			}
 		});
@@ -56,7 +56,7 @@ hui.ui.listen({
 		hui.ui.request({
 			url:'TestDatabase.php',
 			parameters:values,
-			onJSON:function(result) {
+			$object:function(result) {
 				hui.log(result);
 				if (!result.server) {
 					hui.ui.showMessage({text:'Unable to connect to host',duration:4000,icon:'common/warning'});
@@ -66,7 +66,7 @@ hui.ui.listen({
 					hui.ui.showMessage({text:'Database connection verified :-)',duration:2000,icon:'common/success'});
 				}
 			},
-			onFailure:function() {
+			$failure:function() {
 				hui.ui.showMessage({text:'An error occurred when testing connection :-(',duration:2000});
 			}
 		})
@@ -82,7 +82,7 @@ hui.ui.listen({
 		hui.ui.request({
 			url : 'PreviewConfiguration.php',
 			parameters : values,
-			onJSON : function(result) {
+			$object : function(result) {
 				preview.setValue(result.config);
 				this.previewing = false;
 				if (this.prendingPreview) {
@@ -90,7 +90,7 @@ hui.ui.listen({
 					this.$valuesChanged$formula();
 				}
 			}.bind(this),
-			onFailure:function() {
+			$failure:function() {
 				hui.ui.showMessage({text:'An error occurred when building preview',duration:2000});
 				this.previewing = false;
 			}.bind(this)

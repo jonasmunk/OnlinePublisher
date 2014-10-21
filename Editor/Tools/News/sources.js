@@ -13,7 +13,7 @@ hui.ui.listen({
 		hui.ui.request({
 			parameters : {id:id},
 			url : '../../Services/Model/LoadObject.php',
-			onJSON : function(obj) {
+			$object : function(obj) {
 				sourceText.setText((hui.ui.language=='da' ? ' - synkroniseret: ' : ' - synchronized: ')+new Date(obj.synchronized*1000));
 			}
 		});

@@ -48,10 +48,10 @@ op.part.utils = {
 					this.pendingUpdateOptions = null;
 				}
 			}.bind(this),
-			onFailure:function(e) {
+			$failure:function(e) {
 				hui.log(e);
 			},
-			onException:function(e) {
+			$exception:function(e) {
 				hui.log(e);
 				throw e;
 			}

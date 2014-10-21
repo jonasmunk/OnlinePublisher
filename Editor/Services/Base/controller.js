@@ -21,7 +21,7 @@ var baseController = {
 		hui.log('Fetching status');
 		hui.ui.request({
 			url : 'Services/Base/data/Status.php',
-			onJSON : function(obj) {
+			$object : function(obj) {
 				hui.log(obj);
 				if (window['editToolbar']) {
 					editToolbar.getByKey('service:publish').setBadge(obj.unpublished || null);
@@ -151,7 +151,7 @@ var baseController = {
 			message : {start:'Henter note...',delay:300},
 			url : 'Services/Model/LoadObject.php',
 			parameters : {id:id},
-			onJSON : function(obj) {
+			$object : function(obj) {
 				this.issueId = id;
 				issueFormula.setValues({text:obj.note,kind:obj.kind});
 				saveIssue.setEnabled(true);

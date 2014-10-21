@@ -54,7 +54,7 @@ op.Editor = {
 			url : 'data/LoadPageProperties.php',
 			parameters : {id:op.page.id},
 			message : {start:language=='da' ? 'Henter info...' : 'Loading info...',delay:300},
-			onJSON : function(obj) {
+			$object : function(obj) {
 				this.propertiesFormula.setValues(obj);
 				this.propertiesWindow.show();
 			}.bind(this)
@@ -89,7 +89,7 @@ op.Editor = {
 				url : 'data/LoadDesignInfo.php',
 				parameters : {id:op.page.id},
 				message : {start:'Henter design info...',delay:300},
-				onJSON : function(parameters) {
+				$object : function(parameters) {
 					if (parameters.length>0) {
 						this._buildDesignForm(parameters);
 						this.designWindow.show();

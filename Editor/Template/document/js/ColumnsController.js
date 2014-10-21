@@ -17,7 +17,7 @@ var columnsController = {
 			message : {start : {en:'Loading column...',da:'Åbner kolonne...'},delay:300},
 			url : 'data/LoadColumn.php',
 			parameters : { id : this.editedColumn.id },
-			onJSON : function(obj) {
+			$object : function(obj) {
 				var values = {preset:'dynamic',width:'',left:obj.left,right:obj.right,top:obj.top,bottom:obj.bottom};
 				if (obj.width=='min') {
 					values.preset='min';

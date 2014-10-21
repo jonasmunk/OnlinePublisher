@@ -106,7 +106,7 @@ hui.ui.listen({
 			json : {data:{id:id}},
 			message : {start:{en:'Loading mailing list...',da:'Henter postliste...'},delay:300},
 			url : '../../Services/Model/LoadObject.php',
-			onJSON : function(data) {
+			$object : function(data) {
 				this.mailinglistId = data.id;
 				mailinglistTitle.setValue(data.title);
 				mailinglistNote.setValue(data.note);
@@ -267,7 +267,7 @@ hui.ui.listen({
 			json : {data:{id:id}},
 			message : {start:{en:'Loading group...',da:'Henter gruppe...'},delay:300},
 			url : '../../Services/Model/LoadObject.php',
-			onJSON : function(data) {
+			$object : function(data) {
 				this.groupId = data.id;
 				groupTitle.setValue(data.title);
 				groupNote.setValue(data.note);
@@ -331,7 +331,7 @@ hui.ui.listen({
 		hui.ui.request({
 			json : {data:data},
 			url : 'data/GetMailinglistEmails.php',
-			onJSON : function(data) {
+			$object : function(data) {
 				hui.log(data)
 				var mails = []
 				for (var i=0; i < data.length; i++) {

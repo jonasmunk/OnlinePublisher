@@ -34,7 +34,7 @@ hui.ui.listen({
 			json : {data:data},
 			message : {start:'Gemmer aflæsning...',success:'Aflæsningen er gemt'},
 			$success : 'usageUpdated',
-			onFailure:function() {
+			$failure:function() {
 				hui.ui.showMessage({text:'Der skete desværre en fejl',icon:'common/warning',duration:4000});
 			}
 		});
@@ -189,7 +189,7 @@ hui.ui.listen({
 			json:{data:{id:id}},
 			url:'LoadSummary.php',
 			message:{start:'Åbner måler...',delay:300},
-			onJSON:function(data) {
+			$object:function(data) {
 				this.meterId = id;
 				subUsageList.clear();
 				summaryFormula.reset();
@@ -211,7 +211,7 @@ hui.ui.listen({
 			json : {data:values},
 			url : 'data/SaveSummary.php',
 			message : {start:'Gemmer information',success:'Informationen er gemt'},
-			onFailure : function() {
+			$failure : function() {
 				hui.ui.showMessage({text:'Der skete desværre en fejl',icon:'common/warning',duration:4000});
 			},
 			$success : function() {
@@ -268,7 +268,7 @@ hui.ui.listen({
 				this._resetSubUsage();
 				subUsageList.refresh();
 			}.bind(this),
-			onFailure:function() {
+			$failure:function() {
 				hui.ui.showMessage({text:'Der skete desværre en fejl',icon:'common/warning',duration:4000});
 			}
 		});
@@ -283,7 +283,7 @@ hui.ui.listen({
 			json : {data:{id:obj.id}},
 			url : '../../Services/Model/LoadObject.php',
 			message : {start:'Åbner aflæsning...',delay:300},
-			onJSON : function(data) {
+			$object : function(data) {
 				hui.ui.hideMessage();
 				this.subUsageId = data.id;
 				subUsageFormula.setValues(data);

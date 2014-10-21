@@ -53,7 +53,7 @@ var partController = {
 	$uploadDidCompleteQueue$fileUpload : function() {
 		hui.ui.request({
 			'url' : '../../Parts/file/UploadStatus.php',
-			onJSON : function(status) {
+			$object : function(status) {
 				if (status.id) {
 					document.forms.PartForm.fileId.value = status.id;
 					this.preview();

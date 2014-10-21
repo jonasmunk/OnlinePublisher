@@ -588,7 +588,7 @@ hui.ui.Editor.prototype = {
 						}
 						this._cleanDrag();
 					}.bind(this),
-					onFailure : function() {
+					$failure : function() {
 						this._cleanDrag();
 					}.bind(this)
 				});

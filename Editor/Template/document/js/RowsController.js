@@ -18,7 +18,7 @@ var rowsController = {
 			message : {start : {en:'Loading row...',da:'Åbner række...'},delay:300},
 			url : 'data/LoadRow.php',
 			parameters : { id : rowId },
-			onJSON : function(obj) {
+			$object : function(obj) {
 				rowWindow.show();
 				rowFormula.setValues(obj);				
 				return;

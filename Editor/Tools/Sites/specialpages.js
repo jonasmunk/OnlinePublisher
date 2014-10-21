@@ -20,7 +20,7 @@ hui.ui.listen({
 			parameters : {id:id},
 			url : 'data/LoadSpecialPage.php',
 			message : {start:{en:'Loading special page...', da:'Åbner speciel side...'},delay:300},
-			onJSON : function(data) {
+			$object : function(data) {
 				specialPageFormula.setValues(data);
 				specialPageWindow.show();
 				deleteSpecialPage.setEnabled(true);

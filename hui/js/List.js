@@ -286,8 +286,8 @@ hui.ui.List.prototype = {
 		this._setBusy(true);
 		hui.ui.request({
 			url:url,
-			onJSON : function(obj) {this._setBusy(false);this.$objectsLoaded(obj)}.bind(this),
-			onXML : function(obj) {this._setBusy(false);this.$listLoaded(obj)}.bind(this)
+			$object : function(obj) {this._setBusy(false);this.$objectsLoaded(obj)}.bind(this),
+			$xml : function(obj) {this._setBusy(false);this.$listLoaded(obj)}.bind(this)
 		});
 	},
 	/** @private */

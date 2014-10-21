@@ -20,7 +20,7 @@ var controller = {
 			url : 'Services/Core/ChangePassword.php',
 			$success : 'change',
 			parameters : {key:this.key,password:values.password1},
-			onFailure : function() {
+			$failure : function() {
 				hui.ui.showMessage({text:{en:'An internal error occurred',da:'Der skete en fejl internt i systemet'},duration:2000});
 				change.enable();
 			}

@@ -71,7 +71,7 @@ hui.ui.listen({
 		var value = selector.getValue();
 		if (value.kind=='calendarsource') {
 			hui.ui.showMessage({text:{en:'Synchronizing source...',da:'Synkroniserer kilde...'}});
-			hui.ui.request({url:'actions/SyncCalendarSource.php',$success:'synchronizeSource',onFailure:'synchronizeSource',parameters:{id:value.value}});
+			hui.ui.request({url:'actions/SyncCalendarSource.php',$success:'synchronizeSource',$failure:'synchronizeSource',parameters:{id:value.value}});
 		}
 	},
 	$success$synchronizeSource : function() {

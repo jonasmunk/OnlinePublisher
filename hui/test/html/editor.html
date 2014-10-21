@@ -46,7 +46,7 @@
 					window.setTimeout(function() {
 						if (hui.cls.has(info.dragged,'nodrag')) {
 							hui.ui.showMessage({text:'I could not move it',duration:2000});
-							info.onFailure()
+							info.$failure()
 						} else {
 							hui.ui.hideMessage();
 							info.$success();

@@ -44,7 +44,7 @@
 		<script type="text/javascript">
 		hui.ui.request({
 			url : '../info/icons.json',
-			onJSON : function(obj) {
+			$object : function(obj) {
 				var body = document.body;
 				for (group in obj) {
 					if (group=='overlay') continue

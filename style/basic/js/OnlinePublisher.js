@@ -156,7 +156,7 @@ op.login = function(username,password) {
 		message : {start:{en:'Logging in...',da:'Logger ind...'},delay:300},
 		url : op.context+'Editor/Services/Core/Authentication.php',
 		parameters : {username:username,password:password},
-		onJSON : function(response) {
+		$object : function(response) {
 			if (response.success) {
 				hui.ui.showMessage({text:{en:'You are now logged in',da:'Du er nu logget ind'},icon:'common/success',duration:4000});
 				op.igniteEditor();
@@ -164,7 +164,7 @@ op.login = function(username,password) {
 				hui.ui.showMessage({text:{en:'The user was not found',da:'Brugeren blev ikke fundet'},icon:'common/warning',duration:4000});
 			}
 		},
-		onFailure : function() {
+		$failure : function() {
 			hui.ui.showMessage({text:{en:'An internal error occurred',da:'Der skete en fejl internt i systemet'},icon:'common/warning',duration:4000});
 		}
 	});

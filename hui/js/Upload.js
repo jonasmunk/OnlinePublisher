@@ -185,13 +185,13 @@ hui.ui.Upload.prototype = {
 			file : file,
 			url : this.options.url,
 			parameters : this.options.parameters,
-			onProgress : function(current,total) {
+			$progress : function(current,total) {
 				item.updateProgress(current,total);
 			},
-			onLoad : function() {
+			$load : function() {
 				hui.log('transferFile: load');
 			},
-			onAbort : function() {
+			$abort : function() {
 				this.$_itemFail(item);
 				item.setError('Afbrudt')
 			}.bind(this),
@@ -200,7 +200,7 @@ hui.ui.Upload.prototype = {
 				item.data.request = t;
 				this.$_itemSuccess(item);
 			}.bind(this),
-			onFailure : function() {
+			$failure : function() {
 				hui.log('transferFile: fail');
 				this.$_itemFail(item);
 			}.bind(this)

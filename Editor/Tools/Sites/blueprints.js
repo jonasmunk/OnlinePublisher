@@ -21,7 +21,7 @@ hui.ui.listen({
 			json : {data:data},
 			url : '../../Services/Model/LoadObject.php',
 			message : {start:{en:'Loading template...', da:'Åbner skabelon...'},delay:300},
-			onJSON : function(data) {
+			$object : function(data) {
 				blueprintFormula.setValues(data);
 				blueprintWindow.show();
 				deleteBlueprint.setEnabled(true);

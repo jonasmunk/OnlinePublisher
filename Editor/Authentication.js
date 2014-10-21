@@ -66,7 +66,7 @@ var controller = {
 			url:'Services/Core/Authentication.php',
 			$success: 'login',
 			parameters : values,
-			onFailure:function() {
+			$failure:function() {
 				hui.ui.showMessage({text:{en:'An internal error occurred',da:'Der skete en fejl internt i systemet'},icon:'common/warning',duration:4000});
 				this._enableLogin();
 			}.bind(this)
@@ -106,7 +106,7 @@ var controller = {
 			url : 'Services/Core/RecoverPassword.php',
 		$success : 'recovery',
 			parameters : {text:text},
-			onFailure : function() {
+			$failure : function() {
 				hui.ui.showMessage({text:{en:'An internal error occurred',da:'Der skete en fejl internt i systemet'},icon:'common/warning',duration:4000});
 			}
 		});
@@ -137,14 +137,14 @@ var controller = {
 		hui.ui.request({
 			url : 'Services/Core/UpdateDatabase.php',
 			parameters : values,
-			onFailure : function() {
+			$failure : function() {
 				hui.ui.showMessage({text:{en:'An internal error occurred',da:'Der skete en fejl internt i systemet'},icon:'common/warning',duration:4000});
 			},
-			onForbidden : function() {
+			$forbidden : function() {
 				hui.ui.showMessage({text:{en:'The username or password is incorrect',da:'Bruger eller kode er ikke korrekt'},icon:'common/warning',duration:4000});
 				form.focus();
 			},
-			onJSON : function(response) {
+			$object : function(response) {
 				databaseLog.setValue(response.log);
 				databaseLogWindow.show();
 				if (!response.updated) {
@@ -175,13 +175,14 @@ var controller = {
 		hui.ui.request({
 			url : 'Services/Core/CreateAdministrator.php',
 			parameters : values,
-			onFailure : function() {
+			$failure : function() {
 				hui.ui.showMessage({text:{en:'An internal error occurred',da:'Der skete en fejl internt i systemet'},icon:'common/warning',duration:4000});
 			},
-			onForbidden : function() {
+			$forbidden : function() {
 				hui.ui.showMessage({text:{en:'The username or password is incorrect',da:'Bruger eller kode er ikke korrekt'},icon:'common/warning',duration:4000});
 				form.focus();
-			$successuccess : function(response) {
+      },
+			$success : function(response) {
 				hui.ui.showMessage({text:{en:'The administrator has been created',da:'Administratoren er nu oprettet'},icon:'common/success',duration:4000});
 				form.reset();
 				adminWindow.hide();

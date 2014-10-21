@@ -64,7 +64,7 @@ op.WeblogTemplate = {
 				var data = hui.string.fromJSON(t.responseText);
 				this.editEntry(data);
 			}.bind(this),
-			onException : function(t,e) {
+			$exception : function(t,e) {
 				hui.log(e);
 			}.bind(this)
 		});

@@ -204,7 +204,7 @@ hui.ui.listen({
 			url : 'data/LoadImage.php',
 			parameters : {id:id},
 			message : {start:{en:'Loading image...',da:'Åbner billede...'},delay:300},
-			onJSON : function(data) {
+			$object : function(data) {
 				this.imageId = id;
 				imageFormula.setValues(data.image);
 				imageGroups.setValue(data.groups);

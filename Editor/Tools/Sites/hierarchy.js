@@ -80,7 +80,7 @@ hui.ui.listen({
 			message : {start : {en:'Loading hierarchy...',da:'Åbner hierarki...'},delay : 300},
 			url : 'data/LoadHierarchy.php',
 			parameters : {id:id},
-			onJSON : function(data) {
+			$object : function(data) {
 				this.activeHierarchy = data.id;
 				hierarchyFormula.setValues(data);
 				hierarchyEditor.show();
@@ -116,7 +116,7 @@ hui.ui.listen({
 			message : {start : {en:'Deleting hierarchy...', da:'Sletter hierarki...'},delay : 300},
 			url : 'actions/DeleteHierarchy.php',
 			parameters : {id : this.activeHierarchy},
-			onFailure : function() {
+			$failure : function() {
 				hui.ui.showMessage({text : {en:'The hierarchy could not be deleted', da:'Hierarkiet kunne ikke slettes'},icon : 'common/warning',duration : 2000});
 			},
 			$success : function() {
@@ -143,7 +143,7 @@ hui.ui.listen({
 			message : {start : {en:'Moving menu item...', da:'Flytter menupunkt...'},delay : 300},
 			url : 'actions/RelocateHierarchyItem.php',
 			parameters : parameters,
-			onJSON : function(response) {
+			$object : function(response) {
 				if (response.success) {
 					list.refresh();
 					selectionSource.refresh();
@@ -276,7 +276,7 @@ hui.ui.listen({
 			message : {start : {en:'Deleting menu item...', da:'Sletter menupunkt...'},delay : 300},
 			url : 'actions/DeleteHierarchyItem.php',
 			parameters : {id : id},
-			onFailure : function() {
+			$failure : function() {
 				hui.ui.showMessage({text : {en:'The menu item could not be deleted', da:'Menupunktet kunne ikke slettes'},icon : 'common/warning',duration : 2000});
 			},
 			$success : function() {

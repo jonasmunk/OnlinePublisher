@@ -128,7 +128,7 @@ var linkController = {
 			url : 'data/LoadLink.php',
 			parameters : {id:id},
 			message : {start:{en:'Loading link...',da:'Henter link...'},delay:300},
-			onJSON : function(obj) {
+			$object : function(obj) {
 				this.linkId = obj.id;
 				if (obj.partId) {
 					this.linkPartId = obj.partId;
@@ -178,7 +178,7 @@ var linkController = {
 		hui.ui.request({
 			url : 'data/LoadLinkInfo.php',
 			parameters : {id:info.id},
-			onJSON : function(obj) {
+			$object : function(obj) {
 				this.panelLinkInfo = obj;
 				linkInfo.setContent(obj.rendering);
 				linkPanel.position(info.node);

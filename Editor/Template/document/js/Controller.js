@@ -230,7 +230,7 @@ var controller = {
 					column : this.menuInfo.columnId,
 					index : this.menuInfo.sectionIndex
 				},
-				onJSON : function(obj) {
+				$object : function(obj) {
 					document.location = 'Editor.php';//'Editor.php?section='+obj.sectionId;
 				},
 				$failure : function() {
@@ -248,7 +248,7 @@ var controller = {
 				column : this.menuInfo.columnId,
 				index : this.menuInfo.sectionIndex
 			},
-			onJSON : function(obj) {
+			$object : function(obj) {
 				document.location = 'Editor.php?section='+obj.sectionId;
 			}
 		})

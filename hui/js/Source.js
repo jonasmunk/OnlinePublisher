@@ -108,17 +108,17 @@ hui.ui.Source.prototype = {
 				url : this.options.url,
 				parameters : prms,
 				$success : this.parse.bind(this),
-				onException : function(e,t) {
+				$exception : function(e,t) {
 					hui.log('Exception while loading source...')
 					hui.log(e)
 					self.end();
 				},
-				onForbidden : function() {
+				$forbidden : function() {
 					hui.ui.handleForbidden(self);
 					hui.ui.callDelegates(self,'sourceFailed');
 					self.end();
 				},
-				onFailure : function(t) {
+				$failure : function(t) {
 					hui.log('sourceFailed');
 					hui.ui.callDelegates(self,'sourceFailed');
 					self.end();

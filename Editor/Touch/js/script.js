@@ -109,7 +109,7 @@ hui.ui.listen({
 	_reloadList : function() {
 		hui.ui.request({
 			url : 'data/list_pages.php',
-			onJSON : function(list) {
+			$object : function(list) {
 				var c = hui.get('list');
 				hui.each(list,function(item) {
 					var li = hui.build('li',{text:item.title,parent:c});

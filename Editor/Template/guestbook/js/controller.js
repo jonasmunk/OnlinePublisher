@@ -5,7 +5,7 @@ var controller = {
 		hui.ui.request({
 			url : 'data/Load.php',
 			parameters : {id:this.id},
-			onJSON : function(values) {
+			$object : function(values) {
 				formula.setValues(values);
 				formula.focus();
 			}.bind(this)
