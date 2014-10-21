@@ -62,7 +62,7 @@ hui.ui.listen({
 				success : {en:'The person has been added to the group',da:'Personen er blevet tilføjet til gruppen'}
 			},
 			url : 'actions/AddPersonToGroup.php',
-			onSuccess : function() {
+			$success : function() {
 				personGroupSource.refresh();
 				list.refresh();
 			}
@@ -132,7 +132,7 @@ hui.ui.listen({
 			message : {start:{en:'Saving mailinglist...',da:'Gemmer postliste...'},delay:300},
 			json : {data:data},
 			url : 'actions/SaveMailinglist.php',
-			onSuccess : function() {
+			$success : function() {
 				mailinglistSource.refresh();
 				list.refresh();
 			}
@@ -146,7 +146,7 @@ hui.ui.listen({
 			message : {start:{en:'Deleting mailing list...',da:'Sletter postliste...',delay:300}},
 			json : {data:{id:this.mailinglistId}},
 			url : '../../Services/Model/DeleteObject.php',
-			onSuccess : function() {
+			$success : function() {
 				mailinglistSource.refresh();
 				list.refresh();				
 			}
@@ -169,7 +169,7 @@ hui.ui.listen({
 			message : {start:{en:'Loading person...',da:'Henter person...'},delay:300},
 			json : {data:{id:id}},
 			url : 'data/LoadPerson.php',
-			onSuccess : 'loadPerson'
+			$success : 'loadPerson'
 		});
 	},
 
@@ -203,7 +203,7 @@ hui.ui.listen({
 			json : {data:data},
 			message : {start:{en:'Saving person...',da:'Gemmer person...'},delay:300},
 			url : 'actions/SavePerson.php',
-			onSuccess : function() {
+			$success : function() {
 				list.refresh();
 			}
 		});
@@ -244,7 +244,7 @@ hui.ui.listen({
 			message : {start:{en:'Deleting person...',da:'Sletter person...'},delay:300},
 			json : {data:{id:this.personId}},
 			url : '../../Services/Model/DeleteObject.php',
-			onSuccess : function() {
+			$success : function() {
 				list.refresh();
 			}
 		});
@@ -293,7 +293,7 @@ hui.ui.listen({
 			json : {data:data},
 			message : {start:{en:'Saving group...',da:'Gemmer gruppe...',delay:300}},
 			url : 'actions/SaveGroup.php',
-			onSuccess : function() {
+			$success : function() {
 				personGroupSource.refresh();
 				list.refresh();
 				personGroups.refresh();
@@ -308,7 +308,7 @@ hui.ui.listen({
 			message : {start:{en:'Deleting group...',da:'Sletter gruppe...'},delay:300},
 			json : {data:{id:this.groupId}},
 			url : '../../Services/Model/DeleteObject.php',
-			onSuccess : function() {
+			$success : function() {
 				personGroupSource.refresh();
 				list.refresh();
 			}

@@ -49,7 +49,7 @@ op.WeblogTemplate = {
 		hui.ui.request({
 			url: op.page.pagePath,
 			parameters:parms,
-			onSuccess: function(transport) {
+			$success: function(transport) {
 		    	document.location.reload();
 			}
 		});
@@ -60,7 +60,7 @@ op.WeblogTemplate = {
 			url : op.page.pagePath,
 			method : 'post',
 			parameters : parms,
-			onSuccess : function(t) {
+			$success : function(t) {
 				var data = hui.string.fromJSON(t.responseText);
 				this.editEntry(data);
 			}.bind(this),
@@ -80,7 +80,7 @@ op.WeblogTemplate = {
 				hui.ui.request({
 					url : op.page.pagePath,
 					parameters:parms,
-					onSuccess: function(t) {
+					$success: function(t) {
 				    	document.location.reload();
 					}
 				});
@@ -128,7 +128,7 @@ op.WeblogTemplate = {
 		hui.ui.request({
 			url : op.page.pagePath,
 			parameters : parms,
-			onSuccess : function(transport) {
+			$success : function(transport) {
 				this.editBox.hide();
 		    	window.setTimeout(function() {document.location.reload()},500);
 			}.bind(this)

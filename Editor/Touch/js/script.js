@@ -123,7 +123,7 @@ hui.ui.listen({
 	loadPage : function(id) {
 		hui.ui.request({
 			url : 'data/page_contents.php?id='+id+'&content=true',
-			onSuccess : function(t) {
+			$success : function(t) {
 				hui.get('container').innerHTML = t.responseText;
 			}
 		})

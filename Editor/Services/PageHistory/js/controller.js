@@ -73,7 +73,7 @@ hui.ui.listen({
 			message : {start:'Gemmer beskrivelse',delay:300},
 			url : 'data/UpdateMessage.php',
 			parameters : {message : values.message, id: this.messageId},
-			onSuccess : function() {
+			$success : function() {
 				list.refresh();
 			}
 		})

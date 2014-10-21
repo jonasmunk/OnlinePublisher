@@ -2171,7 +2171,7 @@ div.part_file a:hover, div.part_file a:hover span
 	color: #0033AA;
 }
 /* style/basic/css/part_formula.css */
-div.part_formula form
+.part_formula_form
 {
 	margin: 0;
 	display: block;
@@ -2182,7 +2182,7 @@ div.part_formula p
 	margin: 0;
 }
 
-p.part_formula_label
+.part_formula_label
 {
 	margin: 0;
 	font-weight: bold;
@@ -2190,7 +2190,7 @@ p.part_formula_label
 	line-height: 14px;
 }
 
-span.part_formula_required
+.part_formula_required
 {
 	color: #f06;
 	font-size: 21px;
@@ -2200,90 +2200,37 @@ span.part_formula_required
 	font-weight: normal;
 }
 
-div.part_formula_field
+.part_formula_field
 {
 	margin-bottom: 5px;
 }
 
-p.part_formula_hint
+.part_formula_hint
 {
 	margin: -1px 0 0;
 	font-size: 9px;
 	color: #999;
 }
 
-p.part_formula_input
+.part_formula_field_content
 {
 	font-size: 0;
 }
 
-div.part_formula_fieldset
+.part_formula_fieldset
 {
 	margin-bottom: 10px;
 }
 
-p.part_formula_fieldset_legend
+.part_formula_fieldset_legend
 {
-	text-decoration: underline;
-	font-size: 11px;
-	margin-bottom: 5px;
-}
-
-div.part_formula_fieldset_dotted div.part_formula_field
-{
-	height: 15px;
-	border-bottom: 1px dotted #ccc;
-	position: relative;
-}
-
-div.part_formula_fieldset_dotted p.part_formula_label
-{
-	position: absolute;
-	height: 20px;
-	padding-right: 3px;
-	background: #fff;
-	line-height: 24px;
-}
-
-div.part_formula_fieldset_dotted p.part_formula_input
-{
-	position: absolute;
-	right: 0;
-	width: 50px;
-	padding-left: 4px;
-	background: #fff;
 	font-size: 12px;
+	margin-bottom: 5px;
+    font-weight: bold;
 }
 
-div.part_formula_fieldset_dotted p.part_formula_input input
-{
-	margin-top: 3px;
-}
-
-div.part_formula_fieldset_dotted span.part_formula_prefix
-{
-	position: absolute;
-	margin-left: -200px;
-	width: 200px;
-	font-size: 11px;
-	height: 20px;
-	text-align: right;
-}
-
-div.part_formula_fieldset_dotted span.part_formula_prefix span
-{
-	display: inline-block;
-	height: 20px;
-	background: #fff;
-	line-height: 24px;
-	padding-right: 6px;
-	padding-left: 6px;
-	color: #999;
-}
-
-
-
-input.part_formula_input, textarea.part_formula_input
+.part_formula_input, 
+.part_formula_input
 {
 	width: 100%;
 	box-sizing: border-box;
@@ -2295,23 +2242,24 @@ input.part_formula_input, textarea.part_formula_input
 	margin: 0;
 }
 
-textarea.part_formula_input
+.part_formula_input_lines
 {
 	height: 100px;
 }
 
-div.part_formula table
+.part_formula_columns
 {
 	border-spacing: 0;
 	width: 100%;
 }
 
-td.part_formula_column
+.part_formula_column
 {
+    vertical-align: top;
 	padding: 0 0 0 10px;
 }
 
-td.part_formula_column_first
+.part_formula_column_first
 {
 	padding: 0;
 }
@@ -2324,37 +2272,37 @@ td.part_formula_column_first
 h1.part_header, textarea.part_header_1
 {
 	font-size: 20pt;
-	line-height: 24pt;
+	line-height: 1.2em;
 }
 
 h2.part_header, textarea.part_header_2
 {
 	font-size: 15pt;
-	line-height: 17pt;
+	line-height: 1.133333333em;
 }
 
 h3.part_header, textarea.part_header_3
 {
 	font-size: 13pt;
-	line-height: 14pt;
+	line-height: 1.076923077em;
 }
 
 h4.part_header, textarea.part_header_4
 {
-	font-size:12pt;
-	line-height: 14pt;
+	font-size: 12pt;
+	line-height: 1.166666667em;
 }
 
 h5.part_header, textarea.part_header_5
 {
-	font-size:11.5pt;
-	line-height: 12pt;
+	font-size: 11.5pt;
+	line-height: 1.043478261em;
 }
 
 h6.part_header, textarea.part_header_6
 {
-	font-size:11pt;
-	line-height: 12pt;
+	font-size: 11pt;
+	line-height: 1,090909091em;
 }
 
 .part_section_header_1
@@ -2577,20 +2525,20 @@ div.part_list_busy
 	padding: 10px 0px;
 }
 
-div.part_listing, textarea.part_listing
+.part_listing
 {
 	font-size: 8pt;
 	color: #333;
 }
 
-div.part_listing ul
+.part_listing ul
 {
 	margin: 0px;
 	color: #bbb;
 	padding-left: 25px;
 }
 
-div.part_listing span.part_listing_first
+.part_listing_first
 {
 	font-size: 9pt;
 	font-weight: bold;
@@ -2601,7 +2549,7 @@ span.part_listing
 	color: #333;
 }
 
-div.part_listing li
+.part_listing li
 {
 	margin-bottom: 5px;
 }
@@ -3064,7 +3012,7 @@ div.part_poster_inset div.part_poster_page_content
 }
 
 /* style/basic/css/part_richtext.css */
-div.part_richtext
+.part_richtext
 {
 	font-size: 9pt;
 	line-height: 1.4em;

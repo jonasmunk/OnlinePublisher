@@ -6,36 +6,34 @@ hui.ui.Source = function(options) {
 	this.name = options.name;
 	this.data = null;
 	this.parameters = [];
-    // Clone parameters so the can be reused
+    // Clone parameters so they can be reused
     for (var i = 0; i < this.options.parameters.length; i++) {
         var p = this.options.parameters[i]
-        this.parameters.push({key:p.key,value:p.value});
+        this.parameters.push({key:p.key,value:p.value,separate:p.separate});
     }
 	hui.ui.extend(this);
 	if (options.delegate) {
 		this.listen(options.delegate);
 	}
 	this.initial = true;
-	this.busy=false;
-	hui.ui.onReady(this.init.bind(this));
+	this.busy = false;
+	hui.ui.onReady(this._init.bind(this));
 };
 
 hui.ui.Source.prototype = {
-	/** @private */
-	init : function() {
+	_init : function() {
 		var self = this;
 		hui.each(this.parameters,function(parm) {
 			var val = hui.ui.bind(parm.value,function(value) {
 				self.changeParameter(parm.key,value);
 			});
-			parm.value = self.convertValue(val);
+			parm.value = self._convertValue(val);
 		});
 		if (!this.options.lazy) {
 			this.refresh();
 		}
 	},
-	/** @private */
-	convertValue : function(value) {		
+	_convertValue : function(value) {
 		if (value && value.getTime) {
 			return value.getTime();
 		}
@@ -53,11 +51,11 @@ hui.ui.Source.prototype = {
 			this.refresh();
 		}.bind(this),100)
 	},
-	
+
 	/** Refreshes the data source */
 	refresh : function() {
 		if (this.options.delay<1) {
-			this._refresh();			
+			this._refresh();
 		} else {
 			window.clearTimeout(this._refreshDelay);
 			this._refreshDelay = window.setTimeout(this._refresh.bind(this),this.options.delay);
@@ -89,18 +87,27 @@ hui.ui.Source.prototype = {
 		this.pendingRefresh = false;
 		var self = this;
 		if (this.options.url) {
-			var prms = {};
+			var prms = [];
 			for (var j=0; j < this.parameters.length; j++) {
 				var p = this.parameters[j];
-				prms[p.key] = p.value;
+                if (hui.isArray(p.value) && p.separate) {
+                    for (var k = 0; k < p.value.length; k++) {
+        				prms.push({
+                            name : p.key,
+                            value : p.value[k]
+                        });
+                    }
+                } else {
+    				prms.push({name : p.key, value : p.value});
+                }
 			};
-			this.busy=true;
+			this.busy = true;
 			hui.ui.callDelegates(this,'sourceIsBusy');
 			this.transport = hui.request({
 				method : 'post',
 				url : this.options.url,
 				parameters : prms,
-				onSuccess : this.parse.bind(this),
+				$success : this.parse.bind(this),
 				onException : function(e,t) {
 					hui.log('Exception while loading source...')
 					hui.log(e)
@@ -135,7 +142,7 @@ hui.ui.Source.prototype = {
 	},
 	/** @private */
 	end : function() {
-		this.busy=false;
+		this.busy = false;
 		hui.ui.callDelegates(this,'sourceIsNotBusy');
 		if (this.pendingRefresh) {
 			this.refresh();
@@ -177,10 +184,10 @@ hui.ui.Source.prototype = {
 		var val = hui.ui.bind(parm.value,function(value) {
 			this.changeParameter(parm.key,value);
 		}.bind(this));
-		parm.value = this.convertValue(val);
+		parm.value = this._convertValue(val);
 	},
 	setParameter : function(key,value) {
-		value = this.convertValue(value);
+		value = this._convertValue(value);
 		for (var i=0; i < this.parameters.length; i++) {
 			var p = this.parameters[i]
 			if (p.key==key) {
@@ -191,7 +198,7 @@ hui.ui.Source.prototype = {
 		this.parameters.push({key:key,value:value});
 	},
 	changeParameter : function(key,value) {
-		value = this.convertValue(value);
+		value = this._convertValue(value);
 		for (var i=0; i < this.parameters.length; i++) {
 			var p = this.parameters[i]
 			if (p.key==key) {

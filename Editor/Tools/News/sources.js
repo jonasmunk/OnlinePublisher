@@ -25,7 +25,7 @@ hui.ui.listen({
 			message : {start:{en:'Synchronizing source',da:'Synkroniserer kilde...'},success:{en:'The source has been synchronized',da:'Kilden er nu synkroniseret'}},
 			url : 'actions/SyncSource.php',
 			parameters : {id:item.value},
-			onSuccess : function() {
+			$success : function() {
 				list.refresh();
 				synchronize.enable();
 				this.updateSourceInfo(item.value);
@@ -57,7 +57,7 @@ hui.ui.listen({
 				json : {data:values},
 				url : 'actions/SaveSource.php',
 				message : {start:{en:'Saving source...',da:'Gemmer kilde...'},delay:300},
-				onSuccess : function() {
+				$success : function() {
 					sourcesSource.refresh();
 				}
 			});
@@ -78,7 +78,7 @@ hui.ui.listen({
 		hui.ui.request({
 			parameters : {id:id},
 			url : '../../Services/Model/LoadObject.php',
-			onSuccess : 'sourceLoaded',
+			$success : 'sourceLoaded',
 			message : {start:{en:'Loading source...',da:'Åbner kilde...'},delay:300}
 		});
 	},
@@ -93,7 +93,7 @@ hui.ui.listen({
 		hui.ui.request({
 			json : {data:{id:this.sourceId}},
 			url : '../../Services/Model/DeleteObject.php',
-			onSuccess : 'deleteSource',
+			$success : 'deleteSource',
 			message : {start:{en:'Deleting source...',da:'Sletter kilde...'},delay:300}
 		});
 	},

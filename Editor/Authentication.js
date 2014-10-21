@@ -64,7 +64,7 @@ var controller = {
 		login.disable();
 		hui.ui.request({
 			url:'Services/Core/Authentication.php',
-			onSuccess : 'login',
+			$success: 'login',
 			parameters : values,
 			onFailure:function() {
 				hui.ui.showMessage({text:{en:'An internal error occurred',da:'Der skete en fejl internt i systemet'},icon:'common/warning',duration:4000});
@@ -103,10 +103,10 @@ var controller = {
 		var text = recoveryForm.getValues()['nameOrMail'];
 		hui.ui.showMessage({text:{en:'Looking for user and sending e-mail...',da:'Leder efter bruger, og sender e-mail...'},busy:true});
 		hui.ui.request({
-			url:'Services/Core/RecoverPassword.php',
-			onSuccess:'recovery',
-			parameters:{text:text},
-			onFailure:function() {
+			url : 'Services/Core/RecoverPassword.php',
+		$success : 'recovery',
+			parameters : {text:text},
+			onFailure : function() {
 				hui.ui.showMessage({text:{en:'An internal error occurred',da:'Der skete en fejl internt i systemet'},icon:'common/warning',duration:4000});
 			}
 		});
@@ -181,8 +181,7 @@ var controller = {
 			onForbidden : function() {
 				hui.ui.showMessage({text:{en:'The username or password is incorrect',da:'Bruger eller kode er ikke korrekt'},icon:'common/warning',duration:4000});
 				form.focus();
-			},
-			onSuccess : function(response) {
+			$successuccess : function(response) {
 				hui.ui.showMessage({text:{en:'The administrator has been created',da:'Administratoren er nu oprettet'},icon:'common/success',duration:4000});
 				form.reset();
 				adminWindow.hide();

@@ -45,7 +45,7 @@ hui.ui.listen({
 			url : 'actions/AddFileToGroup.php',
 			message : {start:{en:'Adding to group...', da:'Tilføjer til gruppe...'},delay:300,success:{en:'The file has been added to the group',da:'Filen er blevet tilføjet til gruppen'}},
 			json : {data:{file:dragged.id,group:dropped.value}},
-			onSuccess : function() {
+			$success : function() {
 				filesSource.refresh();
 				groupSource.refresh();
 			}
@@ -79,7 +79,7 @@ hui.ui.listen({
 	$click$fetchFile : function() {
 		fetchFile.setEnabled(false);
 		hui.ui.showMessage({text:{en:'Fetching file...',da:'Henter fil...'},busy:true});
-		hui.ui.request({url:'actions/FetchFile.php',onSuccess:'fileFetched',parameters:fetchFormula.getValues()});
+		hui.ui.request({url:'actions/FetchFile.php',$success:'fileFetched',parameters:fetchFormula.getValues()});
 	},
 	$success$fileFetched : function(data) {
 		if (data.success) {
@@ -101,7 +101,7 @@ hui.ui.listen({
 		hui.ui.request({
 			message : {start : {en:'Deleting file...',da:'Sletter fil...'}, delay : 300},
 			url : 'actions/DeleteFile.php',
-			onSuccess : 'fileDeleted',
+			$success : 'fileDeleted',
 			parameters : {id:obj.id}
 		});
 		if (obj.id===this.fileId) {
@@ -133,7 +133,7 @@ hui.ui.listen({
 		hui.ui.request({
 			message : {start : 'Åbner fil...',delay:300},
 			url : 'data/LoadFile.php',
-			onSuccess : 'fileLoaded',
+			$success : 'fileLoaded',
 			parameters : {id:id}
 		});
 	},
@@ -156,7 +156,7 @@ hui.ui.listen({
 		hui.ui.request({
 			message : {start : {en:'Saving file...',da:'Gemmer fil...'},delay:300},
 			url : 'actions/UpdateFile.php',
-			onSuccess : 'fileUpdated',
+			$success : 'fileUpdated',
 			json : {data:data}
 		});
 		this.fileId = null;
@@ -173,7 +173,7 @@ hui.ui.listen({
 		hui.ui.request({
 			message : {start : {en:'Deleting file...',da:'Sletter fil...'}, delay : 300},
 			url : 'actions/DeleteFile.php',
-			onSuccess : 'fileDeleted',
+			$success : 'fileDeleted',
 			parameters : {id:this.fileId}
 		});
 		this.$click$cancelFile();
@@ -205,7 +205,7 @@ hui.ui.listen({
 				message : { start : {en:'Saving group...',da:'Gemmer gruppe...'}, delay : 300 },
 				json : {data:values},
 				url : 'actions/SaveGroup.php',
-				onSuccess : function() {groupSource.refresh()}
+				$success : function() {groupSource.refresh()}
 			});
 			this.groupId = null;
 			groupFormula.reset();
@@ -221,7 +221,7 @@ hui.ui.listen({
 			message : { start : {en:'Loading group...',da:'Åbner gruppe...'}, delay : 300 },
 			parameters : {id:item.value},
 			url : '../../Services/Model/LoadObject.php',
-			onSuccess : 'loadGroup'
+			$success : 'loadGroup'
 		});
 	},
 	$success$loadGroup : function(data) {
@@ -236,7 +236,7 @@ hui.ui.listen({
 			message : { start : {en:'Deleting group...',da:'Sletter gruppe...'}, delay : 300 },
 			json : {data:{id:this.groupId}},
 			url : '../../Services/Model/DeleteObject.php',
-			onSuccess : 'deleteGroup'
+			$success : 'deleteGroup'
 		});
 		this.groupId = null;
 		groupFormula.reset();

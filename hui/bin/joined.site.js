@@ -1541,7 +1541,7 @@ hui._onReady = function(delegate) {
  *  files : «HTML5-files»,
  *  parameters : {key : 'value'},
  *
- *  onSuccess : function(transport) {
+ *  $success : function(transport) {
  *    // when status is 200
  *  },
  *  onForbidden : function(transport) {
@@ -1574,8 +1574,8 @@ hui.request = function(options) {
 	transport.onreadystatechange = function() {
 		try {
 			if (transport.readyState == 4) {
-				if (transport.status == 200 && options.onSuccess) {
-					options.onSuccess(transport);
+				if (transport.status == 200 && options.$success) {
+					options.$success(transport);
 				} else if (transport.status == 403 && options.onForbidden) {
 					options.onForbidden(transport);
 				} else if (transport.status !== 0 && options.onFailure) {
@@ -1674,13 +1674,24 @@ hui.request.isXMLResponse = function(t) {
 hui.request._buildPostBody = function(parameters) {
 	if (!parameters) return null;
 	var output = '';
-	for (var param in parameters) {
-		if (output.length>0) output+='&';
-		output+=encodeURIComponent(param)+'=';
-		if (parameters[param]!==undefined && parameters[param]!==null) {
-			output+=encodeURIComponent(parameters[param]);
-		}
-	}
+    if (hui.isArray(parameters)) {
+        for (var i = 0; i < parameters.length; i++) {
+            var param = parameters[i];
+    		if (i > 0) {output += '&'};
+    		output+=encodeURIComponent(param.name)+'=';
+    		if (param.value!==undefined && param.value!==null) {
+    			output+=encodeURIComponent(param.value);
+    		}
+        }
+    } else {
+    	for (var param in parameters) {
+    		if (output.length > 0) {output += '&'};
+    		output+=encodeURIComponent(param)+'=';
+    		if (parameters[param]!==undefined && parameters[param]!==null) {
+    			output+=encodeURIComponent(parameters[param]);
+    		}
+    	}        
+    }
 	return output;
 }
 
@@ -4447,14 +4458,14 @@ hui.ui.request = function(options) {
 			options.parameters[key]=hui.string.toJSON(options.json[key]);
 		}
 	}
-	var onSuccess = options.onSuccess || options.$success,
+	var success = options.$success,
 		onJSON = options.onJSON || options.$object,
 		onText = options.onText || options.$text,
 		onXML = options.onXML || options.$xml,
 		onFailure = options.onFailure || options.$failure,
 		onForbidden = options.onForbidden || options.$forbidden,
 		message = options.message;
-	options.onSuccess = function(t) {
+	options.$success = function(t) {
 		if (message) {
 			if (message.success) {
 				hui.ui.showMessage({text:message.success,icon:'common/success',duration:message.duration || 2000});
@@ -4463,7 +4474,7 @@ hui.ui.request = function(options) {
 			}
 		}
 		var str,json;
-		if (typeof(onSuccess)=='string') {
+		if (typeof(success)=='string') {
 			if (!hui.request.isXMLResponse(t)) {
 				str = t.responseText.replace(/^\s+|\s+$/g, '');
 				if (str.length>0) {
@@ -4471,9 +4482,9 @@ hui.ui.request = function(options) {
 				} else {
 					json = '';
 				}
-				hui.ui.callDelegates(json,'success$'+onSuccess);
+				hui.ui.callDelegates(json,'success$'+success);
 			} else {
-				hui.ui.callDelegates(t,'success$'+onSuccess);
+				hui.ui.callDelegates(t,'success$'+success);
 			}
 		} else if (onXML && hui.request.isXMLResponse(t)) {
 			onXML(t.responseXML);
@@ -4485,8 +4496,8 @@ hui.ui.request = function(options) {
 				json = null;
 			}
 			onJSON(json);
-		} else if (typeof(onSuccess)=='function') {
-			onSuccess(t);
+		} else if (typeof(success)=='function') {
+			success(t);
 		} else if (onText) {
 			onText(t.responseText);
 		}

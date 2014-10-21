@@ -195,7 +195,7 @@ hui.ui.Upload.prototype = {
 				this.$_itemFail(item);
 				item.setError('Afbrudt')
 			}.bind(this),
-			onSuccess : function(t) {
+			$success : function(t) {
 				hui.log('transferFile: success');
 				item.data.request = t;
 				this.$_itemSuccess(item);

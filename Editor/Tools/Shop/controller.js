@@ -42,7 +42,7 @@ hui.ui.listen({
 			offerFormula.reset();
 			deleteOffer.setEnabled(false);
 			saveOffer.setEnabled(false);
-			hui.ui.request({json:{data:data},url:'../../Services/Model/LoadObject.php',onSuccess:'loadOffer'});
+			hui.ui.request({json:{data:data},url:'../../Services/Model/LoadObject.php',$success:'loadOffer'});
 		} else if (obj.kind=='productgroup') {
 			this.loadGroup(obj.id);
 		} else if (obj.kind=='product') {
@@ -57,7 +57,7 @@ hui.ui.listen({
 		productFormula.reset();
 		deleteProduct.setEnabled(false);
 		saveProduct.setEnabled(false);
-		hui.ui.request({json:{data:data},url:'data/LoadProduct.php',onSuccess:'loadProduct'});
+		hui.ui.request({json:{data:data},url:'data/LoadProduct.php',$success:'loadProduct'});
 	},
 	$success$loadProduct : function(data) {
 		this.productId = data.product.id;
@@ -100,7 +100,7 @@ hui.ui.listen({
 			groups:productGroups.getValues()
 		};
 		hui.log(data);
-		hui.ui.request({json:{data:data},url:'actions/SaveProduct.php',onSuccess:'saveProduct'});
+		hui.ui.request({json:{data:data},url:'actions/SaveProduct.php',$success:'saveProduct'});
 	},
 	$success$saveProduct : function() {
 		list.refresh();
@@ -116,7 +116,7 @@ hui.ui.listen({
 		return '../../../services/images/?id='+obj.id+'&width=48&height=48&format=jpg';
 	},
 	$click$deleteProduct : function() {
-		hui.ui.request({json:{data:{id:this.productId}},url:'../../Services/Model/DeleteObject.php',onSuccess:'deleteProduct'});
+		hui.ui.request({json:{data:{id:this.productId}},url:'../../Services/Model/DeleteObject.php',$success:'deleteProduct'});
 	},
 	$success$deleteProduct : function() {
 		this.productId=null;
@@ -142,7 +142,7 @@ hui.ui.listen({
 		offerFormula.reset();
 	},
 	$click$deleteOffer : function() {
-		hui.ui.request({json:{data:{id:this.offerId}},url:'../../Services/Model/DeleteObject.php',onSuccess:'deleteOffer'});
+		hui.ui.request({json:{data:{id:this.offerId}},url:'../../Services/Model/DeleteObject.php',$success:'deleteOffer'});
 	},
 	$success$deleteOffer : function() {
 		offerEditor.hide();
@@ -156,7 +156,7 @@ hui.ui.listen({
 			note:offerNote.getValue(),
 			expiry:offerExpiry.getValue()
 		};
-		hui.ui.request({json:{data:data},url:'actions/SaveOffer.php',onSuccess:'saveOffer'});
+		hui.ui.request({json:{data:data},url:'actions/SaveOffer.php',$success:'saveOffer'});
 	},
 	$success$saveOffer : function() {
 		offerEditor.hide();
@@ -171,7 +171,7 @@ hui.ui.listen({
 		groupFormula.reset();
 		deleteGroup.setEnabled(false);
 		saveGroup.setEnabled(false);
-		hui.ui.request({json:{data:data},url:'../../Services/Model/LoadObject.php',onSuccess:'loadGroup'});
+		hui.ui.request({json:{data:data},url:'../../Services/Model/LoadObject.php',$success:'loadGroup'});
 	},
 	$click$newGroup : function() {
 		this.groupId = 0;
@@ -193,7 +193,7 @@ hui.ui.listen({
 		groupFormula.reset();
 	},
 	$click$deleteGroup : function() {
-		hui.ui.request({json:{data:{id:this.groupId}},url:'../../Services/Model/DeleteObject.php',onSuccess:'deleteGroup'});
+		hui.ui.request({json:{data:{id:this.groupId}},url:'../../Services/Model/DeleteObject.php',$success:'deleteGroup'});
 	},
 	$success$deleteGroup : function() {
 		groupEditor.hide();
@@ -209,7 +209,7 @@ hui.ui.listen({
 			return;
 		}
 		data.id=this.groupId;
-		hui.ui.request({json:{data:data},url:'actions/SaveGroup.php',onSuccess:'saveGroup'});
+		hui.ui.request({json:{data:data},url:'actions/SaveGroup.php',$success:'saveGroup'});
 	},
 	$success$saveGroup : function() {
 		groupEditor.hide();
@@ -225,7 +225,7 @@ hui.ui.listen({
 		typeFormula.reset();
 		deleteType.setEnabled(false);
 		saveType.setEnabled(false);
-		hui.ui.request({json:{data:data},url:'../../Services/Model/LoadObject.php',onSuccess:'loadType'});
+		hui.ui.request({json:{data:data},url:'../../Services/Model/LoadObject.php',$success:'loadType'});
 	},
 	$click$newType : function() {
 		this.typeId = 0;
@@ -248,7 +248,7 @@ hui.ui.listen({
 		typeFormula.reset();
 	},
 	$click$deleteType : function() {
-		hui.ui.request({json:{data:{id:this.typeId}},url:'../../Services/Model/DeleteObject.php',onSuccess:'deleteType'});
+		hui.ui.request({json:{data:{id:this.typeId}},url:'../../Services/Model/DeleteObject.php',$success:'deleteType'});
 	},
 	$success$deleteType : function() {
 		typeEditor.hide();
@@ -262,7 +262,7 @@ hui.ui.listen({
 			title:typeTitle.getValue(),
 			note:typeNote.getValue()
 		};
-		hui.ui.request({json:{data:data},url:'actions/SaveType.php',onSuccess:'saveType'});
+		hui.ui.request({json:{data:data},url:'actions/SaveType.php',$success:'saveType'});
 	},
 	$success$saveType : function() {
 		typeEditor.hide();

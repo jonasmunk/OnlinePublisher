@@ -479,7 +479,7 @@
 						line : lineNumber,
 						url : document.location.href
 					},
-					onSuccess : function() {
+					$success : function() {
 						hui.log('Sent error');
 					} 
 				})

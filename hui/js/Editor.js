@@ -565,7 +565,7 @@ hui.ui.Editor.prototype = {
 			
 			if (parts[dropInfo.partIndex] != dragged) {
 				this.fire('partWasMoved',{dragged:dragged,rowIndex : dropInfo.rowIndex,columnIndex : dropInfo.columnIndex,partIndex : dropInfo.partIndex, 
-					onSuccess : function() {
+					$success : function() {
 						dragged.style.webkitTransformOrigin='0 0';
 						var dummy = hui.build('div');
 						if (dropInfo.partIndex>=parts.length) {

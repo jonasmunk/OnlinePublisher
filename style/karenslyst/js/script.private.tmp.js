@@ -319,15 +319,15 @@ op.part.Formula.prototype = {
 		hui.ui.request({
 			url : url,
 			json : {data:data},
-			onSuccess : this._onSuccess.bind(this),
-			onFailure : this._onFailure.bind(this)
+			$success : this._success.bind(this),
+			$failure : this._failure.bind(this)
 		});
 	},
-	_onSuccess : function() {
+	_success : function() {
 		hui.ui.showMessage({text:'Beskeden er nu sendt',icon:'common/success',duration:2000});
 		this.element.reset();
 	},
-	_onFailure : function() {
+	_failure : function() {
 		hui.ui.showMessage({text:'Beskeden kunne desværre ikke afleveres',duration:5000});
 	}
 }

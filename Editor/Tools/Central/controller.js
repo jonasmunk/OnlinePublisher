@@ -30,7 +30,7 @@ hui.ui.listen({
 			message : {start : 'Gemmer site...',delay:300},
 			url : 'data/SaveSite.php',
 			json : {data:data},
-			onSuccess : function() {
+			$success : function() {
 				list.refresh();
 			}
 		});
@@ -59,7 +59,7 @@ hui.ui.listen({
 			message : { start : 'Sletter site...', delay : 300 },
 			parameters : {id : this.siteId},
 			url : '../../Services/Model/DeleteObject.php',
-			onSuccess : function() {
+			$success : function() {
 				list.refresh();
 			}.bind(this)
 		});
@@ -70,7 +70,7 @@ hui.ui.listen({
 		hui.ui.request({
 			url : 'data/Refresh.php',
 			message : { start : 'Opdaterer...', delay : 300 },
-			onSuccess : function() {
+			$success : function() {
 				list.refresh();
 			}
 		})

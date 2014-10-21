@@ -910,14 +910,14 @@ hui.ui.request = function(options) {
 			options.parameters[key]=hui.string.toJSON(options.json[key]);
 		}
 	}
-	var onSuccess = options.onSuccess || options.$success,
+	var success = options.$success,
 		onJSON = options.onJSON || options.$object,
 		onText = options.onText || options.$text,
 		onXML = options.onXML || options.$xml,
 		onFailure = options.onFailure || options.$failure,
 		onForbidden = options.onForbidden || options.$forbidden,
 		message = options.message;
-	options.onSuccess = function(t) {
+	options.$success = function(t) {
 		if (message) {
 			if (message.success) {
 				hui.ui.showMessage({text:message.success,icon:'common/success',duration:message.duration || 2000});
@@ -926,7 +926,7 @@ hui.ui.request = function(options) {
 			}
 		}
 		var str,json;
-		if (typeof(onSuccess)=='string') {
+		if (typeof(success)=='string') {
 			if (!hui.request.isXMLResponse(t)) {
 				str = t.responseText.replace(/^\s+|\s+$/g, '');
 				if (str.length>0) {
@@ -934,9 +934,9 @@ hui.ui.request = function(options) {
 				} else {
 					json = '';
 				}
-				hui.ui.callDelegates(json,'success$'+onSuccess);
+				hui.ui.callDelegates(json,'success$'+success);
 			} else {
-				hui.ui.callDelegates(t,'success$'+onSuccess);
+				hui.ui.callDelegates(t,'success$'+success);
 			}
 		} else if (onXML && hui.request.isXMLResponse(t)) {
 			onXML(t.responseXML);
@@ -948,8 +948,8 @@ hui.ui.request = function(options) {
 				json = null;
 			}
 			onJSON(json);
-		} else if (typeof(onSuccess)=='function') {
-			onSuccess(t);
+		} else if (typeof(success)=='function') {
+			success(t);
 		} else if (onText) {
 			onText(t.responseText);
 		}

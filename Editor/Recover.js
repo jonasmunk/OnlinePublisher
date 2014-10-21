@@ -18,7 +18,7 @@ var controller = {
 		hui.ui.showMessage({text:{en:'Changing password...',da:'Ændrer kode...'}});
 		hui.ui.request({
 			url : 'Services/Core/ChangePassword.php',
-			onSuccess : 'change',
+			$success : 'change',
 			parameters : {key:this.key,password:values.password1},
 			onFailure : function() {
 				hui.ui.showMessage({text:{en:'An internal error occurred',da:'Der skete en fejl internt i systemet'},duration:2000});

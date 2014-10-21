@@ -48,7 +48,7 @@ hui.ui.listen({
 			json : {data:values},
 			url : 'actions/SaveBlueprint.php',
 			message : {start:{en:'Saving template...', da:'Gemmer skabelon...'},delay:300},
-			onSuccess : function() {
+			$success : function() {
 				listSource.refresh();
 			}.bind(this)
 		});
@@ -62,7 +62,7 @@ hui.ui.listen({
 			json : {data:{id:this.blueprintId}},
 			url : '../../Services/Model/DeleteObject.php',
 			message : {start:{en:'Deleting template...', da:'Sletter skabelon...'},delay:300},
-			onSuccess : function() {
+			$success : function() {
 				listSource.refresh();
 			}.bind(this)
 		});

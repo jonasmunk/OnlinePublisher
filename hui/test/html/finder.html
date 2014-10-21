@@ -47,7 +47,7 @@
 			finder.show();
 		})
 		
-		hui.request({url:'../../xslt/gui.xsl',onSuccess : function(t) {
+		hui.request({url:'../../xslt/gui.xsl',$success : function(t) {
             //return;
 			var xml = hui.xml.parse('<?xml version="1.0"?><gui xmlns="uri:hui" padding="20" title="Box"></gui>');
 			var xsl = t.responseXML;

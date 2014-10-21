@@ -21,7 +21,7 @@ hui.ui.listen({
 			message : {start:{en:'Loading source...',da:'Henter kilde...'},delay:300},
 			parameters : {id:id},
 			url : '../../Services/Model/LoadObject.php',
-			onSuccess : 'loadSource'
+			$success : 'loadSource'
 		});
 	},
 	
@@ -39,7 +39,7 @@ hui.ui.listen({
 	$click$saveSource : function() {
 		var data = sourceFormula.getValues();
 		data.id = this.sourceId;
-		hui.ui.request({url:'actions/SaveCalendarSource.php',onSuccess:'saveSource',json:{data:data}});
+		hui.ui.request({url:'actions/SaveCalendarSource.php',$success:'saveSource',json:{data:data}});
 	},
 	$success$saveSource : function() {
 		this.sourceId = null;
@@ -49,7 +49,7 @@ hui.ui.listen({
 		list.refresh();
 	},
 	$click$deleteSource : function() {
-		hui.ui.request({url:'actions/DeleteCalendarSource.php',onSuccess:'deleteSource',parameters:{id:this.sourceId}});
+		hui.ui.request({url:'actions/DeleteCalendarSource.php',$success:'deleteSource',parameters:{id:this.sourceId}});
 	},
 	$success$deleteSource : function() {
 		this.sourceId = null;
@@ -71,7 +71,7 @@ hui.ui.listen({
 		var value = selector.getValue();
 		if (value.kind=='calendarsource') {
 			hui.ui.showMessage({text:{en:'Synchronizing source...',da:'Synkroniserer kilde...'}});
-			hui.ui.request({url:'actions/SyncCalendarSource.php',onSuccess:'synchronizeSource',onFailure:'synchronizeSource',parameters:{id:value.value}});
+			hui.ui.request({url:'actions/SyncCalendarSource.php',$success:'synchronizeSource',onFailure:'synchronizeSource',parameters:{id:value.value}});
 		}
 	},
 	$success$synchronizeSource : function() {

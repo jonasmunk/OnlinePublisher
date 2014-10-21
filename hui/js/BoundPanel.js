@@ -85,16 +85,16 @@ hui.ui.BoundPanel.prototype = {
 		var vert;
 		if (this.relativePosition=='left') {
 			vert = false;
-			this.element.style.marginLeft='30px';
+			this.element.style.marginLeft='20px';
 		} else if (this.relativePosition=='right') {
 			vert = false;
-			this.element.style.marginLeft='-30px';
+			this.element.style.marginLeft='-20px';
 		} else if (this.relativePosition=='top') {
 			vert = true;
-			this.element.style.marginTop='30px';
+			this.element.style.marginTop='20px';
 		} else if (this.relativePosition=='bottom') {
 			vert = true;
-			this.element.style.marginTop='-30px';
+			this.element.style.marginTop='-20px';
 		}
 		this.element.style.visibility = 'visible';
 		this.element.style.display = 'block';
@@ -102,9 +102,9 @@ hui.ui.BoundPanel.prototype = {
 		this.element.style.zIndex = index;
 		hui.ui.callVisible(this);
 		if (hui.browser.opacity) {
-			hui.animate(this.element,'opacity',1,400,{ease:hui.ease.fastSlow});
+			hui.animate(this.element,'opacity',1,300,{ease:hui.ease.fastSlow});
 		}
-		hui.animate(this.element,vert ? 'margin-top' : 'margin-left','0px',800,{ease:hui.ease.bounce});
+		hui.animate(this.element,vert ? 'margin-top' : 'margin-left','0px',300,{ease:hui.ease.fastSlow});
 		this.visible=true;
 		if (this.options.modal) {
 			hui.ui.showCurtain({widget:this,zIndex:index-1,transparent:this.options.modal=='transparent',color:'auto'});
@@ -131,7 +131,7 @@ hui.ui.BoundPanel.prototype = {
 			this.element.style.display='none';
 			hui.ui.callVisible(this);
 		} else {
-			hui.animate(this.element,'opacity',0,300,{ease:hui.ease.slowFast,$complete:function() {
+			hui.animate(this.element,'opacity',0,100,{ease:hui.ease.slowFast,$complete:function() {
 				this.element.style.display='none';
 				hui.ui.callVisible(this);
 			}.bind(this)});

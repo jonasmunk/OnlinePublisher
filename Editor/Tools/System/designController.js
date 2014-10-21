@@ -5,7 +5,7 @@ hui.ui.listen({
 		if (obj.kind=='design') {
 			designFormula.reset();
 			designEditor.show();
-			hui.ui.request({parameters:{id:obj.id},url:'../../Services/Model/LoadObject.php',onSuccess:'loadDesign'});
+			hui.ui.request({parameters:{id:obj.id},url:'../../Services/Model/LoadObject.php',$success:'loadDesign'});
 		}
 	},
 	$success$loadDesign : function(data) {
@@ -23,7 +23,7 @@ hui.ui.listen({
 		designEditor.hide();
 	},
 	$click$deleteDesign : function() {
-		hui.ui.request({json:{data:{id:this.id}},url:'../../Services/Model/DeleteObject.php',onSuccess:'deleteDesign'});
+		hui.ui.request({json:{data:{id:this.id}},url:'../../Services/Model/DeleteObject.php',$success:'deleteDesign'});
 	},
 	$success$deleteDesign : function() {
 		list.refresh();
@@ -40,7 +40,7 @@ hui.ui.listen({
 			designFormula.focus();
 		} else {
 			values.id = this.id;
-			hui.ui.request({json:{data:values},url:'actions/SaveDesign.php',onSuccess:'designSaved'});
+			hui.ui.request({json:{data:values},url:'actions/SaveDesign.php',$success:'designSaved'});
 		}
 	},
 	$success$designSaved : function() {

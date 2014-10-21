@@ -29,7 +29,7 @@ hui.ui.listen({
 			url : 'actions/AddImageToGroup.php',
 			json : {data:{image:dragged.id,group:dropped.value}},
 			message : {start:{en:'Adding to group...', da:'Tilføjer til gruppe...'},delay:300},
-			onSuccess : function() {
+			$success : function() {
 				imagesSource.refresh();
 				listSource.refresh();
 				groupSource.refresh();
@@ -133,7 +133,7 @@ hui.ui.listen({
 			url:'actions/DeleteImages.php',
 			json:{ids:selection},
 			message:{start:{en:'Deleting image..', da:'Sletter billede...'},delay:300},
-			onSuccess:function() {
+			$success:function() {
 				imagesSource.refresh();
 				listSource.refresh();
 				groupSource.refresh();
@@ -183,7 +183,7 @@ hui.ui.listen({
 			url:'actions/SaveImage.php',
 			json:{data:data},
 			message:{start:{en:'Saving image...', da:'Gemmer billede...'},delay:300},
-			onSuccess:function() {
+			$success:function() {
 				imagesSource.refresh();
 				listSource.refresh();
 				groupSource.refresh();
@@ -219,7 +219,7 @@ hui.ui.listen({
 			url:'actions/DeleteImage.php',
 			parameters:{id:id},
 			message:{start:{en:'Deleting image...', da:'Sletter billede...'},delay:300},
-			onSuccess:function() {
+			$success:function() {
 				imagesSource.refresh();
 				listSource.refresh();
 				groupSource.refresh();

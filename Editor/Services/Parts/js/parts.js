@@ -32,7 +32,7 @@ op.part.utils = {
 		hui.ui.request({
 			url : url,
 			parameters : params,
-			onSuccess : function(t) {
+			$success : function(t) {
 				options.node.innerHTML=t.responseText;
 				if (options.runScripts) {
 					hui.dom.runScripts(options.node);

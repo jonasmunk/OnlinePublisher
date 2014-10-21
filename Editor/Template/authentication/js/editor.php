@@ -38,7 +38,7 @@ var templateController = {
 		hui.ui.request({
 			url : '../../../Template/authentication/Save.php',
 			parameters : values,
-			onSuccess : function() {
+			$success : function() {
 				var base = hui.get.firstByClass(document.body,'authentication');
 				var h1 = hui.get.firstByTag(base,'h1');
 				if (h1) {

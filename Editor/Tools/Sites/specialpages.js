@@ -47,7 +47,7 @@ hui.ui.listen({
 			json : {data:values},
 			url : 'actions/SaveSpecialPage.php',
 			message : {start:{en:'Saving special page...', da:'Gemmer speciel side...'},delay:300},
-			onSuccess : function() {
+			$success : function() {
 				listSource.refresh();
 			}.bind(this)
 		});
@@ -61,7 +61,7 @@ hui.ui.listen({
 			parameters : { id : this.specialPageId },
 			url : 'actions/DeleteSpecialPage.php',
 			message : {start:{en:'Deleting special page...', da:'Sletter speciel side...'},delay:300},
-			onSuccess : function() {
+			$success : function() {
 				listSource.refresh();
 			}.bind(this)
 		});

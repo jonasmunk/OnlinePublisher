@@ -117,7 +117,7 @@ hui.ui.ImageInput.prototype = {
 	_updateImages : function() {
 		var self = this;
 		hui.request({
-			onSuccess:function(t) {
+			$success : function(t) {
 				self._parse(t.responseXML);
 			},
 			url : this.options.source

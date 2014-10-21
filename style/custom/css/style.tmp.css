@@ -2091,6 +2091,7 @@ body
 	margin: 0;
 	padding: 20px;
 	text-align: center;
+	font-family: 'Open Sans', Arial, sans-serif;
 }
 
 div.layout
@@ -2112,15 +2113,6 @@ div.layout_content
 div.layout_header
 {
 	height: 110px;
-	/*
-	background: #434E59;
-    background: -webkit-gradient(linear,0 0,0 bottom,from(#eeeeee),to(#ffffff));
-    background: -moz-linear-gradient(#eeeeee, #ffffff);
-    background: gradient(linear,0 0,0 bottom,from(#eeeeee),to(#ffffff));
-    background: linear-gradient(#eeeeee, #ffffff);
-    -ms-filter: progid:DXImageTransform.Microsoft.gradient (GradientType=0, startColorstr=#eeeeee, endColorstr=#ffffff);
-    filter: progid:DXImageTransform.Microsoft.gradient (GradientType=0, startColorstr=#eeeeee, endColorstr=#ffffff);
-	*/
 }
 
 div.layout_header img
@@ -2134,9 +2126,8 @@ p.layout_logo
 	margin: 0;
 	font-size: 48px;
 	letter-spacing: -2px;
-	font-family: 'Trebuchet MS', Arial, sans-serif;
-	color: #1980AF;
-	font-weight: bold;
+	color: #333;
+	font-weight: 300;
 	padding-left: 30px;
 	height: 80px;
 	line-height: 80px;
@@ -2144,45 +2135,43 @@ p.layout_logo
 
 /************** Navigation ****************/
 
-div.layout_navigation ul
+.layout_menu_top
 {
-	font-family: 'Trebuchet MS', Arial, sans-serif;
 	margin: 0;
-	padding: 0;
+	padding: 0 0 0 20px;
 	list-style: none;
 	height: 30px;
 	font-size: 0;
 	border-bottom: 1px solid #eee;
 }
 
-div.layout_navigation li
+.layout_menu_top_item
 {
 	display: inline;
 	height: 30px;
 	border-right: 1px dotted #eee;
 }
 
-div.layout_navigation a
+.layout_menu_top_link
 {
 	line-height: 30px;
 	display: inline-block;
 	height: 30px;
-	padding: 0 30px;
+	padding: 0 10px;
 	font-size: 16px;
 	text-decoration: none;
 	color: #333;
 }
 
-div.layout_navigation li.selected a, div.layout_navigation li.highlighted a
+.layout_menu_top_link_highlighted > span,
+.layout_menu_top_link_selected > span
 {
-	background: #fafafa;
-	/*font-weight: bold;
-	color: #1980AF;*/
-	border-bottom: 5px solid #1980AF;
-	height: 26px;
+	border-bottom: 3px solid #666;
+	height: 28px;
+	display: inline-block;
 }
 
-div.layout_navigation li a:hover
+.layout_menu_top_link:hover
 {
 	background: #f8f8f8;
 	border-left: 1px solid #eee;
@@ -2212,12 +2201,11 @@ div.layout_sidebar li
 
 div.layout_sidebar li a
 {
-	border-bottom: 1px dotted #eee;
+	border-bottom: 1px solid #eee;
 	text-decoration: none;
 	color: #555;
 	padding-left: 10px;
 	font-size: 15px;
-	font-family: 'Trebuchet MS', Arial, sans-serif;
 	height: 30px;
 	line-height: 30px;
 	display: block;
@@ -2225,9 +2213,10 @@ div.layout_sidebar li a
 
 div.layout_sidebar a.selected, div.layout_sidebar a.highlighted
 {
-	background: #fafafa;
-	font-weight: bold;
-	color: #1980AF;
+	font-weight: 600;
+	color: #000;
+    border-left: 3px solid #666;
+	padding-left: 7px;
 }
 
 div.layout_sidebar li a:hover
@@ -2398,7 +2387,7 @@ div.part_file a:hover, div.part_file a:hover span
 	color: #0033AA;
 }
 /* style/basic/css/part_formula.css */
-div.part_formula form
+.part_formula_form
 {
 	margin: 0;
 	display: block;
@@ -2409,7 +2398,7 @@ div.part_formula p
 	margin: 0;
 }
 
-p.part_formula_label
+.part_formula_label
 {
 	margin: 0;
 	font-weight: bold;
@@ -2417,7 +2406,7 @@ p.part_formula_label
 	line-height: 14px;
 }
 
-span.part_formula_required
+.part_formula_required
 {
 	color: #f06;
 	font-size: 21px;
@@ -2427,90 +2416,37 @@ span.part_formula_required
 	font-weight: normal;
 }
 
-div.part_formula_field
+.part_formula_field
 {
 	margin-bottom: 5px;
 }
 
-p.part_formula_hint
+.part_formula_hint
 {
 	margin: -1px 0 0;
 	font-size: 9px;
 	color: #999;
 }
 
-p.part_formula_input
+.part_formula_field_content
 {
 	font-size: 0;
 }
 
-div.part_formula_fieldset
+.part_formula_fieldset
 {
 	margin-bottom: 10px;
 }
 
-p.part_formula_fieldset_legend
+.part_formula_fieldset_legend
 {
-	text-decoration: underline;
-	font-size: 11px;
-	margin-bottom: 5px;
-}
-
-div.part_formula_fieldset_dotted div.part_formula_field
-{
-	height: 15px;
-	border-bottom: 1px dotted #ccc;
-	position: relative;
-}
-
-div.part_formula_fieldset_dotted p.part_formula_label
-{
-	position: absolute;
-	height: 20px;
-	padding-right: 3px;
-	background: #fff;
-	line-height: 24px;
-}
-
-div.part_formula_fieldset_dotted p.part_formula_input
-{
-	position: absolute;
-	right: 0;
-	width: 50px;
-	padding-left: 4px;
-	background: #fff;
 	font-size: 12px;
+	margin-bottom: 5px;
+    font-weight: bold;
 }
 
-div.part_formula_fieldset_dotted p.part_formula_input input
-{
-	margin-top: 3px;
-}
-
-div.part_formula_fieldset_dotted span.part_formula_prefix
-{
-	position: absolute;
-	margin-left: -200px;
-	width: 200px;
-	font-size: 11px;
-	height: 20px;
-	text-align: right;
-}
-
-div.part_formula_fieldset_dotted span.part_formula_prefix span
-{
-	display: inline-block;
-	height: 20px;
-	background: #fff;
-	line-height: 24px;
-	padding-right: 6px;
-	padding-left: 6px;
-	color: #999;
-}
-
-
-
-input.part_formula_input, textarea.part_formula_input
+.part_formula_input, 
+.part_formula_input
 {
 	width: 100%;
 	box-sizing: border-box;
@@ -2522,23 +2458,24 @@ input.part_formula_input, textarea.part_formula_input
 	margin: 0;
 }
 
-textarea.part_formula_input
+.part_formula_input_lines
 {
 	height: 100px;
 }
 
-div.part_formula table
+.part_formula_columns
 {
 	border-spacing: 0;
 	width: 100%;
 }
 
-td.part_formula_column
+.part_formula_column
 {
+    vertical-align: top;
 	padding: 0 0 0 10px;
 }
 
-td.part_formula_column_first
+.part_formula_column_first
 {
 	padding: 0;
 }
@@ -2551,37 +2488,37 @@ td.part_formula_column_first
 h1.part_header, textarea.part_header_1
 {
 	font-size: 20pt;
-	line-height: 24pt;
+	line-height: 1.2em;
 }
 
 h2.part_header, textarea.part_header_2
 {
 	font-size: 15pt;
-	line-height: 17pt;
+	line-height: 1.133333333em;
 }
 
 h3.part_header, textarea.part_header_3
 {
 	font-size: 13pt;
-	line-height: 14pt;
+	line-height: 1.076923077em;
 }
 
 h4.part_header, textarea.part_header_4
 {
-	font-size:12pt;
-	line-height: 14pt;
+	font-size: 12pt;
+	line-height: 1.166666667em;
 }
 
 h5.part_header, textarea.part_header_5
 {
-	font-size:11.5pt;
-	line-height: 12pt;
+	font-size: 11.5pt;
+	line-height: 1.043478261em;
 }
 
 h6.part_header, textarea.part_header_6
 {
-	font-size:11pt;
-	line-height: 12pt;
+	font-size: 11pt;
+	line-height: 1,090909091em;
 }
 
 .part_section_header_1
@@ -2804,20 +2741,20 @@ div.part_list_busy
 	padding: 10px 0px;
 }
 
-div.part_listing, textarea.part_listing
+.part_listing
 {
 	font-size: 8pt;
 	color: #333;
 }
 
-div.part_listing ul
+.part_listing ul
 {
 	margin: 0px;
 	color: #bbb;
 	padding-left: 25px;
 }
 
-div.part_listing span.part_listing_first
+.part_listing_first
 {
 	font-size: 9pt;
 	font-weight: bold;
@@ -2828,7 +2765,7 @@ span.part_listing
 	color: #333;
 }
 
-div.part_listing li
+.part_listing li
 {
 	margin-bottom: 5px;
 }
@@ -3291,7 +3228,7 @@ div.part_poster_inset div.part_poster_page_content
 }
 
 /* style/basic/css/part_richtext.css */
-div.part_richtext
+.part_richtext
 {
 	font-size: 9pt;
 	line-height: 1.4em;
@@ -3366,7 +3303,7 @@ img.part_text_image_left
 /* style/custom/css/overwrite.css */
 body
 {
-	font-family: Helvetica,Arial,sans-serif;
+	font-family: 'Open Sans', Arial, sans-serif;
 }
 
 a.common
@@ -3389,30 +3326,54 @@ h1.common,h2.common,h3.common,h4.common,h5.common,h6.common
 {
 	margin: 0px;
 	color: #555;
-	font-family: Georgia,'Times New Roman',Palatino,Times,sans-serif;
-	/*font-family: Helvetica,Arial,sans-serif;*/
-	font-weight: normal;
+	font-weight: 600;
+}
+
+.common_button {
+    display: inline-block;
+    -webkit-appearance: none;
+    height: 24px;
+    font-family: inherit;
+    background: #ddd;
+    border: 1px solid #ccc;
+    border-radius: 3px;
 }
 
 p.common, ul.common
 {
-	font-family: 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;	font-size: 9pt;
 	line-height: 160%;
 	text-align: justify;
 }
 
-.common_font
+.part_richtext,
+.part_text,
+.part_listing,
+.part_listing_first
 {
-	font-family: 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+    font-size: 11pt;
+    line-height: 1.4em;
+}
+
+.part_richtext h1,
+.part_richtext h2,
+.part_richtext h3,
+.part_richtext h4,
+.part_richtext h5,
+.part_richtext h6 {
+    color: #555;
 }
 
 hr.part_horizontalrule
 {
-	border-bottom: 1px dotted #ccc;
+	border-bottom: 1px solid #ddd;
 }
 
 .part_header
 {
-	font-family: Georgia,'Times New Roman',Palatino,Times,sans-serif;
 	color: #555;
+}
+
+ {
+    font-size: 11pt;
+    line-height: 1.4em;
 }

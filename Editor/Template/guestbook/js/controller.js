@@ -25,7 +25,7 @@ var controller = {
 		hui.ui.request({
 			url : 'data/Save.php',
 			parameters : values,
-			onSuccess : function(obj) {
+			$success : function(obj) {
 				hui.ui.showMessage({text:'Ændringerne er nu gemt',icon:'common/success',duration:2000});
 				window.parent.frames[0].controller.markChanged();
 			}
@@ -37,7 +37,7 @@ var controller = {
 			hui.ui.request({
 				url : 'data/DeleteItem.php',
 				parameters : {id : info.row.id},
-				onSuccess : function() {
+				$success : function() {
 					listSource.refresh();
 				}
 			});

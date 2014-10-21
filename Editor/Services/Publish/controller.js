@@ -6,7 +6,7 @@ hui.ui.listen({
 		hui.ui.request({
 			url:'PublishOne.php',
 			parameters:{id:item.row.id,kind:item.row.kind},
-			onSuccess : function() {
+			$success : function() {
 				listSource.refresh();
 				hui.ui.tellContainers('pageChanged');
 			}
@@ -24,7 +24,7 @@ hui.ui.listen({
 	$click$publishAll : function() {
 		hui.ui.request({
 			url:'PublishAll.php',
-			onSuccess : function() {
+			$success : function() {
 				listSource.refresh();
 				hui.ui.tellContainers('pageChanged');
 			}
