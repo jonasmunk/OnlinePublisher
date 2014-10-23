@@ -1570,7 +1570,7 @@ hui._onReady = function(delegate) {
  */
 hui.request = function(options) {
 	options = hui.override({method:'POST',async:true,headers:{Ajax:true}},options);
-	var transport = hui.request.createTransport(options);
+	var transport = hui.request.createTransport();
 	if (!transport) {return;}
 	transport.onreadystatechange = function() {
 		try {
