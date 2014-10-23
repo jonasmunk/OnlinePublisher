@@ -409,6 +409,7 @@ $databaseTables = array(
 	'page_cache' => array(
 			array("page_id","int(11)","YES","","",""),
 			array("stamp","datetime","YES","","",""),
+			array("version","int(11)","","","0",""),
 			array("html","mediumtext","YES","","",""),
 			array("path","varchar(1024)","YES","","","")
 	),

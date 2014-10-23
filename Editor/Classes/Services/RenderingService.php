@@ -115,7 +115,7 @@ class RenderingService {
             'absolute-path' => $absolutePath,
             'absolute-page-path' => $absolutePagePath,
             'template' => $template,
-            'agent' => RenderingService::_getAgent(),
+//            'agent' => RenderingService::_getAgent(), // TODO Disabled for performance reasons (not in use)
             'userid' => $userId,
             'username' => $userName,
             'usertitle' => $userTitle,

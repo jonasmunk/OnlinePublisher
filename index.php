@@ -13,6 +13,18 @@ if (!file_exists('Config/Setup.php')) {
 }
 require_once 'Editor/Include/Public.php';
 
+require_once 'Editor/Classes/Core/Database.php';
+require_once 'Editor/Classes/Core/Request.php';
+require_once 'Editor/Classes/Core/SystemInfo.php';
+require_once 'Editor/Classes/Utilities/Strings.php';
+require_once 'Editor/Classes/Services/RenderingService.php';
+require_once 'Editor/Classes/Services/ConfigurationService.php';
+require_once 'Editor/Classes/Services/CacheService.php';
+require_once 'Editor/Classes/Services/XslService.php';
+require_once 'Editor/Classes/Services/TemplateService.php';
+require_once 'Editor/Classes/Services/ClassService.php';
+require_once 'Editor/Classes/Templates/TemplateController.php';
+
 session_set_cookie_params(0);
 session_start();
 

@@ -34,7 +34,8 @@ class CacheService {
 			return false;
 		}
 		$sql = "select page_cache.html,UNIX_TIMESTAMP(page.published) as published from page_cache,page,frame where page.secure=0 and page.dynamic=0 and page.id=page_cache.page_id and page.frame_id=frame.id and frame.dynamic=0";
-		if (strlen($path)>0) {
+		$sql.= " and page_cache.version=".Database::int(SystemInfo::getDate());
+    if (strlen($path)>0) {
 			$sql.=" and page_cache.path=".Database::text($path);
 			$sql.=" and page.path=".Database::text($path);
 		} else {
@@ -70,7 +71,7 @@ class CacheService {
 			$sql.=" and (page_cache.path is null or page_cache.path='')";
 		}
 		Database::delete($sql);
-		$sql = "insert into page_cache (page_id,path,html,stamp) values (".Database::int($id).",".Database::text($path).",".$html.",now())";
+		$sql = "insert into page_cache (page_id,path,html,stamp,version) values (".Database::int($id).",".Database::text($path).",".$html.",now(),".Database::int(SystemInfo::getDate()).")";
 		Database::insert($sql);
 	}
 	
