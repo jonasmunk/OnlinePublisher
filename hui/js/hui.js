@@ -1570,7 +1570,8 @@ hui._onReady = function(delegate) {
  */
 hui.request = function(options) {
 	options = hui.override({method:'POST',async:true,headers:{Ajax:true}},options);
-	var transport = hui.request.createTransport();
+	var transport = hui.request.createTransport(options);
+	if (!transport) {return;}
 	transport.onreadystatechange = function() {
 		try {
 			if (transport.readyState == 4) {
@@ -1714,16 +1715,11 @@ hui.request.createTransport = function() {
 		}
 		else if (window.ActiveXObject) {
 			return hui.request._getActiveX();
-		} else {
-			// Could not create transport
-			this.delegate.onError(this);
 		}
 	}
 	catch (ex) {
-		if (this.delegate.onError) {
-			this.delegate.onError(this,ex);
-		}
 	}
+	return null;
 }
 
 hui.request._getActiveX = function() {
