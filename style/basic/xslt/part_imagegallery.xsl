@@ -114,6 +114,7 @@
                 </xsl:with-param>
             </xsl:call-template>
         </span>
+        <xsl:text> </xsl:text>
 	</xsl:template>
 
 </xsl:stylesheet>

@@ -40,7 +40,7 @@ class RenderingService {
 		// Translations
 		$sql="select page.id,page.language,page.path from page_translation,page".
 		" where page.id=page_translation.translation_id and page.disabled=0".
-		" and page_translation.page_id=".$id." order by language";
+		" and page_translation.page_id=".Database::int($id)." order by language";
 		$result = Database::select($sql);
 		while ($row = Database::next($result)) {
 			$output.='<translation page="'.$row['id'].'"'.($row['path']!='' ? ' path="'.Strings::escapeEncodedXML($row['path']).'"' : '').($row['language']!='' ? ' language="'.Strings::escapeEncodedXML(strtolower($row['language'])).'"' : '').'/>';
