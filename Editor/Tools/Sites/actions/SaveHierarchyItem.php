@@ -7,7 +7,7 @@ require_once '../../../Include/Private.php';
 
 $data = Request::getObject('data');
 
-if ($data->id) {
+if (isset($data->id)) {
 	$item = HierarchyItem::load($data->id);
 	$item->setTitle($data->title);
 	$item->setHidden($data->hidden);

@@ -51,8 +51,8 @@ class Database {
 	}
 	
 	static function getConnection() {
-		$config = ConfigurationService::getDatabase();
 		if (!isset($GLOBALS['OP_CON'])) {
+    		$config = ConfigurationService::getDatabase();
 			$con = mysqli_connect($config['host'], $config['user'],$config['password'],false);
 			if (!$con) {
 				return false;

@@ -124,12 +124,18 @@ class Request {
 	}
 
 	/**
-	 * Gets the boolean value of a variable passed thru the get protocol
-	 * @param string $key The name of the variable
+	 * Gets the boolean value of a request parameter
+	 * @param string $key The name of the parameter
 	 * @return boolean True if the value equals "true", false otherwise
 	 */
 	static function getBoolean($key) {
-        return Request::getString($key)=='true';
+        if (isset($_POST[$key])) {
+            return $_POST[$key] == 'true';
+        }
+        if (isset($_GET[$key])) {
+            return $_GET[$key] == 'true';
+        }
+        return false;
 	}
 
 	/**

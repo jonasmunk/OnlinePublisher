@@ -10,8 +10,8 @@ class Response {
         if (!ConfigurationService::isUnicode()) {
     		$obj = Strings::toUnicode($obj);            
         }
-		header('Content-Type: text/plain; charset=utf-8');
-		echo Strings::toJSON($obj);
+        header('Content-Type: text/plain; charset=utf-8');
+        echo Strings::toJSON($obj);
 	}
     
     static function setExpiresInHours($hours=0) {

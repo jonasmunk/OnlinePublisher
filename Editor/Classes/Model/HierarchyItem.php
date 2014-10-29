@@ -130,6 +130,7 @@ class HierarchyItem extends Entity implements Loadable {
 			" where id=".$this->id;
 			Database::update($sql);
 			Hierarchy::markHierarchyOfItemChanged($this->id);
+		    EventService::fireEvent('update','hierarchy',null,$this->hierarchyId);
 		}
 	}
 }

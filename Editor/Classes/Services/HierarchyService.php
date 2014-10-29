@@ -33,14 +33,16 @@ class HierarchyService {
 
     static function updateHierarchy($hierarchy) {
 		if (!$hierarchy) {
-			Log::debug('No hierarchy');
+			Log::warn('No hierarchy');
 			return;
 		}
         $sql="update hierarchy set ".
         "name=".Database::text($hierarchy->getName()).
         ",language=".Database::text($hierarchy->getLanguage()).
         " where id=".Database::int($hierarchy->getId());
-        return Database::update($sql);
+        $result = Database::update($sql);
+		EventService::fireEvent('update','hierarchy',null,$hierarchy->getId());
+        return $result;
     }
 
     static function canDeleteHierarchy($id) {
@@ -198,6 +200,7 @@ class HierarchyService {
 		")";
 		$id = Database::insert($sql);
 		HierarchyService::markHierarchyChanged($options['hierarchyId']);
+		EventService::fireEvent('update','hierarchy',null,$options['hierarchyId']);
 		return $id;
 	}
     

@@ -229,6 +229,8 @@ $HUMANISE_EDITOR_CLASSES = array (
     'InternalSession' => 'Core/InternalSession.php',
     'Loadable' => 'Core/Loadable.php',
     'Log' => 'Core/Log.php',
+    'ModelAuditor' => 'Core/ModelAuditor.php',
+    'ModelEventListener' => 'Core/ModelEventListener.php',
     'PageQuery' => 'Core/PageQuery.php',
     'Query' => 'Core/Query.php',
     'Request' => 'Core/Request.php',
@@ -245,6 +247,10 @@ $HUMANISE_EDITOR_CLASSES = array (
       1 => 'Hierarchy',
       2 => 'HierarchyItem',
       3 => 'Link',
+    ),
+    'ModelEventListener' => 
+    array (
+      0 => 'ModelAuditor',
     ),
   ),
   'parents' => 

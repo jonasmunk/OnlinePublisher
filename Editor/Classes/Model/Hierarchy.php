@@ -192,7 +192,7 @@ class Hierarchy extends Entity implements Loadable {
 	        	$sql="update hierarchy set changed=now() where id=".Database::int($hierarchyId);
 	        	Database::update($sql);
 	        	$output = true;
-				EventService::fireEvent('update','hierarchy',null,$id);
+				EventService::fireEvent('update','hierarchy',null,$hierarchyId);
 	        }
 	        Database::free($result);
 		} else {
@@ -242,6 +242,7 @@ class Hierarchy extends Entity implements Loadable {
 	static function markHierarchyOfItemChanged($id) {
 	    $sql = "update hierarchy,hierarchy_item set hierarchy.changed=now() where hierarchy.id=hierarchy_item.hierarchy_id and hierarchy_item.id=".Database::int($id);
         Database::update($sql);
+        
 	}
 	
 	static function markHierarchyOfPageChanged($id) {
@@ -311,7 +312,9 @@ class Hierarchy extends Entity implements Loadable {
 		Database::free($result);
 
 		Hierarchy::markHierarchyOfItemChanged($move);
-		
+
+	    EventService::fireEvent('update','hierarchy',null,$moveHierarchy);
+        
 		return array('success'=>true);
 	}
 }

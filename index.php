@@ -17,16 +17,13 @@ require_once 'Editor/Classes/Core/Database.php';
 require_once 'Editor/Classes/Core/Request.php';
 require_once 'Editor/Classes/Core/SystemInfo.php';
 require_once 'Editor/Classes/Utilities/Strings.php';
-require_once 'Editor/Classes/Services/RenderingService.php';
 require_once 'Editor/Classes/Services/ConfigurationService.php';
 require_once 'Editor/Classes/Services/CacheService.php';
-require_once 'Editor/Classes/Services/XslService.php';
-require_once 'Editor/Classes/Services/TemplateService.php';
 require_once 'Editor/Classes/Services/ClassService.php';
-require_once 'Editor/Classes/Templates/TemplateController.php';
 
-session_set_cookie_params(0);
-session_start();
+// TODO Is it necessary to start the session each time?
+//session_set_cookie_params(0);
+//session_start();
 
 if (!Database::testConnection()) {
 	$error = '<title>The page is not available at the moment</title>'.
@@ -50,11 +47,15 @@ if (Request::getBoolean('logout')) {
 	ExternalSession::logOut();
 }
 
-//Log::debug('Path : "'.$path.'", id : "'.$id.'"');
-
 if (CacheService::sendCachedPage($id,$path)) {
 	exit;
 }
+
+require_once 'Editor/Classes/Services/RenderingService.php';
+require_once 'Editor/Classes/Services/XslService.php';
+require_once 'Editor/Classes/Services/TemplateService.php';
+require_once 'Editor/Classes/Templates/TemplateController.php';
+
 
 if (strlen($path)>1) {
 	$relative = str_repeat('../',substr_count($path,'/'));

@@ -111,8 +111,7 @@ class ClassService {
 	}
     
     static function getByInterface($interface) {
-		global $basePath;
-        require_once $basePath.'Editor/Info/Classes.php';
+		global $HUMANISE_EDITOR_CLASSES;
         if (is_array($HUMANISE_EDITOR_CLASSES['interfaces'][$interface])) {
             return $HUMANISE_EDITOR_CLASSES['interfaces'][$interface];
         }

@@ -43,7 +43,7 @@ class ToolService {
 				}
 				$categorized[$info->category][$key] = $info;
 			} else {
-				Log::debug('Tool not found: '.$key);
+				Log::warn('Tool not found: '.$key);
 			}
 		}
 		foreach ($categorized as $key => &$value) {
