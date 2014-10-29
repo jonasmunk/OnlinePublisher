@@ -74,3 +74,20 @@ hr.part_horizontalrule
     font-size: 11pt;
     line-height: 1.4em;
 }
+
+/** Menu **/
+
+.part_section_menu {
+    margin-bottom: 20px;
+}
+
+.part_menu_link {
+    color: #349;
+    display: inline-block;
+    text-decoration: none;
+}
+
+.part_menu_link:before {
+    content: '›';
+    margin-right: 5px;
+}

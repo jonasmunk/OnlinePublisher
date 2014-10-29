@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="ISO-8859-1"?>
+<?xml version="1.0" encoding="UTF-8"?>
 
 <xsl:stylesheet version="1.0"
  xmlns="http://www.w3.org/1999/xhtml"
@@ -9,7 +9,15 @@
  >
 
 <xsl:template match="m:menu">
-    <xsl:apply-templates/>
+    <div>
+        <xsl:attribute name="class">
+            <xsl:text>part_menu</xsl:text>
+            <xsl:if test="@variant!=''">
+                <xsl:text> part_menu_</xsl:text><xsl:value-of select="@variant"/>
+            </xsl:if>
+        </xsl:attribute>
+        <xsl:apply-templates/>
+    </div>
 </xsl:template>
 
 <xsl:template match="m:items">
@@ -20,7 +28,9 @@
     <li class="part_menu_item">
         <a class="part_menu_link">
             <xsl:call-template name="util:link"/>
-            <xsl:value-of select="@title"/>
+            <span class="part_menu_link_text">
+                <xsl:value-of select="@title"/>
+            </span>
         </a>
         <xsl:if test="m:item">
             <ul class="part_menu_level">
