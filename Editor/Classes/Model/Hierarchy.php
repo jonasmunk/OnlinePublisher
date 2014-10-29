@@ -148,7 +148,8 @@ class Hierarchy extends Entity implements Loadable {
 	    $data = $this->build($this->id,$allowDisabled);
 	    $sql="update hierarchy set published=now(),data=".Database::text($data)." where id=".Database::int($this->id);
 	    Database::update($sql);
-		CacheService::clearCompletePageCache();
+        
+        EventService::fireEvent('publish','hierarchy',null,$this->id);
     }
     
     static function build($id,$allowDisabled=true) {

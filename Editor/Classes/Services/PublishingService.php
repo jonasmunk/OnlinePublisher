@@ -27,9 +27,8 @@ class PublishingService {
 		Database::update($sql);
 		$sql="insert into page_history (page_id,user_id,data,time) values (".$id.",".InternalSession::getUserId().",".Database::text($result['data']).",now())";
 		Database::insert($sql);
-		
-		// Clear page cache
-		CacheService::clearPageCache($id);
+
+		EventService::fireEvent('publish','page',null,$id);		
 	}
 	
 	static function reIndexPage($id) {
@@ -125,8 +124,11 @@ class PublishingService {
 	}
 	
 	static function publishFrame($id) {
-		$sql="select * from frame where id=".$id;
-		$row = Database::selectFirst($sql);
+		$sql="select * from frame where id=@int(id)";
+		$row = Database::selectFirst($sql,['id'=>$id]);
+        if (!$row) {
+            return;
+        }
 		$data='';
 		$dynamic=0;
 		if ($row['searchenabled']) {
@@ -165,8 +167,7 @@ class PublishingService {
 		$sql="update frame set data=".Database::text($data).",published=now(),dynamic=".$dynamic." where id=".$id;
 		Database::update($sql);
 	
-		// Clear page cache
-		CacheService::clearPageCache($id);
+        EventService::fireEvent('publish','frame',null,$id);
 	}
 	
 	static function buildFrameLinks($id,$position) {

@@ -83,7 +83,7 @@ class SpecialPage extends Entity {
 	function remove() {
 		$sql = "delete from specialpage where id = ".Database::int($this->id);
 		$result = Database::delete($sql);
-		CacheService::clearCompletePageCache();
+        EventService::fireEvent('delete','specialpage',null,$this->id);
 		return $result;
 	}
 	
@@ -95,6 +95,7 @@ class SpecialPage extends Entity {
 			",page_id=".Database::int($this->pageId).
 			" where id=".Database::int($this->id);
 			Database::update($sql);
+            EventService::fireEvent('update','specialpage',null,$this->id);
 		} else {
 			$sql="insert into specialpage (`type`,language,page_id) values (".
 			Database::text($this->type).",".
@@ -102,7 +103,7 @@ class SpecialPage extends Entity {
 			Database::int($this->pageId).
 			")";
 			$this->id = Database::insert($sql);
+            EventService::fireEvent('create','specialpage',null,$this->id);
 		}
-		CacheService::clearCompletePageCache();
 	}
 }
