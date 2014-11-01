@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="ISO-8859-1"?>
+<?xml version="1.0" encoding="UTF-8"?>
 
 <xsl:stylesheet version="1.0"
  xmlns="http://www.w3.org/1999/xhtml"
@@ -11,12 +11,12 @@
 	<xsl:template match="map:map[@frame]">
 		<span>
 			<xsl:attribute name="class">
+                <xsl:text>part_map</xsl:text>
 				<xsl:if test="not(@width) and @provider='google-interactive'">
 					<xsl:text> shared_frame_adaptive</xsl:text>
 				</xsl:if>
 			</xsl:attribute>
             
-    
             <xsl:call-template name="util:wrap-in-frame">
                 <xsl:with-param name="variant" select="@frame"/>
                 <xsl:with-param name="content">

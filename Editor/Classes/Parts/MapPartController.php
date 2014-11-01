@@ -97,7 +97,7 @@ class MapPartController extends PartController
 		}
 		$xml.='>';
 		if ($part->getText()) {
-			$xml.='<text>'.Strings::escapeXML($part->getText()).'</text>';
+			$xml.='<text>'.Strings::escapeSimpleXML($part->getText()).'</text>';
 		}
 		$markers = Strings::fromJSON(Strings::toUnicode($part->getMarkers()));
 		if (is_array($markers)) {
