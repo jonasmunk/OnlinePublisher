@@ -3617,7 +3617,6 @@ hui.ui._resize = function() {
 }
 
 hui.ui._afterResize = function() {
-	hui.log('afterResize')
 	hui.ui.callSuperDelegates(hui.ui,'$afterResize');
 }
 
