@@ -1302,10 +1302,19 @@ div.part_table td
 
 
 
-hr.part_horizontalrule
+.part_horizontalrule
 {
 	border: none;
 	border-bottom: solid 1px #ddd;
+}
+
+.part_movie_text {
+	font-weight: normal;
+	font-size: 24px;
+}
+
+.part_movie_text_inner {
+	padding-top: 2px;
 }
 /* style/lottemunk/css/main.css */
 section,header,p,header,footer,figure
@@ -1388,7 +1397,7 @@ header nav
 
 	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#1a2128', endColorstr='#0d0d0d',GradientType=0 ); /* IE6-9 */
 
-	
+	overflow: hidden;
 	position: absolute;
 	bottom: -40px;
 	right: 0;
@@ -2737,6 +2746,11 @@ body.small #video article p
 }
 
 @media screen and (max-width: 700px) {
+	
+	body.front header nav a
+	{
+		padding: 0 5px;
+	}
 }
 
 

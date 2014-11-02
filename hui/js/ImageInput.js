@@ -36,6 +36,7 @@ hui.ui.ImageInput.prototype = {
 	_clear : function(e) {
 		hui.stop(e);
 		this.reset();
+		this._fireChange();
 	},
 	reset : function() {
 		this.value = null;

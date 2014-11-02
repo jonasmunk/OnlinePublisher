@@ -101,8 +101,17 @@ div.part_table td
 
 
 
-hr.part_horizontalrule
+.part_horizontalrule
 {
 	border: none;
 	border-bottom: solid 1px #ddd;
+}
+
+.part_movie_text {
+	font-weight: normal;
+	font-size: 24px;
+}
+
+.part_movie_text_inner {
+	padding-top: 2px;
 }

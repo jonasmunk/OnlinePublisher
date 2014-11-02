@@ -70,7 +70,7 @@ hui.browser.animation = !hui.browser.msie6 && !hui.browser.msie7 && !hui.browser
 
 hui.browser.wordbreak = !hui.browser.msie6 && !hui.browser.msie7 && !hui.browser.msie8;
 
-hui.browser.touch = "ontouchstart" in window || window.DocumentTouch && document instanceof DocumentTouch;
+hui.browser.touch = (!!('ontouchstart' in window) || (!!('onmsgesturechange' in window) && !!window.navigator.maxTouchPoints)) ? true : false;
 
 (function() {
 	var result = /Safari\/([\d.]+)/.exec(navigator.userAgent);

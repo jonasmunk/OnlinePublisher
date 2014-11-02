@@ -132,6 +132,11 @@ body.small #video article p
 }
 
 @media screen and (max-width: 700px) {
+	
+	body.front header nav a
+	{
+		padding: 0 5px;
+	}
 }
 
 
