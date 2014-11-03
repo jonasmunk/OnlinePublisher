@@ -9,10 +9,19 @@ if (!isset($GLOBALS['basePath'])) {
 }
 
 Entity::$schema['Frame'] = array(
-	'table' => 'page',
+	'table' => 'frame',
 	'properties' => array(
+		'id' => array('type'=>'int'),
 		'title' => array('type'=>'string'),
-		'hierarchyId' => array('type'=>'int','relation'=>array('class'=>'Hierarchy','property'=>'id'))
+		'name' => array('type'=>'string'),
+		'bottomText' => array('type'=>'string','column'=>'bottomtext'),
+		'changed' => array('type'=>'datetime'),
+		'published' => array('type'=>'datetime'),
+		'searchEnabled' => array('type'=>'boolean','column'=>'searchenabled'),
+		'userStatusEnabled' => array('type'=>'boolean','column'=>'userstatusenabled'),
+		'searchPageId' => array('type'=>'int','column'=>'searchpage_id','relation'=>array('class'=>'Page','property'=>'id')),
+    	'loginPageId' => array('type'=>'int','column'=>'userstatuspage_id','relation'=>array('class'=>'Page','property'=>'id')),
+		'hierarchyId' => array('type'=>'int','column'=>'hierarchy_id','relation'=>array('class'=>'Hierarchy','property'=>'id'))
 	)
 );
 class Frame extends Entity implements Loadable {
@@ -22,6 +31,7 @@ class Frame extends Entity implements Loadable {
 	var $bottomText;
 	var $hierarchyId;
 	var $changed;
+    var $published;
 	var $searchEnabled;
 	var $searchPageId;
 	var $userStatusEnabled;
@@ -105,6 +115,15 @@ class Frame extends Entity implements Loadable {
 	function getLoginPageId() {
 	    return $this->loginPageId;
 	}
+    
+    function setPublished($published) {
+        $this->published = $published;
+    }
+    
+    function getPublished() {
+        return $this->published;
+    }
+    
 		
 	// Utils...
 

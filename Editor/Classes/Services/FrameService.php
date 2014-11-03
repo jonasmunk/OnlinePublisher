@@ -118,22 +118,7 @@ class FrameService {
 	}
 	
 	static function load($id) {
-		$sql = "select id,title,bottomtext,name,hierarchy_id,UNIX_TIMESTAMP(changed) as changed,searchenabled,searchpage_id,userstatusenabled,userstatuspage_id from frame where id=".Database::int($id);
-		if ($row = Database::selectFirst($sql)) {
-			$frame = new Frame();
-			$frame->setId(intval($row['id']));
-			$frame->setTitle($row['title']);
-			$frame->setBottomText($row['bottomtext']);
-			$frame->setName($row['name']);
-			$frame->setHierarchyId(intval($row['hierarchy_id']));
-			$frame->setSearchEnabled($row['searchenabled'] ? true : false);
-			$frame->setSearchPageId(intval($row['searchpage_id']));
-			$frame->setUserStatusEnabled($row['userstatusenabled'] ? true : false);
-			$frame->setLoginPageId(intval($row['userstatuspage_id']));
-			$frame->changed = intval($row['changed']);
-			return $frame;
-		}
-		return null;
+        return ModelService::load('Frame',$id);
 	}
 	
     static function canRemove($frame) {
@@ -196,7 +181,6 @@ class FrameService {
 	}
 	
 	static function replaceNewsBlocks($frame,$blocks) {
-		Log::debug($blocks);
 		
 		if (!is_object($frame)) {
 			Log::debug('No frame provided');
