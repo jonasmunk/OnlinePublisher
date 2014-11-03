@@ -60,28 +60,19 @@ class In2iGui {
 		'</xsl:stylesheet>';
 	
         header('X-UA-Compatible: IE=edge');
-		if (function_exists('xslt_create')) {
-			$arguments = array('/_xml' => &$xmlData,'/_xsl' => &$xslData);
-			$xp = xslt_create();
-			header('Content-Type: '.($xhtml ? 'application/xhtml+xml' : 'text/html'));
-			echo xslt_process($xp, 'arg:/_xml', 'arg:/_xsl', NULL, $arguments );
-	    	xslt_free($xp);
+		function xslErrorHandler($errno, $errmsg, $filename, $linenum, $vars) {
+			header('Content-Type: text/xml');
+			echo $vars['gui'];
+			exit;
 		}
-		else {
-			function xslErrorHandler($errno, $errmsg, $filename, $linenum, $vars) {
-				header('Content-Type: text/xml');
-				echo $vars['gui'];
-				exit;
-			}
-			header('Content-Type: '.($xhtml ? 'application/xhtml+xml' : 'text/html').'; charset=UTF-8');
-			$xslt = new xsltProcessor;
-			$doc = new DOMDocument();
-			$doc->loadXML($xslData);
-			$xslt->importStyleSheet($doc);
-			$doc = new DOMDocument();
-			$doc->loadXML($xmlData);
-			echo MarkupUtils::moveScriptsToBottom($xslt->transformToXML($doc));
-		}
+		header('Content-Type: '.($xhtml ? 'application/xhtml+xml' : 'text/html').'; charset=UTF-8');
+		$xslt = new xsltProcessor;
+		$doc = new DOMDocument();
+		$doc->loadXML($xslData);
+		$xslt->importStyleSheet($doc);
+		$doc = new DOMDocument();
+		$doc->loadXML($xmlData);
+		echo MarkupUtils::moveScriptsToBottom($xslt->transformToXML($doc));
 	}
 	
 	static function localize($xml,$language='en') {
