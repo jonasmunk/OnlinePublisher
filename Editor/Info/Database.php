@@ -570,8 +570,9 @@ $databaseTables = array(
 		),
 	'part_menu' => array(
 			array("part_id","int(11)","","","0",""),
-			array("hierarchy_id","int(11)","","","0",""),
+			array("hierarchy_id","int(11)","YES","","",""),
 			array("variant","varchar(255)","YES","","",""),
+			array("header","varchar(255)","YES","","",""),
     		array("depth","int(11)","","","0","")
 		),
 	'part_movie' => array(

@@ -30,6 +30,7 @@ class TestMenuPart extends UnitTestCase {
 		$obj = new MenuPart();
 		$obj->setHierarchyId(10);
 		$obj->setVariant('plain');
+		$obj->setHeader('My header');
 		$obj->setDepth(5);
 		$obj->save();
 		
@@ -37,6 +38,7 @@ class TestMenuPart extends UnitTestCase {
         $this->assertNotNull($loaded);
 		$this->assertEqual($loaded->getHierarchyId(),10);
 		$this->assertEqual($loaded->getVariant(),'plain');
+		$this->assertEqual($loaded->getHeader(),'My header');
 		$this->assertEqual($loaded->getDepth(),5);
 		
 		$loaded->remove();
@@ -46,6 +48,7 @@ class TestMenuPart extends UnitTestCase {
 		$obj = new MenuPart();
 		$obj->setHierarchyId(1234);
 		$obj->setVariant('Get me back!');
+		$obj->setHeader('My header');
 		$obj->setDepth(3);
 		$ctrl = new MenuPartController();
 		
@@ -59,6 +62,7 @@ class TestMenuPart extends UnitTestCase {
 		$this->assertIdentical($imported->getHierarchyId(),$obj->getHierarchyId());
 		$this->assertIdentical($imported->getVariant(),$obj->getVariant());
 		$this->assertIdentical($imported->getDepth(),$obj->getDepth());
+		$this->assertIdentical($imported->getHeader(),$obj->getHeader());
 	}
         
 }

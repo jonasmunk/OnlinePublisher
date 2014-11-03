@@ -1025,6 +1025,10 @@ div.part_mailinglist input.text
     margin: 0;
     padding: 0;
 }
+
+.part_menu_level_sub {
+    padding-left: 20px;
+}
 /* style/basic/css/part_movie.css */
 .part_movie_body
 {

@@ -152,7 +152,7 @@ class ListPartController extends PartController
 				</tab>
 			</tabs>
 		</window>';
-		return In2iGui::renderFragment($gui);
+		return UI::renderFragment($gui);
 	}
 	
 	function buildData($part) {

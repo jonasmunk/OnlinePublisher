@@ -12,6 +12,7 @@ Entity::$schema['MenuPart'] = [
 	'table' => 'part_menu',
 	'properties' => [
 		'hierarchyId' => [ 'type' => 'int', 'column' => 'hierarchy_id', 'relation' => ['class' => 'Hierarchy','property' => 'id'] ],
+		'header' => [ 'type' => 'string' ],
 		'variant' => [ 'type' => 'string' ],
         'depth' => [ 'type' => 'int' ],
 	]
@@ -21,6 +22,7 @@ class MenuPart extends Part
 {
 	var $hierarchyId;
 	var $variant;
+    var $header;
     var $depth;
 
 	function MenuPart() {
@@ -53,6 +55,14 @@ class MenuPart extends Part
     
     function getDepth() {
         return $this->depth;
+    }
+    
+    function setHeader($header) {
+        $this->header = $header;
+    }
+    
+    function getHeader() {
+        return $this->header;
     }
     
 }

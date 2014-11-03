@@ -20,6 +20,10 @@
     </div>
 </xsl:template>
 
+<xsl:template match="m:header">
+    <h2 class="part_menu_header"><xsl:value-of select="."/></h2>
+</xsl:template>
+
 <xsl:template match="m:items">
     <ul class="part_menu_level"><xsl:apply-templates/></ul>
 </xsl:template>
@@ -33,7 +37,7 @@
             </span>
         </a>
         <xsl:if test="m:item">
-            <ul class="part_menu_level">
+            <ul class="part_menu_level part_menu_level_sub">
                 <xsl:apply-templates/>
             </ul>
         </xsl:if>

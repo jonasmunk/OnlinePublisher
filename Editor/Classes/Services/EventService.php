@@ -110,7 +110,16 @@ class EventService {
                     from document_section,part_menu,page,frame
                     where document_section.part_id=part_menu.part_id
                     and page.id = document_section.page_id
-                    and page.frame_id = frame.id and frame.hierarchy_id = @int(hierarchyId)";
+                    and page.frame_id = frame.id 
+                    and frame.hierarchy_id = @int(hierarchyId)
+                    and part_menu.hierarchy_id = 0
+                    
+                    union select distinct page.id
+                    from document_section,part_menu,page
+                    where document_section.part_id=part_menu.part_id
+                    and page.id = document_section.page_id
+                    and part_menu.hierarchy_id = @int(hierarchyId)
+                ";
                 $ids = Database::selectIntArray($sql, ['hierarchyId' => $id] );
                 foreach ($ids as $id) {
     				PageService::markChanged($id);
