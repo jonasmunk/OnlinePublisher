@@ -29,6 +29,7 @@ class TestFrame extends UnitTestCase {
 		
 		$loaded = Frame::load($obj->getId());
 		$this->assertNotNull($loaded);
+		$this->assertEqual($loaded->getId(),$obj->getId());
 		$this->assertEqual($loaded->getName(),'My frame name');
 		$this->assertEqual($loaded->getTitle(),'My frame title');
 		$this->assertEqual($loaded->getBottomText(),'This is the bottom text');
