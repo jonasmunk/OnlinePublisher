@@ -304,7 +304,7 @@
 			
 		<xsl:call-template name="util:style-ie6"/>
 		<xsl:call-template name="util:style-lt-ie9"/>
-		<link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Lato:300,400,700" type="text/css" media="screen" title="no title" charset="utf-8"/>
+		<link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Lato:300,400,700" type="text/css" media="screen" title="no title"/>
 		<xsl:call-template name="util:scripts-build"/>
 		<xsl:call-template name="util:style-build"/>
 		<!--
@@ -389,6 +389,7 @@
 			<div class="layout_base">
 				<div class="layout_info">
 					<div class="about">
+                        <xsl:attribute name="data-editable">{"name":"about"}</xsl:attribute>
 						<xsl:choose>
 							<xsl:when test="//p:page/p:meta/p:language='en'">
 								<h2>About Humanise</h2>
