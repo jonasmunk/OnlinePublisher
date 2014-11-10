@@ -95,7 +95,10 @@ hui.ui.Toolbar.Icon = function(options) {
 	this.element.tabIndex=this.enabled ? 0 : -1;
 	this.icon = hui.get.firstByClass(this.element,'hui_icon');
 	hui.ui.extend(this);
-	this.addBehavior();
+  if (options.listener) {
+    this.listen(options.listener);
+  }
+	this._attach();
 }
 
 hui.ui.Toolbar.Icon.create = function(options) {
@@ -113,11 +116,10 @@ hui.ui.Toolbar.Icon.create = function(options) {
 }
 
 hui.ui.Toolbar.Icon.prototype = {
-	/** @private */
-	addBehavior : function() {
+	_attach : function() {
 		var self = this;
 		this.element.onclick = function() {
-			self.wasClicked();
+			self._click();
 		}
 	},
 	/** Sets wether the icon should be enabled */
@@ -171,25 +173,24 @@ hui.ui.Toolbar.Icon.prototype = {
 		hui.cls.set(this.element,'hui_toolbar_icon_selected',selected);
 	},
 	/** @private */
-	wasClicked : function() {
+	_click : function() {
 		if (this.enabled) {
 			if (this.options.confirm) {
 				hui.ui.confirmOverlay({
-					widget:this,
-					text:this.options.confirm.text,
-					okText:this.options.confirm.okText,
-					cancelText:this.options.confirm.cancelText,
-					onOk:this.fireClick.bind(this)
+					widget : this,
+					text : this.options.confirm.text,
+					okText : this.options.confirm.okText,
+					cancelText : this.options.confirm.cancelText,
+					onOk : this._fireClick.bind(this)
 				});
 			} else {
-				this.fireClick();
+				this._fireClick();
 			}
 		}
 	},
-	/** @private */
-	fireClick : function() {
-		hui.ui.callDelegates(this,'toolbarIconWasClicked');
-		hui.ui.callDelegates(this,'click');
+	_fireClick : function() {
+		this.fire('toolbarIconWasClicked'); // TODO deprecated
+		this.fire('click');
 	}
 }
 
