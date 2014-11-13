@@ -57,6 +57,7 @@ class Database {
 			if (!$con) {
 				return false;
 			}
+            // TODO mysqli_set_charset is expensive - and sometimes it has no effect (it is correct already)
             if (ConfigurationService::isUnicode()) {
                 mysqli_set_charset($con,'utf8');
             } else {
