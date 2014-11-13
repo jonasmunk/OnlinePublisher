@@ -2906,6 +2906,10 @@ div.part_mailinglist input.text
 	white-space: pre;
 }
 /* style/basic/css/part_menu.css */
+.part_menu_header {
+    margin: 0;
+}
+
 .part_menu_level {
     list-style: none;
     margin: 0;

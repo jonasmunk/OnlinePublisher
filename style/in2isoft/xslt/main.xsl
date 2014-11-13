@@ -389,7 +389,6 @@
 			<div class="layout_base">
 				<div class="layout_info">
 					<div class="about">
-                        <xsl:attribute name="data-editable">{"name":"about"}</xsl:attribute>
 						<xsl:choose>
 							<xsl:when test="//p:page/p:meta/p:language='en'">
 								<h2>About Humanise</h2>
@@ -400,12 +399,20 @@
 								<p class="more"><a href="{$path}om/" class="common"><span>More about Humanise »</span></a></p>
 							</xsl:when>
 							<xsl:otherwise>
-								<h2>Om Humanise</h2>
-								<p>Vores focus er på brugeroplevelse og design. Vi leder altid efter
-									den mest enkle og essentielle løsning. Vi tror på at maskinen skal
-									arbejde for mennesket. Vi mener at viden bør være fri
-									og tilgængelig for alle. Vi håber du er enig :-)
-								</p>
+                                <div>
+                                    <xsl:attribute name="data-editable">{"name":"about"}</xsl:attribute>
+                                <xsl:call-template name="util:parameter">
+                                    <xsl:with-param name="name" select="'about'"/>
+                                    <xsl:with-param name="default">
+        								<h2>Om Humanise</h2>
+        								<p>Vores focus er på brugeroplevelse og design. Vi leder altid efter
+        									den mest enkle og essentielle løsning. Vi tror på at maskinen skal
+        									arbejde for mennesket. Vi mener at viden bør være fri
+        									og tilgængelig for alle. Vi håber du er enig :-)
+        								</p>                                        
+                                    </xsl:with-param>
+                                </xsl:call-template>
+                                </div>
 								<p class="more"><a href="{$path}om/" class="common"><span>Mere om Humanise »</span></a></p>
 							</xsl:otherwise>
 						</xsl:choose>
@@ -436,7 +443,6 @@
 	</body>
 </html>
 </xsl:template>
-
 
 <xsl:template match="p:content">
 <div>
