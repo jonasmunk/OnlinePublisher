@@ -9,12 +9,12 @@ if (!isset($GLOBALS['basePath'])) {
 }
 
 class ModelService {
-    
+
     static function buildSelect($class) {
         $hierarchy = ClassService::_getHierarchy($class);
         return ModelService::_buildSelect($hierarchy);
     }
-    
+
     static function _buildSelect($hierarchy) {
         $sqlColumns = [];
         $sqlTables = [];
@@ -30,7 +30,7 @@ class ModelService {
                 if ($fieldInfo['type']=='datetime') {
                     $sqlColumns[] = 'UNIX_TIMESTAMP(`' . $info['table'] . '`.`' . $column . '`) as ' . $info['table'] . '_' . $column;
                 } else {
-                    $sqlColumns[] = '`' . $info['table'] . '`.`' . $column . '` as ' . $info['table'] . '_' . $column;                    
+                    $sqlColumns[] = '`' . $info['table'] . '`.`' . $column . '` as ' . $info['table'] . '_' . $column;
                 }
             }
         }
@@ -42,15 +42,15 @@ class ModelService {
         if (count($sqlWhere)>0) {
             $sql.= ' where ' . join($sqlWhere,' and ');
         }
-        return $sql;        
+        return $sql;
     }
-    
+
     static function load($class,$id) {
         $hierarchy = ClassService::_getHierarchy($class);
         $sql = ModelService::_buildSelect($hierarchy);
         if ($row = Database::selectFirst($sql,['id' => $id])) {
             $obj = new $class();
-            for ($i=0; $i < count($hierarchy); $i++) { 
+            for ($i=0; $i < count($hierarchy); $i++) {
                 if (!isset(Entity::$schema[$hierarchy[$i]])) {
                     continue;
                 }
@@ -78,13 +78,13 @@ class ModelService {
     					$obj->$setter($ids);
     				}
     			}
-                
-            }            
+
+            }
             return $obj;
         }
         return null;
     }
-    
+
     static function save($object) {
         $class = get_class($object);
         $hierarchy = ClassService::_getHierarchy($class);
@@ -98,10 +98,10 @@ class ModelService {
                 $sql = 'insert into `' . $info['table'] . '` ';
                 $sql .= '(' . SchemaService::buildSqlColumns($info,['id']) . ')';
                 $sql .= ' values (' . SchemaService::buildSqlValues($object,$info,['id']) . ')';
-            
+
                 $id = Database::insert($sql);
                 $object->setId($id);
-            }            
+            }
         } else {
             for ($i=0; $i < count($hierarchy); $i++) {
                 if (!isset(Entity::$schema[$hierarchy[$i]])) {
@@ -114,7 +114,7 @@ class ModelService {
                 $sql .= ' where id=@int(id)';
 
                 $id = Database::insert($sql,['id'=>$object->getId()]);
-            }                        
+            }
         }
     }
 
@@ -128,8 +128,8 @@ class ModelService {
             // TODO Support inheritance
             $info = Entity::$schema[$hierarchy[$i]];
             // TODO Support inheritance
-            $sql = 'delete from `' . $info['table'] . '` where id=@int(id)';            
+            $sql = 'delete from `' . $info['table'] . '` where id=@int(id)';
             $id = Database::delete($sql,['id'=>$object->getId()]);
-        }            
+        }
     }
 }
