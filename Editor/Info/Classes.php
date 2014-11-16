@@ -197,6 +197,7 @@ $HUMANISE_EDITOR_CLASSES = array (
     'Object' => 'Model/Object.php',
     'ObjectLink' => 'Model/ObjectLink.php',
     'Page' => 'Model/Page.php',
+    'Parameter' => 'Model/Parameter.php',
     'PartLink' => 'Model/PartLink.php',
     'SpecialPage' => 'Model/SpecialPage.php',
     'Template' => 'Model/Template.php',
@@ -247,6 +248,7 @@ $HUMANISE_EDITOR_CLASSES = array (
       1 => 'Hierarchy',
       2 => 'HierarchyItem',
       3 => 'Link',
+      4 => 'Parameter',
     ),
     'ModelEventListener' => 
     array (
@@ -367,9 +369,10 @@ $HUMANISE_EDITOR_CLASSES = array (
       66 => 'Object',
       67 => 'ObjectLink',
       68 => 'Page',
-      69 => 'PartLink',
-      70 => 'SpecialPage',
-      71 => 'Template',
+      69 => 'Parameter',
+      70 => 'PartLink',
+      71 => 'SpecialPage',
+      72 => 'Template',
     ),
     'PartController' => 
     array (

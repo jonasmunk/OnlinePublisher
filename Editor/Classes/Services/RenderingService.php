@@ -5,7 +5,7 @@ if (!isset($GLOBALS['basePath'])) {
 }
 
 class RenderingService {
-	
+
 	static function sendNotFound() {
 		$uri = $_SERVER['REQUEST_URI'];
 		if ($uri!='/favicon.ico' && $uri!='/robots.txt' && $uri!='/apple-touch-icon.png' && $uri!='/apple-touch-icon-precomposed.png') {
@@ -13,9 +13,9 @@ class RenderingService {
 		}
 		$error = '<title>Page not found</title>'.
 		'<note>The requested page was not found on this website</note>';
-		RenderingService::displayError($error);	
+		RenderingService::displayError($error);
 	}
-	
+
 	static function displayError($message,$path="") {
 		$xml = '<?xml version="1.0" encoding="UTF-8"?>';
 		$xml.= '<message xmlns="http://uri.in2isoft.com/onlinepublisher/publishing/error/1.0/">';
@@ -25,11 +25,12 @@ class RenderingService {
 		header("HTTP/1.0 404 Not Found");
 		echo RenderingService::applyStylesheet($xml,"basic","error",$path,$path,$path,'',false,'en');
 	}
-	
+
 	static function buildPageContext($id,$nextPage,$previousPage) {
 		$output='<context>';
+
 		// Front pages
-		$sql="select specialpage.*,page.path from specialpage,page where page.disabled=0 and specialpage.page_id = page.id";
+		$sql = "select specialpage.*,page.path from specialpage,page where page.disabled=0 and specialpage.page_id = page.id";
 		$result = Database::select($sql);
 		while ($row = Database::next($result)) {
 			if ($row['type']=='home') {
@@ -37,8 +38,9 @@ class RenderingService {
 			}
 		}
 		Database::free($result);
+
 		// Translations
-		$sql="select page.id,page.language,page.path from page_translation,page".
+		$sql = "select page.id,page.language,page.path from page_translation,page".
 		" where page.id=page_translation.translation_id and page.disabled=0".
 		" and page_translation.page_id=".Database::int($id)." order by language";
 		$result = Database::select($sql);
@@ -53,9 +55,23 @@ class RenderingService {
 			$output.='<previous id="'.$previousPage.'"/>';
 		}
 		$output.='</context>';
+
+        if (ConfigurationService::isDebug()) {
+            // TODO Only in debug mode for now
+            // Parameters
+            $output.='<parameters>';
+            $sql = "select name,value from parameter";
+    		$result = Database::select($sql);
+    		while ($row = Database::next($result)) {
+    			$output.='<parameter name="' . Strings::escapeEncodedXML($row['name']) . '" category="design"><![CDATA[' . $row['value'] . ']]></parameter>';
+    		}
+    		Database::free($result);
+            $output.='</parameters>';
+
+        }
 		return $output;
 	}
-	
+
 	static function applyStylesheet(&$xmlData,$design,$template,$path,$urlPath,$navigationPath,$pagePath,$preview,$language) {
 		global $basePath;
 
@@ -66,7 +82,7 @@ class RenderingService {
 			$incPath = $path;
 		}
         if (Console::isFromConsole()) {
-            $incPath = $basePath;            
+            $incPath = $basePath;
         }
 		$contentDesign='basic';
 		if (file_exists($basePath.'style/'.$design.'/xslt/'.$template.'.xsl')) {
@@ -104,9 +120,9 @@ class RenderingService {
 		$absolutePath = 'http://' . @$_SERVER['HTTP_HOST'];
 		$absolutePagePath = $absolutePath . @$_SERVER['REQUEST_URI'];
 		$absolutePath .= '/';
-		
+
 		$statistics = ConfigurationService::isGatherStatistics();
-        
+
         $variables = [
             'design' => $design,
             'path' => $urlPath,
@@ -130,15 +146,15 @@ class RenderingService {
             'language' => $language,
             'statistics' => ($statistics ? 'true' : 'false')
         ];
-		
+
 		$xsl = '<?xml version="1.0" encoding="'.$encoding.'"?>'.
 		'<xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" version="1.0">'.
 		'<xsl:output method="html" indent="no" encoding="'.$encoding.'"/>'.
 		'<xsl:include href="'.$templatePath.'"/>'.
 		'<xsl:include href="'.$mainPath.'"/>';
         foreach ($variables as $name => $value) {
-            $xsl .= '<xsl:variable name="' . Strings::escapeEncodedXML($name) . '">' . 
-                Strings::escapeEncodedXML($value) . 
+            $xsl .= '<xsl:variable name="' . Strings::escapeEncodedXML($name) . '">' .
+                Strings::escapeEncodedXML($value) .
                 '</xsl:variable>';
         }
         $xsl.=
@@ -146,7 +162,7 @@ class RenderingService {
 		'</xsl:stylesheet>';
 		return XslService::transform($xmlData,$xsl);
 	}
-	
+
 	static function applyFrameDynamism($id,&$data) {
 		$sql = "select id,maxitems,sortdir,sortby,timetype,timecount,UNIX_TIMESTAMP(startdate) as startdate,UNIX_TIMESTAMP(enddate) as enddate from frame_newsblock where frame_id=".$id;
 		$result = Database::select($sql);
@@ -211,7 +227,7 @@ class RenderingService {
 		Database::free($result);
 		return $data;
 	}
-	
+
 	static function applyContentDynamism($id,$template,&$data) {
 		$state = array('data' => $data,'redirect' => false,'override' => false);
 		if ($controller = TemplateService::getController($template)) {
@@ -222,7 +238,7 @@ class RenderingService {
 		}
 		return $state;
 	}
-	
+
 	static function handleMissingPage($path) {
 		// See if there is a page redirect
 		$sql = "select page.id,page.path from path left join page on page.id=path.page_id where path.path=".Database::text($path);
@@ -238,7 +254,7 @@ class RenderingService {
 			RenderingService::sendNotFound();
 		}
 	}
-	
+
 	static function buildPage($id,$path=null,$parameters=array()) {
 		//Log::debug('buildPage: id:('.$id.') path:('.$path.')');
 		$sql="select page.id,page.path,page.secure,UNIX_TIMESTAMP(page.published) as published,".
@@ -279,7 +295,7 @@ class RenderingService {
 			$data = $row['data'];
 			$template = $row['template'];
 			$redirect = false;
-		
+
 			if (Strings::isNotBlank($row['path']) && Strings::isBlank($path) && $id>0) {
 				//Log::debug('Redirect: requested:('.$path.') page:('.$row['path'].') id:('.$id.')');
 				if ($row['path']) {
@@ -354,7 +370,7 @@ class RenderingService {
 		}
 		return '';
 	}
-	
+
 	static function findPage($type) {
 		$sql="select page_id from specialpage where type=".Database::text($type)." order by language asc";
 		$row = Database::selectFirst($sql);
@@ -363,12 +379,12 @@ class RenderingService {
 		}
 		return null;
 	}
-	
+
 
 	static function buildDateTag($tag,$stamp) {
 		return '<'.$tag.' unix="'.$stamp.'" day="'.date('d',$stamp).'" weekday="'.date('d',$stamp).'" yearday="'.date('z',$stamp).'" month="'.date('m',$stamp).'" year="'.date('Y',$stamp).'" hour="'.date('H',$stamp).'" minute="'.date('i',$stamp).'" second="'.date('s',$stamp).'" offset="'.date('Z',$stamp).'" timezone="'.date('T',$stamp).'"/>';
 	}
-	
+
 
 
 	// Returns true if the user has access to the page
@@ -381,7 +397,7 @@ class RenderingService {
 			return false;
 		}
 	}
-	
+
 	// finds and redirects to the appropriate authentication page for the provided page
 	// displays error otherwise
 	static function goToAuthenticationPage($id) {
@@ -405,7 +421,7 @@ class RenderingService {
 			return false;
 		}
 	}
-	
+
 	static function showFile($id) {
 		$sql = "select * from file where object_id = ".$id;
 		if ($row = Database::selectFirst($sql)) {
@@ -417,7 +433,7 @@ class RenderingService {
 			RenderingService::displayError($error);
 		}
 	}
-	
+
 	static function getDesign($design) {
 		if (Request::exists('designsession')) {
 			$_SESSION['debug.design']=Request::getString('designsession');
@@ -444,10 +460,10 @@ class RenderingService {
 			header("Cache-Control: public");
 			header("Expires: " . gmdate("D, d M Y H:i:s",time()+604800) . " GMT");
             header('Pragma: cache');
-			header("Content-Type: text/html; charset=UTF-8");   
+			header("Content-Type: text/html; charset=UTF-8");
             header('X-UA-Compatible: IE=edge');
 			if (ConfigurationService::isOptimizeHTML()) {
-				$html = MarkupUtils::moveScriptsToBottom($html);				
+				$html = MarkupUtils::moveScriptsToBottom($html);
 			}
 			echo $html;
 			if (!$page['secure'] && !$page['dynamic'] && !$page['framedynamic']) {
@@ -457,11 +473,11 @@ class RenderingService {
 			}
 		}
 	}
-	
+
 	static function previewPage($options) {
 		$pageId = $options['pageId'];
 		$historyId = @$options['historyId'];
-		
+
 		$sql="select page.id,UNIX_TIMESTAMP(page.published) as published, page.description,page.language,page.keywords,".
 		"page.title,page.dynamic,page.next_page,page.previous_page,".
 		"template.unique,frame.id as frameid,frame.title as frametitle,frame.data as framedata,frame.dynamic as framedynamic,".
@@ -483,10 +499,10 @@ class RenderingService {
 			} else {
 				$data = PageService::getPagePreview($id,$template);
 			}
-		
+
 			$stuff = RenderingService::applyContentDynamism($id,$template,$data);
 			$data = $stuff['data'];
-	
+
 			$framedata = $row['framedata'];
 			if ($row['framedynamic']) {
 				$framedata = RenderingService::applyFrameDynamism($row['frameid'],$framedata);
@@ -521,7 +537,7 @@ class RenderingService {
 			$relativeUrl = isset($options['relativeUrl']) ? $options['relativeUrl'] : $options['relativePath'];
 			$html = RenderingService::applyStylesheet($xml,$design,$template,$options['relativePath'],$relativeUrl,'','?id='.$id.'&amp;',true,strtolower($row['language']));
 			if (ConfigurationService::isOptimizeHTML()) {
-				$html = MarkupUtils::moveScriptsToBottom($html);				
+				$html = MarkupUtils::moveScriptsToBottom($html);
 			}
 			return $html;
 		}

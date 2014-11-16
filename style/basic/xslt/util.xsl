@@ -245,14 +245,17 @@
 <xsl:template name="util:parameter">
     <xsl:param name="name" />
     <xsl:param name="default" />
-    <xsl:choose>
-      <xsl:when test="//p:parameter[@name=$name]">
-          <xsl:value-of select="//p:parameter[@name=$name]" disable-output-escaping="yes"/>
-      </xsl:when>
-      <xsl:otherwise>
-          <xsl:copy-of select="$default"/>
-      </xsl:otherwise>
-    </xsl:choose>
+    <div>
+        <xsl:attribute name="data-editable">{"name":"<xsl:value-of select="$name"/>"}</xsl:attribute>
+        <xsl:choose>
+          <xsl:when test="//p:parameter[@name=$name]">
+              <xsl:value-of select="//p:parameter[@name=$name]" disable-output-escaping="yes"/>
+          </xsl:when>
+          <xsl:otherwise>
+              <xsl:copy-of select="$default"/>
+          </xsl:otherwise>
+        </xsl:choose>
+    </div>
 </xsl:template>
 
 

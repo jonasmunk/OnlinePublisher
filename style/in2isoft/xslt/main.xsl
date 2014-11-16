@@ -399,8 +399,6 @@
 								<p class="more"><a href="{$path}om/" class="common"><span>More about Humanise »</span></a></p>
 							</xsl:when>
 							<xsl:otherwise>
-                                <div>
-                                    <xsl:attribute name="data-editable">{"name":"about"}</xsl:attribute>
                                 <xsl:call-template name="util:parameter">
                                     <xsl:with-param name="name" select="'about'"/>
                                     <xsl:with-param name="default">
@@ -412,8 +410,7 @@
         								</p>                                        
                                     </xsl:with-param>
                                 </xsl:call-template>
-                                </div>
-								<p class="more"><a href="{$path}om/" class="common"><span>Mere om Humanise »</span></a></p>
+                                <p class="more"><a href="{$path}om/" class="common"><span>Mere om Humanise »</span></a></p>
 							</xsl:otherwise>
 						</xsl:choose>
 					</div>
@@ -422,12 +419,17 @@
 							<xsl:when test="//p:page/p:meta/p:language='en'"><h2>Contact</h2></xsl:when>
 							<xsl:otherwise><h2>Kontakt</h2></xsl:otherwise>
 						</xsl:choose>
-						<p class="name"><strong>Jonas Brinkmann Munk</strong></p>
-						<p class="email"><a href="mailto:jonasmunk@me.com" class="common"><span>jonasmunk@me.com</span></a></p>
-						<p class="phone">+45 28 77 63 65</p>
-						<p class="name"><strong>Kenni Graversen</strong></p>
-						<p class="email"><a href="mailto:gr@versen.dk" class="common"><span>gr@versen.dk</span></a></p>
-						<p class="phone">+45 22 48 61 53</p>
+                        <xsl:call-template name="util:parameter">
+                            <xsl:with-param name="name" select="'contact'"/>
+                            <xsl:with-param name="default">
+        						<p class="name"><strong>Jonas Brinkmann Munk</strong></p>
+        						<p class="email"><a href="mailto:jonasmunk@me.com" class="common"><span>jonasmunk@me.com</span></a></p>
+        						<p class="phone">+45 28 77 63 65</p>
+        						<p class="name"><strong>Kenni Graversen</strong></p>
+        						<p class="email"><a href="mailto:gr@versen.dk" class="common"><span>gr@versen.dk</span></a></p>
+        						<p class="phone">+45 22 48 61 53</p>
+                            </xsl:with-param>
+                        </xsl:call-template>
 					</div>
 				</div>
 			</div>

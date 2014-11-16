@@ -10,7 +10,7 @@ if (!isset($GLOBALS['basePath'])) {
 
 class SchemaService {
 	
-	static function buildSqlSetters($obj,$schema) {
+	static function buildSqlSetters($obj,$schema,$exclude=[]) {
 		$sql = '';
 		$fields = $schema;
 		if (isset($schema['properties'])) {
@@ -22,6 +22,9 @@ class SchemaService {
 		}
 		foreach ($fields as $field => $info) {
 			$column = SchemaService::getColumn($field,$info);
+            if (in_array($column,$exclude)) {
+                continue;
+            }
 			if (strlen($sql) > 0) {
 				$sql.=',';
 			}
@@ -69,13 +72,16 @@ class SchemaService {
 		return $property;
 	}
 
-	static function buildSqlColumns($schema) {
+	static function buildSqlColumns($schema,$exclude=[]) {
 		$sql = '';
 		foreach ($schema['properties'] as $field => $info) {
 			$column = $field;
 			if (isset($info['column'])) {
 				$column = $info['column'];
 			}
+            if (in_array($column,$exclude)) {
+                continue;
+            }
 			if (strlen($sql)>0) {
 				$sql.=',';
 			}
@@ -84,13 +90,16 @@ class SchemaService {
 		return $sql;
 	}
 	
-	static function buildSqlValues($obj,$schema) {
+	static function buildSqlValues($obj,$schema,$exclude=[]) {
 		$sql = '';
 		foreach ($schema['properties'] as $field => $info) {
 			$column = $field;
 			if (isset($info['column'])) {
 				$column = $info['column'];
 			}
+            if (in_array($column,$exclude)) {
+                continue;
+            }
 			if (strlen($sql)>0) {
 				$sql.=',';
 			}

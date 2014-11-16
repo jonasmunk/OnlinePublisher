@@ -432,6 +432,13 @@ $databaseTables = array(
 			array("page_id","int(11)","","","0",""),
 			array("translation_id","int(11)","","","0","")
 		),
+	'parameter' => array(
+			array("id","int(11)","","PRI","","auto_increment"),
+			array("name","varchar(255)","","","",""),
+			array("level","varchar(255)","","","",""),
+			array("language","varchar(5)","YES","","",""),
+    		array("value","text","YES","","","")
+		),
 	'part' => array(
 			array("id","int(11)","","PRI","","auto_increment"),
 			array("type","varchar(50)","","","",""),

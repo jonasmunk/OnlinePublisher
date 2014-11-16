@@ -84,4 +84,52 @@ class ModelService {
         }
         return null;
     }
+    
+    static function save($object) {
+        $class = get_class($object);
+        $hierarchy = ClassService::_getHierarchy($class);
+        if (!$object->getId()) {
+            for ($i=0; $i < count($hierarchy); $i++) {
+                if (!isset(Entity::$schema[$hierarchy[$i]])) {
+                    continue;
+                }
+                $info = Entity::$schema[$hierarchy[$i]];
+                // TODO Support inheritance
+                $sql = 'insert into `' . $info['table'] . '` ';
+                $sql .= '(' . SchemaService::buildSqlColumns($info,['id']) . ')';
+                $sql .= ' values (' . SchemaService::buildSqlValues($object,$info,['id']) . ')';
+            
+                $id = Database::insert($sql);
+                $object->setId($id);
+            }            
+        } else {
+            for ($i=0; $i < count($hierarchy); $i++) {
+                if (!isset(Entity::$schema[$hierarchy[$i]])) {
+                    continue;
+                }
+                $info = Entity::$schema[$hierarchy[$i]];
+                // TODO Support inheritance
+                $sql = 'update `' . $info['table'] . '` ';
+                $sql .= 'set ' . SchemaService::buildSqlSetters($object,$info,['id']);
+                $sql .= ' where id=@int(id)';
+
+                $id = Database::insert($sql,['id'=>$object->getId()]);
+            }                        
+        }
+    }
+
+    static function remove($object) {
+        $class = get_class($object);
+        $hierarchy = ClassService::_getHierarchy($class);
+        for ($i=0; $i < count($hierarchy); $i++) {
+            if (!isset(Entity::$schema[$hierarchy[$i]])) {
+                continue;
+            }
+            // TODO Support inheritance
+            $info = Entity::$schema[$hierarchy[$i]];
+            // TODO Support inheritance
+            $sql = 'delete from `' . $info['table'] . '` where id=@int(id)';            
+            $id = Database::delete($sql,['id'=>$object->getId()]);
+        }            
+    }
 }
