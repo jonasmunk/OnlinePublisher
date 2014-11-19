@@ -39,6 +39,17 @@ class TestMoviePart extends UnitTestCase {
 		$obj2->remove();
 	}
 
+	function testVimeo() {
+		$parsed = Strings::analyzeMovieURL('http://vimeo.com/94839196');
+		$this->assertEqual('vimeo',$parsed['type']);
+		$this->assertEqual('94839196',$parsed['id']);
+		
+		// HTTPS version
+		$parsed = Strings::analyzeMovieURL('https://vimeo.com/94839196');
+		$this->assertEqual('vimeo',$parsed['type']);
+		$this->assertEqual('94839196',$parsed['id']);
+	}
+
 	function testImport() {
 		$obj = new MoviePart();
 		$obj->setWidth('400px');

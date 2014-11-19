@@ -101,15 +101,6 @@ class MoviePartController extends PartController
 		return $xml;
 	}
 	
-	function _analyzeURL($url) {
-		if (!Strings::isBlank($url)) {
-			if (preg_match("/http://vimeo.com/([0-9]+)/uim", $url,$matches)) {
-				return ['type' => 'vimeo', 'id'=>$matches[1]];
-			}
-		}
-		return null;
-	}
-	
 	function importSub($node,$part) {
 		if ($file = DOMUtils::getFirstDescendant($node,'file')) {
 			if ($id = intval($file->getAttribute('id'))) {
