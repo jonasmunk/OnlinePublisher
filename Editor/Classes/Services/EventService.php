@@ -86,6 +86,7 @@ class EventService {
     				PageService::markChanged($row['page_id']);
     			}
     			Database::free($result);
+        		CacheService::clearPageCache($id);
             } else if ($event=='delete') {
     			// Remove special pages if page is deleted
     		    $sql = "delete from specialpage where page_id=".Database::int($id);
