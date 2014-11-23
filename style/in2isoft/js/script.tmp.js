@@ -149,7 +149,6 @@ hui.each = function(items,func) {
 		for (var i=0; i < items.length; i++) {
 			func(items.item(i),i);
 		};
-        
 	} else {
 		for (var key in items) {
 			func(key,items[key]);
@@ -6276,7 +6275,6 @@ op.part.Movie.prototype = {
         var url = "http://vimeo.com/api/v2/video/" + id + ".json?callback=" + cb;
 
         window[cb] = function(data) {
-            hui.log(data)
             poster.style.backgroundImage = 'url(' + data[0].thumbnail_large + ')';
         }
         var script = hui.build('script',{type:'text/javascript',src:url,parent:document.head});

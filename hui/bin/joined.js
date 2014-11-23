@@ -147,7 +147,6 @@ hui.each = function(items,func) {
 		for (var i=0; i < items.length; i++) {
 			func(items.item(i),i);
 		};
-        
 	} else {
 		for (var key in items) {
 			func(key,items[key]);
