@@ -172,6 +172,9 @@ class TestStrings extends UnitTestCase {
 		$this->assertEqual('youtube',$result['type']);
 		$this->assertEqual('9q-HBMSSbp4',$result['id']);
 		
+		$result = Strings::analyzeMovieURL('https://www.youtube.com/watch?v=XqJU6PQM0_Q');
+		$this->assertEqual('youtube',$result['type']);
+		$this->assertEqual('XqJU6PQM0_Q',$result['id']);
 	}
 }
 ?>
