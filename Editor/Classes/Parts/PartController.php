@@ -87,6 +87,11 @@ class PartController
 	function isLiveEnabled() {
 		return false;
 	}
+    
+    /** If the XSL of the design should be included when rendering */
+    function renderUsingDesign() {
+        return false;
+    }
 		
 	function render($part,$context,$editor=true) {
 		global $basePath;
@@ -94,17 +99,22 @@ class PartController
         
 		$xmlData = '<?xml version="1.0" encoding="'.$encoding.'"?>'.$this->build($part,$context);
 		
-		$xslData='<?xml version="1.0" encoding="UTF-8"?>'.
+		$xsl='<?xml version="1.0" encoding="UTF-8"?>'.
 		'<xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" version="1.0">'.
-		'<xsl:output method="html" indent="no" encoding="UTF-8"/>'.
-		'<xsl:include href="'.$basePath.'style/basic/xslt/util.xsl"/>'.
-		'<xsl:include href="'.$basePath.'style/basic/xslt/part_'.$this->type.'.xsl"/>'.
+		'<xsl:output method="html" indent="no" encoding="UTF-8"/>';
+        if ($this->renderUsingDesign()) {
+    		$xsl.='<xsl:include href="'.$basePath.'style/basic/xslt/part_'.$this->type.'.xsl"/>'.
+            '<xsl:include href="'.$basePath.'style/' . $context->design . '/xslt/main.xsl"/>';
+        } else {
+    		$xsl.='<xsl:include href="'.$basePath.'style/basic/xslt/util.xsl"/>'.
+        	'<xsl:include href="'.$basePath.'style/basic/xslt/part_'.$this->type.'.xsl"/>';
+        }
+        $xsl.=
 		'<xsl:variable name="design"></xsl:variable>'.
 		'<xsl:variable name="path">../../../</xsl:variable>'.
 		'<xsl:variable name="navigation-path"></xsl:variable>'.
 		'<xsl:variable name="page-path"></xsl:variable>'.
 		'<xsl:variable name="template"></xsl:variable>'.
-		'<xsl:variable name="agent">'.Strings::escapeXML(RenderingService::_getAgent()).'</xsl:variable>'.
 		'<xsl:variable name="userid"></xsl:variable>'.
 		'<xsl:variable name="username"></xsl:variable>'.
 		'<xsl:variable name="usertitle"></xsl:variable>'.
@@ -117,7 +127,7 @@ class PartController
 		'<xsl:variable name="language">'.strtolower($context->getLanguage()).'</xsl:variable>'.
 		'<xsl:template match="/"><xsl:apply-templates/></xsl:template>'.
 		'</xsl:stylesheet>';
-		$html = XslService::transform($xmlData,$xslData);
+		$html = XslService::transform($xmlData,$xsl);
 		return str_replace("<br></br>","<br/>",$html);
 	}
 	
@@ -128,6 +138,10 @@ class PartController
 		}
 		return $str;
 	}
+    
+    function getEditorScript() {
+        return '<script src="'.ConfigurationService::getBaseUrl().'Editor/Parts/' . $this->type . '/script.js" type="text/javascript" charset="utf-8"></script>';
+    }
 	
 	function getIndex($part) {
 		return '';

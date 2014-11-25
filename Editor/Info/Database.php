@@ -667,6 +667,11 @@ $databaseTables = array(
 			array("imagewidth","int(11)","YES","","",""),
 			array("imageheight","int(11)","YES","","","")
 		),
+	'part_widget' => array(
+			array("part_id","int(11)","","","0",""),
+			array("key","varchar(100)","YES","","",""),
+			array("data","text","YES","","",""),
+		),
 	'path' => array(
 			array("object_id","int(11)","","","0",""),
 			array("path","text","YES","","",""),

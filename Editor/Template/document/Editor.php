@@ -31,7 +31,10 @@ echo '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.or
 		<meta http-equiv="content-type" content="text/html; charset=utf-8">
 		';
 		if (file_exists($basePath.'style/'.$design.'/css/fonts.css')) {
-			echo '<link rel="stylesheet" type="text/css" href="../../../style/'.$design.'/css/fonts.css'.$cachePrefix.'" />';
+			echo '<link rel="stylesheet" type="text/css" href="../../../style/'.$cacheUrl.$design.'/css/fonts.css'.$cachePrefix.'" />';
+		}
+		if (file_exists($basePath.'style/'.$design.'/css/editor.css')) {
+			echo '<link rel="stylesheet" type="text/css" href="../../../style/'.$cacheUrl.$design.'/css/editor.css'.$cachePrefix.'" />';
 		}
 		echo '<link rel="stylesheet" type="text/css" href="../../../hui/'.$cacheUrl.'bin/minimized.css'.$cachePrefix.'" />
 		<link rel="stylesheet" type="text/css" href="../../../style/'.$cacheUrl.'basic/css/parts.php'.$cachePrefix.'" />

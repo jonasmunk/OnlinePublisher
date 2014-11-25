@@ -1884,7 +1884,7 @@ div.hui_checkboxes_vertical a.hui_checkbox
 	padding: 1px 5px 0px 0px;
 }
 
-/* ["style\/basic\/css\/shared.css","@parts","style\/in2isoft\/css\/main.css","style\/in2isoft\/css\/front.css","style\/in2isoft\/css\/overwrite.css","style\/in2isoft\/css\/adaption.css","style\/in2isoft\/css\/humanise.css"] */
+/* ["style\/basic\/css\/shared.css","@parts","style\/in2isoft\/css\/main.css","style\/in2isoft\/css\/front.css","style\/in2isoft\/css\/overwrite.css","style\/in2isoft\/css\/adaption.css","style\/in2isoft\/css\/humanise.css","style\/in2isoft\/css\/widgets.css"] */
 /* style/basic/css/shared.css */
 .shared_frame_adaptive
 {
@@ -4362,4 +4362,9 @@ a.layout_design
 	display: block;
 	margin: 0 auto;
 	margin-bottom: 10px;
+}
+
+/* style/in2isoft/css/widgets.css */
+.happy-xmas {
+  background: red;
 }

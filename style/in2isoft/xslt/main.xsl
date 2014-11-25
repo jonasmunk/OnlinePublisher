@@ -8,7 +8,8 @@
  xmlns:n="http://uri.in2isoft.com/onlinepublisher/class/news/1.0/"
  xmlns:o="http://uri.in2isoft.com/onlinepublisher/class/object/1.0/"
  xmlns:util="http://uri.in2isoft.com/onlinepublisher/util/"
- exclude-result-prefixes="p f h n o util"
+ xmlns:widget="http://uri.in2isoft.com/onlinepublisher/part/widget/1.0/"
+ exclude-result-prefixes="p f h n o util widget"
  >
 <xsl:output encoding="UTF-8" method="xml" omit-xml-declaration="yes"/>
 <!--  indent="yes"-->
@@ -746,5 +747,24 @@
 
 
 
+<!--                    Widgets                 -->
+
+<xsl:template match="widget:widget[@key='happy-xmas']">
+    <div class="happy-xmas">
+    <h1><xsl:value-of select="widget:title"/></h1>
+    <xsl:apply-templates select="widget:button"/>
+    </div>
+</xsl:template>
+
+<xsl:template match="widget:widget[@key='call-to-action']">
+    <div class="call-to-action">
+        <p class="call-to-action-text"><xsl:value-of select="widget:text"/></p>
+        <xsl:apply-templates select="widget:button"/>
+    </div>
+</xsl:template>
+
+<xsl:template match="widget:widget[@key='call-to-action']/widget:button">
+    <a href="{@url}" class="call-to-action-button"><xsl:value-of select="."/></a>
+</xsl:template>
 
 </xsl:stylesheet>

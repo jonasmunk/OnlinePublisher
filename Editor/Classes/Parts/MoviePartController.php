@@ -38,7 +38,7 @@ class MoviePartController extends PartController
 			'movieWidth' => $part->getWidth(),
 			'movieHeight' => $part->getHeight()
         ]).
-		'<script src="'.ConfigurationService::getBaseUrl().'Editor/Parts/movie/script.js" type="text/javascript" charset="utf-8"></script>';
+		$this->getEditorScript();
 	}
 	
 	function getFromRequest($id) {

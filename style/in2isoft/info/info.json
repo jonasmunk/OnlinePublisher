@@ -13,7 +13,8 @@
             "style/in2isoft/css/front.css",
             "style/in2isoft/css/overwrite.css",
             "style/in2isoft/css/adaption.css",
-            "style/in2isoft/css/humanise.css"
+            "style/in2isoft/css/humanise.css",
+            "style/in2isoft/css/widgets.css"
         ]
     }
 }

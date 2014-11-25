@@ -232,7 +232,8 @@ class PartService {
             'poster' => array ( 'name' => array('da'=>'Plakat','en'=>'Poster') ),
             'map' => array ( 'name' => array('da'=>'Kort','en'=>'Map') ),
             'movie' => array ( 'name' => array('da'=>'Film','en'=>'Movie') ),
-            'menu' => array ( 'name' => array('da'=>'Menu','en'=>'Menu') )
+            'menu' => array ( 'name' => array('da'=>'Menu','en'=>'Menu') ),
+            'widget' => array ( 'name' => array('da'=>'Widget','en'=>'Widget') )
         );
     }
     
@@ -261,7 +262,8 @@ class PartService {
                 'poster' => $parts['poster'],
                 'map' => $parts['map'],
                 'movie' => $parts['movie'],
-                'menu' => $parts['menu']
+                'menu' => $parts['menu'],
+                'widget' => $parts['widget']
             ))
         );
         return $menu;
