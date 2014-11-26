@@ -60,6 +60,17 @@ class Response {
 	static function forbidden($text=null) {
 		Response::sendStatus(403,'Forbidden',$text);
 	}
+  
+	static function uploadSuccess() {
+		header('Content-Type: text/plain');
+		echo 'SUCCESS';
+	}
+
+	static function uploadFailure() {
+		Response::badRequest();
+		header('Content-Type: text/plain');
+		echo 'FAILURE';
+	}
 	
 	static function sendStatus($number,$key,$text=null) {
 		header('HTTP/1.1 '.$number.' '.$key);

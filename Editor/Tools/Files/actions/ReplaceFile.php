@@ -15,8 +15,8 @@ if (!$id) {
 $response = FileService::replaceUploadedFile($id);
 
 if ($response['success']==true) {
-	In2iGui::respondUploadSuccess();
+	Response::uploadSuccess();
 } else {
-	In2iGui::respondUploadFailure();
+	Response::uploadFailure();
 }
 ?>

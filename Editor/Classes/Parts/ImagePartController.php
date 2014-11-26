@@ -372,7 +372,7 @@ class ImagePartController extends PartController
 			</layout>
 		</window>
 		';
-		return In2iGui::renderFragment($gui);
+		return UI::renderFragment($gui);
 	}
 	
 	function getToolbars() {

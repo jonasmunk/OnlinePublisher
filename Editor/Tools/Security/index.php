@@ -5,5 +5,5 @@
  */
 require_once '../../Include/Private.php';
 
-In2iGui::renderFile('index.xml');
+UI::renderFile('index.xml');
 ?>

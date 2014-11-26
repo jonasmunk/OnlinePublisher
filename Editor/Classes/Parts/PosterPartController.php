@@ -178,7 +178,7 @@ class PosterPartController extends PartController
 				</formula>			
 			</window>
 			';
-		return In2iGui::renderFragment($gui);
+		return UI::renderFragment($gui);
 	}
 	
 	function getFromRequest($id) {

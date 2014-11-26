@@ -53,7 +53,7 @@ class Commander {
     }
 
 	static function hui() {
-        echo In2iGui::compile();        
+        echo UI::compile();        
     }
 
 	static function style() {

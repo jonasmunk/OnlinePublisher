@@ -177,7 +177,7 @@ class MapPartController extends PartController
 			</formula>
 		</window>
 		';
-		return In2iGui::renderFragment($gui);
+		return UI::renderFragment($gui);
 	}
 }
 ?>

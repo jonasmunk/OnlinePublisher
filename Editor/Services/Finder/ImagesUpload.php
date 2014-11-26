@@ -9,10 +9,10 @@ $response = ImageService::createUploadedImage();
 
 if ($response->getSuccess()) {
     Response::sendObject($response->getObject());
-	//In2iGui::respondUploadSuccess();
+	//Response::uploadSuccess();
 } else {
 	Log::debug($response);
-	In2iGui::respondUploadFailure();
+	Response::uploadFailure();
 	exit;
 }
 ?>

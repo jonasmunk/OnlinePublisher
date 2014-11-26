@@ -102,7 +102,7 @@ class TextPartController extends PartController
 			</layout>
 		</window>
 		';
-		return In2iGui::renderFragment($gui);
+		return UI::renderFragment($gui);
 	}
 	
 	function getFromRequest($id) {

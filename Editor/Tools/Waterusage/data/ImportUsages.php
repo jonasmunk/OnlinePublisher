@@ -21,7 +21,7 @@ if ($handle) {
 }
 Log::logTool('waterusage','import','Import complete (usage)');
 
-In2iGui::respondUploadSuccess();
+Response::uploadSuccess();
 
 function handleLine($line) {
 	$words = preg_split('/;/',$line);

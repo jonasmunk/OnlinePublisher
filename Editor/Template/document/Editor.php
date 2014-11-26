@@ -275,7 +275,7 @@ if ($editedSection==null) {
 			</buttons>
 		</window>
 	';
-	echo In2iGui::renderFragment($gui);
+	echo UI::renderFragment($gui);
 }
 echo '</body></html>';
 ?>

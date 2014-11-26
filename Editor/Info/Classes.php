@@ -206,7 +206,6 @@ $HUMANISE_EDITOR_CLASSES = array (
     'DiagramData' => 'Interface/DiagramData.php',
     'DiagramEdge' => 'Interface/DiagramEdge.php',
     'DiagramNode' => 'Interface/DiagramNode.php',
-    'In2iGui' => 'Interface/In2iGui.php',
     'ItemsWriter' => 'Interface/ItemsWriter.php',
     'ListWriter' => 'Interface/ListWriter.php',
     'UI' => 'Interface/UI.php',

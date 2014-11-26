@@ -16,7 +16,7 @@ foreach ($lines as $line) {
 	handleLine($line);
 }
 Log::logTool('waterusage','import','Import complete (meters)');
-In2iGui::respondUploadSuccess();
+Response::uploadSuccess();
 exit;*/
 
 Log::logTool('waterusage','import','Starting import (meters)');
@@ -30,7 +30,7 @@ if ($handle) {
 }
 Log::logTool('waterusage','import','Import complete (meters)');
 
-In2iGui::respondUploadSuccess();
+Response::uploadSuccess();
 
 function handleLine($line) {
 	$line = Strings::fromUnicode($line);

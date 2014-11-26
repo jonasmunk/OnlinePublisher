@@ -358,5 +358,5 @@ $gui='
 		<iframe name="previewFrame" height="400"/>
 	</boundpanel>
 </gui>';
-In2iGui::render($gui);
+UI::render($gui);
 ?>

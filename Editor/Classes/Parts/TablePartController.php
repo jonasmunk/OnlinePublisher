@@ -106,7 +106,7 @@ class TablePartController extends PartController
 
 
 		';
-		return In2iGui::renderFragment($gui);
+		return UI::renderFragment($gui);
 	}
 
 	function getToolbars() {

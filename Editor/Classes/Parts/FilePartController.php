@@ -97,7 +97,7 @@ class FilePartController extends PartController
 			</buttons>
 		</window>
 		';
-		return In2iGui::renderFragment($gui);
+		return UI::renderFragment($gui);
 	}
 	
 	function setLatestUploadId($id) {

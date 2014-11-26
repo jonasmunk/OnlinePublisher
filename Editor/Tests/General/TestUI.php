@@ -11,7 +11,7 @@ if (!isset($GLOBALS['basePath'])) {
 
 class TestUI extends UnitTestCase {
 	
-	function testIt() {
+	function testBuildAbstractUI() {
 		$path = FileService::getPath('Editor/Tests/Resources/abstract_ui.xml');
 		$this->assertTrue(file_exists($path));
         
@@ -19,6 +19,20 @@ class TestUI extends UnitTestCase {
         
         $result = UI::buildAbstractUI($xml);
         
-        //print $result;
+        // TODO Do some actual testing :-)
+	}
+
+	function testLocalize() {
+		$str = '<tag title="{ View ; da: Vis: }" label="{ en: Edit ; da: Rediger mig }" />';
+		$result = UI::localize($str,'en');
+		$this->assertEqual($result,'<tag title="View" label="Edit" />');
+		
+		$result = UI::localize($str,'da');
+		$this->assertEqual($result,'<tag title="Vis:" label="Rediger mig" />');
+
+		$str = '<tag>{ View ; da: Vis: }</tag>';
+		$result = UI::localize($str,'en');
+		$this->assertEqual($result,'<tag>View</tag>');
+
 	}
 }

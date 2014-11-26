@@ -186,7 +186,7 @@ class NewsPartController extends PartController
 			</tabs>
 		</window>
 		';
-		return In2iGui::renderFragment($gui);
+		return UI::renderFragment($gui);
 	}
 	
 	function buildSql($part) {

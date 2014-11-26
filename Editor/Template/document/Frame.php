@@ -10,5 +10,5 @@ $gui='
 	<iframe source="Editor.php" name="EditorFrame" id="Editor" border="true"/>
 </gui>';
 
-In2iGui::render($gui);
+UI::render($gui);
 ?>

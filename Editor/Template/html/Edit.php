@@ -14,5 +14,5 @@ $gui='
 	</script>
 </frames>';
 
-In2iGui::render($gui);
+UI::render($gui);
 ?>

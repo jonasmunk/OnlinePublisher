@@ -9,10 +9,10 @@ $response = FileService::createUploadedFile();
 
 if ($response->getSuccess()) {
 	MoviePartController::setLatestUploadId($response->getObject()->getId());
-	In2iGui::respondUploadSuccess();
+	Response::uploadSuccess();
 } else {
 	MoviePartController::setLatestUploadId(null);
 	Log::debug('Unable to upload file');
-	In2iGui::respondUploadFailure();
+	Response::uploadFailure();
 }
 ?>

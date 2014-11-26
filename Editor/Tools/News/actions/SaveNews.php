@@ -12,7 +12,7 @@ if ($data->id) {
 	$news = new News();
 }
 if ($news) {
-	$links = In2iGui::fromLinks($data->links);
+	$links = UI::fromLinks($data->links);
 	$news->setTitle($data->title);
 	$news->setNote($data->note);
 	$news->setStartdate($data->startdate);

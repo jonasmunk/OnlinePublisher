@@ -17,7 +17,7 @@ if (ZipService::uploadIsZipFile()) {
 		}
 	}
 	$folder->remove();
-	In2iGui::respondUploadSuccess();
+	Response::uploadSuccess();
 	exit;
 }
 
@@ -28,10 +28,10 @@ if ($response->getSuccess()) {
 	if ($group) {
 		ImageService::addImageToGroup($response->getObject()->getId(),$group);
 	}
-	In2iGui::respondUploadSuccess();
+	Response::uploadSuccess();
 } else {
 	Log::debug($response);
-	In2iGui::respondUploadFailure();
+	Response::uploadFailure();
 	exit;
 }
 ?>

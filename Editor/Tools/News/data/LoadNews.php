@@ -10,7 +10,7 @@ $file = News::load($id);
 if ($file) {
 	$groups = $file->getGroupIds();
 
-	$links = In2iGui::toLinks($file->getLinks());
+	$links = UI::toLinks($file->getLinks());
 
 	Response::sendObject(array('news' => $file, 'groups' => $groups, 'links' => $links));
 } else {

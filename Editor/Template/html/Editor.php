@@ -28,5 +28,5 @@ $gui='
 	</box>
 </gui>
 ';
-In2iGui::render($gui);
+UI::render($gui);
 ?>

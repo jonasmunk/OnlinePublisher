@@ -12,10 +12,10 @@ $response = ImageService::createUploadedImage();
 
 if ($response->getSuccess()) {
 	ImagePartController::setLatestUploadId($response->getObject()->getId());
-	In2iGui::respondUploadSuccess();
+	Response::uploadSuccess();
 } else {
 	ImagePartController::setLatestUploadId(null);
 	Log::debug($response);
-	In2iGui::respondUploadFailure();
+	Response::uploadFailure();
 }
 ?>
