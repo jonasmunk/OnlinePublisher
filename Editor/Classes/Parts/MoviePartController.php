@@ -16,7 +16,7 @@ class MoviePartController extends PartController
 	
 	function createPart() {
 		$part = new MoviePart();
-        $part->setHeight('300px');
+        $part->setHeight('56.25%');
         $part->setWidth('100%');
 		$part->save();
 		return $part;

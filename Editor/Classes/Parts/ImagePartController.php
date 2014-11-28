@@ -417,7 +417,7 @@ class ImagePartController extends PartController
 				</row>
 			</grid>
 			<divider/-->
-			<icon icon="common/settings" title="Avanceret" name="showAdvanced"/>
+			<icon icon="common/settings" title="{Advanced; da:Avanceret}" name="showAdvanced"/>
 			'
 			,
 			'Link' =>
