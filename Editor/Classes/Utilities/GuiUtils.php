@@ -221,23 +221,6 @@ class GuiUtils {
 	 * @param int $maxSize The maximum number of chars in the title
 	 * @return string Option-tags for use with XmlWebGui
 	 */
-	static function buildPageOptions($template=null) {
-		$output='';
-		$sql = "select page.id,page.title from page,template where page.template_id=template.id".($template!==null ? " and template.unique='authentication'" : "")." order by page.title";
-		$result = Database::select($sql);
-		while ($row = Database::next($result)) {
-			$output.='<option title="'.Strings::escapeEncodedXML($row['title']).'" value="'.$row['id'].'"/>';
-		}
-		Database::free($result);
-		return $output;
-	}
-	
-	/**
-	 * Builds select-options for a particular type of object
-	 * @param string $type The type of object
-	 * @param int $maxSize The maximum number of chars in the title
-	 * @return string Option-tags for use with XmlWebGui
-	 */
 	static function buildPageItems($template=null) {
 		$output='';
 		$sql = "select page.id,page.title from page,template where page.template_id=template.id".($template!==null ? " and template.unique='authentication'" : "")." order by page.title";
