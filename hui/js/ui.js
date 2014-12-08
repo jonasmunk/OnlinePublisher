@@ -28,7 +28,7 @@ hui.ui = {
 		reload_page : {en:'Reload page',da:'Indæs siden igen'},
 		access_denied : {en:'Access denied, maybe you are nolonger logged in',da:'Adgang nægtet, du er måske ikke længere logget ind'}
 	}
-}
+};
 
 /**
  * Get a widget by name
@@ -60,7 +60,7 @@ hui.ui.onReady = function(func) {
 
 hui.ui._frameLoaded = function(win) {
 	hui.ui.callSuperDelegates(this,'frameLoaded',win);
-}
+};
 
 /** @private */
 hui.ui._resize = function() {
@@ -69,11 +69,11 @@ hui.ui._resize = function() {
 	if (!hui.ui._resizeFirst) {
 		this._delayedResize = window.setTimeout(hui.ui._afterResize,1000);
 	}
-}
+};
 
 hui.ui._afterResize = function() {
 	hui.ui.callSuperDelegates(hui.ui,'$afterResize');
-}
+};
 
 /**
  * Show a confirming overlay
@@ -112,7 +112,7 @@ hui.ui.confirmOverlay = function(options) {
 		if (options.onOk) {
 			options.onOk();
 		}
-		if (options['$ok']) {
+		else if (options.$ok) {
 			options.$ok();
 		}
 		overlay.hide();
@@ -123,14 +123,14 @@ hui.ui.confirmOverlay = function(options) {
 		if (options.onCancel) {
 			options.onCancel();
 		}
-		if (options['$cancel']) {
+		else if (options.$cancel) {
 			options.$cancel();
 		}
 		overlay.hide();
 	});
 	overlay.add(cancel);
 	overlay.show({element:node});
-}
+};
 
 /**
  * Unregisters a widget
@@ -141,15 +141,15 @@ hui.ui.destroy = function(widget) {
         widget.destroy();
     }
 	delete(hui.ui.objects[widget.name]);
-}
+};
 
 hui.ui.destroyDescendants = function(widgetOrElement) {
 	var desc = hui.ui.getDescendants(widgetOrElement);
 	var objects = hui.ui.objects;
 	for (var i=0; i < desc.length; i++) {
         hui.ui.destroy(desc[i]);
-	};
-}
+	}
+};
 
 /** Gets all ancestors of a widget
 	@param {Widget} widget A widget
@@ -173,7 +173,7 @@ hui.ui.getAncestors = function(widget) {
 		}
 	}
 	return desc;
-}
+};
 
 hui.ui.getDescendants = function(widgetOrElement) {
 	var desc = [],e = widgetOrElement.getElement ? widgetOrElement.getElement() : widgetOrElement;
@@ -188,12 +188,11 @@ hui.ui.getDescendants = function(widgetOrElement) {
 				if (d[i]==o[j].element) {
 					desc.push(o[j]);
 				}
-			};
-			
-		};
+			}
+		}
 	}
 	return desc;
-}
+};
 
 hui.ui.getAncestor = function(widget,cls) {
 	var a = hui.ui.getAncestors(widget);
@@ -201,9 +200,9 @@ hui.ui.getAncestor = function(widget,cls) {
 		if (hui.cls.has(a[i].getElement(),cls)) {
 			return a[i];
 		}
-	};
+	}
 	return null;
-}
+};
 
 
 
@@ -224,17 +223,17 @@ hui.ui.changeState = function(state) {
 	hui.ui.state=state;
 	
 	this.reLayout();
-}
+};
 
 hui.ui.reLayout = function() {
 	var widgets = hui.ui.getDescendants(document.body);
 	for (var i=0; i < widgets.length; i++) {
 		var obj = widgets[i];
-		if (obj['$$layout']) {
-			obj['$$layout']();
+		if (obj.$$layout) {
+			obj.$$layout();
 		}
-	};
-}
+	}
+};
 
 
 
@@ -279,8 +278,8 @@ hui.ui.showCurtain = function(options) {
 		}
 		body.appendChild(widget.curtain);
 		hui.listen(widget.curtain,'click',function() {
-			if (widget['$curtainWasClicked']) {
-				widget['$curtainWasClicked']();
+			if (widget.$curtainWasClicked) {
+				widget.$curtainWasClicked();
 			}
 		});
 	}
@@ -316,7 +315,7 @@ hui.ui.showCurtain = function(options) {
 		curtain.style.display='block';
 		hui.animate(curtain,'opacity',0.7,1000,{ease:hui.ease.slowFastSlow});
 	}
-}
+};
 
 hui.ui.hideCurtain = function(widget) {
 	if (widget.curtain) {
@@ -334,14 +333,14 @@ hui.ui.hideCurtain = function(widget) {
  * @returns {String} The localized string
  */
 hui.ui.getText = function(key) {
-	var x = this.texts[key];
-	if (!x) {return key}
-	if (x[this.language]) {
-		return x[this.language];
+	var parts = this.texts[key];
+	if (!parts) {return key;}
+	if (parts[this.language]) {
+		return parts[this.language];
 	} else {
-		return x['en'];
+		return parts.en;
 	}
-}
+};
 
 hui.ui.getTranslated = function(value) {
 	if (!hui.isDefined(value) || hui.isString(value) || typeof(value) == 'number') {
@@ -356,7 +355,7 @@ hui.ui.getTranslated = function(value) {
 	for (var key in value) {
 		return value[key];
 	}
-}
+};
 
 
 
@@ -400,7 +399,7 @@ hui.ui.confirm = function(options) {
 		hui.ui.callDelegates(alert,'ok');
 	}});
 	alert.show();
-}
+};
 
 hui.ui.alert = function(options) {
 	if (!this.alertBox) {
@@ -475,12 +474,12 @@ hui.ui.msg = hui.ui.showMessage;
 hui.ui.msg.success = function(options) {
 	options = hui.override({icon:'common/success',duration:2000},options);
 	hui.ui.msg(options);
-}
+};
 
 hui.ui.msg.fail = function(options) {
 	options = hui.override({icon:'common/warning',duration:3000},options);
 	hui.ui.msg(options);
-}
+};
 
 hui.ui.hideMessage = function() {
 	window.clearTimeout(hui.ui.messageDelayTimer);
@@ -542,7 +541,7 @@ hui.ui.getElement = function(widgetOrElement) {
 		return widgetOrElement.getElement();
 	}
 	return null;
-}
+};
 
 hui.ui.isWithin = function(e,element) {
 	e = hui.event(e);
@@ -595,7 +594,7 @@ hui.ui.keyboardTarget = null; // The widget currently accepting keyboard input
 
 hui.ui.setKeyboardTarget = function(widget) {
 	hui.ui.keyboardTarget = widget;
-}
+};
 
 
 /**
@@ -605,7 +604,7 @@ hui.ui.setKeyboardTarget = function(widget) {
 hui.ui.stress = function(widget) {
 	var e = hui.ui.getElement(widget);
 	hui.effect.wiggle({element:e,duration:1000});
-}
+};
 
 
 //////////////////////////// Positioning /////////////////////////////
@@ -659,41 +658,41 @@ hui.ui.extend = function(obj,options) {
 	obj.listen = function(delegate) {
 		hui.array.add(this.delegates,delegate);
 		return this;
-	}
+	};
 	obj.unListen = function(delegate) {
 		hui.array.remove(this.delegates,delegate);
-	}
+	};
 	obj.clearListeners = function() {
 		this.delegates = [];
-	}
+	};
 	obj.fire = function(method,value,event) {
 		return hui.ui.callDelegates(this,method,value,event);
-	}
+	};
 	obj.fireValueChange = function() {
 		obj.fire('valueChanged',obj.value);
 		hui.ui.firePropertyChange(obj,'value',obj.value);
 		hui.ui.callAncestors(obj,'childValueChanged',obj.value);
-	}
+	};
 	obj.fireProperty = function(key,value) {
 		hui.ui.firePropertyChange(this,key,value);
-	}
+	};
 	obj.fireSizeChange = function() {
 		hui.ui.callAncestors(obj,'$$childSizeChanged');
-	}
+	};
 	if (!obj.getElement) {
 		obj.getElement = function() {
 			return this.element;
-		}
+		};
 	}
 	if (!obj.destroy) {
 		obj.destroy = function() {
             if (this.element) {
-                hui.dom.remove(this.element)
+                hui.dom.remove(this.element);
             }
-		}
+		};
 	}
 	if (!obj.valueForProperty) {
-		obj.valueForProperty = function(p) {return this[p]};
+		obj.valueForProperty = function(p) {return this[p];};
 	}
 };
 
@@ -705,7 +704,7 @@ hui.ui.callAncestors = function(obj,method,value,event) {
 		if (d[i][method]) {
 			d[i][method](value,event);
 		}
-	};
+	}
 };
 
 /** Send a message to all descendants of a widget */
@@ -713,7 +712,7 @@ hui.ui.callDescendants = function(obj,method,value,event) {
 	if (typeof(value)=='undefined') {
 		value=obj;
 	}
-	if (!method[0]=='$') {
+	if (method[0] !== '$') {
 		method = '$'+method;
 	}
 	var d = hui.ui.getDescendants(obj);
@@ -721,13 +720,13 @@ hui.ui.callDescendants = function(obj,method,value,event) {
 		if (d[i][method]) {
 			d[i][method](value,event);
 		}
-	};
+	}
 };
 
 /** Signal that a widget has changed visibility */
 hui.ui.callVisible = function(widget) {
 	hui.ui.callDescendants(widget,'$visibilityChanged');
-}
+};
 
 /** Listen for global events */
 hui.ui.listen = function(delegate) {
@@ -735,21 +734,21 @@ hui.ui.listen = function(delegate) {
 		delegate.$ready();
 	}
 	hui.ui.delegates.push(delegate);
-}
+};
 
 hui.ui.unListen = function(listener) {
 	hui.array.remove(hui.ui.delegates,listener);
-}
+};
 
 hui.ui.callDelegates = function(obj,method,value,event) {
 	if (typeof(value)=='undefined') {
 		value=obj;
 	}
-	var result = undefined;
+	var result;
 	if (obj.delegates) {
 		for (var i=0; i < obj.delegates.length; i++) {
 			var delegate = obj.delegates[i],
-				thisResult = undefined,
+				thisResult,
 				x = '$'+method+'$'+obj.name;
 			if (obj.name && delegate[x]) {
 				thisResult = delegate[x](value,event);
@@ -759,7 +758,7 @@ hui.ui.callDelegates = function(obj,method,value,event) {
 			if (result===undefined && thisResult!==undefined && typeof(thisResult)!='undefined') {
 				result = thisResult;
 			}
-		};
+		}
 	}
 	var superResult = hui.ui.callSuperDelegates(obj,method,value,event);
 	if (result===undefined && superResult!==undefined) {
@@ -779,7 +778,7 @@ hui.ui.tellContainers = function(event,value) {
 			//hui.log('Unable to callContainers')
 		}
 	}
-}
+};
 
 hui.ui._tellContainers = function(event,value) {
 	hui.ui.callSuperDelegates({},event,value);
@@ -790,14 +789,14 @@ hui.ui._tellContainers = function(event,value) {
 			//hui.log('Unable to callContainers')
 		}
 	}
-}
+};
 
 hui.ui.callSuperDelegates = function(obj,method,value,event) {
 	if (typeof(value)=='undefined') value=obj;
-	var result = undefined;
+	var result;
 	for (var i=0; i < hui.ui.delegates.length; i++) {
-		var delegate = hui.ui.delegates[i];
-		var thisResult = undefined;
+		var delegate = hui.ui.delegates[i],
+            thisResult;
 		if (obj.name && delegate['$'+method+'$'+obj.name]) {
 			thisResult = delegate['$'+method+'$'+obj.name](value,event);
 		} else if (delegate['$'+method]) {
@@ -806,7 +805,7 @@ hui.ui.callSuperDelegates = function(obj,method,value,event) {
 		if (result===undefined && thisResult!==undefined && typeof(thisResult)!='undefined') {
 			result = thisResult;
 		}
-	};
+	}
 	return result;
 };
 
@@ -815,7 +814,7 @@ hui.ui.resolveImageUrl = function(widget,img,width,height) {
 		if (widget.delegates[i].$resolveImageUrl) {
 			return widget.delegates[i].$resolveImageUrl(img,width,height);
 		}
-	};
+	}
 	for (var j=0; j < hui.ui.delegates.length; j++) {
 		var delegate = hui.ui.delegates[j];
 		if (delegate.$resolveImageUrl) {
@@ -834,8 +833,8 @@ hui.ui.include = function(options) {
 			hui.dom.runScripts(container);
 			options.$success();
 		}
-	})
-},
+	});
+};
 
 
 
@@ -884,7 +883,7 @@ hui.ui.handleRequestError = function(widget) {
 			}
 		});
 	}
-}
+};
 
 hui.ui.handleForbidden = function(widget) {
 	hui.log('General access denied received');
@@ -900,7 +899,7 @@ hui.ui.handleForbidden = function(widget) {
 			}
 		});
 	}
-}
+};
 
 hui.ui.request = function(options) {
 	options = hui.override({method:'post',parameters:{}},options);
@@ -955,7 +954,7 @@ hui.ui.request = function(options) {
 	};
 	options.$failure = function(t) {
 		if (typeof(failure)=='string') {
-			hui.ui.callDelegates(t,'failure$'+failure)
+			hui.ui.callDelegates(t,'failure$'+failure);
 		} else if (typeof(failure)=='function') {
 			failure(t);
 		} else {
@@ -964,7 +963,7 @@ hui.ui.request = function(options) {
 			}
 			hui.ui.handleRequestError();
 		}
-	}
+	};
 	options.$exception = options.$exception || function(e,t) {
 		hui.log(e);
 		hui.log(t);
@@ -980,7 +979,7 @@ hui.ui.request = function(options) {
 			options.$failure(t);
 			hui.ui.handleForbidden();
 		}
-	}
+	};
 	if (options.message && options.message.start) {
 		hui.ui.msg({text:options.message.start,busy:true,delay:options.message.delay});
 	}
@@ -999,7 +998,7 @@ hui.ui.parseSubItems = function(parent,array) {
 	for (var i=0; i < children.length; i++) {
 		var node = children[i];
 		if (node.nodeType==1 && node.nodeName=='title') {
-			array.push({title:node.getAttribute('title'),type:'title'})
+			array.push({title:node.getAttribute('title'),type:'title'});
 		} else if (node.nodeType==1 && node.nodeName=='item') {
 			var sub = [];
 			hui.ui.parseSubItems(node,sub);
@@ -1013,15 +1012,15 @@ hui.ui.parseSubItems = function(parent,array) {
 				children : sub
 			});
 		}
-	};
-}
+	}
+};
 
 /** A bundle of strings
  * @constructor
  */
 hui.ui.Bundle = function(strings) {
 	this.strings = strings;
-}
+};
 
 hui.ui.Bundle.prototype = {
 	get : function(key) {
@@ -1032,7 +1031,7 @@ hui.ui.Bundle.prototype = {
 		hui.log(key+' not found for language:'+hui.ui.language);
 		return key;
 	}
-}
+};
 
 /**
  * Import some widgets by name
@@ -1042,9 +1041,9 @@ hui.ui.Bundle.prototype = {
 hui.ui.require = function(names,func) {
 	for (var i = names.length - 1; i >= 0; i--){
 		names[i] = hui.ui.context+'hui/js/'+names[i]+'.js';
-	};
+	}
 	hui.require(names,func);
-}
+};
 
 
 
@@ -1057,7 +1056,7 @@ hui.onReady(function() {
 	}
 	for (var i=0; i < hui.ui.delayedUntilReady.length; i++) {
 		hui.ui.delayedUntilReady[i]();
-	};
+	}
 	// Call super delegates after delayedUntilReady...
 	hui.ui.callSuperDelegates(this,'ready');
 });

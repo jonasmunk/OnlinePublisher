@@ -77,7 +77,7 @@ hui.browser.touch = (!!('ontouchstart' in window) || (!!('onmsgesturechange' in 
 	if (result) {
 		hui.browser.webkitVersion = parseFloat(result[1]);
 	}
-})()
+})();
 
 
 
@@ -101,8 +101,8 @@ hui.log = function(obj) {
 		} else {
 			console.log(arguments);			
 		}
-	} catch (ignore) {};
-}
+	} catch (ignore) {}
+};
 
 /**
  * Defer a function so it will fire when the current "thread" is done
@@ -114,7 +114,7 @@ hui.defer = function(func,bind) {
 		func = func.bind(bind);
 	}
 	window.setTimeout(func);
-}
+};
 
 /**
  * Override the properties on the first argument with properties from the last object
@@ -129,7 +129,7 @@ hui.override = function(original,subject) {
 		}
 	}
 	return original;
-}
+};
 
 /**
  * Loop through items in array or properties in an object.
@@ -139,20 +139,21 @@ hui.override = function(original,subject) {
  * @param {Function} func The callback to handle each item
  */
 hui.each = function(items,func) {
+    var i;
 	if (hui.isArray(items)) {		
-		for (var i=0; i < items.length; i++) {
+		for (i = 0; i < items.length; i++) {
 			func(items[i],i);
-		};
+		}
     } else if (items instanceof NodeList) {
-		for (var i=0; i < items.length; i++) {
+		for (i = 0; i < items.length; i++) {
 			func(items.item(i),i);
-		};
+		}
 	} else {
 		for (var key in items) {
 			func(key,items[key]);
 		}
 	}
-}
+};
 
 /**
  * Return text if condition is met
@@ -161,7 +162,7 @@ hui.each = function(items,func) {
  */
 hui.when = function(condition,text) {
 	return condition ? text : '';
-}
+};
 
 /**
  * Converts a string to an int if it is only digits, otherwise remains a string
@@ -178,12 +179,12 @@ hui.intOrString = function(str) {
 		}
 	}
 	return str;
-}
+};
 
 hui.between = function(min,value,max) {
 	var result = Math.min(max,Math.max(min,value));
 	return isNaN(result) ? min : result;
-}
+};
 
 /**
  * Checks if a string has non-whitespace characters
@@ -193,8 +194,8 @@ hui.isBlank = function(str) {
 	if (str===null || typeof(str)==='undefined' || str==='') {
 		return true;
 	}
-	return typeof(str)=='string' && hui.string.trim(str).length==0;
-}
+	return typeof(str)=='string' && hui.string.trim(str).length === 0;
+};
 
 /**
  * Checks that an object is not null and not undefined
@@ -202,7 +203,7 @@ hui.isBlank = function(str) {
  */
 hui.isDefined = function(obj) {
 	return obj!==null && typeof(obj)!=='undefined';
-}
+};
 
 
 
@@ -212,14 +213,14 @@ hui.isDefined = function(obj) {
  */
 hui.isString = function(obj) {
 	return typeof(obj)==='string';
-}
+};
 
 /**
  * Checks if an object is an array
  * @param {Object} obj The object to check
  */
 hui.isArray = function(obj) {
-	if (obj==null || obj==undefined) {
+	if (obj === null || obj === undefined) {
 		return false;
 	}
 	if (obj.constructor == Array) {
@@ -227,7 +228,7 @@ hui.isArray = function(obj) {
 	} else {
 		return Object.prototype.toString.call(obj) === '[object Array]';
 	}
-}
+};
 
 ///////////////////////// Strings ///////////////////////
 
@@ -241,7 +242,7 @@ hui.string = {
 	 * @returns {Boolean} True if «str» starts with «start»
 	 */
 	startsWith : function(str,start) {
-		if (!typeof(str)=='string' || !typeof(start)=='string') {
+		if (typeof(str) !== 'string' || typeof(start) !== 'string') {
 			return false;
 		}
 		return (str.match("^"+start)==start);
@@ -253,7 +254,7 @@ hui.string = {
 	 * @returns {Boolean} True if «str» ends with «end»
 	 */
 	endsWith : function(str,end) {
-		if (!typeof(str)=='string' || !typeof(end)=='string') {
+		if (typeof(str) !== 'string' || typeof(end) !== 'string') {
 			return false;
 		}
 		return (str.match(end+"$")==end);
@@ -265,12 +266,12 @@ hui.string = {
 	 * @returns {String} The camelized string
 	 */
 	camelize : function(str) {
-		if (str.indexOf('-')==-1) {return str}
+		if (str.indexOf('-')==-1) {
+            return str;
+        }
 	    var oStringList = str.split('-');
 
-	    var camelizedString = str.indexOf('-') == 0
-	      ? oStringList[0].charAt(0).toUpperCase() + oStringList[0].substring(1)
-	      : oStringList[0];
+	    var camelizedString = str.indexOf('-') === 0 ? oStringList[0].charAt(0).toUpperCase() + oStringList[0].substring(1) : oStringList[0];
 
 	    for (var i = 1, len = oStringList.length; i < len; i++) {
 	      var s = oStringList[i];
@@ -286,10 +287,10 @@ hui.string = {
 	 */
 	trim : function(str) {
 		if (str===null || str===undefined) {
-			return ''
+			return '';
 		}
-		if (typeof(str)!='string') {
-			str=new String(str)
+		if (typeof(str) != 'string') {
+			str = String(str);
 		}
 		return str.replace(/^[\s\x0b\xa0\u2000\u2001\u2002\u2003\u2004\u2005\u2006\u2007\u2008\u2009\u200a\u200b\u2028\u2029\u3000]+|[\s\x0b\xa0\u2000\u2001\u2002\u2003\u2004\u2005\u2006\u2007\u2008\u2009\u200a\u200b\u2028\u2029\u3000]+$/g, '');
 	},
@@ -311,9 +312,9 @@ hui.string = {
 	 * @returns {String} The shortened text, '' if undefined or null string
 	 */
 	shorten : function(str,length) {
-		if (!hui.isDefined(str)) {return ''};
+		if (!hui.isDefined(str)) {return '';}
 		if (str.length > length) {
-			return str.substring(0,length-3)+'...';
+			return str.substring(0,length-3) + '...';
 		}
 		return str;
 	},
@@ -323,7 +324,7 @@ hui.string = {
 	 * @returns {String} The escaped text
 	 */
 	escapeHTML : function(str) {
-		if (str===null || str===undefined) {return ''};
+		if (str===null || str===undefined) {return '';}
 	   	return hui.build('div',{text:str}).innerHTML;
 	},
 	/**
@@ -332,11 +333,11 @@ hui.string = {
 	 * @returns {String} The escaped text
 	 */
 	escape : function(str) {
-		if (!hui.isDefined(str)) {return ''};
+		if (!hui.isDefined(str)) {return '';}
 		return str.replace(/&/g,'&amp;').
 			replace(/>/g,'&gt;').
 			replace(/</g,'&lt;').
-			replace(/"/g,'&quot;')
+            replace(/"/g,'&quot;');
 	},
 	/**
 	 * Converts a JSON string into an object
@@ -360,7 +361,7 @@ hui.string = {
 	toJSON : function(obj) {
 		return JSON.stringify(obj);
 	}
-}
+};
 
 
 
@@ -383,7 +384,7 @@ hui.array = {
 				if (!hui.array.contains(arr,value[i])) {
 					arr.push(value);
 				}
-			};
+			}
 		} else {
 			if (!hui.array.contains(arr,value)) {
 				arr.push(value);
@@ -401,7 +402,7 @@ hui.array = {
 			if (arr[i]===value) {
 				return true;
 			}
-		};
+		}
 		return false;
 	},
 	/**
@@ -427,7 +428,7 @@ hui.array = {
 			if (arr[i]==value) {
 				arr.splice(i,1);
 			}
-		};
+		}
 	},
 	/**
 	 * Find the first index of a value in an array, -1 if not found
@@ -440,7 +441,7 @@ hui.array = {
 			if (arr[i]===value) {
 				return i;
 			}
-		};
+		}
 		return -1;
 	},
 	/**
@@ -452,10 +453,10 @@ hui.array = {
 		var array = str.split(',');
 		for (var i = array.length - 1; i >= 0; i--){
 			array[i] = parseInt(array[i]);
-		};
+		}
 		return array;
 	}
-}
+};
 
 
 
@@ -486,7 +487,7 @@ hui.dom = {
 			if (children[i].nodeType==hui.ELEMENT_NODE) {
 				return children[i];
 			}
-		};
+		}
 		return null;
 	},
 	parseToNode : function(html) {
@@ -497,7 +498,7 @@ hui.dom = {
 		var children = node.childNodes;
 		for (var i = children.length - 1; i >= 0; i--) {
 			children[i].parentNode.removeChild(children[i]);
-		};
+		}
 	},
 	remove : function(node) {
 		if (node.parentNode) {
@@ -559,7 +560,7 @@ hui.dom = {
 		}
 	},
 	setText : function(node,text) {
-		if (text==undefined || text==null) {
+		if (text===undefined || text===null) {
 			text = '';
 		}
 		var c = node.childNodes;
@@ -580,12 +581,12 @@ hui.dom = {
 		var txt = '';
 		var c = node.childNodes;
 		for (var i=0; i < c.length; i++) {
-			if (c[i].nodeType==hui.TEXT_NODE && c[i].nodeValue!=null) {
-				txt+=c[i].nodeValue;
-			} else if (c[i].nodeType==hui.ELEMENT_NODE) {
-				txt+=hui.dom.getText(c[i]);
+			if (c[i].nodeType == hui.TEXT_NODE && c[i].nodeValue !== null) {
+				txt+= c[i].nodeValue;
+			} else if (c[i].nodeType == hui.ELEMENT_NODE) {
+				txt+= hui.dom.getText(c[i]);
 			}
-		};
+		}
 		return txt;
 	},
 	isVisible : function(node) {
@@ -606,7 +607,7 @@ hui.dom = {
 		}
 		return false;
 	}
-}
+};
 
 
 
@@ -627,10 +628,10 @@ hui.form = {
 			if (hui.isDefined(inputs[i].name)) {
 				params[inputs[i].name] = inputs[i].value;
 			}
-		};
+		}
 		return params;
 	}
-}
+};
 
 
 
@@ -654,7 +655,7 @@ hui.get = function(id) {
 		return document.getElementById(id);
 	}
 	return id;
-}
+};
 
 /**
  * Get array of child elements of «node», not a NodeList
@@ -666,9 +667,9 @@ hui.get.children = function(node) {
 		if (hui.dom.isElement(x[i])) {
 			children.push(x[i]);
 		}
-	};
+	}
 	return children;
-}
+};
 
 hui.get.ancestors = function(element) {
 	var ancestors = [];
@@ -678,7 +679,7 @@ hui.get.ancestors = function(element) {
 		parent = parent.parentNode;
 	}
 	return ancestors;
-}
+};
 
 /**
  * Find the first ancestor with a given class (including self)
@@ -691,7 +692,7 @@ hui.get.firstAncestorByClass = function(element,className) {
 		element = element.parentNode;
 	}
 	return null;
-}
+};
 
 hui.get.next = function(element) {
 	if (!element) {
@@ -711,7 +712,7 @@ hui.get.next = function(element) {
     	return next;
 	}
 	return null;
-}
+};
 
 hui.get.previous = function(element) {
 	if (!element) {
@@ -731,7 +732,7 @@ hui.get.previous = function(element) {
     	return previous;
 	}
 	return null;
-}
+};
 
 hui.get.before = function(element) {
 	var elements = [];
@@ -743,10 +744,10 @@ hui.get.before = function(element) {
 			} else if (nodes[i].nodeType===1) {
 				elements.push(nodes[i]);
 			}
-		};
+		}
 	}
 	return elements;
-}
+};
 
 /**
  * Find all sibling elements after «element»
@@ -759,7 +760,7 @@ hui.get.after = function(element) {
 		next = hui.get.next(next);
 	}
 	return elements;
-}
+};
 
 hui.get.firstByClass = function(parentElement,className,tag) {
 	parentElement = hui.get(parentElement) || document.body;
@@ -774,27 +775,28 @@ hui.get.firstByClass = function(parentElement,className,tag) {
 		}
 	}
 	return null;
-}
+};
 
 hui.get.byClass = function(parentElement,className,tag) {
 	parentElement = hui.get(parentElement) || document.body;
+    var i;
 	if (document.querySelectorAll) {
 		var nl = parentElement.querySelectorAll((tag ? tag+'.' : '.')+className);
 		// Important to convert into array...
 		var l=[];
-		for(var i=0, ll=nl.length; i!=ll; l.push(nl[i++]));
+		for(i=0, ll=nl.length; i!=ll; l.push(nl[i++]));
 		return l;
 	} else {
 		var children = parentElement.getElementsByTagName(tag || '*'),
 		out = [];
-		for (var i=0;i<children.length;i++) {
+		for (i=0;i<children.length;i++) {
 			if (hui.cls.has(children[i],className)) {
-				out[out.length]=children[i];
+				out[out.length] = children[i];
 			}
 		}
 		return out;
 	}
-}
+};
 
 /**
  * Get array of descendants of «node» with the name «name»
@@ -807,7 +809,7 @@ hui.get.byTag = function(node,name) {
 		l=[];
 	for(var i=0, ll=nl.length; i!=ll; l.push(nl[i++]));
 	return l;
-}
+};
 
 hui.get.byId = function(e,id) {
 	var children = e.childNodes;
@@ -822,7 +824,7 @@ hui.get.byId = function(e,id) {
 		}
 	}
 	return null;
-}
+};
 
 hui.get.firstParentByTag = function(node,tag) {
 	var parent = node;
@@ -833,7 +835,7 @@ hui.get.firstParentByTag = function(node,tag) {
 		parent = parent.parentNode;
 	}
 	return null;
-}
+};
 
 hui.get.firstParentByClass = function(node,tag) {
 	var parent = node;
@@ -844,7 +846,7 @@ hui.get.firstParentByClass = function(node,tag) {
 		parent = parent.parentNode;
 	}
 	return null;
-}
+};
 
 /**
  * Find first descendant by tag (excluding self)
@@ -859,7 +861,7 @@ hui.get.firstByTag = function(node,tag) {
 	}
 	var children = node.getElementsByTagName(tag);
 	return children[0];
-}
+};
 
 
 hui.get.firstChild = hui.dom.firstChild;
@@ -896,8 +898,8 @@ hui.get.firstChild = hui.dom.firstChild;
  */
 hui.build = function(name,options,doc) {
 	
-	var doc = doc || document,
-		e = doc.createElement(name);
+	doc = doc || document;
+    var e = doc.createElement(name);
 	if (options) {
 		for (var prop in options) {
 			if (prop=='text') {
@@ -907,7 +909,7 @@ hui.build = function(name,options,doc) {
 			} else if (prop=='parent' && hui.isDefined(options.parent)) {
 				options.parent.appendChild(e);
 			} else if (prop=='parentFirst') {
-				if (options.parentFirst.childNodes.length==0) {
+				if (options.parentFirst.childNodes.length === 0) {
 					options.parentFirst.appendChild(e);
 				} else {
 					options.parentFirst.insertBefore(e,options.parentFirst.childNodes[0]);
@@ -928,7 +930,7 @@ hui.build = function(name,options,doc) {
 		}
 	}
 	return e;
-}
+};
 
 
 
@@ -948,7 +950,7 @@ hui.position = {
 		if (element) {
 			var top = element.offsetTop,
 				tempEl = element.offsetParent;
-			while (tempEl != null) {
+			while (tempEl !== null) {
 				top += tempEl.offsetTop;
 				tempEl = tempEl.offsetParent;
 			}
@@ -961,7 +963,7 @@ hui.position = {
 		if (element) {
 			var left = element.offsetLeft,
 				tempEl = element.offsetParent;
-			while (tempEl != null) {
+			while (tempEl !== null) {
 				left += tempEl.offsetLeft;
 				tempEl = tempEl.offsetParent;
 			}
@@ -973,7 +975,7 @@ hui.position = {
 		return {
 			left : hui.position.getLeft(element),
 			top : hui.position.getTop(element)
-		}
+		};
 	},
 	getScrollOffset : function(element) {
 	    element = hui.get(element);
@@ -982,7 +984,7 @@ hui.position = {
 	      top += element.scrollTop  || 0;
 	      left += element.scrollLeft || 0;
 	      element = element.parentNode;
-		  if (element.tagName=='HTML') {
+		  if (element.tagName === 'HTML') {
 			  break; // TODO Temporary hack - Chrome has the same scrollTop on html as on body
 		  }
 	    } while (element);
@@ -1016,10 +1018,10 @@ hui.position = {
 			var w = hui.window.getViewWidth();
 			if (left + src.clientWidth > w) {
 				left = w - src.clientWidth - (options.viewPartMargin || 0);
-				hui.log(options.viewPartMargin)
+				//hui.log(options.viewPartMargin)
 			}
-			if (left < 0) {left=0}
-			if (top < 0) {top=0}
+			if (left < 0) {left=0;}
+			if (top < 0) {top=0;}
 			
 			var height = hui.window.getViewHeight();
 			var vertMax = hui.window.getScrollTop()+hui.window.getViewHeight()-src.clientHeight,
@@ -1040,10 +1042,10 @@ hui.position = {
 					height-=sib.offsetHeight;
 				}
 			}
-		};
+		}
 		return height;
 	}
-}
+};
 
 
 
@@ -1103,7 +1105,7 @@ hui.window = {
 				if (pos<1) {
 					window.setTimeout(func);
 				}
-			}
+			};
 			func();
 		}
 	},
@@ -1131,7 +1133,7 @@ hui.window = {
 			return document.body.clientWidth;
 		}
 	}
-}
+};
 
 
 
@@ -1158,7 +1160,7 @@ hui.cls = {
 	has : function(element, className) {
 		element = hui.get(element);
 		if (!element || !element.className) {
-			return false
+			return false;
 		}
 		if (element.hasClassName) {
 			return element.hasClassName(className);
@@ -1182,7 +1184,7 @@ hui.cls = {
 	add : function(element, className) {
 	    element = hui.get(element);
 		if (!element) {
-			return
+			return;
 		}
 		if (element.addClassName) {
 			element.addClassName(className);
@@ -1197,7 +1199,7 @@ hui.cls = {
 	 */
 	remove : function(element, className) {
 		element = hui.get(element);
-		if (!element || !element.className) {return};
+		if (!element || !element.className) {return;}
 		if (element.removeClassName) {
 			element.removeClassName(className);
 		}
@@ -1242,7 +1244,7 @@ hui.cls = {
 			hui.cls.remove(element,className);
 		}
 	}
-}
+};
 
 
 
@@ -1272,7 +1274,7 @@ hui.listen = function(element,type,listener,useCapture) {
 	} else {
 		element.attachEvent('on'+type, listener);
 	}
-}
+};
 
 /**
  * Add an event listener to an element, it will only fire once
@@ -1283,11 +1285,11 @@ hui.listen = function(element,type,listener,useCapture) {
 hui.listenOnce = function(element,type,listener) {	
 	var func = null;
 	func = function(e) {
-		hui.unListen(element,type,func)
+		hui.unListen(element,type,func);
 		listener(e);
-	}
+	};
 	hui.listen(element,type,func);
-}
+};
 
 /**
  * Remove an event listener from an element
@@ -1303,7 +1305,7 @@ hui.unListen = function(el,type,listener,useCapture) {
 	} else {
 		el.detachEvent('on'+type, listener);
 	}
-}
+};
 
 /** Creates an event wrapper for an event
  * @param event The DOM event
@@ -1314,7 +1316,7 @@ hui.event = function(event) {
 		return event;
 	}
 	return new hui.Event(event);
-}
+};
 
 /** @constructor
  * Wrapper for events
@@ -1355,7 +1357,7 @@ hui.Event = function(event) {
 	this.rightKey = event.keyCode==39;
 	/** The key code */
 	this.keyCode = event.keyCode;
-}
+};
 
 hui.Event.prototype = {
 	/**
@@ -1400,7 +1402,7 @@ hui.Event.prototype = {
 	 * @returns {Element} The found element or null
 	 */
 	findByClass : function(cls) {
-		return hui.get.firstAncestorByClass(this.element,cls)
+		return hui.get.firstAncestorByClass(this.element,cls);
 	},
 	/** Finds the nearest ancester with a certain tag name
 	 * @param tag The tag name
@@ -1443,19 +1445,19 @@ hui.Event.prototype = {
 	stop : function() {
 		hui.stop(this.event);
 	}
-}
+};
 
 /** 
  * Stops an event from propagating
  * @param event A standard DOM event, NOT an hui.Event
  */
 hui.stop = function(event) {
-	if (!event) {event = window.event};
-	if (event.stopPropagation) {event.stopPropagation()};
-	if (event.preventDefault) {event.preventDefault()};
+	if (!event) {event = window.event;}
+	if (event.stopPropagation) {event.stopPropagation();}
+	if (event.preventDefault) {event.preventDefault();}
 	event.cancelBubble = true;
     event.stopped = true;
-}
+};
 
 hui._defered = [];
 
@@ -1474,9 +1476,9 @@ hui.onReady = function(func) {
 				hui._defered[i]();
 			}
             hui._defered = null;
-		})
+		});
 	}
-}
+};
 
 /**
  * Execute a function when the DOM is ready
@@ -1524,7 +1526,7 @@ hui._onReady = function(delegate) {
 			window.onload = delegate;
 		}
 	}
-}
+};
 
 
 
@@ -1585,11 +1587,11 @@ hui.request = function(options) {
 					options.$forbidden(transport);
 				} else if (transport.status !== 0 && options.$failure) {
 					options.$failure(transport);
-				} else if (transport.status == 0 && options.$abort) {
+				} else if (transport.status === 0 && options.$abort) {
 					options.$abort(transport);
 				}
-				if (options['$finally']) {
-					options['$finally']();
+				if (options.$finally) {
+					options.$finally();
 				}
 			}
 			//hui.request._forget(transport);
@@ -1649,7 +1651,8 @@ hui.request = function(options) {
 	//hui.request._transports.push(transport);
 	//hui.log('Add: '+hui.request._transports.length);
 	return transport;
-}
+};
+
 /*
 hui.request._transports = [];
 
@@ -1673,7 +1676,7 @@ hui.request.abort = function() {
  */
 hui.request.isXMLResponse = function(t) {
 	return t.responseXML && t.responseXML.documentElement && t.responseXML.documentElement.nodeName!='parsererror';
-}
+};
 
 hui.request._buildPostBody = function(parameters) {
 	if (!parameters) return null;
@@ -1697,7 +1700,7 @@ hui.request._buildPostBody = function(parameters) {
     	}        
     }
 	return output;
-}
+};
 
 /**
  * Creates a new XMLHttpRequest
@@ -1724,7 +1727,7 @@ hui.request.createTransport = function() {
 	catch (ex) {
 	}
 	return null;
-}
+};
 
 hui.request._getActiveX = function() {
 	var prefixes = ["MSXML2", "Microsoft", "MSXML", "MSXML3"];
@@ -1734,7 +1737,7 @@ hui.request._getActiveX = function() {
 		}
 		catch (ex) {};
 	}
-}
+};
 
 
 
@@ -1814,7 +1817,7 @@ hui.style = {
         }
         return value;
     }
-}
+};
 
 
 
@@ -1849,7 +1852,7 @@ hui.frame = {
 	        return frame.contentWindow;
 	    }
 	}
-}
+};
 
 
 
@@ -1905,7 +1908,7 @@ hui.selection = {
 		document.onselectstart = on ? null : function () { return false; };
 		document.body.style.webkitUserSelect = on ? null : 'none';
 	}
-}
+};
 
 
 
@@ -2520,9 +2523,11 @@ if (!Function.prototype.bind) {
 	Function.bind = function() {
 	    var args = Array.prototype.slice.call(arguments);
 	    return Function.prototype.bind.apply(args.shift(), args);
-	}
+	};
 }
 
+
+// 
 if (!Function.prototype.argumentNames) {
 	Function.prototype.argumentNames = function() {
 		var names = this.toString().match(/^[\s\(]*function[^(]*\(([^)]*)\)/)[1]
