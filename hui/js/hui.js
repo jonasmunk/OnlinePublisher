@@ -1424,7 +1424,7 @@ hui.Event.prototype = {
 			if (parent.tagName && parent.tagName.toLowerCase()==tag) {
 				if (func(parent)) {
 					return parent;
-				};
+				}
 			}
 			parent = parent.parentNode;
 		}
@@ -1597,7 +1597,7 @@ hui.request = function(options) {
 			//hui.request._forget(transport);
 		} catch (e) {
 			if (options.$exception) {
-				options.$exception(e,transport)
+				options.$exception(e,transport);
 			} else {
 				throw e;
 			}
@@ -1680,19 +1680,20 @@ hui.request.isXMLResponse = function(t) {
 
 hui.request._buildPostBody = function(parameters) {
 	if (!parameters) return null;
-	var output = '';
+	var output = '',
+        param;
     if (hui.isArray(parameters)) {
         for (var i = 0; i < parameters.length; i++) {
-            var param = parameters[i];
-    		if (i > 0) {output += '&'};
+            param = parameters[i];
+    		if (i > 0) {output += '&';}
     		output+=encodeURIComponent(param.name)+'=';
     		if (param.value!==undefined && param.value!==null) {
     			output+=encodeURIComponent(param.value);
     		}
         }
     } else {
-    	for (var param in parameters) {
-    		if (output.length > 0) {output += '&'};
+    	for (param in parameters) {
+    		if (output.length > 0) {output += '&';}
     		output+=encodeURIComponent(param)+'=';
     		if (parameters[param]!==undefined && parameters[param]!==null) {
     			output+=encodeURIComponent(parameters[param]);
@@ -1710,7 +1711,7 @@ hui.request.createTransport = function() {
 	try {
 		if (window.XMLHttpRequest) {
 			var req = new XMLHttpRequest();
-			if (req.readyState == null) {
+			if (req.readyState === null) {
 				req.readyState = 1;
 				req.addEventListener("load", function () {
 					req.readyState = 4;
@@ -1735,7 +1736,7 @@ hui.request._getActiveX = function() {
 		try {
 			return new ActiveXObject(prefixes[i] + ".XmlHttp");
 		}
-		catch (ex) {};
+		catch (ex) {}
 	}
 };
 
@@ -1762,12 +1763,12 @@ hui.style = {
 			if (value) {
 				target.style[hui.string.camelize(property)] = value;
 			}
-		};
+		}
 	},
 	set : function(element,styles) {
 		for (var style in styles) {
 			if (style==='transform') {
-				element.style['webkitTransform'] = styles[style];
+				element.style.webkitTransform = styles[style];
 			} else if (style==='opacity') {
 				hui.style.setOpacity(element,styles[style]);
 			} else {
@@ -1803,17 +1804,17 @@ hui.style = {
 	setOpacity : function(element,opacity) {
 		if (!hui.browser.opacity) {
 			if (opacity==1) {
-				element.style['filter']=null;
+				element.style.filter = null;
 			} else {
-				element.style['filter']='alpha(opacity='+(opacity*100)+')';
+				element.style.filter = 'alpha(opacity='+(opacity*100)+')';
 			}
 		} else {
-			element.style['opacity']=opacity;
+			element.style.opacity = opacity;
 		}
 	},
     length : function(value) {
-        if (typeof(value)==='number') {
-            return value+'px';
+        if (typeof(value) === 'number') {
+            return value + 'px';
         }
         return value;
     }
@@ -1902,7 +1903,7 @@ hui.selection = {
 		return {
 			node : hui.selection.getNode(doc),
 			text : hui.selection.getText(doc)
-		}
+		};
 	},
 	enable : function(on) {
 		document.onselectstart = on ? null : function () { return false; };
@@ -2013,7 +2014,7 @@ hui.effect = {
 		},options.duration || 1000);
 	
 	}
-}
+};
 
 
 
@@ -2027,7 +2028,7 @@ hui.document = {
 	 * Get the height of the document (including the invisble part)
 	 */
 	getWidth : function() {
-		return Math.max(document.body.clientWidth,document.documentElement.clientWidth,document.documentElement.scrollWidth)
+		return Math.max(document.body.clientWidth,document.documentElement.clientWidth,document.documentElement.scrollWidth);
 	},
 	/**
 	 * Get the width of the document (including the invisble part)
@@ -2050,7 +2051,7 @@ hui.document = {
 			return Math.max(document.body.clientHeight,document.documentElement.clientHeight,document.documentElement.scrollHeight);
 		}
 	}
-}
+};
 
 
 
@@ -2077,7 +2078,7 @@ hui.drag = {
 			}
 			hui.stop(e);
 			hui.drag.start(options);
-		})
+		});
 	},
 	/** Start dragging
 	 * <pre><strong>options:</strong> {
@@ -2120,7 +2121,7 @@ hui.drag = {
 				options.onNotMoved();
 			}
 			hui.selection.enable(true);
-		}.bind(this)
+		}.bind(this);
 		hui.listen(target,'mouseup',upper);
 		hui.selection.enable(false);
 	},
@@ -2145,7 +2146,9 @@ hui.drag = {
 			return;
 		}
 		hui.drag._nativeListeners.push(options);
-		if (hui.drag._nativeListeners.length>1) {return};
+		if (hui.drag._nativeListeners.length>1) {
+            return;
+        }
 		hui.listen(document.body,'dragenter',function(e) {
 			var l = hui.drag._nativeListeners;
 			var found = null;
@@ -2153,12 +2156,12 @@ hui.drag = {
 				var lmnt = l[i].element;
 				if (hui.dom.isDescendantOrSelf(e.target,lmnt)) {
 					found = l[i];
-					if (hui.drag._activeDrop==null || hui.drag._activeDrop!=found) {
+					if (hui.drag._activeDrop === null || hui.drag._activeDrop != found) {
 						hui.cls.add(lmnt,found.hoverClass);
 					}
 					break;
 				}
-			};
+			}
 			if (hui.drag._activeDrop) {
 				//var foundElement = found ? found.element : null;
 				if (hui.drag._activeDrop!=found) {
@@ -2192,7 +2195,7 @@ hui.drag = {
 		});
 		
 		hui.listen(document.body,'drop',function(e) {
-			var event = hui.event(e)
+			var event = hui.event(e);
 			event.stop();
 			var options = hui.drag._activeDrop;
 			hui.drag._activeDrop = null;
@@ -2202,10 +2205,10 @@ hui.drag = {
 					options.$drop(e,{event:event});
 				}
 				if (e.dataTransfer) {
-					hui.log(e.dataTransfer.types)
+					hui.log(e.dataTransfer.types);
 					if (options.$dropFiles && e.dataTransfer.files && e.dataTransfer.files.length>0) {
 						options.$dropFiles(e.dataTransfer.files,{event:event});
-					} else if (options.$dropURL && e.dataTransfer.types!=null && (hui.array.contains(e.dataTransfer.types,'public.url') || hui.array.contains(e.dataTransfer.types,'text/uri-list'))) {
+					} else if (options.$dropURL && e.dataTransfer.types !== null && (hui.array.contains(e.dataTransfer.types,'public.url') || hui.array.contains(e.dataTransfer.types,'text/uri-list'))) {
 						var url = e.dataTransfer.getData('public.url');
 						var uriList = e.dataTransfer.getData('text/uri-list');
 						if (url && !hui.string.startsWith(url,'data:')) {
@@ -2213,14 +2216,14 @@ hui.drag = {
 						} else if (uriList && !hui.string.startsWith(url,'data:')) {
 							options.$dropURL(uriList,{event:event});
 						}
-					} else if (options.$dropText && e.dataTransfer.types!=null && hui.array.contains(e.dataTransfer.types,'text/plain')) {
-						options.$dropText(e.dataTransfer.getData('text/plain'),{event:event})
+					} else if (options.$dropText && e.dataTransfer.types !== null && hui.array.contains(e.dataTransfer.types,'text/plain')) {
+						options.$dropText(e.dataTransfer.getData('text/plain'),{event:event});
 					}
 				}
 			}
 		});
 	}
-}
+};
 
 
 
@@ -2236,7 +2239,7 @@ hui.Preloader = function(options) {
 	this.delegate = {};
 	this.images = [];
 	this.loaded = 0;
-}
+};
 
 hui.Preloader.prototype = {
 	/** Add images either as a single url or an array of urls */
@@ -2244,7 +2247,7 @@ hui.Preloader.prototype = {
 		if (typeof(imageOrImages)=='object') {
 			for (var i=0; i < imageOrImages.length; i++) {
 				this.images.push(imageOrImages[i]);
-			};
+			}
 		} else {
 			this.images.push(imageOrImages);
 		}
@@ -2260,6 +2263,9 @@ hui.Preloader.prototype = {
 		startIndex = startIndex || 0;
 		var self = this;
 		this.obs = [];
+		var onLoad = function() {self._imageChanged(this.huiPreloaderIndex,'imageDidLoad');};
+		var onError = function() {self._imageChanged(this.huiPreloaderIndex,'imageDidGiveError');};
+		var onAbort = function() {self._imageChanged(this.huiPreloaderIndex,'imageDidAbort');};
 		for (var i=startIndex; i < this.images.length+startIndex; i++) {
 			var index=i;
 			if (index>=this.images.length) {
@@ -2267,12 +2273,12 @@ hui.Preloader.prototype = {
 			}
 			var img = new Image();
 			img.huiPreloaderIndex = index;
-			img.onload = function() {self._imageChanged(this.huiPreloaderIndex,'imageDidLoad')};
-			img.onerror = function() {self._imageChanged(this.huiPreloaderIndex,'imageDidGiveError')};
-			img.onabort = function() {self._imageChanged(this.huiPreloaderIndex,'imageDidAbort')};
+			img.onload = onLoad;
+			img.onerror = onError;
+			img.onabort = onAbort;
 			img.src = (this.options.context ? this.options.context : '')+this.images[index];
 			this.obs.push(img);
-		};
+		}
 	},
 	_imageChanged : function(index,method) {
 		this.loaded++;
@@ -2283,7 +2289,7 @@ hui.Preloader.prototype = {
 			this.delegate.allImagesDidLoad();
 		}
 	}
-}
+};
 
 
 
@@ -2313,7 +2319,7 @@ hui.cookie = {
 			while (c.charAt(0)==' ') {
 				c = c.substring(1,c.length);
 			}
-			if (c.indexOf(nameEQ) == 0) {
+			if (c.indexOf(nameEQ) === 0) {
 				return c.substring(nameEQ.length,c.length);
 			}
 		}
@@ -2323,7 +2329,7 @@ hui.cookie = {
 	clear : function(name) {
 		this.set(name,"",-1);
 	}
-}
+};
 
 
 
@@ -2341,7 +2347,7 @@ hui.location = {
 			if (parms[i].name==name) {
 				return parms[i].value;
 			}
-		};
+		}
 		return null;
 	},
 	/** Set an URL parameter - initiates a new request */
@@ -2354,7 +2360,7 @@ hui.location = {
 				found=true;
 				break;
 			}
-		};
+		}
 		if (!found) {
 			parms.push({name:name,value:value});
 		}
@@ -2400,9 +2406,9 @@ hui.location = {
 	setParameters : function(parms) {
 		var query = '';
 		for (var i=0; i < parms.length; i++) {
-			query+= i==0 ? '?' : '&';
+			query+= i === 0 ? '?' : '&';
 			query+=parms[i].name+'='+parms[i].value;
-		};
+		}
 		document.location.search=query;
 	},
 	/** Checks if a parameter exists with the value 'true' or 1 */
@@ -2413,7 +2419,7 @@ hui.location = {
 	/** Checks if a parameter exists with the value 'true' or 1 */
 	getInt : function(name) {
 		var value = parseInt(hui.location.getParameter(name));
-		if (value!==NaN) {
+		if (!isNaN(value)) {
 			return value;
 		}
 		return null;
@@ -2429,7 +2435,7 @@ hui.location = {
 			if (name) {
 				parsed.push({name:name,value:value});
 			}
-		};
+		}
 		return parsed;
 	}	
 };
@@ -2474,7 +2480,7 @@ hui.xml = {
   			doc = parser.parseFromString(xml,"text/xml");
 			var errors = doc.getElementsByTagName('parsererror');
 			if (errors.length>0 && errors[0].textContent) {
-				hui.log(errors[0].textContent)
+				hui.log(errors[0].textContent);
 				return null;
 			}
   		} else {
@@ -2494,11 +2500,11 @@ hui.xml = {
      		try {
         		return node.xml;
      		}
-     		catch (e) {}
+     		catch (ex) {}
      	}
 		return null;
    	}
-}
+};
 
 
 
@@ -2534,5 +2540,5 @@ if (!Function.prototype.argumentNames) {
 			.replace(/\/\/.*?[\r\n]|\/\*(?:.|[\r\n])*?\*\//g, '')
 			.replace(/\s+/g, '').split(',');
 		return names.length == 1 && !names[0] ? [] : names;
-	}
+	};
 }
