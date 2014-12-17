@@ -16,5 +16,10 @@
             "style/in2isoft/css/humanise.css",
             "style/in2isoft/css/widgets.css"
         ]
+    },
+    "widgets" : {
+        "call-to-action" : {
+            "template" : "<call-to-action><text>This is the text</text><button url='#'>A button</button></call-to-action>"
+        }
     }
 }
