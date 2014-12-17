@@ -749,22 +749,24 @@
 
 <!--                    Widgets                 -->
 
-<xsl:template match="widget:widget[@key='happy-xmas']">
+<xsl:template match="widget:happy-xmas">
     <div class="happy-xmas">
-    <h1><xsl:value-of select="widget:title"/></h1>
-    <xsl:apply-templates select="widget:button"/>
+        <h1 style="color: red;"><xsl:value-of select="widget:title"/></h1>
     </div>
 </xsl:template>
 
-<xsl:template match="widget:widget[@key='call-to-action']">
+<xsl:template match="widget:call-to-action">
     <div class="call-to-action">
         <p class="call-to-action-text"><xsl:value-of select="widget:text"/></p>
         <xsl:apply-templates select="widget:button"/>
     </div>
 </xsl:template>
 
-<xsl:template match="widget:widget[@key='call-to-action']/widget:button">
-    <a href="{@url}" class="call-to-action-button"><xsl:value-of select="."/></a>
+<xsl:template match="widget:call-to-action/widget:button">
+    <a class="call-to-action-button">
+        <xsl:call-template name="util:link-href"/>
+        <xsl:value-of select="."/>
+    </a>
 </xsl:template>
 
 </xsl:stylesheet>

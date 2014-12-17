@@ -7,8 +7,10 @@
  exclude-result-prefixes="w"
  >
 
+ <!--
 <xsl:template match="w:widget">
     <code>Unknown widget: <xsl:value-of select="@key"/></code>
 </xsl:template>
+     -->
 
 </xsl:stylesheet>
