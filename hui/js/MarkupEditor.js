@@ -159,7 +159,7 @@ hui.ui.MarkupEditor.prototype = {
     },
 	_showColorPicker : function() {
 		if (!this.colorPicker) {
-			this.colorPicker = hui.ui.Window.create();
+			this.colorPicker = hui.ui.Window.create({title:{en:'Color',da:'Farve'}});
 			var picker = hui.ui.ColorPicker.create();
 			picker.listen(this);
 			this.colorPicker.add(picker);
