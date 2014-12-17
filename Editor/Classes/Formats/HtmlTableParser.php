@@ -14,7 +14,6 @@ class HtmlTableParser {
 		foreach ($tables as $table) {
 			$parsedTable = array();
 			$rows = Strings::extract($table,'<tr','tr>');
-            Log::debug($rows);
 			foreach ($rows as $row) {
 				$parsedRow = array();
 				$cells = Strings::extract($row,'<td','td>');

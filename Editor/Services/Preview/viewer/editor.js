@@ -158,6 +158,8 @@ op.Editor = {
 
 hui.ui.listen(op.Editor);
 
+//////////////////////// Parameters ////////////////////
+
 hui.ui.listen({
    $ready : function() {
        var editable = document.querySelectorAll('*[data-editable]');
