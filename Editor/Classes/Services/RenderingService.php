@@ -461,8 +461,8 @@ class RenderingService {
             if ($supportsGzip) {
                 $output = gzencode($html,9);
                 header('Content-Encoding: gzip');
-            }            
-            header('Content-Length: '.strlen($output));                
+            }
+            header('Content-Length: '.strlen($output));
             header("Last-Modified: " . gmdate("D, d M Y H:i:s",$page['published']) . " GMT");
 			header("Cache-Control: public");
 			header("Expires: " . gmdate("D, d M Y H:i:s",time()+604800) . " GMT");
