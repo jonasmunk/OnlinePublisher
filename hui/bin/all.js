@@ -77,7 +77,7 @@ hui.browser.touch = (!!('ontouchstart' in window) || (!!('onmsgesturechange' in 
 	if (result) {
 		hui.browser.webkitVersion = parseFloat(result[1]);
 	}
-})()
+})();
 
 
 
@@ -101,8 +101,8 @@ hui.log = function(obj) {
 		} else {
 			console.log(arguments);			
 		}
-	} catch (ignore) {};
-}
+	} catch (ignore) {}
+};
 
 /**
  * Defer a function so it will fire when the current "thread" is done
@@ -114,7 +114,7 @@ hui.defer = function(func,bind) {
 		func = func.bind(bind);
 	}
 	window.setTimeout(func);
-}
+};
 
 /**
  * Override the properties on the first argument with properties from the last object
@@ -129,7 +129,7 @@ hui.override = function(original,subject) {
 		}
 	}
 	return original;
-}
+};
 
 /**
  * Loop through items in array or properties in an object.
@@ -139,20 +139,21 @@ hui.override = function(original,subject) {
  * @param {Function} func The callback to handle each item
  */
 hui.each = function(items,func) {
+    var i;
 	if (hui.isArray(items)) {		
-		for (var i=0; i < items.length; i++) {
+		for (i = 0; i < items.length; i++) {
 			func(items[i],i);
-		};
+		}
     } else if (items instanceof NodeList) {
-		for (var i=0; i < items.length; i++) {
+		for (i = 0; i < items.length; i++) {
 			func(items.item(i),i);
-		};
+		}
 	} else {
 		for (var key in items) {
 			func(key,items[key]);
 		}
 	}
-}
+};
 
 /**
  * Return text if condition is met
@@ -161,7 +162,7 @@ hui.each = function(items,func) {
  */
 hui.when = function(condition,text) {
 	return condition ? text : '';
-}
+};
 
 /**
  * Converts a string to an int if it is only digits, otherwise remains a string
@@ -178,12 +179,12 @@ hui.intOrString = function(str) {
 		}
 	}
 	return str;
-}
+};
 
 hui.between = function(min,value,max) {
 	var result = Math.min(max,Math.max(min,value));
 	return isNaN(result) ? min : result;
-}
+};
 
 /**
  * Checks if a string has non-whitespace characters
@@ -193,8 +194,8 @@ hui.isBlank = function(str) {
 	if (str===null || typeof(str)==='undefined' || str==='') {
 		return true;
 	}
-	return typeof(str)=='string' && hui.string.trim(str).length==0;
-}
+	return typeof(str)=='string' && hui.string.trim(str).length === 0;
+};
 
 /**
  * Checks that an object is not null and not undefined
@@ -202,7 +203,7 @@ hui.isBlank = function(str) {
  */
 hui.isDefined = function(obj) {
 	return obj!==null && typeof(obj)!=='undefined';
-}
+};
 
 
 
@@ -212,14 +213,14 @@ hui.isDefined = function(obj) {
  */
 hui.isString = function(obj) {
 	return typeof(obj)==='string';
-}
+};
 
 /**
  * Checks if an object is an array
  * @param {Object} obj The object to check
  */
 hui.isArray = function(obj) {
-	if (obj==null || obj==undefined) {
+	if (obj === null || obj === undefined) {
 		return false;
 	}
 	if (obj.constructor == Array) {
@@ -227,7 +228,7 @@ hui.isArray = function(obj) {
 	} else {
 		return Object.prototype.toString.call(obj) === '[object Array]';
 	}
-}
+};
 
 ///////////////////////// Strings ///////////////////////
 
@@ -241,7 +242,7 @@ hui.string = {
 	 * @returns {Boolean} True if «str» starts with «start»
 	 */
 	startsWith : function(str,start) {
-		if (!typeof(str)=='string' || !typeof(start)=='string') {
+		if (typeof(str) !== 'string' || typeof(start) !== 'string') {
 			return false;
 		}
 		return (str.match("^"+start)==start);
@@ -253,7 +254,7 @@ hui.string = {
 	 * @returns {Boolean} True if «str» ends with «end»
 	 */
 	endsWith : function(str,end) {
-		if (!typeof(str)=='string' || !typeof(end)=='string') {
+		if (typeof(str) !== 'string' || typeof(end) !== 'string') {
 			return false;
 		}
 		return (str.match(end+"$")==end);
@@ -265,12 +266,12 @@ hui.string = {
 	 * @returns {String} The camelized string
 	 */
 	camelize : function(str) {
-		if (str.indexOf('-')==-1) {return str}
+		if (str.indexOf('-')==-1) {
+            return str;
+        }
 	    var oStringList = str.split('-');
 
-	    var camelizedString = str.indexOf('-') == 0
-	      ? oStringList[0].charAt(0).toUpperCase() + oStringList[0].substring(1)
-	      : oStringList[0];
+	    var camelizedString = str.indexOf('-') === 0 ? oStringList[0].charAt(0).toUpperCase() + oStringList[0].substring(1) : oStringList[0];
 
 	    for (var i = 1, len = oStringList.length; i < len; i++) {
 	      var s = oStringList[i];
@@ -286,10 +287,10 @@ hui.string = {
 	 */
 	trim : function(str) {
 		if (str===null || str===undefined) {
-			return ''
+			return '';
 		}
-		if (typeof(str)!='string') {
-			str=new String(str)
+		if (typeof(str) != 'string') {
+			str = String(str);
 		}
 		return str.replace(/^[\s\x0b\xa0\u2000\u2001\u2002\u2003\u2004\u2005\u2006\u2007\u2008\u2009\u200a\u200b\u2028\u2029\u3000]+|[\s\x0b\xa0\u2000\u2001\u2002\u2003\u2004\u2005\u2006\u2007\u2008\u2009\u200a\u200b\u2028\u2029\u3000]+$/g, '');
 	},
@@ -311,9 +312,9 @@ hui.string = {
 	 * @returns {String} The shortened text, '' if undefined or null string
 	 */
 	shorten : function(str,length) {
-		if (!hui.isDefined(str)) {return ''};
+		if (!hui.isDefined(str)) {return '';}
 		if (str.length > length) {
-			return str.substring(0,length-3)+'...';
+			return str.substring(0,length-3) + '...';
 		}
 		return str;
 	},
@@ -323,7 +324,7 @@ hui.string = {
 	 * @returns {String} The escaped text
 	 */
 	escapeHTML : function(str) {
-		if (str===null || str===undefined) {return ''};
+		if (str===null || str===undefined) {return '';}
 	   	return hui.build('div',{text:str}).innerHTML;
 	},
 	/**
@@ -332,11 +333,11 @@ hui.string = {
 	 * @returns {String} The escaped text
 	 */
 	escape : function(str) {
-		if (!hui.isDefined(str)) {return ''};
+		if (!hui.isDefined(str)) {return '';}
 		return str.replace(/&/g,'&amp;').
 			replace(/>/g,'&gt;').
 			replace(/</g,'&lt;').
-			replace(/"/g,'&quot;')
+            replace(/"/g,'&quot;');
 	},
 	/**
 	 * Converts a JSON string into an object
@@ -360,7 +361,7 @@ hui.string = {
 	toJSON : function(obj) {
 		return JSON.stringify(obj);
 	}
-}
+};
 
 
 
@@ -383,7 +384,7 @@ hui.array = {
 				if (!hui.array.contains(arr,value[i])) {
 					arr.push(value);
 				}
-			};
+			}
 		} else {
 			if (!hui.array.contains(arr,value)) {
 				arr.push(value);
@@ -401,7 +402,7 @@ hui.array = {
 			if (arr[i]===value) {
 				return true;
 			}
-		};
+		}
 		return false;
 	},
 	/**
@@ -427,7 +428,7 @@ hui.array = {
 			if (arr[i]==value) {
 				arr.splice(i,1);
 			}
-		};
+		}
 	},
 	/**
 	 * Find the first index of a value in an array, -1 if not found
@@ -440,7 +441,7 @@ hui.array = {
 			if (arr[i]===value) {
 				return i;
 			}
-		};
+		}
 		return -1;
 	},
 	/**
@@ -452,10 +453,10 @@ hui.array = {
 		var array = str.split(',');
 		for (var i = array.length - 1; i >= 0; i--){
 			array[i] = parseInt(array[i]);
-		};
+		}
 		return array;
 	}
-}
+};
 
 
 
@@ -486,7 +487,7 @@ hui.dom = {
 			if (children[i].nodeType==hui.ELEMENT_NODE) {
 				return children[i];
 			}
-		};
+		}
 		return null;
 	},
 	parseToNode : function(html) {
@@ -497,7 +498,7 @@ hui.dom = {
 		var children = node.childNodes;
 		for (var i = children.length - 1; i >= 0; i--) {
 			children[i].parentNode.removeChild(children[i]);
-		};
+		}
 	},
 	remove : function(node) {
 		if (node.parentNode) {
@@ -559,7 +560,7 @@ hui.dom = {
 		}
 	},
 	setText : function(node,text) {
-		if (text==undefined || text==null) {
+		if (text===undefined || text===null) {
 			text = '';
 		}
 		var c = node.childNodes;
@@ -580,12 +581,12 @@ hui.dom = {
 		var txt = '';
 		var c = node.childNodes;
 		for (var i=0; i < c.length; i++) {
-			if (c[i].nodeType==hui.TEXT_NODE && c[i].nodeValue!=null) {
-				txt+=c[i].nodeValue;
-			} else if (c[i].nodeType==hui.ELEMENT_NODE) {
-				txt+=hui.dom.getText(c[i]);
+			if (c[i].nodeType == hui.TEXT_NODE && c[i].nodeValue !== null) {
+				txt+= c[i].nodeValue;
+			} else if (c[i].nodeType == hui.ELEMENT_NODE) {
+				txt+= hui.dom.getText(c[i]);
 			}
-		};
+		}
 		return txt;
 	},
 	isVisible : function(node) {
@@ -606,7 +607,7 @@ hui.dom = {
 		}
 		return false;
 	}
-}
+};
 
 
 
@@ -627,10 +628,10 @@ hui.form = {
 			if (hui.isDefined(inputs[i].name)) {
 				params[inputs[i].name] = inputs[i].value;
 			}
-		};
+		}
 		return params;
 	}
-}
+};
 
 
 
@@ -654,7 +655,7 @@ hui.get = function(id) {
 		return document.getElementById(id);
 	}
 	return id;
-}
+};
 
 /**
  * Get array of child elements of «node», not a NodeList
@@ -666,9 +667,9 @@ hui.get.children = function(node) {
 		if (hui.dom.isElement(x[i])) {
 			children.push(x[i]);
 		}
-	};
+	}
 	return children;
-}
+};
 
 hui.get.ancestors = function(element) {
 	var ancestors = [];
@@ -678,7 +679,7 @@ hui.get.ancestors = function(element) {
 		parent = parent.parentNode;
 	}
 	return ancestors;
-}
+};
 
 /**
  * Find the first ancestor with a given class (including self)
@@ -691,7 +692,7 @@ hui.get.firstAncestorByClass = function(element,className) {
 		element = element.parentNode;
 	}
 	return null;
-}
+};
 
 hui.get.next = function(element) {
 	if (!element) {
@@ -711,7 +712,7 @@ hui.get.next = function(element) {
     	return next;
 	}
 	return null;
-}
+};
 
 hui.get.previous = function(element) {
 	if (!element) {
@@ -731,7 +732,7 @@ hui.get.previous = function(element) {
     	return previous;
 	}
 	return null;
-}
+};
 
 hui.get.before = function(element) {
 	var elements = [];
@@ -743,10 +744,10 @@ hui.get.before = function(element) {
 			} else if (nodes[i].nodeType===1) {
 				elements.push(nodes[i]);
 			}
-		};
+		}
 	}
 	return elements;
-}
+};
 
 /**
  * Find all sibling elements after «element»
@@ -759,7 +760,7 @@ hui.get.after = function(element) {
 		next = hui.get.next(next);
 	}
 	return elements;
-}
+};
 
 hui.get.firstByClass = function(parentElement,className,tag) {
 	parentElement = hui.get(parentElement) || document.body;
@@ -774,27 +775,28 @@ hui.get.firstByClass = function(parentElement,className,tag) {
 		}
 	}
 	return null;
-}
+};
 
 hui.get.byClass = function(parentElement,className,tag) {
 	parentElement = hui.get(parentElement) || document.body;
+    var i;
 	if (document.querySelectorAll) {
 		var nl = parentElement.querySelectorAll((tag ? tag+'.' : '.')+className);
 		// Important to convert into array...
 		var l=[];
-		for(var i=0, ll=nl.length; i!=ll; l.push(nl[i++]));
+		for(i=0, ll=nl.length; i!=ll; l.push(nl[i++]));
 		return l;
 	} else {
 		var children = parentElement.getElementsByTagName(tag || '*'),
 		out = [];
-		for (var i=0;i<children.length;i++) {
+		for (i=0;i<children.length;i++) {
 			if (hui.cls.has(children[i],className)) {
-				out[out.length]=children[i];
+				out[out.length] = children[i];
 			}
 		}
 		return out;
 	}
-}
+};
 
 /**
  * Get array of descendants of «node» with the name «name»
@@ -807,7 +809,7 @@ hui.get.byTag = function(node,name) {
 		l=[];
 	for(var i=0, ll=nl.length; i!=ll; l.push(nl[i++]));
 	return l;
-}
+};
 
 hui.get.byId = function(e,id) {
 	var children = e.childNodes;
@@ -822,7 +824,7 @@ hui.get.byId = function(e,id) {
 		}
 	}
 	return null;
-}
+};
 
 hui.get.firstParentByTag = function(node,tag) {
 	var parent = node;
@@ -833,7 +835,7 @@ hui.get.firstParentByTag = function(node,tag) {
 		parent = parent.parentNode;
 	}
 	return null;
-}
+};
 
 hui.get.firstParentByClass = function(node,tag) {
 	var parent = node;
@@ -844,7 +846,7 @@ hui.get.firstParentByClass = function(node,tag) {
 		parent = parent.parentNode;
 	}
 	return null;
-}
+};
 
 /**
  * Find first descendant by tag (excluding self)
@@ -859,7 +861,7 @@ hui.get.firstByTag = function(node,tag) {
 	}
 	var children = node.getElementsByTagName(tag);
 	return children[0];
-}
+};
 
 
 hui.get.firstChild = hui.dom.firstChild;
@@ -896,8 +898,8 @@ hui.get.firstChild = hui.dom.firstChild;
  */
 hui.build = function(name,options,doc) {
 	
-	var doc = doc || document,
-		e = doc.createElement(name);
+	doc = doc || document;
+    var e = doc.createElement(name);
 	if (options) {
 		for (var prop in options) {
 			if (prop=='text') {
@@ -907,7 +909,7 @@ hui.build = function(name,options,doc) {
 			} else if (prop=='parent' && hui.isDefined(options.parent)) {
 				options.parent.appendChild(e);
 			} else if (prop=='parentFirst') {
-				if (options.parentFirst.childNodes.length==0) {
+				if (options.parentFirst.childNodes.length === 0) {
 					options.parentFirst.appendChild(e);
 				} else {
 					options.parentFirst.insertBefore(e,options.parentFirst.childNodes[0]);
@@ -928,7 +930,7 @@ hui.build = function(name,options,doc) {
 		}
 	}
 	return e;
-}
+};
 
 
 
@@ -948,7 +950,7 @@ hui.position = {
 		if (element) {
 			var top = element.offsetTop,
 				tempEl = element.offsetParent;
-			while (tempEl != null) {
+			while (tempEl !== null) {
 				top += tempEl.offsetTop;
 				tempEl = tempEl.offsetParent;
 			}
@@ -961,7 +963,7 @@ hui.position = {
 		if (element) {
 			var left = element.offsetLeft,
 				tempEl = element.offsetParent;
-			while (tempEl != null) {
+			while (tempEl !== null) {
 				left += tempEl.offsetLeft;
 				tempEl = tempEl.offsetParent;
 			}
@@ -973,7 +975,7 @@ hui.position = {
 		return {
 			left : hui.position.getLeft(element),
 			top : hui.position.getTop(element)
-		}
+		};
 	},
 	getScrollOffset : function(element) {
 	    element = hui.get(element);
@@ -982,7 +984,7 @@ hui.position = {
 	      top += element.scrollTop  || 0;
 	      left += element.scrollLeft || 0;
 	      element = element.parentNode;
-		  if (element.tagName=='HTML') {
+		  if (element.tagName === 'HTML') {
 			  break; // TODO Temporary hack - Chrome has the same scrollTop on html as on body
 		  }
 	    } while (element);
@@ -1016,10 +1018,10 @@ hui.position = {
 			var w = hui.window.getViewWidth();
 			if (left + src.clientWidth > w) {
 				left = w - src.clientWidth - (options.viewPartMargin || 0);
-				hui.log(options.viewPartMargin)
+				//hui.log(options.viewPartMargin)
 			}
-			if (left < 0) {left=0}
-			if (top < 0) {top=0}
+			if (left < 0) {left=0;}
+			if (top < 0) {top=0;}
 			
 			var height = hui.window.getViewHeight();
 			var vertMax = hui.window.getScrollTop()+hui.window.getViewHeight()-src.clientHeight,
@@ -1040,10 +1042,10 @@ hui.position = {
 					height-=sib.offsetHeight;
 				}
 			}
-		};
+		}
 		return height;
 	}
-}
+};
 
 
 
@@ -1103,7 +1105,7 @@ hui.window = {
 				if (pos<1) {
 					window.setTimeout(func);
 				}
-			}
+			};
 			func();
 		}
 	},
@@ -1131,7 +1133,7 @@ hui.window = {
 			return document.body.clientWidth;
 		}
 	}
-}
+};
 
 
 
@@ -1158,7 +1160,7 @@ hui.cls = {
 	has : function(element, className) {
 		element = hui.get(element);
 		if (!element || !element.className) {
-			return false
+			return false;
 		}
 		if (element.hasClassName) {
 			return element.hasClassName(className);
@@ -1182,7 +1184,7 @@ hui.cls = {
 	add : function(element, className) {
 	    element = hui.get(element);
 		if (!element) {
-			return
+			return;
 		}
 		if (element.addClassName) {
 			element.addClassName(className);
@@ -1197,7 +1199,7 @@ hui.cls = {
 	 */
 	remove : function(element, className) {
 		element = hui.get(element);
-		if (!element || !element.className) {return};
+		if (!element || !element.className) {return;}
 		if (element.removeClassName) {
 			element.removeClassName(className);
 		}
@@ -1242,7 +1244,7 @@ hui.cls = {
 			hui.cls.remove(element,className);
 		}
 	}
-}
+};
 
 
 
@@ -1272,7 +1274,7 @@ hui.listen = function(element,type,listener,useCapture) {
 	} else {
 		element.attachEvent('on'+type, listener);
 	}
-}
+};
 
 /**
  * Add an event listener to an element, it will only fire once
@@ -1283,11 +1285,11 @@ hui.listen = function(element,type,listener,useCapture) {
 hui.listenOnce = function(element,type,listener) {	
 	var func = null;
 	func = function(e) {
-		hui.unListen(element,type,func)
+		hui.unListen(element,type,func);
 		listener(e);
-	}
+	};
 	hui.listen(element,type,func);
-}
+};
 
 /**
  * Remove an event listener from an element
@@ -1303,7 +1305,7 @@ hui.unListen = function(el,type,listener,useCapture) {
 	} else {
 		el.detachEvent('on'+type, listener);
 	}
-}
+};
 
 /** Creates an event wrapper for an event
  * @param event The DOM event
@@ -1314,7 +1316,7 @@ hui.event = function(event) {
 		return event;
 	}
 	return new hui.Event(event);
-}
+};
 
 /** @constructor
  * Wrapper for events
@@ -1355,7 +1357,7 @@ hui.Event = function(event) {
 	this.rightKey = event.keyCode==39;
 	/** The key code */
 	this.keyCode = event.keyCode;
-}
+};
 
 hui.Event.prototype = {
 	/**
@@ -1400,7 +1402,7 @@ hui.Event.prototype = {
 	 * @returns {Element} The found element or null
 	 */
 	findByClass : function(cls) {
-		return hui.get.firstAncestorByClass(this.element,cls)
+		return hui.get.firstAncestorByClass(this.element,cls);
 	},
 	/** Finds the nearest ancester with a certain tag name
 	 * @param tag The tag name
@@ -1422,7 +1424,7 @@ hui.Event.prototype = {
 			if (parent.tagName && parent.tagName.toLowerCase()==tag) {
 				if (func(parent)) {
 					return parent;
-				};
+				}
 			}
 			parent = parent.parentNode;
 		}
@@ -1443,19 +1445,19 @@ hui.Event.prototype = {
 	stop : function() {
 		hui.stop(this.event);
 	}
-}
+};
 
 /** 
  * Stops an event from propagating
  * @param event A standard DOM event, NOT an hui.Event
  */
 hui.stop = function(event) {
-	if (!event) {event = window.event};
-	if (event.stopPropagation) {event.stopPropagation()};
-	if (event.preventDefault) {event.preventDefault()};
+	if (!event) {event = window.event;}
+	if (event.stopPropagation) {event.stopPropagation();}
+	if (event.preventDefault) {event.preventDefault();}
 	event.cancelBubble = true;
     event.stopped = true;
-}
+};
 
 hui._defered = [];
 
@@ -1474,9 +1476,9 @@ hui.onReady = function(func) {
 				hui._defered[i]();
 			}
             hui._defered = null;
-		})
+		});
 	}
-}
+};
 
 /**
  * Execute a function when the DOM is ready
@@ -1524,7 +1526,7 @@ hui._onReady = function(delegate) {
 			window.onload = delegate;
 		}
 	}
-}
+};
 
 
 
@@ -1585,17 +1587,17 @@ hui.request = function(options) {
 					options.$forbidden(transport);
 				} else if (transport.status !== 0 && options.$failure) {
 					options.$failure(transport);
-				} else if (transport.status == 0 && options.$abort) {
+				} else if (transport.status === 0 && options.$abort) {
 					options.$abort(transport);
 				}
-				if (options['$finally']) {
-					options['$finally']();
+				if (options.$finally) {
+					options.$finally();
 				}
 			}
 			//hui.request._forget(transport);
 		} catch (e) {
 			if (options.$exception) {
-				options.$exception(e,transport)
+				options.$exception(e,transport);
 			} else {
 				throw e;
 			}
@@ -1649,7 +1651,8 @@ hui.request = function(options) {
 	//hui.request._transports.push(transport);
 	//hui.log('Add: '+hui.request._transports.length);
 	return transport;
-}
+};
+
 /*
 hui.request._transports = [];
 
@@ -1673,23 +1676,24 @@ hui.request.abort = function() {
  */
 hui.request.isXMLResponse = function(t) {
 	return t.responseXML && t.responseXML.documentElement && t.responseXML.documentElement.nodeName!='parsererror';
-}
+};
 
 hui.request._buildPostBody = function(parameters) {
 	if (!parameters) return null;
-	var output = '';
+	var output = '',
+        param;
     if (hui.isArray(parameters)) {
         for (var i = 0; i < parameters.length; i++) {
-            var param = parameters[i];
-    		if (i > 0) {output += '&'};
+            param = parameters[i];
+    		if (i > 0) {output += '&';}
     		output+=encodeURIComponent(param.name)+'=';
     		if (param.value!==undefined && param.value!==null) {
     			output+=encodeURIComponent(param.value);
     		}
         }
     } else {
-    	for (var param in parameters) {
-    		if (output.length > 0) {output += '&'};
+    	for (param in parameters) {
+    		if (output.length > 0) {output += '&';}
     		output+=encodeURIComponent(param)+'=';
     		if (parameters[param]!==undefined && parameters[param]!==null) {
     			output+=encodeURIComponent(parameters[param]);
@@ -1697,7 +1701,7 @@ hui.request._buildPostBody = function(parameters) {
     	}        
     }
 	return output;
-}
+};
 
 /**
  * Creates a new XMLHttpRequest
@@ -1707,7 +1711,7 @@ hui.request.createTransport = function() {
 	try {
 		if (window.XMLHttpRequest) {
 			var req = new XMLHttpRequest();
-			if (req.readyState == null) {
+			if (req.readyState === null) {
 				req.readyState = 1;
 				req.addEventListener("load", function () {
 					req.readyState = 4;
@@ -1724,7 +1728,7 @@ hui.request.createTransport = function() {
 	catch (ex) {
 	}
 	return null;
-}
+};
 
 hui.request._getActiveX = function() {
 	var prefixes = ["MSXML2", "Microsoft", "MSXML", "MSXML3"];
@@ -1732,9 +1736,9 @@ hui.request._getActiveX = function() {
 		try {
 			return new ActiveXObject(prefixes[i] + ".XmlHttp");
 		}
-		catch (ex) {};
+		catch (ex) {}
 	}
-}
+};
 
 
 
@@ -1759,12 +1763,12 @@ hui.style = {
 			if (value) {
 				target.style[hui.string.camelize(property)] = value;
 			}
-		};
+		}
 	},
 	set : function(element,styles) {
 		for (var style in styles) {
 			if (style==='transform') {
-				element.style['webkitTransform'] = styles[style];
+				element.style.webkitTransform = styles[style];
 			} else if (style==='opacity') {
 				hui.style.setOpacity(element,styles[style]);
 			} else {
@@ -1800,21 +1804,21 @@ hui.style = {
 	setOpacity : function(element,opacity) {
 		if (!hui.browser.opacity) {
 			if (opacity==1) {
-				element.style['filter']=null;
+				element.style.filter = null;
 			} else {
-				element.style['filter']='alpha(opacity='+(opacity*100)+')';
+				element.style.filter = 'alpha(opacity='+(opacity*100)+')';
 			}
 		} else {
-			element.style['opacity']=opacity;
+			element.style.opacity = opacity;
 		}
 	},
     length : function(value) {
-        if (typeof(value)==='number') {
-            return value+'px';
+        if (typeof(value) === 'number') {
+            return value + 'px';
         }
         return value;
     }
-}
+};
 
 
 
@@ -1849,7 +1853,7 @@ hui.frame = {
 	        return frame.contentWindow;
 	    }
 	}
-}
+};
 
 
 
@@ -1899,13 +1903,13 @@ hui.selection = {
 		return {
 			node : hui.selection.getNode(doc),
 			text : hui.selection.getText(doc)
-		}
+		};
 	},
 	enable : function(on) {
 		document.onselectstart = on ? null : function () { return false; };
 		document.body.style.webkitUserSelect = on ? null : 'none';
 	}
-}
+};
 
 
 
@@ -2010,7 +2014,7 @@ hui.effect = {
 		},options.duration || 1000);
 	
 	}
-}
+};
 
 
 
@@ -2024,7 +2028,7 @@ hui.document = {
 	 * Get the height of the document (including the invisble part)
 	 */
 	getWidth : function() {
-		return Math.max(document.body.clientWidth,document.documentElement.clientWidth,document.documentElement.scrollWidth)
+		return Math.max(document.body.clientWidth,document.documentElement.clientWidth,document.documentElement.scrollWidth);
 	},
 	/**
 	 * Get the width of the document (including the invisble part)
@@ -2047,7 +2051,7 @@ hui.document = {
 			return Math.max(document.body.clientHeight,document.documentElement.clientHeight,document.documentElement.scrollHeight);
 		}
 	}
-}
+};
 
 
 
@@ -2074,7 +2078,7 @@ hui.drag = {
 			}
 			hui.stop(e);
 			hui.drag.start(options);
-		})
+		});
 	},
 	/** Start dragging
 	 * <pre><strong>options:</strong> {
@@ -2117,7 +2121,7 @@ hui.drag = {
 				options.onNotMoved();
 			}
 			hui.selection.enable(true);
-		}.bind(this)
+		}.bind(this);
 		hui.listen(target,'mouseup',upper);
 		hui.selection.enable(false);
 	},
@@ -2142,7 +2146,9 @@ hui.drag = {
 			return;
 		}
 		hui.drag._nativeListeners.push(options);
-		if (hui.drag._nativeListeners.length>1) {return};
+		if (hui.drag._nativeListeners.length>1) {
+            return;
+        }
 		hui.listen(document.body,'dragenter',function(e) {
 			var l = hui.drag._nativeListeners;
 			var found = null;
@@ -2150,12 +2156,12 @@ hui.drag = {
 				var lmnt = l[i].element;
 				if (hui.dom.isDescendantOrSelf(e.target,lmnt)) {
 					found = l[i];
-					if (hui.drag._activeDrop==null || hui.drag._activeDrop!=found) {
+					if (hui.drag._activeDrop === null || hui.drag._activeDrop != found) {
 						hui.cls.add(lmnt,found.hoverClass);
 					}
 					break;
 				}
-			};
+			}
 			if (hui.drag._activeDrop) {
 				//var foundElement = found ? found.element : null;
 				if (hui.drag._activeDrop!=found) {
@@ -2189,7 +2195,7 @@ hui.drag = {
 		});
 		
 		hui.listen(document.body,'drop',function(e) {
-			var event = hui.event(e)
+			var event = hui.event(e);
 			event.stop();
 			var options = hui.drag._activeDrop;
 			hui.drag._activeDrop = null;
@@ -2199,10 +2205,10 @@ hui.drag = {
 					options.$drop(e,{event:event});
 				}
 				if (e.dataTransfer) {
-					hui.log(e.dataTransfer.types)
+					hui.log(e.dataTransfer.types);
 					if (options.$dropFiles && e.dataTransfer.files && e.dataTransfer.files.length>0) {
 						options.$dropFiles(e.dataTransfer.files,{event:event});
-					} else if (options.$dropURL && e.dataTransfer.types!=null && (hui.array.contains(e.dataTransfer.types,'public.url') || hui.array.contains(e.dataTransfer.types,'text/uri-list'))) {
+					} else if (options.$dropURL && e.dataTransfer.types !== null && (hui.array.contains(e.dataTransfer.types,'public.url') || hui.array.contains(e.dataTransfer.types,'text/uri-list'))) {
 						var url = e.dataTransfer.getData('public.url');
 						var uriList = e.dataTransfer.getData('text/uri-list');
 						if (url && !hui.string.startsWith(url,'data:')) {
@@ -2210,14 +2216,14 @@ hui.drag = {
 						} else if (uriList && !hui.string.startsWith(url,'data:')) {
 							options.$dropURL(uriList,{event:event});
 						}
-					} else if (options.$dropText && e.dataTransfer.types!=null && hui.array.contains(e.dataTransfer.types,'text/plain')) {
-						options.$dropText(e.dataTransfer.getData('text/plain'),{event:event})
+					} else if (options.$dropText && e.dataTransfer.types !== null && hui.array.contains(e.dataTransfer.types,'text/plain')) {
+						options.$dropText(e.dataTransfer.getData('text/plain'),{event:event});
 					}
 				}
 			}
 		});
 	}
-}
+};
 
 
 
@@ -2233,7 +2239,7 @@ hui.Preloader = function(options) {
 	this.delegate = {};
 	this.images = [];
 	this.loaded = 0;
-}
+};
 
 hui.Preloader.prototype = {
 	/** Add images either as a single url or an array of urls */
@@ -2241,7 +2247,7 @@ hui.Preloader.prototype = {
 		if (typeof(imageOrImages)=='object') {
 			for (var i=0; i < imageOrImages.length; i++) {
 				this.images.push(imageOrImages[i]);
-			};
+			}
 		} else {
 			this.images.push(imageOrImages);
 		}
@@ -2257,6 +2263,9 @@ hui.Preloader.prototype = {
 		startIndex = startIndex || 0;
 		var self = this;
 		this.obs = [];
+		var onLoad = function() {self._imageChanged(this.huiPreloaderIndex,'imageDidLoad');};
+		var onError = function() {self._imageChanged(this.huiPreloaderIndex,'imageDidGiveError');};
+		var onAbort = function() {self._imageChanged(this.huiPreloaderIndex,'imageDidAbort');};
 		for (var i=startIndex; i < this.images.length+startIndex; i++) {
 			var index=i;
 			if (index>=this.images.length) {
@@ -2264,12 +2273,12 @@ hui.Preloader.prototype = {
 			}
 			var img = new Image();
 			img.huiPreloaderIndex = index;
-			img.onload = function() {self._imageChanged(this.huiPreloaderIndex,'imageDidLoad')};
-			img.onerror = function() {self._imageChanged(this.huiPreloaderIndex,'imageDidGiveError')};
-			img.onabort = function() {self._imageChanged(this.huiPreloaderIndex,'imageDidAbort')};
+			img.onload = onLoad;
+			img.onerror = onError;
+			img.onabort = onAbort;
 			img.src = (this.options.context ? this.options.context : '')+this.images[index];
 			this.obs.push(img);
-		};
+		}
 	},
 	_imageChanged : function(index,method) {
 		this.loaded++;
@@ -2280,7 +2289,7 @@ hui.Preloader.prototype = {
 			this.delegate.allImagesDidLoad();
 		}
 	}
-}
+};
 
 
 
@@ -2310,7 +2319,7 @@ hui.cookie = {
 			while (c.charAt(0)==' ') {
 				c = c.substring(1,c.length);
 			}
-			if (c.indexOf(nameEQ) == 0) {
+			if (c.indexOf(nameEQ) === 0) {
 				return c.substring(nameEQ.length,c.length);
 			}
 		}
@@ -2320,7 +2329,7 @@ hui.cookie = {
 	clear : function(name) {
 		this.set(name,"",-1);
 	}
-}
+};
 
 
 
@@ -2338,7 +2347,7 @@ hui.location = {
 			if (parms[i].name==name) {
 				return parms[i].value;
 			}
-		};
+		}
 		return null;
 	},
 	/** Set an URL parameter - initiates a new request */
@@ -2351,7 +2360,7 @@ hui.location = {
 				found=true;
 				break;
 			}
-		};
+		}
 		if (!found) {
 			parms.push({name:name,value:value});
 		}
@@ -2397,9 +2406,9 @@ hui.location = {
 	setParameters : function(parms) {
 		var query = '';
 		for (var i=0; i < parms.length; i++) {
-			query+= i==0 ? '?' : '&';
+			query+= i === 0 ? '?' : '&';
 			query+=parms[i].name+'='+parms[i].value;
-		};
+		}
 		document.location.search=query;
 	},
 	/** Checks if a parameter exists with the value 'true' or 1 */
@@ -2410,7 +2419,7 @@ hui.location = {
 	/** Checks if a parameter exists with the value 'true' or 1 */
 	getInt : function(name) {
 		var value = parseInt(hui.location.getParameter(name));
-		if (value!==NaN) {
+		if (!isNaN(value)) {
 			return value;
 		}
 		return null;
@@ -2426,7 +2435,7 @@ hui.location = {
 			if (name) {
 				parsed.push({name:name,value:value});
 			}
-		};
+		}
 		return parsed;
 	}	
 };
@@ -2471,7 +2480,7 @@ hui.xml = {
   			doc = parser.parseFromString(xml,"text/xml");
 			var errors = doc.getElementsByTagName('parsererror');
 			if (errors.length>0 && errors[0].textContent) {
-				hui.log(errors[0].textContent)
+				hui.log(errors[0].textContent);
 				return null;
 			}
   		} else {
@@ -2491,11 +2500,11 @@ hui.xml = {
      		try {
         		return node.xml;
      		}
-     		catch (e) {}
+     		catch (ex) {}
      	}
 		return null;
    	}
-}
+};
 
 
 
@@ -2520,16 +2529,18 @@ if (!Function.prototype.bind) {
 	Function.bind = function() {
 	    var args = Array.prototype.slice.call(arguments);
 	    return Function.prototype.bind.apply(args.shift(), args);
-	}
+	};
 }
 
+
+// 
 if (!Function.prototype.argumentNames) {
 	Function.prototype.argumentNames = function() {
 		var names = this.toString().match(/^[\s\(]*function[^(]*\(([^)]*)\)/)[1]
 			.replace(/\/\/.*?[\r\n]|\/\*(?:.|[\r\n])*?\*\//g, '')
 			.replace(/\s+/g, '').split(',');
 		return names.length == 1 && !names[0] ? [] : names;
-	}
+	};
 }
 
 /////////////////////////// Animation ///////////////////////////
@@ -5114,7 +5125,7 @@ hui.ui = {
 		reload_page : {en:'Reload page',da:'Indæs siden igen'},
 		access_denied : {en:'Access denied, maybe you are nolonger logged in',da:'Adgang nægtet, du er måske ikke længere logget ind'}
 	}
-}
+};
 
 /**
  * Get a widget by name
@@ -5146,7 +5157,7 @@ hui.ui.onReady = function(func) {
 
 hui.ui._frameLoaded = function(win) {
 	hui.ui.callSuperDelegates(this,'frameLoaded',win);
-}
+};
 
 /** @private */
 hui.ui._resize = function() {
@@ -5155,11 +5166,11 @@ hui.ui._resize = function() {
 	if (!hui.ui._resizeFirst) {
 		this._delayedResize = window.setTimeout(hui.ui._afterResize,1000);
 	}
-}
+};
 
 hui.ui._afterResize = function() {
 	hui.ui.callSuperDelegates(hui.ui,'$afterResize');
-}
+};
 
 /**
  * Show a confirming overlay
@@ -5198,7 +5209,7 @@ hui.ui.confirmOverlay = function(options) {
 		if (options.onOk) {
 			options.onOk();
 		}
-		if (options['$ok']) {
+		else if (options.$ok) {
 			options.$ok();
 		}
 		overlay.hide();
@@ -5209,14 +5220,14 @@ hui.ui.confirmOverlay = function(options) {
 		if (options.onCancel) {
 			options.onCancel();
 		}
-		if (options['$cancel']) {
+		else if (options.$cancel) {
 			options.$cancel();
 		}
 		overlay.hide();
 	});
 	overlay.add(cancel);
 	overlay.show({element:node});
-}
+};
 
 /**
  * Unregisters a widget
@@ -5227,15 +5238,15 @@ hui.ui.destroy = function(widget) {
         widget.destroy();
     }
 	delete(hui.ui.objects[widget.name]);
-}
+};
 
 hui.ui.destroyDescendants = function(widgetOrElement) {
 	var desc = hui.ui.getDescendants(widgetOrElement);
 	var objects = hui.ui.objects;
 	for (var i=0; i < desc.length; i++) {
         hui.ui.destroy(desc[i]);
-	};
-}
+	}
+};
 
 /** Gets all ancestors of a widget
 	@param {Widget} widget A widget
@@ -5259,7 +5270,7 @@ hui.ui.getAncestors = function(widget) {
 		}
 	}
 	return desc;
-}
+};
 
 hui.ui.getDescendants = function(widgetOrElement) {
 	var desc = [],e = widgetOrElement.getElement ? widgetOrElement.getElement() : widgetOrElement;
@@ -5274,12 +5285,11 @@ hui.ui.getDescendants = function(widgetOrElement) {
 				if (d[i]==o[j].element) {
 					desc.push(o[j]);
 				}
-			};
-			
-		};
+			}
+		}
 	}
 	return desc;
-}
+};
 
 hui.ui.getAncestor = function(widget,cls) {
 	var a = hui.ui.getAncestors(widget);
@@ -5287,9 +5297,9 @@ hui.ui.getAncestor = function(widget,cls) {
 		if (hui.cls.has(a[i].getElement(),cls)) {
 			return a[i];
 		}
-	};
+	}
 	return null;
-}
+};
 
 
 
@@ -5310,17 +5320,17 @@ hui.ui.changeState = function(state) {
 	hui.ui.state=state;
 	
 	this.reLayout();
-}
+};
 
 hui.ui.reLayout = function() {
 	var widgets = hui.ui.getDescendants(document.body);
 	for (var i=0; i < widgets.length; i++) {
 		var obj = widgets[i];
-		if (obj['$$layout']) {
-			obj['$$layout']();
+		if (obj.$$layout) {
+			obj.$$layout();
 		}
-	};
-}
+	}
+};
 
 
 
@@ -5365,8 +5375,8 @@ hui.ui.showCurtain = function(options) {
 		}
 		body.appendChild(widget.curtain);
 		hui.listen(widget.curtain,'click',function() {
-			if (widget['$curtainWasClicked']) {
-				widget['$curtainWasClicked']();
+			if (widget.$curtainWasClicked) {
+				widget.$curtainWasClicked();
 			}
 		});
 	}
@@ -5402,7 +5412,7 @@ hui.ui.showCurtain = function(options) {
 		curtain.style.display='block';
 		hui.animate(curtain,'opacity',0.7,1000,{ease:hui.ease.slowFastSlow});
 	}
-}
+};
 
 hui.ui.hideCurtain = function(widget) {
 	if (widget.curtain) {
@@ -5420,14 +5430,14 @@ hui.ui.hideCurtain = function(widget) {
  * @returns {String} The localized string
  */
 hui.ui.getText = function(key) {
-	var x = this.texts[key];
-	if (!x) {return key}
-	if (x[this.language]) {
-		return x[this.language];
+	var parts = this.texts[key];
+	if (!parts) {return key;}
+	if (parts[this.language]) {
+		return parts[this.language];
 	} else {
-		return x['en'];
+		return parts.en;
 	}
-}
+};
 
 hui.ui.getTranslated = function(value) {
 	if (!hui.isDefined(value) || hui.isString(value) || typeof(value) == 'number') {
@@ -5442,7 +5452,7 @@ hui.ui.getTranslated = function(value) {
 	for (var key in value) {
 		return value[key];
 	}
-}
+};
 
 
 
@@ -5486,7 +5496,7 @@ hui.ui.confirm = function(options) {
 		hui.ui.callDelegates(alert,'ok');
 	}});
 	alert.show();
-}
+};
 
 hui.ui.alert = function(options) {
 	if (!this.alertBox) {
@@ -5561,12 +5571,12 @@ hui.ui.msg = hui.ui.showMessage;
 hui.ui.msg.success = function(options) {
 	options = hui.override({icon:'common/success',duration:2000},options);
 	hui.ui.msg(options);
-}
+};
 
 hui.ui.msg.fail = function(options) {
 	options = hui.override({icon:'common/warning',duration:3000},options);
 	hui.ui.msg(options);
-}
+};
 
 hui.ui.hideMessage = function() {
 	window.clearTimeout(hui.ui.messageDelayTimer);
@@ -5628,7 +5638,7 @@ hui.ui.getElement = function(widgetOrElement) {
 		return widgetOrElement.getElement();
 	}
 	return null;
-}
+};
 
 hui.ui.isWithin = function(e,element) {
 	e = hui.event(e);
@@ -5681,7 +5691,7 @@ hui.ui.keyboardTarget = null; // The widget currently accepting keyboard input
 
 hui.ui.setKeyboardTarget = function(widget) {
 	hui.ui.keyboardTarget = widget;
-}
+};
 
 
 /**
@@ -5691,7 +5701,7 @@ hui.ui.setKeyboardTarget = function(widget) {
 hui.ui.stress = function(widget) {
 	var e = hui.ui.getElement(widget);
 	hui.effect.wiggle({element:e,duration:1000});
-}
+};
 
 
 //////////////////////////// Positioning /////////////////////////////
@@ -5745,41 +5755,41 @@ hui.ui.extend = function(obj,options) {
 	obj.listen = function(delegate) {
 		hui.array.add(this.delegates,delegate);
 		return this;
-	}
+	};
 	obj.unListen = function(delegate) {
 		hui.array.remove(this.delegates,delegate);
-	}
+	};
 	obj.clearListeners = function() {
 		this.delegates = [];
-	}
+	};
 	obj.fire = function(method,value,event) {
 		return hui.ui.callDelegates(this,method,value,event);
-	}
+	};
 	obj.fireValueChange = function() {
 		obj.fire('valueChanged',obj.value);
 		hui.ui.firePropertyChange(obj,'value',obj.value);
 		hui.ui.callAncestors(obj,'childValueChanged',obj.value);
-	}
+	};
 	obj.fireProperty = function(key,value) {
 		hui.ui.firePropertyChange(this,key,value);
-	}
+	};
 	obj.fireSizeChange = function() {
 		hui.ui.callAncestors(obj,'$$childSizeChanged');
-	}
+	};
 	if (!obj.getElement) {
 		obj.getElement = function() {
 			return this.element;
-		}
+		};
 	}
 	if (!obj.destroy) {
 		obj.destroy = function() {
             if (this.element) {
-                hui.dom.remove(this.element)
+                hui.dom.remove(this.element);
             }
-		}
+		};
 	}
 	if (!obj.valueForProperty) {
-		obj.valueForProperty = function(p) {return this[p]};
+		obj.valueForProperty = function(p) {return this[p];};
 	}
 };
 
@@ -5791,7 +5801,7 @@ hui.ui.callAncestors = function(obj,method,value,event) {
 		if (d[i][method]) {
 			d[i][method](value,event);
 		}
-	};
+	}
 };
 
 /** Send a message to all descendants of a widget */
@@ -5799,7 +5809,7 @@ hui.ui.callDescendants = function(obj,method,value,event) {
 	if (typeof(value)=='undefined') {
 		value=obj;
 	}
-	if (!method[0]=='$') {
+	if (method[0] !== '$') {
 		method = '$'+method;
 	}
 	var d = hui.ui.getDescendants(obj);
@@ -5807,13 +5817,13 @@ hui.ui.callDescendants = function(obj,method,value,event) {
 		if (d[i][method]) {
 			d[i][method](value,event);
 		}
-	};
+	}
 };
 
 /** Signal that a widget has changed visibility */
 hui.ui.callVisible = function(widget) {
 	hui.ui.callDescendants(widget,'$visibilityChanged');
-}
+};
 
 /** Listen for global events */
 hui.ui.listen = function(delegate) {
@@ -5821,21 +5831,21 @@ hui.ui.listen = function(delegate) {
 		delegate.$ready();
 	}
 	hui.ui.delegates.push(delegate);
-}
+};
 
 hui.ui.unListen = function(listener) {
 	hui.array.remove(hui.ui.delegates,listener);
-}
+};
 
 hui.ui.callDelegates = function(obj,method,value,event) {
 	if (typeof(value)=='undefined') {
 		value=obj;
 	}
-	var result = undefined;
+	var result;
 	if (obj.delegates) {
 		for (var i=0; i < obj.delegates.length; i++) {
 			var delegate = obj.delegates[i],
-				thisResult = undefined,
+				thisResult,
 				x = '$'+method+'$'+obj.name;
 			if (obj.name && delegate[x]) {
 				thisResult = delegate[x](value,event);
@@ -5845,7 +5855,7 @@ hui.ui.callDelegates = function(obj,method,value,event) {
 			if (result===undefined && thisResult!==undefined && typeof(thisResult)!='undefined') {
 				result = thisResult;
 			}
-		};
+		}
 	}
 	var superResult = hui.ui.callSuperDelegates(obj,method,value,event);
 	if (result===undefined && superResult!==undefined) {
@@ -5865,7 +5875,7 @@ hui.ui.tellContainers = function(event,value) {
 			//hui.log('Unable to callContainers')
 		}
 	}
-}
+};
 
 hui.ui._tellContainers = function(event,value) {
 	hui.ui.callSuperDelegates({},event,value);
@@ -5876,14 +5886,14 @@ hui.ui._tellContainers = function(event,value) {
 			//hui.log('Unable to callContainers')
 		}
 	}
-}
+};
 
 hui.ui.callSuperDelegates = function(obj,method,value,event) {
 	if (typeof(value)=='undefined') value=obj;
-	var result = undefined;
+	var result;
 	for (var i=0; i < hui.ui.delegates.length; i++) {
-		var delegate = hui.ui.delegates[i];
-		var thisResult = undefined;
+		var delegate = hui.ui.delegates[i],
+            thisResult;
 		if (obj.name && delegate['$'+method+'$'+obj.name]) {
 			thisResult = delegate['$'+method+'$'+obj.name](value,event);
 		} else if (delegate['$'+method]) {
@@ -5892,7 +5902,7 @@ hui.ui.callSuperDelegates = function(obj,method,value,event) {
 		if (result===undefined && thisResult!==undefined && typeof(thisResult)!='undefined') {
 			result = thisResult;
 		}
-	};
+	}
 	return result;
 };
 
@@ -5901,7 +5911,7 @@ hui.ui.resolveImageUrl = function(widget,img,width,height) {
 		if (widget.delegates[i].$resolveImageUrl) {
 			return widget.delegates[i].$resolveImageUrl(img,width,height);
 		}
-	};
+	}
 	for (var j=0; j < hui.ui.delegates.length; j++) {
 		var delegate = hui.ui.delegates[j];
 		if (delegate.$resolveImageUrl) {
@@ -5920,8 +5930,8 @@ hui.ui.include = function(options) {
 			hui.dom.runScripts(container);
 			options.$success();
 		}
-	})
-},
+	});
+};
 
 
 
@@ -5970,7 +5980,7 @@ hui.ui.handleRequestError = function(widget) {
 			}
 		});
 	}
-}
+};
 
 hui.ui.handleForbidden = function(widget) {
 	hui.log('General access denied received');
@@ -5986,7 +5996,7 @@ hui.ui.handleForbidden = function(widget) {
 			}
 		});
 	}
-}
+};
 
 hui.ui.request = function(options) {
 	options = hui.override({method:'post',parameters:{}},options);
@@ -6041,7 +6051,7 @@ hui.ui.request = function(options) {
 	};
 	options.$failure = function(t) {
 		if (typeof(failure)=='string') {
-			hui.ui.callDelegates(t,'failure$'+failure)
+			hui.ui.callDelegates(t,'failure$'+failure);
 		} else if (typeof(failure)=='function') {
 			failure(t);
 		} else {
@@ -6050,7 +6060,7 @@ hui.ui.request = function(options) {
 			}
 			hui.ui.handleRequestError();
 		}
-	}
+	};
 	options.$exception = options.$exception || function(e,t) {
 		hui.log(e);
 		hui.log(t);
@@ -6066,7 +6076,7 @@ hui.ui.request = function(options) {
 			options.$failure(t);
 			hui.ui.handleForbidden();
 		}
-	}
+	};
 	if (options.message && options.message.start) {
 		hui.ui.msg({text:options.message.start,busy:true,delay:options.message.delay});
 	}
@@ -6085,7 +6095,7 @@ hui.ui.parseSubItems = function(parent,array) {
 	for (var i=0; i < children.length; i++) {
 		var node = children[i];
 		if (node.nodeType==1 && node.nodeName=='title') {
-			array.push({title:node.getAttribute('title'),type:'title'})
+			array.push({title:node.getAttribute('title'),type:'title'});
 		} else if (node.nodeType==1 && node.nodeName=='item') {
 			var sub = [];
 			hui.ui.parseSubItems(node,sub);
@@ -6099,15 +6109,15 @@ hui.ui.parseSubItems = function(parent,array) {
 				children : sub
 			});
 		}
-	};
-}
+	}
+};
 
 /** A bundle of strings
  * @constructor
  */
 hui.ui.Bundle = function(strings) {
 	this.strings = strings;
-}
+};
 
 hui.ui.Bundle.prototype = {
 	get : function(key) {
@@ -6118,7 +6128,7 @@ hui.ui.Bundle.prototype = {
 		hui.log(key+' not found for language:'+hui.ui.language);
 		return key;
 	}
-}
+};
 
 /**
  * Import some widgets by name
@@ -6128,9 +6138,9 @@ hui.ui.Bundle.prototype = {
 hui.ui.require = function(names,func) {
 	for (var i = names.length - 1; i >= 0; i--){
 		names[i] = hui.ui.context+'hui/js/'+names[i]+'.js';
-	};
+	}
 	hui.require(names,func);
-}
+};
 
 
 
@@ -6143,7 +6153,7 @@ hui.onReady(function() {
 	}
 	for (var i=0; i < hui.ui.delayedUntilReady.length; i++) {
 		hui.ui.delayedUntilReady[i]();
-	};
+	}
 	// Call super delegates after delayedUntilReady...
 	hui.ui.callSuperDelegates(this,'ready');
 });
@@ -14495,7 +14505,7 @@ hui.ui.MarkupEditor.prototype = {
     },
 	_showColorPicker : function() {
 		if (!this.colorPicker) {
-			this.colorPicker = hui.ui.Window.create();
+			this.colorPicker = hui.ui.Window.create({title:{en:'Color',da:'Farve'}});
 			var picker = hui.ui.ColorPicker.create();
 			picker.listen(this);
 			this.colorPicker.add(picker);
