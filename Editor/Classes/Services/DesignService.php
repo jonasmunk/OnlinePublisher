@@ -43,12 +43,36 @@ class DesignService {
         }
         return $files;
     }
+    
+    static function _embedInlineCSS($design) {
+		global $basePath;
+        
+        $inlineFile = $basePath."style/".$design."/css/inline.css";
+        $inlineFileMinified = $basePath."style/".$design."/css/inline.min.css";
+        if (file_exists($inlineFile)) {
+            $xslFile = $basePath.'style/' .$design . '/xslt/main.xsl';
+            DesignService::_compress($inlineFile,$inlineFileMinified);
+            $xsl = file_get_contents($xslFile);
+            $callTemplate = Strings::extract($xsl,'<xsl:call-template name="util:style-inline">','</xsl:call-template>');
+            foreach ($callTemplate as $template) {
+                $param = Strings::extract($template,'<xsl:with-param name="compiled">','</xsl:with-param>');
+                if (count($param)==1) {
+                    $param = $param[0];
+                    $new = '<xsl:with-param name="compiled">' . file_get_contents($inlineFileMinified) . '</xsl:with-param>';
+                    $replacement = str_replace($param,$new,$template);
+                    $xsl = str_replace($template,$replacement,$xsl);
+                }
+            }
+            FileSystemService::writeStringToFile($xsl,$xslFile);
+        }
+    }
   
 	static function rebuild() {
 		global $basePath;
         
         $designs = DesignService::getAvailableDesigns();
         foreach ($designs as $key => $info) {
+            DesignService::_embedInlineCSS($key);
             if (!isset($info->build)) {
                 continue;
             }
