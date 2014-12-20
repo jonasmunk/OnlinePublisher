@@ -676,7 +676,21 @@
 	</xsl:if>
 </xsl:template>
 
-
+<xsl:template name="util:style-inline">
+    <xsl:param name="compiled" />
+    <xsl:param name="file" select="'inline.css'"/>
+    <xsl:choose>
+      <xsl:when test="$development='true'">
+  		<link rel="stylesheet" type="text/css" href="{$path}{$timestamp-url}style/{$design}/css/{$file}{$timestamp-query}"/>
+      </xsl:when>
+      <xsl:otherwise>
+      	<style type="text/css">
+      		<xsl:value-of select="$compiled"/>
+            <xsl:text> </xsl:text>
+      	</style>
+      </xsl:otherwise>
+    </xsl:choose>    
+</xsl:template>
 
 
 
