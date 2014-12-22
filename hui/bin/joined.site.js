@@ -1461,7 +1461,8 @@ hui.stop = function(event) {
 
 hui._defered = [];
 
-hui._ready = document.readyState == 'complete' || document.readyState == 'interactive';
+hui._ready = document.readyState == 'complete';// || document.readyState;
+// TODO Maybe interactive is too soon???
 
 hui.onReady = function(func) {
 	if (hui._ready) {
