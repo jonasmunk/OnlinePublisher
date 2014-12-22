@@ -9,7 +9,7 @@ if (!isset($GLOBALS['basePath'])) {
 }
 
 class DesignService {
-	
+
 	/**
 	 * Finds all available designs
 	 * @return array An array of the unique names of all available designs
@@ -24,14 +24,14 @@ class DesignService {
 		}
 		return $out;
 	}
-	
+
 	static function getInfo($name) {
 		global $basePath;
 		$path = $basePath."style/".$name."/info/info.json";
 		$info = JsonService::readFile($path);
 		return $info;
 	}
-    
+
     static function _getPartStyleFiles() {
 		global $basePath;
         $files = array();
@@ -43,10 +43,10 @@ class DesignService {
         }
         return $files;
     }
-    
+
     static function _embedInlineCSS($design) {
 		global $basePath;
-        
+
         $inlineFile = $basePath."style/".$design."/css/inline.css";
         $inlineFileMinified = $basePath."style/".$design."/css/inline.min.css";
         if (file_exists($inlineFile)) {
@@ -66,102 +66,101 @@ class DesignService {
             FileSystemService::writeStringToFile($xsl,$xslFile);
         }
     }
-  
+
 	static function rebuild() {
 		global $basePath;
-        
+
         $designs = DesignService::getAvailableDesigns();
         foreach ($designs as $key => $info) {
-            DesignService::_embedInlineCSS($key);
-            if (!isset($info->build)) {
-                continue;
-            }
-            if (isset($info->build->css)) {
-                
-                $imports = array();
-                
-                $data = '/* '.Strings::toJSON($info->build->css).' */';
-                
-                foreach ($info->build->css as $file) {
-                    if ($file[0]=='@') {
-                        if ($file=='@parts') {
-        			        $data .= DesignService::_read('style/basic/css/document.css');
-                            $imports[] = 'style/basic/css/document.css';
-                            
-                            $partFiles = DesignService::_getPartStyleFiles();
-                            foreach ($partFiles as $partFile) {
-            			        $data .= DesignService::_read($partFile);      
-                                $imports[] = $partFile;
+            if (isset($info->build)) {
+                if (isset($info->build->css)) {
+
+                    $imports = array();
+
+                    $data = '/* '.Strings::toJSON($info->build->css).' */';
+
+                    foreach ($info->build->css as $file) {
+                        if ($file[0]=='@') {
+                            if ($file=='@parts') {
+            			        $data .= DesignService::_read('style/basic/css/document.css');
+                                $imports[] = 'style/basic/css/document.css';
+
+                                $partFiles = DesignService::_getPartStyleFiles();
+                                foreach ($partFiles as $partFile) {
+                			        $data .= DesignService::_read($partFile);
+                                    $imports[] = $partFile;
+                                }
                             }
+                        } else {
+                			$data .= DesignService::_read($file);
+                            $imports[] = $file;
                         }
-                    } else {
-            			$data .= DesignService::_read($file);     
-                        $imports[] = $file;                      
+                    }
+                    {
+                        $cssFile = $basePath."style/".$key."/css/style.private.tmp.css";
+                        FileSystemService::writeStringToFile($data,$cssFile);
+                        DesignService::_compress($cssFile,$basePath."style/".$key."/css/style.private.css");
+                    }
+                    {
+            			$huiCss = DesignService::_read('hui/bin/joined.site.css');
+                        $huiCss = preg_replace("/(url\\(['\"]?)(..\/gfx\/)([^\\)]+\\))/u", "$1../../../hui/gfx/$3", $huiCss);
+                        $data = $huiCss . $data;
+                        $cssFile = $basePath."style/".$key."/css/style.tmp.css";
+                        FileSystemService::writeStringToFile($data,$cssFile);
+                        DesignService::_compress($cssFile,$basePath."style/".$key."/css/style.css");
+                    }
+                    {
+                        $data = '';
+                        foreach ($imports as $path) {
+                            $data .= '@import url(../../../' . $path . ');' . PHP_EOL;
+                        }
+                        $cssFile = $basePath."style/".$key."/css/style.dev.css";
+                        FileSystemService::writeStringToFile($data,$cssFile);
                     }
                 }
-                {
-                    $cssFile = $basePath."style/".$key."/css/style.private.tmp.css";
-                    FileSystemService::writeStringToFile($data,$cssFile);
-                    DesignService::_compress($cssFile,$basePath."style/".$key."/css/style.private.css");
-                }
-                {
-        			$huiCss = DesignService::_read('hui/bin/joined.site.css');
-                    $huiCss = preg_replace("/(url\\(['\"]?)(..\/gfx\/)([^\\)]+\\))/u", "$1../../../hui/gfx/$3", $huiCss);
-                    $data = $huiCss . $data;
-                    $cssFile = $basePath."style/".$key."/css/style.tmp.css";
-                    FileSystemService::writeStringToFile($data,$cssFile);
-                    DesignService::_compress($cssFile,$basePath."style/".$key."/css/style.css");
-                }
-                {
-                    $data = '';
-                    foreach ($imports as $path) {
-                        $data .= '@import url(../../../' . $path . ');' . PHP_EOL;
+                if (isset($info->build->js)) {
+
+                    $imports = array();
+                    $data = '/* '.Strings::toJSON($info->build->js).' */' . PHP_EOL . PHP_EOL;
+
+                    $data .= DesignService::_read('style/basic/js/OnlinePublisher.js');
+
+                    foreach ($info->build->js as $file) {
+                        $data .= DesignService::_read($file);
+                        $imports[] = $file;
                     }
-                    $cssFile = $basePath."style/".$key."/css/style.dev.css";
-                    FileSystemService::writeStringToFile($data,$cssFile);
+                    {
+                        $jsFile = $basePath."style/".$key."/js/script.private.tmp.js";
+                        FileSystemService::writeStringToFile($data,$jsFile);
+                        DesignService::_compress($jsFile,$basePath."style/".$key."/js/script.private.js");
+                    }
+                    {
+                        $jsFile = $basePath."style/".$key."/js/script.tmp.js";
+                        $data = DesignService::_read('hui/bin/joined.site.js') . $data;
+                        FileSystemService::writeStringToFile($data,$jsFile);
+                        DesignService::_compress($jsFile,$basePath."style/".$key."/js/script.js");
+                    }
+                    {
+                        $data = '';
+                        $jsFile = $basePath."style/".$key."/js/script.dev.js";
+                        foreach ($imports as $path) {
+                            $data.= 'document.write(\'<script type="text/javascript" src="\' + _editor.context + \'' . $path . '"></script>\')';
+                        }
+                        FileSystemService::writeStringToFile($data,$jsFile);
+                    }
                 }
             }
-            if (isset($info->build->js)) {
-                
-                $imports = array();
-                $data = '/* '.Strings::toJSON($info->build->js).' */' . PHP_EOL . PHP_EOL;
-                                
-                $data .= DesignService::_read('style/basic/js/OnlinePublisher.js');
-                
-                foreach ($info->build->js as $file) {
-                    $data .= DesignService::_read($file);
-                    $imports[] = $file;
-                }
-                {
-                    $jsFile = $basePath."style/".$key."/js/script.private.tmp.js";
-                    FileSystemService::writeStringToFile($data,$jsFile);
-                    DesignService::_compress($jsFile,$basePath."style/".$key."/js/script.private.js");
-                }
-                {
-                    $jsFile = $basePath."style/".$key."/js/script.tmp.js";
-                    $data = DesignService::_read('hui/bin/joined.site.js') . $data;
-                    FileSystemService::writeStringToFile($data,$jsFile);
-                    DesignService::_compress($jsFile,$basePath."style/".$key."/js/script.js");
-                }
-                {
-                    $data = '';
-                    $jsFile = $basePath."style/".$key."/js/script.dev.js";
-                    foreach ($imports as $path) {
-                        $data.= 'document.write(\'<script type="text/javascript" src="\' + _editor.context + \'' . $path . '"></script>\')';
-                    }
-                    FileSystemService::writeStringToFile($data,$jsFile);
-                }
-            }
+            DesignService::_embedInlineCSS($key);
         }
 	}
-    
+
     static function _read($path) {
         global $basePath;
         $data = PHP_EOL . '/* '.$path.' */' . PHP_EOL;
 		$data .= file_get_contents($basePath.$path);
         return $data;
     }
-    
+
 	static function _compress($in,$out) {
         global $basePath;
         $cmd = "java -jar ".$basePath."hui/tools/yuicompressor-2.4.8.jar ".$in." --charset UTF-8 -o ".$out;
@@ -188,7 +187,7 @@ class DesignService {
 		}
 		return $out;
 	}
-	
+
 	static function _getType($key,$info) {
 		if ($info->parameters) {
 			foreach ($info->parameters as $parameter) {
@@ -199,7 +198,7 @@ class DesignService {
 		}
 		return null;
 	}
-	
+
 	static function saveParameters($id,$parameters) {
 		$design = Design::load($id);
 		$info = DesignService::getInfo($design->getUnique());
@@ -210,7 +209,7 @@ class DesignService {
 			$type = DesignService::_getType($key,$info);
 			$sql = "insert into design_parameter (design_id,`key`,`value`) values (".Database::int($id).",".Database::text($key).",".Database::text($value).")";
 			Database::insert($sql);
-			if (Strings::isNotBlank($value)) {				
+			if (Strings::isNotBlank($value)) {
 				$xml.='<parameter key="'.$key.'">';
 				if ($type=='image') {
 					$image = Image::load($value);
@@ -223,14 +222,14 @@ class DesignService {
 				$xml.='</parameter>';
 			}
 		}
-		
+
 		$design->setParameters($xml);
 		$design->save();
 		$design->publish();
 	}
-    
 
-	
+
+
 	static function getFrameOptions() {
 		return '
 			<item title="{None; da:Ingen}" value=""/>
@@ -239,7 +238,7 @@ class DesignService {
 			<item title="{Shaddow; da:Skygge}" value="shadow_slant"/>
 			<item title="Polaroid" value="polaroid"/>';
 	}
-	
+
 	static function validate($name) {
 		global $basePath;
 		$valid = true;
