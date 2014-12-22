@@ -6,7 +6,7 @@ if (!isset($GLOBALS['basePath'])) {
 
 class SystemInfo {
 	
-	private static $date = 20;
+	private static $date = 22;
 	private static $month = 12;
 	private static $year = 2014;
 	private static $feedbackMail = "jonasmunk@mac.com";
