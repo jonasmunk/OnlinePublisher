@@ -55,14 +55,15 @@ class DesignService {
             $xsl = file_get_contents($xslFile);
             $callTemplate = Strings::extract($xsl,'<xsl:call-template name="util:style-inline">','</xsl:call-template>');
             foreach ($callTemplate as $template) {
-                $param = Strings::extract($template,'<xsl:with-param name="compiled">','</xsl:with-param>');
-                if (count($param)==1) {
-                    $param = $param[0];
+                $compiledParam = Strings::extract($template,'<xsl:with-param name="compiled">','</xsl:with-param>');
+                if (count($compiledParam)==1) {
+                    $compiledParam = $compiledParam[0];
                     $new = '<xsl:with-param name="compiled">' . file_get_contents($inlineFileMinified) . '</xsl:with-param>';
-                    $replacement = str_replace($param,$new,$template);
+                    $replacement = str_replace($compiledParam,$new,$template);
                     $xsl = str_replace($template,$replacement,$xsl);
                 }
             }
+            unlink($inlineFileMinified);
             FileSystemService::writeStringToFile($xsl,$xslFile);
         }
     }
@@ -100,6 +101,7 @@ class DesignService {
                         $cssFile = $basePath."style/".$key."/css/style.private.tmp.css";
                         FileSystemService::writeStringToFile($data,$cssFile);
                         DesignService::_compress($cssFile,$basePath."style/".$key."/css/style.private.css");
+                        unlink($cssFile);
                     }
                     {
             			$huiCss = DesignService::_read('hui/bin/joined.site.css');
@@ -108,6 +110,7 @@ class DesignService {
                         $cssFile = $basePath."style/".$key."/css/style.tmp.css";
                         FileSystemService::writeStringToFile($data,$cssFile);
                         DesignService::_compress($cssFile,$basePath."style/".$key."/css/style.css");
+                        unlink($cssFile);
                     }
                     {
                         $data = '';
