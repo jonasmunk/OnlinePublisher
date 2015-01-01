@@ -48,8 +48,8 @@ class DesignService {
 		global $basePath;
 
         $inlineFile = $basePath."style/".$design."/css/inline.css";
-        $inlineFileMinified = $basePath."style/".$design."/css/inline.min.css";
         if (file_exists($inlineFile)) {
+            $inlineFileMinified = $basePath."style/".$design."/css/inline.min.css";
             $xslFile = $basePath.'style/' .$design . '/xslt/main.xsl';
             DesignService::_compress($inlineFile,$inlineFileMinified);
             $xsl = file_get_contents($xslFile);
