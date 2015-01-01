@@ -54,6 +54,7 @@
 	</head>
 	<body>
 		<script type="text/javascript">
+            <xsl:text disable-output-escaping="yes">
             _editor.defer(function() {
     			if (hui.browser.windows) {
     				hui.cls.add(document.body,'windows');
@@ -64,10 +65,11 @@
     			if (hui.browser.webkit) {
     				hui.cls.add(document.body,'webkit');
     			}
-    			if (window.devicePixelRatio==2) {
+    			if (window.devicePixelRatio > 1) {
     				hui.cls.add(document.body,'retina');
     			}            
             })
+            </xsl:text>
 		</script>
 		<div class="layout">
 			<div class="layout_head">
