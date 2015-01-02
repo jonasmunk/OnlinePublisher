@@ -456,10 +456,13 @@ class RenderingService {
 			echo $page['xml'];
 		} else {
 			$html = RenderingService::applyStylesheet($page['xml'],RenderingService::getDesign($page['design']),$page['template'],'',$relative,$relative,$samePageBaseUrl,false,$page['language']);
+			if (ConfigurationService::isOptimizeHTML()) {
+				$html = MarkupUtils::moveScriptsToBottom($html);
+			}
             $output = $html;
             $supportsGzip = strpos($_SERVER['HTTP_ACCEPT_ENCODING'], 'gzip') !== false;
             if ($supportsGzip) {
-                $output = gzencode($html,9);
+                $output = gzencode($output,9);
                 header('Content-Encoding: gzip');
             }
             header('Content-Length: '.strlen($output));
@@ -469,9 +472,6 @@ class RenderingService {
             header('Pragma: cache');
 			header("Content-Type: text/html; charset=UTF-8");
             header('X-UA-Compatible: IE=edge');
-			if (ConfigurationService::isOptimizeHTML()) {
-				$html = MarkupUtils::moveScriptsToBottom($html);
-			}
 			echo $output;
 			if (!$page['secure'] && !$page['dynamic'] && !$page['framedynamic']) {
 				CacheService::createPageCache($page['id'],$path,$html);
