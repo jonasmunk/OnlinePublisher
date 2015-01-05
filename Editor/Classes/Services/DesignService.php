@@ -44,6 +44,35 @@ class DesignService {
         return $files;
     }
 
+    static function _inlineJS() {
+        $files = FileSystemService::find([
+            'dir' => FileService::getPath('style'),
+            'extension' => 'xsl'
+        ]);
+        foreach ($files as $xslFile) {
+            $xsl = file_get_contents($xslFile);
+            $callTemplate = Strings::extract($xsl,'<xsl:call-template name="util:script-inline">','</xsl:call-template>');
+            foreach ($callTemplate as $template) {
+                $minified = null;
+                if (preg_match("/<xsl:with-param name=\"file\" select=\"'([^']+)'\"/", $template, $found)) {
+                	$jsFile = FileService::getPath($found[1]);
+                    $minified = DesignService::_compressToString($jsFile);
+                } else {
+                    continue;
+                }
+
+                $compiledParam = Strings::extract($template,'<xsl:with-param name="compiled">','</xsl:with-param>');
+                if (count($compiledParam)==1) {
+                    $compiledParam = $compiledParam[0];
+                    $new = '<xsl:with-param name="compiled"><![CDATA[' . $minified . ']]></xsl:with-param>';
+                    $replacement = str_replace($compiledParam,$new,$template);
+                    $xsl = str_replace($template,$replacement,$xsl);
+                }
+            }
+            FileSystemService::writeStringToFile($xsl,$xslFile);
+        }
+    }
+
     static function _embedInlineCSS($design) {
 		global $basePath;
 
@@ -155,6 +184,7 @@ class DesignService {
             }
             DesignService::_embedInlineCSS($key);
         }
+        DesignService::_inlineJS();
 	}
 
     static function _read($path) {
@@ -168,6 +198,16 @@ class DesignService {
         global $basePath;
         $cmd = "java -jar ".$basePath."hui/tools/yuicompressor-2.4.8.jar ".$in." --charset UTF-8 -o ".$out;
         shell_exec($cmd);
+    }
+
+	static function _compressToString($in) {
+        global $basePath;
+        $out = $in . '.tmp';
+        $cmd = "java -jar ".$basePath."hui/tools/yuicompressor-2.4.8.jar ".$in." --charset UTF-8 -o ".$out;
+        shell_exec($cmd);
+        $str = file_get_contents($out);
+        unlink($out);
+        return $str;
     }
 
 	static function loadParameters($id) {

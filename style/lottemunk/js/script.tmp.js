@@ -5742,7 +5742,7 @@ if (!op) {
 }
 
 op.preview = false;
-op.page = {id:null,path:null,template:null};
+op.page = op.page || {id:null,path:null,template:null};
 
 
 op.ignite = function() {

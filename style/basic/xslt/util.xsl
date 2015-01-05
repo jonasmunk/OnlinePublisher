@@ -134,15 +134,8 @@
 <xsl:template name="util:googleanalytics">
 	<xsl:param name="code" select="//p:meta/p:analytics/@key"/>
 	<xsl:if test="not($preview='true') and $code!='' and $statistics='true'">
-		<script type="text/javascript">
-			(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-			(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-			m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-			})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
-
-			ga('create', '<xsl:value-of select="$code"/>', {siteSpeedSampleRate : 20});
-			ga('send', 'pageview');
-		</script>
+		<script type="text/javascript">(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+ga('create', '<xsl:value-of select="$code"/>', {siteSpeedSampleRate : 20});ga('send', 'pageview');</script>
 	</xsl:if>
 </xsl:template>
 
@@ -286,13 +279,7 @@
         </xsl:when>
 		<xsl:otherwise>
             <xsl:call-template name="util:_scripts-config"/>
-            <script type="text/javascript">
-                _editor.ready(function() {
-                    $script('<xsl:value-of select="$path"/><xsl:value-of select="$timestamp-url"/>style/<xsl:value-of select="$design"/>/js/script.js<xsl:value-of select="$timestamp-query"/>',function() {
-                        _editor.$scriptReady();
-                    })
-                })
-            </script>
+            <script type="text/javascript">_editor.ready(function() {$script('<xsl:value-of select="$path"/><xsl:value-of select="$timestamp-url"/>style/<xsl:value-of select="$design"/>/js/script.js<xsl:value-of select="$timestamp-query"/>',function() {_editor.$scriptReady();})})</script>
 		</xsl:otherwise>
 	</xsl:choose>
     <xsl:call-template name="util:_scripts-preview"/>
@@ -351,170 +338,52 @@
 </xsl:template>
 
 <xsl:template name="util:_scripts-msie">
-	<!-- html5 -->
-	<xsl:comment><![CDATA[[if lt IE 9]>
-    <script src="//html5shim.googlecode.com/svn/trunk/html5.js" data-movable="false"></script>
-	<![endif]]]></xsl:comment>
-	<xsl:comment><![CDATA[[if lt IE 8]>
-	<script type="text/javascript" src="]]><xsl:value-of select="$path"/><xsl:value-of select="$timestamp-url"/>hui/lib/json2.js<xsl:value-of select="$timestamp-query"/><![CDATA["></script>
-	<![endif]]]></xsl:comment>
+<!-- html5 -->
+<xsl:comment><![CDATA[[if lt IE 9]>
+<script src="//html5shim.googlecode.com/svn/trunk/html5.js" data-movable="false"></script>
+<![endif]]]></xsl:comment>
+<xsl:comment><![CDATA[[if lt IE 8]>
+<script type="text/javascript" src="]]><xsl:value-of select="$path"/><xsl:value-of select="$timestamp-url"/>hui/lib/json2.js<xsl:value-of select="$timestamp-query"/><![CDATA["></script>
+<![endif]]]></xsl:comment>
 </xsl:template>
 
 <xsl:template name="util:_scripts-config">
-	<script type="text/javascript"><xsl:comment>
-        _editor.defer(function() {
-		hui.ui.context = '<xsl:value-of select="$path"/>';
-		hui.ui.language = '<xsl:value-of select="$language"/>';
-		op.context = '<xsl:value-of select="$path"/>';
-		op.page.id=<xsl:value-of select="@id"/>;
-		op.page.template='<xsl:value-of select="$template"/>';
-		op.page.path='<xsl:value-of select="$path"/>';
-		op.page.pagePath='<xsl:value-of select="$page-path"/>';
-		op.user = {
-			username : '<xsl:value-of select="$username"/>',
-			id : <xsl:value-of select="$userid"/>,
-			internal : <xsl:value-of select="$internal-logged-in"/>
-		};
-		op.preview=<xsl:value-of select="$preview"/>;
-		op.ignite();
-        });
-	</xsl:comment></script>
+<script type="text/javascript">
+<xsl:comment>
+_editor.defer(function() {hui.ui.context='<xsl:value-of select="$path"/>';hui.ui.language='<xsl:value-of select="$language"/>';op.context='<xsl:value-of select="$path"/>';op.page.id=<xsl:value-of select="@id"/>;op.page.template='<xsl:value-of select="$template"/>';op.page.path='<xsl:value-of select="$path"/>';op.page.pagePath='<xsl:value-of select="$page-path"/>';op.user={username:'<xsl:value-of select="$username"/>',id:<xsl:value-of select="$userid"/>,internal:<xsl:value-of select="$internal-logged-in"/>};op.preview=<xsl:value-of select="$preview"/>;op.ignite();});
+</xsl:comment>
+</script>
 </xsl:template>
 
 <xsl:template name="util:_scripts-base">
-	<script type="text/javascript">
-        <xsl:text disable-output-escaping="yes">//&lt;![CDATA[</xsl:text>
-        <xsl:text disable-output-escaping="yes">
-        <![CDATA[
-        (function(e,t){typeof module!="undefined"&&module.exports?module.exports=t():typeof define=="function"&&define.amd?define(t):this[e]=t()})("$script",function(){function h(e,t){for(var n=0,i=e.length;n<i;++n)if(!t(e[n]))return r;return 1}function p(e,t){h(e,function(e){return!t(e)})}function d(e,t,n){function g(e){return e.call?e():u[e]}function y(){if(!--m){u[o]=1,s&&s();for(var e in f)h(e.split("|"),g)&&!p(f[e],g)&&(f[e]=[])}}e=e[i]?e:[e];var r=t&&t.call,s=r?t:n,o=r?e.join(""):t,m=e.length;return setTimeout(function(){p(e,function(e){if(e===null)return y();if(l[e])return o&&(a[o]=1),l[e]==2&&y();l[e]=1,o&&(a[o]=1),v(!/^https?:\/\//.test(e)&&c?c+e+".js":e,y)})},0),d}function v(n,i){var u=e.createElement("script"),a=r;u.onload=u.onerror=u[o]=function(){if(u[s]&&!/^c|loade/.test(u[s])||a)return;u.onload=u[o]=null,a=1,l[n]=2,i()},u.async=1,u.src=n,t.insertBefore(u,t.lastChild)}var e=document,t=e.getElementsByTagName("head")[0],n="string",r=!1,i="push",s="readyState",o="onreadystatechange",u={},a={},f={},l={},c;return d.get=v,d.order=function(e,t,n){(function r(i){i=e.shift(),e.length?d(i,r):d(i,t,n)})()},d.path=function(e){c=e},d.ready=function(e,t,n){e=e[i]?e:[e];var r=[];return!p(e,function(e){u[e]||r[i](e)})&&h(e,function(e){return u[e]})?t():!function(e){f[e]=f[e]||[],f[e][i](t),n&&n(r)}(e.join("|")),d},d.done=function(e){d([null],e)},d})        
-        window._editor = {
-            deferred : [],
-            scriptLoaded : false,
-            ready : function(delegate) {
-                if (document.readyState == 'complete') {
-                    delegate();
-                }
-            	else if (window.addEventListener) {
-            		window.addEventListener('DOMContentLoaded',delegate,false);
-            	}
-                else if(document.addEventListener) {
-            		document.addEventListener('load', delegate, false);
-            	}
-            	else if(typeof window.attachEvent != 'undefined') {
-            		window.attachEvent('onload', delegate);
-            	}
-            	else {
-            		if(typeof window.onload == 'function') {
-            			var existing = window.onload;
-            			window.onload = function() {
-            				existing();
-            				delegate();
-            			};
-            		} else {
-            			window.onload = delegate;
-            		}
-            	}
-    
-            },
-            viewReady : function(func) {
-                var raf = window.requestAnimationFrame || window.mozRequestAnimationFrame || window.webkitRequestAnimationFrame || window.msRequestAnimationFrame;
-                if (raf) {
-                    return raf(func);
-                }
-                this.ready(func);
-            },
-            defer : function(func) {
-                if (this.scriptLoaded) {
-                    func();
-                } else {
-                    this.deferred[this.deferred.length] = func;
-                }
-            },
-            _parts : {},
-            _loadPart : function(info) {
-                var name = info.name;
-                if (op.part[name]) {
-                    info.$ready();
-                } else {
-                    if (!this._parts[name]) {
-                        this._parts[name] = [info];
-                        $script(_editor.context+'style/basic/js/parts/' + name + '.js',function() {
-                            hui.each(_editor._parts[name],function(item) {
-                                item.$ready();
-                            })
-                            _editor._parts[name] = [];
-                        });
-                    } else {
-                        this._parts[name].push(info);
-                    }
-                }
-            },
-            loadPart : function(info) {
-                this.defer(function() {
-                    _editor._loadPart(info);
-                })
-                if (!window['op']) {
-                    this.defer
-                }
-                if (window['op'] && op.part[info.name]) {
-                    info.$ready();
-                }
-            },
-            loadCSS : function(href) {
-                this.viewReady(function() {
-                    var e = document.createElement('link');
-                    e.setAttribute('rel','stylesheet');
-                    e.setAttribute('type','text/css');
-                    e.setAttribute('href',href);
-                    _editor.inject(e);
-                });
-            },
-            inject : function(node) {
-                var h = document.getElementsByTagName('head')[0];
-                if (h) {
-                    h.appendChild(node);
-                } else {
-                    this.ready(function() {
-                        _editor.inject(node);
-                    })
-                }
-            },
-            $scriptReady : function() {
-                for (var i = 0; i < this.deferred.length; i++) {
-                    if (typeof(this.deferred[i])=='function') {
-                        this.deferred[i]();
-                    }                  
-                }
-                this.scriptLoaded = true;
-            }
-        }
-        ]]>
-        </xsl:text>
-        _editor.context = '<xsl:value-of select="$path"/>';
-        
-		window.onerror = function(errorMsg, url, lineNumber) {
-			try {
-				hui.request({
-					url : _editor.context + 'services/issues/scripterror/',
-					parameters : {
-						message : errorMsg,
-						file : url,
-						line : lineNumber,
-						url : document.location.href
-					},
-					$success : function() {
-						hui.log('Sent error');
-					} 
-				})
-			} catch (ignore) {}
-		}
-        
-        <xsl:text disable-output-escaping="yes">//]]&gt;</xsl:text>
-	</script>    
+    <xsl:call-template name="util:script-inline">
+        <xsl:with-param name="file" select="'style/basic/js/boot.js'"/>
+        <xsl:with-param name="compiled"><![CDATA[(function(b,a){typeof module!="undefined"&&module.exports?module.exports=a():typeof define=="function"&&define.amd?define(a):this[b]=a()})("$script",function(){function w(d,c){for(var f=0,a=d.length;f<a;++f){if(!c(d[f])){return b}}return 1}function g(c,a){w(c,function(d){return !a(d)})}function z(i,p,d){function h(n){return n.call?n():D[n]}function l(){if(!--f){D[c]=1,u&&u();for(var n in x){w(n.split("|"),h)&&!g(x[n],h)&&(x[n]=[])}}}i=i[q]?i:[i];var a=p&&p.call,u=a?p:d,c=a?i.join(""):p,f=i.length;return setTimeout(function(){g(i,function(n){if(n===null){return l()}if(m[n]){return c&&(B[c]=1),m[n]==2&&l()}m[n]=1,c&&(B[c]=1),C(!/^https?:\/\//.test(n)&&A?A+n+".js":n,l)})},0),z}function C(f,e){var d=y.createElement("script"),c=b;d.onload=d.onerror=d[j]=function(){if(d[F]&&!/^c|loade/.test(d[F])||c){return}d.onload=d[j]=null,c=1,m[f]=2,e()},d.async=1,d.src=f,E.insertBefore(d,E.lastChild)}var y=document,E=y.getElementsByTagName("head")[0],k="string",b=!1,q="push",F="readyState",j="onreadystatechange",D={},B={},x={},m={},A;return z.get=C,z.order=function(d,a,f){(function c(e){e=d.shift(),d.length?z(e,c):z(e,a,f)})()},z.path=function(a){A=a},z.ready=function(d,a,f){d=d[q]?d:[d];var c=[];return !g(d,function(h){D[h]||c[q](h)})&&w(d,function(h){return D[h]})?a():!function(h){x[h]=x[h]||[],x[h][q](a),f&&f(c)}(d.join("|")),z},z.done=function(a){z([null],a)},z});(function(b,a){b._editor={deferred:[],scriptLoaded:false,ready:function(c){if(a.readyState=="complete"){c()}else{if(b.addEventListener){b.addEventListener("DOMContentLoaded",c,false)}else{if(a.addEventListener){a.addEventListener("load",c,false)}else{if(typeof b.attachEvent!="undefined"){b.attachEvent("onload",c)}else{if(typeof b.onload=="function"){var d=b.onload;b.onload=function(){d();c()}}else{b.onload=c}}}}}},viewReady:function(c){var d=b.requestAnimationFrame||b.mozRequestAnimationFrame||b.webkitRequestAnimationFrame||b.msRequestAnimationFrame;if(d){return d(c)}this.ready(c)},defer:function(c){if(this.scriptLoaded){c()}else{this.deferred[this.deferred.length]=c}},_parts:{},_loadPart:function(d){var c=d.name;if(op.part[c]){d.$ready()}else{if(!this._parts[c]){this._parts[c]=[d];$script(_editor.context+"style/basic/js/parts/"+c+".js",function(){hui.each(_editor._parts[c],function(e){e.$ready()});_editor._parts[c]=[]})}else{this._parts[c].push(d)}}},loadPart:function(c){this.defer(function(){_editor._loadPart(c)});if(!b.op){this.defer}if(b.op&&op.part[c.name]){c.$ready()}},loadCSS:function(c){this.viewReady(function(){var d=a.createElement("link");d.setAttribute("rel","stylesheet");d.setAttribute("type","text/css");d.setAttribute("href",c);_editor.inject(d)})},inject:function(d){var c=a.getElementsByTagName("head")[0];if(c){c.appendChild(d)}else{this.ready(function(){_editor.inject(d)})}},$scriptReady:function(){for(var c=0;c<this.deferred.length;c++){if(typeof(this.deferred[c])=="function"){this.deferred[c]()}}this.scriptLoaded=true}}})(window,document);]]></xsl:with-param>
+    </xsl:call-template>
+    <script>_editor.context = '<xsl:value-of select="$path"/>';</script>
 </xsl:template>
 
 <xsl:template name="util:scripts-adaptive">
 	<script src="{$path}{$timestamp-url}hui/lib/ios-orientationchange-fix.js{$timestamp-query}" type="text/javascript"><xsl:comment/></script>
+</xsl:template>
+
+<xsl:template name="util:script-inline">
+    <xsl:param name="compiled" />
+    <xsl:param name="file"/>
+    <xsl:choose>
+      <xsl:when test="$development='true'">
+  		<script type="text/javascript" src="{$path}{$timestamp-url}{$file}{$timestamp-query}"><xsl:comment/></script>
+      </xsl:when>
+      <xsl:otherwise>
+      	<script type="text/javascript">
+            <xsl:text disable-output-escaping="yes">//&lt;![CDATA[
+</xsl:text>
+      		<xsl:value-of select="$compiled" disable-output-escaping="yes"/>
+            <xsl:text disable-output-escaping="yes">
+//]]&gt;</xsl:text>
+      	</script>
+      </xsl:otherwise>
+    </xsl:choose>    
 </xsl:template>
 
 <xsl:template name="util:html-attributes">
@@ -533,27 +402,19 @@
 <!-- Style -->
 
 <xsl:template name="util:style-ie6">
-	<xsl:comment><![CDATA[[if lt IE 7]>
-		<link rel="stylesheet" type="text/css" href="]]><xsl:value-of select="$path"/><xsl:value-of select="$timestamp-url"/>style/<xsl:value-of select="$design"/><![CDATA[/css/msie6.css"> </link>
-	<![endif]]]></xsl:comment>
+	<xsl:comment><![CDATA[[if lt IE 7]><link rel="stylesheet" type="text/css" href="]]><xsl:value-of select="$path"/><xsl:value-of select="$timestamp-url"/>style/<xsl:value-of select="$design"/><![CDATA[/css/msie6.css"> </link><![endif]]]></xsl:comment>
 </xsl:template>
 
 <xsl:template name="util:style-ie7">
-	<xsl:comment><![CDATA[[if IE 7]>
-		<link rel="stylesheet" type="text/css" href="]]><xsl:value-of select="$path"/><xsl:value-of select="$timestamp-url"/>style/<xsl:value-of select="$design"/><![CDATA[/css/msie7.css"> </link>
-	<![endif]]]></xsl:comment>
+	<xsl:comment><![CDATA[[if IE 7]><link rel="stylesheet" type="text/css" href="]]><xsl:value-of select="$path"/><xsl:value-of select="$timestamp-url"/>style/<xsl:value-of select="$design"/><![CDATA[/css/msie7.css"> </link><![endif]]]></xsl:comment>
 </xsl:template>
 
 <xsl:template name="util:style-ie8">
-	<xsl:comment><![CDATA[[if IE 8]>
-		<link rel="stylesheet" type="text/css" href="]]><xsl:value-of select="$path"/><xsl:value-of select="$timestamp-url"/>style/<xsl:value-of select="$design"/><![CDATA[/css/msie8.css"> </link>
-	<![endif]]]></xsl:comment>
+	<xsl:comment><![CDATA[[if IE 8]><link rel="stylesheet" type="text/css" href="]]><xsl:value-of select="$path"/><xsl:value-of select="$timestamp-url"/>style/<xsl:value-of select="$design"/><![CDATA[/css/msie8.css"> </link><![endif]]]></xsl:comment>
 </xsl:template>
 
 <xsl:template name="util:style-lt-ie9">
-	<xsl:comment><![CDATA[[if lt IE 9]>
-		<link rel="stylesheet" type="text/css" href="]]><xsl:value-of select="$path"/><xsl:value-of select="$timestamp-url"/>style/<xsl:value-of select="$design"/><![CDATA[/css/msie_lt9.css"> </link>
-	<![endif]]]></xsl:comment>
+	<xsl:comment><![CDATA[[if lt IE 9]><link rel="stylesheet" type="text/css" href="]]><xsl:value-of select="$path"/><xsl:value-of select="$timestamp-url"/>style/<xsl:value-of select="$design"/><![CDATA[/css/msie_lt9.css"> </link><![endif]]]></xsl:comment>
 </xsl:template>
 
 <xsl:template name="util:style">
@@ -621,15 +482,9 @@
 
 <xsl:template name="util:lazy-fonts">
     <xsl:param name="google"/>
-	<script>
-	  WebFontConfig = {
-        google: {
-          families: ['<xsl:value-of select="$google"/>']
-        }
-	  };
-      <xsl:text disable-output-escaping="yes">
-          <![CDATA[/* Web Font Loader v1.5.10 - (c) Adobe Systems, Google. License: Apache 2.0 */
-;(function(window,document,undefined){var k=this;function l(a,b){var c=a.split("."),d=k;c[0]in d||!d.execScript||d.execScript("var "+c[0]);for(var e;c.length&&(e=c.shift());)c.length||void 0===b?d=d[e]?d[e]:d[e]={}:d[e]=b}function aa(a,b,c){return a.call.apply(a.bind,arguments)}
+<script>WebFontConfig={google:{families:['<xsl:value-of select="$google"/>']}};
+<!--/* Web Font Loader v1.5.10 - (c) Adobe Systems, Google. License: Apache 2.0 */-->
+<xsl:text disable-output-escaping="yes"><![CDATA[;(function(window,document,undefined){var k=this;function l(a,b){var c=a.split("."),d=k;c[0]in d||!d.execScript||d.execScript("var "+c[0]);for(var e;c.length&&(e=c.shift());)c.length||void 0===b?d=d[e]?d[e]:d[e]={}:d[e]=b}function aa(a,b,c){return a.call.apply(a.bind,arguments)}
 function ba(a,b,c){if(!a)throw Error();if(2<arguments.length){var d=Array.prototype.slice.call(arguments,2);return function(){var c=Array.prototype.slice.call(arguments);Array.prototype.unshift.apply(c,d);return a.apply(b,c)}}return function(){return a.apply(b,arguments)}}function n(a,b,c){n=Function.prototype.bind&&-1!=Function.prototype.bind.toString().indexOf("native code")?aa:ba;return n.apply(null,arguments)}var q=Date.now||function(){return+new Date};function s(a,b){this.K=a;this.w=b||a;this.D=this.w.document}s.prototype.createElement=function(a,b,c){a=this.D.createElement(a);if(b)for(var d in b)b.hasOwnProperty(d)&&("style"==d?a.style.cssText=b[d]:a.setAttribute(d,b[d]));c&&a.appendChild(this.D.createTextNode(c));return a};function t(a,b,c){a=a.D.getElementsByTagName(b)[0];a||(a=document.documentElement);a&&a.lastChild&&a.insertBefore(c,a.lastChild)}function ca(a,b){function c(){a.D.body?b():setTimeout(c,0)}c()}
 function u(a,b,c){b=b||[];c=c||[];for(var d=a.className.split(/\s+/),e=0;e<b.length;e+=1){for(var f=!1,g=0;g<d.length;g+=1)if(b[e]===d[g]){f=!0;break}f||d.push(b[e])}b=[];for(e=0;e<d.length;e+=1){f=!1;for(g=0;g<c.length;g+=1)if(d[e]===c[g]){f=!0;break}f||b.push(d[e])}a.className=b.join(" ").replace(/\s+/g," ").replace(/^\s+|\s+$/,"")}function v(a,b){for(var c=a.className.split(/\s+/),d=0,e=c.length;d<e;d++)if(c[d]==b)return!0;return!1}
 function w(a){var b=a.w.location.protocol;"about:"==b&&(b=a.K.location.protocol);return"https:"==b?"https:":"http:"}function x(a,b){var c=a.createElement("link",{rel:"stylesheet",href:b}),d=!1;c.onload=function(){d||(d=!0)};c.onerror=function(){d||(d=!0)};t(a,"head",c)}
@@ -657,20 +512,14 @@ sa.prototype.parse=function(){for(var a=this.s.length,b=0;b<a;b++){var c=this.s[
 V.prototype.ba=function(a){for(var b=this.d,c=new qa(this.f.api,w(b),this.f.text),d=this.f.families,e=d.length,f=0;f<e;f++){var g=d[f].split(":");3==g.length&&c.X.push(g.pop());var h="";2==g.length&&""!=g[1]&&(h=":");c.s.push(g.join(h))}d=new sa(d);d.parse();x(b,c.e());a(d.ea,d.O,xa)};function W(a,b){this.d=a;this.f=b;this.p=[]}W.prototype.I=function(a){var b=this.d;return w(this.d)+(this.f.api||"//f.fontdeck.com/s/css/js/")+(b.w.location.hostname||b.K.location.hostname)+"/"+a+".js"};
 W.prototype.L=function(a,b){var c=this.f.id,d=this.d.w,e=this;c?(d.__webfontfontdeckmodule__||(d.__webfontfontdeckmodule__={}),d.__webfontfontdeckmodule__[c]=function(a,c){for(var d=0,p=c.fonts.length;d<p;++d){var m=c.fonts[d];e.p.push(new K(m.name,fa("font-weight:"+m.weight+";font-style:"+m.style)))}b(a)},y(this.d,this.I(c),function(a){a&&b(!1)})):b(!1)};W.prototype.load=function(a){a(this.p)};function X(a,b){this.d=a;this.f=b;this.p=[]}X.prototype.I=function(a){var b=w(this.d);return(this.f.api||b+"//use.typekit.net")+"/"+a+".js"};X.prototype.L=function(a,b){var c=this.f.id,d=this.d.w,e=this;c?y(this.d,this.I(c),function(a){if(a)b(!1);else{if(d.Typekit&&d.Typekit.config&&d.Typekit.config.fn){a=d.Typekit.config.fn;for(var c=0;c<a.length;c+=2)for(var h=a[c],p=a[c+1],m=0;m<p.length;m++)e.p.push(new K(h,p[m]));try{d.Typekit.load({events:!1,classes:!1})}catch(r){}}b(!0)}},2E3):b(!1)};
 X.prototype.load=function(a){a(this.p)};function Y(a,b){this.d=a;this.f=b;this.p=[]}Y.prototype.L=function(a,b){var c=this,d=c.f.projectId,e=c.f.version;if(d){var f=c.d.w;y(this.d,c.I(d,e),function(e){if(e)b(!1);else{if(f["__mti_fntLst"+d]&&(e=f["__mti_fntLst"+d]()))for(var h=0;h<e.length;h++)c.p.push(new K(e[h].fontfamily));b(a.m.R)}}).id="__MonotypeAPIScript__"+d}else b(!1)};Y.prototype.I=function(a,b){var c=w(this.d),d=(this.f.api||"fast.fonts.net/jsapi").replace(/^.*http(s?):(\/\/)?/,"");return c+"//"+d+"/"+a+".js"+(b?"?v="+b:"")};
-Y.prototype.load=function(a){a(this.p)};function Z(a,b){this.d=a;this.f=b}Z.prototype.load=function(a){var b,c,d=this.f.urls||[],e=this.f.families||[],f=this.f.testStrings||{};b=0;for(c=d.length;b<c;b++)x(this.d,d[b]);d=[];b=0;for(c=e.length;b<c;b++){var g=e[b].split(":");if(g[1])for(var h=g[1].split(","),p=0;p<h.length;p+=1)d.push(new K(g[0],h[p]));else d.push(new K(g[0]))}a(d,f)};Z.prototype.L=function(a,b){return b(a.m.R)};var $=new U(k);$.v.A.custom=function(a,b){return new Z(b,a)};$.v.A.fontdeck=function(a,b){return new W(b,a)};$.v.A.monotype=function(a,b){return new Y(b,a)};$.v.A.typekit=function(a,b){return new X(b,a)};$.v.A.google=function(a,b){return new V(b,a)};k.WebFont||(k.WebFont={},k.WebFont.load=n($.load,$),k.WebFontConfig&&$.load(k.WebFontConfig));})(this,document);
-
-]]>
+Y.prototype.load=function(a){a(this.p)};function Z(a,b){this.d=a;this.f=b}Z.prototype.load=function(a){var b,c,d=this.f.urls||[],e=this.f.families||[],f=this.f.testStrings||{};b=0;for(c=d.length;b<c;b++)x(this.d,d[b]);d=[];b=0;for(c=e.length;b<c;b++){var g=e[b].split(":");if(g[1])for(var h=g[1].split(","),p=0;p<h.length;p+=1)d.push(new K(g[0],h[p]));else d.push(new K(g[0]))}a(d,f)};Z.prototype.L=function(a,b){return b(a.m.R)};var $=new U(k);$.v.A.custom=function(a,b){return new Z(b,a)};$.v.A.fontdeck=function(a,b){return new W(b,a)};$.v.A.monotype=function(a,b){return new Y(b,a)};$.v.A.typekit=function(a,b){return new X(b,a)};$.v.A.google=function(a,b){return new V(b,a)};k.WebFont||(k.WebFont={},k.WebFont.load=n($.load,$),k.WebFontConfig&&$.load(k.WebFontConfig));})(this,document);]]>
 </xsl:text>
 	</script>
 </xsl:template>
 
 <xsl:template name="util:_style-hui-msie">
-	<xsl:comment><![CDATA[[if lt IE 7]>
-	<link rel="stylesheet" type="text/css" href="]]><xsl:value-of select="$path"/><xsl:value-of select="$timestamp-url"/>hui/css/msie6.css<xsl:value-of select="$timestamp-query"/><![CDATA["></link>
-	<![endif]]]></xsl:comment>
-	<xsl:comment><![CDATA[[if IE 7]>
-	<link rel="stylesheet" type="text/css" href="]]><xsl:value-of select="$path"/><xsl:value-of select="$timestamp-url"/>hui/css/msie7.css<xsl:value-of select="$timestamp-query"/><![CDATA["></link>
-	<![endif]]]></xsl:comment>
+	<xsl:comment><![CDATA[[if lt IE 7]><link rel="stylesheet" type="text/css" href="]]><xsl:value-of select="$path"/><xsl:value-of select="$timestamp-url"/>hui/css/msie6.css<xsl:value-of select="$timestamp-query"/><![CDATA["></link><![endif]]]></xsl:comment>
+	<xsl:comment><![CDATA[[if IE 7]><link rel="stylesheet" type="text/css" href="]]><xsl:value-of select="$path"/><xsl:value-of select="$timestamp-url"/>hui/css/msie7.css<xsl:value-of select="$timestamp-query"/><![CDATA["></link><![endif]]]></xsl:comment>
 </xsl:template>
 
 <xsl:template name="util:_style-dynamic">

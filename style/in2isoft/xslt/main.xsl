@@ -53,24 +53,10 @@
 		</xsl:call-template>
 	</head>
 	<body>
-		<script type="text/javascript">
-            <xsl:text disable-output-escaping="yes">
-            _editor.defer(function() {
-    			if (hui.browser.windows) {
-    				hui.cls.add(document.body,'windows');
-    			}
-    			if (hui.browser.msie) {
-    				hui.cls.add(document.body,'msie');
-    			}
-    			if (hui.browser.webkit) {
-    				hui.cls.add(document.body,'webkit');
-    			}
-    			if (window.devicePixelRatio > 1) {
-    				hui.cls.add(document.body,'retina');
-    			}            
-            })
-            </xsl:text>
-		</script>
+        <xsl:call-template name="util:script-inline">
+            <xsl:with-param name="file" select="'style/in2isoft/js/inline.js'"/>
+            <xsl:with-param name="compiled"><![CDATA[_editor.defer(function(){if(hui.browser.windows){hui.cls.add(document.body,"windows")}if(hui.browser.msie){hui.cls.add(document.body,"msie")}if(hui.browser.webkit){hui.cls.add(document.body,"webkit")}if(window.devicePixelRatio>1){hui.cls.add(document.body,"retina")}new hui.ui.SearchField({element:"search",expandedWidth:200})});]]></xsl:with-param>
+        </xsl:call-template>
 		<div class="layout">
 			<div class="layout_head">
 				<ul>
@@ -99,9 +85,7 @@
 							<div id="poster_right"><div id="poster_right_inner"><xsl:comment/></div></div>
 							</div>
 						</div>
-                        <script type="text/javascript">
-                            _editor.defer(function() {new Poster();});
-                        </script>
+                        <script type="text/javascript">_editor.defer(function() {new Poster();});</script>
 					</xsl:if>
 					<xsl:apply-templates select="p:content"/>
 					<xsl:choose>
@@ -470,11 +454,6 @@
 		<form action="{$path}" method="get" class="search" accept-charset="UTF-8">
 			<div>
 				<span class="hui_searchfield" id="search"><em class="hui_searchfield_placeholder">Søg her...</em><a href="javascript:void(0);" class="hui_searchfield_reset" tabindex="-1"><xsl:comment/></a><span><span><input type="text" class="text" name="query"/></span></span></span>
-				<script type="text/javascript">
-                    _editor.defer(function() {
-                        new hui.ui.SearchField({element:'search',expandedWidth:200});                    
-                    })
-				</script>
 				<input type="hidden" name="id" value="{f:frame/f:search/@page}"/>
 				<xsl:for-each select="f:frame/f:search/f:types/f:type">
 				<input type="hidden" name="{@unique}" value="on"/>
