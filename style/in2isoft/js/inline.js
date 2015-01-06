@@ -8,8 +8,8 @@ _editor.defer(function() {
   if (hui.browser.webkit) {
   	hui.cls.add(document.body,'webkit');
   }
-  if (window.devicePixelRatio > 1) {
-  	hui.cls.add(document.body,'retina');
-  }            
   new hui.ui.SearchField({element:'search',expandedWidth:200});
 })
+if (window.devicePixelRatio > 1) {
+	document.body.className+=' retina';
+}            

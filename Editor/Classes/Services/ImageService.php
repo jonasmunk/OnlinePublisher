@@ -230,7 +230,6 @@ class ImageService {
 			@unlink($tempPath);
 			return $output;
 		}
-
 		$extension = FileSystemService::getFileExtension($fileName);
 		if (!$extension) {
 			$extension = FileService::mimeTypeToExtension($mimeType);
@@ -244,6 +243,8 @@ class ImageService {
 			@unlink($tempPath);
 			return $output;
 		}
+
+        ImageTransformationService::optimizeFile($path);
 		
 		$fileName = FileSystemService::getFileBaseName($path);
 		
@@ -292,6 +293,7 @@ class ImageService {
 		if (Strings::isBlank($fileName)) {
 			$fileName = FileSystemService::getFileBaseName($tempPath);
 		}
+        $fileName = FileSystemService::safeFilename($fileName);
 		
 		$uploadDir = FileSystemService::join($basePath,'images');
 		$filePath = FileSystemService::join($uploadDir,$fileName);
@@ -314,6 +316,8 @@ class ImageService {
 			Log::debug('Could not copy: '.$tempPath.' -> '.$filePath);
 			return ImportResult::fail(array('en'=>'Unable to copy file', 'da'=>'Kunne ikke kopiere filen'));
 		}
+        
+        ImageTransformationService::optimizeFile($filePath);
 
 		// If no title build one from filename
 		if (Strings::isBlank($title)) {

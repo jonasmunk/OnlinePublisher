@@ -218,12 +218,23 @@ class ImageTransformationService {
 				@imagejpeg($image,$recipe['destination']);
 			}
 		}
+        if (isset($recipe['destination'])) {
+            ImageTransformationService::optimizeFile($recipe['destination']);
+        }
 		@imagedestroy($image);
 	}
     
     static function _memoryCheck ($x, $y, $rgb=3) {
         $maxmem = 32*1024*1024;
         return ( $x * $y * $rgb * 1.7 < $maxmem - memory_get_usage() );
+    }
+    
+    static function optimizeFile($file) {
+        $output = [];
+        // TODO escape quote
+        exec('optipng -o7 "'.$file.'"',$output);
+        exec('jpegoptim "'.$file.'"',$output);
+        Log::debug($output);
     }
     	
 	static function sendFile($path,$mimeType) {

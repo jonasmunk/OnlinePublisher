@@ -12,7 +12,6 @@
  exclude-result-prefixes="p f h n o util widget"
  >
 <xsl:output encoding="UTF-8" method="xml" omit-xml-declaration="yes"/>
-<!--  indent="yes"-->
 <xsl:include href="../../basic/xslt/util.xsl"/>
 
 <xsl:template match="p:page">
@@ -35,7 +34,6 @@
 			</xsl:choose>
 		</title>
 		<meta name="viewport" content="user-scalable=yes, initial-scale = 1, maximum-scale = 10, minimum-scale = 0.2"/>
-		<meta name="google-site-verification" content="WMeBqZoNf7fYYk8Yvu8p05cFXnskJt1_Y6SJtXE-Ym0" />
 		<link rel="shortcut icon" href="{$path}style/in2isoft/gfx/favicon.ico" type="image/x-icon" />
 		<xsl:call-template name="util:metatags"/>
 		<xsl:call-template name="util:watermark"/>

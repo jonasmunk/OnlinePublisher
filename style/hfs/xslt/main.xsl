@@ -41,7 +41,6 @@
 		<div class="layout_header">
 			<div class="layout_header_content">
 				<xsl:comment/>
-				<xsl:call-template name="search"/>
 			</div>
 			<div class="layout_logo"><xsl:comment/></div>
 				<ul class="layout_navigation"><xsl:apply-templates select="f:frame/h:hierarchy/h:item"/></ul>
@@ -311,29 +310,6 @@
 <xsl:value-of select="@title"/>
 </span>
 </a>
-</xsl:template>
-
-
-
-<!--                  Search                     -->
-
-
-<xsl:template name="search">
-	<xsl:if test="f:frame/f:search">
-		<form action="{$path}" method="get" class="layout_search" accept-charset="UTF-8">
-			<div>
-				<span class="hui_searchfield" id="search"><em class="hui_searchfield_placeholder">Søg her...</em><a href="javascript:void(0);" class="hui_searchfield_reset" tabindex="-1"><xsl:comment/></a><span><span><input type="text" class="text" name="query"/></span></span></span>
-				<script type="text/javascript">
-					new hui.ui.SearchField({element:'search'});
-				</script>
-				<input type="hidden" name="id" value="{f:frame/f:search/@page}"/>
-				<xsl:for-each select="f:frame/f:search/f:types/f:type">
-				<input type="hidden" name="{@unique}" value="on"/>
-				</xsl:for-each>
-				<input type="submit" class="submit" value="Søg"/>
-			</div>
-		</form>
-	</xsl:if>
 </xsl:template>
 
 
