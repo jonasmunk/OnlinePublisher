@@ -227,6 +227,7 @@ class ImageService {
 		}
 		if (!in_array($mimeType,ImageService::$validTypes)) {
 			$output['message'] = 'Invalid mime type: '+$mimeType;
+			@unlink($tempPath);
 			return $output;
 		}
 
@@ -240,8 +241,8 @@ class ImageService {
 		
 		if (!@rename($tempPath, $path)) {
 			$output['message'] = 'Unable to move file from temporary path;';
-			return $output;
 			@unlink($tempPath);
+			return $output;
 		}
 		
 		$fileName = FileSystemService::getFileBaseName($path);
