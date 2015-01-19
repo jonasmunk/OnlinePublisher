@@ -2543,3 +2543,7 @@ if (!Function.prototype.argumentNames) {
 		return names.length == 1 && !names[0] ? [] : names;
 	};
 }
+
+if (window.define) {
+	define('hui');
+}
