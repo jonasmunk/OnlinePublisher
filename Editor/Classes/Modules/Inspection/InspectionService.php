@@ -78,7 +78,28 @@ class InspectionService {
 			$inspection->setText($ok ? 'Krypteret netværk er installeret' : 'Krypteret netværk mangler');
 			$inspections[] = $inspection;
 		}
-		
+		{
+		  $text = shell_exec('jpegoptim -V');
+      $ok = Strings::isNotBlank($text);
+			$inspection = new Inspection();
+			$inspection->setCategory('environment');
+			$inspection->setEntity(['type'=>'api','title'=>'JPEG optimization','id'=>'jpegoptim','icon'=>'common/object']);
+			$inspection->setStatus($ok ? 'ok' : 'error');
+			$inspection->setText($ok ? 'JPEG optimization available' : 'JPEG optimization missing (jpegoptim from CLI)');
+      $inspection->setInfo($text);
+			$inspections[] = $inspection;
+		}
+		{
+		  $text = shell_exec('optipng -v');
+      $ok = Strings::isNotBlank($text);
+			$inspection = new Inspection();
+			$inspection->setCategory('environment');
+			$inspection->setEntity(['type'=>'api','title'=>'PNG optimization','id'=>'optipng','icon'=>'common/object']);
+			$inspection->setStatus($ok ? 'ok' : 'error');
+			$inspection->setText($ok ? 'PNG optimization available' : 'PNG optimization missing (optipng from CLI)');
+      $inspection->setInfo($text);
+			$inspections[] = $inspection;
+		}
 		
 		
 	}

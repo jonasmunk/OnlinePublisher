@@ -32,7 +32,7 @@ class Response {
 	
 	static function redirectMoved($url) {
 		session_write_close();
-		header('HTTP/1.1 301 Moved Permanently');
+		header('HTTP/1.1 301 Moved Permanently',true,301);
 		header('Location: '.$url);
 		exit();
 	}

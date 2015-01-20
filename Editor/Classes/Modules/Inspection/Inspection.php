@@ -15,6 +15,7 @@ class Inspection {
 	var $entity;
 	var $status;
 	var $category;
+    var $info;
 	
 	function setStatus($status) {
 	    $this->status = $status;
@@ -56,4 +57,13 @@ class Inspection {
 	function getEntity() {
 	    return $this->entity;
 	}
+  
+    function setInfo($info) {
+        $this->info = $info;
+    }
+
+    function getInfo() {
+        return $this->info;
+    }
+  
 }

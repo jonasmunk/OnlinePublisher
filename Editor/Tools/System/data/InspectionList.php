@@ -20,12 +20,21 @@ $inspections = InspectionService::performInspection(array(
 	'category' => Request::getString('category')
 ));
 
-$icons = array('warning'=>'common/warning','ok'=>'common/success','error'=>'common/stop');
+$icons = [
+  'warning' => 'common/warning',
+  'ok' => 'common/success',
+  'error' => 'common/stop'
+];
 
 foreach ($inspections as $inspection) {
 	$entity = $inspection->getEntity();
 	$writer->startRow();
-	$writer->startCell(array('icon'=>$icons[$inspection->getStatus()]))->text($inspection->getText())->endCell();
+	$writer->startCell(['icon'=>$icons[$inspection->getStatus()]]);
+  $writer->text($inspection->getText());
+  if ($inspection->getInfo()) {
+    $writer->startLine(['minor'=>true])->text($inspection->getInfo())->endLine();
+  }
+  $writer->endCell();
 	if ($entity) {
 		$writer->startCell(array('icon'=>$entity['icon']))->text($entity['title'])->endCell();
 	} else {
