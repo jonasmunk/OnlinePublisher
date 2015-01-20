@@ -204,6 +204,7 @@ a.hui_toolbar_icon_disabled
 {
 	opacity: 0.3;
 	cursor: default;
+    filter: saturate(0);
 	-webkit-filter: saturate(0);
 }
 
