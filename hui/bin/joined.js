@@ -2544,6 +2544,10 @@ if (!Function.prototype.argumentNames) {
 	};
 }
 
+if (window.define) {
+	define('hui');
+}
+
 /////////////////////////// Animation ///////////////////////////
 
 /**

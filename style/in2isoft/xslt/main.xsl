@@ -47,7 +47,6 @@
 		<xsl:call-template name="util:style-ie6"/>
 		<xsl:call-template name="util:style-lt-ie9"/>
 		<xsl:call-template name="util:scripts-build"/>
-		<xsl:call-template name="util:style-build"/>
 		<xsl:call-template name="util:lazy-fonts">
 			<xsl:with-param name="google" select="'Lato:300,400,700'"/>
 		</xsl:call-template>
@@ -55,7 +54,7 @@
 	<body>
         <xsl:call-template name="util:script-inline">
             <xsl:with-param name="file" select="'style/in2isoft/js/inline.js'"/>
-            <xsl:with-param name="compiled"><![CDATA[_editor.defer(function(){if(hui.browser.windows){hui.cls.add(document.body,"windows")}if(hui.browser.msie){hui.cls.add(document.body,"msie")}if(hui.browser.webkit){hui.cls.add(document.body,"webkit")}new hui.ui.SearchField({element:"search",expandedWidth:200})});if(window.devicePixelRatio>1){document.body.className+=" retina"}]]></xsl:with-param>
+            <xsl:with-param name="compiled"><![CDATA[_editor.defer(function(){if(hui.browser.windows){hui.cls.add(document.body,"windows")}if(hui.browser.msie){hui.cls.add(document.body,"msie")}if(hui.browser.webkit){hui.cls.add(document.body,"webkit")}new hui.ui.SearchField({element:"search",expandedWidth:200})});if(window.devicePixelRatio>1){document.body.className+=" retina"};]]></xsl:with-param>
         </xsl:call-template>
 		<div class="layout">
 			<div class="layout_head">

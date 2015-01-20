@@ -2546,6 +2546,10 @@ if (!Function.prototype.argumentNames) {
 	};
 }
 
+if (window.define) {
+	define('hui');
+}
+
 /////////////////////////// Animation ///////////////////////////
 
 /**
@@ -5943,6 +5947,10 @@ op.showVideo = function(video) {
 		this.videoViewer = new op.VideoViewer();
 	}
 	this.videoViewer.show(video);
+}
+
+if (window.define) {
+	define('op');
 }
 
 op.VideoViewer = function() {

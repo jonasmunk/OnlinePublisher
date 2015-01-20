@@ -210,6 +210,10 @@ op.showVideo = function(video) {
 	this.videoViewer.show(video);
 }
 
+if (window.define) {
+	define('op');
+}
+
 op.VideoViewer = function() {
 	this.box = hui.ui.Box.create(null,{absolute:true,modal:true})
 	this.box.addToDocument();

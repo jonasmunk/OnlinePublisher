@@ -1,0 +1,25 @@
+{
+	"name" : "Humanise",
+	"description" : "New design for Humanise I/S",
+	"owner" : "The design is the property of Humanise I/S",
+    "build" : {
+        "js" : [
+            "style/humanise/js/Poster.js"
+        ],
+        "css" : [
+            "style/basic/css/shared.css",
+            "@parts",
+            "style/humanise/css/main.css",
+            "style/humanise/css/front.css",
+            "style/humanise/css/overwrite.css",
+            "style/humanise/css/adaption.css",
+            "style/humanise/css/humanise.css",
+            "style/humanise/css/widgets.css"
+        ]
+    },
+    "widgets" : {
+        "call-to-action" : {
+            "template" : "<call-to-action><text>This is the text</text><button url='#'>A button</button></call-to-action>"
+        }
+    }
+}
