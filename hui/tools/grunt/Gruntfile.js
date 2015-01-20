@@ -11,12 +11,12 @@ module.exports = function(grunt) {
             //urls : ['http://localhost/~jonasmunk/onlinepublisher/hui/test/phantom/test.html']
         },
         watch: {
-          files: ['<%= jshint.all %>'],
+          files: ['../../js/hui.js'],//['<%= jshint.all %>'],
           tasks: ['jshint']
         }
     });
 
-    // Load the plugin that provides the "uglify" task.
+    // Load
     grunt.loadNpmTasks('grunt-contrib-jshint');
     grunt.loadNpmTasks('grunt-contrib-qunit');
     grunt.loadNpmTasks('grunt-contrib-watch');
@@ -24,7 +24,7 @@ module.exports = function(grunt) {
     // Default task(s).
     grunt.registerTask('default', ['jshint']);
     grunt.registerTask('test', ['qunit']);
-    //grunt.registerTask('watch', ['watch']);
+    grunt.registerTask('watch', ['watch']);
     
 
 };
