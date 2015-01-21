@@ -2668,7 +2668,7 @@ ul.layout_placards li.onlineobjects span {
 body,.common_font,p.common,ul.common,h1.common,h2.common,h3.common,h4.common,h5.common,h6.common,.part_header,.part_text,div.part_richtext {
 	font-family: 'Helvetica Neue','Helvetica','Arial','Lucida Grande','Lucida Sans Unicode',sans-serif
 }
-.wf-active body,.wf-active .common_font,.wf-active p.common,.wf-active ul.common,.wf-active h1.common,.wf-active h2.common,.wf-active h3.common,.wf-active h4.common,.wf-active h5.common,.wf-active h6.common,.wf-active .part_header,.wf-active .part_text,.wf-active div.part_richtext {
+.font body,.font .common_font,.font p.common,.font ul.common,.font h1.common,.font h2.common,.font h3.common,.font h4.common,.font h5.common,.font h6.common,.font .part_header,.font .part_text,.font div.part_richtext {
 	font-family: Lato,'Helvetica Neue','Helvetica','Arial','Lucida Grande','Lucida Sans Unicode',sans-serif
 }
 a.common {

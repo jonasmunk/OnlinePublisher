@@ -203,57 +203,8 @@ op.imageViewerDelegate = {
 	}
 }
 
-op.showVideo = function(video) {
-	if (!this.videoViewer) {
-		this.videoViewer = new op.VideoViewer();
-	}
-	this.videoViewer.show(video);
-}
-
 if (window.define) {
 	define('op');
-}
-
-op.VideoViewer = function() {
-	this.box = hui.ui.Box.create(null,{absolute:true,modal:true})
-	this.box.addToDocument();
-	this.content = new Element('div').setStyle({width:'400px',height:'200px'});
-	this.box.add(this.content);
-	this.box.listen(this);
-}
-
-op.VideoViewer.prototype = {
-	show : function(video) {
-		//this.content.update('<video onclick="this.play()" src="'+video.file+'" style="width: '+video.width+'px;height: '+video.height+'px;"></video>');
-		this.content.setStyle({width:video.width+'px',height:video.height+'px'});
-		this.content.insert(this.buildQuickTime(video));
-		this.box.show();
-	},
-	buildFlash : function() {
-		var s1 = new SWFObject('player.swf',"ply","328","200","9","#FFFFFF");
-		s1.addParam("allowfullscreen","true");
-		s1.addParam("allowscriptaccess","always");
-		s1.addParam("flashvars","file=video.flv&image=preview.jpg");
-		s1.write("container");
-	},
-	buildQuickTime : function(video) {
-		var obj =  new Element('object',{width:video.width,height:video.height,type:'video/quicktime',data:video.file});
-		return obj;
-/*		'<object width="320" height="180" type="video/quicktime" data="http://movies.apple.com/movies/us/apple/mac/macbook/2008/designvideo/apple_new_macbook_video_20081014_320x180.mov?width=320&amp;height=180" id="movieIdInner">
-		<param value="false" name="controller"/>
-		<param value="undefined" name="posterframe"/>
-		<param value="false" name="showlogo"/>
-		<param value="true" name="autostart"/>
-		<param value="true" name="cache"/>
-		<param value="white" name="bgcolor"/>
-		<param value="false" name="aggressivecleanup"/>
-		<param value="true" name="saveembedtags"/>
-		</object>';*/
-	},
-	boxCurtainWasClicked : function() {
-		this.box.hide();
-		this.content.update();
-	}
 }
 
 if (op.part===undefined) {

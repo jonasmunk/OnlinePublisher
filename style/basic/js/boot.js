@@ -59,9 +59,6 @@ window._editor = {
         this.defer(function() {
             _editor._loadPart(info);
         })
-        if (!window['op']) {
-            this.defer
-        }
         if (window['op'] && op.part[info.name]) {
             info.$ready();
         }
