@@ -11,7 +11,14 @@ class Response {
     		$obj = Strings::toUnicode($obj);            
         }
         header('Content-Type: text/plain; charset=utf-8');
-        echo Strings::toJSON($obj);
+        $str = Strings::toJSON($obj);
+        /* TODO May be overkill since JSON is often very small
+        $supportsGzip = strpos($_SERVER['HTTP_ACCEPT_ENCODING'], 'gzip') !== false;
+        if ($supportsGzip) {
+            $str = gzencode($str,9);
+            header('Content-Encoding: gzip');
+        }*/
+        echo $str;
 	}
     
     static function setExpiresInHours($hours=0) {
