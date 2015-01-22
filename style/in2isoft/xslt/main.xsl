@@ -49,6 +49,7 @@
 		<xsl:call-template name="util:scripts-build"/>
 		<xsl:call-template name="util:load-font">
 			<xsl:with-param name="href" select="'http://fonts.googleapis.com/css?family=Lato:300,400,700'"/>
+            <xsl:with-param name="family" select="'Lato'"/>
 		</xsl:call-template>
         <!--
 		<xsl:call-template name="util:lazy-fonts">
@@ -88,7 +89,7 @@
 							<div id="poster_right"><div id="poster_right_inner"><xsl:comment/></div></div>
 							</div>
 						</div>
-                        <script type="text/javascript">_editor.defer(function() {new Poster();});</script>
+                        <script type="text/javascript">require(['Poster'],function() {new Poster();});</script>
 					</xsl:if>
 					<xsl:apply-templates select="p:content"/>
 					<xsl:choose>

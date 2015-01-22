@@ -17,9 +17,7 @@
 	  		<div id="part_imagegallery_{generate-id()}" class="part_imagegallery_masonry">
 	              <xsl:for-each select="o:object[@type='image']">
 	                  <a href="{$path}services/images/?id={@id}">
-	                      <xsl:attribute name="data">{"id" : <xsl:value-of select="@id"/>,
-	  						"width" : <xsl:value-of select="o:sub/i:image/i:width"/>,
-	  						"height" : <xsl:value-of select="o:sub/i:image/i:height"/>}</xsl:attribute>
+	                      <xsl:attribute name="data">{"id" : <xsl:value-of select="@id"/>,"width" : <xsl:value-of select="o:sub/i:image/i:width"/>,"height" : <xsl:value-of select="o:sub/i:image/i:height"/>}</xsl:attribute>
 	                      <xsl:value-of select="o:title"/>
 	                  </a>
 	                  <xsl:text> </xsl:text>
@@ -39,29 +37,15 @@
 		  </xsl:otherwise>
 		</xsl:choose>
 		<script type="text/javascript">
-			_editor.loadPart({
-                name : 'ImageGallery', 
-                $ready : function() {
-					var images = [];
+			<xsl:text>_editor.loadPart({</xsl:text>
+                <xsl:text>name : 'ImageGallery',</xsl:text>
+                <xsl:text>$ready : function() {</xsl:text>
+					<xsl:text>var images = [</xsl:text>
 
-    				<xsl:for-each select="o:object">
-    					images.push({
-    						id : <xsl:value-of select="@id"/>,
-    						width : <xsl:value-of select="o:sub/i:image/i:width"/>,
-    						height : <xsl:value-of select="o:sub/i:image/i:height"/>,
-    						text : '<xsl:value-of select="o:note"/>'
-    					});
-    				</xsl:for-each>
+    				<xsl:for-each select="o:object"><xsl:if test="position()>1">,</xsl:if>{id:<xsl:value-of select="@id"/>,width:<xsl:value-of select="o:sub/i:image/i:width"/>,height:<xsl:value-of select="o:sub/i:image/i:height"/>,text:'<xsl:value-of select="o:note"/>'}</xsl:for-each>
+                    <xsl:text>];</xsl:text>
 					
-    				var part = new op.part.ImageGallery({
-    					element : 'part_imagegallery_<xsl:value-of select="generate-id()"/>',
-    					variant : '<xsl:value-of select="ig:display/@variant"/>',
-    					editor : <xsl:value-of select="$editor='true'"/>,
-						images : images
-    				});
-    			}
-            });
-		</script>
+    				<xsl:text>var part = new op.part.ImageGallery({</xsl:text>element : 'part_imagegallery_<xsl:value-of select="generate-id()"/>',variant : '<xsl:value-of select="ig:display/@variant"/>',editor : <xsl:value-of select="$editor='true'"/>,images : images});}});</script>
 	</xsl:template>
 
 	<xsl:template match="o:object[@type='image']">

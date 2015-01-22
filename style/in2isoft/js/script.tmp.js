@@ -4610,7 +4610,9 @@ hui.ui.require = function(names,func) {
 	hui.require(names,func);
 };
 
-
+if (window.define) {
+	define('hui.ui');
+}
 
 hui.onReady(function() {
 	hui.listen(window,'resize',hui.ui._resize);
@@ -6437,3 +6439,5 @@ Poster.prototype.preload = function() {
 	loader.addImages(this.rightImages);
 	loader.load();
 }
+
+window.define && define('Poster');

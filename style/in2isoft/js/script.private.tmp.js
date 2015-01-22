@@ -698,3 +698,5 @@ Poster.prototype.preload = function() {
 	loader.addImages(this.rightImages);
 	loader.load();
 }
+
+window.define && define('Poster');

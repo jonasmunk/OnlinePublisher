@@ -282,3 +282,5 @@ op.part.ImageGallery.Masonry.prototype = {
 		'</div>';
 	}
 }
+
+window.define && define('op.part.ImageGallery');

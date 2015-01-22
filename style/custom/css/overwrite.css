@@ -1,6 +1,10 @@
 body
 {
-	font-family: 'Open Sans', Arial, sans-serif;
+	font-family: Arial, sans-serif;
+}
+
+body.font {
+    font-family: 'Open Sans', Arial, sans-serif;
 }
 
 a.common

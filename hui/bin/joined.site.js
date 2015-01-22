@@ -4608,7 +4608,9 @@ hui.ui.require = function(names,func) {
 	hui.require(names,func);
 };
 
-
+if (window.define) {
+	define('hui.ui');
+}
 
 hui.onReady(function() {
 	hui.listen(window,'resize',hui.ui._resize);
