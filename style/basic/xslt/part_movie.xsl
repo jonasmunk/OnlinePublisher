@@ -94,10 +94,8 @@
         </div>
 	</div>
     <script type="text/javascript">
-        _editor.defer(function() {
-            new op.part.Movie({
-                element : '<xsl:value-of select="generate-id()"/>'
-            })
+        require(['op.part.Movie'],function() {
+            new op.part.Movie({element : '<xsl:value-of select="generate-id()"/>'})
         });
     </script>
 </xsl:template>

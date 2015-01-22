@@ -20,7 +20,7 @@
 		<xsl:comment/>
 	</div>
 	<script type="text/javascript">
-        _editor.defer(function() {
+        require(['op.part.Poster'],function() {
         	try {
         		new op.part.Poster({
         			element : 'part_poster_<xsl:value-of select="../../@id"/>',

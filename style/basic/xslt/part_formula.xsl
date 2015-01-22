@@ -19,7 +19,7 @@
       			<xsl:call-template name="p:content"/>
       		</form>
       		<script type="text/javascript">
-      			_editor.defer(function() {
+      			require(['op.part.Formula'],function() {
       				var inputs = [];
       				<xsl:for-each select="descendant::p:input">
       					inputs.push({

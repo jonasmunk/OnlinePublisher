@@ -58,7 +58,7 @@
 <xsl:template name="img:script">
 	<xsl:if test="img:link/@image and $editor!='true'">
 		<script type="text/javascript">
-		_editor.defer(function() {
+		require(['op'],(function() {
 			op.registerImageViewer('part_image_<xsl:value-of select="generate-id()"/>',{
 					id : <xsl:value-of select="img:link/@image"/>,
 					text : '<xsl:value-of select="img:link/@note"/>'

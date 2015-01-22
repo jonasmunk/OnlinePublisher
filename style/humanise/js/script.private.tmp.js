@@ -203,10 +203,6 @@ op.imageViewerDelegate = {
 	}
 }
 
-if (window.define) {
-	define('op');
-}
-
 if (op.part===undefined) {
 	op.part = {};
 }
@@ -220,6 +216,7 @@ op.feedback = function(a) {
 	})
 }
 
+window.define && define('op');
 
 /************* Image gallery *************/
 
@@ -287,6 +284,7 @@ op.part.Formula.prototype = {
 	}
 }
 
+window.define && define('op.part.Formula');
 
 ///////////////// Image //////////////////
 
@@ -305,7 +303,7 @@ op.part.Image = function(options) {
 		hui.animate({node:effect,duration:1000,delay:1000,ease:hui.ease.flicker,css:{opacity:0}})
 	})
 }
-
+window.define && define('op.part.Image');
 
 ///////////////// Poster //////////////////
 
@@ -383,6 +381,7 @@ op.part.Poster.prototype = {
 		}
 	}
 }
+window.define && define('op.part.Poster');
 
 ///////////////// Map //////////////////
 
@@ -464,7 +463,7 @@ op.part.Map.prototype = {
 	}
 }
 
-
+window.define && define('op.part.Map');
 
 ////////////////////// Movie ////////////////////////
 
@@ -512,7 +511,7 @@ op.part.Movie.prototype = {
     }
 }
 
-
+window.define && define('op.part.Movie');
 
 // Stuff...
 
@@ -611,6 +610,8 @@ op.SearchField = function(o) {
 	this.field.onblur();
 }
 
+window.define && define('op.SearchField');
+
 op.Dissolver = function(options) {
 	options = this.options = hui.override({wait:4000,transition:2000,delay:0},options);
 	this.pos = Math.floor(Math.random()*(options.elements.length-.00001));
@@ -635,6 +636,8 @@ op.Dissolver.prototype = {
 		}.bind(this)});
 	}
 }
+
+window.define && define('op.Dissolver');
 /* style/humanise/js/Poster.js */
 Poster = function() {
 	return;

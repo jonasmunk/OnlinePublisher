@@ -118,7 +118,7 @@
     	<xsl:call-template name="util:scripts"/>
 		-->
 		<script type="text/javascript">
-            _editor.defer(function() {
+            require(['hui'],(function() {
     			if (window.devicePixelRatio==2) {
     				hui.cls.add(document.body,'retina');
     			}            
@@ -134,7 +134,7 @@
       				<div class="layout_top_body"><div><xsl:comment/></div></div>
       			</header>
                 <script>
-                    _editor.defer(function() {
+                    require(['hui'],(function() {
                         var img = new Image();
                         img.onload = function() {
                             var x = hui.get.byClass(document.body,'layout_top_body')[0];
