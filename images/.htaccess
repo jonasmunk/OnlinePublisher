@@ -1,0 +1,12 @@
+<IfModule mod_headers.c>
+Header set Cache-Control "public"
+Header unset Cookie
+</IfModule>
+
+<IfModule mod_expires.c>
+ExpiresActive On
+# 1 week
+ExpiresDefault A604800
+</IfModule>
+
+SetEnv session.use_cookies='0';
