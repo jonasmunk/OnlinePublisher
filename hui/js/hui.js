@@ -398,12 +398,7 @@ hui.array = {
 	 * @returns {boolean} true if the value is in the array
 	 */
 	contains : function(arr,value) {
-		for (var i=0; i < arr.length; i++) {
-			if (arr[i]===value) {
-				return true;
-			}
-		}
-		return false;
+		return hui.array.indexOf(arr,value) !== -1;
 	},
 	/**
 	 * Add or remove a value from an array.
@@ -452,7 +447,7 @@ hui.array = {
 	toIntegers : function(str) {
 		var array = str.split(',');
 		for (var i = array.length - 1; i >= 0; i--){
-			array[i] = parseInt(array[i]);
+			array[i] = parseInt(array[i],10);
 		}
 		return array;
 	}
