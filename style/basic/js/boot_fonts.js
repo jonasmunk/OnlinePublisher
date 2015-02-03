@@ -1,31 +1,41 @@
-(function(window,document) {
-  _editor.loadFont = function(options) {
-    var dummy = document.createElement('div');
-    dummy.setAttribute('style','font: 400px fantasy;position:absolute;top:-9999px;left:-9999px');
-    dummy.innerHTML = 'Am-i#o';
-    document.body.appendChild(dummy);
-    var width = dummy.clientWidth;
-    var e = document.createElement('link');
-    e.rel = 'stylesheet';
-    e.type = 'text/css';
-    e.href = options.href;
-    this.inject(e);
-    if (width==0) { // TODO IE7 (we cannot test) so we play it safe
-      document.body.className += ' ' + options.cls;
-      return;
-    }
-    dummy.style.fontFamily = "'" + options.family + "',fantasy";
-    var tester;
-    var timeout = 0.01;
-    tester = function() {
-      timeout *= 1.5;
-      if (width != dummy.clientWidth) {
-        document.body.className += ' ' + options.cls;
-        dummy.parentNode.removeChild(dummy);
-      } else {
-        window.setTimeout(tester,timeout);
+(function(window,document,tool) {
+  tool.loadFont = function(options) {
+    var weights = options.weights || ['normal'];
+    weights = ['300','400','700'];
+    var count = weights.length;
+    var operation = function(weight) {
+      var dummy = tool._build('div',{style:'font:400px fantasy;position:absolute;top:-9999px;left:-9999px'})
+      dummy.innerHTML = 'Am-i#w^o';
+      document.body.appendChild(dummy);
+      var width = dummy.clientWidth;
+      //console.log('Checking: '+weight);
+      dummy.style.fontFamily = "'" + options.family + "',fantasy";
+      dummy.style.fontWeight = weight;
+      var tester;
+      var timeout = 0.01;
+      tester = function() {
+        timeout *= 1.5;
+        if (width==0 || width != dummy.clientWidth) {
+          count--;
+          //console.log('found: '+weight+','+width+'/'+dummy.clientWidth);
+          if (count==0) {
+            document.body.className += ' ' + options.cls;
+          }
+          dummy.parentNode.removeChild(dummy);
+        } else {
+          window.setTimeout(tester,timeout);
+        }
       }
+      tester();
     }
-    tester();    
+    for (var i = 0; i < weights.length; i++) {
+      operation(weights[i]);
+    }
+
+    tool.inject(tool._build('link',{
+      rel : 'stylesheet',
+      type : 'text/css',
+      href : options.href
+    }));
   }
-})(window,document);
+})(window,document,_editor);
