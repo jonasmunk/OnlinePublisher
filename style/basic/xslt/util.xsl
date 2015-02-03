@@ -489,11 +489,12 @@ require(['hui.ui'],function() {hui.ui.context='<xsl:value-of select="$path"/>';h
 <xsl:template name="util:load-font">
     <xsl:param name="href"/>
     <xsl:param name="family"/>
+    <xsl:param name="weights"/>
     <xsl:call-template name="util:script-inline">
         <xsl:with-param name="file" select="'style/basic/js/boot_fonts.js'"/>
         <xsl:with-param name="compiled"><![CDATA[(function(c,a,b){b.loadFont=function(e){var g=e.weights||["normal"];g=["300","400","700"];var h=g.length;var d=function(l){var m=b._build("div",{style:"font:400px fantasy;position:absolute;top:-9999px;left:-9999px"});m.innerHTML="Am-i#w^o";a.body.appendChild(m);var j=m.clientWidth;m.style.fontFamily="'"+e.family+"',fantasy";m.style.fontWeight=l;var i;var k=0.01;i=function(){k*=1.5;if(j==0||j!=m.clientWidth){h--;if(h==0){a.body.className+=" "+e.cls}m.parentNode.removeChild(m)}else{c.setTimeout(i,k)}};i()};for(var f=0;f<g.length;f++){d(g[f])}b.inject(b._build("link",{rel:"stylesheet",type:"text/css",href:e.href}))}})(window,document,_editor);]]></xsl:with-param>
     </xsl:call-template>
-    <script>_editor.loadFont({href:'<xsl:value-of select="$href"/>',family:'<xsl:value-of select="$family"/>',cls:'font'});</script>
+    <script>_editor.loadFont({href:'<xsl:value-of select="$href"/>',family:'<xsl:value-of select="$family"/>',cls:'font'<xsl:if test="$weights!=''">,weights:'<xsl:value-of select="$weights"/>'.split(',')</xsl:if>});</script>
 </xsl:template>
 
 <xsl:template name="util:lazy-fonts">
