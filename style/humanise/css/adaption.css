@@ -19,20 +19,6 @@
     width: 33%;
     padding: 15px 0; } }
 @media screen and (min-width: 760px) {
-  .layout_menu {
-    background: none;
-    text-align: left; }
-  .layout_menu > li {
-    vertical-align: top; }
-  .layout_menu > li > a {
-    font-size: 20px;
-    line-height: 44px;
-    padding: 0 10px;
-    color: #324d60; }
-
-  .layout_menu_item_first {
-    display: inline-block; }
-
   .layout_inner_content_sidebar {
     margin-right: 30%; }
 
@@ -79,8 +65,6 @@
     height: 100%; }
 
   .layout_middle, .layout_head_body, .layout_base {
-    margin: 0 auto;
-    width: 980px;
     position: relative;
     min-height: 100%; }
 
@@ -101,9 +85,6 @@
 
   .layout_info {
     padding: 0; }
-
-  .layout_menu {
-    padding: 5px 0; }
 
   .layout_side_navigation {
     position: fixed;

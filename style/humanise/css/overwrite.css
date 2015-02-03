@@ -1,29 +1,3 @@
-
-body,
-.common_font,
-p.common, 
-ul.common,
-h1.common,h2.common,h3.common,h4.common,h5.common,h6.common,
-.part_header,
-.part_text,
-div.part_richtext
-{
-	font-family: 'Helvetica Neue','Helvetica','Arial','Lucida Grande','Lucida Sans Unicode', sans-serif;
-}
-
-.font body,
-.font .common_font,
-.font p.common, 
-.font ul.common,
-.font h1.common,.font h2.common,.font h3.common,.font h4.common,.font h5.common,.font h6.common,
-.font .part_header,
-.font .part_text,
-.font div.part_richtext
-{
-	font-family: Lato,'Helvetica Neue','Helvetica','Arial','Lucida Grande','Lucida Sans Unicode', sans-serif;
-}
-
-
 /********************* Common *******************/
 	
 a.common
@@ -42,13 +16,6 @@ a.common span
 a.common:hover, a.common:hover span
 {
 	color: #0169b2;
-}
-
-h1.common,h2.common,h3.common,h4.common,h5.common,h6.common
-{
-	margin: 0px;
-	color: #333;
-	font-weight: 300;
 }
 
 h1.common

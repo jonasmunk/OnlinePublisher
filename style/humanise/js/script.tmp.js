@@ -6443,3 +6443,5 @@ Poster.prototype.preload = function() {
 	loader.addImages(this.rightImages);
 	loader.load();
 }
+
+define('Poster',Poster);

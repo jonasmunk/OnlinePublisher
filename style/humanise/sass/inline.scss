@@ -1,43 +1,39 @@
+@import 'tools';
+
 body
 {
 	padding: 0px;
 	margin: 0px;
-    font-family: Arial,'Helvetica',sans-serif;
+  font-family: Arial,'Helvetica',sans-serif;
 }
+
+body.font
+{
+	font-family: Lato,'Helvetica Neue','Helvetica','Arial','Lucida Grande','Lucida Sans Unicode', sans-serif;
+}
+
 
 #poster {
 	display: none;
 }
 
-
-div.document_column
-{
-	display: block;
+.layout_middle,
+.layout_head_body,
+.layout_base {
+	position: relative;
+  max-width: 980px;
+  margin: 0 auto;
 }
 
-@media screen and (max-width: 700px) {
-	.document_column {
-		width: auto !important;
-		padding: 0 !important;
-	}
-}
-
-@media screen and (min-width: 700px) {
-	.document_row {
-		display: table;
-		width: 100%;
-	}
-	.document_row_body {
-		display: table-row;
-	}
-	div.document_column {
-		display: table-cell;
-	}
+.layout_head_body {
+  position: relative;
 }
 
 .layout_head {
 	background: #f6f6f9;
 }
+
+///////// Menu /////////
 
 .layout_menu {
 	margin: 0;
@@ -72,7 +68,6 @@ div.document_column
 		display: none;
 	}
 }
-
 .layout_sub_navigation {
 	margin: 0;
 	padding: 5px 5px;
@@ -134,5 +129,95 @@ div.document_column
 	
 	> path {
 		fill: #aaa;
+	}
+}
+
+@include breakpoint(760px) {
+  
+	
+	.layout_menu {
+		text-align: left;
+		
+		> li {
+			vertical-align: top;
+		}
+	}
+  
+  .layout_menu_link {
+		font-size: 20px;
+		line-height: 44px;
+		padding: 0 10px;
+		color: $color;
+  }
+
+	.layout_menu_item_first {
+		display: inline-block;
+	}
+  
+	.layout_inner_content_sidebar {
+		margin-right: 30%;
+	}
+	
+	.layout_sidebar {
+		width: 30%;
+		float: right;
+	}
+}
+
+@include breakpoint(1000px) {
+	
+	.layout_menu {
+		padding: 5px 0;
+	}
+  .layout_sub_navigation, .layout_inner_content {
+    padding-left: 0px;
+  }
+  .layout_sub_navigation li:first-child {
+  margin-left: -5px;
+  }
+}
+
+
+
+///////////////////// Common //////////////////
+
+.common_header {
+	margin: 0px;
+	color: #333;
+	font-weight: 300;
+}
+
+.part_text
+{
+	font-size: 12pt;
+	font-weight: 300;
+	word-spacing: 1px;
+}
+
+/////////////////// Document ////////////////
+
+div.document_column
+{
+	display: block;
+}
+
+@media screen and (max-width: 700px) {
+	.document_column {
+		width: auto !important;
+		padding: 0 !important;
+	}
+}
+
+@media screen and (min-width: 700px) {
+	.document_row {
+		display: table;
+		width: 100%;
+	}
+	.document_row_body {
+		display: table-row;
+	}
+	div.document_column {
+		display: table-cell;
+    vertical-align: top;
 	}
 }
