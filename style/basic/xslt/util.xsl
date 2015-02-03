@@ -13,6 +13,8 @@
  exclude-result-prefixes="p f h header text util part"
  >
 
+<xsl:variable name="only-inline" select="'!true'" />
+
 <xsl:variable name="timestamp-query">
 	<xsl:if test="$urlrewrite!='true'">
 		<xsl:text>?version=</xsl:text><xsl:value-of select="$timestamp"/>
@@ -432,6 +434,7 @@ require(['hui.ui'],function() {hui.ui.context='<xsl:value-of select="$path"/>';h
 </xsl:template>
 
 <xsl:template name="util:style-build">
+    <xsl:param name="plain" select="'false'"/>
     <xsl:if test="$template!='document'">
         <link rel="stylesheet" type="text/css" href="{$path}{$timestamp-url}style/basic/css/{$template}.css"/>
     </xsl:if>
@@ -450,15 +453,21 @@ require(['hui.ui'],function() {hui.ui.context='<xsl:value-of select="$path"/>';h
 		</xsl:when>
 		<xsl:when test="$development='true'">
 			<link rel="stylesheet" type="text/css" href="{$path}{$timestamp-url}hui/bin/minimized.site.css{$timestamp-query}"/>
-	        <link rel="stylesheet" type="text/css" href="{$path}{$timestamp-url}style/{$design}/css/style.dev.css"/>
+            <xsl:if test="$plain='false'">
+                <xsl:call-template name="util:lazy-style">
+                    <xsl:with-param name="href">
+                        <xsl:value-of select="$path"/><xsl:value-of select="$timestamp-url"/>style/<xsl:value-of select="$design"/><xsl:text>/css/style.dev.css</xsl:text>
+                    </xsl:with-param>
+                </xsl:call-template>                
+            </xsl:if>
         </xsl:when>
-		<xsl:otherwise>
+    	<xsl:when test="$plain='false'">
             <xsl:call-template name="util:lazy-style">
                 <xsl:with-param name="href">
                     <xsl:value-of select="$path"/><xsl:value-of select="$timestamp-url"/>style/<xsl:value-of select="$design"/><xsl:text>/css/style.css</xsl:text>
                 </xsl:with-param>
             </xsl:call-template>
-		</xsl:otherwise>
+		</xsl:when>
 	</xsl:choose>
     <xsl:call-template name="util:_style-dynamic"/>
     <xsl:call-template name="util:_style-hui-msie"/>
@@ -482,7 +491,7 @@ require(['hui.ui'],function() {hui.ui.context='<xsl:value-of select="$path"/>';h
     <xsl:param name="family"/>
     <xsl:call-template name="util:script-inline">
         <xsl:with-param name="file" select="'style/basic/js/boot_fonts.js'"/>
-        <xsl:with-param name="compiled"><![CDATA[(function(b,a){_editor.loadFont=function(d){var i=a.createElement("div");i.setAttribute("style","font: 400px fantasy;position:absolute;top:-9999px;left:-9999px");i.innerHTML="Am-i#o";a.body.appendChild(i);var f=i.clientWidth;var h=a.createElement("link");h.rel="stylesheet";h.type="text/css";h.href=d.href;this.inject(h);if(f==0){a.body.className+=" "+d.cls;return}i.style.fontFamily="'"+d.family+"',fantasy";var c;var g=0.01;c=function(){g*=1.5;if(f!=i.clientWidth){a.body.className+=" "+d.cls;i.parentNode.removeChild(i)}else{b.setTimeout(c,g)}};c()}})(window,document);]]></xsl:with-param>
+        <xsl:with-param name="compiled"><![CDATA[(function(c,a,b){b.loadFont=function(e){var g=e.weights||["normal"];g=["300","400","700"];var h=g.length;var d=function(l){var m=b._build("div",{style:"font:400px fantasy;position:absolute;top:-9999px;left:-9999px"});m.innerHTML="Am-i#w^o";a.body.appendChild(m);var j=m.clientWidth;m.style.fontFamily="'"+e.family+"',fantasy";m.style.fontWeight=l;var i;var k=0.01;i=function(){k*=1.5;if(j==0||j!=m.clientWidth){h--;if(h==0){a.body.className+=" "+e.cls}m.parentNode.removeChild(m)}else{c.setTimeout(i,k)}};i()};for(var f=0;f<g.length;f++){d(g[f])}b.inject(b._build("link",{rel:"stylesheet",type:"text/css",href:e.href}))}})(window,document,_editor);]]></xsl:with-param>
     </xsl:call-template>
     <script>_editor.loadFont({href:'<xsl:value-of select="$href"/>',family:'<xsl:value-of select="$family"/>',cls:'font'});</script>
 </xsl:template>
@@ -564,7 +573,8 @@ Y.prototype.load=function(a){a(this.p)};function Z(a,b){this.d=a;this.f=b}Z.prot
       </xsl:when>
       <xsl:otherwise>
       	<style type="text/css">
-      		<xsl:value-of select="$compiled"/>
+            
+      		<xsl:value-of select="$compiled" disable-output-escaping="yes"/>
             <xsl:text> </xsl:text>
       	</style>
       </xsl:otherwise>
