@@ -54,10 +54,6 @@
 			<xsl:with-param name="href" select="'http://fonts.googleapis.com/css?family=Lato:300,400,700'"/>
             <xsl:with-param name="family" select="'Lato'"/>
 		</xsl:call-template>
-        <!--
-		<xsl:call-template name="util:lazy-fonts">
-			<xsl:with-param name="google" select="'Lato:300,400,700'"/>
-		</xsl:call-template>-->
 	</head>
 	<body>
         <xsl:call-template name="util:script-inline">
