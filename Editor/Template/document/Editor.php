@@ -44,6 +44,7 @@ echo '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.or
 		<!--[if IE 8]><link rel="stylesheet" type="text/css" href="../../../hui/'.$cacheUrl.'css/msie8.css'.$cachePrefix.'"></link><![endif]-->
 		<!--[if lt IE 7]><link rel="stylesheet" type="text/css" href="../../../hui/'.$cacheUrl.'css/msie6.css'.$cachePrefix.'"></link><![endif]-->
 		<!--[if IE 7]><link rel="stylesheet" type="text/css" href="../../../hui/'.$cacheUrl.'css/msie7.css'.$cachePrefix.'"></link><![endif]-->
+		<!--[if lt IE 9]><script type="text/javascript" src="../../../hui/'.$cacheUrl.'bin/compatibility.min.js'.$cachePrefix.'" charset="UTF-8"></script><![endif]-->
 		<script type="text/javascript" src="'.$cacheUrl.'js/combined.php'.$cachePrefix.'" charset="UTF-8"></script>
 		<script type="text/javascript">
 			op.context = "../../../";

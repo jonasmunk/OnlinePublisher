@@ -336,13 +336,7 @@ ga('create', '<xsl:value-of select="$code"/>', {siteSpeedSampleRate : 20});ga('s
 <xsl:template name="util:_scripts-msie">
 <!-- html5 -->
 <xsl:comment><![CDATA[[if lt IE 9]>
-<script src="//html5shim.googlecode.com/svn/trunk/html5.js" data-movable="false"></script>
-<![endif]]]></xsl:comment>
-<xsl:comment><![CDATA[[if lt IE 9]>
-<script type="text/javascript" src="]]><xsl:value-of select="$path"/><xsl:value-of select="$timestamp-url"/>style/basic/js/boot_ie.js<xsl:value-of select="$timestamp-query"/><![CDATA["></script>
-<![endif]]]></xsl:comment>
-<xsl:comment><![CDATA[[if lt IE 8]>
-<script type="text/javascript" src="]]><xsl:value-of select="$path"/><xsl:value-of select="$timestamp-url"/>hui/lib/json2.js<xsl:value-of select="$timestamp-query"/><![CDATA["></script>
+<script type="text/javascript" src="]]><xsl:value-of select="$path"/><xsl:value-of select="$timestamp-url"/>hui/bin/compatibility.min.js<xsl:value-of select="$timestamp-query"/><![CDATA["></script>
 <![endif]]]></xsl:comment>
 </xsl:template>
 

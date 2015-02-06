@@ -1,4 +1,4 @@
-.layout_searching .layout_search_body {
+.layout_search_body {
   display: block;
   position: absolute;
   top: 0;
@@ -7,6 +7,9 @@
   right: 150px;
   height: 50px;
   padding: 4px; }
+
+.layout_searching .layout_search_body {
+  display: block; }
 
 .layout_search_icon {
   cursor: pointer; }

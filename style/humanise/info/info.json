@@ -4,7 +4,8 @@
 	"owner" : "The design is the property of Humanise I/S",
     "build" : {
         "js" : [
-            "style/humanise/js/Poster.js"
+            "style/humanise/js/poster.js",
+            "style/humanise/js/layout.js"
         ],
         "css" : [
             "style/basic/css/shared.css",

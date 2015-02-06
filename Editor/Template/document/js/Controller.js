@@ -7,6 +7,12 @@ var _editor = {
   }
 }
 
+if (!window.require) {
+	window.require = function(requirements,callback) {
+		callback();
+	}
+}
+
 var controller = {
 	pageId : 0,
 	activeSection : null,

@@ -1,7 +1,8 @@
 /********************** Poster *********************/
-@media screen and (min-width: 600px) {
+@media screen and (min-width: 1000px) {
   #poster {
-    width: 990px;
+    display: block;
+    width: 980px;
     height: 310px;
     background: url("../gfx/poster_bg.png");
     cursor: pointer;
@@ -53,7 +54,7 @@
   background: #f8f8f9;
   margin: 0;
   padding: 0;
-  border-radius: 0 0 5px 5px;
+  border-radius: 5px;
   overflow: hidden; }
 
 ul.layout_placards a {

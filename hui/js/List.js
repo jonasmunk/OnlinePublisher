@@ -500,7 +500,7 @@ hui.ui.List.prototype = {
 				if (child.getAttribute('icon')) {
 					obj.appendChild(hui.ui.createIcon(child.getAttribute('icon'),16));
 				}
-				if (child.firstChild && child.firstChild.nodeType==hui.TEXT_NODE && child.firstChild.nodeValue.length>0) {
+				if (child.firstChild && child.firstChild.nodeType===3 && child.firstChild.nodeValue.length>0) {
 					hui.dom.addText(obj,child.firstChild.nodeValue);
 				}
 				cell.appendChild(obj);

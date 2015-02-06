@@ -2,9 +2,6 @@
 var hui = {
 	/** @namespace */
 	browser : {},
-	ELEMENT_NODE : 1,
-	ATTRIBUTE_NODE : 2,
-	TEXT_NODE : 3,
 	KEY_BACKSPACE : 8,
     KEY_TAB : 9,
     KEY_RETURN : 13,
@@ -25,6 +22,8 @@ var hui = {
 
 
 //////////////////////// Browser //////////////////////////
+
+// TODO make this easier to optimize
 
 /** If the browser is opera */
 hui.browser.opera = /opera/i.test(navigator.userAgent);
@@ -467,10 +466,10 @@ hui.array = {
 /** @namespace */
 hui.dom = {
 	isElement : function(node,name) {
-		return node.nodeType==hui.ELEMENT_NODE && (name===undefined ? true : node.nodeName.toLowerCase()==name);
+		return node.nodeType==1 && (name===undefined ? true : node.nodeName.toLowerCase()==name);
 	},
 	isDefinedText : function(node) {
-		return node.nodeType==hui.TEXT_NODE && node.nodeValue.length>0;
+		return node.nodeType==3 && node.nodeValue.length>0;
 	},
 	addText : function(node,text) {
 		node.appendChild(document.createTextNode(text));
@@ -479,7 +478,7 @@ hui.dom = {
 	firstChild : function(node) {
 		var children = node.childNodes;
 		for (var i=0; i < children.length; i++) {
-			if (children[i].nodeType==hui.ELEMENT_NODE) {
+			if (children[i].nodeType==1) {
 				return children[i];
 			}
 		}
@@ -561,7 +560,7 @@ hui.dom = {
 		var c = node.childNodes;
 		var updated = false;
 		for (var i = c.length - 1; i >= 0; i--){
-			if (!updated && c[i].nodeType==hui.TEXT_NODE) {
+			if (!updated && c[i].nodeType === 3) {
 				c[i].nodeValue=text;
 				updated = true;
 			} else {
@@ -576,9 +575,9 @@ hui.dom = {
 		var txt = '';
 		var c = node.childNodes;
 		for (var i=0; i < c.length; i++) {
-			if (c[i].nodeType == hui.TEXT_NODE && c[i].nodeValue !== null) {
+			if (c[i].nodeType === 3 && c[i].nodeValue !== null) {
 				txt+= c[i].nodeValue;
-			} else if (c[i].nodeType == hui.ELEMENT_NODE) {
+			} else if (c[i].nodeType == 1) {
 				txt+= hui.dom.getText(c[i]);
 			}
 		}
@@ -759,7 +758,7 @@ hui.get.after = function(element) {
 
 hui.get.firstByClass = function(parentElement,className,tag) {
 	parentElement = hui.get(parentElement) || document.body;
-	if (document.querySelector) {
+  if (parentElement.querySelector) {
 		return parentElement.querySelector((tag ? tag+'.' : '.')+className);
 	} else {
 		var children = parentElement.getElementsByTagName(tag || '*');
@@ -775,7 +774,7 @@ hui.get.firstByClass = function(parentElement,className,tag) {
 hui.get.byClass = function(parentElement,className,tag) {
 	parentElement = hui.get(parentElement) || document.body;
     var i;
-	if (document.querySelectorAll) {
+	if (parentElement.querySelectorAll) {
 		var nl = parentElement.querySelectorAll((tag ? tag+'.' : '.')+className);
 		// Important to convert into array...
 		var l=[];
@@ -809,7 +808,7 @@ hui.get.byTag = function(node,name) {
 hui.get.byId = function(e,id) {
 	var children = e.childNodes;
 	for (var i = children.length - 1; i >= 0; i--) {
-		if (children[i].nodeType===hui.ELEMENT_NODE && children[i].getAttribute('id')===id) {
+		if (children[i].nodeType===1 && children[i].getAttribute('id')===id) {
 			return children[i];
 		} else {
 			var found = hui.get.byId(children[i],id);
@@ -851,7 +850,7 @@ hui.get.firstParentByClass = function(node,tag) {
  */
 hui.get.firstByTag = function(node,tag) {
 	node = hui.get(node) || document.body;
-	if (document.querySelector && tag!=='*') {
+	if (node.querySelector && tag!=='*') {
 		return node.querySelector(tag);
 	}
 	var children = node.getElementsByTagName(tag);
@@ -861,7 +860,15 @@ hui.get.firstByTag = function(node,tag) {
 
 hui.get.firstChild = hui.dom.firstChild;
 
+hui.find = function(selector,context) {
+  return (context || document).querySelector(selector);
+}
 
+hui.collect = function(selectors,context) {
+  for (key in selectors) {
+    selectors[key] = hui.get.firstByClass(context,selectors[key]);
+  }
+}
 
 
 
@@ -2437,107 +2444,6 @@ hui.location = {
 };
 
 
-
-hui.xml = {
-	transform : function(xml,xsl) {
-		if (window.ActiveXObject) {
-			return xml.transformNode(xsl);
-		} else if (document.implementation && document.implementation.createDocument) {
-			try {
-			  	var pro = new XSLTProcessor();
-                pro.setParameter(null,'dev','true');
-                pro.setParameter(null,'profile','true');
-                pro.setParameter(null,'version','true');
-                pro.setParameter(null,'pathVersion','true');
-                pro.setParameter(null,'context','true');
-                pro.setParameter(null,'language','true');
-			  	pro.importStylesheet(xsl);
-/*		'<xsl:variable name="profile">'.$profile.'</xsl:variable>'.
-		'<xsl:variable name="version">'.SystemInfo::getDate().'</xsl:variable>'.
-		'<xsl:variable name="pathVersion">'.$pathVersion.'</xsl:variable>'.
-		'<xsl:variable name="context">'.$context.'</xsl:variable>'.
-		'<xsl:variable name="language">'.InternalSession::getLanguage().'</xsl:variable>';)*/
-				var ownerDocument = document;//.implementation.createDocument("", "test", null); 
-			    return pro.transformToFragment(xml,ownerDocument);				
-			} catch (e) {
-				hui.log('Transform exception...');
-				hui.log(e);
-				throw e;
-			}
-		} else {
-			hui.log('No XSLT!');
-		}
-	},
-	parse : function(xml) {
-		var doc;
-		try {
-		if (window.DOMParser) {
-  			var parser = new DOMParser();
-  			doc = parser.parseFromString(xml,"text/xml");
-			var errors = doc.getElementsByTagName('parsererror');
-			if (errors.length>0 && errors[0].textContent) {
-				hui.log(errors[0].textContent);
-				return null;
-			}
-  		} else {
-  			doc = new ActiveXObject("Microsoft.XMLDOM");
-			doc.async = false;
-  			doc.loadXML(xml); 
-  		}
-		} catch (e) {
-			return null;
-		}
-		return doc;
-	},
-	serialize : function(node) {
-  		try {
-      		return (new XMLSerializer()).serializeToString(node);
-  		} catch (e) {
-     		try {
-        		return node.xml;
-     		}
-     		catch (ex) {}
-     	}
-		return null;
-   	}
-};
-
-
-
-
-
-
-
-
-if (!Function.prototype.bind) {
-	Function.prototype.bind = function () {
-	    if (arguments.length < 2 && arguments[0] === undefined) {
-	        return this;
-	    }
-	    var thisObj = this,
-	    args = Array.prototype.slice.call(arguments),
-	    obj = args.shift();
-	    return function () {
-	        return thisObj.apply(obj, args.concat(Array.prototype.slice.call(arguments)));
-	    };
-	};
-
-	Function.bind = function() {
-	    var args = Array.prototype.slice.call(arguments);
-	    return Function.prototype.bind.apply(args.shift(), args);
-	};
-}
-
-
-// 
-if (!Function.prototype.argumentNames) {
-	Function.prototype.argumentNames = function() {
-		var names = this.toString().match(/^[\s\(]*function[^(]*\(([^)]*)\)/)[1]
-			.replace(/\/\/.*?[\r\n]|\/\*(?:.|[\r\n])*?\*\//g, '')
-			.replace(/\s+/g, '').split(',');
-		return names.length == 1 && !names[0] ? [] : names;
-	};
-}
 
 if (window.define) {
 	define('hui');

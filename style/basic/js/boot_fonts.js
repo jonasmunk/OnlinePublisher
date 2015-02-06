@@ -4,10 +4,14 @@
     weights = ['300','400','700'];
     var count = weights.length;
     var operation = function(weight) {
-      var dummy = tool._build('div',{style:'font:400px fantasy;position:absolute;top:-9999px;left:-9999px'})
+      var dummy = document.createElement('div');
+	  dummy.style.position = 'absolute';
+	  dummy.style.top = '-9999px';
+	  dummy.style.font = '400px fantasy';
       dummy.innerHTML = 'Am-i#w^o';
       document.body.appendChild(dummy);
       var width = dummy.clientWidth;
+
       //console.log('Checking: '+weight);
       dummy.style.fontFamily = "'" + options.family + "',fantasy";
       dummy.style.fontWeight = weight;

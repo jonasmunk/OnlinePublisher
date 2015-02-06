@@ -1,5 +1,4 @@
 Poster = function() {
-	return;
 	this.poster = hui.get('poster');
 	this.left = hui.get('poster_left');
 	this.right = hui.get('poster_right');
@@ -18,7 +17,7 @@ Poster = function() {
 	this.poster.onclick = function() {
 		document.location=op.page.path+self.links[self.leftPos];
 	}
-  	this.preload();
+  this.preload();
 }
 
 Poster.prototype.start = function() {

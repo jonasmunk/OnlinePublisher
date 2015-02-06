@@ -22,7 +22,7 @@
 		<title>
 			<xsl:choose>
 				<xsl:when test="//p:page/p:context/p:home[@page=//p:page/@id]">
-					<xsl:text>Humanise : </xsl:text>
+					<xsl:text>Humanise - </xsl:text>
 					<xsl:choose>
 						<xsl:when test="//p:page/p:meta/p:language='en'"><xsl:text>Software for humans</xsl:text></xsl:when>
 						<xsl:otherwise><xsl:text>Software til mennesker</xsl:text></xsl:otherwise>
@@ -39,7 +39,7 @@
 		<xsl:call-template name="util:watermark"/>
         
         <xsl:call-template name="util:style-inline">
-			<xsl:with-param name="compiled">body{padding:0;margin:0;font-family:Arial,'Helvetica',sans-serif}body.font{font-family:Lato,'Helvetica Neue','Helvetica','Arial','Lucida Grande','Lucida Sans Unicode',sans-serif}#poster{display:none}.layout_middle,.layout_head_body,.layout_base{position:relative;max-width:980px;margin:0 auto}.layout_head_body{position:relative}.layout_head{background:#f6f6f9}.layout_menu{margin:0;padding:5px 10px;list-style:none;text-align:center}.layout_menu_item{display:inline-block}.layout_menu_link{padding:0 5px;height:32px;line-height:32px;text-decoration:none;color:#333}.layout_menu_item_first{display:block;text-align:center}.layout_menu_link_first{background:url("/style/humanise/gfx/graphics.png") -139px -636px;display:inline-block;width:160px;height:40px}.layout_menu_link_first>span{display:none}.layout_sub_navigation{margin:0;padding:5px 5px;list-style:none;border-bottom:1px solid #eee}.layout_sub_navigation>li{display:inline-block}.layout_sub_navigation>li>a{padding:0 5px;height:32px;line-height:32px;text-decoration:none;color:#333}.layout_side_navigation{margin:0;padding:5px 5px;list-style:none;border-bottom:1px solid #eee}.layout_side_navigation>li{display:inline-block}.layout_side_navigation>li>a{padding:0 5px;height:32px;line-height:32px;text-decoration:none;color:#333}.layout_inner_content{padding:10px}.layout_search{margin:0;font-size:0}.layout_search_body{display:none}.layout_search_icon{position:absolute;top:10px;right:10px;display:inline-block;width:30px;height:30px}.layout_search_icon>path{fill:#aaa}@media screen and (min-width:760px){.layout_menu{text-align:left}.layout_menu>li{vertical-align:top}.layout_menu_link{font-size:20px;line-height:44px;padding:0 10px;color:#324d60}.layout_menu_item_first{display:inline-block}.layout_inner_content_sidebar{margin-right:30%}.layout_sidebar{width:30%;float:right}}@media screen and (min-width:1000px){.layout_menu{padding:5px 0}.layout_sub_navigation,.layout_inner_content{padding-left:0}.layout_sub_navigation li:first-child{margin-left:-5px}}.common_header{margin:0;color:#333;font-weight:300}.part_text{font-size:12pt;font-weight:300;word-spacing:1px}div.document_column{display:block}@media screen and (max-width:700px){.document_column{width:auto !important;padding:0 !important}}@media screen and (min-width:700px){.document_row{display:table;width:100%}.document_row_body{display:table-row}div.document_column{display:table-cell;vertical-align:top}}</xsl:with-param>
+			<xsl:with-param name="compiled">body{padding:0;margin:0;font-family:Arial,'Helvetica',sans-serif}body.font{font-family:Lato,'Helvetica Neue','Helvetica','Arial','Lucida Grande','Lucida Sans Unicode',sans-serif}.layout_middle,.layout_head_body,.layout_base{position:relative;max-width:980px;margin:0 auto}.layout_head_body{position:relative}.layout_head{background:#f6f6f9}.layout_menu{margin:0;padding:5px 10px;list-style:none;text-align:center}.layout_menu_item{display:inline-block}.layout_menu_link{padding:0 5px;height:32px;line-height:32px;text-decoration:none;color:#333}.layout_menu_item_first{display:block;text-align:center}.layout_menu_link_first{background:url("/style/humanise/gfx/graphics.png") -139px -636px;display:inline-block;width:160px;height:40px}.layout_menu_link_first>span{display:none}.layout_sub_navigation{margin:0;padding:5px 5px;list-style:none;border-bottom:1px solid #eee}.layout_sub_navigation>li{display:inline-block}.layout_sub_navigation>li>a{padding:0 5px;height:32px;line-height:32px;text-decoration:none;color:#333}.layout_side_navigation{margin:0;padding:5px 5px;list-style:none;border-bottom:1px solid #eee}.layout_side_navigation>li{display:inline-block}.layout_side_navigation>li>a{padding:0 5px;height:32px;line-height:32px;text-decoration:none;color:#333}.layout_inner_content{padding:10px}.layout_search{margin:0;font-size:0}.layout_search_body{display:none}.layout_search_icon{position:absolute;top:10px;right:10px;display:inline-block;width:30px;height:30px}.layout_search_icon>path{fill:#aaa}@media screen and (min-width:760px){.layout_menu{text-align:left}.layout_menu>li{vertical-align:top}.layout_menu_link{font-size:20px;line-height:44px;padding:0 10px;color:#324d60}.layout_menu_item_first{display:inline-block}.layout_inner_content_sidebar{margin-right:30%}.layout_sidebar{width:30%;float:right}}@media screen and (min-width:1000px){.layout_menu{padding:5px 0}.layout_sub_navigation,.layout_inner_content{padding-left:0}.layout_sub_navigation li:first-child{margin-left:-5px}}.common_header{margin:0;color:#333;font-weight:300}.part_text{font-size:12pt;font-weight:300;word-spacing:1px}div.document_column{display:block}@media screen and (max-width:700px){.document_column{width:auto !important;padding:0 !important}}@media screen and (min-width:700px){.document_row{display:table;width:100%}.document_row_body{display:table-row}div.document_column{display:table-cell;vertical-align:top}}</xsl:with-param>
         </xsl:call-template>
 					
 		<xsl:call-template name="util:style-ie6"/>
@@ -51,15 +51,11 @@
             <xsl:with-param name="family" select="'Lato'"/>
             <xsl:with-param name="weights" select="'300,400,700'"/>
 		</xsl:call-template>
-        <!--
-		<xsl:call-template name="util:lazy-fonts">
-			<xsl:with-param name="google" select="'Lato:300,400,700'"/>
-		</xsl:call-template>-->
 	</head>
 	<body>
         <xsl:call-template name="util:script-inline">
             <xsl:with-param name="file" select="'style/humanise/js/inline.js'"/>
-            <xsl:with-param name="compiled"><![CDATA[_editor.defer(function(){if(hui.browser.windows){hui.cls.add(document.body,"windows")}if(hui.browser.msie){hui.cls.add(document.body,"msie")}if(hui.browser.webkit){hui.cls.add(document.body,"webkit")}new hui.ui.SearchField({element:"search",expandedWidth:200});hui.listen(hui.get.firstByClass(document.body,"layout_search_icon"),"click",function(){hui.cls.toggle(document.body,"layout_searching")})});if(window.devicePixelRatio>1){document.body.className+=" retina"};]]></xsl:with-param>
+            <xsl:with-param name="compiled"><![CDATA[_editor.defer(function(){if(hui.browser.windows){hui.cls.add(document.body,"windows")}if(hui.browser.msie){hui.cls.add(document.body,"msie")}if(hui.browser.webkit){hui.cls.add(document.body,"webkit")}});if(window.devicePixelRatio>1){document.body.className+=" retina"};]]></xsl:with-param>
         </xsl:call-template>
 		<div class="layout">
 			<div class="layout_head">
@@ -112,10 +108,7 @@
 						<xsl:choose>
 							<xsl:when test="//p:page/p:meta/p:language='en'">
 								<h2>About Humanise</h2>
-								<p>We focus on user experience and design. We seek out the most simple and essential solution. 
-									We believe that machines should work for people. We think that knowledge should be free and accessible to all. 
-									We hope you agree :-)
-								</p>
+								<p>We focus on user experience and design. We seek out the most simple and essential solution. We believe that machines should work for people. We think that knowledge should be free and accessible to all. We hope you agree :-)</p>
 								<p class="more"><a href="{$path}om/" class="common"><span>More about Humanise »</span></a></p>
 							</xsl:when>
 							<xsl:otherwise>
@@ -123,11 +116,7 @@
                                     <xsl:with-param name="name" select="'about'"/>
                                     <xsl:with-param name="default">
         								<h2>Om Humanise</h2>
-        								<p>Vores focus er på brugeroplevelse og design. Vi leder altid efter
-        									den mest enkle og essentielle løsning. Vi tror på at maskinen skal
-        									arbejde for mennesket. Vi mener at viden bør være fri
-        									og tilgængelig for alle. Vi håber du er enig :-)
-        								</p>                                        
+        								<p>Vores focus er på brugeroplevelse og design. Vi leder altid efter den mest enkle og essentielle løsning. Vi tror på at maskinen skal arbejde for mennesket. Vi mener at viden bør være fri og tilgængelig for alle. Vi håber du er enig :-)</p>                                        
                                     </xsl:with-param>
                                 </xsl:call-template>
                                 <p class="more"><a href="{$path}om/" class="common"><span>Mere om Humanise »</span></a></p>
