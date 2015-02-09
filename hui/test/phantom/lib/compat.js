@@ -1,3 +1,5 @@
+// Phantom may use an old webkit websion
+
 if (!Function.prototype.bind) {
 	Function.prototype.bind = function () {
 	    if (arguments.length < 2 && arguments[0] === undefined) {
