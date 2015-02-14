@@ -18,9 +18,8 @@
 @import url(../../../style/basic/css/part_richtext.css);
 @import url(../../../style/basic/css/part_table.css);
 @import url(../../../style/basic/css/part_text.css);
-@import url(../../../style/humanise/css/main.css);
+@import url(../../../style/humanise/css/deferred.css);
 @import url(../../../style/humanise/css/front.css);
 @import url(../../../style/humanise/css/overwrite.css);
-@import url(../../../style/humanise/css/adaption.css);
 @import url(../../../style/humanise/css/humanise.css);
 @import url(../../../style/humanise/css/widgets.css);

@@ -1,0 +1,55 @@
+@include when(all,inline) {
+  body
+  {
+  	padding: 0px;
+  	margin: 0px;
+    font-family: Arial,'Helvetica',sans-serif;
+  }
+
+  body.font
+  {
+  	font-family: Lato,'Helvetica Neue','Helvetica','Arial','Lucida Grande','Lucida Sans Unicode', sans-serif;
+  }
+  
+  form
+  {
+  	margin: 0px;
+  }
+  img
+  {
+  	border: none;
+  }
+
+  a {
+      word-break: break-word;
+  }
+}
+
+@include when(1000px,inline) {
+	#poster
+	{
+    display: block;
+		width: 980px;
+		height: 310px;
+    background: #333;
+  }
+  
+	#poster_loader
+	{
+		background: #000;
+		color: #FFFFFF;
+		left: 50%;
+		margin-left: -25px;
+		position: absolute;
+		text-align: center;
+		top: 150px;
+		width: 50px;
+		height: 24px;
+		line-height: 22px;
+	}	
+  
+}
+
+@import 'layout_menu';
+@import 'layout_search';
+@import 'layout';

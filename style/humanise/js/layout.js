@@ -13,8 +13,9 @@ require(['hui'],function() {
     },
     _attach : function() {
       hui.listen(this.nodes.icon,'click',this._toggle.bind(this));
+      hui.listen(this.nodes.text,'focus',this._focus.bind(this));
       hui.listen(this.nodes.text,'blur',this._blur.bind(this));
-      this._toggle();
+      //this._toggle();
     },
     _toggle : function() {
     	hui.cls.toggle(document.body,'layout_searching');
@@ -23,6 +24,9 @@ require(['hui'],function() {
 	          this.nodes.text.focus();		  	
 		  } catch (ignore) {}
       }.bind(this),100)
+    },
+    _focus : function() {
+      hui.cls.add(document.body,'layout_searching');
     },
     _blur : function() {
       hui.cls.remove(document.body,'layout_searching');

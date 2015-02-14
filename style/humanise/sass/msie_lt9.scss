@@ -1,10 +1,12 @@
-@import 'tools.scss';
+$target: deferred;
+
+@import 'tools';
 
 @mixin breakpoint($size) {
 	@content;
 }
 
-@import 'adaption';
+@import 'parts/all';
 
 div.layout_middle, div.layout_info
 {

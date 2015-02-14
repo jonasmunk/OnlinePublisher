@@ -39,7 +39,7 @@
 		<xsl:call-template name="util:watermark"/>
         
         <xsl:call-template name="util:style-inline">
-			<xsl:with-param name="compiled">body{padding:0;margin:0;font-family:Arial,'Helvetica',sans-serif}body.font{font-family:Lato,'Helvetica Neue','Helvetica','Arial','Lucida Grande','Lucida Sans Unicode',sans-serif}.layout_middle,.layout_head_body,.layout_base{position:relative;max-width:980px;margin:0 auto}.layout_head_body{position:relative}.layout_head{background:#f6f6f9}.layout_menu{margin:0;padding:5px 10px;list-style:none;text-align:center}.layout_menu_item{display:inline-block}.layout_menu_link{padding:0 5px;height:32px;line-height:32px;text-decoration:none;color:#333}.layout_menu_item_first{display:block;text-align:center}.layout_menu_link_first{background:url("/style/humanise/gfx/graphics.png") -139px -636px;display:inline-block;width:160px;height:40px}.layout_menu_link_first>span{display:none}.layout_sub_navigation{margin:0;padding:5px 5px;list-style:none;border-bottom:1px solid #eee}.layout_sub_navigation>li{display:inline-block}.layout_sub_navigation>li>a{padding:0 5px;height:32px;line-height:32px;text-decoration:none;color:#333}.layout_side_navigation{margin:0;padding:5px 5px;list-style:none;border-bottom:1px solid #eee}.layout_side_navigation>li{display:inline-block}.layout_side_navigation>li>a{padding:0 5px;height:32px;line-height:32px;text-decoration:none;color:#333}.layout_inner_content{padding:10px}.layout_search{margin:0;font-size:0}.layout_search_body{display:none}.layout_search_icon{position:absolute;top:10px;right:10px;display:inline-block;width:30px;height:30px}.layout_search_icon>path{fill:#aaa}@media screen and (min-width:760px){.layout_menu{text-align:left}.layout_menu>li{vertical-align:top}.layout_menu_link{font-size:20px;line-height:44px;padding:0 10px;color:#324d60}.layout_menu_item_first{display:inline-block}.layout_inner_content_sidebar{margin-right:30%}.layout_sidebar{width:30%;float:right}}@media screen and (min-width:1000px){.layout_menu{padding:5px 0}.layout_sub_navigation,.layout_inner_content{padding-left:0}.layout_sub_navigation li:first-child{margin-left:-5px}}.common_header{margin:0;color:#333;font-weight:300}.part_text{font-size:12pt;font-weight:300;word-spacing:1px}div.document_column{display:block}@media screen and (max-width:700px){.document_column{width:auto !important;padding:0 !important}}@media screen and (min-width:700px){.document_row{display:table;width:100%}.document_row_body{display:table-row}div.document_column{display:table-cell;vertical-align:top}}</xsl:with-param>
+			<xsl:with-param name="compiled">body{padding:0;margin:0;font-family:Arial,'Helvetica',sans-serif}body.font{font-family:Lato,'Helvetica Neue','Helvetica','Arial','Lucida Grande','Lucida Sans Unicode',sans-serif}form{margin:0}img{border:none}a{word-break:break-word}@media screen and (min-width:1000px){#poster{display:block;width:980px;height:310px;background:#333}#poster_loader{background:#000;color:#FFF;left:50%;margin-left:-25px;position:absolute;text-align:center;top:150px;width:50px;height:24px;line-height:22px}}.layout_menu{margin:0;padding:5px 10px;list-style:none;text-align:center}.layout_menu_item{display:inline-block}.layout_menu_link{padding:0 5px;height:32px;line-height:32px;text-decoration:none;color:#333}.layout_menu_item_first{display:block;text-align:center}.layout_menu_link_first{background:url(/style/humanise/gfx/graphics.png) -139px -636px;display:inline-block;width:160px;height:40px}.layout_menu_link_first > span{display:none}.retina .layout_menu_link_first{background-image:url(../gfx/graphics_2x.png);background-size:400px 907px}@media screen and (min-width:760px){.layout_menu{text-align:left}.layout_menu > li{vertical-align:top}.layout_menu_link{font-size:20px;line-height:44px;padding:0 10px;color:#324d60}.layout_menu_item_first{display:inline-block}}@media screen and (min-width:1000px){.layout_menu{padding:5px 0}}.layout_search{margin:0;font-size:0}.layout_search_body{display:none}.layout_search_icon{position:absolute;top:10px;right:10px;display:inline-block;width:30px;height:30px}.layout_search_icon > path{fill:#aaa}.layout_middle,.layout_head_body,.layout_base{position:relative;max-width:980px;margin:0 auto}.layout_head_body{position:relative}.layout_head{background:#f6f6f9}.layout_sub_navigation{margin:0;padding:5px 5px;list-style:none;border-bottom:1px solid #eee}.layout_sub_navigation > li{display:inline-block}.layout_sub_navigation > li > a{padding:0 5px;height:32px;line-height:32px;text-decoration:none;color:#333}.layout_side_navigation{margin:0;padding:5px 5px;list-style:none;border-bottom:1px solid #eee}.layout_side_navigation > li{display:inline-block}.layout_side_navigation > li > a{padding:0 5px;height:32px;line-height:32px;text-decoration:none;color:#333}.layout_inner_content{padding:10px}@media screen and (min-width:560px){.layout_inner_content{padding:20px}.layout_sub_navigation{padding:5px 15px}}@media screen and (min-width:760px){.layout_inner_content_sidebar{margin-right:30%}.layout_sidebar{width:30%;float:right}}@media screen and (min-width:1000px){.layout_sub_navigation,.layout_inner_content{padding-left:0}.layout_sub_navigation li:first-child{margin-left:-5px}}.common_header{margin:0;color:#333;font-weight:300}.part_text{font-size:12pt;font-weight:300;word-spacing:1px}div.document_column{display:block}@media screen and (max-width:700px){.document_column{width:auto!important;padding:0!important}}@media screen and (min-width:700px){.document_row{display:table;width:100%}.document_row_body{display:table-row}div.document_column{display:table-cell;vertical-align:top}}</xsl:with-param>
         </xsl:call-template>
 					
 		<xsl:call-template name="util:style-ie6"/>
@@ -55,7 +55,8 @@
 	<body>
         <xsl:call-template name="util:script-inline">
             <xsl:with-param name="file" select="'style/humanise/js/inline.js'"/>
-            <xsl:with-param name="compiled"><![CDATA[_editor.defer(function(){if(hui.browser.windows){hui.cls.add(document.body,"windows")}if(hui.browser.msie){hui.cls.add(document.body,"msie")}if(hui.browser.webkit){hui.cls.add(document.body,"webkit")}});if(window.devicePixelRatio>1){document.body.className+=" retina"};]]></xsl:with-param>
+            <xsl:with-param name="compiled"><![CDATA[_editor.defer(function(){hui.browser.windows&&hui.cls.add(document.body,"windows"),hui.browser.msie&&hui.cls.add(document.body,"msie"),hui.browser.webkit&&hui.cls.add(document.body,"webkit")}),window.devicePixelRatio>1&&(document.body.className+=" retina")
+]]></xsl:with-param>
         </xsl:call-template>
 		<div class="layout">
 			<div class="layout_head">
@@ -88,13 +89,19 @@
 						<xsl:when test="//p:page/@id=//p:context/p:home/@page">
 							<ul class="layout_placards">
 								<li class="onlinepublisher">
-									<a href="{$path}produkter/onlinepublisher/"><strong>Humanise <em>Editor</em></strong> - <span>Simpelt værktøj til opbygning og redigering af hjemmesider</span></a>
+									<a href="{$path}produkter/onlinepublisher/">
+                                        <strong>Humanise <em>Editor</em></strong> - <span class="layout_placards_text layout_placards_text_onlinepublisher">Simpelt værktøj til opbygning og redigering af hjemmesider</span>
+                                    </a>
 								</li>
 								<li class="onlineobjects">
-									<a href="{$path}produkter/onlineobjects/"><strong>Online<em>Objects</em></strong> - <span>Fleksibelt grundsystem til web-applikationer</span></a>
+									<a href="{$path}produkter/onlineobjects/">
+                                        <strong>Online<em>Objects</em></strong> - <span class="layout_placards_text layout_placards_text_onlineobjects">Fleksibelt grundsystem til web-applikationer</span>
+                                    </a>
 								</li>
 								<li class="onlineme">
-									<a href="{$path}teknologi/hui/"><strong>Humanise <em>UI</em></strong> - <span>Intuitiv, avanceret og effektiv brugerflade</span></a>
+									<a href="{$path}teknologi/hui/">
+                                        <strong>Humanise <em>UI</em></strong> - <span class="layout_placards_text layout_placards_text_onlineme">Intuitiv, avanceret og effektiv brugerflade</span>
+                                    </a>
 								</li>
 							</ul>
 						</xsl:when>
@@ -447,12 +454,12 @@
 			<svg class="layout_search_icon" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill="black" d="M19.129,18.164l-4.518-4.52c1.152-1.373,1.852-3.143,1.852-5.077c0-4.361-3.535-7.896-7.896-7.896 c-4.361,0-7.896,3.535-7.896,7.896s3.535,7.896,7.896,7.896c1.934,0,3.705-0.698,5.078-1.853l4.52,4.519 c0.266,0.268,0.699,0.268,0.965,0C19.396,18.863,19.396,18.431,19.129,18.164z M8.567,15.028c-3.568,0-6.461-2.893-6.461-6.461 s2.893-6.461,6.461-6.461c3.568,0,6.46,2.893,6.46,6.461S12.135,15.028,8.567,15.028z"></path></svg>
 			<label class="layout_search_label" for="layout_search">Søgning</label>
 			<span class="layout_search_body">
-				<input type="text" class="layout_search_text" id="layout_search" name="query"/>
+				<input type="text" class="layout_search_text" id="layout_search" name="query" placeholder="Search here"/>
 				<input type="hidden" name="id" value="{f:frame/f:search/@page}"/>
 				<xsl:for-each select="f:frame/f:search/f:types/f:type">
 				<input type="hidden" name="{@unique}" value="on"/>
 				</xsl:for-each>
-				<input type="submit" class="layout_search_submit" value="Søg"/>
+				<input type="submit" class="layout_search_submit" value="Søg" tabindex="-1"/>
 			</span>
 		</form>
 	</xsl:if>

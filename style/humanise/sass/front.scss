@@ -5,9 +5,6 @@
 @include breakpoint(1000px) {
 	#poster
 	{
-    display: block;
-		width: 980px;
-		height: 310px;
 		background: url('../gfx/poster_bg.png');
 		cursor: pointer;
 		overflow: hidden;
@@ -51,19 +48,6 @@
 		background: 495px 0px no-repeat;
 	}
 
-	#poster_loader
-	{
-		background: #000;
-		color: #FFFFFF;
-		left: 50%;
-		margin-left: -25px;
-		position: absolute;
-		text-align: center;
-		top: 150px;
-		width: 50px;
-		height: 24px;
-		line-height: 22px;
-	}	
 }
 
 
@@ -79,55 +63,60 @@
 	padding: 0;
 	border-radius: 5px;
 	overflow: hidden;
+
+  a {
+  	display: block;
+  	border-right: 1px solid #ddd;
+  	text-decoration: none;
+  	color: #333;
+  	font-size: 0;
+    
+    &:hover {
+      background: #f0f0f3;
+    }
+  
+    &:focus {
+      outline-offset: -7px;
+    }
+    
+  }
+  
+  strong {
+  	display: block;
+  	font-size: 30px;
+  	line-height: 30px;
+  	font-weight: normal;
+  	color: #89a;
+  	padding: 8px 0px 10px;
+  	font-weight: 300;
+  	white-space: nowrap;
+  	width: 100%;
+  	text-indent: 10px;
+  	overflow: hidden;
+  	text-overflow: ellipsis;
+  }
+  
+  em {
+  	font-style: normal;
+  	color: #333537;    
+  }
+  
 }
 
-ul.layout_placards a
-{
-	display: block;
-	border-right: 1px solid #ddd;
-	text-decoration: none;
-	color: #333;
-	font-size: 0;
-}
-
-ul.layout_placards a:hover
-{
-	background: #f0f0f3;
-}
-
-ul.layout_placards strong
-{
-	display: block;
-	font-size: 30px;
-	line-height: 30px;
-	font-weight: normal;
-	color: #89a;
-	padding: 8px 0px 10px;
-	font-family: Lato,"Lucida Grande","Lucida Sans Unicode", sans-serif;
-	font-weight: 300;
-	white-space: nowrap;
-	width: 100%;
-	text-indent: 10px;
-	overflow: hidden;
-	text-overflow: ellipsis;
-}
-
-ul.layout_placards em
-{
-	font-style: normal;
-	color: #333537;
-}
-
-ul.layout_placards span
-{
+.layout_placards_text {
 	display: block;
 	font-size: 18px;
 	line-height: 22px;
 	padding: 5px 20px 0 150px;
 	height: 120px;
 	color: #567;
-	font-family: Lato,"Lucida Grande","Lucida Sans Unicode", sans-serif;
-	font-weight: 300;
+	font-weight: 300;    
+	background: url('../gfx/graphics.png') 0 0 no-repeat;
+  
+  .retina & {
+  	background-image: url('../gfx/graphics_2x.png');
+  	background-size: 400px 907px;
+  }
 }
 
 ul.layout_placards li.onlineme a
@@ -135,19 +124,19 @@ ul.layout_placards li.onlineme a
 	border: none;
 }
 
-ul.layout_placards li.onlineme span
+.layout_placards_text_onlineme
 {
-	background: url('../gfx/graphics.png') -44px -420px no-repeat;
+	background-position: -44px -420px;
 }
 
-ul.layout_placards li.onlinepublisher span
+.layout_placards_text_onlinepublisher
 {
-	background: url('../gfx/graphics.png') -40px -5px no-repeat;
+	background-position: -40px -5px;
 }
 
-ul.layout_placards li.onlineobjects span
+.layout_placards_text_onlineobjects
 {
-	background: url('../gfx/graphics.png') -44px -200px no-repeat;
+	background-position: -44px -200px;
 }
 
 @include breakpoint(760px) {
