@@ -25,31 +25,10 @@
   }
 }
 
-@include when(1000px,inline) {
-	#poster
-	{
-    display: block;
-		width: 980px;
-		height: 310px;
-    background: #333;
-  }
-  
-	#poster_loader
-	{
-		background: #000;
-		color: #FFFFFF;
-		left: 50%;
-		margin-left: -25px;
-		position: absolute;
-		text-align: center;
-		top: 150px;
-		width: 50px;
-		height: 24px;
-		line-height: 22px;
-	}	
-  
-}
-
 @import 'layout_menu';
 @import 'layout_search';
+@import 'layout_info';
+@import 'layout_placards';
 @import 'layout';
+@import 'poster';
+@import 'call_to_action';

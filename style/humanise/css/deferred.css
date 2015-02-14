@@ -73,17 +73,61 @@
   .layout_searching .layout_search_body {
     width: 200px;
     opacity: 1; } }
-.layout_design {
-  background: url("/style/in2isoft/gfx/graphics.png") -172px -709px;
-  text-indent: -10000px;
-  width: 177px;
-  height: 191px;
-  display: block;
-  margin: 0 auto;
-  margin-bottom: 10px; }
-.retina .layout_design {
-  background-image: url("../gfx/graphics_2x.png");
-  background-size: 400px 907px; }
+.layout_info {
+  overflow: hidden;
+  padding: 10px; }
+
+div.layout_info h2 {
+  font-weight: 300;
+  font-size: 28px;
+  margin: 0px 20px 10px 0;
+  height: 28px;
+  color: #666; }
+
+div.layout_info p {
+  margin: 0 20px 0 0; }
+
+div.layout_info div.about p {
+  font-weight: 300;
+  font-size: 12pt;
+  line-height: 16pt;
+  margin-top: 11px;
+  color: #666; }
+
+body.windows div.layout_info div.about p, body.windows div.layout_info div.about p {
+  font-weight: normal; }
+
+div.layout_info div.contact p {
+  font-size: 9pt;
+  color: #666;
+  line-height: 16pt; }
+
+div.layout_info div.contact p.name {
+  color: #999;
+  font-size: 12pt; }
+
+div.layout_info div.contact p.name strong {
+  font-weight: normal; }
+
+div.layout_info div.about p.more {
+  line-height: 11px;
+  font-size: 11pt;
+  margin-top: 24px; }
+
+div.layout_info a span {
+  color: #666; }
+
+div.layout_info:hover h2 {
+  color: #000; }
+
+div.layout_info:hover div.about p {
+  color: #333; }
+
+div.layout_info:hover a span {
+  color: #0079CD; }
+
+div.layout_info:hover div.contact p.name {
+  color: #333; }
 
 @media screen and (min-width: 560px) {
   .layout_info {
@@ -99,6 +143,86 @@
     float: left;
     width: 33%;
     padding: 15px 0; } }
+@media screen and (min-width: 1000px) {
+  .layout_info {
+    padding: 0; } }
+.layout_placards {
+  list-style: none;
+  border: 1px solid #ddd;
+  background: #f8f8f9;
+  margin: 0;
+  padding: 0;
+  border-radius: 5px;
+  overflow: hidden; }
+.layout_placards a {
+  display: block;
+  border-right: 1px solid #ddd;
+  text-decoration: none;
+  color: #333;
+  font-size: 0; }
+.layout_placards a:hover {
+  background: #f0f0f3; }
+.layout_placards a:focus {
+  outline-offset: -7px; }
+.layout_placards strong {
+  display: block;
+  font-size: 30px;
+  line-height: 30px;
+  font-weight: normal;
+  color: #89a;
+  padding: 8px 0px 10px;
+  font-weight: 300;
+  white-space: nowrap;
+  width: 100%;
+  text-indent: 10px;
+  overflow: hidden;
+  text-overflow: ellipsis; }
+.layout_placards em {
+  font-style: normal;
+  color: #333537; }
+
+.layout_placards_text {
+  display: block;
+  font-size: 18px;
+  line-height: 22px;
+  padding: 5px 20px 0 150px;
+  height: 120px;
+  color: #567;
+  font-weight: 300;
+  background: url("../gfx/graphics.png") 0 0 no-repeat; }
+.retina .layout_placards_text {
+  background-image: url("../gfx/graphics_2x.png");
+  background-size: 400px 907px; }
+
+ul.layout_placards li.onlineme a {
+  border: none; }
+
+.layout_placards_text_onlineme {
+  background-position: -44px -420px; }
+
+.layout_placards_text_onlinepublisher {
+  background-position: -40px -5px; }
+
+.layout_placards_text_onlineobjects {
+  background-position: -44px -200px; }
+
+@media screen and (min-width: 760px) {
+  .layout_placards li {
+    float: left;
+    width: 33.333333333%;
+    font-size: 0; } }
+.layout_design {
+  background: url("/style/in2isoft/gfx/graphics.png") -172px -709px;
+  text-indent: -10000px;
+  width: 177px;
+  height: 191px;
+  display: block;
+  margin: 0 auto;
+  margin-bottom: 10px; }
+.retina .layout_design {
+  background-image: url("../gfx/graphics_2x.png");
+  background-size: 400px 907px; }
+
 @media screen and (min-width: 760px) {
   .layout_side_navigation {
     list-style: none;
@@ -155,75 +279,72 @@
     padding-left: 0px; }
 
   .layout_sub_navigation li:first-child {
-    margin-left: -5px; }
+    margin-left: -5px; } }
+@media screen and (min-width: 1000px) {
+  #poster {
+    background: #333 url("../gfx/poster_bg.png");
+    cursor: pointer;
+    overflow: hidden; }
 
-  .layout_info {
-    padding: 0; } }
-/******** Footer ********/
-div.layout_footer span {
-  color: #666; }
+  #poster_body {
+    width: 990px;
+    position: relative;
+    left: 50%;
+    margin-left: -495px; }
 
-div.layout_links {
-  height: 30px; }
+  #poster_left {
+    float: left;
+    height: 310px;
+    width: 495px;
+    overflow: hidden; }
 
-div.layout_links a span {
-  color: #666; }
+  #poster_right {
+    float: left;
+    height: 310px;
+    width: 495px;
+    overflow: hidden; }
 
-/*********************** Info **********************/
-.layout_info {
-  overflow: hidden;
-  padding: 10px; }
+  #poster_left_inner {
+    width: 990px;
+    height: 310px;
+    background: 245px 0px no-repeat; }
 
-div.layout_info h2 {
-  font-family: Lato,"Lucida Grande","Lucida Sans Unicode", sans-serif;
-  font-weight: 300;
-  font-size: 28px;
-  margin: 0px 20px 10px 0;
-  height: 28px;
-  color: #666; }
+  #poster_right_inner {
+    width: 990px;
+    height: 310px;
+    background: 495px 0px no-repeat; } }
+.call-to-action {
+  background: #fafafa;
+  border: 1px solid #eee;
+  border-radius: 3px;
+  padding: 20px 10px;
+  text-align: center; }
 
-div.layout_info p {
-  margin: 0 20px 0 0; }
-
-div.layout_info div.about p {
-  font-family: Lato,"Lucida Grande","Lucida Sans Unicode", sans-serif;
-  font-weight: 300;
-  font-size: 12pt;
-  line-height: 16pt;
-  margin-top: 11px;
-  color: #666; }
-
-body.windows div.layout_info div.about p, body.windows div.layout_info div.about p {
-  font-weight: normal; }
-
-div.layout_info div.contact p {
-  font-size: 9pt;
+.call-to-action-text {
+  margin: -5px 0 0;
   color: #666;
-  line-height: 16pt; }
+  font-weight: 300;
+  font-size: 32px;
+  line-height: 1; }
 
-div.layout_info div.contact p.name {
-  color: #999;
-  font-size: 12pt; }
+.call-to-action-button {
+  background: #3080CB;
+  color: #fff;
+  height: 34px;
+  line-height: 34px;
+  padding: 0 20px;
+  box-sizing: border-box;
+  border: none;
+  border-radius: 3px;
+  display: inline-block;
+  font-size: 18px;
+  margin-top: 20px;
+  text-decoration: none;
+  cursor: pointer; }
 
-div.layout_info div.contact p.name strong {
-  font-weight: normal; }
+.call-to-action-button:hover {
+  background: #206AB0; }
 
-div.layout_info div.about p.more {
-  line-height: 11px;
-  font-size: 11pt;
-  margin-top: 24px; }
-
-div.layout_info a span {
-  color: #666; }
-
-div.layout_info:hover h2 {
-  color: #000; }
-
-div.layout_info:hover div.about p {
-  color: #333; }
-
-div.layout_info:hover a span {
-  color: #0079CD; }
-
-div.layout_info:hover div.contact p.name {
-  color: #333; }
+.call-to-action-button:active {
+  -webkit-transform: scale(0.95);
+  outline: none; }

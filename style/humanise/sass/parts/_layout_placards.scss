@@ -1,0 +1,96 @@
+@include when {
+  .layout_placards
+  {
+  	list-style: none;
+  	border: 1px solid #ddd;
+  	background: #f8f8f9;
+  	margin: 0;
+  	padding: 0;
+  	border-radius: 5px;
+  	overflow: hidden;
+
+    a {
+    	display: block;
+    	border-right: 1px solid #ddd;
+    	text-decoration: none;
+    	color: #333;
+    	font-size: 0;
+    
+      &:hover {
+        background: #f0f0f3;
+      }
+  
+      &:focus {
+        outline-offset: -7px;
+      }
+    
+    }
+  
+    strong {
+    	display: block;
+    	font-size: 30px;
+    	line-height: 30px;
+    	font-weight: normal;
+    	color: #89a;
+    	padding: 8px 0px 10px;
+    	font-weight: 300;
+    	white-space: nowrap;
+    	width: 100%;
+    	text-indent: 10px;
+    	overflow: hidden;
+    	text-overflow: ellipsis;
+    }
+  
+    em {
+    	font-style: normal;
+    	color: #333537;    
+    }
+  
+  }
+
+  .layout_placards_text {
+  	display: block;
+  	font-size: 18px;
+  	line-height: 22px;
+  	padding: 5px 20px 0 150px;
+  	height: 120px;
+  	color: #567;
+  	font-weight: 300;    
+  	background: url('../gfx/graphics.png') 0 0 no-repeat;
+  
+    .retina & {
+    	background-image: url('../gfx/graphics_2x.png');
+    	background-size: 400px 907px;
+    }
+  }
+
+  ul.layout_placards li.onlineme a
+  {
+  	border: none;
+  }
+
+  .layout_placards_text_onlineme
+  {
+  	background-position: -44px -420px;
+  }
+
+  .layout_placards_text_onlinepublisher
+  {
+  	background-position: -40px -5px;
+  }
+
+  .layout_placards_text_onlineobjects
+  {
+  	background-position: -44px -200px;
+  }
+}
+
+
+@include when(760px) {
+	.layout_placards li
+	{
+		float: left;
+		width: 33.333333333%;
+		font-size: 0;
+	}
+}

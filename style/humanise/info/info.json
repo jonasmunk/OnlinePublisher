@@ -11,9 +11,7 @@
             "style/basic/css/shared.css",
             "@parts",
             "style/humanise/css/deferred.css",
-            "style/humanise/css/front.css",
             "style/humanise/css/overwrite.css",
-            "style/humanise/css/humanise.css",
             "style/humanise/css/widgets.css"
         ]
     },

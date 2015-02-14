@@ -86,27 +86,6 @@
 	}
 }
 
-@include when(560px) {	
-	.layout_info {
-		border: 1px solid #eee;
-		border-width: 1px 0;
-		margin: 20px 0;
-		padding: 0 20px;
-		
-		.about {
-			float: left;
-			width: 66.4%;
-			padding: 15px 0;
-		}
-		
-		.contact {
-			float: left;
-			width: 33%;
-			padding: 15px 0;
-		}
-	}
-}
-
 @include when(760px,inline) {
   
 	.layout_inner_content_sidebar {
@@ -222,8 +201,5 @@
 	.layout_sub_navigation li:first-child {
 		margin-left: -5px;
 	}
-	
-	.layout_info {
-		padding: 0;
-	}
+
 }
