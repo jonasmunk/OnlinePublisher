@@ -760,7 +760,7 @@ hui.get.after = function(element) {
 
 hui.get.firstByClass = function(parentElement,className,tag) {
 	parentElement = hui.get(parentElement) || document.body;
-	if (document.querySelector) {
+  if (parentElement.querySelector) {
 		return parentElement.querySelector((tag ? tag+'.' : '.')+className);
 	} else {
 		var children = parentElement.getElementsByTagName(tag || '*');
@@ -776,7 +776,7 @@ hui.get.firstByClass = function(parentElement,className,tag) {
 hui.get.byClass = function(parentElement,className,tag) {
 	parentElement = hui.get(parentElement) || document.body;
     var i;
-	if (document.querySelectorAll) {
+	if (parentElement.querySelectorAll) {
 		var nl = parentElement.querySelectorAll((tag ? tag+'.' : '.')+className);
 		// Important to convert into array...
 		var l=[];
@@ -852,7 +852,7 @@ hui.get.firstParentByClass = function(node,tag) {
  */
 hui.get.firstByTag = function(node,tag) {
 	node = hui.get(node) || document.body;
-	if (document.querySelector && tag!=='*') {
+	if (node.querySelector && tag!=='*') {
 		return node.querySelector(tag);
 	}
 	var children = node.getElementsByTagName(tag);
@@ -868,7 +868,7 @@ hui.find = function(selector,context) {
 
 hui.collect = function(selectors,context) {
   for (key in selectors) {
-    selectors[key] = hui.find(selectors[key],context);
+    selectors[key] = hui.get.firstByClass(context,selectors[key]);
   }
 }
 

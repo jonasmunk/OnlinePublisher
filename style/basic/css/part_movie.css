@@ -33,7 +33,7 @@
     color: #fff;
     padding: 0 5px;
 }
-
+/*
 .part_movie_poster:before {
 	content: '\25B6';
 	position: absolute;
@@ -55,7 +55,7 @@
 
 .part_movie_poster:before {
     display: none;
-}
+}*/
 
 .part_movie_poster:after {
 	position: absolute;

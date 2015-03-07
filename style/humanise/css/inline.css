@@ -162,7 +162,7 @@ div.part_news_item_description {
 .layout_menu_link_first > span {
   display: none; }
 .retina .layout_menu_link_first {
-  background-image: url("../gfx/graphics_2x.png");
+  background-image: url("/style/humanise/gfx/graphics_2x.png");
   background-size: 400px 907px; }
 
 @media screen and (min-width: 760px) {

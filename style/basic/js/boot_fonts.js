@@ -6,6 +6,7 @@
     var operation = function(weight) {
       var dummy = document.createElement('div');
 	  dummy.style.position = 'absolute';
+	  dummy.style.whiteSpace = 'nowrap';
 	  dummy.style.top = '-9999px';
 	  dummy.style.font = '400px fantasy';
       dummy.innerHTML = 'Am-i#w^o';

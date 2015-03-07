@@ -39,7 +39,7 @@
 		<xsl:call-template name="util:watermark"/>
         
         <xsl:call-template name="util:style-inline">
-			<xsl:with-param name="compiled">body{padding:0;margin:0;font-family:Arial,'Helvetica',sans-serif}body.font{font-family:Lato,'Helvetica Neue','Helvetica','Arial','Lucida Grande','Lucida Sans Unicode',sans-serif}form{margin:0}img{border:none}a{word-break:break-word}a.common{color:#ddd;color:rgba(0,0,0,0.15);cursor:pointer;font-weight:normal}a.common span{color:#0079cd}a.common:hover,a.common:hover span{color:#0169b2}h1.common{font-weight:400;color:#324d60}p.common,ul.common{font-size:12pt;line-height:160%;text-align:justify}.retina.webkit a.common{text-decoration:none;background-image:-moz-linear-gradient(top,transparent 99%,rgba(0,0,0,0.5) 99%);background-image:-webkit-linear-gradient(top,transparent 98%,rgba(0,0,0,0.5) 98%);background-image:linear-gradient(top,transparent 98%,rgba(0,0,0,0.5) 98%);background-repeat:repeat-x}.part_header{color:#333;font-weight:300}.part_header_1{color:#3080CB}h1.part_header,textarea.part_header_1{font-size:38px;line-height:42px}h2.part_header,textarea.part_header_2{font-size:19pt;line-height:21pt}h3.part_header,textarea.part_header_3{font-size:14pt;line-height:16pt;font-weight:400}h4.part_header,textarea.part_header_4,h5.part_header,textarea.part_header_5,h6.part_header,textarea.part_header_6{font-weight:400}div.part_section_header_3{padding-bottom:5px}body.windows .part_header{font-weight:normal}body.windows h1.part_header{font-weight:300}p.part_poster_text{font-size:14px;font-weight:300}p.part_poster_link{font-size:14px}p.part_poster_title{font-weight:400}.part_text,div.part_richtext{font-size:12pt;font-weight:300;word-spacing:1px}.part_text strong,div.part_richtext strong{color:#000;font-weight:400}div.part_richtext p{margin:10px 0}div.part_listing,textarea.part_listing{font-size:11pt;font-weight:300;word-spacing:1px}div.part_listing span.part_listing_first{font-size:12pt;font-weight:normal}body.windows .part_text,body.windows .part_text{font-weight:normal}div.part_list h3{font-weight:normal}hr.part_horizontalrule{border:none;border-bottom:solid 1px #DDD}div.part_news_item_title{font-size:10pt;font-weight:400}.windows div.part_news_item_title{font-weight:bold}div.part_news_item_description{font-size:10pt;font-weight:300}.windows div.part_news_item_description{font-weight:400}.layout_menu{margin:0;padding:5px 10px;list-style:none;text-align:center}.layout_menu_item{display:inline-block}.layout_menu_link{padding:0 5px;height:32px;line-height:32px;text-decoration:none;color:#333}.layout_menu_item_first{display:block;text-align:center}.layout_menu_link_first{background:url(/style/humanise/gfx/graphics.png) -139px -636px;display:inline-block;width:160px;height:40px}.layout_menu_link_first > span{display:none}.retina .layout_menu_link_first{background-image:url(../gfx/graphics_2x.png);background-size:400px 907px}@media screen and (min-width:760px){.layout_menu{text-align:left}.layout_menu > li{vertical-align:top}.layout_menu_link{font-size:20px;line-height:44px;padding:0 10px;color:#324d60}.layout_menu_item_first{display:inline-block}}@media screen and (min-width:1000px){.layout_menu{padding:5px 0}}.layout_search{margin:0;font-size:0}.layout_search_body{display:none}.layout_search_icon{position:absolute;top:10px;right:10px;display:inline-block;width:30px;height:30px}.layout_search_icon > path{fill:#aaa}.layout_middle,.layout_head_body,.layout_base{position:relative;max-width:980px;margin:0 auto}.layout_head_body{position:relative}.layout_head{background:#f6f6f9}.layout_sub_navigation{margin:0;padding:5px 5px;list-style:none;border-bottom:1px solid #eee}.layout_sub_navigation > li{display:inline-block}.layout_sub_navigation > li > a{padding:0 5px;height:32px;line-height:32px;text-decoration:none;color:#333}.layout_side_navigation{margin:0;padding:5px 5px;list-style:none;border-bottom:1px solid #eee}.layout_side_navigation > li{display:inline-block}.layout_side_navigation > li > a{padding:0 5px;height:32px;line-height:32px;text-decoration:none;color:#333}.layout_inner_content{padding:10px}@media screen and (min-width:560px){.layout_inner_content{padding:20px}.layout_sub_navigation{padding:5px 15px}}@media screen and (min-width:760px){.layout_inner_content_sidebar{margin-right:30%}.layout_sidebar{width:30%;float:right}}@media screen and (min-width:1000px){.layout_sub_navigation,.layout_inner_content{padding-left:0}.layout_sub_navigation li:first-child{margin-left:-5px}}@media screen and (min-width:1000px){#poster{display:block;width:980px;height:310px;background:#333}#poster_loader{background:#000;color:#FFF;left:50%;margin-left:-25px;position:absolute;text-align:center;top:150px;width:50px;height:24px;line-height:22px}}.call-to-action{background:#fafafa;border:1px solid #eee;border-radius:3px;padding:20px 10px;text-align:center}.call-to-action-text{margin:-5px 0 0;color:#666;font-weight:300;font-size:32px;line-height:1}.call-to-action-button{background:#3080CB;color:#fff;height:34px;line-height:34px;padding:0 20px;box-sizing:border-box;border:none;border-radius:3px;display:inline-block;font-size:18px;margin-top:20px;text-decoration:none;cursor:pointer}.call-to-action-button:hover{background:#206AB0}.call-to-action-button:active{-webkit-transform:scale(0.95);outline:none}.common_header{margin:0;color:#333;font-weight:300}.part_text{font-size:12pt;font-weight:300;word-spacing:1px}div.document_column{display:block}@media screen and (max-width:700px){.document_column{width:auto!important;padding:0!important}}@media screen and (min-width:700px){.document_row{display:table;width:100%}.document_row_body{display:table-row}div.document_column{display:table-cell;vertical-align:top}}</xsl:with-param>
+			<xsl:with-param name="compiled">body{padding:0;margin:0;font-family:Arial,'Helvetica',sans-serif}body.font{font-family:Lato,'Helvetica Neue','Helvetica','Arial','Lucida Grande','Lucida Sans Unicode',sans-serif}form{margin:0}img{border:none}a{word-break:break-word}a.common{color:#ddd;color:rgba(0,0,0,0.15);cursor:pointer;font-weight:normal}a.common span{color:#0079cd}a.common:hover,a.common:hover span{color:#0169b2}h1.common{font-weight:400;color:#324d60}p.common,ul.common{font-size:12pt;line-height:160%;text-align:justify}.retina.webkit a.common{text-decoration:none;background-image:-moz-linear-gradient(top,transparent 99%,rgba(0,0,0,0.5) 99%);background-image:-webkit-linear-gradient(top,transparent 98%,rgba(0,0,0,0.5) 98%);background-image:linear-gradient(top,transparent 98%,rgba(0,0,0,0.5) 98%);background-repeat:repeat-x}.part_header{color:#333;font-weight:300}.part_header_1{color:#3080CB}h1.part_header,textarea.part_header_1{font-size:38px;line-height:42px}h2.part_header,textarea.part_header_2{font-size:19pt;line-height:21pt}h3.part_header,textarea.part_header_3{font-size:14pt;line-height:16pt;font-weight:400}h4.part_header,textarea.part_header_4,h5.part_header,textarea.part_header_5,h6.part_header,textarea.part_header_6{font-weight:400}div.part_section_header_3{padding-bottom:5px}body.windows .part_header{font-weight:normal}body.windows h1.part_header{font-weight:300}p.part_poster_text{font-size:14px;font-weight:300}p.part_poster_link{font-size:14px}p.part_poster_title{font-weight:400}.part_text,div.part_richtext{font-size:12pt;font-weight:300;word-spacing:1px}.part_text strong,div.part_richtext strong{color:#000;font-weight:400}div.part_richtext p{margin:10px 0}div.part_listing,textarea.part_listing{font-size:11pt;font-weight:300;word-spacing:1px}div.part_listing span.part_listing_first{font-size:12pt;font-weight:normal}body.windows .part_text,body.windows .part_text{font-weight:normal}div.part_list h3{font-weight:normal}hr.part_horizontalrule{border:none;border-bottom:solid 1px #DDD}div.part_news_item_title{font-size:10pt;font-weight:400}.windows div.part_news_item_title{font-weight:bold}div.part_news_item_description{font-size:10pt;font-weight:300}.windows div.part_news_item_description{font-weight:400}.layout_menu{margin:0;padding:5px 10px;list-style:none;text-align:center}.layout_menu_item{display:inline-block}.layout_menu_link{padding:0 5px;height:32px;line-height:32px;text-decoration:none;color:#333}.layout_menu_item_first{display:block;text-align:center}.layout_menu_link_first{background:url(/style/humanise/gfx/graphics.png) -139px -636px;display:inline-block;width:160px;height:40px}.layout_menu_link_first > span{display:none}.retina .layout_menu_link_first{background-image:url(/style/humanise/gfx/graphics_2x.png);background-size:400px 907px}@media screen and (min-width:760px){.layout_menu{text-align:left}.layout_menu > li{vertical-align:top}.layout_menu_link{font-size:20px;line-height:44px;padding:0 10px;color:#324d60}.layout_menu_item_first{display:inline-block}}@media screen and (min-width:1000px){.layout_menu{padding:5px 0}}.layout_search{margin:0;font-size:0}.layout_search_body{display:none}.layout_search_icon{position:absolute;top:10px;right:10px;display:inline-block;width:30px;height:30px}.layout_search_icon > path{fill:#aaa}.layout_middle,.layout_head_body,.layout_base{position:relative;max-width:980px;margin:0 auto}.layout_head_body{position:relative}.layout_head{background:#f6f6f9}.layout_sub_navigation{margin:0;padding:5px 5px;list-style:none;border-bottom:1px solid #eee}.layout_sub_navigation > li{display:inline-block}.layout_sub_navigation > li > a{padding:0 5px;height:32px;line-height:32px;text-decoration:none;color:#333}.layout_side_navigation{margin:0;padding:5px 5px;list-style:none;border-bottom:1px solid #eee}.layout_side_navigation > li{display:inline-block}.layout_side_navigation > li > a{padding:0 5px;height:32px;line-height:32px;text-decoration:none;color:#333}.layout_inner_content{padding:10px}@media screen and (min-width:560px){.layout_inner_content{padding:20px}.layout_sub_navigation{padding:5px 15px}}@media screen and (min-width:760px){.layout_inner_content_sidebar{margin-right:30%}.layout_sidebar{width:30%;float:right}}@media screen and (min-width:1000px){.layout_sub_navigation,.layout_inner_content{padding-left:0}.layout_sub_navigation li:first-child{margin-left:-5px}}@media screen and (min-width:1000px){#poster{display:block;width:980px;height:310px;background:#333}#poster_loader{background:#000;color:#FFF;left:50%;margin-left:-25px;position:absolute;text-align:center;top:150px;width:50px;height:24px;line-height:22px}}.call-to-action{background:#fafafa;border:1px solid #eee;border-radius:3px;padding:20px 10px;text-align:center}.call-to-action-text{margin:-5px 0 0;color:#666;font-weight:300;font-size:32px;line-height:1}.call-to-action-button{background:#3080CB;color:#fff;height:34px;line-height:34px;padding:0 20px;box-sizing:border-box;border:none;border-radius:3px;display:inline-block;font-size:18px;margin-top:20px;text-decoration:none;cursor:pointer}.call-to-action-button:hover{background:#206AB0}.call-to-action-button:active{-webkit-transform:scale(0.95);outline:none}.common_header{margin:0;color:#333;font-weight:300}.part_text{font-size:12pt;font-weight:300;word-spacing:1px}div.document_column{display:block}@media screen and (max-width:700px){.document_column{width:auto!important;padding:0!important}}@media screen and (min-width:700px){.document_row{display:table;width:100%}.document_row_body{display:table-row}div.document_column{display:table-cell;vertical-align:top}}</xsl:with-param>
         </xsl:call-template>
 					
 		<xsl:call-template name="util:style-lt-ie9"/>
@@ -87,19 +87,19 @@
 					<xsl:choose>
 						<xsl:when test="//p:page/@id=//p:context/p:home/@page">
 							<ul class="layout_placards">
-								<li class="onlinepublisher">
-									<a href="{$path}produkter/onlinepublisher/">
-                                        <strong>Humanise <em>Editor</em></strong> - <span class="layout_placards_text layout_placards_text_onlinepublisher">Simpelt værktøj til opbygning og redigering af hjemmesider</span>
+								<li class="layout_placards_item">
+									<a href="{$path}produkter/onlinepublisher/" class="layout_placards_link">
+                                        <strong>Humanise <em>Editor</em></strong> - <span class="layout_placards_text layout_placards_text_editor">Simpelt værktøj til opbygning og redigering af hjemmesider</span>
                                     </a>
 								</li>
-								<li class="onlineobjects">
-									<a href="{$path}produkter/onlineobjects/">
-                                        <strong>Online<em>Objects</em></strong> - <span class="layout_placards_text layout_placards_text_onlineobjects">Fleksibelt grundsystem til web-applikationer</span>
+								<li class="layout_placards_item">
+									<a href="{$path}produkter/onlineobjects/" class="layout_placards_link">
+                                        <strong>Online<em>Objects</em></strong> - <span class="layout_placards_text layout_placards_text_objects">Fleksibelt grundsystem til web-applikationer</span>
                                     </a>
 								</li>
-								<li class="onlineme">
-									<a href="{$path}teknologi/hui/">
-                                        <strong>Humanise <em>UI</em></strong> - <span class="layout_placards_text layout_placards_text_onlineme">Intuitiv, avanceret og effektiv brugerflade</span>
+								<li class="layout_placards_item">
+									<a href="{$path}teknologi/hui/" class="layout_placards_link layout_placards_link_last">
+                                        <strong>Humanise <em>UI</em></strong> - <span class="layout_placards_text layout_placards_text_hui">Intuitiv, avanceret og effektiv brugerflade</span>
                                     </a>
 								</li>
 							</ul>
@@ -110,39 +110,39 @@
 			
 			<div class="layout_base">
 				<div class="layout_info">
-					<div class="about">
+					<div class="layout_info_about">
 						<xsl:choose>
 							<xsl:when test="//p:page/p:meta/p:language='en'">
-								<h2>About Humanise</h2>
+								<h2 class="layout_info_header">About Humanise</h2>
 								<p>We focus on user experience and design. We seek out the most simple and essential solution. We believe that machines should work for people. We think that knowledge should be free and accessible to all. We hope you agree :-)</p>
-								<p class="more"><a href="{$path}om/" class="common"><span>More about Humanise »</span></a></p>
+								<p class="layout_info_more"><a href="{$path}om/" class="common"><span>More about Humanise »</span></a></p>
 							</xsl:when>
 							<xsl:otherwise>
                                 <xsl:call-template name="util:parameter">
                                     <xsl:with-param name="name" select="'about'"/>
                                     <xsl:with-param name="default">
-        								<h2>Om Humanise</h2>
+        								<h2 class="layout_info_header">Om Humanise</h2>
         								<p>Vores focus er på brugeroplevelse og design. Vi leder altid efter den mest enkle og essentielle løsning. Vi tror på at maskinen skal arbejde for mennesket. Vi mener at viden bør være fri og tilgængelig for alle. Vi håber du er enig :-)</p>                                        
                                     </xsl:with-param>
                                 </xsl:call-template>
-                                <p class="more"><a href="{$path}om/" class="common"><span>Mere om Humanise »</span></a></p>
+                                <p class="layout_info_more"><a href="{$path}om/" class="common"><span>Mere om Humanise »</span></a></p>
 							</xsl:otherwise>
 						</xsl:choose>
 					</div>
-					<div class="contact">
+					<div class="layout_info_contact">
 						<xsl:choose>
 							<xsl:when test="//p:page/p:meta/p:language='en'"><h2>Contact</h2></xsl:when>
-							<xsl:otherwise><h2>Kontakt</h2></xsl:otherwise>
+							<xsl:otherwise><h2 class="layout_info_header">Kontakt</h2></xsl:otherwise>
 						</xsl:choose>
                         <xsl:call-template name="util:parameter">
                             <xsl:with-param name="name" select="'contact'"/>
                             <xsl:with-param name="default">
-        						<p class="name"><strong>Jonas Brinkmann Munk</strong></p>
-        						<p class="email"><a href="mailto:jonasmunk@me.com" class="common"><span>jonasmunk@me.com</span></a></p>
-        						<p class="phone">+45 28 77 63 65</p>
-        						<p class="name"><strong>Kenni Graversen</strong></p>
-        						<p class="email"><a href="mailto:gr@versen.dk" class="common"><span>gr@versen.dk</span></a></p>
-        						<p class="phone">+45 22 48 61 53</p>
+        						<p><strong class="layout_info_name">Jonas Brinkmann Munk</strong></p>
+        						<p><a href="mailto:jonasmunk@me.com" class="common"><span>jonasmunk@me.com</span></a></p>
+        						<p><a href="tel:004528776365" class="layout_info_phone">+45 28 77 63 65</a></p>
+        						<p><strong class="layout_info_name">Kenni Graversen</strong></p>
+        						<p><a href="mailto:gr@versen.dk" class="common"><span>gr@versen.dk</span></a></p>
+        						<p><a href="tel:004522486153" class="layout_info_phone">+45 22 48 61 53</a></p>
                             </xsl:with-param>
                         </xsl:call-template>
 					</div>

@@ -1,13 +1,11 @@
 @include when {
 
-  .layout_info
-  {
+  .layout_info {
   	overflow: hidden;
   	padding: 10px;
   }
 
-  div.layout_info h2
-  {
+  .layout_info_header {
   	font-weight: 300;
   	font-size: 28px;
   	margin: 0px 20px 10px 0;
@@ -15,97 +13,94 @@
   	color: #666;
   }
 
-
-  div.layout_info p
-  {
-  	margin: 0 20px 0 0;
+  .layout_info_about {
+    
+    p {
+    	font-weight: 300;
+    	font-size: 12pt;
+    	line-height: 16pt;
+    	margin-top: 11px;
+    	color: #666;      
+    }
   }
 
-  div.layout_info div.about p
-  {
-  	font-weight: 300;
-  	font-size: 12pt;
-  	line-height: 16pt;
-  	margin-top: 11px;
-  	color: #666;
-  }
-
-  body.windows div.layout_info div.about p, body.windows div.layout_info div.about p
-  {
-  	font-weight: normal;
-  }
-
-
-  div.layout_info div.contact p
-  {
-  	font-size: 9pt;
-  	color: #666;
-  	line-height: 16pt;
-  }
-
-  div.layout_info div.contact p.name
-  {
-  	color: #999;
-  	font-size: 12pt;
-  }
-
-  div.layout_info div.contact p.name strong
-  {
-  	font-weight: normal;
-  }
-
-  div.layout_info div.about p.more
-  {
+  .layout_info_more {
   	line-height: 11px;
   	font-size: 11pt;
   	margin-top: 24px;
   }
 
-  div.layout_info a span
-  {
+  .layout_info_contact {
+  	font-size: 9pt;
   	color: #666;
+    
+    p {
+    	margin: 0;      
+    	line-height: 16pt;
+    }
   }
 
-  div.layout_info:hover h2
-  {
-  	color: #000;
+  .layout_info_name {
+  	color: #999;
+  	font-size: 12pt;
+  	font-weight: normal;      
   }
 
-  div.layout_info:hover div.about p
-  {
-  	color: #333;
+  .layout_info_phone {
+    color: inherit;
+    text-decoration: none;
   }
 
-  div.layout_info:hover a span
-  {
-  	color: #0079CD;
+  .layout_info {
+    a span {
+    	color: #666;      
+    }
   }
 
-  div.layout_info:hover div.contact p.name
-  {
-  	color: #333;
+  .layout_info:hover {
+    
+    .layout_info_header {
+      color: #000;
+    }
+
+    .layout_info_about p {
+    	color: #333;
+    }
+
+    a span {
+    	color: #0079CD;
+    }
+    
+    .layout_info_name {
+    	color: #333;
+    }
   }
 
 }
 
 @include when(560px) {	
+
 	.layout_info {
 		border: 1px solid #eee;
 		border-width: 1px 0;
 		margin: 20px 0;
 		padding: 0 20px;
+  }
+
+	.layout_info_about {
+		float: left;
+		width: 66.4%;
+		padding: 15px 0;
+    
+    p {
+      margin-right: 40px;
+    }
+	}
 		
-		.about {
-			float: left;
-			width: 66.4%;
-			padding: 15px 0;
-		}
-		
-		.contact {
-			float: left;
-			width: 33%;
-			padding: 15px 0;
-		}
+	.layout_info_contact {
+		float: left;
+		width: 33%;
+		padding: 15px 0;
 	}
 }
 

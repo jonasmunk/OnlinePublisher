@@ -3,7 +3,7 @@
 a.common
 {
 	color: #ddd;
-    color: rgba(0,0,0,.15);
+  color: rgba(0,0,0,.15);
 	cursor: pointer;
 	font-weight: normal;
 }
@@ -32,13 +32,10 @@ p.common, ul.common
 }
 
 .retina.webkit a.common {
-    text-decoration: none;
+  text-decoration: none;
 
-    background-image: -moz-linear-gradient(top, rgba(0, 0, 0, 0) 99%, rgba(0, 0, 0, 0.5) 99%);
-    background-image: -webkit-linear-gradient(top, rgba(0, 0, 0, 0) 98%, rgba(0, 0, 0, 0.5) 98%);
-    background-image: linear-gradient(top, rgba(0, 0, 0, 0) 98%, rgba(0, 0, 0, 0.5) 98%);
-    background-repeat: repeat-x
+  background-image: -moz-linear-gradient(top, rgba(0, 0, 0, 0) 99%, rgba(0, 0, 0, 0.5) 99%);
+  background-image: -webkit-linear-gradient(top, rgba(0, 0, 0, 0) 98%, rgba(0, 0, 0, 0.5) 98%);
+  background-image: linear-gradient(top, rgba(0, 0, 0, 0) 98%, rgba(0, 0, 0, 0.5) 98%);
+  background-repeat: repeat-x
 }
-
-
-

@@ -34,17 +34,10 @@
   	}
     
     .retina & {
-    	background-image: url('../gfx/graphics_2x.png');
+    	background-image: url('/style/humanise/gfx/graphics_2x.png');
     	background-size: 400px 907px;
     }
   }  
-}
-
-@include when(all) {
-  .layout_menu_link_first {
-    &:focus {
-    }
-  }
 }
 
 @include when(760px,'inline') {
