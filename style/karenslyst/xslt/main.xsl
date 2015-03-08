@@ -118,11 +118,11 @@
     	<xsl:call-template name="util:scripts"/>
 		-->
 		<script type="text/javascript">
-            require(['hui'],(function() {
+            require(['hui'],function() {
     			if (window.devicePixelRatio==2) {
     				hui.cls.add(document.body,'retina');
     			}            
-            })
+            });
 		</script>
     </head>
     <body>
@@ -133,15 +133,15 @@
       				<h1 class="title">Karenslyst <span class="title_more"> ~ et landsted til leje</span></h1>
       				<div class="layout_top_body"><div><xsl:comment/></div></div>
       			</header>
-                <script>
-                    require(['hui'],(function() {
+                <script type="text/javascript">
+                    require(['hui'],function() {
                         var img = new Image();
                         img.onload = function() {
                             var x = hui.get.byClass(document.body,'layout_top_body')[0];
                             hui.cls.add(x,'layout_top_body-loaded');
                         }
                         img.src = '<xsl:value-of select="$path"/><xsl:value-of select="$timestamp-url"/>style/karenslyst/gfx/front.jpg';
-                    })
+                    });
                 </script>                
               </xsl:when>
               <xsl:otherwise>
