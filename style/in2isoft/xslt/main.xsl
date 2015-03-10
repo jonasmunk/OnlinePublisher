@@ -59,7 +59,7 @@
 	<body>
         <xsl:call-template name="util:script-inline">
             <xsl:with-param name="file" select="'style/in2isoft/js/inline.js'"/>
-            <xsl:with-param name="compiled"><![CDATA[_editor.defer(function(){if(hui.browser.windows){hui.cls.add(document.body,"windows")}if(hui.browser.msie){hui.cls.add(document.body,"msie")}if(hui.browser.webkit){hui.cls.add(document.body,"webkit")}new hui.ui.SearchField({element:"search",expandedWidth:200})});if(window.devicePixelRatio>1){document.body.className+=" retina"};]]></xsl:with-param>
+            <xsl:with-param name="compiled"><![CDATA[_editor.defer(function(){if(hui.browser.windows){hui.cls.add(document.body,"windows")}if(hui.browser.msie){hui.cls.add(document.body,"msie")}if(hui.browser.webkit){hui.cls.add(document.body,"webkit")}var a=hui.get("search");if(a){new hui.ui.SearchField({element:a,expandedWidth:200})}});if(window.devicePixelRatio>1){document.body.className+=" retina"};]]></xsl:with-param>
         </xsl:call-template>
 		<div class="layout">
 			<div class="layout_head">
