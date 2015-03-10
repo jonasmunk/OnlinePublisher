@@ -13,6 +13,8 @@
  exclude-result-prefixes="p f h header text util part"
  >
 
+<xsl:variable name="only-inline" select="'!true'" />
+
 <xsl:variable name="timestamp-query">
 	<xsl:if test="$urlrewrite!='true'">
 		<xsl:text>?version=</xsl:text><xsl:value-of select="$timestamp"/>
@@ -334,13 +336,7 @@ ga('create', '<xsl:value-of select="$code"/>', {siteSpeedSampleRate : 20});ga('s
 <xsl:template name="util:_scripts-msie">
 <!-- html5 -->
 <xsl:comment><![CDATA[[if lt IE 9]>
-<script src="//html5shim.googlecode.com/svn/trunk/html5.js" data-movable="false"></script>
-<![endif]]]></xsl:comment>
-<xsl:comment><![CDATA[[if lt IE 9]>
-<script type="text/javascript" src="]]><xsl:value-of select="$path"/><xsl:value-of select="$timestamp-url"/>style/basic/js/boot_ie.js<xsl:value-of select="$timestamp-query"/><![CDATA["></script>
-<![endif]]]></xsl:comment>
-<xsl:comment><![CDATA[[if lt IE 8]>
-<script type="text/javascript" src="]]><xsl:value-of select="$path"/><xsl:value-of select="$timestamp-url"/>hui/lib/json2.js<xsl:value-of select="$timestamp-query"/><![CDATA["></script>
+<script type="text/javascript" src="]]><xsl:value-of select="$path"/><xsl:value-of select="$timestamp-url"/>hui/bin/compatibility.min.js<xsl:value-of select="$timestamp-query"/><![CDATA["></script>
 <![endif]]]></xsl:comment>
 </xsl:template>
 
@@ -355,7 +351,21 @@ require(['hui.ui'],function() {hui.ui.context='<xsl:value-of select="$path"/>';h
 <xsl:template name="util:_scripts-base">
     <xsl:call-template name="util:script-inline">
         <xsl:with-param name="file" select="'style/basic/js/boot.js'"/>
-        <xsl:with-param name="compiled"><![CDATA[!function(){function f(h,g){g in c?h(g,c[g]):a[g]?a[g].push(h):a[g]=[h]}function d(i,h){c[i]=h;var g=a[i];g&&(g.forEach(function(e){e(i,h)}),a[i]=0)}function b(l,h){var g=l.length;if(g){var j=[],k=0;l.forEach(f.bind(0,function(i,e){j[l.indexOf(i)]=e,++k>=g&&h.apply(0,j)}))}else{h()}}var a={},c={};require=b,define=function(h,e,g){g?b(e,function(){d(h,g.apply(0,arguments))}):d(h,e)}}();(function(b,a){b._editor={deferred:[],scriptLoaded:false,ready:function(c){if(a.readyState=="complete"){c()}else{if(b.addEventListener){b.addEventListener("DOMContentLoaded",c,false)}else{if(a.addEventListener){a.addEventListener("load",c,false)}else{if(typeof b.attachEvent!="undefined"){b.attachEvent("onload",c)}}}}},viewReady:function(c){var d=b.requestAnimationFrame||b.mozRequestAnimationFrame||b.webkitRequestAnimationFrame||b.msRequestAnimationFrame;if(d){return d(c)}this.ready(c)},defer:function(c){if(this.scriptLoaded){c()}else{this.deferred[this.deferred.length]=c}},_parts:{},loadPart:function(c){this.defer(function(){_editor.loadScript(_editor.context+"style/basic/js/parts/"+c.name+".js");require(["op.part."+c.name],c.$ready)})},loadCSS:function(c){this.viewReady(function(){_editor.inject(_editor._build("link",{rel:"stylesheet",type:"text/css",href:c}))})},_loaded:{},loadScript:function(c){if(!this._loaded[c]){this._loaded[c]=1;_editor.inject(this._build("script",{async:"async",src:c}))}},_build:function(d,c){var f=a.createElement(d);for(variable in c){f.setAttribute(variable,c[variable])}return f},inject:function(d){var c=a.getElementsByTagName("head")[0];if(c){c.appendChild(d)}else{this.ready(function(){_editor.inject(d)})}},$scriptReady:function(){for(var c=0;c<this.deferred.length;c++){if(typeof(this.deferred[c])=="function"){this.deferred[c]()}}this.scriptLoaded=true}};require(["hui","hui.ui","op"],function(){_editor.$scriptReady()})})(window,document);]]></xsl:with-param>
+        <xsl:with-param name="compiled"><![CDATA[// require & define https://curiosity-driven.org/minimal-loader#final
+// $script loader
+//(function(e,t){typeof module!="undefined"&&module.exports?module.exports=t():typeof define=="function"&&define.amd?define(t):this[e]=t()})("$script",function(){function h(e,t){for(var n=0,i=e.length;n<i;++n)if(!t(e[n]))return r;return 1}function p(e,t){h(e,function(e){return!t(e)})}function d(e,t,n){function g(e){return e.call?e():u[e]}function y(){if(!--m){u[o]=1,s&&s();for(var e in f)h(e.split("|"),g)&&!p(f[e],g)&&(f[e]=[])}}e=e[i]?e:[e];var r=t&&t.call,s=r?t:n,o=r?e.join(""):t,m=e.length;return setTimeout(function(){p(e,function(e){if(e===null)return y();if(l[e])return o&&(a[o]=1),l[e]==2&&y();l[e]=1,o&&(a[o]=1),v(!/^https?:\/\//.test(e)&&c?c+e+".js":e,y)})},0),d}function v(n,i){var u=e.createElement("script"),a=r;u.onload=u.onerror=u[o]=function(){if(u[s]&&!/^c|loade/.test(u[s])||a)return;u.onload=u[o]=null,a=1,l[n]=2,i()},u.async=1,u.src=n,t.insertBefore(u,t.lastChild)}var e=document,t=e.getElementsByTagName("head")[0],n="string",r=!1,i="push",s="readyState",o="onreadystatechange",u={},a={},f={},l={},c;return d.get=v,d.order=function(e,t,n){(function r(i){i=e.shift(),e.length?d(i,r):d(i,t,n)})()},d.path=function(e){c=e},d.ready=function(e,t,n){e=e[i]?e:[e];var r=[];return!p(e,function(e){u[e]||r[i](e)})&&h(e,function(e){return u[e]})?t():!function(e){f[e]=f[e]||[],f[e][i](t),n&&n(r)}(e.join("|")),d},d.done=function(e){d([null],e)},d});
+!function(){function e(e,t){t in r?e(t,r[t]):n[t]?n[t].push(e):n[t]=[e]}function t(e,t){r[e]=t
+var i=n[e]
+i&&(i.forEach(function(i){i(e,t)}),n[e]=0)}function i(t,i){var n=t.length
+if(n){var r=[],d=0
+t.forEach(e.bind(0,function(e,a){r[t.indexOf(e)]=a,++d>=n&&i.apply(0,r)}))}else i()}var n={},r={}
+require=i,define=function(e,n,r){r?i(n,function(){t(e,r.apply(0,arguments))}):t(e,n)}}(),function(e,t){e._editor={deferred:[],scriptLoaded:!1,ready:function(i){"complete"==t.readyState?i():e.addEventListener?e.addEventListener("DOMContentLoaded",i,!1):t.addEventListener?t.addEventListener("load",i,!1):"undefined"!=typeof e.attachEvent&&e.attachEvent("onload",i)},viewReady:function(t){var i=e.requestAnimationFrame||e.mozRequestAnimationFrame||e.webkitRequestAnimationFrame||e.msRequestAnimationFrame
+return i?i(t):void this.ready(t)},defer:function(e){this.scriptLoaded?e():this.deferred[this.deferred.length]=e},_parts:{},loadPart:function(e){this.defer(function(){_editor.loadScript(_editor.context+"style/basic/js/parts/"+e.name+".js"),require(["op.part."+e.name],e.$ready)})},loadCSS:function(e){this.viewReady(function(){_editor.inject(_editor._build("link",{rel:"stylesheet",type:"text/css",href:e}))})},_loaded:{},loadScript:function(e){this._loaded[e]||(this._loaded[e]=1,_editor.inject(this._build("script",{async:"async",src:e})))},_build:function(e,i){var n=t.createElement(e)
+for(variable in i)n.setAttribute(variable,i[variable])
+return n},inject:function(e){var i=t.getElementsByTagName("head")[0]
+i?i.appendChild(e):this.ready(function(){_editor.inject(e)})},$scriptReady:function(){for(var e=0;e<this.deferred.length;e++)"function"==typeof this.deferred[e]&&this.deferred[e]()
+this.scriptLoaded=!0}},require(["hui","hui.ui","op"],function(){_editor.$scriptReady()})}(window,document)
+]]></xsl:with-param>
     </xsl:call-template>
     <script>_editor.context = '<xsl:value-of select="$path"/>';</script>
 </xsl:template>
@@ -432,6 +442,7 @@ require(['hui.ui'],function() {hui.ui.context='<xsl:value-of select="$path"/>';h
 </xsl:template>
 
 <xsl:template name="util:style-build">
+    <xsl:param name="plain" select="'false'"/>
     <xsl:if test="$template!='document'">
         <link rel="stylesheet" type="text/css" href="{$path}{$timestamp-url}style/basic/css/{$template}.css"/>
     </xsl:if>
@@ -450,15 +461,21 @@ require(['hui.ui'],function() {hui.ui.context='<xsl:value-of select="$path"/>';h
 		</xsl:when>
 		<xsl:when test="$development='true'">
 			<link rel="stylesheet" type="text/css" href="{$path}{$timestamp-url}hui/bin/minimized.site.css{$timestamp-query}"/>
-	        <link rel="stylesheet" type="text/css" href="{$path}{$timestamp-url}style/{$design}/css/style.dev.css"/>
+            <xsl:if test="$plain='false'">
+                <xsl:call-template name="util:lazy-style">
+                    <xsl:with-param name="href">
+                        <xsl:value-of select="$path"/><xsl:value-of select="$timestamp-url"/>style/<xsl:value-of select="$design"/><xsl:text>/css/style.dev.css</xsl:text>
+                    </xsl:with-param>
+                </xsl:call-template>                
+            </xsl:if>
         </xsl:when>
-		<xsl:otherwise>
+    	<xsl:when test="$plain='false'">
             <xsl:call-template name="util:lazy-style">
                 <xsl:with-param name="href">
                     <xsl:value-of select="$path"/><xsl:value-of select="$timestamp-url"/>style/<xsl:value-of select="$design"/><xsl:text>/css/style.css</xsl:text>
                 </xsl:with-param>
             </xsl:call-template>
-		</xsl:otherwise>
+		</xsl:when>
 	</xsl:choose>
     <xsl:call-template name="util:_style-dynamic"/>
     <xsl:call-template name="util:_style-hui-msie"/>
@@ -480,16 +497,26 @@ require(['hui.ui'],function() {hui.ui.context='<xsl:value-of select="$path"/>';h
 <xsl:template name="util:load-font">
     <xsl:param name="href"/>
     <xsl:param name="family"/>
+    <xsl:param name="weights"/>
     <xsl:call-template name="util:script-inline">
         <xsl:with-param name="file" select="'style/basic/js/boot_fonts.js'"/>
-        <xsl:with-param name="compiled"><![CDATA[(function(b,a){_editor.loadFont=function(d){var i=a.createElement("div");i.setAttribute("style","font: 400px fantasy;position:absolute;top:-9999px;left:-9999px");i.innerHTML="Am-i#o";a.body.appendChild(i);var f=i.clientWidth;var h=a.createElement("link");h.rel="stylesheet";h.type="text/css";h.href=d.href;this.inject(h);if(f==0){a.body.className+=" "+d.cls;return}i.style.fontFamily="'"+d.family+"',fantasy";var c;var g=0.01;c=function(){g*=1.5;if(f!=i.clientWidth){a.body.className+=" "+d.cls;i.parentNode.removeChild(i)}else{b.setTimeout(c,g)}};c()}})(window,document);]]></xsl:with-param>
+        <xsl:with-param name="compiled"><![CDATA[!function(t,e,n){n.loadFont=function(i){var o=i.weights||["normal"]
+o=["300","400","700"]
+for(var l=o.length,a=function(n){var o=e.createElement("div")
+o.style.position="absolute",o.style.whiteSpace="nowrap",o.style.top="-9999px",o.style.font="400px fantasy",o.innerHTML="Am-i#w^o",e.body.appendChild(o)
+var a=o.clientWidth
+o.style.fontFamily="'"+i.family+"',fantasy",o.style.fontWeight=n
+var s,r=.01;(s=function(){r*=1.5,0==a||a!=o.clientWidth?(l--,0==l&&(e.body.className+=" "+i.cls),o.parentNode.removeChild(o)):t.setTimeout(s,r)})()},s=0;s<o.length;s++)a(o[s])
+n.inject(n._build("link",{rel:"stylesheet",type:"text/css",href:i.href}))}}(window,document,_editor)
+]]></xsl:with-param>
     </xsl:call-template>
-    <script>_editor.loadFont({href:'<xsl:value-of select="$href"/>',family:'<xsl:value-of select="$family"/>',cls:'font'});</script>
+    <script>_editor.loadFont({href:'<xsl:value-of select="$href"/>',family:'<xsl:value-of select="$family"/>',cls:'font'<xsl:if test="$weights!=''">,weights:'<xsl:value-of select="$weights"/>'.split(',')</xsl:if>});</script>
 </xsl:template>
 
 <xsl:template name="util:lazy-fonts">
     <xsl:param name="google"/>
-<script>WebFontConfig={google:{families:['<xsl:value-of select="$google"/>']}};
+<script><xsl:text disable-output-escaping="yes">//&lt;![CDATA[</xsl:text>
+WebFontConfig={google:{families:['<xsl:value-of select="$google"/>']}};
 <!--/* Web Font Loader v1.5.10 - (c) Adobe Systems, Google. License: Apache 2.0 */-->
 <xsl:text disable-output-escaping="yes"><![CDATA[;(function(window,document,undefined){var k=this;function l(a,b){var c=a.split("."),d=k;c[0]in d||!d.execScript||d.execScript("var "+c[0]);for(var e;c.length&&(e=c.shift());)c.length||void 0===b?d=d[e]?d[e]:d[e]={}:d[e]=b}function aa(a,b,c){return a.call.apply(a.bind,arguments)}
 function ba(a,b,c){if(!a)throw Error();if(2<arguments.length){var d=Array.prototype.slice.call(arguments,2);return function(){var c=Array.prototype.slice.call(arguments);Array.prototype.unshift.apply(c,d);return a.apply(b,c)}}return function(){return a.apply(b,arguments)}}function n(a,b,c){n=Function.prototype.bind&&-1!=Function.prototype.bind.toString().indexOf("native code")?aa:ba;return n.apply(null,arguments)}var q=Date.now||function(){return+new Date};function s(a,b){this.K=a;this.w=b||a;this.D=this.w.document}s.prototype.createElement=function(a,b,c){a=this.D.createElement(a);if(b)for(var d in b)b.hasOwnProperty(d)&&("style"==d?a.style.cssText=b[d]:a.setAttribute(d,b[d]));c&&a.appendChild(this.D.createTextNode(c));return a};function t(a,b,c){a=a.D.getElementsByTagName(b)[0];a||(a=document.documentElement);a&&a.lastChild&&a.insertBefore(c,a.lastChild)}function ca(a,b){function c(){a.D.body?b():setTimeout(c,0)}c()}
@@ -520,8 +547,7 @@ V.prototype.ba=function(a){for(var b=this.d,c=new qa(this.f.api,w(b),this.f.text
 W.prototype.L=function(a,b){var c=this.f.id,d=this.d.w,e=this;c?(d.__webfontfontdeckmodule__||(d.__webfontfontdeckmodule__={}),d.__webfontfontdeckmodule__[c]=function(a,c){for(var d=0,p=c.fonts.length;d<p;++d){var m=c.fonts[d];e.p.push(new K(m.name,fa("font-weight:"+m.weight+";font-style:"+m.style)))}b(a)},y(this.d,this.I(c),function(a){a&&b(!1)})):b(!1)};W.prototype.load=function(a){a(this.p)};function X(a,b){this.d=a;this.f=b;this.p=[]}X.prototype.I=function(a){var b=w(this.d);return(this.f.api||b+"//use.typekit.net")+"/"+a+".js"};X.prototype.L=function(a,b){var c=this.f.id,d=this.d.w,e=this;c?y(this.d,this.I(c),function(a){if(a)b(!1);else{if(d.Typekit&&d.Typekit.config&&d.Typekit.config.fn){a=d.Typekit.config.fn;for(var c=0;c<a.length;c+=2)for(var h=a[c],p=a[c+1],m=0;m<p.length;m++)e.p.push(new K(h,p[m]));try{d.Typekit.load({events:!1,classes:!1})}catch(r){}}b(!0)}},2E3):b(!1)};
 X.prototype.load=function(a){a(this.p)};function Y(a,b){this.d=a;this.f=b;this.p=[]}Y.prototype.L=function(a,b){var c=this,d=c.f.projectId,e=c.f.version;if(d){var f=c.d.w;y(this.d,c.I(d,e),function(e){if(e)b(!1);else{if(f["__mti_fntLst"+d]&&(e=f["__mti_fntLst"+d]()))for(var h=0;h<e.length;h++)c.p.push(new K(e[h].fontfamily));b(a.m.R)}}).id="__MonotypeAPIScript__"+d}else b(!1)};Y.prototype.I=function(a,b){var c=w(this.d),d=(this.f.api||"fast.fonts.net/jsapi").replace(/^.*http(s?):(\/\/)?/,"");return c+"//"+d+"/"+a+".js"+(b?"?v="+b:"")};
 Y.prototype.load=function(a){a(this.p)};function Z(a,b){this.d=a;this.f=b}Z.prototype.load=function(a){var b,c,d=this.f.urls||[],e=this.f.families||[],f=this.f.testStrings||{};b=0;for(c=d.length;b<c;b++)x(this.d,d[b]);d=[];b=0;for(c=e.length;b<c;b++){var g=e[b].split(":");if(g[1])for(var h=g[1].split(","),p=0;p<h.length;p+=1)d.push(new K(g[0],h[p]));else d.push(new K(g[0]))}a(d,f)};Z.prototype.L=function(a,b){return b(a.m.R)};var $=new U(k);$.v.A.custom=function(a,b){return new Z(b,a)};$.v.A.fontdeck=function(a,b){return new W(b,a)};$.v.A.monotype=function(a,b){return new Y(b,a)};$.v.A.typekit=function(a,b){return new X(b,a)};$.v.A.google=function(a,b){return new V(b,a)};k.WebFont||(k.WebFont={},k.WebFont.load=n($.load,$),k.WebFontConfig&&$.load(k.WebFontConfig));})(this,document);]]>
-</xsl:text>
-	</script>
+</xsl:text><xsl:text disable-output-escaping="yes">//]]&gt;</xsl:text>	</script>
 </xsl:template>
 
 <xsl:template name="util:_style-hui-msie">
@@ -564,7 +590,8 @@ Y.prototype.load=function(a){a(this.p)};function Z(a,b){this.d=a;this.f=b}Z.prot
       </xsl:when>
       <xsl:otherwise>
       	<style type="text/css">
-      		<xsl:value-of select="$compiled"/>
+            
+      		<xsl:value-of select="$compiled" disable-output-escaping="yes"/>
             <xsl:text> </xsl:text>
       	</style>
       </xsl:otherwise>

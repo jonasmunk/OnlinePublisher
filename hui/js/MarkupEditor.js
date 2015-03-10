@@ -123,10 +123,10 @@ hui.ui.MarkupEditor.prototype = {
 	},
 	_showBar : function() {
 		if (!this.bar) {
-            this.bar = new hui.ui.MarkupEditor.Bar({
-                $clickButton : this._buttonClicked.bind(this),
-                $changeBlock : this._changeBlock.bind(this),
-            })
+			this.bar = new hui.ui.MarkupEditor.Bar({
+				$clickButton : this._buttonClicked.bind(this),
+				$changeBlock : this._changeBlock.bind(this)
+			})
 		}
 		this.bar.show(this);
 	},

@@ -1,14 +1,38 @@
-body
-{
-	padding: 0px;
+$target: inline;
+
+@import 'tools';
+
+@import 'parts/all';
+
+
+
+
+///////// Menu /////////
+
+
+
+
+
+
+
+
+
+///////////////////// Common //////////////////
+
+.common_header {
 	margin: 0px;
-    font-family: Arial,'Helvetica',sans-serif;
+	color: #333;
+	font-weight: 300;
 }
 
-#poster {
-	display: none;
+.part_text
+{
+	font-size: 12pt;
+	font-weight: 300;
+	word-spacing: 1px;
 }
 
+/////////////////// Document ////////////////
 
 div.document_column
 {
@@ -32,107 +56,6 @@ div.document_column
 	}
 	div.document_column {
 		display: table-cell;
-	}
-}
-
-.layout_head {
-	background: #f6f6f9;
-}
-
-.layout_menu {
-	margin: 0;
-	padding: 5px 10px;
-	list-style: none;
-	text-align: center;
-}
-
-.layout_menu_item {
-	display: inline-block;
-}
-
-.layout_menu_link {
-	padding: 0 5px;
-	height: 32px;
-	line-height: 32px;
-	text-decoration: none;
-	color: #333;
-}
-
-.layout_menu_item_first {
-	display: block;
-	text-align: center;
-}
-
-.layout_menu_link_first {
-	background: url("/style/humanise/gfx/graphics.png") -139px -636px;
-	display: inline-block;
-	width: 160px;
-	height: 40px;
-	> span {
-		display: none;
-	}
-}
-
-.layout_sub_navigation {
-	margin: 0;
-	padding: 5px 5px;
-	list-style: none;
-	border-bottom: 1px solid #eee;
-	
-	> li {
-		display: inline-block;
-		
-		> a {
-			padding: 0 5px;
-			height: 32px;
-			line-height: 32px;
-			text-decoration: none;
-			color: #333;
-		}
-	}
-}
-
-.layout_side_navigation {
-	margin: 0;
-	padding: 5px 5px;
-	list-style: none;
-	border-bottom: 1px solid #eee;
-	
-	> li {
-		display: inline-block;
-		
-		> a {
-			padding: 0 5px;
-			height: 32px;
-			line-height: 32px;
-			text-decoration: none;
-			color: #333;
-		}
-	}
-}
-
-.layout_inner_content {
-	padding: 10px;
-}
-
-.layout_search {
-	margin: 0;
-	font-size: 0;
-}
-
-.layout_search_body {
-	display: none;
-}
-
-.layout_search_icon {
-	position: absolute;
-	top: 10px;
-	right: 10px;
-	display: inline-block;
-	width: 30px;
-	height: 30px;
-	
-	> path {
-		fill: #aaa;
+    vertical-align: top;
 	}
 }

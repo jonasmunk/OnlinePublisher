@@ -1,9 +1,21 @@
 $color: #324d60;
 $background: #f6f6f9;
 
-
 @mixin breakpoint($size) {
 	@media screen and (min-width: $size) {
 		@content;
 	}
+}
+
+@mixin when($size:all,$type:'deferred') {
+  @if ($target==$type) {
+    @if ($size=='all') {
+      @content;
+    }
+    @else {
+    	@media screen and (min-width: $size) {
+    		@content;
+    	}    
+    }
+  }
 }

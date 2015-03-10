@@ -11,7 +11,7 @@ if (!isset($GLOBALS['basePath'])) {
 
 class TestValidation extends UnitTestCase {
 
-	function testCreate() {
+	function testValidate() {
 		$template = TemplateService::getTemplateByUnique('document');
 		if (!$template) {
 			Log::debug('Skipping test since no document template exists');
@@ -56,7 +56,9 @@ class TestValidation extends UnitTestCase {
 			$this->assertTrue(strpos($html, 'Test page for validation')!==false,'The design "'.$name.'" does not contain the title');
 			if (isset($info->build)) {
                 $this->assertTrue(strpos($html, '/js/script.js')!==false,'The design "'.$name.'" does not include scripts');
-                $this->assertTrue(strpos($html, '/css/style.css')!==false,'The design "'.$name.'" does not include css');			  
+                if ($name!=='in2isoft') {
+                  $this->assertTrue(strpos($html, '/css/style.css')!==false,'The design "'.$name.'" does not include css');			  
+                }
 			} else {
                 $this->assertTrue(strpos($html, '/bin/minimized.site.js')!==false,'The design "'.$name.'" does not include minimized site scripts');
                 $this->assertTrue(strpos($html, '/bin/minimized.site.css')!==false,'The design "'.$name.'" does not include minimized site css');			    

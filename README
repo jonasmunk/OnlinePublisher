@@ -13,3 +13,9 @@ A product description in danish can be found at http://www.in2isoft.dk/produkter
 Write me at jonas@in2isoft.dk for more info.
 
 http://www.in2isoft.dk/
+
+Development
+-----------
+
+Install minify CLI
+sudo npm install minifier -g

@@ -1015,24 +1015,6 @@ hui.ui.parseSubItems = function(parent,array) {
 	}
 };
 
-/** A bundle of strings
- * @constructor
- */
-hui.ui.Bundle = function(strings) {
-	this.strings = strings;
-};
-
-hui.ui.Bundle.prototype = {
-	get : function(key) {
-		var values = this.strings[key];
-		if (values) {
-			return values[hui.ui.language];
-		}
-		hui.log(key+' not found for language:'+hui.ui.language);
-		return key;
-	}
-};
-
 /**
  * Import some widgets by name
  * @param {Array} names Array of widgets to import

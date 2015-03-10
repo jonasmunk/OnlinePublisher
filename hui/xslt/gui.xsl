@@ -86,6 +86,10 @@
 				</style>
 			</xsl:for-each>
 			
+			<xsl:comment><![CDATA[[if lt IE 9]>
+				<script type="text/javascript" src="]]><xsl:value-of select="$context"/><![CDATA[/hui/]]><xsl:value-of select="$pathVersion"/><![CDATA[bin/compatibility.min.js]]><![CDATA["></script>
+			<![endif]]]></xsl:comment>
+            
 			
 			<xsl:choose>
 				<xsl:when test="$dev='true'">

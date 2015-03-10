@@ -10,6 +10,8 @@ if (!isset($GLOBALS['basePath'])) {
 
 class DesignService {
 
+  static $useYUI = false;
+
 	/**
 	 * Finds all available designs
 	 * @return array An array of the unique names of all available designs
@@ -78,6 +80,7 @@ class DesignService {
 
         $inlineFile = $basePath."style/".$design."/css/inline.css";
         if (file_exists($inlineFile)) {
+            Log::info('Embedding inline css for: ' . $design);
             $inlineFileMinified = $basePath."style/".$design."/css/inline.min.css";
             $xslFile = $basePath.'style/' .$design . '/xslt/main.xsl';
             DesignService::_compress($inlineFile,$inlineFileMinified);
@@ -97,11 +100,14 @@ class DesignService {
         }
     }
 
-	static function rebuild() {
+	static function rebuild($design) {
 		global $basePath;
 
         $designs = DesignService::getAvailableDesigns();
         foreach ($designs as $key => $info) {
+            if ($design!==null && $design!==$key) {
+                continue;
+            }
             if (isset($info->build)) {
                 if (isset($info->build->css)) {
 
@@ -176,7 +182,7 @@ class DesignService {
                         $data = '';
                         $jsFile = $basePath."style/".$key."/js/script.dev.js";
                         foreach ($imports as $path) {
-                            $data.= 'document.write(\'<script type="text/javascript" src="\' + _editor.context + \'' . $path . '"></script>\')';
+                            $data.= 'document.write(\'<script type="text/javascript" src="\' + _editor.context + \'' . $path . '"></script>\');';
                         }
                         FileSystemService::writeStringToFile($data,$jsFile);
                     }
@@ -196,15 +202,18 @@ class DesignService {
 
 	static function _compress($in,$out) {
         global $basePath;
-        $cmd = "java -jar ".$basePath."hui/tools/yuicompressor-2.4.8.jar ".$in." --charset UTF-8 -o ".$out;
+        if (DesignService::$useYUI) {
+          $cmd = "java -jar ".$basePath."hui/tools/yuicompressor-2.4.8.jar ".$in." --charset UTF-8 -o ".$out;
+        } else {
+          $cmd = "minify ".$in." -o ".$out;
+        }
         shell_exec($cmd);
     }
 
 	static function _compressToString($in) {
         global $basePath;
         $out = $in . '.tmp';
-        $cmd = "java -jar ".$basePath."hui/tools/yuicompressor-2.4.8.jar ".$in." --charset UTF-8 -o ".$out;
-        shell_exec($cmd);
+        DesignService::_compress($in,$out);
         $str = file_get_contents($out);
         unlink($out);
         return $str;
@@ -302,7 +311,8 @@ class DesignService {
         } else {
             $valid = $valid && !file_exists($basePath."style/".$name."/css/style.php");
         }
-		$valid = $valid && file_exists($basePath."style/".$name."/css/overwrite.css");
+        // TODO (jm)
+		//$valid = $valid && file_exists($basePath."style/".$name."/css/overwrite.css");
 		return $valid;
 	}
 }

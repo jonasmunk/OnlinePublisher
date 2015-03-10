@@ -1,0 +1,41 @@
+/********************* Common *******************/
+	
+a.common
+{
+	color: #ddd;
+  color: rgba(0,0,0,.15);
+	cursor: pointer;
+	font-weight: normal;
+}
+
+a.common span
+{
+	color: #0079cd;
+}
+	
+a.common:hover, a.common:hover span
+{
+	color: #0169b2;
+}
+
+h1.common
+{
+	font-weight: 400;
+	color: #324d60;
+}
+
+p.common, ul.common
+{
+	font-size: 12pt;
+	line-height: 160%;
+	text-align: justify;
+}
+
+.retina.webkit a.common {
+  text-decoration: none;
+
+  background-image: -moz-linear-gradient(top, rgba(0, 0, 0, 0) 99%, rgba(0, 0, 0, 0.5) 99%);
+  background-image: -webkit-linear-gradient(top, rgba(0, 0, 0, 0) 98%, rgba(0, 0, 0, 0.5) 98%);
+  background-image: linear-gradient(top, rgba(0, 0, 0, 0) 98%, rgba(0, 0, 0, 0.5) 98%);
+  background-repeat: repeat-x
+}

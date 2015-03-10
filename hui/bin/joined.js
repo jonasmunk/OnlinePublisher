@@ -2,9 +2,6 @@
 var hui = {
 	/** @namespace */
 	browser : {},
-	ELEMENT_NODE : 1,
-	ATTRIBUTE_NODE : 2,
-	TEXT_NODE : 3,
 	KEY_BACKSPACE : 8,
     KEY_TAB : 9,
     KEY_RETURN : 13,
@@ -25,6 +22,8 @@ var hui = {
 
 
 //////////////////////// Browser //////////////////////////
+
+// TODO make this easier to optimize
 
 /** If the browser is opera */
 hui.browser.opera = /opera/i.test(navigator.userAgent);
@@ -398,12 +397,7 @@ hui.array = {
 	 * @returns {boolean} true if the value is in the array
 	 */
 	contains : function(arr,value) {
-		for (var i=0; i < arr.length; i++) {
-			if (arr[i]===value) {
-				return true;
-			}
-		}
-		return false;
+		return hui.array.indexOf(arr,value) !== -1;
 	},
 	/**
 	 * Add or remove a value from an array.
@@ -452,7 +446,7 @@ hui.array = {
 	toIntegers : function(str) {
 		var array = str.split(',');
 		for (var i = array.length - 1; i >= 0; i--){
-			array[i] = parseInt(array[i]);
+			array[i] = parseInt(array[i],10);
 		}
 		return array;
 	}
@@ -472,10 +466,10 @@ hui.array = {
 /** @namespace */
 hui.dom = {
 	isElement : function(node,name) {
-		return node.nodeType==hui.ELEMENT_NODE && (name===undefined ? true : node.nodeName.toLowerCase()==name);
+		return node.nodeType==1 && (name===undefined ? true : node.nodeName.toLowerCase()==name);
 	},
 	isDefinedText : function(node) {
-		return node.nodeType==hui.TEXT_NODE && node.nodeValue.length>0;
+		return node.nodeType==3 && node.nodeValue.length>0;
 	},
 	addText : function(node,text) {
 		node.appendChild(document.createTextNode(text));
@@ -484,7 +478,7 @@ hui.dom = {
 	firstChild : function(node) {
 		var children = node.childNodes;
 		for (var i=0; i < children.length; i++) {
-			if (children[i].nodeType==hui.ELEMENT_NODE) {
+			if (children[i].nodeType==1) {
 				return children[i];
 			}
 		}
@@ -566,7 +560,7 @@ hui.dom = {
 		var c = node.childNodes;
 		var updated = false;
 		for (var i = c.length - 1; i >= 0; i--){
-			if (!updated && c[i].nodeType==hui.TEXT_NODE) {
+			if (!updated && c[i].nodeType === 3) {
 				c[i].nodeValue=text;
 				updated = true;
 			} else {
@@ -581,9 +575,9 @@ hui.dom = {
 		var txt = '';
 		var c = node.childNodes;
 		for (var i=0; i < c.length; i++) {
-			if (c[i].nodeType == hui.TEXT_NODE && c[i].nodeValue !== null) {
+			if (c[i].nodeType === 3 && c[i].nodeValue !== null) {
 				txt+= c[i].nodeValue;
-			} else if (c[i].nodeType == hui.ELEMENT_NODE) {
+			} else if (c[i].nodeType == 1) {
 				txt+= hui.dom.getText(c[i]);
 			}
 		}
@@ -764,7 +758,7 @@ hui.get.after = function(element) {
 
 hui.get.firstByClass = function(parentElement,className,tag) {
 	parentElement = hui.get(parentElement) || document.body;
-	if (document.querySelector) {
+  if (parentElement.querySelector) {
 		return parentElement.querySelector((tag ? tag+'.' : '.')+className);
 	} else {
 		var children = parentElement.getElementsByTagName(tag || '*');
@@ -780,7 +774,7 @@ hui.get.firstByClass = function(parentElement,className,tag) {
 hui.get.byClass = function(parentElement,className,tag) {
 	parentElement = hui.get(parentElement) || document.body;
     var i;
-	if (document.querySelectorAll) {
+	if (parentElement.querySelectorAll) {
 		var nl = parentElement.querySelectorAll((tag ? tag+'.' : '.')+className);
 		// Important to convert into array...
 		var l=[];
@@ -814,7 +808,7 @@ hui.get.byTag = function(node,name) {
 hui.get.byId = function(e,id) {
 	var children = e.childNodes;
 	for (var i = children.length - 1; i >= 0; i--) {
-		if (children[i].nodeType===hui.ELEMENT_NODE && children[i].getAttribute('id')===id) {
+		if (children[i].nodeType===1 && children[i].getAttribute('id')===id) {
 			return children[i];
 		} else {
 			var found = hui.get.byId(children[i],id);
@@ -856,7 +850,7 @@ hui.get.firstParentByClass = function(node,tag) {
  */
 hui.get.firstByTag = function(node,tag) {
 	node = hui.get(node) || document.body;
-	if (document.querySelector && tag!=='*') {
+	if (node.querySelector && tag!=='*') {
 		return node.querySelector(tag);
 	}
 	var children = node.getElementsByTagName(tag);
@@ -866,7 +860,15 @@ hui.get.firstByTag = function(node,tag) {
 
 hui.get.firstChild = hui.dom.firstChild;
 
+hui.find = function(selector,context) {
+  return (context || document).querySelector(selector);
+}
 
+hui.collect = function(selectors,context) {
+  for (key in selectors) {
+    selectors[key] = hui.get.firstByClass(context,selectors[key]);
+  }
+}
 
 
 
@@ -2443,107 +2445,6 @@ hui.location = {
 
 
 
-hui.xml = {
-	transform : function(xml,xsl) {
-		if (window.ActiveXObject) {
-			return xml.transformNode(xsl);
-		} else if (document.implementation && document.implementation.createDocument) {
-			try {
-			  	var pro = new XSLTProcessor();
-                pro.setParameter(null,'dev','true');
-                pro.setParameter(null,'profile','true');
-                pro.setParameter(null,'version','true');
-                pro.setParameter(null,'pathVersion','true');
-                pro.setParameter(null,'context','true');
-                pro.setParameter(null,'language','true');
-			  	pro.importStylesheet(xsl);
-/*		'<xsl:variable name="profile">'.$profile.'</xsl:variable>'.
-		'<xsl:variable name="version">'.SystemInfo::getDate().'</xsl:variable>'.
-		'<xsl:variable name="pathVersion">'.$pathVersion.'</xsl:variable>'.
-		'<xsl:variable name="context">'.$context.'</xsl:variable>'.
-		'<xsl:variable name="language">'.InternalSession::getLanguage().'</xsl:variable>';)*/
-				var ownerDocument = document;//.implementation.createDocument("", "test", null); 
-			    return pro.transformToFragment(xml,ownerDocument);				
-			} catch (e) {
-				hui.log('Transform exception...');
-				hui.log(e);
-				throw e;
-			}
-		} else {
-			hui.log('No XSLT!');
-		}
-	},
-	parse : function(xml) {
-		var doc;
-		try {
-		if (window.DOMParser) {
-  			var parser = new DOMParser();
-  			doc = parser.parseFromString(xml,"text/xml");
-			var errors = doc.getElementsByTagName('parsererror');
-			if (errors.length>0 && errors[0].textContent) {
-				hui.log(errors[0].textContent);
-				return null;
-			}
-  		} else {
-  			doc = new ActiveXObject("Microsoft.XMLDOM");
-			doc.async = false;
-  			doc.loadXML(xml); 
-  		}
-		} catch (e) {
-			return null;
-		}
-		return doc;
-	},
-	serialize : function(node) {
-  		try {
-      		return (new XMLSerializer()).serializeToString(node);
-  		} catch (e) {
-     		try {
-        		return node.xml;
-     		}
-     		catch (ex) {}
-     	}
-		return null;
-   	}
-};
-
-
-
-
-
-
-
-
-if (!Function.prototype.bind) {
-	Function.prototype.bind = function () {
-	    if (arguments.length < 2 && arguments[0] === undefined) {
-	        return this;
-	    }
-	    var thisObj = this,
-	    args = Array.prototype.slice.call(arguments),
-	    obj = args.shift();
-	    return function () {
-	        return thisObj.apply(obj, args.concat(Array.prototype.slice.call(arguments)));
-	    };
-	};
-
-	Function.bind = function() {
-	    var args = Array.prototype.slice.call(arguments);
-	    return Function.prototype.bind.apply(args.shift(), args);
-	};
-}
-
-
-// 
-if (!Function.prototype.argumentNames) {
-	Function.prototype.argumentNames = function() {
-		var names = this.toString().match(/^[\s\(]*function[^(]*\(([^)]*)\)/)[1]
-			.replace(/\/\/.*?[\r\n]|\/\*(?:.|[\r\n])*?\*\//g, '')
-			.replace(/\s+/g, '').split(',');
-		return names.length == 1 && !names[0] ? [] : names;
-	};
-}
-
 if (window.define) {
 	define('hui');
 }
@@ -3593,6 +3494,70 @@ hui.store = {
 }
 
 
+hui.xml = {
+/*	transform : function(xml,xsl) {
+		if (window.ActiveXObject) {
+			return xml.transformNode(xsl);
+		} else if (document.implementation && document.implementation.createDocument) {
+			try {
+			  	var pro = new XSLTProcessor();
+                pro.setParameter(null,'dev','true');
+                pro.setParameter(null,'profile','true');
+                pro.setParameter(null,'version','true');
+                pro.setParameter(null,'pathVersion','true');
+                pro.setParameter(null,'context','true');
+                pro.setParameter(null,'language','true');
+			  	pro.importStylesheet(xsl);
+//		'<xsl:variable name="profile">'.$profile.'</xsl:variable>'.
+//		'<xsl:variable name="version">'.SystemInfo::getDate().'</xsl:variable>'.
+//		'<xsl:variable name="pathVersion">'.$pathVersion.'</xsl:variable>'.
+//		'<xsl:variable name="context">'.$context.'</xsl:variable>'.
+//		'<xsl:variable name="language">'.InternalSession::getLanguage().'</xsl:variable>';)
+				var ownerDocument = document;//.implementation.createDocument("", "test", null); 
+			    return pro.transformToFragment(xml,ownerDocument);				
+			} catch (e) {
+				hui.log('Transform exception...');
+				hui.log(e);
+				throw e;
+			}
+		} else {
+			hui.log('No XSLT!');
+		}
+	},*/
+	parse : function(xml) {
+		var doc;
+		try {
+		if (window.DOMParser) {
+  			var parser = new DOMParser();
+  			doc = parser.parseFromString(xml,"text/xml");
+			var errors = doc.getElementsByTagName('parsererror');
+			if (errors.length>0 && errors[0].textContent) {
+				hui.log(errors[0].textContent);
+				return null;
+			}
+  		} else {
+  			doc = new ActiveXObject("Microsoft.XMLDOM");
+			doc.async = false;
+  			doc.loadXML(xml); 
+  		}
+		} catch (e) {
+			return null;
+		}
+		return doc;
+	},
+	serialize : function(node) {
+  		try {
+      		return (new XMLSerializer()).serializeToString(node);
+  		} catch (e) {
+     		try {
+        		return node.xml;
+     		}
+     		catch (ex) {}
+     	}
+		return null;
+   	}
+};
+
 /**
  * SWFUpload: http://www.swfupload.org, http://swfupload.googlecode.com
  *
@@ -4411,283 +4376,6 @@ SWFUpload.prototype.uploadComplete = function (file) {
 SWFUpload.prototype.debug = function (message) {
 	hui.log(message);
 };
-
-
-/*
-    json2.js
-    2008-01-17
-
-    Public Domain
-
-    No warranty expressed or implied. Use at your own risk.
-
-    See http://www.JSON.org/js.html
-
-    This file creates a global JSON object containing two methods:
-
-        JSON.stringify(value, whitelist)
-            value       any JavaScript value, usually an object or array.
-
-            whitelist   an optional array prameter that determines how object
-                        values are stringified.
-
-            This method produces a JSON text from a JavaScript value.
-            There are three possible ways to stringify an object, depending
-            on the optional whitelist parameter.
-
-            If an object has a toJSON method, then the toJSON() method will be
-            called. The value returned from the toJSON method will be
-            stringified.
-
-            Otherwise, if the optional whitelist parameter is an array, then
-            the elements of the array will be used to select members of the
-            object for stringification.
-
-            Otherwise, if there is no whitelist parameter, then all of the
-            members of the object will be stringified.
-
-            Values that do not have JSON representaions, such as undefined or
-            functions, will not be serialized. Such values in objects will be
-            dropped; in arrays will be replaced with null.
-            JSON.stringify(undefined) returns undefined. Dates will be
-            stringified as quoted ISO dates.
-
-            Example:
-
-            var text = JSON.stringify(['e', {pluribus: 'unum'}]);
-            // text is '["e",{"pluribus":"unum"}]'
-
-        JSON.parse(text, filter)
-            This method parses a JSON text to produce an object or
-            array. It can throw a SyntaxError exception.
-
-            The optional filter parameter is a function that can filter and
-            transform the results. It receives each of the keys and values, and
-            its return value is used instead of the original value. If it
-            returns what it received, then structure is not modified. If it
-            returns undefined then the member is deleted.
-
-            Example:
-
-            // Parse the text. If a key contains the string 'date' then
-            // convert the value to a date.
-
-            myData = JSON.parse(text, function (key, value) {
-                return key.indexOf('date') >= 0 ? new Date(value) : value;
-            });
-
-    This is a reference implementation. You are free to copy, modify, or
-    redistribute.
-
-    Use your own copy. It is extremely unwise to load third party
-    code into your pages.
-*/
-
-/*jslint evil: true */
-
-/*global JSON */
-
-/*members "\b", "\t", "\n", "\f", "\r", "\"", JSON, "\\", apply,
-    charCodeAt, floor, getUTCDate, getUTCFullYear, getUTCHours,
-    getUTCMinutes, getUTCMonth, getUTCSeconds, hasOwnProperty, join, length,
-    parse, propertyIsEnumerable, prototype, push, replace, stringify, test,
-    toJSON, toString
-*/
-
-if (!this.JSON) {
-
-    JSON = function () {
-
-        function f(n) {    // Format integers to have at least two digits.
-            return n < 10 ? '0' + n : n;
-        }
-
-        Date.prototype.toJSON = function () {
-
-// Eventually, this method will be based on the date.toISOString method.
-
-            return this.getUTCFullYear()   + '-' +
-                 f(this.getUTCMonth() + 1) + '-' +
-                 f(this.getUTCDate())      + 'T' +
-                 f(this.getUTCHours())     + ':' +
-                 f(this.getUTCMinutes())   + ':' +
-                 f(this.getUTCSeconds())   + 'Z';
-        };
-
-
-        var m = {    // table of character substitutions
-            '\b': '\\b',
-            '\t': '\\t',
-            '\n': '\\n',
-            '\f': '\\f',
-            '\r': '\\r',
-            '"' : '\\"',
-            '\\': '\\\\'
-        };
-
-        function stringify(value, whitelist) {
-            var a,          // The array holding the partial texts.
-                i,          // The loop counter.
-                k,          // The member key.
-                l,          // Length.
-                r = /["\\\x00-\x1f\x7f-\x9f]/g,
-                v;          // The member value.
-
-            switch (typeof value) {
-            case 'string':
-
-// If the string contains no control characters, no quote characters, and no
-// backslash characters, then we can safely slap some quotes around it.
-// Otherwise we must also replace the offending characters with safe sequences.
-
-                return r.test(value) ?
-                    '"' + value.replace(r, function (a) {
-                        var c = m[a];
-                        if (c) {
-                            return c;
-                        }
-                        c = a.charCodeAt();
-                        return '\\u00' + Math.floor(c / 16).toString(16) +
-                                                   (c % 16).toString(16);
-                    }) + '"' :
-                    '"' + value + '"';
-
-            case 'number':
-
-// JSON numbers must be finite. Encode non-finite numbers as null.
-
-                return isFinite(value) ? String(value) : 'null';
-
-            case 'boolean':
-            case 'null':
-                return String(value);
-
-            case 'object':
-
-// Due to a specification blunder in ECMAScript,
-// typeof null is 'object', so watch out for that case.
-
-                if (!value) {
-                    return 'null';
-                }
-
-// If the object has a toJSON method, call it, and stringify the result.
-
-                if (typeof value.toJSON === 'function') {
-                    return stringify(value.toJSON());
-                }
-                a = [];
-                if (typeof value.length === 'number' &&
-                        !(value.propertyIsEnumerable('length'))) {
-
-// The object is an array. Stringify every element. Use null as a placeholder
-// for non-JSON values.
-
-                    l = value.length;
-                    for (i = 0; i < l; i += 1) {
-                        a.push(stringify(value[i], whitelist) || 'null');
-                    }
-
-// Join all of the elements together and wrap them in brackets.
-
-                    return '[' + a.join(',') + ']';
-                }
-                if (whitelist) {
-
-// If a whitelist (array of keys) is provided, use it to select the components
-// of the object.
-
-                    l = whitelist.length;
-                    for (i = 0; i < l; i += 1) {
-                        k = whitelist[i];
-                        if (typeof k === 'string') {
-                            v = stringify(value[k], whitelist);
-                            if (v) {
-                                a.push(stringify(k) + ':' + v);
-                            }
-                        }
-                    }
-                } else {
-
-// Otherwise, iterate through all of the keys in the object.
-
-                    for (k in value) {
-                        if (typeof k === 'string') {
-                            v = stringify(value[k], whitelist);
-                            if (v) {
-                                a.push(stringify(k) + ':' + v);
-                            }
-                        }
-                    }
-                }
-
-// Join all of the member texts together and wrap them in braces.
-
-                return '{' + a.join(',') + '}';
-            }
-        }
-
-        return {
-            stringify: stringify,
-            parse: function (text, filter) {
-                var j;
-
-                function walk(k, v) {
-                    var i, n;
-                    if (v && typeof v === 'object') {
-                        for (i in v) {
-                            if (Object.prototype.hasOwnProperty.apply(v, [i])) {
-                                n = walk(i, v[i]);
-                                if (n !== undefined) {
-                                    v[i] = n;
-                                }
-                            }
-                        }
-                    }
-                    return filter(k, v);
-                }
-
-
-// Parsing happens in three stages. In the first stage, we run the text against
-// regular expressions that look for non-JSON patterns. We are especially
-// concerned with '()' and 'new' because they can cause invocation, and '='
-// because it can cause mutation. But just to be safe, we want to reject all
-// unexpected forms.
-
-// We split the first stage into 4 regexp operations in order to work around
-// crippling inefficiencies in IE's and Safari's regexp engines. First we
-// replace all backslash pairs with '@' (a non-JSON character). Second, we
-// replace all simple value tokens with ']' characters. Third, we delete all
-// open brackets that follow a colon or comma or that begin the text. Finally,
-// we look to see that the remaining characters are only whitespace or ']' or
-// ',' or ':' or '{' or '}'. If that is so, then the text is safe for eval.
-
-                if (/^[\],:{}\s]*$/.test(text.replace(/\\./g, '@').
-replace(/"[^"\\\n\r]*"|true|false|null|-?\d+(?:\.\d*)?(?:[eE][+\-]?\d+)?/g, ']').
-replace(/(?:^|:|,)(?:\s*\[)+/g, ''))) {
-
-// In the second stage we use the eval function to compile the text into a
-// JavaScript structure. The '{' operator is subject to a syntactic ambiguity
-// in JavaScript: it can begin a block or an object literal. We wrap the text
-// in parens to eliminate the ambiguity.
-
-                    j = eval('(' + text + ')');
-
-// In the optional third stage, we recursively walk the new structure, passing
-// each name/value pair to a filter function for possible transformation.
-
-                    return typeof filter === 'function' ? walk('', j) : j;
-                }
-
-// If the text is not JSON parseable, then a SyntaxError is thrown.
-
-                throw new SyntaxError('parseJSON');
-            }
-        };
-    }();
-}
-
-
 
 
 /*
@@ -6117,24 +5805,6 @@ hui.ui.parseSubItems = function(parent,array) {
 	}
 };
 
-/** A bundle of strings
- * @constructor
- */
-hui.ui.Bundle = function(strings) {
-	this.strings = strings;
-};
-
-hui.ui.Bundle.prototype = {
-	get : function(key) {
-		var values = this.strings[key];
-		if (values) {
-			return values[hui.ui.language];
-		}
-		hui.log(key+' not found for language:'+hui.ui.language);
-		return key;
-	}
-};
-
 /**
  * Import some widgets by name
  * @param {Array} names Array of widgets to import
@@ -6171,7 +5841,7 @@ hui.onReady(function() {
  * @constructor
  */
 hui.ui.Source = function(options) {
-	this.options = hui.override({url:null,dwr:null,parameters:[],lazy:false},options);
+	this.options = hui.override({url:null,parameters:[],lazy:false},options);
 	this.name = options.name;
 	this.data = null;
 	this.parameters = [];
@@ -6293,20 +5963,6 @@ hui.ui.Source.prototype = {
 					self.end();
 				}
 			});
-		} else if (this.options.dwr) {
-			var pair = this.options.dwr.split('.');
-			var facade = eval(pair[0]);
-			var method = pair[1];
-			var args = facade[method].argumentNames();
-			for (var k=0; k < args.length; k++) {
-				if (this.parameters[k]) {
-					args[k]=this.parameters[k].value===undefined ? null : this.parameters[k].value;
-				}
-			};
-			args[args.length-1]=function(r) {self.parseDWR(r)};
-			this.busy=true;
-			hui.ui.callDelegates(this,'sourceIsBusy');
-			facade[method].apply(facade,args);
 		}
 	},
 	/** @private */
@@ -7413,7 +7069,7 @@ hui.ui.List.prototype = {
 				if (child.getAttribute('icon')) {
 					obj.appendChild(hui.ui.createIcon(child.getAttribute('icon'),16));
 				}
-				if (child.firstChild && child.firstChild.nodeType==hui.TEXT_NODE && child.firstChild.nodeValue.length>0) {
+				if (child.firstChild && child.firstChild.nodeType===3 && child.firstChild.nodeValue.length>0) {
 					hui.dom.addText(obj,child.firstChild.nodeValue);
 				}
 				cell.appendChild(obj);
@@ -9831,7 +9487,7 @@ hui.ui.BoundPanel.prototype = {
             };
             nodeOffset = {
                 left : options.rect.left, 
-                top : options.rect.top,                
+                top : options.rect.top
             };
             nodeScrollOffset = {left: 0, top: 0};
 		} else {
@@ -14476,10 +14132,10 @@ hui.ui.MarkupEditor.prototype = {
 	},
 	_showBar : function() {
 		if (!this.bar) {
-            this.bar = new hui.ui.MarkupEditor.Bar({
-                $clickButton : this._buttonClicked.bind(this),
-                $changeBlock : this._changeBlock.bind(this),
-            })
+			this.bar = new hui.ui.MarkupEditor.Bar({
+				$clickButton : this._buttonClicked.bind(this),
+				$changeBlock : this._changeBlock.bind(this)
+			})
 		}
 		this.bar.show(this);
 	},
@@ -17895,7 +17551,7 @@ hui.ui.Split.prototype = {
     			},
     			onMove : function(e) {
     			    hui.log('moving')
-    			},
+    			}
      			//onMove : this._onMove.bind(this),
     			//onAfterMove : this._onAfterMove.bind(this)
     		});            

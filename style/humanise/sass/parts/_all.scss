@@ -1,0 +1,36 @@
+@include when(all,inline) {
+  body
+  {
+  	padding: 0px;
+  	margin: 0px;
+    font-family: Arial,'Helvetica',sans-serif;
+  }
+
+  body.font
+  {
+  	font-family: Lato,'Helvetica Neue','Helvetica','Arial','Lucida Grande','Lucida Sans Unicode', sans-serif;
+  }
+  
+  form
+  {
+  	margin: 0px;
+  }
+  img
+  {
+  	border: none;
+  }
+
+  a {
+      word-break: break-word;
+  }
+}
+
+@import 'common';
+@import 'part';
+@import 'layout_menu';
+@import 'layout_search';
+@import 'layout_info';
+@import 'layout_placards';
+@import 'layout';
+@import 'poster';
+@import 'call_to_action';

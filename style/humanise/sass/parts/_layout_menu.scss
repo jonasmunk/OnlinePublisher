@@ -1,0 +1,72 @@
+@include when(all,inline) {
+
+  .layout_menu {
+  	margin: 0;
+  	padding: 5px 10px;
+  	list-style: none;
+  	text-align: center;
+  }
+
+  .layout_menu_item {
+  	display: inline-block;
+  }
+
+  .layout_menu_link {
+  	padding: 0 5px;
+  	height: 32px;
+  	line-height: 32px;
+  	text-decoration: none;
+  	color: #333;
+  }
+
+  .layout_menu_item_first {
+  	display: block;
+  	text-align: center;
+  }
+
+  .layout_menu_link_first {
+  	background: url("/style/humanise/gfx/graphics.png") -139px -636px;
+  	display: inline-block;
+  	width: 160px;
+  	height: 40px;
+  	> span {
+  		display: none;
+  	}
+    
+    .retina & {
+    	background-image: url('/style/humanise/gfx/graphics_2x.png');
+    	background-size: 400px 907px;
+    }
+  }  
+}
+
+@include when(760px,'inline') {
+
+	.layout_menu {
+		text-align: left;
+		
+		> li {
+			vertical-align: top;
+		}
+	}
+  
+  .layout_menu_link {
+		font-size: 20px;
+		line-height: 44px;
+		padding: 0 10px;
+		color: $color;
+  }
+  
+	.layout_menu_item_first {
+		display: inline-block;
+	}
+
+}
+
+@include when(1000px,'inline') {
+	
+	.layout_menu {
+		padding: 5px 0;
+	}
+
+}

@@ -36,7 +36,7 @@ hui.ui.Split.prototype = {
     			},
     			onMove : function(e) {
     			    hui.log('moving')
-    			},
+    			}
      			//onMove : this._onMove.bind(this),
     			//onAfterMove : this._onAfterMove.bind(this)
     		});            

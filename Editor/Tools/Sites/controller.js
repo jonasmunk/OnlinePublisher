@@ -80,7 +80,7 @@ var mainController = {
 		} else if (item.kind=='hierarchy') {
 			hui.ui.get('edit').disable();
 			hui.ui.get('info').enable();
-			hui.ui.get('delete').disabke();
+			hui.ui.get('delete').disable();
 			hui.ui.get('view').disable();
 		} else {
 			hui.ui.get('edit').disable()

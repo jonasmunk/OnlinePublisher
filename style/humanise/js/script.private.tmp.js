@@ -1,4 +1,4 @@
-/* ["style\/humanise\/js\/Poster.js"] */
+/* ["style\/humanise\/js\/poster.js","style\/humanise\/js\/layout.js"] */
 
 
 /* style/basic/js/OnlinePublisher.js */
@@ -638,9 +638,8 @@ op.Dissolver.prototype = {
 }
 
 window.define && define('op.Dissolver');
-/* style/humanise/js/Poster.js */
+/* style/humanise/js/poster.js */
 Poster = function() {
-	return;
 	this.poster = hui.get('poster');
 	this.left = hui.get('poster_left');
 	this.right = hui.get('poster_right');
@@ -659,7 +658,7 @@ Poster = function() {
 	this.poster.onclick = function() {
 		document.location=op.page.path+self.links[self.leftPos];
 	}
-  	this.preload();
+  this.preload();
 }
 
 Poster.prototype.start = function() {
@@ -702,3 +701,43 @@ Poster.prototype.preload = function() {
 	loader.addImages(this.rightImages);
 	loader.load();
 }
+
+define('Poster',Poster);
+/* style/humanise/js/layout.js */
+require(['hui'],function() {
+
+  var SearchField = function(options) {
+    this.element = options.element;
+    hui.collect(this.nodes,this.element);
+    this._attach();
+  }
+
+  SearchField.prototype = {
+    nodes : {
+      icon : 'layout_search_icon',
+      text : 'layout_search_text'
+    },
+    _attach : function() {
+      hui.listen(this.nodes.icon,'click',this._toggle.bind(this));
+      hui.listen(this.nodes.text,'focus',this._focus.bind(this));
+      hui.listen(this.nodes.text,'blur',this._blur.bind(this));
+      //this._toggle();
+    },
+    _toggle : function() {
+    	hui.cls.toggle(document.body,'layout_searching');
+      window.setTimeout(function() {
+		  try {
+	          this.nodes.text.focus();		  	
+		  } catch (ignore) {}
+      }.bind(this),100)
+    },
+    _focus : function() {
+      hui.cls.add(document.body,'layout_searching');
+    },
+    _blur : function() {
+      hui.cls.remove(document.body,'layout_searching');
+    }
+  }
+  new SearchField({element:hui.find('.layout_search')});
+
+});

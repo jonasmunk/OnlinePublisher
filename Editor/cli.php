@@ -33,7 +33,7 @@ if (method_exists('Commander',$args[1])) {
 
 
 class Commander {
-	
+
 	static function test($args) {
         if (!Database::testConnection()) {
             echo "No database - no testing!\n";
@@ -44,30 +44,31 @@ class Commander {
             if (strpos($args[2],'/')!==false) {
                 TestService::runTest($args[2],new ConsoleReporter());
             } else {
-                TestService::runTestsInGroup($args[2],new ConsoleReporter());                
+                TestService::runTestsInGroup($args[2],new ConsoleReporter());
             }
         } else {
             TestService::runAllTests(new ConsoleReporter());
         }
-        
+
     }
 
 	static function hui() {
-        echo UI::compile();        
+        echo UI::compile();
     }
 
-	static function style() {
-        DesignService::rebuild();  
+	static function style($args) {
+        $design = isset($args[2]) ? $args[2] : null;
+        DesignService::rebuild($design);
     }
 
 	static function schema() {
         global $basePath;
         $schema = SchemaService::getDatabaseSchema();
-                
+
         $schema = var_export(SchemaService::getDatabaseSchema(),true);
 
         $file = $basePath."Editor/Info/Schema.php";
-        
+
         $data = "<?php
 /**
  * @package OnlinePublisher
@@ -87,7 +88,7 @@ if (!isset(\$GLOBALS['basePath'])) {
 	static function classes() {
         $success = ClassService::rebuildClasses();
         echo $success ? 'Classes successfully rebuild' : 'ERROR: Classes could not be rebuild';
-        echo PHP_EOL;  
+        echo PHP_EOL;
     }
 
 	static function check() {

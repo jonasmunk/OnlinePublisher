@@ -17,3 +17,6 @@ local/logs/*
 .svn
 .htaccess
 style/*/.sass-cache
+
+profile_prepend.php
+profile_append.php
