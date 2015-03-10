@@ -311,7 +311,8 @@ class DesignService {
         } else {
             $valid = $valid && !file_exists($basePath."style/".$name."/css/style.php");
         }
-		$valid = $valid && file_exists($basePath."style/".$name."/css/overwrite.css");
+        // TODO (jm)
+		//$valid = $valid && file_exists($basePath."style/".$name."/css/overwrite.css");
 		return $valid;
 	}
 }
