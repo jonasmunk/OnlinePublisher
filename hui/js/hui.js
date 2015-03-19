@@ -180,10 +180,38 @@ hui.intOrString = function(str) {
 	return str;
 };
 
+/** 
+ * Make sure a number is between a min / max
+ */
 hui.between = function(min,value,max) {
 	var result = Math.min(max,Math.max(min,value));
 	return isNaN(result) ? min : result;
 };
+
+/**
+ * Fit a box inside a container while preserving aspect ratio (note: expects sane input)
+ * @param {Object} box The box to scale {width : 200, height : 100}
+ * @param {Object} container The container to fit the box inside {width : 20, height : 40}
+ * @returns {Object} An object of the new box {width : 20, height : 10}
+ */
+hui.fit = function(box,container,options) {
+  options = options || {};
+  var boxRatio = box.width / box.height;
+  var containerRatio = container.width / container.height;
+  var width, height;
+  if (options.upscale===false && box.width<=container.width && box.height<=container.height) {
+    width = box.width;
+    height = box.height;
+  }
+  else if (boxRatio > containerRatio) {
+    width = container.width;
+    height = Math.round(container.width/box.width * box.height);
+  } else {
+    width = Math.round(container.height/box.height * box.width);
+    height = container.height;
+  }
+  return {width : width, height : height};
+}
 
 /**
  * Checks if a string has non-whitespace characters
@@ -2073,9 +2101,11 @@ hui.drag = {
 	 *  <em>see hui.drag.start for more options</em>
 	 * }
 	 * @param {Object} options The options
+   * @param {Element} options.element The element to attach to
 	 */
 	register : function(options) {
-		hui.listen(options.element,'mousedown',function(e) {
+		var touch = options.touch && hui.browser.touch;
+		hui.listen(options.element,touch ? 'touchstart' : 'mousedown',function(e) {
 			if (options.$check && options.$check(e)===false) {
 				return;
 			}
@@ -2088,13 +2118,14 @@ hui.drag = {
 	 *  onBeforeMove : function(event), // Called when the cursor moves for the first time
 	 *  onMove : function(event), // Called when the cursor moves
 	 *  onAfterMove : function(event), // Called if the cursor has moved
+   *  onNotMoved : function(event), // Called if the cursor has not moved
 	 *  onEnd : function(event), // Called when the mouse is released, even if the cursor has not moved
 	 * }
 	 * @param {Object} options The options
 	 */
 	start : function(options) {
 		var target = hui.browser.msie ? document : window;
-		
+		var touch = options.touch && hui.browser.touch;
 		if (options.onStart) {
 			options.onStart();
 		}
@@ -2110,10 +2141,10 @@ hui.drag = {
 			moved = true;
 			options.onMove(e);
 		}.bind(this);
-		hui.listen(target,'mousemove',mover);
+		hui.listen(target,touch ? 'touchmove' : 'mousemove',mover);
 		upper = function() {
-			hui.unListen(target,'mousemove',mover);
-			hui.unListen(target,'mouseup',upper);
+			hui.unListen(target,touch ? 'touchmove' : 'mousemove',mover);
+			hui.unListen(target,touch ? 'touchend' : 'mouseup',upper);
 			if (options.onEnd) {
 				options.onEnd();
 			}
@@ -2125,7 +2156,7 @@ hui.drag = {
 			}
 			hui.selection.enable(true);
 		}.bind(this);
-		hui.listen(target,'mouseup',upper);
+		hui.listen(target,touch ? 'touchend' : 'mouseup',upper);
 		hui.selection.enable(false);
 	},
 	
