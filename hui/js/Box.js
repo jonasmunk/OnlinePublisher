@@ -48,7 +48,7 @@ hui.ui.Box.prototype = {
 	shake : function() {
 		hui.effect.shake({element:this.element});
 	},
-	
+
 	/**
 	 * Adds the box to the end of the body
 	 */
@@ -76,13 +76,17 @@ hui.ui.Box.prototype = {
 			hui.ui.showCurtain({widget:this,zIndex:index});
 		}
 		if (this.options.absolute) {
-			hui.style.set(e,{display:'block',visibility:'hidden'});
+			hui.style.set(e,{ display : 'block', visibility : 'hidden' });
 			var w = e.clientWidth;
-			var top = (hui.window.getViewHeight()-e.clientHeight)/2+hui.window.getScrollTop();
-			hui.style.set(e,{'marginLeft':(w/-2)+'px',top:top+'px'});
-			hui.style.set(e,{display:'block',visibility:'visible'});
+			var top = (hui.window.getViewHeight() - e.clientHeight) / 2 + hui.window.getScrollTop();
+			hui.style.set(e,{
+        marginLeft : (w/-2)+'px',
+        top : top+'px',
+        display : 'block',
+        visibility : 'visible'
+      });
 		} else {
-			e.style.display='block';
+			e.style.display = 'block';
 		}
 		this.visible = true;
 		hui.ui.callVisible(this);
