@@ -80,11 +80,11 @@ hui.ui.Box.prototype = {
 			var w = e.clientWidth;
 			var top = (hui.window.getViewHeight() - e.clientHeight) / 2 + hui.window.getScrollTop();
 			hui.style.set(e,{
-        marginLeft : (w/-2)+'px',
-        top : top+'px',
-        display : 'block',
-        visibility : 'visible'
-      });
+				marginLeft : (w/-2)+'px',
+				top : top+'px',
+				display : 'block',
+				visibility : 'visible'
+			});
 		} else {
 			e.style.display = 'block';
 		}
