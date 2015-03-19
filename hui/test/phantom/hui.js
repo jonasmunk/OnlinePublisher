@@ -1,10 +1,13 @@
 QUnit.test( "Test isString", function( assert ) {
     
-    var str = "This is a string"
+    var str = 
 
-    assert.ok(hui.isString(str));
-
+    // Positives...
+    assert.ok(hui.isString('This is a string'));
+    assert.ok(hui.isString(' '));
     assert.ok(hui.isString(''));
+    
+    // Negatives...
     assert.ok(!hui.isString());
     assert.ok(!hui.isString(null));
     assert.ok(!hui.isString(NaN));
@@ -56,4 +59,51 @@ QUnit.test( "Test between", function( assert ) {
 
     assert.equal(5,hui.between(5,null,10));
     assert.equal(5,hui.between(5,"",10));
+})
+
+QUnit.test( "Test fitting", function( assert ) {
+  !function() {
+    var fitted = hui.fit({width:100,height:100},{width:20,height:100});
+    assert.equal(20,fitted.height);
+    assert.equal(20,fitted.width);    
+  }()
+
+  !function() {
+    var fitted = hui.fit({width:100,height:200},{width:20,height:100});
+    assert.equal(40,fitted.height);
+    assert.equal(20,fitted.width);
+  }()
+
+  // Same dimensions
+  !function() {
+    var fitted = hui.fit({width:100,height:100},{width:20,height:20});
+    assert.equal(20,fitted.height);
+    assert.equal(20,fitted.width);
+  }()
+
+  !function() {
+    var fitted = hui.fit({width:120,height:100},{width:20,height:20});
+    assert.equal(17,fitted.height);
+    assert.equal(20,fitted.width);
+  }()
+
+  // Scaled up
+  !function() {
+    var fitted = hui.fit({width:6,height:5},{width:20,height:20});
+    assert.equal(17,fitted.height);
+    assert.equal(20,fitted.width);
+  }()
+
+  !function() {
+    var fitted = hui.fit({width:200,height:100},{width:20,height:40});
+    assert.equal(20,fitted.width);
+    assert.equal(10,fitted.height);
+  }()
+
+  // Exactly same size
+  !function() {
+    var fitted = hui.fit({width:50,height:50},{width:50,height:50});
+    assert.equal(50,fitted.height);
+    assert.equal(50,fitted.width);
+  }()
 })
