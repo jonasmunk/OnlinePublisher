@@ -130,7 +130,7 @@ div.hui_curtain
 	background: url('../gfx/sad_mac.png') center center no-repeat;
 }
 
-div.hui_imageviewer_controller
+.hui_imageviewer_controller
 {
 	height: 50px;
 	width: 180px;
@@ -139,19 +139,19 @@ div.hui_imageviewer_controller
 	background: url('../gfx/overlay.png') left top no-repeat;
 }
 
-div.hui_imageviewer_controller div
+.hui_imageviewer_controller div
 {
 	height: 50px;
 	background: url('../gfx/overlay.png') right -50px no-repeat;
 }
 
-div.hui_imageviewer_controller div div
+.hui_imageviewer_controller div div
 {
 	background: url('../gfx/overlay.png') left -100px repeat-x;
 	margin: 0 10px;
 }
 
-div.hui_imageviewer_controller a
+.hui_imageviewer_controller a
 {
 	float: left;
 	width: 40px;
@@ -187,7 +187,7 @@ div.hui_imageviewer_controller a
 	background-position: 7px -100px;
 }
 
-div.hui_imageviewer_text
+.hui_imageviewer_text
 {
 	height: 20px;
 	position: absolute;
@@ -198,7 +198,7 @@ div.hui_imageviewer_text
 	background: #fff;
 }
 
-div.hui_imageviewer_zoomer
+.hui_imageviewer_zoomer
 {
 	position: absolute;
 	overflow: hidden;
