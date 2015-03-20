@@ -9,6 +9,7 @@
  *  ease : function(num) {},
  *  $complete : function() {}
  *}
+ * TODO Document options.property, options.value
  * 
  * @param {Element | Object} options Options or an element
  * @param {String} style The css property
@@ -102,7 +103,7 @@ hui.animation._ieOpacityUpdater = function(element,v,work) {
 hui.animation._render = function() {
 	hui.animation.running = true;
 	var next = false,
-		stamp = new Date().getTime();
+	stamp = Date.now();
 	for (var id in hui.animation.objects) {
 		var obj = hui.animation.objects[id];
 		if (obj.work) {
@@ -233,7 +234,7 @@ hui.animation.Item.prototype.animate = function(from,to,property,duration,delega
 		work.unit = null;
 		work.updater = hui.animation._propertyUpater;
 	}
-	work.start = new Date().getTime();
+	work.start = Date.now();
 	if (delegate && delegate.delay) {
 		work.start+=delegate.delay;
 	}
@@ -567,6 +568,11 @@ hui.ease = {
 	}
 };
 
+if (!Date.now) {
+  Date.now = function now() {
+    return new Date().getTime();
+  };
+}
 
 (function() {
     var lastTime = 0;
@@ -580,7 +586,7 @@ hui.ease = {
     }
     if (!window.requestAnimationFrame) {
         window.requestAnimationFrame = function(callback, element) {
-            var currTime = new Date().getTime();
+            var currTime = Date.now();
             var timeToCall = Math.max(0, 16 - (currTime - lastTime));
             var id = window.setTimeout(function() { callback(currTime + timeToCall); },
               0);
