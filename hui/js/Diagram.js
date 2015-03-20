@@ -713,6 +713,7 @@ hui.ui.Diagram.util = {
 		hui.cls.add(obj.element,'hui_diagram_dragable');
 		var dragState = null;
 		hui.drag.register({
+			touch : true,
 			element : obj.element,
 			onStart : function() {
 				hui.cls.add(obj.element,'hui_diagram_dragging');
