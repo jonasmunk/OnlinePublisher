@@ -49,14 +49,15 @@ hui.ui.ImageViewer = function(options) {
 	this.width = 600;
 	this.height = 460;
 	this.index = 0;
+	this.position = 0; // pixels
 	this.playing = false;
 	this.name = options.name;
 	this.images = options.images || [];
 	
 	// Behavior ...
 	this.box.listen(this);
-	this._addBehavior();
-  this._attachDrag();
+	this._attach();
+	this._attachDrag();
 	hui.ui.extend(this);
 	
 	if (options.listener) {
@@ -101,7 +102,7 @@ hui.ui.ImageViewer.prototype = {
 		play : 'hui_imageviewer_play',
 		close : 'hui_imageviewer_close'
 	},
-	_addBehavior : function() {
+	_attach : function() {
 		var self = this;
 		this.nodes.next.onclick = function() {
 			self.next(true);
@@ -146,20 +147,32 @@ hui.ui.ImageViewer.prototype = {
 		var initial = 0;
 		var scrl = 0;
 		var viewer = this.nodes.viewer;
+		var inner = this.nodes.innerViewer;
+		var max = 0;
 		hui.drag.register({
 			touch : true,
 			element : this.nodes.innerViewer,
 			onBeforeMove : function(e) {
 				initial = e.getLeft();
-				scrl = viewer.scrollLeft;
-			},
+				scrl = this.position;
+				max = (this.images.length-1) * this.width * -1;
+				hui.log('max='+max)
+			}.bind(this),
 			onMove : function(e) {
-				viewer.scrollLeft = scrl - (e.getLeft() - initial);
-			},
+				var pos = (scrl - (initial - e.getLeft()));
+				if (pos > 0) {
+					pos = (Math.exp(pos * -0.013) -1) * -80;
+				}
+				if (pos < max) {
+					pos = (Math.exp((pos - max) * 0.013) -1) * 80 + max;
+				}
+				this.position = pos;
+				inner.style.marginLeft = pos + 'px';
+			}.bind(this),
 			onAfterMove : function() {
-				var num = Math.round(viewer.scrollLeft / this.width);
+				var num = Math.round(this.position * -1 / this.width);
 				this.index = num;
-				this._goToImage(true,num);
+				this._goToImage(true,num,false,true);
 			}.bind(this),
 			onNotMoved : this._zoom.bind(this)
 		})
@@ -191,25 +204,29 @@ hui.ui.ImageViewer.prototype = {
 		var snap = this.options.sizeSnap;
 		var newWidth = hui.window.getViewWidth() - this.options.perimeter;
 		newWidth = Math.floor(newWidth / snap) * snap;
-		newWidth = Math.min(newWidth , this.options.maxWidth);
+		newWidth = Math.min(newWidth, this.options.maxWidth);
 		var newHeight = hui.window.getViewHeight() - this.options.perimeter;
 		newHeight = Math.floor(newHeight / snap) * snap;
-		newHeight = Math.min(newHeight , this.options.maxHeight);
+		newHeight = Math.min(newHeight, this.options.maxHeight);
 		var maxWidth = 0;
 		var maxHeight = 0;
-		for (var i=0; i < this.images.length; i++) {
-			var dims = this._getLargestSize({ width : newWidth, height : newHeight}, this.images[i] );
-			maxWidth = Math.max(maxWidth , dims.width);
-			maxHeight = Math.max(maxHeight , dims.height);
+		for (var i = 0; i < this.images.length; i++) {
+			var dims = this._getLargestSize({
+				width: newWidth,
+				height: newHeight
+			}, this.images[i]);
+			maxWidth = Math.max(maxWidth, dims.width);
+			maxHeight = Math.max(maxHeight, dims.height);
 		};
-		newHeight = Math.floor( Math.min(newHeight , maxHeight) );
-		newWidth = Math.floor( Math.min(newWidth , maxWidth) );
-		
+		newHeight = Math.floor(Math.min(newHeight, maxHeight));
+		newWidth = Math.floor(Math.min(newWidth, maxWidth));
+
 		if (newWidth != this.width || newHeight != this.height) {
 			this.width = newWidth;
 			this.height = newHeight;
 			this.dirty = true;
 		}
+
 	},
 	_updateUI : function() {
 		if (this.dirty) {
@@ -231,21 +248,39 @@ hui.ui.ImageViewer.prototype = {
 	_shouldShowController : function() {
 		return this.images.length>1;
 	},
-	_goToImage : function(animate,num,user) {	
+	_goToImage : function(animate,num,user,drag) {
+		var target = this.position = this.index * (this.width + this.options.margin) * -1;
 		if (animate) {
-			if (num>1) {
-				hui.animate(this.nodes.viewer,'scrollLeft',this.index*(this.width+this.options.margin),Math.min(num*this.options.transitionReturn,2000),{ease:this.options.easeReturn});				
+			var duration, ease;
+			if (drag) {
+				duration = 200;
+				ease = hui.ease.fastSlow;
+				ease = hui.ease.quadOut;
+			}
+			else if (num > 1) {
+				duration = Math.min(num * this.options.transitionReturn, 2000)
+				ease = this.options.easeReturn;
 			} else {
-				var end = this.index==0 || this.index==this.images.length-1;
-				var ease = (end ? this.options.easeEnd : this.options.ease);
+				var end = this.index == 0 || this.index == this.images.length - 1;
+				ease = (end ? this.options.easeEnd : this.options.ease);
 				if (!user) {
 					ease = this.options.easeAuto;
 				}
-				hui.animate(this.nodes.viewer,'scrollLeft',this.index*(this.width+this.options.margin),(end ? this.options.transitionEnd : this.options.transition),{ease:ease});
+				duration = (end ? this.options.transitionEnd : this.options.transition);
 			}
+			hui.animate({
+				node : this.nodes.innerViewer, 
+				css : {marginLeft : target + 'px'}, 
+				duration : duration,
+				ease : ease
+			});
 		} else {
-			this.nodes.viewer.scrollLeft = this.index * (this.width + this.options.margin);
+			this.nodes.innerViewer.style.marginLeft = target + 'px';
 		}
+		this._drawText();
+	},
+	
+	_drawText : function() {
 		var text = this.images[this.index].text;
 		if (text) {
 			this.nodes.text.innerHTML = text;
@@ -253,7 +288,7 @@ hui.ui.ImageViewer.prototype = {
 		} else {
 			this.nodes.text.innerHTML = '';
 			this.nodes.text.style.display = 'none';
-		}
+		}		
 	},
 	
 	// Show / hide ...
