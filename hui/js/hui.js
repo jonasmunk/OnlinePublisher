@@ -2101,16 +2101,18 @@ hui.drag = {
 	 *  <em>see hui.drag.start for more options</em>
 	 * }
 	 * @param {Object} options The options
-   * @param {Element} options.element The element to attach to
+	 * @param {Element} options.element The element to attach to
 	 */
 	register : function(options) {
 		var touch = options.touch && hui.browser.touch;
 		hui.listen(options.element,touch ? 'touchstart' : 'mousedown',function(e) {
+			e = hui.event(e);
+			// TODO This shuould be a hui.Event
 			if (options.$check && options.$check(e)===false) {
 				return;
 			}
-			hui.stop(e);
-			hui.drag.start(options);
+			e.stop();
+			hui.drag.start(options,e);
 		});
 	},
 	/** Start dragging
@@ -2123,18 +2125,31 @@ hui.drag = {
 	 * }
 	 * @param {Object} options The options
 	 */
-	start : function(options) {
+	start : function(options,e) {
 		var target = hui.browser.msie ? document : window;
 		var touch = options.touch && hui.browser.touch;
 		if (options.onStart) {
 			options.onStart();
 		}
+		var latest = {
+			x: e.getLeft(),
+			y: e.getTop(),
+			time: Date.now()
+		};
+		var initial = latest;
 		var mover,
 			upper,
 			moved = false;
 		mover = function(e) {
 			e = hui.event(e);
 			e.stop(e);
+/*
+			var pos = {x:e.getLeft(),y:e.getTop(),time: Date.now()};
+			
+			var speed = (latest.x - pos.x) / (latest.time - pos.time);
+			hui.log(speed);
+			latest = pos;
+*/			
 			if (!moved && options.onBeforeMove) {
 				options.onBeforeMove(e);
 			}
@@ -2265,7 +2280,7 @@ hui.drag = {
 
 /** @constructor
  * A preloader for images
- * Events: imageDidLoad(index), imageDidGiveError(index), imageDidAbort(index)
+ * Events: imageDidLoad(index), imageDidGiveError(index), imageDidAbort(index), allImagesDidLoad
  * @param options {context:«prefix for urls»}
  */
 hui.Preloader = function(options) {
