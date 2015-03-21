@@ -25,7 +25,7 @@ hui.ui.TextField = function(options) {
 	this.placeholder = hui.get.firstByClass(this.element,'hui_field_placeholder');
 	this.value = this.input.value;
     this.modified = false;
-	this._addBehavior();
+	this._attach();
 }
 
 
@@ -69,29 +69,34 @@ hui.ui.TextField.create = function(options) {
 }
 
 hui.ui.TextField.prototype = {
-	_addBehavior : function() {
+	_attach : function() {
 		if (this.placeholder) {
 			var self = this;
 			hui.ui.onReady(function() {
 				window.setTimeout(function() {
 					self.value = self.input.value;
 					self._updateClass();
-				},500);
+				}, 500);
 			});
 		}
-		hui.ui.addFocusClass({element:this.input,classElement:this.element,'class':'hui_field_focused',widget:this});
-		hui.listen(this.input,'keyup',this._onKeyUp.bind(this));
-		hui.listen(this.input,'keydown',this._onKeyDown.bind(this));
+		hui.ui.addFocusClass({
+			element: this.input,
+			classElement: this.element,
+			'class': 'hui_field_focused',
+			widget: this
+		});
+		hui.listen(this.input, 'keyup', this._onKeyUp.bind(this));
+		hui.listen(this.input, 'keydown', this._onKeyDown.bind(this));
 		var p = this.element.getElementsByTagName('em')[0];
 		if (p) {
 			this._updateClass();
-			hui.listen(p,'mousedown',function() {
+			hui.listen(p, 'mousedown', function() {
 				window.setTimeout(function() {
 					this.input.focus();
 					this.input.select();
-				}.bind(this)
-			)}.bind(this));
-			hui.listen(p,'mouseup',function() {
+				}.bind(this))
+			}.bind(this));
+			hui.listen(p, 'mouseup', function() {
 				this.input.focus();
 				this.input.select();
 			}.bind(this));
