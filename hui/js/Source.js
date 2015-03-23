@@ -2,7 +2,7 @@
  * @constructor
  */
 hui.ui.Source = function(options) {
-	this.options = hui.override({url:null,parameters:[],lazy:false},options);
+	this.options = hui.override({url:null,dwr:null,parameters:[],lazy:false},options);
 	this.name = options.name;
 	this.data = null;
 	this.parameters = [];
@@ -124,6 +124,20 @@ hui.ui.Source.prototype = {
 					self.end();
 				}
 			});
+		} else if (this.options.dwr) {
+			var pair = this.options.dwr.split('.');
+			var facade = eval(pair[0]);
+			var method = pair[1];
+			var args = facade[method].argumentNames();
+			for (var k=0; k < args.length; k++) {
+				if (this.parameters[k]) {
+					args[k]=this.parameters[k].value===undefined ? null : this.parameters[k].value;
+				}
+			};
+			args[args.length-1]=function(r) {self.parseDWR(r)};
+			this.busy=true;
+			hui.ui.callDelegates(this,'sourceIsBusy');
+			facade[method].apply(facade,args);
 		}
 	},
 	/** @private */
@@ -195,4 +209,13 @@ hui.ui.Source.prototype = {
 	}
 }
 
+// TODO Remove this when DWR support is removed
+if (!Function.prototype.argumentNames) {
+	Function.prototype.argumentNames = function() {
+		var names = this.toString().match(/^[\s\(]*function[^(]*\(([^)]*)\)/)[1]
+			.replace(/\/\/.*?[\r\n]|\/\*(?:.|[\r\n])*?\*\//g, '')
+			.replace(/\s+/g, '').split(',');
+		return names.length == 1 && !names[0] ? [] : names;
+	}
+}
 /* EOF */
