@@ -1718,6 +1718,7 @@ td.hui_layout_bottom
 	overflow: auto;
 	width: 100%;
 	position: relative;
+	-webkit-overflow-scrolling: touch;
 }
 /*
 .hui_overflow::-webkit-scrollbar

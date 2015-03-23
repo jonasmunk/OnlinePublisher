@@ -176,19 +176,22 @@ hui.ui.getAncestors = function(widget) {
 };
 
 hui.ui.getDescendants = function(widgetOrElement) {
-	var desc = [],e = widgetOrElement.getElement ? widgetOrElement.getElement() : widgetOrElement;
-	if (e) {
-		var d = e.getElementsByTagName('*');
-		var o = [];
-		for (var key in hui.ui.objects) {
-			o.push(hui.ui.objects[key]);
-		}
-		for (var i=0; i < d.length; i++) {
-			for (var j=0; j < o.length; j++) {
-				if (d[i]==o[j].element) {
-					desc.push(o[j]);
-				}
+	var desc = [];
+	if (widgetOrElement) {
+		var e = widgetOrElement.getElement ? widgetOrElement.getElement() : widgetOrElement;
+		if (e) {
+			var d = e.getElementsByTagName('*');
+			var o = [];
+			for (var key in hui.ui.objects) {
+				o.push(hui.ui.objects[key]);
 			}
+			for (var i=0; i < d.length; i++) {
+				for (var j=0; j < o.length; j++) {
+					if (d[i]==o[j].element) {
+						desc.push(o[j]);
+					}
+				};
+			};
 		}
 	}
 	return desc;
@@ -639,16 +642,16 @@ hui.ui.positionAtElement = function(element,target,options) {
 //////////////////// Delegating ////////////////////
 
 hui.ui.extend = function(obj,options) {
-	if (!obj.name) {
-		hui.ui.latestObjectIndex++;
-		obj.name = 'unnamed'+hui.ui.latestObjectIndex;
-	}
 	if (options!==undefined) {
 		if (obj.options) {
 			obj.options = hui.override(obj.options,options);
 		}
 		obj.element = hui.get(options.element);
 		obj.name = options.name;
+	}
+	if (!obj.name) {
+		hui.ui.latestObjectIndex++;
+		obj.name = 'unnamed'+hui.ui.latestObjectIndex;
 	}
 	if (hui.ui.objects[obj.name]) {
 		hui.log('Widget replaced: '+obj.name,hui.ui.objects[obj.name]);
