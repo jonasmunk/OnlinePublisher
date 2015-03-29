@@ -138,7 +138,7 @@
                             <xsl:with-param name="name" select="'contact'"/>
                             <xsl:with-param name="default">
         						<p><strong class="layout_info_name">Jonas Brinkmann Munk</strong></p>
-        						<p><a href="mailto:jonasmunk@me.com" class="common"><span>jonasmunk@me.com</span></a></p>
+        						<p><a href="mailto:jonasmunk@mac.com" class="common"><span>jonasmunk@mac.com</span></a></p>
         						<p><a href="tel:004528776365" class="layout_info_phone">+45 28 77 63 65</a></p>
         						<p><strong class="layout_info_name">Kenni Graversen</strong></p>
         						<p><a href="mailto:gr@versen.dk" class="common"><span>gr@versen.dk</span></a></p>
