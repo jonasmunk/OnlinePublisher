@@ -14,6 +14,7 @@
 
 .hui_imageviewer_inner_viewer
 {
+	transform: translate3d(0,0,0);
 }
 
 .hui_imageviewer_status
@@ -35,25 +36,14 @@
 	background: url('../gfx/sad_mac.png') center center no-repeat;
 }
 
-.hui_imageviewer_controller
-{
-	height: 50px;
-	width: 180px;
-	position: absolute;
-	margin-top: -70px;
-	background: url('../gfx/overlay.png') left top no-repeat;
-}
-
-.hui_imageviewer_controller div
-{
-	height: 50px;
-	background: url('../gfx/overlay.png') right -50px no-repeat;
-}
-
-.hui_imageviewer_controller div div
-{
-	background: url('../gfx/overlay.png') left -100px repeat-x;
-	margin: 0 10px;
+.hui_imageviewer_controller {
+    height: 45px;
+    width: 160px;
+    position: absolute;
+    margin-top: -70px;
+    background: rgba(0,0,0,.5);
+    border-radius: 5px;
+    padding: 0 5px;
 }
 
 .hui_imageviewer_controller a
