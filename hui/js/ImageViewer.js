@@ -82,7 +82,7 @@ hui.ui.ImageViewer.create = function(options) {
 		'<a class="hui_imageviewer_next"></a>'+
 		'<a class="hui_imageviewer_close"></a>'+
 		'</div></div></div>'});
-	var box = options.box = hui.ui.Box.create({absolute:true,modal:true,closable:true});
+	var box = options.box = hui.ui.Box.create({variant:'plain',absolute:true,modal:true,closable:true});
 	box.add(element);
 	box.addToDocument();
 	return new hui.ui.ImageViewer(options);
@@ -145,6 +145,7 @@ hui.ui.ImageViewer.prototype = {
 	},
 	_attachDrag : function() {
 		var initial = 0;
+		var left = 0;
 		var scrl = 0;
 		var viewer = this.nodes.viewer;
 		var inner = this.nodes.innerViewer;
@@ -159,7 +160,8 @@ hui.ui.ImageViewer.prototype = {
 				hui.log('max='+max)
 			}.bind(this),
 			onMove : function(e) {
-				var pos = (scrl - (initial - e.getLeft()));
+				left = e.getLeft();
+				var pos = (scrl - (initial - left));
 				if (pos > 0) {
 					pos = (Math.exp(pos * -0.013) -1) * -80;
 				}
@@ -170,6 +172,7 @@ hui.ui.ImageViewer.prototype = {
 				inner.style.marginLeft = pos + 'px';
 			}.bind(this),
 			onAfterMove : function() {
+				hui.log(initial - left);
 				var num = Math.round(this.position * -1 / this.width);
 				this.index = num;
 				this._goToImage(true,num,false,true);
@@ -435,9 +438,9 @@ hui.ui.ImageViewer.prototype = {
 	previous : function(user) {
 		var num = 1;
 		this.index--;
-		if (this.index<0) {
-			this.index=this.images.length-1;
-			num = this.images.length-1;
+		if (this.index < 0) {
+			this.index = this.images.length - 1;
+			num = this.images.length - 1;
 		}
 		this._goToImage(true,num,user);
 		this._resetPlay();
@@ -449,8 +452,8 @@ hui.ui.ImageViewer.prototype = {
 		var num = 1;
 		this.index++;
 		if (this.index==this.images.length) {
-			this.index=0;
-			num = this.images.length-1;
+			this.index = 0;
+			num = this.images.length - 1;
 		}
 		this._goToImage(true,num,user);
 		this._resetPlay();

@@ -6,11 +6,10 @@ hui.ui.Box = function(options) {
 	this.options = hui.override({},options);
 	this.name = options.name;
 	this.element = hui.get(options.element);
-	this.body = hui.get.firstByClass(this.element,'hui_box_body');
-	this.close = hui.get.firstByClass(this.element,'hui_box_close');
+  hui.collect(this.nodes,this.element);
 	this.visible = !this.options.absolute;
-	if (this.close) {
-		hui.listen(this.close,'click',this._close.bind(this));
+	if (this.nodes.close) {
+		hui.listen(this.nodes.close,'click',this._close.bind(this));
 	}
 	hui.ui.extend(this);
 };
@@ -21,24 +20,45 @@ hui.ui.Box = function(options) {
  */
 hui.ui.Box.create = function(options) {
 	options = options || {};
-	options.element = hui.build('div',{
-		'class' : options.absolute ? 'hui_box hui_box_absolute' : 'hui_box',
-		html : (options.closable ? '<a class="hui_box_close" href="#"></a>' : '')+
-			'<div class="hui_box_top"><div><div></div></div></div>'+
-			'<div class="hui_box_middle"><div class="hui_box_middle">'+
-			(options.title ? '<div class="hui_box_header"><strong class="hui_box_title">'+hui.string.escape(hui.ui.getTranslated(options.title))+'</strong></div>' : '')+
-			'<div class="hui_box_body" style="'+
+  var variant = options.variant || 'standard';
+  var complex = variant !== 'plain';
+  var html = (options.closable ? '<a class="hui_box_close hui_box_close_' + variant + '" href="#"></a>' : '');
+  if (complex) {
+    html += '<div class="hui_box_top"><div><div></div></div></div>'+
+      '<div class="hui_box_middle"><div class="hui_box_middle">';
+  }
+  if (options.title) {
+    html+='<div class="hui_box_header"><strong class="hui_box_title">'+hui.string.escape(hui.ui.getTranslated(options.title))+'</strong></div>';
+  }
+  html += '<div class="hui_box_body" style="'+
 			(options.padding ? 'padding: '+options.padding+'px;' : '')+
 			(options.width ? 'width: '+options.width+'px;' : '')+
-			'"></div>'+
-			'</div></div>'+
-			'<div class="hui_box_bottom"><div><div></div></div></div>',
+  '"></div>';
+  if (complex) {
+    html += '</div></div>'+
+      '<div class="hui_box_bottom"><div><div></div></div></div>';
+  }
+
+	options.element = hui.build('div',{
+		'class' : 'hui_box hui_box_' + variant,
+		html : html,
 		style : options.width ? options.width+'px' : null
 	});
+  if (options.absolute) {
+    hui.cls.add(options.element,'hui_box_absolute');
+  }
+  if (variant) {
+    hui.cls.add(options.element,'hui_box_' + variant);
+  } 
 	return new hui.ui.Box(options);
 };
 
 hui.ui.Box.prototype = {
+  nodes : {
+  	body : 'hui_box_body',
+  	close : 'hui_box_close'
+  },
+  
 	_close : function(e) {
 		hui.stop(e);
 		this.hide();
@@ -59,10 +79,11 @@ hui.ui.Box.prototype = {
 	 * Adds a child widget or node
 	 */
 	add : function(widget) {
+    var body = this.nodes.body;
 		if (widget.getElement) {
-			this.body.appendChild(widget.getElement());
+			body.appendChild(widget.getElement());
 		} else {
-			this.body.appendChild(widget);
+			body.appendChild(widget);
 		}
 	},
 	/**
