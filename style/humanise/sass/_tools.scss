@@ -10,7 +10,7 @@ $line-color: #eee;
 }
 
 @mixin when($size:all,$type:'deferred') {
-  @if ($target==$type) {
+  @if ($target==$type or $target==editor) {
     @if ($size=='all') {
       @content;
     }

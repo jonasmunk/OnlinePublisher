@@ -4657,7 +4657,7 @@ hui.ui.ImageViewer.create = function(options) {
 		'<a class="hui_imageviewer_next"></a>'+
 		'<a class="hui_imageviewer_close"></a>'+
 		'</div></div></div>'});
-	var box = options.box = hui.ui.Box.create({absolute:true,modal:true,closable:true});
+	var box = options.box = hui.ui.Box.create({variant:'plain',absolute:true,modal:true,closable:true});
 	box.add(element);
 	box.addToDocument();
 	return new hui.ui.ImageViewer(options);
@@ -4695,14 +4695,16 @@ hui.ui.ImageViewer.prototype = {
 		}
 		this._keyListener = function(e) {
 			e = hui.event(e);
-			if (e.rightKey) {
-				self.next(true);
-			} else if (e.leftKey) {
-				self.previous(true);
-			} else if (e.escapeKey) {
+			if (e.escapeKey) {
 				self.hide();
-			} else if (e.returnKey) {
-				self.playOrPause();
+			} else if (!self.zoomed) {
+				if (e.rightKey) {
+					self.next(true);
+				} else if (e.leftKey) {
+					self.previous(true);
+				} else if (e.returnKey) {
+					self.playOrPause();
+				}				
 			}
 		},
 		hui.listen(this.nodes.viewer,'mousemove',this._onMouseMove.bind(this));
@@ -4718,8 +4720,16 @@ hui.ui.ImageViewer.prototype = {
 			}
 		}.bind(this));
 	},
+	_draw : function(pos) {
+		if (hui.browser.webkit) {
+			this.nodes.innerViewer.style.webkitTransform = 'translate3d(' + this.position + 'px,0,0)';			
+		} else {
+			this.nodes.innerViewer.style.marginLeft = this.position + 'px';
+		}
+	},
 	_attachDrag : function() {
 		var initial = 0;
+		var left = 0;
 		var scrl = 0;
 		var viewer = this.nodes.viewer;
 		var inner = this.nodes.innerViewer;
@@ -4731,10 +4741,10 @@ hui.ui.ImageViewer.prototype = {
 				initial = e.getLeft();
 				scrl = this.position;
 				max = (this.images.length-1) * this.width * -1;
-				hui.log('max='+max)
 			}.bind(this),
 			onMove : function(e) {
-				var pos = (scrl - (initial - e.getLeft()));
+				left = e.getLeft();
+				var pos = (scrl - (initial - left));
 				if (pos > 0) {
 					pos = (Math.exp(pos * -0.013) -1) * -80;
 				}
@@ -4742,11 +4752,20 @@ hui.ui.ImageViewer.prototype = {
 					pos = (Math.exp((pos - max) * 0.013) -1) * 80 + max;
 				}
 				this.position = pos;
-				inner.style.marginLeft = pos + 'px';
+				this._draw();
 			}.bind(this),
 			onAfterMove : function() {
-				var num = Math.round(this.position * -1 / this.width);
-				this.index = num;
+				var func = (initial - left) < 0 ? Math.floor : Math.ceil;
+				this.index = func(this.position * -1 / this.width);
+				var num = this.images.length - 1;
+				if (this.index==this.images.length) {
+					this.index = 0;
+				} else if (this.index < 0) {
+					this.index = this.images.length - 1;
+				} else {
+					num = 1;
+				}
+				
 				this._goToImage(true,num,false,true);
 			}.bind(this),
 			onNotMoved : this._zoom.bind(this)
@@ -4811,24 +4830,21 @@ hui.ui.ImageViewer.prototype = {
 				hui.style.set(element,{width: (this.width + this.options.margin) + 'px',height : (this.height-1)+'px' });
 				this.nodes.innerViewer.appendChild(element);
 			};
-			if (this._shouldShowController()) {
-				this.nodes.controller.style.display='block';
-			} else {
-				this.nodes.controller.style.display='none';
-			}
+			this.nodes.controller.style.display = this._shouldShowController() ? 'block' : 'none';
 			this.dirty = false;
 			this._preload();
 		}
 	},
 	_shouldShowController : function() {
-		return this.images.length>1;
+		return this.images.length > 1;
 	},
 	_goToImage : function(animate,num,user,drag) {
+		var initial = this.position;
 		var target = this.position = this.index * (this.width + this.options.margin) * -1;
 		if (animate) {
 			var duration, ease;
 			if (drag) {
-				duration = 200;
+				duration = 200 * num;
 				ease = hui.ease.fastSlow;
 				ease = hui.ease.quadOut;
 			}
@@ -4848,9 +4864,13 @@ hui.ui.ImageViewer.prototype = {
 				css : {marginLeft : target + 'px'}, 
 				duration : duration,
 				ease : ease
+				,$render : function(node,v) {
+					this.position = initial + (target - initial) * v;
+					this._draw();
+				}.bind(this)
 			});
 		} else {
-			this.nodes.innerViewer.style.marginLeft = target + 'px';
+			this._draw();
 		}
 		this._drawText();
 	},
@@ -4887,10 +4907,22 @@ hui.ui.ImageViewer.prototype = {
 		this._calculateSize();
 		this._updateUI();
 		var margin = this.options.margin;
-		hui.style.set(this.element, {width:(this.width+margin)+'px',height:(this.height+margin*2-1)+'px'});
-		hui.style.set(this.nodes.viewer, {width:(this.width+margin)+'px',height:(this.height-1)+'px'});
-		hui.style.set(this.nodes.innerViewer, {width:((this.width+margin)*this.images.length)+'px',height:(this.height-1)+'px'});
-		hui.style.set(this.nodes.controller, {marginLeft:((this.width-180)/2+margin*0.5)+'px',display:'none'});
+		hui.style.set(this.element, {
+			width: (this.width + margin) + 'px',
+			height: (this.height + margin * 2 - 1) + 'px'
+		});
+		hui.style.set(this.nodes.viewer, {
+			width: (this.width + margin) + 'px',
+			height: (this.height - 1) + 'px'
+		});
+		hui.style.set(this.nodes.innerViewer, {
+			width: ((this.width + margin) * this.images.length) + 'px',
+			height: (this.height - 1) + 'px'
+		});
+		hui.style.set(this.nodes.controller, {
+			marginLeft: ((this.width - 160) / 2 + margin * 0.5) + 'px',
+			display: 'none'
+		});
 		this.box.show();
 		this._goToImage(false,0,false);
 		hui.listen(document,'keydown',this._keyListener);
@@ -4928,6 +4960,7 @@ hui.ui.ImageViewer.prototype = {
 	_hide : function() {
 		this.pause();
 		this.box.hide();
+		this._endZoom();
 		hui.unListen(document,'keydown',this._keyListener);
 		this.visible = false;
 		this._setHash(false);	
@@ -5010,9 +5043,9 @@ hui.ui.ImageViewer.prototype = {
 	previous : function(user) {
 		var num = 1;
 		this.index--;
-		if (this.index<0) {
-			this.index=this.images.length-1;
-			num = this.images.length-1;
+		if (this.index < 0) {
+			this.index = this.images.length - 1;
+			num = this.images.length - 1;
 		}
 		this._goToImage(true,num,user);
 		this._resetPlay();
@@ -5024,8 +5057,8 @@ hui.ui.ImageViewer.prototype = {
 		var num = 1;
 		this.index++;
 		if (this.index==this.images.length) {
-			this.index=0;
-			num = this.images.length-1;
+			this.index = 0;
+			num = this.images.length - 1;
 		}
 		this._goToImage(true,num,user);
 		this._resetPlay();
@@ -5084,10 +5117,12 @@ hui.ui.ImageViewer.prototype = {
 	
 	
 	// Zooming ...
+	
+	zoomed : false,
 
 	_zoom : function(e) {
 		var img = this.images[this.index];
-		if (img.width<=this.width && img.height<=this.height) {
+		if (img.width <= this.width && img.height <= this.height) {
 			return; // Don't zoom if small
 		}
 		if (!this.zoomer) {
@@ -5097,28 +5132,34 @@ hui.ui.ImageViewer.prototype = {
 			});
 			this.element.insertBefore(this.zoomer,hui.dom.firstChild(this.element));
 			hui.listen(this.zoomer,'mousemove',this._onZoomMove.bind(this));
-			hui.listen(this.zoomer,'click',function() {
-				this.zoomer.style.display='none';
-			}.bind(this));
+			hui.listen(this.zoomer,'click',this._endZoom.bind(this));
 		}
+		this._hideController();
 		this.pause();
 		var size = this._getLargestSize({width:2000,height:2000},img);
 		var url = hui.ui.resolveImageUrl(this,img,size.width,size.height);
-		this.zoomer.innerHTML = '<div style="width:'+size.width+'px;height:'+size.height+'px; margin: 0 auto;"><img src="'+url+'" style="margin-top: '+ Math.max(0,Math.round((this.nodes.viewer.clientHeight-size.height)/2)) + 'px" /></div>';
+		var top = Math.max(0, Math.round((this.nodes.viewer.clientHeight - size.height) / 2));
+		this.zoomer.innerHTML = '<div style="width:'+size.width+'px;height:'+size.height+'px; margin: 0 auto;"><img src="'+url+'" style="margin-top: '+ top + 'px" /></div>';
 		this.zoomer.style.display = 'block';
 		this.zoomInfo = {width:size.width,height:size.height};
 		this._onZoomMove(e);
+		this.zoomed = true;
 	},
 	_onZoomMove : function(e) {
-		e = new hui.Event(e);
 		if (!this.zoomInfo) {
 			return;
 		}
-		var offset = {left:hui.position.getLeft(this.zoomer),top:hui.position.getTop(this.zoomer)};
-		var x = (e.getLeft()-offset.left)/this.zoomer.clientWidth*(this.zoomInfo.width-this.zoomer.clientWidth);
-		var y = (e.getTop()-offset.top)/this.zoomer.clientHeight*(this.zoomInfo.height-this.zoomer.clientHeight);
+		var offset = hui.position.get(this.zoomer);
+		e = new hui.Event(e);
+		var x = (e.getLeft() - offset.left) / this.zoomer.clientWidth * (this.zoomInfo.width - this.zoomer.clientWidth);
+		var y = (e.getTop() - offset.top) / this.zoomer.clientHeight * (this.zoomInfo.height - this.zoomer.clientHeight);
+
 		this.zoomer.scrollLeft = x;
 		this.zoomer.scrollTop = y;
+	},
+	_endZoom : function() {
+		this.zoomer.style.display='none';
+		this.zoomed = false;
 	}
 	
 }
@@ -5133,11 +5174,10 @@ hui.ui.Box = function(options) {
 	this.options = hui.override({},options);
 	this.name = options.name;
 	this.element = hui.get(options.element);
-	this.body = hui.get.firstByClass(this.element,'hui_box_body');
-	this.close = hui.get.firstByClass(this.element,'hui_box_close');
+  hui.collect(this.nodes,this.element);
 	this.visible = !this.options.absolute;
-	if (this.close) {
-		hui.listen(this.close,'click',this._close.bind(this));
+	if (this.nodes.close) {
+		hui.listen(this.nodes.close,'click',this._close.bind(this));
 	}
 	hui.ui.extend(this);
 };
@@ -5148,24 +5188,45 @@ hui.ui.Box = function(options) {
  */
 hui.ui.Box.create = function(options) {
 	options = options || {};
-	options.element = hui.build('div',{
-		'class' : options.absolute ? 'hui_box hui_box_absolute' : 'hui_box',
-		html : (options.closable ? '<a class="hui_box_close" href="#"></a>' : '')+
-			'<div class="hui_box_top"><div><div></div></div></div>'+
-			'<div class="hui_box_middle"><div class="hui_box_middle">'+
-			(options.title ? '<div class="hui_box_header"><strong class="hui_box_title">'+hui.string.escape(hui.ui.getTranslated(options.title))+'</strong></div>' : '')+
-			'<div class="hui_box_body" style="'+
+  var variant = options.variant || 'standard';
+  var complex = variant !== 'plain';
+  var html = (options.closable ? '<a class="hui_box_close hui_box_close_' + variant + '" href="#"></a>' : '');
+  if (complex) {
+    html += '<div class="hui_box_top"><div><div></div></div></div>'+
+      '<div class="hui_box_middle"><div class="hui_box_middle">';
+  }
+  if (options.title) {
+    html+='<div class="hui_box_header"><strong class="hui_box_title">'+hui.string.escape(hui.ui.getTranslated(options.title))+'</strong></div>';
+  }
+  html += '<div class="hui_box_body" style="'+
 			(options.padding ? 'padding: '+options.padding+'px;' : '')+
 			(options.width ? 'width: '+options.width+'px;' : '')+
-			'"></div>'+
-			'</div></div>'+
-			'<div class="hui_box_bottom"><div><div></div></div></div>',
+  '"></div>';
+  if (complex) {
+    html += '</div></div>'+
+      '<div class="hui_box_bottom"><div><div></div></div></div>';
+  }
+
+	options.element = hui.build('div',{
+		'class' : 'hui_box hui_box_' + variant,
+		html : html,
 		style : options.width ? options.width+'px' : null
 	});
+  if (options.absolute) {
+    hui.cls.add(options.element,'hui_box_absolute');
+  }
+  if (variant) {
+    hui.cls.add(options.element,'hui_box_' + variant);
+  } 
 	return new hui.ui.Box(options);
 };
 
 hui.ui.Box.prototype = {
+  nodes : {
+  	body : 'hui_box_body',
+  	close : 'hui_box_close'
+  },
+  
 	_close : function(e) {
 		hui.stop(e);
 		this.hide();
@@ -5186,10 +5247,11 @@ hui.ui.Box.prototype = {
 	 * Adds a child widget or node
 	 */
 	add : function(widget) {
+    var body = this.nodes.body;
 		if (widget.getElement) {
-			this.body.appendChild(widget.getElement());
+			body.appendChild(widget.getElement());
 		} else {
-			this.body.appendChild(widget);
+			body.appendChild(widget);
 		}
 	},
 	/**

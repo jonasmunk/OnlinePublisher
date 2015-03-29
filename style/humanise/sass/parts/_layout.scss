@@ -54,7 +54,7 @@
   }
 
   .layout_inner_content {
-  	padding: 10px;
+	  padding: 10px;
   }
 }
 
@@ -76,9 +76,13 @@
 }
 
 @include when(560px,inline) {
+
+    .layout_inner_content {
+  	  padding: 20px 0;
+    }
 	
-	.layout_inner_content {
-		padding: 20px;
+	.layout_inner_content_sidebar {
+		padding: 20px 20px 20px 0;
 	}
 	
 	.layout_sub_navigation {
@@ -108,7 +112,7 @@
 		font-size: 12pt;
 		line-height: 26px;
 		border-bottom: none;
-    border-left: 1px solid $line-color;
+		border-left: 1px solid $line-color;
 		
 		> li {
 			display: block;
@@ -184,12 +188,13 @@
 
 @include when(1000px,inline) {
 	
-  .layout_sub_navigation, .layout_inner_content {
-    padding-left: 0px;
-  }
-  .layout_sub_navigation li:first-child {
-  margin-left: -5px;
-  }
+	.layout_sub_navigation, .layout_inner_content {
+		padding-left: 0px;
+	}
+	
+	.layout_sub_navigation li:first-child {
+		margin-left: -5px;
+	}
 }
 
 @include when(1000px) {

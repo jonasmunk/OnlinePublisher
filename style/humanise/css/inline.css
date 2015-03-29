@@ -39,9 +39,9 @@ p.common, ul.common {
 
 .retina.webkit a.common {
   text-decoration: none;
-  background-image: -moz-linear-gradient(top, transparent 99%, rgba(0, 0, 0, 0.5) 99%);
-  background-image: -webkit-linear-gradient(top, transparent 98%, rgba(0, 0, 0, 0.5) 98%);
-  background-image: linear-gradient(top, transparent 98%, rgba(0, 0, 0, 0.5) 98%);
+  background-image: -moz-linear-gradient(top, rgba(0, 0, 0, 0) 99%, rgba(0, 0, 0, 0.5) 99%);
+  background-image: -webkit-linear-gradient(top, rgba(0, 0, 0, 0) 98%, rgba(0, 0, 0, 0.5) 98%);
+  background-image: linear-gradient(top, rgba(0, 0, 0, 0) 98%, rgba(0, 0, 0, 0.5) 98%);
   background-repeat: repeat-x; }
 
 .layout_menu {
@@ -124,7 +124,7 @@ p.common, ul.common {
   margin: 0;
   padding: 5px 5px;
   list-style: none;
-  border-bottom: 1px solid #eee; }
+  border-bottom: 1px solid #eeeeee; }
 .layout_sub_navigation > li {
   display: inline-block; }
 .layout_sub_navigation > li > a {
@@ -138,7 +138,7 @@ p.common, ul.common {
   margin: 0;
   padding: 5px 5px;
   list-style: none;
-  border-bottom: 1px solid #eee; }
+  border-bottom: 1px solid #eeeeee; }
 .layout_side_navigation > li {
   display: inline-block; }
 .layout_side_navigation > li > a {
@@ -153,7 +153,10 @@ p.common, ul.common {
 
 @media screen and (min-width: 560px) {
   .layout_inner_content {
-    padding: 20px; }
+    padding: 20px 0; }
+
+  .layout_inner_content_sidebar {
+    padding: 20px 20px 20px 0; }
 
   .layout_sub_navigation {
     padding: 5px 15px; } }

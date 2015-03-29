@@ -251,83 +251,108 @@ div.hui_curtain {
 	top: 0;
 	left: 0
 }
-.hui_imageviewer {
+.hui_imageviewer
+{
 	background: #fff;
-	font: 10pt "Lucida Grande","Lucida Sans Unicode",Verdana,sans-serif;
-	text-align: left
+	font: 10pt "Lucida Grande", "Lucida Sans Unicode", Verdana, sans-serif;
+	text-align: left;
 }
-.hui_imageviewer_viewer {
+
+.hui_imageviewer_viewer
+{
 	width: 500px;
 	height: 360px;
-	overflow: hidden
+	overflow: hidden;
 }
-.hui_imageviewer_status {
+
+.hui_imageviewer_inner_viewer
+{
+	transform: translate3d(0,0,0);
+}
+
+.hui_imageviewer_status
+{
 	position: absolute;
 	color: #666;
 	margin-top: -21px;
-	margin-left: 5px
+	margin-left: 5px;
 }
-.hui_imageviewer_image {
+
+.hui_imageviewer_image
+{
 	float: left;
-	background: url('/hui/gfx/spinner.gif') center center no-repeat
+	background: url('../gfx/spinner.gif') center center no-repeat;
 }
-.hui_imageviewer_image_error,.hui_imageviewer_image_abort {
-	background: url('/hui/gfx/sad_mac.png') center center no-repeat
+
+.hui_imageviewer_image_error, .hui_imageviewer_image_abort
+{
+	background: url('../gfx/sad_mac.png') center center no-repeat;
 }
-div.hui_imageviewer_controller {
-	height: 50px;
-	width: 180px;
-	position: absolute;
-	margin-top: -70px;
-	background: url('/hui/gfx/overlay.png') left top no-repeat
+
+.hui_imageviewer_controller {
+    height: 45px;
+    width: 160px;
+    position: absolute;
+    margin-top: -70px;
+    background: rgba(0,0,0,.5);
+    border-radius: 5px;
+    padding: 0 5px;
 }
-div.hui_imageviewer_controller div {
-	height: 50px;
-	background: url('/hui/gfx/overlay.png') right -50px no-repeat
-}
-div.hui_imageviewer_controller div div {
-	background: url('/hui/gfx/overlay.png') left -100px repeat-x;
-	margin: 0 10px
-}
-div.hui_imageviewer_controller a {
+
+.hui_imageviewer_controller a
+{
 	float: left;
 	width: 40px;
 	height: 25px;
-	margin: 10px 0 0;
-	background-image: url('/hui/gfx/imageviewer_controls.png');
+	margin: 10px 0px 0;
+	background-image: url('../gfx/imageviewer_controls.png');
 	background-repeat: no-repeat;
-	cursor: pointer
+	cursor: pointer;
 }
-.hui_imageviewer_previous {
-	background-position: 7px -75px
+
+.hui_imageviewer_previous
+{
+	background-position: 7px -75px;
 }
-.hui_imageviewer_next {
-	background-position: 7px -50px
+
+.hui_imageviewer_next
+{
+	background-position: 7px -50px;
 }
-.hui_imageviewer_play {
-	background-position: 7px 0
+
+.hui_imageviewer_play
+{
+	background-position: 7px 0;
 }
-.hui_imageviewer_pause {
-	background-position: 7px -25px
+
+.hui_imageviewer_pause
+{
+	background-position: 7px -25px;
 }
-.hui_imageviewer_close {
-	background-position: 7px -100px
+
+.hui_imageviewer_close
+{
+	background-position: 7px -100px;
 }
-div.hui_imageviewer_text {
+
+.hui_imageviewer_text
+{
 	height: 20px;
 	position: absolute;
 	line-height: 20px;
 	margin-left: 2px;
 	margin-top: -22px;
 	padding: 0 5px;
-	background: #fff
+	background: #fff;
 }
-div.hui_imageviewer_zoomer {
+
+.hui_imageviewer_zoomer
+{
 	position: absolute;
 	overflow: hidden;
 	z-index: 100;
 	cursor: crosshair;
-	background: url('/hui/gfx/spinner.gif') center center no-repeat
+	background: url('../gfx/spinner.gif') center center no-repeat;
 }
 textarea.hui_editor_header {
 	background: 0;
@@ -450,153 +475,227 @@ div.hui_overlay_light div.hui_inner_overlay {
 div.hui_overlay_light div.hui_overlay_icon {
 	margin-top: 2px
 }
-div.hui_box {
+/************************** Box *************************/
+
+.hui_box
+{
 	margin: 0 auto;
-	text-align: left
+	text-align: left;
 }
-a.hui_box_close {
+
+.hui_box_close
+{
 	width: 29px;
 	height: 31px;
-	background: url('/hui/gfx/box_close.png') left top no-repeat;
+	background: url('../gfx/box_close.png') left top no-repeat;
 	position: absolute;
 	margin: -10px 0 0 -10px;
-	z-index: 200
+	z-index: 200;
 }
-a.hui_box_close:hover {
-	background-position: 0 -31px
+
+.hui_box_close:hover
+{
+	background-position: 0 -31px;
 }
-a.hui_box_close:focus {
+
+.hui_box_close:focus
+{
 	background-position: 0 -62px;
-	outline: 0
+	outline: none;
 }
-a.hui_box_close:focus:hover {
+
+.hui_box_close:focus:hover
+{
 	background-position: 0 -93px;
-	outline: 0
+	outline: none;
 }
-div.hui_box_absolute {
+
+.hui_box_absolute
+{
 	position: absolute;
 	left: 50%;
 	top: -10000px;
 	margin-left: -1000px;
-	visibility: hidden
+	visibility: hidden;
 }
-div.hui_box_top {
+
+/****************************** Plain ****************************/
+
+.hui_box_plain
+{
+    box-shadow: 0 5px 20px rgba(0,0,0,.3);
+}
+
+.hui_box_close_plain
+{
+	margin: -15px 0 0 -15px;
+}
+
+/****************************** Standard ****************************/
+
+.hui_box_top
+{
 	height: 5px;
-	background: url('/hui/gfx/box_shadow.png') left top no-repeat;
-	padding-left: 18px
+	background: url('../gfx/box_shadow.png') left top no-repeat;
+	padding-left: 18px;
 }
-div.hui_box_top div {
+
+.hui_box_top div
+{
 	height: 5px;
-	background: url('/hui/gfx/box_shadow.png') right -5px no-repeat;
-	padding-right: 18px
+	background: url('../gfx/box_shadow.png') right -5px no-repeat;
+	padding-right: 18px;
 }
-div.hui_box_top div div {
-	background: url('/hui/gfx/box_shadow.png') left -10px repeat-x;
-	padding: 0
+
+.hui_box_top div div
+{
+	background: url('../gfx/box_shadow.png') left -10px repeat-x;
+	padding: 0px;
 }
-div.hui_box_bottom {
+
+.hui_box_bottom
+{
 	height: 13px;
-	background: url('/hui/gfx/box_shadow.png') left -15px no-repeat;
-	padding-left: 18px
+	background: url('../gfx/box_shadow.png') left -15px no-repeat;
+	padding-left: 18px;
 }
-div.hui_box_bottom div {
+
+.hui_box_bottom div
+{
 	height: 13px;
-	background: url('/hui/gfx/box_shadow.png') right -28px no-repeat;
-	padding-right: 18px
+	background: url('../gfx/box_shadow.png') right -28px no-repeat;
+	padding-right: 18px;
 }
-div.hui_box_bottom div div {
-	background: url('/hui/gfx/box_shadow.png') left -41px repeat-x;
-	padding: 0
+
+.hui_box_bottom div div
+{
+	background: url('../gfx/box_shadow.png') left -41px repeat-x;
+	padding: 0px;
 }
-div.hui_box_middle {
-	background: url('/hui/gfx/box_shadow.png') left -54px repeat-y;
-	padding-left: 7px
+
+.hui_box_middle
+{
+	background: url('../gfx/box_shadow.png') left -54px repeat-y;
+	padding-left: 7px;
 }
-div.hui_box_middle div.hui_box_middle {
-	background: url('/hui/gfx/box_shadow.png') right -54px repeat-y;
-	padding: 0 7px 0 0
+
+.hui_box_middle .hui_box_middle
+{
+	background: url('../gfx/box_shadow.png') right -54px repeat-y;
+	padding: 0px 7px 0px 0px;
 }
-div.hui_box_body {
-	padding: 0;
-	background: #fff
+
+.hui_box_body
+{
+	padding: 0px;
+	background: #fff;
 }
-div.hui_box_textured div.hui_box_body {
+
+.hui_box_textured .hui_box_body
+{
 	background: #f3f3f3;
-	border: 1px solid #fff
+	border: 1px solid #fff;
 }
-div.hui_box_header {
+
+.hui_box_header
+{
 	height: 58px;
-	background: url('/hui/gfx/box_toolbar.png') left top repeat-x;
+	background: url('../gfx/box_toolbar.png') left top repeat-x;
 	border: 1px solid #b6c1d0;
-	border-width: 0 1px;
-	font-family: "Lucida Grande","Lucida Sans Unicode",sans-serif
+	border-width: 0px 1px;
+	font-family: "Lucida Grande","Lucida Sans Unicode",sans-serif;
 }
-strong.hui_box_title {
+
+.hui_box_title
+{
 	float: left;
 	height: 58px;
 	line-height: 58px;
 	font-size: 12pt;
 	color: #44474c;
 	font-weight: normal;
-	padding: 0 15px;
-	text-shadow: rgba(255,255,255,.5) 0 1px 0
+	padding: 0px 15px;
+	text-shadow: rgba(255,255,255,.5) 0px 1px 0px;
 }
-div.hui_box_header_toolbar strong.hui_box_title {
-	float: right
+
+.hui_box_header_toolbar .hui_box_title
+{
+	float: right;
 }
-div.hui_box_header div.hui_toolbar {
-	float: left
+
+.hui_box_header .hui_toolbar
+{
+	float: left;
 }
-div.hui_box_header div.hui_toolbar_icon_selected {
-	background: url('/hui/gfx/box_toolbar.png') left -174px repeat-x
+
+.hui_box_header a.hui_toolbar_icon_selected
+{
+    background-color: rgba(119, 142, 169, 0.5);
 }
-div.hui_box_header div.hui_toolbar_icon_selected div.hui_toolbar_inner_icon {
-	background: url('/hui/gfx/box_toolbar.png') left -58px no-repeat
-}
-div.hui_box_header div.hui_toolbar_icon_selected div.hui_toolbar_inner_icon div.hui_toolbar_inner_icon {
-	background: url('/hui/gfx/box_toolbar.png') right -116px no-repeat
-}
-div.hui_box_rounded div.hui_box_top,div.hui_box_rounded div.hui_box_top div {
+
+/***************************** Rounded ************************/
+
+
+.hui_box_rounded .hui_box_top,
+.hui_box_rounded .hui_box_top div
+{
 	font-size: 0;
-	background: url('/hui/gfx/box_rounded.png') no-repeat;
+	background: url('../gfx/box_rounded.png') no-repeat;
 	height: 7px;
-	padding: 0
+	padding: 0;
 }
-div.hui_box_rounded div.hui_box_top div {
-	background-position: right -7px
+
+.hui_box_rounded .hui_box_top div
+{
+	background-position: right -7px;
 }
-div.hui_box_rounded div.hui_box_top div div {
+
+.hui_box_rounded .hui_box_top div div
+{
 	background-position: left -14px;
 	background-repeat: repeat-x;
-	margin: 0 8px
+	margin: 0 8px;
 }
-div.hui_box_rounded div.hui_box_bottom,div.hui_box_rounded div.hui_box_bottom div {
+
+.hui_box_rounded .hui_box_bottom,
+.hui_box_rounded .hui_box_bottom div
+{
 	font-size: 0;
-	background: url('/hui/gfx/box_rounded.png') left -21px no-repeat;
+	background: url('../gfx/box_rounded.png') left -21px no-repeat;
 	height: 10px;
-	padding: 0
+	padding: 0;
 }
-div.hui_box_rounded div.hui_box_bottom div {
+
+.hui_box_rounded .hui_box_bottom div
+{
 	background-position: right -31px;
-	padding: 0
+	padding: 0;
 }
-div.hui_box_rounded div.hui_box_bottom div div {
+
+.hui_box_rounded .hui_box_bottom div div
+{
 	background-position: left -41px;
 	background-repeat: repeat-x;
-	margin: 0 8px
+	margin: 0 8px;
 }
-div.hui_box_rounded div.hui_box_middle {
-	background: url('/hui/gfx/box_rounded_middle.png') repeat-y;
-	padding: 0
+
+.hui_box_rounded .hui_box_middle
+{
+	background: url('../gfx/box_rounded_middle.png') repeat-y;
+	padding: 0;
 }
-div.hui_box_rounded div.hui_box_middle div.hui_box_middle {
-	background: url('/hui/gfx/box_rounded_middle.png') right repeat-y
+
+.hui_box_rounded .hui_box_middle .hui_box_middle
+{
+	background: url('../gfx/box_rounded_middle.png') right repeat-y;
 }
-div.hui_box_rounded div.hui_box_body {
+
+.hui_box_rounded .hui_box_body
+{
 	margin: 0 3px;
 	background: #fff;
 	padding: 1px 0;
-	overflow: hidden
+	overflow: hidden;
 }
 div.hui_buttons {
 	overflow: hidden;

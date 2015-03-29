@@ -3939,6 +3939,7 @@ div.hui_boundpanel_light div.hui_boundpanel_arrow_bottom
 
 .hui_imageviewer_inner_viewer
 {
+	transform: translate3d(0,0,0);
 }
 
 .hui_imageviewer_status
@@ -3960,25 +3961,14 @@ div.hui_boundpanel_light div.hui_boundpanel_arrow_bottom
 	background: url('../gfx/sad_mac.png') center center no-repeat;
 }
 
-.hui_imageviewer_controller
-{
-	height: 50px;
-	width: 180px;
-	position: absolute;
-	margin-top: -70px;
-	background: url('../gfx/overlay.png') left top no-repeat;
-}
-
-.hui_imageviewer_controller div
-{
-	height: 50px;
-	background: url('../gfx/overlay.png') right -50px no-repeat;
-}
-
-.hui_imageviewer_controller div div
-{
-	background: url('../gfx/overlay.png') left -100px repeat-x;
-	margin: 0 10px;
+.hui_imageviewer_controller {
+    height: 45px;
+    width: 160px;
+    position: absolute;
+    margin-top: -70px;
+    background: rgba(0,0,0,.5);
+    border-radius: 5px;
+    padding: 0 5px;
 }
 
 .hui_imageviewer_controller a
@@ -4995,13 +4985,13 @@ a.hui_datepicker_next
 
 /************************** Box *************************/
 
-div.hui_box
+.hui_box
 {
 	margin: 0 auto;
 	text-align: left;
 }
 
-a.hui_box_close
+.hui_box_close
 {
 	width: 29px;
 	height: 31px;
@@ -5011,24 +5001,24 @@ a.hui_box_close
 	z-index: 200;
 }
 
-a.hui_box_close:hover
+.hui_box_close:hover
 {
 	background-position: 0 -31px;
 }
 
-a.hui_box_close:focus
+.hui_box_close:focus
 {
 	background-position: 0 -62px;
 	outline: none;
 }
 
-a.hui_box_close:focus:hover
+.hui_box_close:focus:hover
 {
 	background-position: 0 -93px;
 	outline: none;
 }
 
-div.hui_box_absolute
+.hui_box_absolute
 {
 	position: absolute;
 	left: 50%;
@@ -5037,71 +5027,85 @@ div.hui_box_absolute
 	visibility: hidden;
 }
 
-div.hui_box_top
+/****************************** Plain ****************************/
+
+.hui_box_plain
+{
+    box-shadow: 0 5px 20px rgba(0,0,0,.3);
+}
+
+.hui_box_close_plain
+{
+	margin: -15px 0 0 -15px;
+}
+
+/****************************** Standard ****************************/
+
+.hui_box_top
 {
 	height: 5px;
 	background: url('../gfx/box_shadow.png') left top no-repeat;
 	padding-left: 18px;
 }
 
-div.hui_box_top div
+.hui_box_top div
 {
 	height: 5px;
 	background: url('../gfx/box_shadow.png') right -5px no-repeat;
 	padding-right: 18px;
 }
 
-div.hui_box_top div div
+.hui_box_top div div
 {
 	background: url('../gfx/box_shadow.png') left -10px repeat-x;
 	padding: 0px;
 }
 
-div.hui_box_bottom
+.hui_box_bottom
 {
 	height: 13px;
 	background: url('../gfx/box_shadow.png') left -15px no-repeat;
 	padding-left: 18px;
 }
 
-div.hui_box_bottom div
+.hui_box_bottom div
 {
 	height: 13px;
 	background: url('../gfx/box_shadow.png') right -28px no-repeat;
 	padding-right: 18px;
 }
 
-div.hui_box_bottom div div
+.hui_box_bottom div div
 {
 	background: url('../gfx/box_shadow.png') left -41px repeat-x;
 	padding: 0px;
 }
 
-div.hui_box_middle
+.hui_box_middle
 {
 	background: url('../gfx/box_shadow.png') left -54px repeat-y;
 	padding-left: 7px;
 }
 
-div.hui_box_middle div.hui_box_middle
+.hui_box_middle .hui_box_middle
 {
 	background: url('../gfx/box_shadow.png') right -54px repeat-y;
 	padding: 0px 7px 0px 0px;
 }
 
-div.hui_box_body
+.hui_box_body
 {
 	padding: 0px;
 	background: #fff;
 }
 
-div.hui_box_textured div.hui_box_body
+.hui_box_textured .hui_box_body
 {
 	background: #f3f3f3;
 	border: 1px solid #fff;
 }
 
-div.hui_box_header
+.hui_box_header
 {
 	height: 58px;
 	background: url('../gfx/box_toolbar.png') left top repeat-x;
@@ -5110,7 +5114,7 @@ div.hui_box_header
 	font-family: "Lucida Grande","Lucida Sans Unicode",sans-serif;
 }
 
-strong.hui_box_title
+.hui_box_title
 {
 	float: left;
 	height: 58px;
@@ -5122,35 +5126,26 @@ strong.hui_box_title
 	text-shadow: rgba(255,255,255,.5) 0px 1px 0px;
 }
 
-div.hui_box_header_toolbar strong.hui_box_title
+.hui_box_header_toolbar .hui_box_title
 {
 	float: right;
 }
 
-div.hui_box_header div.hui_toolbar
+.hui_box_header .hui_toolbar
 {
 	float: left;
 }
 
-div.hui_box_header div.hui_toolbar_icon_selected
+.hui_box_header a.hui_toolbar_icon_selected
 {
-	background: url('../gfx/box_toolbar.png') left -174px repeat-x;
-}
-
-div.hui_box_header div.hui_toolbar_icon_selected div.hui_toolbar_inner_icon
-{
-	background: url('../gfx/box_toolbar.png') left -58px no-repeat;
-}
-
-div.hui_box_header div.hui_toolbar_icon_selected div.hui_toolbar_inner_icon div.hui_toolbar_inner_icon
-{
-	background: url('../gfx/box_toolbar.png') right -116px no-repeat;
+    background-color: rgba(119, 142, 169, 0.5);
 }
 
 /***************************** Rounded ************************/
 
 
-div.hui_box_rounded div.hui_box_top, div.hui_box_rounded div.hui_box_top div
+.hui_box_rounded .hui_box_top,
+.hui_box_rounded .hui_box_top div
 {
 	font-size: 0;
 	background: url('../gfx/box_rounded.png') no-repeat;
@@ -5158,19 +5153,20 @@ div.hui_box_rounded div.hui_box_top, div.hui_box_rounded div.hui_box_top div
 	padding: 0;
 }
 
-div.hui_box_rounded div.hui_box_top div
+.hui_box_rounded .hui_box_top div
 {
 	background-position: right -7px;
 }
 
-div.hui_box_rounded div.hui_box_top div div
+.hui_box_rounded .hui_box_top div div
 {
 	background-position: left -14px;
 	background-repeat: repeat-x;
 	margin: 0 8px;
 }
 
-div.hui_box_rounded div.hui_box_bottom, div.hui_box_rounded div.hui_box_bottom div
+.hui_box_rounded .hui_box_bottom,
+.hui_box_rounded .hui_box_bottom div
 {
 	font-size: 0;
 	background: url('../gfx/box_rounded.png') left -21px no-repeat;
@@ -5178,31 +5174,31 @@ div.hui_box_rounded div.hui_box_bottom, div.hui_box_rounded div.hui_box_bottom d
 	padding: 0;
 }
 
-div.hui_box_rounded div.hui_box_bottom div
+.hui_box_rounded .hui_box_bottom div
 {
 	background-position: right -31px;
 	padding: 0;
 }
 
-div.hui_box_rounded div.hui_box_bottom div div
+.hui_box_rounded .hui_box_bottom div div
 {
 	background-position: left -41px;
 	background-repeat: repeat-x;
 	margin: 0 8px;
 }
 
-div.hui_box_rounded div.hui_box_middle
+.hui_box_rounded .hui_box_middle
 {
 	background: url('../gfx/box_rounded_middle.png') repeat-y;
 	padding: 0;
 }
 
-div.hui_box_rounded div.hui_box_middle div.hui_box_middle
+.hui_box_rounded .hui_box_middle .hui_box_middle
 {
 	background: url('../gfx/box_rounded_middle.png') right repeat-y;
 }
 
-div.hui_box_rounded div.hui_box_body
+.hui_box_rounded .hui_box_body
 {
 	margin: 0 3px;
 	background: #fff;
