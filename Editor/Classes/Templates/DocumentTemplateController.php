@@ -154,11 +154,17 @@ class DocumentTemplateController extends TemplateController
 
 	static function buildPartContext($pageId) {
 		$context = new PartContext();
-		$context->setLanguage(PageService::getLanguage($pageId));
+        
+        $sql = "SELECT design.unique as design, lower(page.language) as language from page,design where design.object_id = page.design_id and page.id = @int(id)";
+        if ($result = Database::selectFirst($sql,['id' => $pageId])) {
+    		$context->setLanguage($result['language']);
+    		$context->setDesign($result['design']);
+        }
+        
 		
 		//////////////////// Find links ///////////////////
-		$sql = "select link.*,page.path from link left join page on page.id=link.target_id and link.target_type='page' where page_id=".Database::int($pageId)." and source_type='text'";
-		$result = Database::select($sql);
+		$sql = "SELECT link.*,page.path from link left join page on page.id=link.target_id and link.target_type='page' where page_id=@int(id) and source_type='text'";
+		$result = Database::select($sql,['id' => $pageId]);
 		while ($row = Database::next($result)) {
 			$context -> addBuildLink(
 				Strings::escapeSimpleXML($row['source_text']),

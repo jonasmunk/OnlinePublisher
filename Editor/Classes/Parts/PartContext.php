@@ -23,7 +23,7 @@ class PartContext {
 		$this->displayLinks = array();
 		//$this->buildLinks = array();
 		$this->template = 'document';
-		$this->design = 'in2isoft';
+		$this->design = 'basic';
 		$this->buildDecorator = new TextDecorator();
 		$this->buildDecorator->setEmailTags('<link email="{subject}">','</link>');
 		$this->buildDecorator->setHttpTags('<link url="{subject}">','</link>');
