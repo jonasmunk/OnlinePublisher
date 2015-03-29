@@ -1,158 +1,94 @@
-@import url(http://fonts.googleapis.com/css?family=Lato:300,400,700);
-body.editor, .editor .common_font, .editor p.common, .editor ul.common, .editor h1.common, .editor h2.common, .editor h3.common, .editor h4.common, .editor h5.common, .editor h6.common, .editor .part_header, .editor .part_text, .editor div.part_richtext {
-  font-family: Lato,'Helvetica Neue','Helvetica','Arial','Lucida Grande','Lucida Sans Unicode', sans-serif; }
+/*
+Error: Undefined variable: "$target".
+        on line 13 of /Users/jonasmunk/Sites/onlinepublisher/style/humanise/sass/_tools.scss, in `when'
+        from line 1 of /Users/jonasmunk/Sites/onlinepublisher/style/humanise/sass/parts/_part.scss
+        from line 17 of /Users/jonasmunk/Sites/onlinepublisher/style/humanise/sass/editor.scss
 
-.call-to-action {
-  background: #fafafa;
-  border: 1px solid #eee;
-  border-radius: 3px;
-  padding: 20px 10px;
-  text-align: center; }
+8: .editor .part_header,
+9: .editor .part_text,
+10: .editor div.part_richtext
+11: {
+12: 	font-family: Lato,'Helvetica Neue','Helvetica','Arial','Lucida Grande','Lucida Sans Unicode', sans-serif;
+13: }
+14: @import "tools";
+15: @import "parts/call_to_action";
+16: @import "parts/common";
+17: @import "parts/part";
 
-.call-to-action-text {
-  margin: -5px 0 0;
-  color: #666;
-  font-weight: 300;
-  font-size: 32px;
-  line-height: 1; }
-
-.call-to-action-button {
-  background: #3080CB;
-  color: #fff;
-  height: 34px;
-  line-height: 34px;
-  padding: 0 20px;
-  box-sizing: border-box;
-  border: none;
-  border-radius: 3px;
-  display: inline-block;
-  font-size: 18px;
-  margin-top: 20px;
-  text-decoration: none;
-  cursor: pointer; }
-
-.call-to-action-button:hover {
-  background: #206AB0; }
-
-.call-to-action-button:active {
-  -webkit-transform: scale(0.95);
-  outline: none; }
-
-/********************* Common *******************/
-a.common {
-  color: #ddd;
-  color: rgba(0, 0, 0, 0.15);
-  cursor: pointer;
-  font-weight: normal; }
-
-a.common span {
-  color: #0079cd; }
-
-a.common:hover, a.common:hover span {
-  color: #0169b2; }
-
-h1.common {
-  font-weight: 400;
-  color: #324d60; }
-
-p.common, ul.common {
-  font-size: 12pt;
-  line-height: 160%;
-  text-align: justify; }
-
-.retina.webkit a.common {
-  text-decoration: none;
-  background-image: -moz-linear-gradient(top, transparent 99%, rgba(0, 0, 0, 0.5) 99%);
-  background-image: -webkit-linear-gradient(top, transparent 98%, rgba(0, 0, 0, 0.5) 98%);
-  background-image: linear-gradient(top, transparent 98%, rgba(0, 0, 0, 0.5) 98%);
-  background-repeat: repeat-x; }
-
-/************ Headers ***********/
-.part_header {
-  color: #333;
-  font-weight: 300; }
-
-.part_header_1 {
-  color: #3080CB; }
-
-h1.part_header, textarea.part_header_1 {
-  font-size: 38px;
-  line-height: 42px; }
-
-h2.part_header, textarea.part_header_2 {
-  font-size: 19pt;
-  line-height: 21pt;
-  /*font-weight: 400;*/ }
-
-h3.part_header, textarea.part_header_3 {
-  font-size: 14pt;
-  line-height: 16pt;
-  font-weight: 400; }
-
-h4.part_header, textarea.part_header_4, h5.part_header, textarea.part_header_5, h6.part_header, textarea.part_header_6 {
-  font-weight: 400; }
-
-div.part_section_header_3 {
-  padding-bottom: 5px; }
-
-body.windows .part_header {
-  font-weight: normal; }
-
-body.windows h1.part_header {
-  font-weight: 300; }
-
-/************** Poster ************/
-p.part_poster_text {
-  font-size: 14px;
-  font-weight: 300; }
-
-p.part_poster_link {
-  font-size: 14px; }
-
-p.part_poster_title {
-  font-weight: 400; }
-
-/*************** text *************/
-.part_text, div.part_richtext {
-  font-size: 12pt;
-  font-weight: 300;
-  /*letter-spacing: 1px;*/
-  word-spacing: 1px; }
-
-.part_text strong, div.part_richtext strong {
-  color: #000;
-  font-weight: 400; }
-
-div.part_richtext p {
-  margin: 10px 0; }
-
-div.part_listing, textarea.part_listing {
-  font-size: 11pt;
-  font-weight: 300;
-  word-spacing: 1px; }
-
-div.part_listing span.part_listing_first {
-  font-size: 12pt;
-  font-weight: normal; }
-
-body.windows .part_text, body.windows .part_text {
-  font-weight: normal; }
-
-div.part_list h3 {
-  font-weight: normal; }
-
-hr.part_horizontalrule {
-  border: none;
-  border-bottom: solid 1px #DDD; }
-
-div.part_news_item_title {
-  font-size: 10pt;
-  font-weight: 400; }
-.windows div.part_news_item_title {
-  font-weight: bold; }
-
-div.part_news_item_description {
-  font-size: 10pt;
-  font-weight: 300; }
-.windows div.part_news_item_description {
-  font-weight: 400; }
+Backtrace:
+/Users/jonasmunk/Sites/onlinepublisher/style/humanise/sass/_tools.scss:13:in `when'
+/Users/jonasmunk/Sites/onlinepublisher/style/humanise/sass/parts/_part.scss:1
+/Users/jonasmunk/Sites/onlinepublisher/style/humanise/sass/editor.scss:17
+/Library/Ruby/Gems/2.0.0/gems/sass-3.4.11/lib/sass/script/tree/variable.rb:49:in `_perform'
+/Library/Ruby/Gems/2.0.0/gems/sass-3.4.11/lib/sass/script/tree/node.rb:50:in `perform'
+/Library/Ruby/Gems/2.0.0/gems/sass-3.4.11/lib/sass/script/tree/operation.rb:64:in `_perform'
+/Library/Ruby/Gems/2.0.0/gems/sass-3.4.11/lib/sass/script/tree/node.rb:50:in `perform'
+/Library/Ruby/Gems/2.0.0/gems/sass-3.4.11/lib/sass/tree/visitors/perform.rb:297:in `visit_if'
+/Library/Ruby/Gems/2.0.0/gems/sass-3.4.11/lib/sass/tree/visitors/base.rb:36:in `visit'
+/Library/Ruby/Gems/2.0.0/gems/sass-3.4.11/lib/sass/tree/visitors/perform.rb:158:in `block in visit'
+/Library/Ruby/Gems/2.0.0/gems/sass-3.4.11/lib/sass/stack.rb:79:in `block in with_base'
+/Library/Ruby/Gems/2.0.0/gems/sass-3.4.11/lib/sass/stack.rb:115:in `with_frame'
+/Library/Ruby/Gems/2.0.0/gems/sass-3.4.11/lib/sass/stack.rb:79:in `with_base'
+/Library/Ruby/Gems/2.0.0/gems/sass-3.4.11/lib/sass/tree/visitors/perform.rb:158:in `visit'
+/Library/Ruby/Gems/2.0.0/gems/sass-3.4.11/lib/sass/tree/visitors/perform.rb:363:in `block (4 levels) in visit_mixin'
+/Library/Ruby/Gems/2.0.0/gems/sass-3.4.11/lib/sass/tree/visitors/perform.rb:363:in `map'
+/Library/Ruby/Gems/2.0.0/gems/sass-3.4.11/lib/sass/tree/visitors/perform.rb:363:in `block (3 levels) in visit_mixin'
+/Library/Ruby/Gems/2.0.0/gems/sass-3.4.11/lib/sass/tree/visitors/perform.rb:179:in `with_environment'
+/Library/Ruby/Gems/2.0.0/gems/sass-3.4.11/lib/sass/tree/visitors/perform.rb:363:in `block (2 levels) in visit_mixin'
+/Library/Ruby/Gems/2.0.0/gems/sass-3.4.11/lib/sass/tree/visitors/perform.rb:84:in `perform_arguments'
+/Library/Ruby/Gems/2.0.0/gems/sass-3.4.11/lib/sass/tree/visitors/perform.rb:358:in `block in visit_mixin'
+/Library/Ruby/Gems/2.0.0/gems/sass-3.4.11/lib/sass/stack.rb:98:in `block in with_mixin'
+/Library/Ruby/Gems/2.0.0/gems/sass-3.4.11/lib/sass/stack.rb:115:in `with_frame'
+/Library/Ruby/Gems/2.0.0/gems/sass-3.4.11/lib/sass/stack.rb:98:in `with_mixin'
+/Library/Ruby/Gems/2.0.0/gems/sass-3.4.11/lib/sass/tree/visitors/perform.rb:346:in `visit_mixin'
+/Library/Ruby/Gems/2.0.0/gems/sass-3.4.11/lib/sass/tree/visitors/base.rb:36:in `visit'
+/Library/Ruby/Gems/2.0.0/gems/sass-3.4.11/lib/sass/tree/visitors/perform.rb:158:in `block in visit'
+/Library/Ruby/Gems/2.0.0/gems/sass-3.4.11/lib/sass/stack.rb:79:in `block in with_base'
+/Library/Ruby/Gems/2.0.0/gems/sass-3.4.11/lib/sass/stack.rb:115:in `with_frame'
+/Library/Ruby/Gems/2.0.0/gems/sass-3.4.11/lib/sass/stack.rb:79:in `with_base'
+/Library/Ruby/Gems/2.0.0/gems/sass-3.4.11/lib/sass/tree/visitors/perform.rb:158:in `visit'
+/Library/Ruby/Gems/2.0.0/gems/sass-3.4.11/lib/sass/tree/visitors/perform.rb:325:in `block (2 levels) in visit_import'
+/Library/Ruby/Gems/2.0.0/gems/sass-3.4.11/lib/sass/tree/visitors/perform.rb:325:in `map'
+/Library/Ruby/Gems/2.0.0/gems/sass-3.4.11/lib/sass/tree/visitors/perform.rb:325:in `block in visit_import'
+/Library/Ruby/Gems/2.0.0/gems/sass-3.4.11/lib/sass/stack.rb:88:in `block in with_import'
+/Library/Ruby/Gems/2.0.0/gems/sass-3.4.11/lib/sass/stack.rb:115:in `with_frame'
+/Library/Ruby/Gems/2.0.0/gems/sass-3.4.11/lib/sass/stack.rb:88:in `with_import'
+/Library/Ruby/Gems/2.0.0/gems/sass-3.4.11/lib/sass/tree/visitors/perform.rb:322:in `visit_import'
+/Library/Ruby/Gems/2.0.0/gems/sass-3.4.11/lib/sass/tree/visitors/base.rb:36:in `visit'
+/Library/Ruby/Gems/2.0.0/gems/sass-3.4.11/lib/sass/tree/visitors/perform.rb:158:in `block in visit'
+/Library/Ruby/Gems/2.0.0/gems/sass-3.4.11/lib/sass/stack.rb:79:in `block in with_base'
+/Library/Ruby/Gems/2.0.0/gems/sass-3.4.11/lib/sass/stack.rb:115:in `with_frame'
+/Library/Ruby/Gems/2.0.0/gems/sass-3.4.11/lib/sass/stack.rb:79:in `with_base'
+/Library/Ruby/Gems/2.0.0/gems/sass-3.4.11/lib/sass/tree/visitors/perform.rb:158:in `visit'
+/Library/Ruby/Gems/2.0.0/gems/sass-3.4.11/lib/sass/tree/visitors/base.rb:52:in `block in visit_children'
+/Library/Ruby/Gems/2.0.0/gems/sass-3.4.11/lib/sass/tree/visitors/base.rb:52:in `map'
+/Library/Ruby/Gems/2.0.0/gems/sass-3.4.11/lib/sass/tree/visitors/base.rb:52:in `visit_children'
+/Library/Ruby/Gems/2.0.0/gems/sass-3.4.11/lib/sass/tree/visitors/perform.rb:167:in `block in visit_children'
+/Library/Ruby/Gems/2.0.0/gems/sass-3.4.11/lib/sass/tree/visitors/perform.rb:179:in `with_environment'
+/Library/Ruby/Gems/2.0.0/gems/sass-3.4.11/lib/sass/tree/visitors/perform.rb:166:in `visit_children'
+/Library/Ruby/Gems/2.0.0/gems/sass-3.4.11/lib/sass/tree/visitors/base.rb:36:in `block in visit'
+/Library/Ruby/Gems/2.0.0/gems/sass-3.4.11/lib/sass/tree/visitors/perform.rb:186:in `visit_root'
+/Library/Ruby/Gems/2.0.0/gems/sass-3.4.11/lib/sass/tree/visitors/base.rb:36:in `visit'
+/Library/Ruby/Gems/2.0.0/gems/sass-3.4.11/lib/sass/tree/visitors/perform.rb:157:in `visit'
+/Library/Ruby/Gems/2.0.0/gems/sass-3.4.11/lib/sass/tree/visitors/perform.rb:8:in `visit'
+/Library/Ruby/Gems/2.0.0/gems/sass-3.4.11/lib/sass/tree/root_node.rb:36:in `css_tree'
+/Library/Ruby/Gems/2.0.0/gems/sass-3.4.11/lib/sass/tree/root_node.rb:20:in `render'
+/Library/Ruby/Gems/2.0.0/gems/sass-3.4.11/lib/sass/engine.rb:268:in `render'
+/Library/Ruby/Gems/2.0.0/gems/sass-3.4.11/lib/sass/plugin/compiler.rb:492:in `update_stylesheet'
+/Library/Ruby/Gems/2.0.0/gems/sass-3.4.11/lib/sass/plugin/compiler.rb:215:in `block in update_stylesheets'
+/Library/Ruby/Gems/2.0.0/gems/sass-3.4.11/lib/sass/plugin/compiler.rb:209:in `each'
+/Library/Ruby/Gems/2.0.0/gems/sass-3.4.11/lib/sass/plugin/compiler.rb:209:in `update_stylesheets'
+/Library/Ruby/Gems/2.0.0/gems/sass-3.4.11/lib/sass/plugin/compiler.rb:470:in `on_file_changed'
+/Library/Ruby/Gems/2.0.0/gems/sass-3.4.11/lib/sass/plugin/compiler.rb:328:in `block in watch'
+/Library/Ruby/Gems/2.0.0/gems/sass-3.4.11/vendor/listen/lib/listen/listener.rb:252:in `call'
+/Library/Ruby/Gems/2.0.0/gems/sass-3.4.11/vendor/listen/lib/listen/listener.rb:252:in `on_change'
+/Library/Ruby/Gems/2.0.0/gems/sass-3.4.11/vendor/listen/lib/listen/listener.rb:290:in `block in initialize_adapter'
+/Library/Ruby/Gems/2.0.0/gems/sass-3.4.11/vendor/listen/lib/listen/adapter.rb:254:in `call'
+/Library/Ruby/Gems/2.0.0/gems/sass-3.4.11/vendor/listen/lib/listen/adapter.rb:254:in `report_changes'
+/Library/Ruby/Gems/2.0.0/gems/sass-3.4.11/vendor/listen/lib/listen/adapter.rb:323:in `poll_changed_directories'
+/Library/Ruby/Gems/2.0.0/gems/sass-3.4.11/vendor/listen/lib/listen/adapter.rb:299:in `block in start_poller'
+*/
+body:before {
+  white-space: pre;
+  font-family: monospace;
+  content: "Error: Undefined variable: \"$target\".\A         on line 13 of /Users/jonasmunk/Sites/onlinepublisher/style/humanise/sass/_tools.scss, in `when'\A         from line 1 of /Users/jonasmunk/Sites/onlinepublisher/style/humanise/sass/parts/_part.scss\A         from line 17 of /Users/jonasmunk/Sites/onlinepublisher/style/humanise/sass/editor.scss\A \A 8: .editor .part_header,\A 9: .editor .part_text,\A 10: .editor div.part_richtext\A 11: {\A 12: 	font-family: Lato,'Helvetica Neue','Helvetica','Arial','Lucida Grande','Lucida Sans Unicode', sans-serif;\A 13: }\A 14: @import \"tools\";\A 15: @import \"parts/call_to_action\";\A 16: @import \"parts/common\";\A 17: @import \"parts/part\";"; }

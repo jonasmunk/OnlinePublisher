@@ -103,7 +103,7 @@ div.part_list h3 {
 
 hr.part_horizontalrule {
   border: none;
-  border-bottom: solid 1px #DDD; }
+  border-bottom: solid 1px #eee; }
 
 div.part_news_item_title {
   font-size: 10pt;
@@ -352,10 +352,11 @@ div.part_news_item_description {
   .layout_side_navigation {
     list-style: none;
     margin: 20px 0 30px 15px;
-    padding: 10px;
+    padding: 0 10px;
     font-size: 12pt;
     line-height: 26px;
-    background: #f6f6f9; }
+    border-bottom: none;
+    border-left: 1px solid #eee; }
   .layout_side_navigation > li {
     display: block; }
   .layout_side_navigation a {

@@ -1,6 +1,8 @@
 $color: #324d60;
 $background: #f6f6f9;
 
+$line-color: #eee;
+
 @mixin breakpoint($size) {
 	@media screen and (min-width: $size) {
 		@content;
