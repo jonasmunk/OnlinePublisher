@@ -474,7 +474,7 @@ hui.ui.Editor.prototype = {
 			onEnd : function() {
 				
 			}
-		})
+		},e);
 	},
 	_onBeforeDrag : function() {
 		var dragged = this._dragInfo.draggedElement,
