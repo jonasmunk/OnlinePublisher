@@ -107,9 +107,11 @@ class Strings {
     }
 
 	static function htmlNumericEntities(&$str){
-	  return preg_replace('/[^!-%\x27-;=?-~ ]/e', '"&#".ord("$0").chr(59)', $str);
+	  return preg_replace_callback('/[^!-%\x27-;=?-~ ]/', function($matches) {
+          return "&#" . ord($matches[0]) . chr(59);
+      }, $str);
 	}
-	
+    
 	static function escapeXMLBreak($input,$break) {
         $output = Strings::escapeEncodedXML($input);
         $output = str_replace("&#13;&#10;", $break, $output);

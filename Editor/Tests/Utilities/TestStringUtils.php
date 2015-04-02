@@ -14,7 +14,7 @@ if (!isset($GLOBALS['basePath'])) {
 class TestStrings extends UnitTestCase {
     
 	function testTest() {
-		$result = preg_replace("/&#(0|30);/e", '', 'hep &#30; &#0;hey');
+		$result = preg_replace_callback("/&#(0|30);/", function() {return '';}, 'hep &#30; &#0;hey');
 		$this->assertEqual($result,'hep  hey');
 	}
 
@@ -96,6 +96,11 @@ class TestStrings extends UnitTestCase {
 
     function testSummarize() {
 		$this->assertEqual("onc<highlight>e</highlight> upon a tim<highlight>e</highlight>",Strings::summarizeAndHighlight(array("e"),"once upon a time"));
+	}
+
+    function testNumericEntities() {
+        $str = Strings::fromUnicode("Æbleø");
+		$this->assertEqual("&#198;ble&#248;",Strings::htmlNumericEntities($str));
 	}
 	
 	function testInsertEmail() {
