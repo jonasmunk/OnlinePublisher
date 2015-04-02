@@ -9,7 +9,8 @@
  xmlns:o="http://uri.in2isoft.com/onlinepublisher/class/object/1.0/"
  xmlns:util="http://uri.in2isoft.com/onlinepublisher/util/"
  xmlns:hr="http://uri.in2isoft.com/onlinepublisher/part/horizontalrule/1.0/"
- exclude-result-prefixes="p f h n o util hr"
+ xmlns:widget="http://uri.in2isoft.com/onlinepublisher/part/widget/1.0/"
+ exclude-result-prefixes="p f h n o util hr widget"
  >
 <xsl:output encoding="UTF-8" method="xml" omit-xml-declaration="yes"/>
 
@@ -188,6 +189,22 @@
 		<xsl:apply-templates/>
 		<xsl:comment/>
 	</div>
+</xsl:template>
+
+<xsl:template match="widget:poster">
+	<div class="poster poster_{@variant}">
+    	<div class="poster_body poster_body_{@variant}">
+    		<div class="poster_block poster_block_{@variant}">
+    		<h2 class="poster_title"><xsl:value-of select="widget:title"/></h2>
+    		<p class="poster_text"><xsl:value-of select="widget:text"/></p>
+            <!--
+    		<p class="poster_links">
+    			<a class="poster_link poster_link_havestue" href="/da/havestuen/">Mere om havestuen</a>
+    		</p>
+            -->
+    		</div>
+    	</div>
+    </div>
 </xsl:template>
 
 </xsl:stylesheet>
