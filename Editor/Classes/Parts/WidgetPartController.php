@@ -73,17 +73,17 @@ class WidgetPartController extends PartController
 
 	function editorGui($part,$context) {
 		$gui='
-		<window title="{Info; da:Info}" icon="common/info" name="widgetDataWindow" width="300" padding="10">
+		<window title="{Widget; da:Widget}" icon="common/info" name="widgetDataWindow" width="400" padding="5" close="false">
             <formula name="widgetDataFormula">
                 <fields labels="above">
-                    <field label="Type">
                     <!--
+                    <field label="Type">
             			<dropdown key="key">
                             <item value="key" text="Hey"/>
-                        </dropdown>-->
+                        </dropdown>
                         <text-input key="key"/>
-                    </field>
-                    <field label="Data">
+                    </field>-->
+                    <field>
                         <code-input key="data"/>
                     </field>
                 </fields>
