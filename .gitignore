@@ -8,7 +8,7 @@ files
 public/*
 !files/.htaccess
 images
-data
+./data
 !images/.htaccess
 local/cache/images/*
 local/cache/temp/*
