@@ -10275,8 +10275,10 @@ hui.ui.ImageViewer.prototype = {
 		this.zoomer.scrollTop = y;
 	},
 	_endZoom : function() {
-		this.zoomer.style.display='none';
-		this.zoomed = false;
+		if (this.zoomer) {
+			this.zoomer.style.display='none';
+			this.zoomed = false;			
+		}
 	}
 	
 }
@@ -21357,7 +21359,7 @@ hui.ui.Editor.prototype = {
 			onEnd : function() {
 				
 			}
-		})
+		},e);
 	},
 	_onBeforeDrag : function() {
 		var dragged = this._dragInfo.draggedElement,
