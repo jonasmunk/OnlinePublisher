@@ -8,7 +8,7 @@
  >
 
 <xsl:template match="hr:horizontalrule">
-<hr class="part_horizontalrule"/>
+    <hr class="part_horizontalrule"/>
 </xsl:template>
 
 </xsl:stylesheet>
