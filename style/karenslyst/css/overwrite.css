@@ -1,3 +1,8 @@
+.common_font
+{
+	font-family: Georgia,"Book Antiqua", "Palatino",Times,serif;
+}
+
 a.common
 {
 	color: #ddd;
@@ -14,18 +19,6 @@ a.common:hover, a.common:hover span
 	color: #005aae;
 }
 
-.part_header
-{
-	margin: 0px;
-	color: #000;
-	font-family: 'Playfair Display', Georgia,"Book Antiqua", "Palatino",Times,serif;
-	font-weight: normal;
-}
-
-h2.part_header {
-	font-size: 32pt;
-	line-height: 1.1;
-}
 
 p.common, ul.common
 {
@@ -35,9 +28,35 @@ p.common, ul.common
 	text-align: justify;
 }
 
-.common_font
+.part_header
 {
-	font-family: Georgia,"Book Antiqua", "Palatino",Times,serif;
+	color: #000;
+	font-family: 'Playfair Display', Georgia,"Book Antiqua", "Palatino",Times,serif;
+	font-weight: normal;
+}
+
+.part_header_1 {
+	font-size: 48pt;
+	line-height: 1.1;
+}
+
+.part_header_2 {
+	font-size: 32pt;
+	line-height: 1.1;
+}
+
+.part_header_3 {
+	font-size: 24pt;
+	line-height: 1.1;
+}
+
+.part_header_4 {
+	font-size: 18pt;
+	line-height: 1.1;
+}
+
+.part_horizontalrule {
+	border-bottom: 1px solid #ddd;
 }
 
 .part_text
@@ -45,14 +64,14 @@ p.common, ul.common
 	font-size: 16px;
 }
 
-div.part_listing span.part_listing_first
-{
-	font-size: 11pt;
+.part_listing {
+	font-size: 14px;
+	color: #333;
 }
 
-div.part_listing, textarea.part_listing {
-	font-size: 10pt;
-	color: #333;
+.part_listing_first, textarea.part_listing
+{
+	font-size: 16px;
 }
 
 .part_map_static_content {
