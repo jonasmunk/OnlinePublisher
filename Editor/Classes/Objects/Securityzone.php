@@ -11,15 +11,17 @@ if (!isset($GLOBALS['basePath'])) {
 Entity::$schema['Securityzone'] = [
 	'table' => 'securityzone',
 	'properties' => [
-    	'authenticationPageId'   => array('type'=>'int','column'=>'authentication_page_id')
+    	'authenticationPageId'   => ['type'=>'int','column'=>'authentication_page_id', 'relation' => ['class' => 'Page', 'property' => 'id']]
 	]
 ];
 
 class Securityzone extends Object {
 	var $authenticationPageId;
+    
+    static $TYPE = 'securityzone';
 
 	function Securityzone() {
-		parent::Object('securityzone');
+		parent::Object(Securityzone::$TYPE);
 	}
 	
 	static function load($id) {
@@ -35,23 +37,25 @@ class Securityzone extends Object {
 	}
 
 	function removeMore() {
-		$sql = "delete from securityzone_page where securityzone_id=".$this->id;
-		Database::delete($sql);
-		$sql = "delete from securityzone_user where securityzone_id=".$this->id;
-		Database::delete($sql);
+		$sql = "DELETE from securityzone_page where securityzone_id=@int(id)";
+		Database::delete($sql,['id'=>$this->id]);
+
+		$sql = "DELETE from securityzone_user where securityzone_id=@int(id)";
+		Database::delete($sql,['id'=>$this->id]);
+
 		PageService::updateSecureStateOfAllPages();
 	}
 	
 	/***** Users *****/
 	
 	function addUser($userId) {
-		$sql = "insert into securityzone_user (securityzone_id,user_id) values (".$this->id.",".$userId.")";
-		Database::insert($sql);
+		$sql = "INSERT into securityzone_user (securityzone_id,user_id) values (@int(zoneId),@int(userId))";
+		Database::insert($sql,['zoneId'=>$this->id,'userId'=>$userId]);
 	}
 	
 	function removeUser($userId) {
-		$sql = "delete from securityzone_user where securityzone_id=".$this->id." and user_id=".$userId;
-		Database::delete($sql);
+		$sql = "DELETE from securityzone_user where securityzone_id=@int(zoneId) and user_id=@int(userId)";
+		Database::delete($sql,['zoneId'=>$this->id,'userId'=>$userId]);
 	}
 }
 ?>
