@@ -9,11 +9,14 @@
 		<parameter key="direction" value="@list.sort.direction"/>
 		<parameter key="text" value="@search.value"/>
 	</source>
+		
+	<source name="sidebarSource" url="data/Sidebar.php"/>
 	
 	<structure>
 		<top>
 			<toolbar>
 				<icon icon="common/user" title="{New user; da:Ny bruger}" overlay="new" name="newUser"/>
+				<icon icon="common/folder" title="{New zone; da:Ny zone}" overlay="new" name="newZone"/>
 				<divider/>
 				<icon icon="common/delete" title="{Delete; da:Slet}" disabled="true" name="deleteItem">
 					<confirm text="{Are you sure?; da:Er du sikker?}" ok="{Yes, delete; da:Ja, slet}" cancel="{Cancel; da:Annuller}"/>
@@ -30,8 +33,8 @@
 		<middle>
 			<left>
 				<overflow>
-				<selection value="overview" name="selector" top="5">
-					<item icon="common/files" title="{Overview; da:Oversigt}" value="overview"/>
+				<selection value="users" name="selector" top="5">
+                    <items source="sidebarSource"/>
 				</selection>
 				</overflow>
 			</left>
@@ -85,6 +88,25 @@
 						<confirm text="{Are you sure?; da:Er du sikker?}" ok="{Yes, delete user; da:Ja, slet brugeren}" cancel="{No; da:Nej}"/>
 					</button>
 					<button name="saveUser" title="{Save; da:Gem}" highlighted="true"/>
+				</buttons>
+			</fields>
+		</formula>
+	</window>
+	
+	<window name="zoneWindow" width="300" title="{Zone; da:Zone}" padding="5">
+		<formula name="zoneFormula">
+			<fields>
+				<field label="{Title; da:Titel}:">
+					<text-input key="title"/>
+				</field>
+			</fields>
+			<fields>
+				<buttons>
+					<button name="cancelZone" title="{Cancel; da:Annuller}"/>
+					<button name="deleteZone" title="{Delete; da:Slet}">
+						<confirm text="{Are you sure?; da:Er du sikker?}" ok="{Yes, delete zone; da:Ja, slet zonen}" cancel="{No; da:Nej}"/>
+					</button>
+					<button name="saveZone" title="{Save; da:Gem}" highlighted="true" submit="true"/>
 				</buttons>
 			</fields>
 		</formula>

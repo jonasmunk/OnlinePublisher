@@ -14,6 +14,11 @@ hui.ui.listen({
 		deleteItem.setEnabled(obj!==null);
 		editItem.setEnabled(obj!==null);
 	},
+	$open$selector : function(obj) {
+		if (obj.kind == 'securityzone') {
+			this._loadZone(obj.value);
+		}
+	},
 	
 	// Toolbar
 	
@@ -87,8 +92,9 @@ hui.ui.listen({
 		this._deleteUser(this.userId);
 	},
 	_deleteUser : function(id) {
+		// TODO (jm) More ribust deletion (should current user be deletable?)
 		hui.ui.request({
-			json : {data:{id:id}},
+			parameters : {id:id},
 			url : '../../Services/Model/DeleteObject.php',
 			$success:function() {
 				userWindow.hide();
@@ -96,5 +102,78 @@ hui.ui.listen({
 				list.refresh();
 			}
 		});
-	}
+	},
+	
+	////////////////////////////// Zones /////////////////////////////
+
+	zoneId : 0,
+
+	$click$newZone : function() {
+		this.zoneId = 0;
+		zoneFormula.reset();
+		zoneWindow.show();
+		deleteZone.setEnabled(false);
+		zoneFormula.focus();
+	},
+	$click$cancelZone : function() {
+		this.zoneId = 0;
+		zoneWindow.hide();
+		zoneFormula.reset();
+	},
+	$submit$zoneFormula : function() {
+		var data = zoneFormula.getValues();
+		data.id = this.zoneId;
+		zoneWindow.setBusy(true);
+		hui.ui.request({
+			json : {data:data},
+			url : 'actions/SaveZone.php',
+			$success:function() {
+				zoneWindow.hide();
+				zoneFormula.reset();
+				sidebarSource.refresh();
+			},
+			$failure : function() {
+				hui.ui.msg.fail({text:{da:'Zonen kunne ikke gemmes',en:'The zone could not be saved'}});
+			},
+			$finally : function() {
+				zoneWindow.setBusy(false);
+			}
+		});
+	},
+	_loadZone : function(id) {
+		zoneWindow.setBusy(true);
+		zoneFormula.reset();
+		deleteZone.setEnabled(false);
+		saveZone.setEnabled(false);
+		hui.ui.request({
+			json : {data:{id:id}},
+			url : '../../Services/Model/LoadObject.php',
+			$object : function(data) {
+				this.zoneId = data.id;
+				zoneFormula.setValues(data);
+				zoneWindow.show();
+				saveZone.setEnabled(true);
+				deleteZone.setEnabled(true);
+				zoneFormula.focus();
+			}.bind(this),
+			$finally : function() {
+				zoneWindow.setBusy(false);
+			}
+		});
+	},
+	$click$deleteZone : function() {
+		this._deleteZone(this.zoneId);
+	},
+	_deleteZone : function(id) {
+		zoneWindow.hide();
+		zoneFormula.reset();
+		hui.ui.request({
+			parameters : {id:id},
+			url : '../../Services/Model/DeleteObject.php',
+			$success : function() {
+				sidebarSource.refresh();
+			}
+		});
+	},
+	
 })
