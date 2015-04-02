@@ -4615,7 +4615,20 @@ hui.ui.ImageViewer = function(options) {
 	// Collect elements ...
 	this.element = hui.get(options.element);
 
-  hui.collect(this.nodes,this.element);
+	this.nodes = {
+		viewer : 'hui_imageviewer_viewer',
+		innerViewer : 'hui_imageviewer_inner_viewer',
+
+		status : 'hui_imageviewer_status',
+		text : 'hui_imageviewer_text',
+
+		previous : 'hui_imageviewer_previous',
+		controller : 'hui_imageviewer_controller',
+		next : 'hui_imageviewer_next',
+		play : 'hui_imageviewer_play',
+		close : 'hui_imageviewer_close'
+	};
+	hui.collect(this.nodes,this.element);
 
 	this.box = this.options.box;
 	
@@ -4664,19 +4677,6 @@ hui.ui.ImageViewer.create = function(options) {
 }
 
 hui.ui.ImageViewer.prototype = {
-	nodes : {
-		viewer : 'hui_imageviewer_viewer',
-		innerViewer : 'hui_imageviewer_inner_viewer',
-
-		status : 'hui_imageviewer_status',
-		text : 'hui_imageviewer_text',
-
-		previous : 'hui_imageviewer_previous',
-		controller : 'hui_imageviewer_controller',
-		next : 'hui_imageviewer_next',
-		play : 'hui_imageviewer_play',
-		close : 'hui_imageviewer_close'
-	},
 	_attach : function() {
 		var self = this;
 		this.nodes.next.onclick = function() {
@@ -5176,7 +5176,11 @@ hui.ui.Box = function(options) {
 	this.options = hui.override({},options);
 	this.name = options.name;
 	this.element = hui.get(options.element);
-  hui.collect(this.nodes,this.element);
+    this.nodes = {
+    	body : 'hui_box_body',
+    	close : 'hui_box_close'
+    };
+	hui.collect(this.nodes,this.element);
 	this.visible = !this.options.absolute;
 	if (this.nodes.close) {
 		hui.listen(this.nodes.close,'click',this._close.bind(this));
@@ -5223,12 +5227,7 @@ hui.ui.Box.create = function(options) {
 	return new hui.ui.Box(options);
 };
 
-hui.ui.Box.prototype = {
-  nodes : {
-  	body : 'hui_box_body',
-  	close : 'hui_box_close'
-  },
-  
+hui.ui.Box.prototype = {  
 	_close : function(e) {
 		hui.stop(e);
 		this.hide();
