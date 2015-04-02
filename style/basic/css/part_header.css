@@ -3,37 +3,37 @@
 	margin: 0;
 }
 
-h1.part_header, textarea.part_header_1
+.part_header_1
 {
 	font-size: 20pt;
 	line-height: 1.2em;
 }
 
-h2.part_header, textarea.part_header_2
+.part_header_2
 {
 	font-size: 15pt;
 	line-height: 1.133333333em;
 }
 
-h3.part_header, textarea.part_header_3
+.part_header_3
 {
 	font-size: 13pt;
 	line-height: 1.076923077em;
 }
 
-h4.part_header, textarea.part_header_4
+.part_header_4
 {
 	font-size: 12pt;
 	line-height: 1.166666667em;
 }
 
-h5.part_header, textarea.part_header_5
+.part_header_5
 {
 	font-size: 11.5pt;
 	line-height: 1.043478261em;
 }
 
-h6.part_header, textarea.part_header_6
+.part_header_6
 {
 	font-size: 11pt;
 	line-height: 1,090909091em;
