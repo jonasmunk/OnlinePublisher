@@ -136,7 +136,9 @@
 				<xsl:text> hui_formula_field_compact</xsl:text>
 			</xsl:if>
 		</xsl:attribute>
-		<label class="hui_formula_field"><xsl:value-of select="@label"/></label>
+        <xsl:if test="@label">
+    		<label class="hui_formula_field"><xsl:value-of select="@label"/></label>            
+        </xsl:if>
 		<div class="hui_formula_field_body"><xsl:apply-templates/></div>
 		<xsl:if test="@hint"><p class="hui_formula_field_hint"><xsl:value-of select="@hint"/></p></xsl:if>
 	</div>
