@@ -6,7 +6,11 @@ hui.ui.Box = function(options) {
 	this.options = hui.override({},options);
 	this.name = options.name;
 	this.element = hui.get(options.element);
-  hui.collect(this.nodes,this.element);
+    this.nodes = {
+    	body : 'hui_box_body',
+    	close : 'hui_box_close'
+    };
+	hui.collect(this.nodes,this.element);
 	this.visible = !this.options.absolute;
 	if (this.nodes.close) {
 		hui.listen(this.nodes.close,'click',this._close.bind(this));
@@ -53,12 +57,7 @@ hui.ui.Box.create = function(options) {
 	return new hui.ui.Box(options);
 };
 
-hui.ui.Box.prototype = {
-  nodes : {
-  	body : 'hui_box_body',
-  	close : 'hui_box_close'
-  },
-  
+hui.ui.Box.prototype = {  
 	_close : function(e) {
 		hui.stop(e);
 		this.hide();

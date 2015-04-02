@@ -40,7 +40,20 @@ hui.ui.ImageViewer = function(options) {
 	// Collect elements ...
 	this.element = hui.get(options.element);
 
-  hui.collect(this.nodes,this.element);
+	this.nodes = {
+		viewer : 'hui_imageviewer_viewer',
+		innerViewer : 'hui_imageviewer_inner_viewer',
+
+		status : 'hui_imageviewer_status',
+		text : 'hui_imageviewer_text',
+
+		previous : 'hui_imageviewer_previous',
+		controller : 'hui_imageviewer_controller',
+		next : 'hui_imageviewer_next',
+		play : 'hui_imageviewer_play',
+		close : 'hui_imageviewer_close'
+	};
+	hui.collect(this.nodes,this.element);
 
 	this.box = this.options.box;
 	
@@ -89,19 +102,6 @@ hui.ui.ImageViewer.create = function(options) {
 }
 
 hui.ui.ImageViewer.prototype = {
-	nodes : {
-		viewer : 'hui_imageviewer_viewer',
-		innerViewer : 'hui_imageviewer_inner_viewer',
-
-		status : 'hui_imageviewer_status',
-		text : 'hui_imageviewer_text',
-
-		previous : 'hui_imageviewer_previous',
-		controller : 'hui_imageviewer_controller',
-		next : 'hui_imageviewer_next',
-		play : 'hui_imageviewer_play',
-		close : 'hui_imageviewer_close'
-	},
 	_attach : function() {
 		var self = this;
 		this.nodes.next.onclick = function() {
