@@ -32,12 +32,12 @@ echo '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.or
 		';
 		echo '<link rel="stylesheet" type="text/css" href="../../../hui/'.$cacheUrl.'bin/minimized.css'.$cachePrefix.'" />
 		<link rel="stylesheet" type="text/css" href="../../../style/'.$cacheUrl.'basic/css/parts.php'.$cachePrefix.'" />
-		<link rel="stylesheet" type="text/css" href="../../../style/'.$cacheUrl.'basic/css/document.css'.$cachePrefix.'" />';
-		if (file_exists($basePath.'style/'.$design.'/css/overwrite.css')) {
-			echo '<link rel="stylesheet" type="text/css" href="../../../style/'.$cacheUrl.$design.'/css/editor.css'.$cachePrefix.'" />';
-		}    
+		<link rel="stylesheet" type="text/css" href="../../../style/'.$cacheUrl.'basic/css/document.css'.$cachePrefix.'" />';    
 		if (file_exists($basePath.'style/'.$design.'/css/editor.css')) {
 			echo '<link rel="stylesheet" type="text/css" href="../../../style/'.$cacheUrl.$design.'/css/editor.css'.$cachePrefix.'" />';
+		}
+		else if (file_exists($basePath.'style/'.$design.'/css/overwrite.css')) {
+			echo '<link rel="stylesheet" type="text/css" href="../../../style/'.$cacheUrl.$design.'/css/overwrite.css'.$cachePrefix.'" />';
 		}
     echo '
 		<link rel="stylesheet" type="text/css" href="css/stylesheet.css'.$cachePrefix.'" />
