@@ -11,14 +11,14 @@ if (!isset($GLOBALS['basePath'])) {
 
 class TestDesignService extends UnitTestCase {
     
-    function testIt() {
+    function testGettingDesigns() {
 		$designs = DesignService::getAvailableDesigns();
-		$this->assertTrue(count($designs)>0);
+		$this->assertTrue(count($designs) > 0);
 		$this->assertTrue(is_array($designs));
-        $this->assertTrue(array_key_exists('basic',$designs),"The basic design is not present");
+        $this->assertTrue(array_key_exists('basic',$designs), "The basic design is not present");
     }
 
-	function testValid() {
+	function testValidateDesigns() {
 		$designs = DesignService::getAvailableDesigns();
 		foreach ($designs as $design => $info) {
 			$valid = DesignService::validate($design);
@@ -34,7 +34,6 @@ class TestDesignService extends UnitTestCase {
 		$parameters = DesignService::loadParameters($custom->getId());
 		
 		Log::debug($parameters);
-
 
 		$this->assertTrue(count($parameters)>0);
 		

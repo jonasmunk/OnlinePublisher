@@ -312,7 +312,7 @@ class DesignService {
             $valid = $valid && !file_exists($basePath."style/".$name."/css/style.php");
         }
         // TODO (jm)
-		//$valid = $valid && file_exists($basePath."style/".$name."/css/overwrite.css");
+		$valid = $valid && file_exists($basePath."style/".$name."/css/editor.css");
 		return $valid;
 	}
 }
