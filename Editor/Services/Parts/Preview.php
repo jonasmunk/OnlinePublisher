@@ -12,8 +12,7 @@ $pageId = Request::getInt('pageId');
 if ($controller = PartService::getController($type)) {
 	if ($part = $controller->getFromRequest($id)) {
 		header("Content-Type: text/html; charset=UTF-8");
-		$context = new PartContext();
-		$context->setLanguage(PageService::getLanguage($pageId));
+		$context = DocumentTemplateController::buildPartContext($pageId);
 		echo $controller->render($part,$context);
 	}
 }
