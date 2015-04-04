@@ -188,7 +188,7 @@ class PageService {
 	}
     
     static function addPageToSecurityZone($pageId,$zoneId) {
-        if (!SecurityZone::load($zoneId)) {
+        if (!Securityzone::load($zoneId)) {
             Log::warn('Zone not found: ' . $zoneId);
             return;
         }
@@ -205,7 +205,7 @@ class PageService {
     }
     
     static function removePageFromSecurityZone($pageId,$zoneId) {
-        if (!SecurityZone::load($zoneId)) {
+        if (!Securityzone::load($zoneId)) {
             Log::warn('Zone not found: ' . $zoneId);
             return;
         }
@@ -224,7 +224,7 @@ class PageService {
             Log::warn('User not found: ' . $userId);
             return;
         }
-        if (!SecurityZone::load($zoneId)) {
+        if (!Securityzone::load($zoneId)) {
             Log::warn('Zone not found: ' . $zoneId);
             return;
         }
@@ -240,7 +240,7 @@ class PageService {
             Log::warn('User not found: ' . $userId);
             return;
         }
-        if (!SecurityZone::load($zoneId)) {
+        if (!Securityzone::load($zoneId)) {
             Log::warn('Zone not found: ' . $zoneId);
             return;
         }
