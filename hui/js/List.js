@@ -323,6 +323,7 @@ hui.ui.List.prototype = {
 		this.rows = [];
 		this.columns = [];
 		this.checkboxMode = doc.documentElement.getAttribute('checkboxes')==='true';
+		var movable = doc.documentElement.getAttribute('ordering')==='true';
 		var headTr = document.createElement('tr');
 		var sort = doc.getElementsByTagName('sort');
 		this.sortKey=null;
@@ -336,6 +337,9 @@ hui.ui.List.prototype = {
 			var a = hui.build('a',{className:'list_check_all',parent:th})
 			hui.listen(th,'click',this._checkAll.bind(this));
 		}
+    if (movable) {
+      hui.build('th',{'class':'hui_list_order_header',parent:headTr});
+    }
 		var headers = doc.getElementsByTagName('header');
 		var i;
 		for (i=0; i < headers.length; i++) {
@@ -378,6 +382,10 @@ hui.ui.List.prototype = {
 				var td = hui.build('td',{parent:row,className:'hui_list_checkbox'});
 				hui.build('a',{className:'hui_list_checkbox',parent:td});
 			}
+      if (movable) {
+				var td = hui.build('td',{parent:row,className:'hui_list_order'});        
+				hui.build('a',{className:'hui_list_order_handler',parent:td});
+      }
 			
 			var icon = rows[i].getAttribute('icon');
 			var title = rows[i].getAttribute('title');

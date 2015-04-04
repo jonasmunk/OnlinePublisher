@@ -2,6 +2,7 @@
 <?xml-stylesheet type="text/xsl" href="setup.xsl"?>
 <gui xmlns="uri:hui" title="List" padding="10">
 	<controller name="controller" source="list.js"/>
+  
 	<structure>
 		<top>
 		<toolbar>
@@ -18,8 +19,13 @@
 					<item icon="common/folder" title="Icons" value="data/list_icons.xml"/>
 					<item icon="common/folder" title="Hierarchy" value="data/list_hierarchy.xml"/>
 					<item icon="common/folder" title="Mixed" value="data/list_mixed.xml"/>
+					<item icon="common/folder" title="Checkboxes" value="data/list_checkboxes.xml"/>
+					<item icon="common/folder" title="Ordering" value="data/list_ordering.xml"/>
 					<title>JSON</title>
 					<item icon="common/folder" title="Icons" value="data/list_icons.json"/>
+					<title>Drop targets</title>
+					<item icon="common/folder" title="Folder" kind="folder"/>
+					<item icon="common/folder" title="Another folder" kind="folder"/>
 				</selection>
 			</left>
 			<center>

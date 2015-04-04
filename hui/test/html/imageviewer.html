@@ -14,19 +14,6 @@
 	<script charset="utf-8" type="text/javascript" src="../../js/hui_color.js"></script>
 	<script charset="utf-8" type="text/javascript" src="../../lib/date.js"></script>
 	<script charset="utf-8" type="text/javascript" src="../../js/ui.js"></script>
-	<script charset="utf-8" type="text/javascript" src="../../js/Window.js"></script>
-	<script charset="utf-8" type="text/javascript" src="../../js/Alert.js"></script>
-	<script charset="utf-8" type="text/javascript" src="../../js/Button.js"></script>
-	<script charset="utf-8" type="text/javascript" src="../../js/Tabs.js"></script>
-	<script charset="utf-8" type="text/javascript" src="../../js/Formula.js"></script>
-	<script charset="utf-8" type="text/javascript" src="../../js/DropDown.js"></script>
-	<script charset="utf-8" type="text/javascript" src="../../js/Checkbox.js"></script>
-	<script charset="utf-8" type="text/javascript" src="../../js/TextField.js"></script>
-	<script charset="utf-8" type="text/javascript" src="../../js/NumberField.js"></script>
-	<script charset="utf-8" type="text/javascript" src="../../js/DateTimeField.js"></script>
-	<script charset="utf-8" type="text/javascript" src="../../js/BoundPanel.js"></script>
-	<script charset="utf-8" type="text/javascript" src="../../js/DatePicker.js"></script>
-	<script charset="utf-8" type="text/javascript" src="../../js/Slider.js"></script>
 	<script charset="utf-8" type="text/javascript" src="../../js/ImageViewer.js"></script>
 	<script charset="utf-8" type="text/javascript" src="../../js/Box.js"></script>
 </head>
@@ -34,29 +21,52 @@
 <body>
 	<button id="show">Show</button>
 	<script>
-  
-		!function() {
-			var viewer = hui.ui.ImageViewer.create();
-      viewer.addImages([
-        {width:1000,height:500,id:1},
-        {width:500,height:1000,id:2},
-        {width:200,height:300,id:3},
-        {width:20,height:30,id:3},
-        {width:3000,height:2000,id:3},
-        {width:3000,height:100,id:3}
-      ])
-      viewer.listen({
-        $resolveImageUrl : function(image,width,height) {
-          var fitted = hui.fit(image,{width:width,height:height},{upscale:false});
-          return 'http://placehold.it/' + fitted.width + 'x' + fitted.height + '&text=' + fitted.width + 'x' + fitted.height + ' ('+image.width+'x'+image.height+')';
-        }
-      })
-      viewer.show(1);
-      
-      hui.listen('show','click',function() {
-        viewer.show();
-      })
-		}()
+	! function() {
+		var viewer = hui.ui.ImageViewer.create();
+		viewer.addImages([{
+			width: 1000,
+			height: 500,
+			id: 1
+		}, {
+			width: 500,
+			height: 1000,
+			id: 2
+		}, {
+			width: 200,
+			height: 300,
+			id: 3
+		}, {
+			width: 20,
+			height: 30,
+			id: 3
+		}, {
+			width: 3000,
+			height: 2000,
+			id: 3
+		}, {
+			width: 3000,
+			height: 100,
+			id: 3
+		}])
+		viewer.listen({
+			$resolveImageUrl: function(image, width, height) {
+				var fitted = hui.fit(image, {
+					width: width,
+					height: height
+				}, {
+					upscale: false
+				});
+				return 'http://placehold.it/' + fitted.width + 'x' + fitted.height + '&text=' + fitted.width + 'x' + fitted.height + ' (' + image.width + 'x' + image.height + ')';
+			}
+		})
+		viewer.show(1);
+
+		hui.listen('show', 'click', function() {
+			viewer.show();
+		})
+	}()
 	</script>
+	
+	<div style="height: 3000px;"></div>
 </body>
 </html>
