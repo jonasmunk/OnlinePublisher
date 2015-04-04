@@ -6,10 +6,14 @@ var controller = {
 	$ready : function() {
 	},
 	$drop$user$folder : function(dragged,target) {
-		hui.ui.alert({text:hui.string.toJSON(dragged)+' was dropped on '+hui.string.toJSON(target)});
+		hui.ui.alert({
+      text : dragged.title + ' was dropped on ' + target.title
+    });
 	},
 	$drop$icon$folder : function(dragged,target) {
-		hui.ui.alert({text:hui.string.toJSON(dragged)+' was dropped on '+hui.string.toJSON(target)});
+		hui.ui.alert({
+      text : dragged.title + ' was dropped on ' + target.title
+    });
 	},
 	$open$list : function(info) {
 		alert(hui.string.toJSON(info))
