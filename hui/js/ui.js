@@ -697,6 +697,9 @@ hui.ui.extend = function(obj,options) {
 	if (!obj.valueForProperty) {
 		obj.valueForProperty = function(p) {return this[p];};
 	}
+	if (obj.nodes && obj.element) {
+		obj.nodes = hui.collect(obj.nodes,obj.element);
+	}
 };
 
 /** Send a message to all ancestors of a widget */

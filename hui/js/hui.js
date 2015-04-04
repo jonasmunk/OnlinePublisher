@@ -896,13 +896,15 @@ hui.get.firstByTag = function(node,tag) {
 hui.get.firstChild = hui.dom.firstChild;
 
 hui.find = function(selector,context) {
-  return (context || document).querySelector(selector);
+	return (context || document).querySelector(selector);
 }
 
 hui.collect = function(selectors,context) {
-  for (key in selectors) {
-    selectors[key] = hui.get.firstByClass(context,selectors[key]);
-  }
+	var copy = {};
+	for (key in selectors) {
+		copy[key] = hui.get.firstByClass(context,selectors[key]);
+	}
+	return copy;
 }
 
 
