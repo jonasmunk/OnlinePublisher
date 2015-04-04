@@ -6,8 +6,10 @@ if (!isset($GLOBALS['basePath'])) {
 
 class Response {
     
+    static $OK = 200;
     static $FORBIDDEN = 403;
     static $NOT_FOUND = 404;
+    static $UNAUTHORIZED = 401;
     static $UNAVAILABLE = 503;
 		
 	static function sendObject($obj) {
@@ -67,6 +69,10 @@ class Response {
 	static function notFound($text=null) {
 		Response::sendStatus(404,$text);
 	}
+    
+    static function unauthorized($text=null) {
+		Response::sendStatus(Response::$UNAUTHORIZED,$text);
+    }
 	
 	static function forbidden($text=null) {
 		Response::sendStatus(Response::$FORBIDDEN,$text);
