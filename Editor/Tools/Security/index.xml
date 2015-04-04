@@ -8,9 +8,17 @@
 		<parameter key="sort" value="@list.sort.key"/>
 		<parameter key="direction" value="@list.sort.direction"/>
 		<parameter key="text" value="@search.value"/>
+		<parameter key="kind" value="@selector.kind"/>
 	</source>
 		
 	<source name="sidebarSource" url="data/Sidebar.php"/>
+	<source name="zoneUsersSource" url="data/ListZoneUsers.php">
+		<parameter key="zoneId" value="@selector.value"/>
+    </source>
+	<source name="zonePagesSource" url="data/ListZonePages.php">
+		<parameter key="zoneId" value="@selector.value"/>
+    </source>
+    <source name="pageItems" url="../../Services/Model/Items.php?type=page&amp;includeEmpty=true"/>
 	
 	<structure>
 		<top>
@@ -23,6 +31,8 @@
 				</icon>
 				<icon icon="common/edit" title="{Edit; da:Rediger}" disabled="true" name="editItem"/>
 				<divider/>
+				<icon icon="common/page" overlay="new" title="{Add page; da:Tilføj side}" name="addPage"/>
+				<icon icon="common/page" overlay="new" title="{Add user; da:Tilføj bruger}" name="addUser"/>
 				<right>
 					<field label="{Search; da:Søgning}">
 						<searchfield name="search" expanded-width="200"/>
@@ -33,19 +43,50 @@
 		<middle>
 			<left>
 				<overflow>
-				<selection value="users" name="selector" top="5">
-                    <items source="sidebarSource"/>
-				</selection>
+    				<selection value="users" name="selector" top="5">
+                        <items source="sidebarSource"/>
+    				</selection>
 				</overflow>
 			</left>
 			<center>
-				<overflow>
-					<list name="list" source="listSource" state="list"/>
-				</overflow>
+
+				<pages height="full" name="pages">
+					<page key="users">
+        				<overflow>
+        					<list name="list" source="listSource" state="list"/>
+        				</overflow>
+                    </page>
+					<page key="zone">
+
+        				<split>
+        					<row height="50%">
+                                <bar variant="layout"><text name="zoneTitle"/></bar>
+                				<overflow>
+                					<list name="zoneUsers" source="zoneUsersSource" selectable="false"/>
+                				</overflow>
+        					</row>
+        					<row>
+                				<overflow>
+                					<list name="zonePages" source="zonePagesSource" selectable="false"/>
+                				</overflow>
+                            </row>
+                        </split>
+                    </page>
+                </pages>
 			</center>
 		</middle>
 		<bottom/>
 	</structure>
+    
+	<finder name="pageFinder"
+        title="{Select page; da:Vælg side}"
+		url="../../Services/Finder/Pages.php"
+	/>
+    
+	<finder name="userFinder"
+        title="{Select user; da:Vælg bruger}"
+		url="../../Services/Finder/Objects.php?type=user"
+	/>
 	
 	<window name="userWindow" width="300" title="{User; da:Bruger}" padding="5">
 		<formula name="userFormula">
@@ -98,6 +139,9 @@
 			<fields>
 				<field label="{Title; da:Titel}:">
 					<text-input key="title"/>
+				</field>
+				<field label="{Authentication page; da:Login-side}:">
+					<dropdown key="authenticationPageId" source="pageItems"/>
 				</field>
 			</fields>
 			<fields>

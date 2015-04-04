@@ -13,6 +13,7 @@ if ($data->id > 0) {
 	$zone = new Securityzone();
 }
 $zone->setTitle($data->title);
+$zone->setAuthenticationPageId($data->authenticationPageId);
 if (!$zone->save()) {
 	Response::badRequest();
 }

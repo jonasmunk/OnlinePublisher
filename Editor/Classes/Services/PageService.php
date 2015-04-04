@@ -186,6 +186,68 @@ class PageService {
 		$sql = "UPDATE page left join securityzone_page on page.id=securityzone_page.page_id set page.secure=0 where securityzone_page.securityzone_id is null";
 		Database::update($sql);
 	}
+    
+    static function addPageToSecurityZone($pageId,$zoneId) {
+        if (!SecurityZone::load($zoneId)) {
+            Log::warn('Zone not found: ' . $zoneId);
+            return;
+        }
+        if (!PageService::exists($pageId)) {
+            Log::warn('Page not found: ' . $pageId);
+            return;
+        }
+        $parameters = ['pageId'=>$pageId,'zoneId'=>$zoneId]; 
+        $sql = "DELETE from securityzone_page where page_id=@int(pageId) and securityzone_id=@int(zoneId)";
+        Database::delete($sql,$parameters);
+        $sql = "INSERT into securityzone_page (page_id,securityzone_id) values (@int(pageId),@int(zoneId))";
+        Database::insert($sql,$parameters);
+        PageService::updateSecureStateOfAllPages();
+    }
+    
+    static function removePageFromSecurityZone($pageId,$zoneId) {
+        if (!SecurityZone::load($zoneId)) {
+            Log::warn('Zone not found: ' . $zoneId);
+            return;
+        }
+        if (!PageService::exists($pageId)) {
+            Log::warn('Page not found: ' . $pageId);
+            return;
+        }
+        $parameters = ['pageId'=>$pageId,'zoneId'=>$zoneId]; 
+        $sql = "DELETE from securityzone_page where page_id=@int(pageId) and securityzone_id=@int(zoneId)";
+        Database::delete($sql,$parameters);
+        PageService::updateSecureStateOfAllPages();
+    }
+    
+    static function addUserToSecurityZone($userId,$zoneId) {
+        if (!User::load($userId)) {
+            Log::warn('User not found: ' . $userId);
+            return;
+        }
+        if (!SecurityZone::load($zoneId)) {
+            Log::warn('Zone not found: ' . $zoneId);
+            return;
+        }
+        $parameters = ['userId'=>$userId,'zoneId'=>$zoneId]; 
+        $sql = "DELETE from securityzone_user where user_id=@int(userId) and securityzone_id=@int(zoneId)";
+        Database::delete($sql,$parameters);
+        $sql = "INSERT into securityzone_user (user_id,securityzone_id) values (@int(userId),@int(zoneId))";
+        Database::insert($sql,$parameters);
+    }
+    
+    static function removeUserFromSecurityZone($userId,$zoneId) {
+        if (!User::load($userId)) {
+            Log::warn('User not found: ' . $userId);
+            return;
+        }
+        if (!SecurityZone::load($zoneId)) {
+            Log::warn('Zone not found: ' . $zoneId);
+            return;
+        }
+        $parameters = ['userId'=>$userId,'zoneId'=>$zoneId]; 
+        $sql = "DELETE from securityzone_user where user_id=@int(userId) and securityzone_id=@int(zoneId)";
+        Database::delete($sql,$parameters);
+    }
 	
 	static function search($query) {
 

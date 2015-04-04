@@ -19,6 +19,19 @@ hui.ui.listen({
 			this._loadZone(obj.value);
 		}
 	},
+	$select$selector : function(obj) {
+		if (obj.kind == 'securityzone') {
+			this.activeZoneId = obj.value;
+			zoneTitle.setText(obj.title);
+			pages.goTo('zone');
+			addPage.enable();
+			addUser.enable();
+		} else {
+			pages.goTo('users');
+			addPage.disable();
+			addUser.disable();
+		}
+	},
 	
 	// Toolbar
 	
@@ -100,6 +113,74 @@ hui.ui.listen({
 				userWindow.hide();
 				userFormula.reset();
 				list.refresh();
+			}
+		});
+	},
+	
+	////////////////////////// Zone editing ////////////////
+	
+	activeZoneId : 0,
+	
+	$click$addPage : function() {
+		pageFinder.show();
+	},
+	
+	$select$pageFinder : function(obj) {
+		pageFinder.hide();
+		hui.ui.request({
+			message : {start:{en:'Adding page', da:'Tilføjer side'}},
+			parameters : {
+				zoneId : this.activeZoneId,
+				pageId : obj.id
+			},
+			url : 'actions/AddPageToZone.php',
+			$success : function() {
+				zonePagesSource.refresh();
+			}
+		});
+	},
+	$clickIcon$zonePages : function(info) {
+		hui.ui.request({
+			message : {start:{en:'Removing page', da:'Fjerner side'}},
+			parameters : {
+				zoneId : this.activeZoneId,
+				pageId : info.row.id
+			},
+			url : 'actions/RemovePageFromZone.php',
+			$success : function() {
+				zonePagesSource.refresh();
+			}
+		});
+	},
+	
+	$click$addUser : function() {
+		userFinder.show();
+	},
+	
+	$select$userFinder : function(obj) {
+		userFinder.hide();
+		hui.ui.request({
+			message : {start:{en:'Adding user', da:'Tilføjer bruger'}},
+			parameters : {
+				zoneId : this.activeZoneId,
+				userId : obj.id
+			},
+			url : 'actions/AddUserToZone.php',
+			$success : function() {
+				zoneUsersSource.refresh();
+			}
+		});
+	},
+	$clickIcon$zoneUsers : function(info) {
+		hui.ui.request({
+			message : {start:{en:'Removing user', da:'Fjerner bruger'}},
+			parameters : {
+				zoneId : this.activeZoneId,
+				userId : info.row.id
+			},
+			url : 'actions/RemoveUserFromZone.php',
+			$success : function() {
+				zoneUsersSource.refresh();
 			}
 		});
 	},
