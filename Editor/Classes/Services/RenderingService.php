@@ -11,19 +11,29 @@ class RenderingService {
 		if ($uri!='/favicon.ico' && $uri!='/robots.txt' && $uri!='/apple-touch-icon.png' && $uri!='/apple-touch-icon-precomposed.png') {
 			Log::logPublic('pagenotfound','uri='.$_SERVER['REQUEST_URI']);
 		}
-		$error = '<title>Page not found</title>'.
-		'<note>The requested page was not found on this website</note>';
-		RenderingService::displayError($error);
+		RenderingService::displayMessage([
+            'status' => Response::$NOT_FOUND,
+		    'title' => 'Page not found',
+            'note' => 'The requested page was not found on this website'
+		]);
 	}
 
-	static function displayError($message,$path="") {
+	static function displayMessage($options,$path="") {
+        if (!isset($options['status'])) {
+            $options['status'] = Response::$NOT_FOUND;
+        }
 		$xml = '<?xml version="1.0" encoding="UTF-8"?>';
 		$xml.= '<message xmlns="http://uri.in2isoft.com/onlinepublisher/publishing/error/1.0/">';
-		$xml.= $message;
+        if (isset($options['title'])) {
+            $xml.= '<title>' . Strings::escapeXML($options['title']) . '</title>';
+        }
+        if (isset($options['note'])) {
+            $xml.= '<note>' . Strings::escapeXML($options['note']) . '</note>';
+        }
 		$xml.= '</message>';
 		header("Content-Type: text/html; charset=UTF-8");
-		header("HTTP/1.0 404 Not Found");
-		echo RenderingService::applyStylesheet($xml,"basic","error",$path,$path,$path,'',false,'en');
+        Response::sendStatus($options['status']);
+        echo RenderingService::applyStylesheet($xml,"basic","error",$path,$path,$path,'',false,'en');
 	}
 
 	static function buildPageContext($id,$nextPage,$previousPage) {
@@ -400,37 +410,46 @@ class RenderingService {
 
 	// finds and redirects to the appropriate authentication page for the provided page
 	// displays error otherwise
-	static function goToAuthenticationPage($id) {
+	static function goToAuthenticationPage($id,$path) {
 		if ($authId = RenderingService::findAuthenticationPageForPage($id)) {
-			Response::redirect('./?id='.$authId.'&page='.$id);
+			Response::redirect('/?id='.$authId.'&page='.$id);
 		}
 		else {
-			echo 'could not find auth page!';
+            RenderingService::displayMessage([
+                'status' => Response::$FORBIDDEN,
+                'title' => 'You do not have access to this page',
+                'note' => 'Also, there is not specified a way to gain access'
+            ]);
 		}
 	}
 
-	// Finds the appropriate authentication page for a given page
-	// returns the id of the authentication page
-	// returns false otherwise
+	/** 
+     * Finds the appropriate authentication page for a given page
+	 * returns the id of the authentication page
+	 * returns false otherwise
+     */
 	static function findAuthenticationPageForPage($id) {
-		$sql = "select authentication_page_id,page.id from securityzone, securityzone_page,page,page as authpage where securityzone.object_id=securityzone_page.securityzone_id and page.id= securityzone_page.page_id and authpage.id = authentication_page_id and page.id=".$id;
-		if ($row = Database::selectFirst($sql)) {
+		$sql = "select authentication_page_id,page.id from securityzone, securityzone_page,page,page as authpage where securityzone.object_id=securityzone_page.securityzone_id and page.id= securityzone_page.page_id and authpage.id = authentication_page_id and page.id=@int(id)";
+		if ($row = Database::selectFirst($sql,['id'=>$id])) {
 			return $row['authentication_page_id'];
 		}
 		else {
+            Log::debug($sql.$id);
 			return false;
 		}
 	}
 
 	static function showFile($id) {
-		$sql = "select * from file where object_id = ".$id;
-		if ($row = Database::selectFirst($sql)) {
+		$sql = "select * from file where object_id = @int(id)";
+		if ($row = Database::selectFirst($sql,['id' => $id])) {
 			Response::redirect('files/'.$row['filename']);
 		} else {
-			$error = '<title>Filen findes ikke!</title>'.
-			'<note>Den forespurgte fil findes ikke på dette website.</note>';
 			Log::logPublic('filenotfound','File-id:'.$id);
-			RenderingService::displayError($error);
+			RenderingService::displayMessage([
+                'status' => Response::$NOT_FOUND,
+			    'title' => 'The file could not be found',
+                'note' => 'The file may be removed or renamed'
+			]);
 		}
 	}
 

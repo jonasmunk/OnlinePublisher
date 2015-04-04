@@ -25,9 +25,11 @@ session_set_cookie_params(0);
 session_start();
 
 if (!Database::testConnection()) {
-	$error = '<title>The page is not available at the moment</title>'.
-	'<note>Please try again later</note>';
-	RenderingService::displayError($error);
+	RenderingService::displayMessage([
+        'status' => Response::$UNAVAILABLE,
+	    'title' => 'The page is not available at the moment',
+        'note' => 'Please try again later'
+	]);
 	exit;
 }
 
@@ -76,12 +78,10 @@ if (!CacheService::sendCachedPage($id,$path)) {
   	//Log::debug('No page : '.$path);
   	$id = RenderingService::findPage('home');
   	if ($id==null) {
-  		$error = '<title>Ingen forside!</title>'.
-  		'<note>Der er ikke opsat en forside til dette website.
-  		Hvis du er redaktør på siden bør du logge ind i redigeringsværktøjet
-  		og opsætte hvilken side der skal være forsiden.
-  		</note>';
-  		RenderingService::displayError($error,'');
+  		RenderingService::displayMessage([
+  		    'title' => 'No front page',
+            'note' => 'This website has no front page. If you are the editor you probably should log in and fix the issue'
+  		]);
   		exit;
   	}
   	$page = RenderingService::buildPage($id);
@@ -103,11 +103,11 @@ if (!CacheService::sendCachedPage($id,$path)) {
   			RenderingService::writePage($id,$path,$page,$relative,$samePageBaseUrl);
   		}
   		else {
-  			RenderingService::goToAuthenticationPage($id);
+  			RenderingService::goToAuthenticationPage($page['id'],$path);
   		}
   	}
   	else {
-  		RenderingService::goToAuthenticationPage($id);
+  		RenderingService::goToAuthenticationPage($page['id'],$path);
   	}
   }
   // If nothing special about page
