@@ -5,6 +5,10 @@ if (!isset($GLOBALS['basePath'])) {
 }
 
 class Response {
+    
+    static $FORBIDDEN = 403;
+    static $NOT_FOUND = 404;
+    static $UNAVAILABLE = 503;
 		
 	static function sendObject($obj) {
         if (!ConfigurationService::isUnicode()) {
@@ -49,23 +53,23 @@ class Response {
 	}
 	
 	static function internalServerError($text=null) {
-		Response::sendStatus(500,'Internal Server Error',$text);
+		Response::sendStatus(500,$text);
 	}
 	
 	static function badGateway($text=null) {
-		Response::sendStatus(502,'Bad Gateway',$text);
+		Response::sendStatus(502,$text);
 	}
 	
 	static function badRequest($text=null) {
-		Response::sendStatus(400,'Bad Request',$text);
+		Response::sendStatus(400,$text);
 	}
 	
 	static function notFound($text=null) {
-		Response::sendStatus(404,'Not Found',$text);
+		Response::sendStatus(404,$text);
 	}
 	
 	static function forbidden($text=null) {
-		Response::sendStatus(403,'Forbidden',$text);
+		Response::sendStatus(Response::$FORBIDDEN,$text);
 	}
   
 	static function uploadSuccess() {
@@ -79,10 +83,10 @@ class Response {
 		echo 'FAILURE';
 	}
 	
-	static function sendStatus($number,$key,$text=null) {
-		header('HTTP/1.1 '.$number.' '.$key);
+	static function sendStatus($number,$text=null) {
+        http_response_code($number);
 		if ($text) {
-			echo '<html><head><title>'.$text.'</title></head><body><h1>'.$text.'</h1></body><p>'.$number.' '.$key.'</p></html>';
+			echo '<!DOCTYPE html><html><head><title>'.$text.'</title></head><body><h1>'.$text.'</h1></body><p>'.$number.' '.$key.'</p></html>';
 		}
 	}
 }
