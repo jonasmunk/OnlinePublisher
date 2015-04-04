@@ -99,7 +99,7 @@ if (!CacheService::sendCachedPage($id,$path)) {
   // If the page is secure
   else if ($page['secure']) {
   	if ($user = ExternalSession::getUser()) {
-  		if (RenderingService::userHasAccessToPage($user['id'],$id)) {
+  		if (RenderingService::userHasAccessToPage($user['id'],$page['id'])) {
   			RenderingService::writePage($id,$path,$page,$relative,$samePageBaseUrl);
   		}
   		else {
