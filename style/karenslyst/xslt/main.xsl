@@ -207,4 +207,29 @@
     </div>
 </xsl:template>
 
+<xsl:template match="widget:login">
+	<div class="part_authentication" id="part_authentication_{generate-id()}">
+        <form class="part_authentication_form" action="{$path}services/authentication">
+            <p class="part_authentication_field">
+                <label class="part_authentication_label">Username</label>
+                <input class="part_authentication_input part_authentication_username common_input" name="username"/>
+            </p>
+            <p class="part_authentication_field">
+                <label class="part_authentication_label">Password</label>
+                <input class="part_authentication_input part_authentication_password common_input" secret="secret" name="password"/>
+            </p>
+            <p class="part_authentication_actions">
+                <button class="part_authentication_login common_button">Log in</button>
+            </p>
+        </form>
+    </div>
+    
+	<script type="text/javascript">_editor.loadPart({
+        name : 'Authentication',$ready : function() {
+            new op.part.Authentication({element : 'part_authentication_<xsl:value-of select="generate-id()"/>'});
+        }
+    });
+    </script>
+</xsl:template>
+
 </xsl:stylesheet>

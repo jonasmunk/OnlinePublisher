@@ -28,6 +28,26 @@ p.common, ul.common
 	text-align: justify;
 }
 
+.common_button {
+    display: inline-block;
+    -webkit-appearance: none;
+    height: 32px;
+    font-family: inherit;
+	font-size: 16px;
+    background: #eee;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+}
+
+.common_input {
+	display: inline-block;
+	-webkit-appearance: none;
+    height: 24px;
+    border: 1px solid #ccc;
+    font-family: inherit;
+	font-size: 16px;
+}
+
 .part_header
 {
 	color: #000;

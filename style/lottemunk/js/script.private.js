@@ -45,9 +45,10 @@ o.open(this.map,i)}return
 var i}}},window.define&&define("op.part.Map"),op.part.Movie=function(e){this.options=e,this.element=hui.get(e.element),this._attach()},op.part.Movie.prototype={_attach:function(){hui.listen(this.element,"click",this._activate.bind(this))
 var e=hui.get.firstByClass(this.element,"part_movie_poster")
 if(e){var i=e.getAttribute("data-id")
-if(i){var t=window.devicePixelRatio||1,o=op.context+"services/images/?id="+i+"&width="+e.clientWidth*t+"&height="+e.clientHeight*t
-e.style.backgroundImage="url("+o+")"}else{var s=e.getAttribute("data-vimeo-id")
-s&&this._vimeo(s,e)}}},_activate:function(){var e=hui.get.firstByClass(this.element,"part_movie_body"),i=hui.get.firstByTag(this.element,"noscript")
+if(i)window.setTimeout(function(){var t=window.devicePixelRatio||1,o=op.context+"services/images/?id="+i+"&width="+e.clientWidth*t+"&height="+e.clientHeight*t
+e.style.backgroundImage="url("+o+")"},2e3)
+else{var t=e.getAttribute("data-vimeo-id")
+t&&this._vimeo(t,e)}}},_activate:function(){var e=hui.get.firstByClass(this.element,"part_movie_body"),i=hui.get.firstByTag(this.element,"noscript")
 i&&(e.innerHTML=hui.dom.getText(i)),e.style.background=""},_vimeo:function(e,i){var t="callback_"+e,o="http://vimeo.com/api/v2/video/"+e+".json?callback="+t
 window[t]=function(e){i.style.backgroundImage="url("+e[0].thumbnail_large+")"}
 hui.build("script",{type:"text/javascript",src:o,parent:document.head})}},window.define&&define("op.part.Movie"),hui.transition=function(e){var i=e.hide,t=e.show,o=hui.transition[t.effect],s=hui.transition[i.effect]

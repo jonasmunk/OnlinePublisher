@@ -19,4 +19,5 @@ include 'part_table.css';
 include 'part_map.css';
 include 'part_movie.css';
 include 'part_menu.css';
+include 'part_authentication.css';
 ?>

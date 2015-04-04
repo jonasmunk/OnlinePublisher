@@ -480,9 +480,11 @@ op.part.Movie.prototype = {
         if (poster) {
             var id = poster.getAttribute('data-id');
             if (id) {
-        		var x = window.devicePixelRatio || 1;
-        		var url = op.context + 'services/images/?id=' + id + '&width=' + (poster.clientWidth * x) + '&height=' + (poster.clientHeight * x);
-                poster.style.backgroundImage = 'url(' + url + ')';
+				window.setTimeout(function() {
+	        		var x = window.devicePixelRatio || 1;
+	        		var url = op.context + 'services/images/?id=' + id + '&width=' + (poster.clientWidth * x) + '&height=' + (poster.clientHeight * x);
+	                poster.style.backgroundImage = 'url(' + url + ')';					
+				},2000)
             } else {
                 var vimeoId = poster.getAttribute('data-vimeo-id');
                 if (vimeoId) {
