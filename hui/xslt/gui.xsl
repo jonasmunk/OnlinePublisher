@@ -1355,4 +1355,23 @@ doc title:'Rich text' class:'hui.ui.RichText'
 		</script>
 	</xsl:template>
 
+    <xsl:template match="gui:finder">
+        <script type="text/javascript">
+            (function() {
+    			var <xsl:value-of select="generate-id()"/>_obj = new hui.ui.Finder({
+    				name : '<xsl:value-of select="@name"/>',
+                    url : '<xsl:value-of select="@url"/>',
+    				title : '<xsl:value-of select="@title"/>',
+    				list : {url:'<xsl:value-of select="@list-url"/>'},
+    				selection : {
+    					url : '<xsl:value-of select="@selection-url"/>',
+    					value : '<xsl:value-of select="@selection-value"/>',
+    					parameter : '<xsl:value-of select="@selection-parameter"/>'
+    				},
+    				search : {parameter : '<xsl:value-of select="@search-parameter"/>'}
+    			});
+    			<xsl:call-template name="gui:createobject"/>
+            })();
+        </script>
+    </xsl:template>
 </xsl:stylesheet>
