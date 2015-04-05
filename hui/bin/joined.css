@@ -3215,6 +3215,7 @@ div.hui_list tr.hui_drop td
 	background: #779cd6 url('../gfx/hover_bg.png');
 }
 
+/************** Checkbox *************/
 
 a.hui_list_checkbox
 {
@@ -3290,9 +3291,25 @@ a.list_check_all
 	cursor: pointer;
 }
 
+/* Ordering */
+
+.hui_list_order {
+  width: 16px;
+  vertical-align: middle;
+}
+
+.hui_list_order_handler {
+  display: inline-block;
+  border: 3px solid #ddd;
+  border-width: 3px 0;
+  height: 3px;
+  width: 16px;
+	cursor: move;
+	cursor: -webkit-grab;
+	cursor: -moz-grab;
+}
+
 /* Native drop */
-
-
 
 div.hui_list_drop
 {

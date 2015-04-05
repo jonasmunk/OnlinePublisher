@@ -225,12 +225,12 @@ ga('create', '<xsl:value-of select="$code"/>', {siteSpeedSampleRate : 20});ga('s
 				<xsl:when test="$userid>0">
 					<strong><xsl:text>Bruger: </xsl:text></strong><xsl:value-of select="$usertitle"/>
 					<xsl:text> </xsl:text>
-					<a href="{$path}?id={//f:userstatus/@page}&amp;logout=true"><xsl:text>log ud</xsl:text></a>
+					<a href="{$path}?id={//f:userstatus/@page}&amp;logout=true" class="common common_link"><span><xsl:text>log ud</xsl:text></span></a>
 				</xsl:when>
 				<xsl:otherwise>
-				<span>Ikke logget ind</span>
-				<xsl:text> </xsl:text>
-				<a href="{$path}?id={//f:userstatus/@page}">log ind</a>
+    				<span>Ikke logget ind</span>
+    				<xsl:text> </xsl:text>
+    				<a href="{$path}?id={//f:userstatus/@page}" class="common common_link"><span>log ind</span></a>
 				</xsl:otherwise>
 			</xsl:choose>
 		</div>
@@ -497,7 +497,8 @@ this.scriptLoaded=!0}},require(["hui","hui.ui","op"],function(){_editor.$scriptR
 <xsl:template name="util:load-font">
     <xsl:param name="href"/>
     <xsl:param name="family"/>
-    <xsl:param name="weights"/>
+    <xsl:param name="weights" select="'400'"/>
+    <xsl:param name="class" select="'font'"/>
     <xsl:call-template name="util:script-inline">
         <xsl:with-param name="file" select="'style/basic/js/boot_fonts.js'"/>
         <xsl:with-param name="compiled"><![CDATA[!function(t,e,n){n.loadFont=function(i){var o=i.weights||["normal"]
@@ -510,7 +511,7 @@ var s,r=.01;(s=function(){r*=1.5,0==a||a!=o.clientWidth?(l--,0==l&&(e.body.class
 n.inject(n._build("link",{rel:"stylesheet",type:"text/css",href:i.href}))}}(window,document,_editor)
 ]]></xsl:with-param>
     </xsl:call-template>
-    <script>_editor.loadFont({href:'<xsl:value-of select="$href"/>',family:'<xsl:value-of select="$family"/>',cls:'font'<xsl:if test="$weights!=''">,weights:'<xsl:value-of select="$weights"/>'.split(',')</xsl:if>});</script>
+    <script>_editor.loadFont({href:'<xsl:value-of select="$href"/>',family:'<xsl:value-of select="$family"/>',cls:'<xsl:value-of select="$class"/>'<xsl:if test="$weights!=''">,weights:'<xsl:value-of select="$weights"/>'.split(',')</xsl:if>});</script>
 </xsl:template>
 
 <xsl:template name="util:lazy-fonts">
