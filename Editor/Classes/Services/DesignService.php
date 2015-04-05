@@ -74,30 +74,42 @@ class DesignService {
             FileSystemService::writeStringToFile($xsl,$xslFile);
         }
     }
+    
+    static function _getFileParameter($xsl,$default='inline.css') {
+        if (preg_match("/<xsl:with-param[\\W]+name=\"file\"[\\W]+select=\"'([^']+)'\"/uim", $xsl,$matches)) {
+            return $matches[1];
+        }
+        return $default;
+    }
 
     static function _embedInlineCSS($design) {
 		global $basePath;
 
-        $inlineFile = $basePath."style/".$design."/css/inline.css";
-        if (file_exists($inlineFile)) {
-            Log::info('Embedding inline css for: ' . $design);
-            $inlineFileMinified = $basePath."style/".$design."/css/inline.min.css";
-            $xslFile = $basePath.'style/' .$design . '/xslt/main.xsl';
-            DesignService::_compress($inlineFile,$inlineFileMinified);
-            $xsl = file_get_contents($xslFile);
-            $callTemplate = Strings::extract($xsl,'<xsl:call-template name="util:style-inline">','</xsl:call-template>');
-            foreach ($callTemplate as $template) {
-                $compiledParam = Strings::extract($template,'<xsl:with-param name="compiled">','</xsl:with-param>');
-                if (count($compiledParam)==1) {
-                    $compiledParam = $compiledParam[0];
-                    $new = '<xsl:with-param name="compiled">' . file_get_contents($inlineFileMinified) . '</xsl:with-param>';
+        Log::info('Embedding inline css for: ' . $design);
+        $inlineFileMinified = $basePath."style/".$design."/css/inline.min.css";
+        $xslFile = $basePath.'style/' .$design . '/xslt/main.xsl';
+        DesignService::_compress($inlineFile,$inlineFileMinified);
+        $xsl = file_get_contents($xslFile);
+        $callTemplate = Strings::extract($xsl,'<xsl:call-template name="util:style-inline">','</xsl:call-template>');
+        foreach ($callTemplate as $template) {
+            $compiledParam = Strings::extract($template,'<xsl:with-param name="compiled">','</xsl:with-param>');
+            if (count($compiledParam)==1) {
+                $compiledParam = $compiledParam[0];
+
+                $cssFileName = DesignService::_getFileParameter($template);
+                $cssFile = $basePath."style/".$design."/css/".$cssFileName;
+                if (file_exists($cssFile)) {
+                    $cssMin = DesignService::_compressToString($cssFile);
+                    $new = '<xsl:with-param name="compiled">' . $cssMin . '</xsl:with-param>';
                     $replacement = str_replace($compiledParam,$new,$template);
                     $xsl = str_replace($template,$replacement,$xsl);
+                } else {
+                    Log::warn('Inline file not found: ' . $cssFile);
                 }
             }
-            unlink($inlineFileMinified);
-            FileSystemService::writeStringToFile($xsl,$xslFile);
         }
+        unlink($inlineFileMinified);
+        FileSystemService::writeStringToFile($xsl,$xslFile);
     }
 
 	static function rebuild($design) {
