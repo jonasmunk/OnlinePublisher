@@ -9,23 +9,28 @@
 	height: 500px;
 	left: 0;
 	right: 0;
+	background-color: #eee;
 	background-size: cover;
-  background-repeat: no-repeat;
+	background-repeat: no-repeat;
 	background-position: 50% 50%;
 }
 
 .poster_title {
-	font-family: $serif-font;
+	font-family: $serif-font-fallback;
 	text-rendering: geometricPrecision;
 	font-weight: normal;
 	font-size: 48pt;
 	margin: 0 0 10px;
 	color: #fff;
+
+	.font_playfair & {
+		font-family: $serif-font;
+	}
 }
 
 .poster_block {
 	position: absolute;
-  background: rgb(6, 21, 22);
+	background: rgb(6, 21, 22);
 	background: rgba(6, 21, 22, 0.8);
 	color: #fff;
 	width: 400px;
@@ -37,9 +42,13 @@
 }
 
 .poster_text {
-	font-family: 'Annie Use Your Telescope', cursive;
+	font-family: cursive;
 	font-size: 28pt;
 	margin: 0;
+}
+
+.font_annie .poster_text {
+	font-family: 'Annie Use Your Telescope', cursive;	
 }
 
 .poster_links {

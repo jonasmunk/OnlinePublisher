@@ -51,8 +51,12 @@ p.common, ul.common
 .part_header
 {
 	color: #000;
-	font-family: 'Playfair Display', Georgia,"Book Antiqua", "Palatino",Times,serif;
+	font-family: Georgia,"Book Antiqua", "Palatino",Times,serif;
 	font-weight: normal;
+}
+
+.font_playfair .part_header {
+	font-family: 'Playfair Display', Georgia, "Book Antiqua", "Palatino", Times, serif;
 }
 
 .part_header_1 {
@@ -113,4 +117,8 @@ p.common, ul.common
 	display: inline-block;
 	font-size: 32px;
 	height: 44px;
+}
+
+.font_playfair .part_movie_text_inner {
+	font-family: 'Playfair Display', Georgia,"Book Antiqua", "Palatino",Times,serif;
 }

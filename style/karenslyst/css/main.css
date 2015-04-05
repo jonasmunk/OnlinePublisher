@@ -22,6 +22,12 @@
 	color: #333;
 }
 
+.layout_userstatus {
+	text-align: center;
+	margin-top: 50px;
+	color: #999;
+}
+
 
 @media screen and (max-width: 800px) {
 	.document_column {

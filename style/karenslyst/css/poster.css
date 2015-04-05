@@ -7,17 +7,20 @@
   height: 500px;
   left: 0;
   right: 0;
+  background-color: #eee;
   background-size: cover;
   background-repeat: no-repeat;
   background-position: 50% 50%; }
 
 .poster_title {
-  font-family: "Playfair Display", serif;
+  font-family: Georgia, "Book Antiqua", "Palatino", Times, serif;
   text-rendering: geometricPrecision;
   font-weight: normal;
   font-size: 48pt;
   margin: 0 0 10px;
   color: #fff; }
+.font_playfair .poster_title {
+  font-family: "Playfair Display", Georgia, "Book Antiqua", "Palatino", Times, serif; }
 
 .poster_block {
   position: absolute;
@@ -32,15 +35,18 @@
   line-height: 1; }
 
 .poster_text {
-  font-family: 'Annie Use Your Telescope', cursive;
+  font-family: cursive;
   font-size: 28pt;
   margin: 0; }
+
+.font_annie .poster_text {
+  font-family: 'Annie Use Your Telescope', cursive; }
 
 .poster_links {
   margin: 10px 0 0; }
 
 .poster_link {
-  font-family: "Playfair Display", serif;
+  font-family: "Playfair Display", Georgia, "Book Antiqua", "Palatino", Times, serif;
   color: #00A3FF;
   text-decoration: none;
   font-size: 18pt;
