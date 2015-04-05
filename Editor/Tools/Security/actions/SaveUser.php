@@ -24,6 +24,7 @@ if ($user->save()) {
 	$password = $data->password;
 	if (Strings::isNotBlank($password)) {
 		AuthenticationService::setPassword($user,$password);
+        $user->save();
 	}
 	$user->publish();
 } else {
