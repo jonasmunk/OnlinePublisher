@@ -34,7 +34,7 @@
     	<xsl:call-template name="util:metatags"/>
 		<meta property="og:image" content="{$absolute-path}{$timestamp-url}style/karenslyst/gfx/front.jpg" />
         <xsl:call-template name="util:style-inline">
-			<xsl:with-param name="compiled">body{margin:0;padding:0;font-family:Georgia,Times,serif}.layout_content{max-width:940px;margin:0 auto;padding:0 20px}.layout_sub_top{background:#6a99dd url(/style/karenslyst/gfx/top.jpg) 50%;background-size:cover;height:200px}.title_sub{font-family:'Playfair Display',serif;margin:0;color:#fff;font-weight:400;font-size:42pt;position:relative;max-width:940px;padding:0 20px;margin:0 auto}.title_sub_more{font-size:.5em;font-style:italic}</xsl:with-param>
+			<xsl:with-param name="compiled">body{margin:0;padding:0;font-family:Georgia,Times,serif}.layout_content{max-width:940px;margin:0 auto;padding:0 20px}.layout_sub_top{background:#6a99dd url(/style/karenslyst/gfx/top.jpg) 50%;background-size:cover;height:200px}.title_sub{font-family:'Playfair Display',serif;margin:0;color:#fff;font-weight:400;font-size:42pt;position:relative;max-width:940px;padding:0 20px;margin:0 auto}.title_sub_more{font-size:.5em;font-style:italic}.menu{background:#2E3840;font-family:Georgia}.menu_items{list-style:none;padding:0 15px;margin:0 auto;max-width:960px}.menu_item{display:inline-block}.menu_link{display:inline-block;color:#fff;padding:0 10px;font-size:24px;height:42px;line-height:42px;text-decoration:none}</xsl:with-param>
         </xsl:call-template>
         <xsl:if test="//p:page/@id=//p:context/p:home/@page">
             <xsl:call-template name="util:style-inline">

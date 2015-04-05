@@ -27,10 +27,6 @@
     width: auto !important;
     padding: 0 !important; }
 
-  .part_image img {
-    max-width: 100%;
-    height: auto; }
-
   .poster {
     height: auto;
     margin: 0 -20px;

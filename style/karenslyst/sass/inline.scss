@@ -1,3 +1,5 @@
+@import 'tools';
+
 body {
 	margin: 0;
 	padding: 0;
@@ -31,4 +33,33 @@ body {
 .title_sub_more {
     font-size: .5em;
     font-style: italic;
+}
+
+
+.menu {
+	background: #2E3840;
+	font-family: Georgia;
+}
+
+.menu_items {
+	list-style: none;
+	padding: 0 15px;
+	margin: 0 auto;
+	max-width: 960px;
+}
+
+.menu_item {
+	display: inline-block;
+}
+
+$height : 42px;
+
+.menu_link {
+	display: inline-block;
+	color: #fff;
+	padding: 0 10px;
+	font-size: 24px;
+	height: $height;
+	line-height: $height;
+	text-decoration: none;
 }
