@@ -78,12 +78,8 @@
 @include when(560px,inline) {
 
     .layout_inner_content {
-		padding: 20px 0;
+		padding: 20px 10px;
     }
-	
-	.layout_inner_content_sidebar {
-		padding: 20px 20px 20px 0;
-	}
 	
 	.layout_sub_navigation {
 		padding: 5px 15px;

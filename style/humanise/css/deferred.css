@@ -238,9 +238,10 @@ body.windows .part_text {
 .layout_placards {
   list-style: none;
   background: #f8f8f9;
-  margin: 0;
+  margin: 0 -10px;
   padding: 0;
-  overflow: hidden; }
+  overflow: hidden;
+  border-top: 1px solid #ddd; }
 .layout_placards strong {
   display: block;
   font-size: 30px;
@@ -260,10 +261,10 @@ body.windows .part_text {
 
 .layout_placards_link {
   display: block;
-  border-right: 1px solid #ddd;
   text-decoration: none;
   color: #333;
-  font-size: 0; }
+  font-size: 0;
+  border-bottom: 1px solid #ddd; }
 .layout_placards_link:hover {
   background: #f0f0f3; }
 .layout_placards_link:focus {
@@ -301,12 +302,17 @@ body.windows .part_text {
     width: 33.333333333%;
     font-size: 0; }
 
+  .layout_placards_link {
+    border-right: 1px solid #ddd;
+    border-bottom: none; }
+
   .layout_placards_link_last {
     border: none; } }
 @media screen and (min-width: 980px) {
   .layout_placards {
     border: 1px solid #ddd;
-    border-radius: 5px; } }
+    border-radius: 5px;
+    margin: 0; } }
 .layout_design {
   background: url("/style/in2isoft/gfx/graphics.png") -172px -709px;
   text-indent: -10000px;

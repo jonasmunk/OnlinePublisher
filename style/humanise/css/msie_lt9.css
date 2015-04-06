@@ -89,18 +89,20 @@
   width: 33.333333333%;
   font-size: 0; }
 
+.layout_placards_link {
+  border-right: 1px solid #ddd;
+  border-bottom: none; }
+
 .layout_placards_link_last {
   border: none; }
 
 .layout_placards {
   border: 1px solid #ddd;
-  border-radius: 5px; }
+  border-radius: 5px;
+  margin: 0; }
 
 .layout_inner_content {
-  padding: 20px 0; }
-
-.layout_inner_content_sidebar {
-  padding: 20px 20px 20px 0; }
+  padding: 20px 10px; }
 
 .layout_sub_navigation {
   padding: 5px 15px; }
