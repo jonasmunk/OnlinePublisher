@@ -1,11 +1,11 @@
 @include when(1000px,inline) {
 	#poster
 	{
-    display: block;
+		display: block;
 		width: 980px;
 		height: 310px;
-    background: #333;
-  }
+		background: #333;
+	}
   
 	#poster_loader
 	{

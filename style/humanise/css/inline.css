@@ -44,6 +44,16 @@ p.common, ul.common {
   background-image: linear-gradient(top, rgba(0, 0, 0, 0) 98%, rgba(0, 0, 0, 0.5) 98%);
   background-repeat: repeat-x; }
 
+.common_header {
+  margin: 0px;
+  color: #333;
+  font-weight: 300; }
+
+.part_text {
+  font-size: 12pt;
+  font-weight: 300;
+  word-spacing: 1px; }
+
 .layout_menu {
   margin: 0;
   padding: 5px 10px;
@@ -191,52 +201,6 @@ p.common, ul.common {
     width: 50px;
     height: 24px;
     line-height: 22px; } }
-.call-to-action {
-  background: #fafafa;
-  border: 1px solid #eee;
-  border-radius: 3px;
-  padding: 20px 10px;
-  text-align: center; }
-
-.call-to-action-text {
-  margin: -5px 0 0;
-  color: #666;
-  font-weight: 300;
-  font-size: 32px;
-  line-height: 1; }
-
-.call-to-action-button {
-  background: #3080CB;
-  color: #fff;
-  height: 34px;
-  line-height: 34px;
-  padding: 0 20px;
-  box-sizing: border-box;
-  border: none;
-  border-radius: 3px;
-  display: inline-block;
-  font-size: 18px;
-  margin-top: 20px;
-  text-decoration: none;
-  cursor: pointer; }
-
-.call-to-action-button:hover {
-  background: #206AB0; }
-
-.call-to-action-button:active {
-  -webkit-transform: scale(0.95);
-  outline: none; }
-
-.common_header {
-  margin: 0px;
-  color: #333;
-  font-weight: 300; }
-
-.part_text {
-  font-size: 12pt;
-  font-weight: 300;
-  word-spacing: 1px; }
-
 div.document_column {
   display: block; }
 

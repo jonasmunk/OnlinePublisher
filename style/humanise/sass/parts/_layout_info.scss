@@ -1,28 +1,28 @@
 @include when {
 
-  .layout_info {
-  	overflow: hidden;
-  	padding: 10px;
-  }
+	.layout_info {
+		overflow: hidden;
+		padding: 10px;
+	}
 
-  .layout_info_header {
-  	font-weight: 300;
-  	font-size: 28px;
-  	margin: 0px 20px 10px 0;
-  	height: 28px;
-  	color: #666;
-  }
+	.layout_info_header {
+		font-weight: 300;
+		font-size: 28px;
+		margin: 0px 20px 10px 0;
+		height: 28px;
+		color: #666;
+	}
 
-  .layout_info_about {
+	.layout_info_about {
     
-    p {
-    	font-weight: 300;
-    	font-size: 12pt;
-    	line-height: 16pt;
-    	margin-top: 11px;
-    	color: #666;      
-    }
-  }
+		p {
+			font-weight: 300;
+			font-size: 12pt;
+			line-height: 16pt;
+			margin-top: 11px;
+			color: #666;      
+		}
+	}
 
   .layout_info_more {
   	line-height: 11px;
@@ -64,7 +64,7 @@
     }
 
     .layout_info_about p {
-    	color: #333;
+		color: #333;
     }
 
     a span {

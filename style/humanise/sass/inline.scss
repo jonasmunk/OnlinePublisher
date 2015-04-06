@@ -5,33 +5,6 @@ $target: inline;
 @import 'parts/all';
 
 
-
-
-///////// Menu /////////
-
-
-
-
-
-
-
-
-
-///////////////////// Common //////////////////
-
-.common_header {
-	margin: 0px;
-	color: #333;
-	font-weight: 300;
-}
-
-.part_text
-{
-	font-size: 12pt;
-	font-weight: 300;
-	word-spacing: 1px;
-}
-
 /////////////////// Document ////////////////
 
 div.document_column
@@ -56,6 +29,6 @@ div.document_column
 	}
 	div.document_column {
 		display: table-cell;
-    vertical-align: top;
+		vertical-align: top;
 	}
 }

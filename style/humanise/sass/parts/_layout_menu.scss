@@ -40,7 +40,7 @@
   }  
 }
 
-@include when(760px,'inline') {
+@include when(760px,inline) {
 
 	.layout_menu {
 		text-align: left;
@@ -63,7 +63,7 @@
 
 }
 
-@include when(1000px,'inline') {
+@include when(1000px,inline) {
 	
 	.layout_menu {
 		padding: 5px 0;

@@ -1,24 +1,34 @@
-@include when(all,deferred) {
+@include when(all,inline) {
+	.common_header {
+		margin: 0px;
+		color: #333;
+		font-weight: 300;
+	}
+
+	.part_text
+	{
+		font-size: 12pt;
+		font-weight: 300;
+		word-spacing: 1px;
+	}
+}
+
+@include when(all,async) {
   /************ Headers ***********/
 
-  .part_header
-  {
-  	color: #333;
-  	font-weight: 300;
-  }
 
   .part_header_1
   {
   	color: #3080CB;
   }
 
-  h1.part_header, textarea.part_header_1
+  .part_header_1
   {
   	font-size: 38px;
   	line-height: 42px;
   }
 
-  h2.part_header, textarea.part_header_2
+  .part_header_2
   {
   	font-size: 19pt;
   	line-height: 21pt;
@@ -26,49 +36,49 @@
   }
 
 
-  h3.part_header, textarea.part_header_3
+  .part_header_3
   {
   	font-size: 14pt;
   	line-height: 16pt;
   	font-weight: 400;
   }
 
-  h4.part_header, textarea.part_header_4,
-  h5.part_header, textarea.part_header_5,
-  h6.part_header, textarea.part_header_6
+  .part_header_4,
+  .part_header_5,
+  .part_header_6
   {
   	font-weight: 400;
   }
 
-  div.part_section_header_3
+  .part_section_header_3
   {
   	padding-bottom: 5px;
   }
 
-  body.windows .part_header
+  .windows .part_header
   {
   	font-weight: normal;
   }
 
-  body.windows h1.part_header
+  .windows .part_header_1
   {
   	font-weight: 300;
   }
 
   /************** Poster ************/
 
-  p.part_poster_text
+  .part_poster_text
   {
   	font-size: 14px;
   	font-weight: 300;
   }
 
-  p.part_poster_link
+  .part_poster_link
   {
   	font-size: 14px;
   }
 
-  p.part_poster_title
+  .part_poster_title
   {
   	font-weight: 400;
   }
@@ -77,7 +87,7 @@
   /*************** text *************/
 
   .part_text,
-  div.part_richtext
+  .part_richtext
   {
   	font-size: 12pt;
   	font-weight: 300;
@@ -86,46 +96,46 @@
   }
 
   .part_text strong,
-  div.part_richtext strong
+  .part_richtext strong
   {
   	color: #000;
   	font-weight: 400;
   }
 
-  div.part_richtext p
+  .part_richtext p
   {
   	margin: 10px 0;
   }
 
-  div.part_listing, textarea.part_listing
+  .part_listing
   {
   	font-size: 11pt;
   	font-weight: 300;
   	word-spacing: 1px;
   }
 
-  div.part_listing span.part_listing_first
+  .part_listing_first
   {
   	font-size: 12pt;
   	font-weight: normal;
   }
 
-  body.windows .part_text, body.windows .part_text
+  body.windows .part_text
   {
   	font-weight: normal;
   }
 
-  div.part_list h3
+  .part_list h3
   {
   	font-weight: normal;
   }
 
-  hr.part_horizontalrule {
+  .part_horizontalrule {
   	border: none;
   	border-bottom: solid 1px $line-color;
   }
 
-  div.part_news_item_title
+  .part_news_item_title
   {
   	font-size: 10pt;
   	font-weight: 400;
@@ -135,7 +145,7 @@
     }
   }
 
-  div.part_news_item_description
+  .part_news_item_description
   {
   	font-size: 10pt;
   	font-weight: 300;

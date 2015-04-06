@@ -3,21 +3,20 @@ $background: #f6f6f9;
 
 $line-color: #eee;
 
-@mixin breakpoint($size) {
-	@media screen and (min-width: $size) {
+@mixin when($size:all,$type:'async') {
+	@if ($target=='nomediaqueries' and $size!='all') {
 		@content;
 	}
-}
-
-@mixin when($size:all,$type:'deferred') {
-  @if ($target==$type or $target==editor) {
-    @if ($size=='all') {
-      @content;
-    }
-    @else {
-    	@media screen and (min-width: $size) {
-    		@content;
-    	}    
-    }
-  }
+	@else {
+		@if ($target==$type or $target==editor) {
+			@if ($size=='all') {
+				@content;
+			}
+			@else {
+				@media screen and (min-width: $size) {
+					@content;
+				}    
+			}
+		}
+	}
 }

@@ -2,7 +2,7 @@ require(['hui'],function() {
 
   var SearchField = function(options) {
     this.element = options.element;
-    hui.collect(this.nodes,this.element);
+    this.nodes = hui.collect(this.nodes,this.element);
     this._attach();
   }
 
