@@ -1,29 +1,29 @@
-div.part_poster
+.part_poster
 {
 	overflow: hidden;
 	position: relative;
 }
 
-p.part_poster_title
+.part_poster_title
 {
 	margin: 0;
 	font-size: 14pt;
 	font-weight: bold;
 }
 
-p.part_poster_text
+.part_poster_text
 {
 	font-size: 12px;
 	margin: 5px 0 5px;
 }
 
-p.part_poster_link
+.part_poster_link
 {
 	font-size: 12px;
 	margin: 5px 0 5px;
 }
 
-div.part_poster_navigator
+.part_poster_navigator
 {
 	position: absolute;
 	font-size: 0;
@@ -32,7 +32,7 @@ div.part_poster_navigator
 	margin-top: -15px;
 }
 
-div.part_poster_navigator a
+.part_poster_navigator a
 {
 	display: inline-block;
 	width: 10px;
@@ -42,23 +42,23 @@ div.part_poster_navigator a
 	margin-right: 3px;
 }
 
-div.part_poster_navigator a.part_poster_current
+.part_poster_navigator .part_poster_current
 {
 	background: #aaa;
 }
 
-div.part_poster_pages
+.part_poster_pages
 {
 	overflow: hidden;
 }
 
-div.part_poster_page_content
+.part_poster_page_content
 {
 	overflow: hidden;
 	padding: 0 0 10px 0;
 }
 
-div.part_poster_page img
+.part_poster_page img
 {
 	float: right;
 	margin-left: 20px;
@@ -67,20 +67,20 @@ div.part_poster_page img
 
 /*** Light frame **/
 
-div.part_poster_light
+.part_poster_light
 {
 	border: 1px solid #ddd;
 	border-radius: 4px;	
 }
 
-div.part_poster_light div.part_poster_page_content
+.part_poster_light .part_poster_page_content
 {
 	padding: 10px;
 }
 
 /*** inset **/
 
-div.part_poster_inset
+.part_poster_inset
 {
 	background: #FAFAFA;
 	box-shadow: inset 0 1px 7px rgba(0, 0, 0, .07);	
@@ -88,7 +88,7 @@ div.part_poster_inset
 	padding: 5px;
 }
 
-div.part_poster_inset div.part_poster_page_content
+.part_poster_inset .part_poster_page_content
 {
 	padding: 10px;
 }
