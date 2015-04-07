@@ -9,7 +9,7 @@ body {
   padding: 0 20px; }
 
 .layout_sub_top {
-  background: #6a99dd url("/style/karenslyst/gfx/top.jpg") 50%;
+  background: #6A99DD url("/style/karenslyst/gfx/top.jpg") 50%;
   background-size: cover;
   height: 200px; }
 
@@ -49,3 +49,55 @@ body {
   height: 42px;
   line-height: 42px;
   text-decoration: none; }
+
+@media only screen and (max-width: 1000px) {
+  .part_imagegallery_item img {
+    max-width: 100%;
+    height: auto; } }
+@media only screen and (max-width: 768px) {
+  .layout_sub_top {
+    height: auto;
+    padding-bottom: 26.04167%; }
+
+  .title_sub {
+    font-size: 32pt;
+    position: absolute; }
+
+  .document_row:first-child {
+    margin-top: 0 !important; }
+
+  .document_column {
+    width: auto !important;
+    padding: 0 !important; }
+
+  .part_image img {
+    max-width: 100%;
+    height: auto; } }
+@media only screen and (max-width: 500px) {
+  .layout_sub_top {
+    height: 130px;
+    padding: 0; }
+
+  .title_sub {
+    text-align: center;
+    width: auto;
+    font-size: 34pt;
+    line-height: 1;
+    right: 0;
+    left: 0px;
+    top: 0px; }
+
+  .title_more, .title_sub_more {
+    display: none; }
+
+  .layout_content {
+    padding: 0 10px; }
+
+  .menu_items {
+    padding: 5px 0;
+    text-align: center; }
+
+  .menu_link {
+    font-size: 18px;
+    height: 28px;
+    line-height: 28px; } }
