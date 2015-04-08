@@ -100,6 +100,7 @@ class DesignService {
                 $cssFile = $basePath."style/".$design."/css/".$cssFileName;
                 if (file_exists($cssFile)) {
                     $cssMin = DesignService::_compressToString($cssFile);
+					$cssMin = DesignService::adjustURLs($cssMin,$design);
                     $new = '<xsl:with-param name="compiled">' . $cssMin . '</xsl:with-param>';
                     $replacement = str_replace($compiledParam,$new,$template);
                     $xsl = str_replace($template,$replacement,$xsl);
@@ -111,6 +112,10 @@ class DesignService {
         unlink($inlineFileMinified);
         FileSystemService::writeStringToFile($xsl,$xslFile);
     }
+	
+	static function adjustURLs($css,$design) {
+		return preg_replace("/url\((['\"]{0,1})..\//um", 'url($1<xsl:value-of select="\$path"/><xsl:value-of select="\$timestamp-url"/>style/'.$design.'/', $css);
+	}
 
 	static function rebuild($design) {
 		global $basePath;
