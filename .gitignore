@@ -16,7 +16,8 @@ CVS
 /local/logs/*
 .svn
 .htaccess
-/style/*/.sass-cache
+.sass-cache
+/node_modules
 
 profile_prepend.php
 profile_append.php
