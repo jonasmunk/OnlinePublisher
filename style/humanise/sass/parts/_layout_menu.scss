@@ -25,19 +25,22 @@
   }
 
   .layout_menu_link_first {
-  	background: url("/style/humanise/gfx/graphics.png") -139px -636px;
+  	background: url("../gfx/graphics.png") -139px -636px;
   	display: inline-block;
   	width: 160px;
   	height: 40px;
   	> span {
   		display: none;
   	}
-    
-    .retina & {
-    	background-image: url('/style/humanise/gfx/graphics_2x.png');
+  }
+  
+  @media  (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+    .layout_menu_link_first {
+    	background-image: url('../gfx/graphics_2x.png');
     	background-size: 400px 907px;
-    }
-  }  
+    }		
+  }
+  
 }
 
 @include when(760px,inline) {

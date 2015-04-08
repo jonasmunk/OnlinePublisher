@@ -33,7 +33,7 @@
   	padding: 4px;
   }
 
-  .layout_searching {
+  .layout_search_active {
   	.layout_search_body {
   		display: block;
   	}
@@ -48,7 +48,9 @@
   	width: 100%;
   	box-sizing: border-box;
   	height: 40px;
-  	border: 1px solid #aaa;
+  	border: 1px solid #ccc;
+    padding-left: 10px;
+    font-size: 16px;
   }
 
   .layout_search_submit {
@@ -56,20 +58,20 @@
   	height: 40px;
   	box-sizing: border-box;
   	display: inline-block;
-  	background: #abc;
+  	background: #3080CB;
   	color: #fff;
   	position: absolute;
   	right: -100px;
   	top: 4px;
   	border: none;
-  	font-size: 14px;
+  	font-size: 16px;
+    border-radius: 3px;
   }
 }
 
 @include when(560px) {
 	  
   .layout_search_body {
-    width: 0px;
     overflow: hidden;
     display: block;
     opacity: 0;
@@ -78,13 +80,13 @@
     -moz-transition: opacity .2s, width .5s;
     -ms-transition: opacity .2s, width .5s;
     -o-transition: opacity .2s, width .5s;
-    top: 5px;
-    right: 3px;
-    height: auto;
     left: auto;
-    top: 5px;
+    width: 0px;
+    height: auto;
+    top: 9px;
     right: 3px;
     background: none;
+    padding: 0;
   }
 
   .layout_search_text {
@@ -110,9 +112,10 @@
     width: 32px;
     height: 36px;
     cursor: pointer;
+    top: 0;
   }
   
-  .layout_searching {
+  .layout_search_active {
     .layout_search_body {
       width: 200px;
       opacity: 1;

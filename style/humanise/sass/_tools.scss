@@ -1,4 +1,5 @@
 $color: #324d60;
+
 $background: #f6f6f9;
 
 $line-color: #eee;
@@ -19,4 +20,10 @@ $line-color: #eee;
 			}
 		}
 	}
+}
+
+@mixin retina {
+  @media  (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+    @content;
+  }
 }

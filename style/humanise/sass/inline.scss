@@ -7,12 +7,14 @@ $target: inline;
 
 /////////////////// Document ////////////////
 
-div.document_column
-{
-	display: block;
-}
 
 @media screen and (max-width: 700px) {
+
+  div.document_column
+  {
+  	display: block;
+  }
+
 	.document_column {
 		width: auto !important;
 		padding: 0 !important;

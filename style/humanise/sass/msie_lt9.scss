@@ -3,3 +3,9 @@ $target: nomediaqueries;
 @import 'tools';
 
 @import 'parts/all';
+
+.layout_middle, .layout_head_body, .layout_base {
+  width: 980px;
+  padding-left: 20px;
+  padding-right: 20px;
+}

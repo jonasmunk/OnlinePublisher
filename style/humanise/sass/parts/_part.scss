@@ -25,13 +25,13 @@
   .part_header_1
   {
   	font-size: 38px;
-  	line-height: 42px;
+  	line-height: 1.105263158em;
   }
 
   .part_header_2
   {
   	font-size: 19pt;
-  	line-height: 21pt;
+  	line-height: 1.105263158em;
   	/*font-weight: 400;*/
   }
 
@@ -39,7 +39,7 @@
   .part_header_3
   {
   	font-size: 14pt;
-  	line-height: 16pt;
+  	line-height: 1.142857143em;
   	font-weight: 400;
   }
 
@@ -117,11 +117,6 @@
   .part_listing_first
   {
   	font-size: 12pt;
-  	font-weight: normal;
-  }
-
-  body.windows .part_text
-  {
   	font-weight: normal;
   }
 
