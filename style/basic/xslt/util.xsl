@@ -443,6 +443,7 @@ this.scriptLoaded=!0}},require(["hui","hui.ui","op"],function(){_editor.$scriptR
 
 <xsl:template name="util:style-build">
     <xsl:param name="plain" select="'false'"/>
+    <xsl:param name="async" select="'true'"/>
     <xsl:if test="$template!='document'">
         <link rel="stylesheet" type="text/css" href="{$path}{$timestamp-url}style/basic/css/{$template}.css"/>
     </xsl:if>
@@ -461,21 +462,27 @@ this.scriptLoaded=!0}},require(["hui","hui.ui","op"],function(){_editor.$scriptR
 		</xsl:when>
 		<xsl:when test="$development='true'">
 			<link rel="stylesheet" type="text/css" href="{$path}{$timestamp-url}hui/bin/minimized.site.css{$timestamp-query}"/>
-            <xsl:if test="$plain='false'">
+            <xsl:if test="$plain='false' and $async='true'">
                 <xsl:call-template name="util:lazy-style">
                     <xsl:with-param name="href">
                         <xsl:value-of select="$path"/><xsl:value-of select="$timestamp-url"/>style/<xsl:value-of select="$design"/><xsl:text>/css/style.dev.css</xsl:text>
                     </xsl:with-param>
                 </xsl:call-template>                
             </xsl:if>
+            <xsl:if test="$plain='false' and $async='false'">
+                <link rel="stylesheet" type="text/css" href="{$path}{$timestamp-url}style/{$design}/css/style.dev.css{$timestamp-query}"/>
+            </xsl:if>
         </xsl:when>
-    	<xsl:when test="$plain='false'">
+    	<xsl:when test="$plain='false' and $async='true'">
             <xsl:call-template name="util:lazy-style">
                 <xsl:with-param name="href">
                     <xsl:value-of select="$path"/><xsl:value-of select="$timestamp-url"/>style/<xsl:value-of select="$design"/><xsl:text>/css/style.css</xsl:text>
                 </xsl:with-param>
             </xsl:call-template>
 		</xsl:when>
+    	<xsl:when test="$plain='false' and $async='false'">
+            <link rel="stylesheet" type="text/css" href="{$path}{$timestamp-url}style/{$design}/css/style.css{$timestamp-query}"/>
+        </xsl:when>
 	</xsl:choose>
     <xsl:call-template name="util:_style-dynamic"/>
     <xsl:call-template name="util:_style-hui-msie"/>
@@ -501,14 +508,14 @@ this.scriptLoaded=!0}},require(["hui","hui.ui","op"],function(){_editor.$scriptR
     <xsl:param name="class" select="'font'"/>
     <xsl:call-template name="util:script-inline">
         <xsl:with-param name="file" select="'style/basic/js/boot_fonts.js'"/>
-        <xsl:with-param name="compiled"><![CDATA[!function(t,e,n){n.loadFont=function(i){var o=i.weights||["normal"]
-o=["300","400","700"]
-for(var l=o.length,a=function(n){var o=e.createElement("div")
-o.style.position="absolute",o.style.whiteSpace="nowrap",o.style.top="-9999px",o.style.font="400px fantasy",o.innerHTML="Am-i#w^o",e.body.appendChild(o)
-var a=o.clientWidth
-o.style.fontFamily="'"+i.family+"',fantasy",o.style.fontWeight=n
-var s,r=.01;(s=function(){r*=1.5,0==a||a!=o.clientWidth?(l--,0==l&&(e.body.className+=" "+i.cls),o.parentNode.removeChild(o)):t.setTimeout(s,r)})()},s=0;s<o.length;s++)a(o[s])
-n.inject(n._build("link",{rel:"stylesheet",type:"text/css",href:i.href}))}}(window,document,_editor)
+        <xsl:with-param name="compiled"><![CDATA[!function(e,t,l){l.loadFont=function(o){if(e.localStorage&&localStorage.getItem(o.href))t.body.className+=" "+o.cls
+else{var a=o.weights||["normal"]
+a=["300","400","700"]
+for(var n=a.length,i=function(l){var a=t.createElement("div")
+a.style.position="absolute",a.style.whiteSpace="nowrap",a.style.top="-9999px",a.style.font="400px fantasy",a.innerHTML="Am-i#w^o",t.body.appendChild(a)
+var i=a.clientWidth
+a.style.fontFamily="'"+o.family+"',fantasy",a.style.fontWeight=l
+var s,r=.01;(s=function(){r*=1.5,0==i||i!=a.clientWidth?(n--,0==n&&(t.body.className+=" "+o.cls,e.localStorage&&localStorage.setItem(o.href,"1")),a.parentNode.removeChild(a)):e.setTimeout(s,r)})()},s=0;s<a.length;s++)i(a[s])}l.inject(l._build("link",{rel:"stylesheet",type:"text/css",href:o.href}))}}(window,document,_editor)
 ]]></xsl:with-param>
     </xsl:call-template>
     <script>_editor.loadFont({href:'<xsl:value-of select="$href"/>',family:'<xsl:value-of select="$family"/>',cls:'<xsl:value-of select="$class"/>'<xsl:if test="$weights!=''">,weights:'<xsl:value-of select="$weights"/>'.split(',')</xsl:if>});</script>
