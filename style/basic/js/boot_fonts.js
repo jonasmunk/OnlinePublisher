@@ -1,42 +1,46 @@
 (function(window,document,tool) {
   tool.loadFont = function(options) {
-    var weights = options.weights || ['normal'];
-    weights = ['300','400','700'];
-    var count = weights.length;
-    var operation = function(weight) {
-      var dummy = document.createElement('div');
-	  dummy.style.position = 'absolute';
-	  dummy.style.whiteSpace = 'nowrap';
-	  dummy.style.top = '-9999px';
-	  dummy.style.font = '400px fantasy';
-      dummy.innerHTML = 'Am-i#w^o';
-      document.body.appendChild(dummy);
-      var width = dummy.clientWidth;
+    if (window.localStorage && localStorage.getItem(options.href)) {
+      document.body.className += ' ' + options.cls;
+    } else {
+      var weights = options.weights || ['normal'];
+      weights = ['300','400','700'];
+      var count = weights.length;
+      var operation = function(weight) {
+        var dummy = document.createElement('div');
+      dummy.style.position = 'absolute';
+      dummy.style.whiteSpace = 'nowrap';
+      dummy.style.top = '-9999px';
+      dummy.style.font = '400px fantasy';
+        dummy.innerHTML = 'Am-i#w^o';
+        document.body.appendChild(dummy);
+        var width = dummy.clientWidth;
 
-      //console.log('Checking: '+weight);
-      dummy.style.fontFamily = "'" + options.family + "',fantasy";
-      dummy.style.fontWeight = weight;
-      var tester;
-      var timeout = 0.01;
-      tester = function() {
-        timeout *= 1.5;
-        if (width==0 || width != dummy.clientWidth) {
-          count--;
-          //console.log('found: '+weight+','+width+'/'+dummy.clientWidth);
-          if (count==0) {
-            document.body.className += ' ' + options.cls;
+        //console.log('Checking: '+weight);
+        dummy.style.fontFamily = "'" + options.family + "',fantasy";
+        dummy.style.fontWeight = weight;
+        var tester;
+        var timeout = 0.01;
+        tester = function() {
+          timeout *= 1.5;
+          if (width==0 || width != dummy.clientWidth) {
+            count--;
+            //console.log('found: '+weight+','+width+'/'+dummy.clientWidth);
+            if (count==0) {
+              document.body.className += ' ' + options.cls;
+              window.localStorage && localStorage.setItem(options.href,'1');
+            }
+            dummy.parentNode.removeChild(dummy);
+          } else {
+            window.setTimeout(tester,timeout);
           }
-          dummy.parentNode.removeChild(dummy);
-        } else {
-          window.setTimeout(tester,timeout);
         }
+        tester();
       }
-      tester();
+      for (var i = 0; i < weights.length; i++) {
+        operation(weights[i]);
+      }
     }
-    for (var i = 0; i < weights.length; i++) {
-      operation(weights[i]);
-    }
-
     tool.inject(tool._build('link',{
       rel : 'stylesheet',
       type : 'text/css',
