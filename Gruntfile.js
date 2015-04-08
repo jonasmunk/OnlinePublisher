@@ -27,12 +27,14 @@ module.exports = function(grunt) {
         options: {
           sassDir: "style/humanise/sass",
           cssDir: "style/humanise/css",
+			    noLineComments: true,
         }
       },
       karenslyst: {
         options: {
           sassDir: "style/karenslyst/sass",
           cssDir: "style/karenslyst/css",
+			    noLineComments: true,
         }
       }
     },
