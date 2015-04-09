@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <xsl:stylesheet version="1.0"
- xmlns="http://www.w3.org/1999/xhtml"
- xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
- xmlns:l="http://uri.in2isoft.com/onlinepublisher/part/list/1.0/"
- xmlns:p="http://uri.in2isoft.com/onlinepublisher/publishing/page/1.0/"
- xmlns:util="http://uri.in2isoft.com/onlinepublisher/util/"
- exclude-result-prefixes="l"
- >
+xmlns="http://www.w3.org/1999/xhtml"
+xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
+xmlns:l="http://uri.in2isoft.com/onlinepublisher/part/list/1.0/"
+xmlns:p="http://uri.in2isoft.com/onlinepublisher/publishing/page/1.0/"
+xmlns:util="http://uri.in2isoft.com/onlinepublisher/util/"
+exclude-result-prefixes="l"
+>
 
 <xsl:template match="l:list">
 	<div class="part_list common_font" id="part_list_{../../@id}">
@@ -29,8 +29,8 @@
 		</div>
 	</div>
 	<xsl:if test="@dirty='true' and $editor!='true'">
-		<script type="text/javascript">
-			require(['hui'],(function() {
+		<script>
+			require(['hui'],function() {
 				var id = <xsl:value-of select="../../@id"/>;
 				var node = hui.get('part_list_'+id);
 				hui.cls.add(node,'part_list_busy');

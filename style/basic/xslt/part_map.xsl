@@ -107,7 +107,7 @@
 			<span class="part_map_text"><xsl:value-of select="map:text"/></span>
 		</xsl:if>
 		<script type="text/javascript">
-			require(['op.part.Map'],(function() {
+			require(['op.part.Map'],function() {
 				var options = {
 					element : 'map_<xsl:value-of select="../../@id"/>',
 					markers : [],
