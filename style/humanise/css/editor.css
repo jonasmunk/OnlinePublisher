@@ -1,5 +1,4 @@
 @import url(http://fonts.googleapis.com/css?family=Lato:300,400,700);
-/* line 4, ../sass/editor.scss */
 body.editor,
 .editor .common_font,
 .editor p.common,
@@ -11,7 +10,6 @@ body.editor,
   font-family: Lato,'Helvetica Neue','Helvetica','Arial','Lucida Grande','Lucida Sans Unicode', sans-serif;
 }
 
-/* line 3, ../sass/parts/_call_to_action.scss */
 .call-to-action {
   background: #fafafa;
   border: 1px solid #eee;
@@ -20,7 +18,6 @@ body.editor,
   text-align: center;
 }
 
-/* line 11, ../sass/parts/_call_to_action.scss */
 .call-to-action-text {
   margin: -5px 0 0;
   color: #666;
@@ -29,7 +26,6 @@ body.editor,
   line-height: 1;
 }
 
-/* line 19, ../sass/parts/_call_to_action.scss */
 .call-to-action-button {
   background: #3080CB;
   color: #fff;
@@ -46,18 +42,15 @@ body.editor,
   cursor: pointer;
 }
 
-/* line 35, ../sass/parts/_call_to_action.scss */
 .call-to-action-button:hover {
   background: #206AB0;
 }
 
-/* line 39, ../sass/parts/_call_to_action.scss */
 .call-to-action-button:active {
   -webkit-transform: scale(0.95);
   outline: none;
 }
 
-/* line 2, ../sass/parts/_layout_placards.scss */
 .layout_placards {
   list-style: none;
   background: #f8f8f9;
@@ -66,7 +59,6 @@ body.editor,
   overflow: hidden;
   border-top: 1px solid #ddd;
 }
-/* line 10, ../sass/parts/_layout_placards.scss */
 .layout_placards strong {
   display: block;
   font-size: 30px;
@@ -81,13 +73,11 @@ body.editor,
   overflow: hidden;
   text-overflow: ellipsis;
 }
-/* line 25, ../sass/parts/_layout_placards.scss */
 .layout_placards em {
   font-style: normal;
   color: #333537;
 }
 
-/* line 32, ../sass/parts/_layout_placards.scss */
 .layout_placards_link {
   display: block;
   text-decoration: none;
@@ -95,16 +85,13 @@ body.editor,
   font-size: 0;
   border-bottom: 1px solid #ddd;
 }
-/* line 39, ../sass/parts/_layout_placards.scss */
 .layout_placards_link:hover {
   background: #f0f0f3;
 }
-/* line 43, ../sass/parts/_layout_placards.scss */
 .layout_placards_link:focus {
   outline-offset: -7px;
 }
 
-/* line 49, ../sass/parts/_layout_placards.scss */
 .layout_placards_text {
   display: block;
   font-size: 18px;
@@ -117,55 +104,46 @@ body.editor,
 }
 
 @media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
-  /* line 62, ../sass/parts/_layout_placards.scss */
   .layout_placards_text {
     background-image: url("../gfx/graphics_2x.png");
     background-size: 400px 907px;
   }
 }
-/* line 68, ../sass/parts/_layout_placards.scss */
 .layout_placards_text_hui {
   background-position: -44px -420px;
 }
 
-/* line 73, ../sass/parts/_layout_placards.scss */
 .layout_placards_text_editor {
   background-position: -40px -5px;
 }
 
-/* line 78, ../sass/parts/_layout_placards.scss */
 .layout_placards_text_objects {
   background-position: -44px -200px;
 }
 
 @media screen and (min-width: 760px) {
-  /* line 86, ../sass/parts/_layout_placards.scss */
   .layout_placards {
     border: 1px solid #ddd;
     border-width: 1px 0;
     margin: 0 -20px;
   }
 
-  /* line 93, ../sass/parts/_layout_placards.scss */
   .layout_placards_item {
     float: left;
     width: 33.333333333%;
     font-size: 0;
   }
 
-  /* line 100, ../sass/parts/_layout_placards.scss */
   .layout_placards_link {
     border-right: 1px solid #ddd;
     border-bottom: none;
   }
 
-  /* line 105, ../sass/parts/_layout_placards.scss */
   .layout_placards_link_last {
     border: none;
   }
 }
 @media screen and (min-width: 980px) {
-  /* line 111, ../sass/parts/_layout_placards.scss */
   .layout_placards {
     border: 1px solid #ddd;
     border-radius: 5px;
@@ -173,7 +151,6 @@ body.editor,
   }
 }
 /********************* Common *******************/
-/* line 4, ../sass/parts/_common.scss */
 a.common {
   color: #ddd;
   color: rgba(0, 0, 0, 0.15);
@@ -181,23 +158,19 @@ a.common {
   font-weight: normal;
 }
 
-/* line 12, ../sass/parts/_common.scss */
 a.common span {
   color: #0079cd;
 }
 
-/* line 17, ../sass/parts/_common.scss */
 a.common:hover, a.common:hover span {
   color: #0169b2;
 }
 
-/* line 22, ../sass/parts/_common.scss */
 h1.common {
   font-weight: 400;
   color: #324d60;
 }
 
-/* line 28, ../sass/parts/_common.scss */
 p.common, ul.common {
   font-size: 12pt;
   line-height: 160%;
@@ -205,7 +178,6 @@ p.common, ul.common {
 }
 
 @media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
-  /* line 36, ../sass/parts/_common.scss */
   a.common {
     text-decoration: none;
     background-image: -moz-linear-gradient(top, transparent 99%, rgba(0, 0, 0, 0.5) 99%);
@@ -214,14 +186,12 @@ p.common, ul.common {
     background-repeat: repeat-x;
   }
 }
-/* line 2, ../sass/parts/_part.scss */
 .common_header {
   margin: 0px;
   color: #333;
   font-weight: 300;
 }
 
-/* line 8, ../sass/parts/_part.scss */
 .part_text {
   font-size: 12pt;
   font-weight: 300;
@@ -229,72 +199,60 @@ p.common, ul.common {
 }
 
 /************ Headers ***********/
-/* line 20, ../sass/parts/_part.scss */
 .part_header_1 {
   color: #3080CB;
 }
 
-/* line 25, ../sass/parts/_part.scss */
 .part_header_1 {
   font-size: 38px;
   line-height: 1.105263158em;
 }
 
-/* line 31, ../sass/parts/_part.scss */
 .part_header_2 {
   font-size: 19pt;
   line-height: 1.105263158em;
   /*font-weight: 400;*/
 }
 
-/* line 39, ../sass/parts/_part.scss */
 .part_header_3 {
   font-size: 14pt;
   line-height: 1.142857143em;
   font-weight: 400;
 }
 
-/* line 46, ../sass/parts/_part.scss */
 .part_header_4,
 .part_header_5,
 .part_header_6 {
   font-weight: 400;
 }
 
-/* line 53, ../sass/parts/_part.scss */
 .part_section_header_3 {
   padding-bottom: 5px;
 }
 
-/* line 58, ../sass/parts/_part.scss */
 .windows .part_header {
   font-weight: normal;
 }
 
-/* line 63, ../sass/parts/_part.scss */
 .windows .part_header_1 {
   font-weight: 300;
 }
 
 /************** Poster ************/
-/* line 70, ../sass/parts/_part.scss */
 .part_poster_text {
   font-size: 14px;
   font-weight: 300;
 }
 
-/* line 76, ../sass/parts/_part.scss */
 .part_poster_link {
   font-size: 14px;
 }
 
-/* line 81, ../sass/parts/_part.scss */
 .part_poster_title {
   font-weight: 400;
 }
 
 /*************** text *************/
-/* line 89, ../sass/parts/_part.scss */
 .part_text,
 .part_richtext {
   font-size: 12pt;
@@ -303,58 +261,48 @@ p.common, ul.common {
   word-spacing: 1px;
 }
 
-/* line 98, ../sass/parts/_part.scss */
 .part_text strong,
 .part_richtext strong {
   color: #000;
   font-weight: 400;
 }
 
-/* line 105, ../sass/parts/_part.scss */
 .part_richtext p {
   margin: 10px 0;
 }
 
-/* line 110, ../sass/parts/_part.scss */
 .part_listing {
   font-size: 11pt;
   font-weight: 300;
   word-spacing: 1px;
 }
 
-/* line 117, ../sass/parts/_part.scss */
 .part_listing_first {
   font-size: 12pt;
   font-weight: normal;
 }
 
-/* line 123, ../sass/parts/_part.scss */
 .part_list h3 {
   font-weight: normal;
 }
 
-/* line 128, ../sass/parts/_part.scss */
 .part_horizontalrule {
   border: none;
   border-bottom: solid 1px #eee;
 }
 
-/* line 133, ../sass/parts/_part.scss */
 .part_news_item_title {
   font-size: 10pt;
   font-weight: 400;
 }
-/* line 138, ../sass/parts/_part.scss */
 .windows .part_news_item_title {
   font-weight: bold;
 }
 
-/* line 143, ../sass/parts/_part.scss */
 .part_news_item_description {
   font-size: 10pt;
   font-weight: 300;
 }
-/* line 148, ../sass/parts/_part.scss */
 .windows .part_news_item_description {
   font-weight: 400;
 }
