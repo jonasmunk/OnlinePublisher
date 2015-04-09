@@ -30,7 +30,7 @@ exclude-result-prefixes="l"
 	</div>
 	<xsl:if test="@dirty='true' and $editor!='true'">
 		<script>
-			require(['hui'],function() {
+			require(['hui','op'],function() {
 				var id = <xsl:value-of select="../../@id"/>;
 				var node = hui.get('part_list_'+id);
 				hui.cls.add(node,'part_list_busy');
