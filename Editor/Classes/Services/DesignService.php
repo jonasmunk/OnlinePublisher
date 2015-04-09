@@ -86,9 +86,7 @@ class DesignService {
 		global $basePath;
 
         Log::info('Embedding inline css for: ' . $design);
-        $inlineFileMinified = $basePath."style/".$design."/css/inline.min.css";
         $xslFile = $basePath.'style/' .$design . '/xslt/main.xsl';
-        DesignService::_compress($inlineFile,$inlineFileMinified);
         $xsl = file_get_contents($xslFile);
         $callTemplate = Strings::extract($xsl,'<xsl:call-template name="util:style-inline">','</xsl:call-template>');
         foreach ($callTemplate as $template) {
@@ -109,7 +107,6 @@ class DesignService {
                 }
             }
         }
-        unlink($inlineFileMinified);
         FileSystemService::writeStringToFile($xsl,$xslFile);
     }
 	
