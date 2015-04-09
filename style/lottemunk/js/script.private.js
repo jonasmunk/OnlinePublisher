@@ -1,4 +1,3 @@
-/* ["style\/lottemunk\/js\/lottemunk.js"] */
 if(!op)var op={}
 op.preview=!1,op.page=op.page||{id:null,path:null,template:null},op.ignite=function(){if(this.preview||(document.onkeydown=function(e){if(e=hui.event(e),e.returnKey&&e.shiftKey){e.stop()
 var i

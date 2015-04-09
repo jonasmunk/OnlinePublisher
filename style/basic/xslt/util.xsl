@@ -351,8 +351,7 @@ require(['hui.ui'],function() {hui.ui.context='<xsl:value-of select="$path"/>';h
 <xsl:template name="util:_scripts-base">
     <xsl:call-template name="util:script-inline">
         <xsl:with-param name="file" select="'style/basic/js/boot.js'"/>
-        <xsl:with-param name="compiled"><![CDATA[/* require & define https://curiosity-driven.org/minimal-loader#final*/
-!function(){function e(e,t){t in r?e(t,r[t]):n[t]?n[t].push(e):n[t]=[e]}function t(e,t){r[e]=t
+        <xsl:with-param name="compiled"><![CDATA[!function(){function e(e,t){t in r?e(t,r[t]):n[t]?n[t].push(e):n[t]=[e]}function t(e,t){r[e]=t
 var i=n[e]
 i&&(i.forEach(function(i){i(e,t)}),n[e]=0)}function i(t,i){var n=t.length
 if(n){var r=[],d=0
