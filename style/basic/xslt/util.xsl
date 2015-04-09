@@ -136,7 +136,7 @@
 <xsl:template name="util:googleanalytics">
 	<xsl:param name="code" select="//p:meta/p:analytics/@key"/>
 	<xsl:if test="not($preview='true') and $code!='' and $statistics='true'">
-		<script type="text/javascript">(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+		<script>(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
 ga('create', '<xsl:value-of select="$code"/>', {siteSpeedSampleRate : 20});ga('send', 'pageview');</script>
 	</xsl:if>
 </xsl:template>
@@ -145,7 +145,7 @@ ga('create', '<xsl:value-of select="$code"/>', {siteSpeedSampleRate : 20});ga('s
 <xsl:template name="util:googleanalytics_old">
 	<xsl:param name="code" select="//p:meta/p:analytics/@key"/>
 	<xsl:if test="not($preview='true') and $code!='' and $statistics='true'">
-		<script type="text/javascript">
+		<script>
 		try {
 			if (document.location.hostname!=="localhost") {
 				//,'_trackPageLoadTime'
@@ -262,20 +262,20 @@ ga('create', '<xsl:value-of select="$code"/>', {siteSpeedSampleRate : 20});ga('s
 	<xsl:choose>
 		<xsl:when test="$preview='true'">
             <xsl:call-template name="util:_scripts-config"/>
-			<script src="{$path}{$timestamp-url}hui/bin/minimized.js{$timestamp-query}" type="text/javascript"><xsl:comment/></script>
-			<script src="{$path}{$timestamp-url}hui/js/Editor.js{$timestamp-query}" type="text/javascript"><xsl:comment/></script>
-			<script src="{$path}{$timestamp-url}hui/js/Pages.js{$timestamp-query}" type="text/javascript"><xsl:comment/></script>
-			<script src="{$path}{$timestamp-url}style/{$design}/js/script.private.js{$timestamp-query}" type="text/javascript"><xsl:comment/></script>
+			<script src="{$path}{$timestamp-url}hui/bin/minimized.js{$timestamp-query}"><xsl:comment/></script>
+			<script src="{$path}{$timestamp-url}hui/js/Editor.js{$timestamp-query}"><xsl:comment/></script>
+			<script src="{$path}{$timestamp-url}hui/js/Pages.js{$timestamp-query}"><xsl:comment/></script>
+			<script src="{$path}{$timestamp-url}style/{$design}/js/script.private.js{$timestamp-query}"><xsl:comment/></script>
 		</xsl:when>
 		<xsl:when test="$development='true'">
             <xsl:call-template name="util:_scripts-config"/>
-			<script src="{$path}{$timestamp-url}hui/bin/joined.site.js{$timestamp-query}" type="text/javascript"><xsl:comment/></script>
-			<script src="{$path}{$timestamp-url}style/basic/js/OnlinePublisher.js{$timestamp-query}" type="text/javascript"><xsl:comment/></script>
-			<script src="{$path}{$timestamp-url}style/{$design}/js/script.dev.js{$timestamp-query}" type="text/javascript"><xsl:comment/></script>
+			<script src="{$path}{$timestamp-url}hui/bin/joined.site.js{$timestamp-query}"><xsl:comment/></script>
+			<script src="{$path}{$timestamp-url}style/basic/js/OnlinePublisher.js{$timestamp-query}"><xsl:comment/></script>
+			<script src="{$path}{$timestamp-url}style/{$design}/js/script.dev.js{$timestamp-query}"><xsl:comment/></script>
         </xsl:when>
 		<xsl:otherwise>
             <xsl:call-template name="util:_scripts-config"/>
-            <script type="text/javascript">_editor.loadScript('<xsl:value-of select="$path"/><xsl:value-of select="$timestamp-url"/>style/<xsl:value-of select="$design"/>/js/script.js<xsl:value-of select="$timestamp-query"/>')</script>
+            <script>_editor.loadScript('<xsl:value-of select="$path"/><xsl:value-of select="$timestamp-url"/>style/<xsl:value-of select="$design"/>/js/script.js<xsl:value-of select="$timestamp-query"/>')</script>
 		</xsl:otherwise>
 	</xsl:choose>
     <xsl:call-template name="util:_scripts-preview"/>
@@ -288,31 +288,31 @@ ga('create', '<xsl:value-of select="$code"/>', {siteSpeedSampleRate : 20});ga('s
 		<xsl:when test="$preview='true'">
 			<xsl:choose>
 				<xsl:when test="$development='true'">
-					<script src="{$path}{$timestamp-url}hui/bin/joined.js{$timestamp-query}" type="text/javascript"><xsl:comment/></script>
+					<script src="{$path}{$timestamp-url}hui/bin/joined.js{$timestamp-query}"><xsl:comment/></script>
 				</xsl:when>
 				<xsl:otherwise>
-					<script src="{$path}{$timestamp-url}hui/bin/minimized.js{$timestamp-query}" type="text/javascript"><xsl:comment/></script>
+					<script src="{$path}{$timestamp-url}hui/bin/minimized.js{$timestamp-query}"><xsl:comment/></script>
 				</xsl:otherwise>
 			</xsl:choose>
-			<script src="{$path}{$timestamp-url}hui/js/Editor.js{$timestamp-query}" type="text/javascript"><xsl:comment/></script>
-			<script src="{$path}{$timestamp-url}hui/js/Pages.js{$timestamp-query}" type="text/javascript"><xsl:comment/></script>
+			<script src="{$path}{$timestamp-url}hui/js/Editor.js{$timestamp-query}"><xsl:comment/></script>
+			<script src="{$path}{$timestamp-url}hui/js/Pages.js{$timestamp-query}"><xsl:comment/></script>
 		</xsl:when>
 		<xsl:when test="$development='true'">
-			<script src="{$path}{$timestamp-url}hui/js/hui.js{$timestamp-query}" type="text/javascript"><xsl:comment/></script>
-			<script src="{$path}{$timestamp-url}hui/js/hui_animation.js{$timestamp-query}" type="text/javascript"><xsl:comment/></script>
-			<script src="{$path}{$timestamp-url}hui/js/hui_parallax.js{$timestamp-query}" type="text/javascript"><xsl:comment/></script>
-			<script src="{$path}{$timestamp-url}hui/js/hui_color.js{$timestamp-query}" type="text/javascript"><xsl:comment/></script>
-			<script src="{$path}{$timestamp-url}hui/js/hui_require.js{$timestamp-query}" type="text/javascript"><xsl:comment/></script>
-			<script src="{$path}{$timestamp-url}hui/js/ui.js{$timestamp-query}" type="text/javascript"><xsl:comment/></script>
-			<script src="{$path}{$timestamp-url}hui/js/ImageViewer.js{$timestamp-query}" type="text/javascript"><xsl:comment/></script>
-			<script src="{$path}{$timestamp-url}hui/js/Box.js{$timestamp-query}" type="text/javascript"><xsl:comment/></script>
-			<script src="{$path}{$timestamp-url}hui/js/SearchField.js{$timestamp-query}" type="text/javascript"><xsl:comment/></script>
+			<script src="{$path}{$timestamp-url}hui/js/hui.js{$timestamp-query}"><xsl:comment/></script>
+			<script src="{$path}{$timestamp-url}hui/js/hui_animation.js{$timestamp-query}"><xsl:comment/></script>
+			<script src="{$path}{$timestamp-url}hui/js/hui_parallax.js{$timestamp-query}"><xsl:comment/></script>
+			<script src="{$path}{$timestamp-url}hui/js/hui_color.js{$timestamp-query}"><xsl:comment/></script>
+			<script src="{$path}{$timestamp-url}hui/js/hui_require.js{$timestamp-query}"><xsl:comment/></script>
+			<script src="{$path}{$timestamp-url}hui/js/ui.js{$timestamp-query}"><xsl:comment/></script>
+			<script src="{$path}{$timestamp-url}hui/js/ImageViewer.js{$timestamp-query}"><xsl:comment/></script>
+			<script src="{$path}{$timestamp-url}hui/js/Box.js{$timestamp-query}"><xsl:comment/></script>
+			<script src="{$path}{$timestamp-url}hui/js/SearchField.js{$timestamp-query}"><xsl:comment/></script>
 		</xsl:when>
 		<xsl:otherwise>
-			<script src="{$path}{$timestamp-url}hui/bin/minimized.site.js{$timestamp-query}" type="text/javascript"><xsl:comment/></script>
+			<script src="{$path}{$timestamp-url}hui/bin/minimized.site.js{$timestamp-query}"><xsl:comment/></script>
 		</xsl:otherwise>
 	</xsl:choose>
-	<script src="{$path}{$timestamp-url}style/basic/js/OnlinePublisher.js{$timestamp-query}" type="text/javascript"><xsl:comment/></script>
+	<script src="{$path}{$timestamp-url}style/basic/js/OnlinePublisher.js{$timestamp-query}"><xsl:comment/></script>
     <xsl:call-template name="util:_scripts-config"/>
     <xsl:call-template name="util:_scripts-preview"/>
 	<script>_editor.$scriptReady();</script>
@@ -321,8 +321,8 @@ ga('create', '<xsl:value-of select="$code"/>', {siteSpeedSampleRate : 20});ga('s
 <xsl:template name="util:_scripts-preview">
     
 	<xsl:if test="$preview='true' and $mini!='true'">
-		<script src="editor.js?version={$timestamp}" type="text/javascript"><xsl:comment/></script>
-		<script src="{$path}{$timestamp-url}Editor/Template/{$template}/js/editor.php{$timestamp-query}" type="text/javascript"><xsl:comment/></script>
+		<script src="editor.js?version={$timestamp}"><xsl:comment/></script>
+		<script src="{$path}{$timestamp-url}Editor/Template/{$template}/js/editor.php{$timestamp-query}"><xsl:comment/></script>
 	</xsl:if>
     
     <!--
@@ -336,12 +336,12 @@ ga('create', '<xsl:value-of select="$code"/>', {siteSpeedSampleRate : 20});ga('s
 <xsl:template name="util:_scripts-msie">
 <!-- html5 -->
 <xsl:comment><![CDATA[[if lt IE 9]>
-<script type="text/javascript" src="]]><xsl:value-of select="$path"/><xsl:value-of select="$timestamp-url"/>hui/bin/compatibility.min.js<xsl:value-of select="$timestamp-query"/><![CDATA["></script>
+<script src="]]><xsl:value-of select="$path"/><xsl:value-of select="$timestamp-url"/>hui/bin/compatibility.min.js<xsl:value-of select="$timestamp-query"/><![CDATA["></script>
 <![endif]]]></xsl:comment>
 </xsl:template>
 
 <xsl:template name="util:_scripts-config">
-<script type="text/javascript">
+<script>
 <xsl:comment>
 require(['hui.ui'],function() {hui.ui.context='<xsl:value-of select="$path"/>';hui.ui.language='<xsl:value-of select="$language"/>';});require(['op'],function() {op.context='<xsl:value-of select="$path"/>';op.page.id=<xsl:value-of select="@id"/>;op.page.template='<xsl:value-of select="$template"/>';op.page.path='<xsl:value-of select="$path"/>';op.page.pagePath='<xsl:value-of select="$page-path"/>';op.user={username:'<xsl:value-of select="$username"/>',id:<xsl:value-of select="$userid"/>,internal:<xsl:value-of select="$internal-logged-in"/>};op.preview=<xsl:value-of select="$preview"/>;op.ignite();})
 </xsl:comment>
@@ -351,9 +351,7 @@ require(['hui.ui'],function() {hui.ui.context='<xsl:value-of select="$path"/>';h
 <xsl:template name="util:_scripts-base">
     <xsl:call-template name="util:script-inline">
         <xsl:with-param name="file" select="'style/basic/js/boot.js'"/>
-        <xsl:with-param name="compiled"><![CDATA[// require & define https://curiosity-driven.org/minimal-loader#final
-// $script loader
-//(function(e,t){typeof module!="undefined"&&module.exports?module.exports=t():typeof define=="function"&&define.amd?define(t):this[e]=t()})("$script",function(){function h(e,t){for(var n=0,i=e.length;n<i;++n)if(!t(e[n]))return r;return 1}function p(e,t){h(e,function(e){return!t(e)})}function d(e,t,n){function g(e){return e.call?e():u[e]}function y(){if(!--m){u[o]=1,s&&s();for(var e in f)h(e.split("|"),g)&&!p(f[e],g)&&(f[e]=[])}}e=e[i]?e:[e];var r=t&&t.call,s=r?t:n,o=r?e.join(""):t,m=e.length;return setTimeout(function(){p(e,function(e){if(e===null)return y();if(l[e])return o&&(a[o]=1),l[e]==2&&y();l[e]=1,o&&(a[o]=1),v(!/^https?:\/\//.test(e)&&c?c+e+".js":e,y)})},0),d}function v(n,i){var u=e.createElement("script"),a=r;u.onload=u.onerror=u[o]=function(){if(u[s]&&!/^c|loade/.test(u[s])||a)return;u.onload=u[o]=null,a=1,l[n]=2,i()},u.async=1,u.src=n,t.insertBefore(u,t.lastChild)}var e=document,t=e.getElementsByTagName("head")[0],n="string",r=!1,i="push",s="readyState",o="onreadystatechange",u={},a={},f={},l={},c;return d.get=v,d.order=function(e,t,n){(function r(i){i=e.shift(),e.length?d(i,r):d(i,t,n)})()},d.path=function(e){c=e},d.ready=function(e,t,n){e=e[i]?e:[e];var r=[];return!p(e,function(e){u[e]||r[i](e)})&&h(e,function(e){return u[e]})?t():!function(e){f[e]=f[e]||[],f[e][i](t),n&&n(r)}(e.join("|")),d},d.done=function(e){d([null],e)},d});
+        <xsl:with-param name="compiled"><![CDATA[/* require & define https://curiosity-driven.org/minimal-loader#final*/
 !function(){function e(e,t){t in r?e(t,r[t]):n[t]?n[t].push(e):n[t]=[e]}function t(e,t){r[e]=t
 var i=n[e]
 i&&(i.forEach(function(i){i(e,t)}),n[e]=0)}function i(t,i){var n=t.length
@@ -371,7 +369,7 @@ this.scriptLoaded=!0}},require(["hui","hui.ui","op"],function(){_editor.$scriptR
 </xsl:template>
 
 <xsl:template name="util:scripts-adaptive">
-	<script src="{$path}{$timestamp-url}hui/lib/ios-orientationchange-fix.js{$timestamp-query}" type="text/javascript"><xsl:comment/></script>
+	<script src="{$path}{$timestamp-url}hui/lib/ios-orientationchange-fix.js{$timestamp-query}"><xsl:comment/></script>
 </xsl:template>
 
 <xsl:template name="util:script-inline">
@@ -379,10 +377,10 @@ this.scriptLoaded=!0}},require(["hui","hui.ui","op"],function(){_editor.$scriptR
     <xsl:param name="file"/>
     <xsl:choose>
       <xsl:when test="$development='true'">
-  		<script type="text/javascript" src="{$path}{$timestamp-url}{$file}{$timestamp-query}"><xsl:comment/></script>
+  		<script src="{$path}{$timestamp-url}{$file}{$timestamp-query}"><xsl:comment/></script>
       </xsl:when>
       <xsl:otherwise>
-      	<script type="text/javascript">
+      	<script>
             <xsl:text disable-output-escaping="yes">//&lt;![CDATA[
 </xsl:text>
       		<xsl:value-of select="$compiled" disable-output-escaping="yes"/>
@@ -495,7 +493,7 @@ this.scriptLoaded=!0}},require(["hui","hui.ui","op"],function(){_editor.$scriptR
 
 <xsl:template name="util:lazy-style">
     <xsl:param name="href"/>
-    <script type="text/javascript">_editor.loadCSS('<xsl:value-of select="$href"/>');</script>
+    <script>_editor.loadCSS('<xsl:value-of select="$href"/>');</script>
     <noscript>
     <link rel="stylesheet" type="text/css" href="{$href}"/>
     </noscript>
@@ -954,7 +952,7 @@ Y.prototype.load=function(a){a(this.p)};function Z(a,b){this.d=a;this.f=b}Z.prot
 
 <!--
 	<xsl:template name="util:share">
-		<script type="text/javascript" src="http://apis.google.com/js/plusone.js"></script>
+		<script src="http://apis.google.com/js/plusone.js"></script>
 		<g:plusone size="small"></g:plusone>"
 		<div id="fb-root"></div>
 		<script src="http://connect.facebook.net/en_US/all.js#xfbml=1"></script>
