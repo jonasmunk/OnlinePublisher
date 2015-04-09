@@ -43,7 +43,9 @@
   .layout_info_name {
   	color: #999;
   	font-size: 12pt;
-  	font-weight: normal;      
+  	font-weight: normal;
+    display: block;
+    margin-top: 10px;
   }
 
   .layout_info_phone {

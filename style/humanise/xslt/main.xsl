@@ -36,14 +36,17 @@
 		<meta name="viewport" content="user-scalable=yes, initial-scale = 1, maximum-scale = 10, minimum-scale = 0.2"/>
 		<link rel="shortcut icon" href="{$path}style/humanise/gfx/favicon.ico" type="image/x-icon" />
 		<xsl:call-template name="util:metatags"/>
-		<xsl:call-template name="util:watermark"/>
+        <!--
+		<xsl:call-template name="util:watermark"/>-->
         
         <xsl:call-template name="util:style-inline">
 			<xsl:with-param name="compiled">body{padding:0;margin:0;font-family:'Helvetica Neue','Helvetica',Arial,'Helvetica',sans-serif}body.font{font-family:Lato,'Helvetica Neue','Helvetica','Arial','Lucida Grande','Lucida Sans Unicode',sans-serif}form{margin:0}img{border:none}a{word-break:break-word}a.common{color:#ddd;color:rgba(0,0,0,0.15);cursor:pointer;font-weight:normal}a.common span{color:#0079cd}a.common:hover,a.common:hover span{color:#0169b2}h1.common{font-weight:400;color:#324d60}p.common,ul.common{font-size:12pt;line-height:160%;text-align:justify}@media (-webkit-min-device-pixel-ratio:2),(min-resolution:192dpi){a.common{text-decoration:none;background-image:-moz-linear-gradient(top,transparent 99%,rgba(0,0,0,0.5) 99%);background-image:-webkit-linear-gradient(top,transparent 98%,rgba(0,0,0,0.5) 98%);background-image:linear-gradient(top,transparent 98%,rgba(0,0,0,0.5) 98%);background-repeat:repeat-x}}.common_header{margin:0;color:#333;font-weight:300}.part_text{font-size:12pt;font-weight:300;word-spacing:1px}.layout_menu{margin:0;padding:5px 10px;list-style:none;text-align:center}.layout_menu_item{display:inline-block}.layout_menu_link{padding:0 5px;height:32px;line-height:32px;text-decoration:none;color:#333}.layout_menu_item_first{display:block;text-align:center}.layout_menu_link_first{background:url(<xsl:value-of select="$path"/><xsl:value-of select="$timestamp-url"/>style/humanise/gfx/graphics.png) -139px -636px;display:inline-block;width:160px;height:40px}.layout_menu_link_first > span{display:none}@media (-webkit-min-device-pixel-ratio:2),(min-resolution:192dpi){.layout_menu_link_first{background-image:url(<xsl:value-of select="$path"/><xsl:value-of select="$timestamp-url"/>style/humanise/gfx/graphics_2x.png);background-size:400px 907px}}@media screen and (min-width:760px){.layout_menu{text-align:left}.layout_menu > li{vertical-align:top}.layout_menu_link{font-size:20px;line-height:44px;padding:0 10px;color:#324d60}.layout_menu_item_first{display:inline-block}}@media screen and (min-width:1000px){.layout_menu{padding:5px 0}}.layout_search{margin:0;font-size:0}.layout_search_body{display:none}.layout_search_icon{position:absolute;top:10px;right:10px;display:inline-block;width:30px;height:30px}.layout_search_icon > path{fill:#aaa}.layout_middle,.layout_head_body,.layout_base{position:relative;max-width:980px;margin:0 auto}.layout_head_body{position:relative}.layout_head{background:#f6f6f9}.layout_sub_navigation{margin:0;padding:5px 5px;list-style:none;border-bottom:1px solid #eee}.layout_sub_navigation > li{display:inline-block}.layout_sub_navigation > li > a{padding:0 5px;height:32px;line-height:32px;text-decoration:none;color:#333}.layout_side_navigation{margin:0;padding:5px 5px;list-style:none;border-bottom:1px solid #eee}.layout_side_navigation > li{display:inline-block}.layout_side_navigation > li > a{padding:0 5px;height:32px;line-height:32px;text-decoration:none;color:#333}.layout_inner_content{padding:10px}@media screen and (min-width:560px){.layout_inner_content{padding:20px 10px}.layout_sub_navigation{padding:5px 15px}}@media screen and (min-width:760px){.layout_inner_content{padding:20px}.layout_inner_content_sidebar{margin-right:30%}.layout_sidebar{width:30%;float:right}}@media screen and (min-width:1000px){.layout_sub_navigation,.layout_inner_content{padding-left:0;padding-right:0}.layout_sub_navigation li:first-child{margin-left:-5px}}#poster{display:none}@media screen and (min-width:1000px){#poster{display:block;width:980px;height:310px;background:#333;margin-top:20px}#poster_loader{background:#000;color:#FFF;left:50%;margin-left:-25px;position:absolute;text-align:center;top:150px;width:50px;height:24px;line-height:22px}}@media screen and (max-width:700px){div.document_column{display:block}.document_column{width:auto!important;padding:0!important}}@media screen and (min-width:700px){.document_row{display:table;width:100%}.document_row_body{display:table-row}div.document_column{display:table-cell;vertical-align:top}}</xsl:with-param>
         </xsl:call-template>
 		<xsl:call-template name="util:scripts-build"/>
 		<xsl:call-template name="util:style-build">
+            <!--
             <xsl:with-param name="async" select="'false'"/>
+            -->
         </xsl:call-template>
 		<xsl:call-template name="util:style-lt-ie9"/>
 		<xsl:call-template name="util:load-font">
@@ -118,11 +121,9 @@
                             <xsl:with-param name="name" select="'contact'"/>
                             <xsl:with-param name="default">
         						<p><strong class="layout_info_name">Jonas Brinkmann Munk</strong></p>
-        						<p><a href="mailto:jonasmunk@mac.com" class="common"><span>jonasmunk@mac.com</span></a></p>
-        						<p><a href="tel:004528776365" class="layout_info_phone">+45 28 77 63 65</a></p>
+        						<p><a href="mailto:jonasmunk@mac.com" class="common"><span>jonasmunk@mac.com</span></a> · <a href="tel:004528776365" class="layout_info_phone">+45 28 77 63 65</a></p>
         						<p><strong class="layout_info_name">Kenni Graversen</strong></p>
-        						<p><a href="mailto:gr@versen.dk" class="common"><span>gr@versen.dk</span></a></p>
-        						<p><a href="tel:004522486153" class="layout_info_phone">+45 22 48 61 53</a></p>
+        						<p><a href="mailto:gr@versen.dk" class="common"><span>gr@versen.dk</span></a> · <a href="tel:004522486153" class="layout_info_phone">+45 22 48 61 53</a></p>
                             </xsl:with-param>
                         </xsl:call-template>
 					</div>
