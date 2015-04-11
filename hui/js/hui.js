@@ -1616,7 +1616,7 @@ hui._onReady = function(delegate) {
  */
 hui.request = function(options) {
 	options = hui.override({method:'POST',async:true,headers:{Ajax:true}},options);
-	var transport = hui.request.createTransport();
+	var transport = new XMLHttpRequest();
 	if (!transport) {return;}
 	transport.onreadystatechange = function() {
 		try {
@@ -1742,49 +1742,6 @@ hui.request._buildPostBody = function(parameters) {
     }
 	return output;
 };
-
-/**
- * Creates a new XMLHttpRequest
- * @returns The request
- */
-hui.request.createTransport = function() {
-	try {
-		if (window.XMLHttpRequest) {
-			var req = new XMLHttpRequest();
-			if (req.readyState === null) {
-				req.readyState = 1;
-				req.addEventListener("load", function () {
-					req.readyState = 4;
-					if (typeof req.onreadystatechange == "function")
-						req.onreadystatechange();
-				}, false);
-			}
-			return req;
-		}
-		else if (window.ActiveXObject) {
-			return hui.request._getActiveX();
-		}
-	}
-	catch (ex) {
-	}
-	return null;
-};
-
-hui.request._getActiveX = function() {
-	var prefixes = ["MSXML2", "Microsoft", "MSXML", "MSXML3"];
-	for (var i = 0; i < prefixes.length; i++) {
-		try {
-			return new ActiveXObject(prefixes[i] + ".XmlHttp");
-		}
-		catch (ex) {}
-	}
-};
-
-
-
-
-
-
 
 ///////////////////// Style ///////////////////
 
