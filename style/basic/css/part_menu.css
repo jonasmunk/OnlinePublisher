@@ -11,3 +11,7 @@
 .part_menu_level_sub {
     padding-left: 20px;
 }
+
+.part_menu-bar .part_menu_item {
+	display: inline-block;
+}

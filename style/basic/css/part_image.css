@@ -3,16 +3,33 @@
 	font-size: 0;
 }
 
-.part_image_container
-{
-	display: inline-block;
-	position: relative;
-	width: 100%;
+.part_image-center {
+	text-align: center;
+}
+
+.part_image-right {
+	text-align: right;
 }
 
 .part_image_image
 {
 	border-width: 0;
+}
+
+.part_image_adaptive_container-center {
+	margin: 0 auto;
+}
+
+.part_image-right .part_image_adaptive_container {
+	margin: 0 0 0 auto;
+}
+
+.part_image_adaptive_inner
+{
+	display: inline-block;
+	position: relative;
+	width: 100%;
+	text-align: left;
 }
 
 .part_image_adaptive {
@@ -21,7 +38,7 @@
 	height: auto;	
 }
 
-div.part_image p, div.part_image textarea
+.part_image_text
 {
 	margin: 0px;
 	font-size: 8pt;

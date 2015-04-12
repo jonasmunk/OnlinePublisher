@@ -13,7 +13,7 @@
         <xsl:attribute name="class">
             <xsl:text>part_menu</xsl:text>
             <xsl:if test="@variant!=''">
-                <xsl:text> part_menu_</xsl:text><xsl:value-of select="@variant"/>
+                <xsl:text> part_menu-</xsl:text><xsl:value-of select="@variant"/>
             </xsl:if>
         </xsl:attribute>
         <xsl:apply-templates/>
@@ -25,12 +25,26 @@
 </xsl:template>
 
 <xsl:template match="m:items">
-    <ul class="part_menu_level"><xsl:apply-templates/></ul>
+    <ul>
+        <xsl:attribute name="class">
+            <xsl:text>part_menu_level</xsl:text>
+            <xsl:if test="../@variant!=''">
+                <xsl:text> part_menu_level-</xsl:text><xsl:value-of select="../@variant"/>
+            </xsl:if>
+        </xsl:attribute>
+        <xsl:apply-templates/>
+    </ul>
 </xsl:template>
 
 <xsl:template match="m:item">
-    <li class="part_menu_item">
-        <a class="part_menu_link">
+  <li class="part_menu_item">
+        <a class="">
+          <xsl:attribute name="class">
+              <xsl:text>part_menu_link</xsl:text>
+              <xsl:if test="../../@variant!=''">
+                  <xsl:text> part_menu_link-</xsl:text><xsl:value-of select="../../@variant"/>
+              </xsl:if>
+          </xsl:attribute>
             <xsl:call-template name="util:link"/>
             <span class="part_menu_link_text">
                 <xsl:value-of select="@title"/>
@@ -41,7 +55,7 @@
                 <xsl:apply-templates/>
             </ul>
         </xsl:if>
-    </li>
+  </li>
 </xsl:template>
 
 </xsl:stylesheet>

@@ -11,10 +11,13 @@
  >
 
 <xsl:template match="img:image[img:link]">
-	<div class="part_image">
-		<xsl:if test="img:style/@align">
-			<xsl:attribute name="style">text-align: <xsl:value-of select="img:style/@align"/></xsl:attribute>
-		</xsl:if>
+	<div>
+        <xsl:attribute name="class">
+            <xsl:text>part_image</xsl:text>
+    		<xsl:if test="img:style/@align">
+    			<xsl:text> part_image-</xsl:text><xsl:value-of select="img:style/@align"/>
+    		</xsl:if>
+        </xsl:attribute>
 		<a>
 			<xsl:if test="$editor!='true'">
 				<xsl:call-template name="img:buildlink"/>
@@ -27,10 +30,13 @@
 </xsl:template>
 
 <xsl:template match="img:image">
-	<div class="part_image">
-		<xsl:if test="img:style/@align">
-			<xsl:attribute name="style">text-align: <xsl:value-of select="img:style/@align"/></xsl:attribute>
-		</xsl:if>
+	<div>
+        <xsl:attribute name="class">
+            <xsl:text>part_image</xsl:text>
+    		<xsl:if test="img:style/@align">
+    			<xsl:text> part_image-</xsl:text><xsl:value-of select="img:style/@align"/>
+    		</xsl:if>
+        </xsl:attribute>
 		<xsl:choose>
 			<xsl:when test="$editor='true' and not(o:object)">
 				<div>
@@ -92,21 +98,29 @@
         <xsl:with-param name="variant" select="img:style/@frame"/>
         <xsl:with-param name="content">
 			<xsl:choose>
-			  <xsl:when test="img:style/@adaptive='true'">
-  	  			<span class="part_image_container" style="padding-bottom: {$ratio}%; max-width: {$width}px; text-align: left;">
-    				  <img src="{$src}" width="{$width}"  height="{$height}" alt="" class="part_image_image part_image_adaptive" id="part_image_{generate-id()}"/>				
-  				</span>
-			  </xsl:when>
-			  <xsl:otherwise>
-				  <img src="{$src}" width="{$width}"  height="{$height}" alt="" class="part_image_image" id="part_image_{generate-id()}"/>				
-			  </xsl:otherwise>
+                <xsl:when test="img:style/@adaptive='true'">
+                    <div style="max-width: {$width}px;" class="">
+                        <xsl:attribute name="class">
+                            <xsl:text>part_image_adaptive_container</xsl:text>
+                            <xsl:if test="img:style/@align">
+                                <xsl:text> part_image_adaptive_container-</xsl:text><xsl:value-of select="img:style/@align"/>
+                            </xsl:if>
+                        </xsl:attribute>
+                        <span class="part_image_adaptive_inner" style="padding-bottom: {$ratio}%;">
+                        <img src="{$src}" width="{$width}"  height="{$height}" alt="" class="part_image_image part_image_adaptive" id="part_image_{generate-id()}"/>				
+                        </span>
+                    </div>
+                </xsl:when>
+			    <xsl:otherwise>
+                    <img src="{$src}" width="{$width}"  height="{$height}" alt="" class="part_image_image" id="part_image_{generate-id()}"/>				
+                </xsl:otherwise>
 			</xsl:choose>
         </xsl:with-param>
     </xsl:call-template>
 </xsl:template>
 
 <xsl:template match="img:text">
-	<p class="common_font"><xsl:apply-templates/></p>
+	<p class="common_font part_image_text"><xsl:apply-templates/></p>
 </xsl:template>
 
 <xsl:template name="img:buildlink">

@@ -99,9 +99,9 @@
 </xsl:template>
 
 <xsl:template match="txt:link">
-	<a class="common part_text_link">
+	<a class="common common_link part_text_link">
 		<xsl:call-template name="util:link"/>
-		<span><xsl:apply-templates/></span>
+		<span class="common_link_text"><xsl:apply-templates/></span>
 	</a>
 </xsl:template>
 

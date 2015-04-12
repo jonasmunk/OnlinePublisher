@@ -133,7 +133,7 @@
 			<xsl:if test="../../../pp:display/@email_private='true' and p:email[@context='private']!=''">
 				<div class="email">
 					<span class="part_person_label">E-mail: </span>
-					<a class="common value" href="mailto:{p:email[@context='private']}"><span><xsl:value-of select="p:email[@context='private']"/></span></a>
+					<a class="common common_link value" href="mailto:{p:email[@context='private']}"><span class="common_link_text"><xsl:value-of select="p:email[@context='private']"/></span></a>
 					<span class="type" style="display: none;">home</span>
 					<span class="part_person_badge"> (privat)</span>
 				</div>
@@ -141,7 +141,7 @@
 			<xsl:if test="../../../pp:display/@email_job='true' and p:email[@context='job']!=''">
 				<div class="email">
 					<span class="part_person_label">E-mail: </span>
-					<a class="common value" href="mailto:{p:email[@context='job']}"><span><xsl:value-of select="p:email[@context='job']"/></span></a>
+					<a class="common common_link value" href="mailto:{p:email[@context='job']}"><span class="common_link_text"><xsl:value-of select="p:email[@context='job']"/></span></a>
 					<span class="type" style="display: none;">work</span>
 					<span class="part_person_badge"> (arbejde)</span>
 				</div>
@@ -157,7 +157,7 @@
 			<xsl:if test="../../../pp:display/@webaddress='true' and p:webaddress!=''">
 				<div>
 					<span class="part_person_label">Web: </span>
-					<a class="common url" href="{p:webaddress}"><span><xsl:value-of select="p:webaddress"/></span></a>
+					<a class="common common_link url" href="{p:webaddress}"><span class="common_link_text"><xsl:value-of select="p:webaddress"/></span></a>
 				</div>
 			</xsl:if>
 		</div>
