@@ -44,8 +44,8 @@
         </xsl:call-template>
 		<xsl:call-template name="util:scripts-build"/>
 		<xsl:call-template name="util:style-build">
-            <!--
             <xsl:with-param name="async" select="'false'"/>
+            <!--
             -->
         </xsl:call-template>
 		<xsl:call-template name="util:style-lt-ie9"/>
@@ -98,17 +98,21 @@
 							<xsl:when test="//p:page/p:meta/p:language='en'">
 								<h2 class="layout_info_header">About Humanise</h2>
 								<p>We focus on user experience and design. We seek out the most simple and essential solution. We believe that machines should work for people. We think that knowledge should be free and accessible to all. We hope you agree :-)</p>
-								<p class="layout_info_more"><a href="{$path}om/" class="common"><span>More about Humanise »</span></a></p>
+								<p class="layout_info_more">
+                  <a href="{$path}om/" class="common_link"><span class="common_link_text">More about Humanise »</span></a>
+                </p>
 							</xsl:when>
 							<xsl:otherwise>
-                                <xsl:call-template name="util:parameter">
-                                    <xsl:with-param name="name" select="'about'"/>
-                                    <xsl:with-param name="default">
-        								<h2 class="layout_info_header">Om Humanise</h2>
-        								<p>Vores focus er på brugeroplevelse og design. Vi leder altid efter den mest enkle og essentielle løsning. Vi tror på at maskinen skal arbejde for mennesket. Vi mener at viden bør være fri og tilgængelig for alle. Vi håber du er enig :-)</p>                                        
-                                    </xsl:with-param>
-                                </xsl:call-template>
-                                <p class="layout_info_more"><a href="{$path}om/" class="common"><span>Mere om Humanise »</span></a></p>
+                <xsl:call-template name="util:parameter">
+                    <xsl:with-param name="name" select="'about'"/>
+                    <xsl:with-param name="default">
+              				<h2 class="layout_info_header">Om Humanise</h2>
+              				<p>Vores focus er på brugeroplevelse og design. Vi leder altid efter den mest enkle og essentielle løsning. Vi tror på at maskinen skal arbejde for mennesket. Vi mener at viden bør være fri og tilgængelig for alle. Vi håber du er enig :-)</p>                                        
+                    </xsl:with-param>
+                </xsl:call-template>
+                <p class="layout_info_more">
+                  <a href="{$path}om/" class="common_link"><span class="common_link_text">Mere om Humanise »</span></a>
+                </p>
 							</xsl:otherwise>
 						</xsl:choose>
 					</div>
@@ -117,15 +121,15 @@
 							<xsl:when test="//p:page/p:meta/p:language='en'"><h2>Contact</h2></xsl:when>
 							<xsl:otherwise><h2 class="layout_info_header">Kontakt</h2></xsl:otherwise>
 						</xsl:choose>
-                        <xsl:call-template name="util:parameter">
-                            <xsl:with-param name="name" select="'contact'"/>
-                            <xsl:with-param name="default">
-        						<p><strong class="layout_info_name">Jonas Brinkmann Munk</strong></p>
-        						<p><a href="mailto:jonasmunk@mac.com" class="common"><span>jonasmunk@mac.com</span></a> · <a href="tel:004528776365" class="layout_info_phone">+45 28 77 63 65</a></p>
-        						<p><strong class="layout_info_name">Kenni Graversen</strong></p>
-        						<p><a href="mailto:gr@versen.dk" class="common"><span>gr@versen.dk</span></a> · <a href="tel:004522486153" class="layout_info_phone">+45 22 48 61 53</a></p>
-                            </xsl:with-param>
-                        </xsl:call-template>
+            <xsl:call-template name="util:parameter">
+                <xsl:with-param name="name" select="'contact'"/>
+                <xsl:with-param name="default">
+          				<p><strong class="layout_info_name">Jonas Brinkmann Munk</strong></p>
+          				<p><a class="common_link" href="mailto:jonasmunk@mac.com"><span class="common_link_text">jonasmunk@mac.com</span></a> · <a href="tel:004528776365" class="layout_info_phone">+45 28 77 63 65</a></p>
+          				<p><strong class="layout_info_name">Kenni Graversen</strong></p>
+          				<p><a class="common_link" href="mailto:gr@versen.dk"><span class="common_link_text">gr@versen.dk</span></a> · <a href="tel:004522486153" class="layout_info_phone">+45 22 48 61 53</a></p>
+                </xsl:with-param>
+            </xsl:call-template>
 					</div>
 				</div>
 			</div>
@@ -212,18 +216,18 @@
 			<xsl:attribute name="class">
 				<xsl:text>layout_menu_item</xsl:text>
 			<xsl:choose>
-				<xsl:when test="position()>1 and //p:page/@id=@page"> layout_menu_item_selected</xsl:when>
-				<xsl:when test="position()>1 and descendant-or-self::*/@page=//p:page/@id"> layout_menu_item_highlighted</xsl:when>
-				<xsl:when test="position()=1"> layout_menu_item_first</xsl:when>
+				<xsl:when test="position()>1 and //p:page/@id=@page"> layout_menu_item-selected</xsl:when>
+				<xsl:when test="position()>1 and descendant-or-self::*/@page=//p:page/@id"> layout_menu_item-highlighted</xsl:when>
+				<xsl:when test="position()=1"> layout_menu_item-first</xsl:when>
 			</xsl:choose>
 			</xsl:attribute>
 			<a>
 			<xsl:attribute name="class">
 				<xsl:text>layout_menu_link</xsl:text>
 			<xsl:choose>
-				<xsl:when test="position()>1 and //p:page/@id=@page"> layout_menu_link_selected</xsl:when>
-				<xsl:when test="position()>1 and descendant-or-self::*/@page=//p:page/@id"> layout_menu_link_highlighted</xsl:when>
-				<xsl:when test="position()=1"> layout_menu_link_first</xsl:when>
+				<xsl:when test="position()>1 and //p:page/@id=@page"> layout_menu_link-selected</xsl:when>
+				<xsl:when test="position()>1 and descendant-or-self::*/@page=//p:page/@id"> layout_menu_link-highlighted</xsl:when>
+				<xsl:when test="position()=1"> layout_menu_link-first</xsl:when>
 			</xsl:choose>
 			</xsl:attribute>
 				<xsl:call-template name="util:link"/>
@@ -237,46 +241,59 @@
 	<xsl:if test="//f:frame/h:hierarchy/h:item[descendant-or-self::*/@page=//p:page/@id]/h:item">
 		<ul>
 			<xsl:attribute name="class">
-				<xsl:text>layout_sub_navigation</xsl:text>
-				<xsl:if test="//f:frame/h:hierarchy/h:item[descendant-or-self::*/@page=//p:page/@id]/h:item[descendant-or-self::*/@page=//p:page/@id]">
-					<xsl:text> layout_sub_navigation_selected</xsl:text>
-				</xsl:if>
+				<xsl:text>submenu</xsl:text>
 			</xsl:attribute>
 			<xsl:apply-templates select="//f:frame/h:hierarchy/h:item[descendant-or-self::*/@page=//p:page/@id]/h:item"/>
 		</ul>
 	</xsl:if>
 </xsl:template>
 
+<xsl:template match="h:hierarchy/h:item/h:item">
+	<xsl:variable name="class">
+    <xsl:text>submenu_link</xsl:text>
+		<xsl:choose>
+			<xsl:when test="//p:page/@id=@page"><xsl:text> submenu_link-selected</xsl:text></xsl:when>
+			<xsl:when test="descendant-or-self::*/@page=//p:page/@id"><xsl:text> submenu_link-highlighted</xsl:text></xsl:when>
+		</xsl:choose>
+	</xsl:variable>
+	<xsl:if test="not(@hidden='true')">
+		<li class="submenu_item">
+		<a class="{$class}">
+			<xsl:call-template name="util:link"/>
+			<xsl:value-of select="@title"/>
+		</a>
+		</li>
+	</xsl:if>
+</xsl:template>
+
+<xsl:template match="h:hierarchy/h:item/h:item//h:item[not(@hidden='true')]">
+	<xsl:variable name="class">
+    <xsl:text>sidemenu_link</xsl:text>
+		<xsl:choose>
+			<xsl:when test="//p:page/@id=@page"><xsl:text> sidemenu_link-selected</xsl:text></xsl:when>
+			<xsl:when test="descendant-or-self::*/@page=//p:page/@id"><xsl:text> sidemenu_link-highlighted</xsl:text></xsl:when>
+		</xsl:choose>
+	</xsl:variable>
+	<li class="sidemenu_item">
+  	<a class="{$class}">
+  		<xsl:call-template name="util:link"/>
+  		<xsl:value-of select="@title"/>
+  	</a>
+		<xsl:if test="descendant-or-self::*/@page=//p:page/@id and h:item">
+			<ul class="sidemenu_sub"><xsl:apply-templates/></ul>
+		</xsl:if>
+	</li>
+</xsl:template>
+
 <xsl:template name="thirdlevel">
 <xsl:if test="//f:frame/h:hierarchy/h:item/h:item[descendant-or-self::*/@page=//p:page/@id]/h:item">
 	<ul>
 		<xsl:attribute name="class">
-			<xsl:text>layout_side_navigation</xsl:text>
-			<xsl:if test="//f:frame/h:hierarchy/h:item/h:item[descendant-or-self::*/@page=//p:page/@id]/h:item[descendant-or-self::*/@page=//p:page/@id]">
-				<xsl:text> layout_side_navigation_selected</xsl:text>
-			</xsl:if>
+			<xsl:text>sidemenu</xsl:text>
 		</xsl:attribute>
 		<xsl:apply-templates select="//f:frame/h:hierarchy/h:item/h:item[descendant-or-self::*/@page=//p:page/@id]/h:item"/>
 	</ul>
 </xsl:if>
-</xsl:template>
-
-<xsl:template match="h:hierarchy/h:item/h:item">
-	<xsl:variable name="style">
-		<xsl:choose>
-			<xsl:when test="//p:page/@id=@page"><xsl:text>selected</xsl:text></xsl:when>
-			<xsl:when test="descendant-or-self::*/@page=//p:page/@id"><xsl:text>highlighted</xsl:text></xsl:when>
-			<xsl:otherwise>normal</xsl:otherwise>
-		</xsl:choose>
-	</xsl:variable>
-	<xsl:if test="not(@hidden='true')">
-		<li>
-		<a class="{$style}">
-			<xsl:call-template name="util:link"/>
-			<span><xsl:value-of select="@title"/></span>
-		</a>
-		</li>
-	</xsl:if>
 </xsl:template>
 
 <xsl:template match="h:item">

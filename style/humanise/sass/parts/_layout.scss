@@ -14,44 +14,6 @@
 	.layout_head {
 		background: #f6f6f9;
 	}
-  
-	.layout_sub_navigation {
-		margin: 0;
-		padding: 5px 5px;
-		list-style: none;
-		border-bottom: 1px solid $line-color;
-	
-		> li {
-			display: inline-block;
-
-			> a {
-				padding: 0 5px;
-				height: 32px;
-				line-height: 32px;
-				text-decoration: none;
-				color: #333;
-			}
-		}
-	}
-
-	.layout_side_navigation {
-		margin: 0;
-		padding: 5px 5px;
-		list-style: none;
-		border-bottom: 1px solid $line-color;
-
-		> li {
-			display: inline-block;
-
-			> a {
-				padding: 0 5px;
-				height: 32px;
-				line-height: 32px;
-				text-decoration: none;
-				color: #333;
-			}
-		}
-	}
 
 	.layout_inner_content {
 		padding: 10px;
@@ -65,8 +27,7 @@
 		width: 177px;
 		height: 191px;
 		display: block;
-		margin: 0 auto;
-		margin-bottom: 10px;
+		margin: 20px auto 10px;
 	}
 	
 	@include retina {
@@ -79,13 +40,9 @@
 
 @include when(560px,inline) {
 
-    .layout_inner_content {
+	.layout_inner_content {
 		padding: 20px 10px;
     }
-	
-	.layout_sub_navigation {
-		padding: 5px 15px;
-	}
 }
 
 @include when(760px,inline) {
@@ -102,64 +59,13 @@
 		width: 30%;
 		float: right;
 	}
-}
-
-@include when(760px) {
 	
-	.layout_side_navigation
-	{
-		list-style: none;
-		margin: 20px 0 30px 25px;
-		padding: 0 10px;
-		font-size: 12pt;
-		line-height: 26px;
-		border-bottom: none;
-		border-left: 1px solid $line-color;
-		
-		> li {
-			display: block;
-		}
-		
-		a {
-			color: #333;
-			text-decoration: none;
-			padding: 1px 5px;
-		}
-	}
-
-	.layout_side_navigation_selected a
-	{
-		color: #999;
-	}
-
-	.layout_side_navigation_selected:hover a
-	{
-		color: $color;
-	}
-
-	.layout_side_navigation a:hover
-	{
-		color: #000;
-		text-decoration: underline;
-	}
-
-	ul.layout_side_navigation a.selected
-	{
-		color: #0072BC;
-		font-weight: bold;
-	}
-
-	ul.layout_side_navigation a.highlighted
-	{
-		font-weight: bold;
-	}
-
-	ul.layout_side_navigation ul
-	{
-		list-style: none;
-		padding-left: 15px;
+	.layout_body {
+		overflow: hidden;
 	}
 }
+
+
 
 @include when(980px) {
 	
@@ -190,25 +96,16 @@
 
 @include when(1000px,inline) {
 	
-	.layout_sub_navigation, .layout_inner_content {
+	.layout_inner_content {
 		padding-left: 0px;
 		padding-right: 0;
-	}
-	
-	.layout_sub_navigation li:first-child {
-		margin-left: -5px;
 	}
 }
 
 @include when(1000px) {
 	
-	.layout_sub_navigation,
 	.layout_inner_content {
 		padding-left: 0px;
-	}
-	
-	.layout_sub_navigation li:first-child {
-		margin-left: -5px;
 	}
 
 }

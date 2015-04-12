@@ -151,24 +151,23 @@ body.editor,
   }
 }
 /********************* Common *******************/
-a.common {
+.common_link {
   color: #ddd;
-  color: rgba(0, 0, 0, 0.15);
+  color: rgba(0, 0, 0, 0.1);
   cursor: pointer;
   font-weight: normal;
 }
 
-a.common span {
-  color: #0079cd;
+.common_link_text {
+  color: #0094ff;
 }
 
-a.common:hover, a.common:hover span {
-  color: #0169b2;
+.common_link:hover, .common_link:hover .common_link_text {
+  color: #0076cc;
 }
 
 h1.common {
   font-weight: 400;
-  color: #324d60;
 }
 
 p.common, ul.common {
@@ -178,11 +177,11 @@ p.common, ul.common {
 }
 
 @media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
-  a.common {
+  .common_link {
     text-decoration: none;
-    background-image: -moz-linear-gradient(top, transparent 99%, rgba(0, 0, 0, 0.5) 99%);
-    background-image: -webkit-linear-gradient(top, transparent 98%, rgba(0, 0, 0, 0.5) 98%);
-    background-image: linear-gradient(top, transparent 98%, rgba(0, 0, 0, 0.5) 98%);
+    background-image: -moz-linear-gradient(top, rgba(0, 0, 0, 0) 99%, rgba(0, 0, 0, 0.5) 99%);
+    background-image: -webkit-linear-gradient(top, rgba(0, 0, 0, 0) 98%, rgba(0, 0, 0, 0.5) 98%);
+    background-image: linear-gradient(top, rgba(0, 0, 0, 0) 98%, rgba(0, 0, 0, 0.5) 98%);
     background-repeat: repeat-x;
   }
 }
@@ -200,10 +199,6 @@ p.common, ul.common {
 
 /************ Headers ***********/
 .part_header_1 {
-  color: #3080CB;
-}
-
-.part_header_1 {
   font-size: 38px;
   line-height: 1.105263158em;
 }
@@ -211,7 +206,6 @@ p.common, ul.common {
 .part_header_2 {
   font-size: 19pt;
   line-height: 1.105263158em;
-  /*font-weight: 400;*/
 }
 
 .part_header_3 {
@@ -271,6 +265,7 @@ p.common, ul.common {
   margin: 10px 0;
 }
 
+/** Listing **/
 .part_listing {
   font-size: 11pt;
   font-weight: 300;
@@ -288,7 +283,7 @@ p.common, ul.common {
 
 .part_horizontalrule {
   border: none;
-  border-bottom: solid 1px #eee;
+  border-bottom: solid 1px #eeeeee;
 }
 
 .part_news_item_title {
@@ -305,4 +300,21 @@ p.common, ul.common {
 }
 .windows .part_news_item_description {
   font-weight: 400;
+}
+
+/** Menu **/
+.part_menu-bar {
+  display: inline-block;
+  border: 1px solid #ddd;
+  background: #fafafa;
+  border-radius: 4px;
+}
+
+.part_menu_link-bar {
+  line-height: 22px;
+  font-size: 18px;
+  padding: 6px 10px;
+  display: block;
+  text-decoration: none;
+  color: #0094ff;
 }

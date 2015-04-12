@@ -19,7 +19,6 @@
 
   .part_header_1
   {
-  	color: #3080CB;
   }
 
   .part_header_1
@@ -32,7 +31,6 @@
   {
   	font-size: 19pt;
   	line-height: 1.105263158em;
-  	/*font-weight: 400;*/
   }
 
 
@@ -106,6 +104,8 @@
   {
   	margin: 10px 0;
   }
+  
+  /** Listing **/
 
   .part_listing
   {
@@ -149,4 +149,23 @@
       font-weight: 400;
     }
   }
+  
+  /** Menu **/
+  
+  .part_menu-bar {
+	  display: inline-block;
+	  border: 1px solid #ddd;
+	  background: #fafafa;
+	  border-radius: 4px;
+  }
+	  
+  .part_menu_link-bar {
+	  line-height: 22px;
+	  font-size: 18px;
+	  padding: 6px 10px;
+	  display: block;
+	  text-decoration: none;
+	  color: $link-color;
+  }
+  
 }

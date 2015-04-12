@@ -16,15 +16,24 @@
   	height: 32px;
   	line-height: 32px;
   	text-decoration: none;
-  	color: #333;
+		color: $color;
   }
 
-  .layout_menu_item_first {
+	.layout_menu_link-highlighted {
+  	color: $highlight-color;
+  }
+
+  .layout_menu_link-selected {
+		color: $highlight-color;
+		font-weight: bold;
+	}
+
+  .layout_menu_item-first {
   	display: block;
   	text-align: center;
   }
 
-  .layout_menu_link_first {
+  .layout_menu_link-first {
   	background: url("../gfx/graphics.png") -139px -636px;
   	display: inline-block;
   	width: 160px;
@@ -35,7 +44,7 @@
   }
   
   @media  (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
-    .layout_menu_link_first {
+    .layout_menu_link-first {
     	background-image: url('../gfx/graphics_2x.png');
     	background-size: 400px 907px;
     }		
@@ -57,10 +66,9 @@
 		font-size: 20px;
 		line-height: 44px;
 		padding: 0 10px;
-		color: $color;
   }
   
-	.layout_menu_item_first {
+	.layout_menu_item-first {
 		display: inline-block;
 	}
 

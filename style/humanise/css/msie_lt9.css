@@ -10,10 +10,9 @@
   font-size: 20px;
   line-height: 44px;
   padding: 0 10px;
-  color: #324d60;
 }
 
-.layout_menu_item_first {
+.layout_menu_item-first {
   display: inline-block;
 }
 
@@ -70,8 +69,6 @@
 }
 
 .layout_info {
-  border: 1px solid #eee;
-  border-width: 1px 0;
   margin: 20px 0;
   padding: 0 20px;
 }
@@ -126,10 +123,6 @@
   padding: 20px 10px;
 }
 
-.layout_sub_navigation {
-  padding: 5px 15px;
-}
-
 .layout_inner_content {
   padding: 20px;
 }
@@ -143,49 +136,8 @@
   float: right;
 }
 
-.layout_side_navigation {
-  list-style: none;
-  margin: 20px 0 30px 25px;
-  padding: 0 10px;
-  font-size: 12pt;
-  line-height: 26px;
-  border-bottom: none;
-  border-left: 1px solid #eee;
-}
-.layout_side_navigation > li {
-  display: block;
-}
-.layout_side_navigation a {
-  color: #333;
-  text-decoration: none;
-  padding: 1px 5px;
-}
-
-.layout_side_navigation_selected a {
-  color: #999;
-}
-
-.layout_side_navigation_selected:hover a {
-  color: #324d60;
-}
-
-.layout_side_navigation a:hover {
-  color: #000;
-  text-decoration: underline;
-}
-
-ul.layout_side_navigation a.selected {
-  color: #0072BC;
-  font-weight: bold;
-}
-
-ul.layout_side_navigation a.highlighted {
-  font-weight: bold;
-}
-
-ul.layout_side_navigation ul {
-  list-style: none;
-  padding-left: 15px;
+.layout_body {
+  overflow: hidden;
 }
 
 body, html {
@@ -211,22 +163,57 @@ body, html {
   margin-top: -210px;
 }
 
-.layout_sub_navigation, .layout_inner_content {
+.layout_inner_content {
   padding-left: 0px;
   padding-right: 0;
 }
 
-.layout_sub_navigation li:first-child {
-  margin-left: -5px;
-}
-
-.layout_sub_navigation,
 .layout_inner_content {
   padding-left: 0px;
 }
 
-.layout_sub_navigation li:first-child {
-  margin-left: -5px;
+.submenu {
+  padding: 5px 10px;
+}
+
+.submenu_link {
+  padding: 0 10px;
+}
+
+.submenu {
+  padding-left: 0px;
+  padding-right: 0;
+}
+
+.submenu li:first-child {
+  margin-left: -10px;
+}
+
+.sidemenu {
+  list-style: none;
+  margin: 20px 0 30px 25px;
+  padding: 0 10px;
+  font-size: 12pt;
+  line-height: 26px;
+  border-bottom: none;
+  border-left: 1px solid #eeeeee;
+}
+
+.sidemenu_item {
+  display: block;
+}
+
+.sidemenu_link {
+  display: block;
+  padding: 7px 5px;
+}
+.sidemenu_link:hover {
+  text-decoration: underline;
+}
+
+.sidemenu_sub {
+  list-style: none;
+  padding-left: 15px;
 }
 
 #poster {
@@ -251,7 +238,7 @@ body, html {
 }
 
 #poster {
-  background: #333 url("../gfx/poster_bg.png");
+  background: #333333 url("../gfx/poster_bg.png");
   cursor: pointer;
   overflow: hidden;
 }

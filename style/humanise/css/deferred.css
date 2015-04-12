@@ -1,10 +1,6 @@
 /********************* Common *******************/
 /************ Headers ***********/
 .part_header_1 {
-  color: #3080CB;
-}
-
-.part_header_1 {
   font-size: 38px;
   line-height: 1.105263158em;
 }
@@ -12,7 +8,6 @@
 .part_header_2 {
   font-size: 19pt;
   line-height: 1.105263158em;
-  /*font-weight: 400;*/
 }
 
 .part_header_3 {
@@ -72,6 +67,7 @@
   margin: 10px 0;
 }
 
+/** Listing **/
 .part_listing {
   font-size: 11pt;
   font-weight: 300;
@@ -89,7 +85,7 @@
 
 .part_horizontalrule {
   border: none;
-  border-bottom: solid 1px #eee;
+  border-bottom: solid 1px #eeeeee;
 }
 
 .part_news_item_title {
@@ -106,6 +102,23 @@
 }
 .windows .part_news_item_description {
   font-weight: 400;
+}
+
+/** Menu **/
+.part_menu-bar {
+  display: inline-block;
+  border: 1px solid #ddd;
+  background: #fafafa;
+  border-radius: 4px;
+}
+
+.part_menu_link-bar {
+  line-height: 22px;
+  font-size: 18px;
+  padding: 6px 10px;
+  display: block;
+  text-decoration: none;
+  color: #0094ff;
 }
 
 .layout_search_body {
@@ -203,6 +216,11 @@
 .layout_info {
   overflow: hidden;
   padding: 10px;
+  border: 1px solid #eee;
+  border-width: 1px 0;
+}
+.layout_info .common_link_text {
+  color: #666;
 }
 
 .layout_info_header {
@@ -249,18 +267,14 @@
   text-decoration: none;
 }
 
-.layout_info a span {
-  color: #666;
-}
-
 .layout_info:hover .layout_info_header {
   color: #000;
 }
 .layout_info:hover .layout_info_about p {
   color: #333;
 }
-.layout_info:hover a span {
-  color: #0079CD;
+.layout_info:hover .common_link_text {
+  color: #0094ff;
 }
 .layout_info:hover .layout_info_name {
   color: #333;
@@ -268,8 +282,6 @@
 
 @media screen and (min-width: 560px) {
   .layout_info {
-    border: 1px solid #eee;
-    border-width: 1px 0;
     margin: 20px 0;
     padding: 0 20px;
   }
@@ -399,60 +411,13 @@
   width: 177px;
   height: 191px;
   display: block;
-  margin: 0 auto;
-  margin-bottom: 10px;
+  margin: 20px auto 10px;
 }
 
 @media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
   .layout_design {
     background-image: url("../gfx/graphics_2x.png");
     background-size: 400px 907px;
-  }
-}
-@media screen and (min-width: 760px) {
-  .layout_side_navigation {
-    list-style: none;
-    margin: 20px 0 30px 25px;
-    padding: 0 10px;
-    font-size: 12pt;
-    line-height: 26px;
-    border-bottom: none;
-    border-left: 1px solid #eee;
-  }
-  .layout_side_navigation > li {
-    display: block;
-  }
-  .layout_side_navigation a {
-    color: #333;
-    text-decoration: none;
-    padding: 1px 5px;
-  }
-
-  .layout_side_navigation_selected a {
-    color: #999;
-  }
-
-  .layout_side_navigation_selected:hover a {
-    color: #324d60;
-  }
-
-  .layout_side_navigation a:hover {
-    color: #000;
-    text-decoration: underline;
-  }
-
-  ul.layout_side_navigation a.selected {
-    color: #0072BC;
-    font-weight: bold;
-  }
-
-  ul.layout_side_navigation a.highlighted {
-    font-weight: bold;
-  }
-
-  ul.layout_side_navigation ul {
-    list-style: none;
-    padding-left: 15px;
   }
 }
 @media screen and (min-width: 980px) {
@@ -480,18 +445,13 @@
   }
 }
 @media screen and (min-width: 1000px) {
-  .layout_sub_navigation,
   .layout_inner_content {
     padding-left: 0px;
-  }
-
-  .layout_sub_navigation li:first-child {
-    margin-left: -5px;
   }
 }
 @media screen and (min-width: 1000px) {
   #poster {
-    background: #333 url("../gfx/poster_bg.png");
+    background: #333333 url("../gfx/poster_bg.png");
     cursor: pointer;
     overflow: hidden;
   }

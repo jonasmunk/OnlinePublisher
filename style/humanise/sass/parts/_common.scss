@@ -1,28 +1,27 @@
 /********************* Common *******************/
 
 @include when(all,inline) {
-	a.common
+	.common_link
 	{
 		color: #ddd;
-		color: rgba(0,0,0,.15);
+		color: rgba(0,0,0,.1);
 		cursor: pointer;
 		font-weight: normal;
 	}
 
-	a.common span
+	.common_link_text
 	{
-		color: #0079cd;
+		color: $link-color;
 	}
 	
-	a.common:hover, a.common:hover span
+	.common_link:hover, .common_link:hover .common_link_text
 	{
-		color: #0169b2;
+		color: darken($link-color,10%);
 	}
 
 	h1.common
 	{
 		font-weight: 400;
-		color: #324d60;
 	}
 
 	p.common, ul.common
@@ -33,14 +32,13 @@
 	}
 
 	@include retina {
-    a.common {
-  		text-decoration: none;
-  		background-image: -moz-linear-gradient(top, rgba(0, 0, 0, 0) 99%, rgba(0, 0, 0, 0.5) 99%);
-  		background-image: -webkit-linear-gradient(top, rgba(0, 0, 0, 0) 98%, rgba(0, 0, 0, 0.5) 98%);
-  		background-image: linear-gradient(top, rgba(0, 0, 0, 0) 98%, rgba(0, 0, 0, 0.5) 98%);
-  		background-repeat: repeat-x
-  	}
-	} 
-  
-  
+		.common_link {
+			text-decoration: none;
+			background-image: -moz-linear-gradient(top, rgba(0, 0, 0, 0) 99%, rgba(0, 0, 0, 0.5) 99%);
+			background-image: -webkit-linear-gradient(top, rgba(0, 0, 0, 0) 98%, rgba(0, 0, 0, 0.5) 98%);
+			background-image: linear-gradient(top, rgba(0, 0, 0, 0) 98%, rgba(0, 0, 0, 0.5) 98%);
+			background-repeat: repeat-x
+		}
+	}
+
 }

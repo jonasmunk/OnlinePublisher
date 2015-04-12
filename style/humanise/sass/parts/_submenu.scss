@@ -1,0 +1,53 @@
+@include when(all,inline) {
+  
+	.submenu {
+		margin: 0;
+		padding: 5px;
+		list-style: none;
+		border-bottom: 1px solid $line-color;
+	}
+	.submenu_item {
+		display: inline-block;
+	}
+	
+	.submenu_link {
+		padding: 0 5px;
+		height: 32px;
+		line-height: 32px;
+		text-decoration: none;
+		color: #333;		
+	}
+	
+	.submenu_link-highlighted {
+		color: $highlight-color;
+	}
+	
+	.submenu_link-selected {
+		color: $highlight-color;
+		font-weight: bold;
+	}
+}
+
+
+@include when(760px,inline) {
+  
+	.submenu {
+		padding: 5px 10px;
+	}
+
+	.submenu_link {
+		padding: 0 10px;
+	}
+}
+
+@include when(1000px,inline) {
+	
+	.submenu {
+		padding-left: 0px;
+		padding-right: 0;
+	}
+	
+	.submenu li:first-child {
+		margin-left: -10px;
+	}
+}
