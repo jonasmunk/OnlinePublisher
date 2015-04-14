@@ -25,57 +25,60 @@ var hui = {
 
 // TODO make this easier to optimize
 
-/** If the browser is opera */
-hui.browser.opera = /opera/i.test(navigator.userAgent);
-/** If the browser is any version of InternetExplorer */
-hui.browser.msie = !hui.browser.opera && /MSIE/.test(navigator.userAgent) || /Trident/.test(navigator.userAgent);
-/** If the browser is InternetExplorer 6 */
-hui.browser.msie6 = navigator.userAgent.indexOf('MSIE 6') !== -1;
-/** If the browser is InternetExplorer 7 */
-hui.browser.msie7 = navigator.userAgent.indexOf('MSIE 7') !== -1;
-/** If the browser is InternetExplorer 8 */
-hui.browser.msie8 = navigator.userAgent.indexOf('MSIE 8') !== -1;
-/** If the browser is InternetExplorer 9 */
-hui.browser.msie9 = navigator.userAgent.indexOf('MSIE 9') !== -1;
-/** If the browser is InternetExplorer 9 in compatibility mode */
-hui.browser.msie9compat = hui.browser.msie7 && navigator.userAgent.indexOf('Trident/5.0') !== -1;
-/** If the browser is InternetExplorer 10 */
-hui.browser.msie10 = navigator.userAgent.indexOf('MSIE 10') !== -1;
-/** If the browser is InternetExplorer 11 */
-hui.browser.msie11 = navigator.userAgent.indexOf('Trident/7.0') !== -1;
-/** If the browser is WebKit based */
-hui.browser.webkit = navigator.userAgent.indexOf('WebKit') !== -1;
-/** If the browser is any version of Safari */
-hui.browser.safari = navigator.userAgent.indexOf('Safari') !== -1;
-/** If the browser is any version of Chrome */
-hui.browser.chrome = navigator.userAgent.indexOf('Chrome') !== -1;
-/** The version of WebKit (null if not WebKit) */
-hui.browser.webkitVersion = null;
-/** If the browser is Gecko based */
-hui.browser.gecko = !hui.browser.webkit && !hui.browser.msie && navigator.userAgent.indexOf('Gecko') !== -1;
-/** If the browser is Gecko based */
-hui.browser.chrome = navigator.userAgent.indexOf('Chrome') !== -1;
-/** If the browser is safari on iPad */
-hui.browser.ipad = hui.browser.webkit && navigator.userAgent.indexOf('iPad') !== -1;
-/** If the browser is on Windows */
-hui.browser.windows = navigator.userAgent.indexOf('Windows') !== -1;
+(function(browser,agent,window) {
+	/** If the browser is any version of InternetExplorer */
+	browser.msie = !/opera/i.test(agent) && /MSIE/.test(agent) || /Trident/.test(agent);
+	/** If the browser is InternetExplorer 6 */
+	browser.msie6 = agent.indexOf('MSIE 6') !== -1;
+	/** If the browser is InternetExplorer 7 */
+	browser.msie7 = agent.indexOf('MSIE 7') !== -1;
+	/** If the browser is InternetExplorer 8 */
+	browser.msie8 = agent.indexOf('MSIE 8') !== -1;
+	/** If the browser is InternetExplorer 9 */
+	browser.msie9 = agent.indexOf('MSIE 9') !== -1;
+	/** If the browser is InternetExplorer 9 in compatibility mode */
+	browser.msie9compat = browser.msie7 && agent.indexOf('Trident/5.0') !== -1;
+	/** If the browser is InternetExplorer 10 */
+	browser.msie10 = agent.indexOf('MSIE 10') !== -1;
+	/** If the browser is InternetExplorer 11 */
+	browser.msie11 = agent.indexOf('Trident/7.0') !== -1;
+	/** If the browser is WebKit based */
+	browser.webkit = agent.indexOf('WebKit') !== -1;
+	/** If the browser is any version of Safari */
+	browser.safari = agent.indexOf('Safari') !== -1;
+	/** If the browser is any version of Chrome */
+	//browser.chrome = agent.indexOf('Chrome') !== -1;
+	/** The version of WebKit (null if not WebKit) */
+	browser.webkitVersion = null;
+	/** If the browser is Gecko based */
+	browser.gecko = !browser.webkit && !browser.msie && agent.indexOf('Gecko') !== -1;
+	/** If the browser is Gecko based */
+	//browser.chrome = agent.indexOf('Chrome') !== -1;
+	/** If the browser is safari on iPad */
+	browser.ipad = browser.webkit && agent.indexOf('iPad') !== -1;
+	/** If the browser is on Windows */
+	browser.windows = agent.indexOf('Windows') !== -1;
 
-/** If the browser supports CSS opacity */
-hui.browser.opacity = !hui.browser.msie6 && !hui.browser.msie7 && !hui.browser.msie8;
-/** If the browser supports CSS Media Queries */
-hui.browser.mediaQueries = hui.browser.opacity;
-/** If the browser supports CSS animations */
-hui.browser.animation = !hui.browser.msie6 && !hui.browser.msie7 && !hui.browser.msie8 && !hui.browser.msie9;
+	/** If the browser supports CSS opacity */
+	browser.opacity = !browser.msie6 && !browser.msie7 && !browser.msie8;
+	/** If the browser supports CSS Media Queries */
+	browser.mediaQueries = browser.opacity;
+	/** If the browser supports CSS animations */
+	browser.animation = !browser.msie6 && !browser.msie7 && !browser.msie8 && !browser.msie9;
 
-hui.browser.wordbreak = !hui.browser.msie6 && !hui.browser.msie7 && !hui.browser.msie8;
+	browser.wordbreak = !browser.msie6 && !browser.msie7 && !browser.msie8;
 
-hui.browser.touch = (!!('ontouchstart' in window) || (!!('onmsgesturechange' in window) && !!window.navigator.maxTouchPoints)) ? true : false;
+	browser.touch = (!!('ontouchstart' in window) || (!!('onmsgesturechange' in window) && !!window.navigator.maxTouchPoints)) ? true : false;
+
+	var result = /Safari\/([\d.]+)/.exec(agent);
+	if (result) {
+		browser.webkitVersion = parseFloat(result[1]);
+	}
+})(hui.browser,navigator.userAgent,window)
+
+
 
 (function() {
-	var result = /Safari\/([\d.]+)/.exec(navigator.userAgent);
-	if (result) {
-		hui.browser.webkitVersion = parseFloat(result[1]);
-	}
 })();
 
 
@@ -3040,14 +3043,12 @@ if (!Date.now) {
 (function() {
     var lastTime = 0;
     var vendors = ['ms', 'moz', 'webkit', 'o'];
-    if (!hui.browser.chrome) {
-        for(var x = 0; x < vendors.length && !window.requestAnimationFrame; ++x) {
-            window.requestAnimationFrame = window[vendors[x]+'RequestAnimationFrame'];
-            window.cancelAnimationFrame = window[vendors[x]+'CancelAnimationFrame']
-                                       || window[vendors[x]+'CancelRequestAnimationFrame'];
-        }
+    for(var x = 0; x < vendors.length && !window.requestAnimationFrame; ++x) {
+        window.requestAnimationFrame = window[vendors[x]+'RequestAnimationFrame'];
+        window.cancelAnimationFrame = window[vendors[x]+'CancelAnimationFrame']
+                                   || window[vendors[x]+'CancelRequestAnimationFrame'];
     }
-    if (!window.requestAnimationFrame) {
+	if (!window.requestAnimationFrame) {
         window.requestAnimationFrame = function(callback, element) {
             var currTime = Date.now();
             var timeToCall = Math.max(0, 16 - (currTime - lastTime));
