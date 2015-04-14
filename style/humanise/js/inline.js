@@ -1,4 +1,4 @@
-_editor.defer(function() {
+require(['hui'],function() {
   if (hui.browser.windows) {
   	hui.cls.add(document.body,'windows');
   }

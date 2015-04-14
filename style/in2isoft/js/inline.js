@@ -1,4 +1,4 @@
-_editor.defer(function() {
+require(['hui'],function() {
   if (hui.browser.windows) {
   	hui.cls.add(document.body,'windows');
   }
@@ -10,7 +10,9 @@ _editor.defer(function() {
   }
   var search = hui.get('search');
   if (search) {
-    new hui.ui.SearchField({element:search,expandedWidth:200});      
+	require(['hui.ui.SearchField'],function() {
+		new hui.ui.SearchField({element:search,expandedWidth:200});      
+	})
   }
 })
 if (window.devicePixelRatio > 1) {

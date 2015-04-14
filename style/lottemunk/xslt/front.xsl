@@ -142,7 +142,7 @@
 		</div>
 		
 		<script type="text/javascript">
-			_editor.defer(function() {
+			require(['hui.ui.ImageViewer'],function() {
 				var images = [];
 				<xsl:for-each select="//imagegallery:imagegallery//o:object">
 					images.push({

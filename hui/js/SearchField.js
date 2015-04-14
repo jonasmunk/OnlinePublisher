@@ -117,4 +117,7 @@ hui.ui.SearchField.prototype = {
 	}
 }
 
+if (window.define) {
+	define('hui.ui.SearchField',hui.ui.SearchField);
+}
 /* EOF */

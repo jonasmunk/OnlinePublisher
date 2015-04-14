@@ -2458,5 +2458,5 @@ hui.location = {
 
 
 if (window.define) {
-	define('hui');
+	define('hui',hui);
 }
