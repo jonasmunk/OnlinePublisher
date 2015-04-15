@@ -54,9 +54,9 @@ class DOMUtils {
 		}
 	}
 	
-	static function parseHTMLFragment($str) {
-		$str = '<fragment>' . $str . '</fragment>';
-		$doc = new DOMDocument();
+	static function parseHTMLFragment($str,$encoding="ISO-8859-15") {
+		$str = '<?xml encoding="' . $encoding . '"><fragment>' . $str . '</fragment>';
+		$doc = new DOMDocument( "1.0", $encoding);
 		$doc->recover = TRUE;
 		$success = @$doc->loadHtml($str);
 		if ($success) {
@@ -86,8 +86,8 @@ class DOMUtils {
 		return $doc;
 	}
 
-	static function parse($str) {
-		$doc = new DOMDocument();
+	static function parse($str,$encoding="ISO-8859-15") {
+		$doc = new DOMDocument("1.0",$encoding);
 		$success = @$doc->loadXML($str);
 		if ($success) {
 			return $doc;
@@ -147,8 +147,8 @@ class DOMUtils {
 		return preg_replace('/ xmlns="[\\w:\\/.]*"/e','',$str);
 	}
 	
-	static function getInnerXML($node) {
-		$doc = DOMUtils::parse('<xml></xml>');
+	static function getInnerXML($node,$encoding="ISO-8859-15") {
+		$doc = DOMUtils::parse('<xml></xml>',$encoding);
 		for ($i=0; $i < $node->childNodes->length; $i++) { 
 			$clone = $doc->importNode($node->childNodes->item($i),true);
 			$doc->documentElement->appendChild($clone);
