@@ -275,7 +275,10 @@ ga('create', '<xsl:value-of select="$code"/>', {siteSpeedSampleRate : 20});ga('s
         </xsl:when>
 		<xsl:otherwise>
             <xsl:call-template name="util:_scripts-config"/>
+			<script src="{$path}{$timestamp-url}style/{$design}/js/script.js{$timestamp-query}" async="async" defer="defer"><xsl:comment/></script>
+			<!--
             <script>_editor.loadScript('<xsl:value-of select="$path"/><xsl:value-of select="$timestamp-url"/>style/<xsl:value-of select="$design"/>/js/script.js<xsl:value-of select="$timestamp-query"/>')</script>
+				-->
 		</xsl:otherwise>
 	</xsl:choose>
     <xsl:call-template name="util:_scripts-preview"/>
@@ -354,10 +357,10 @@ require(['hui.ui'],function() {hui.ui.context='<xsl:value-of select="$path"/>';h
         <xsl:with-param name="compiled"><![CDATA[!function(){function e(e,t){t in r?e(t,r[t]):n[t]?n[t].push(e):n[t]=[e]}function t(e,t){r[e]=t
 var i=n[e]
 i&&(i.forEach(function(i){i(e,t)}),n[e]=0)}function i(t,i){var n=t.length
-if(n){var r=[],d=0
-t.forEach(e.bind(0,function(e,a){r[t.indexOf(e)]=a,++d>=n&&i.apply(0,r)}))}else i()}var n={},r={}
+if(n){var r=[],a=0
+t.forEach(e.bind(0,function(e,d){r[t.indexOf(e)]=d,++a>=n&&i.apply(0,r)}))}else i()}var n={},r={}
 require=i,define=function(e,n,r){r?i(n,function(){t(e,r.apply(0,arguments))}):t(e,n)}}(),function(e,t){e._editor={deferred:[],scriptLoaded:!1,ready:function(i){"complete"==t.readyState?i():e.addEventListener?e.addEventListener("DOMContentLoaded",i,!1):t.addEventListener?t.addEventListener("load",i,!1):"undefined"!=typeof e.attachEvent&&e.attachEvent("onload",i)},viewReady:function(t){var i=e.requestAnimationFrame||e.mozRequestAnimationFrame||e.webkitRequestAnimationFrame||e.msRequestAnimationFrame
-return i?i(t):void this.ready(t)},defer:function(e){this.scriptLoaded?e():this.deferred[this.deferred.length]=e},_parts:{},loadPart:function(e){this.defer(function(){_editor.loadScript(_editor.context+"style/basic/js/parts/"+e.name+".js"),require(["op.part."+e.name],e.$ready)})},loadCSS:function(e){this.viewReady(function(){_editor.inject(_editor._build("link",{rel:"stylesheet",type:"text/css",href:e}))})},_loaded:{},loadScript:function(e){this._loaded[e]||(this._loaded[e]=1,_editor.inject(this._build("script",{async:"async",src:e})))},_build:function(e,i){var n=t.createElement(e)
+return i?i(t):void this.ready(t)},_parts:{},loadPart:function(e){require(["hui","hui.ui","op"],function(){_editor.loadScript(_editor.context+"style/basic/js/parts/"+e.name+".js")}),require(["op.part."+e.name],e.$ready)},loadCSS:function(e){this.viewReady(function(){_editor.inject(_editor._build("link",{rel:"stylesheet",type:"text/css",href:e}))})},_loaded:{},loadScript:function(e){this._loaded[e]||(this._loaded[e]=1,_editor.inject(this._build("script",{async:"async",src:e})))},_build:function(e,i){var n=t.createElement(e)
 for(variable in i)n.setAttribute(variable,i[variable])
 return n},inject:function(e){var i=t.getElementsByTagName("head")[0]
 i?i.appendChild(e):this.ready(function(){_editor.inject(e)})},$scriptReady:function(){for(var e=0;e<this.deferred.length;e++)"function"==typeof this.deferred[e]&&this.deferred[e]()
@@ -464,7 +467,7 @@ this.scriptLoaded=!0}},require(["hui","hui.ui","op"],function(){_editor.$scriptR
                     <xsl:with-param name="href">
                         <xsl:value-of select="$path"/><xsl:value-of select="$timestamp-url"/>style/<xsl:value-of select="$design"/><xsl:text>/css/style.dev.css</xsl:text>
                     </xsl:with-param>
-                </xsl:call-template>                
+                </xsl:call-template>
             </xsl:if>
             <xsl:if test="$plain='false' and $async='false'">
                 <link rel="stylesheet" type="text/css" href="{$path}{$timestamp-url}style/{$design}/css/style.dev.css{$timestamp-query}"/>
@@ -493,7 +496,7 @@ this.scriptLoaded=!0}},require(["hui","hui.ui","op"],function(){_editor.$scriptR
 <xsl:template name="util:lazy-style">
     <xsl:param name="href"/>
     <script>_editor.loadCSS('<xsl:value-of select="$href"/>');</script>
-    <noscript>
+    <noscript><!-- class="js-async"-->
     <link rel="stylesheet" type="text/css" href="{$href}"/>
     </noscript>
 </xsl:template>

@@ -592,4 +592,8 @@ hui.ui.ImageViewer.prototype = {
 	
 }
 
+if (window.define) {
+	define('hui.ui.ImageViewer',hui.ui.ImageViewer);
+}
+
 /* EOF */

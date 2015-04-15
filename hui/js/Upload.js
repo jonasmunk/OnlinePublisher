@@ -572,9 +572,6 @@ hui.ui.Upload.Flash = function(parent) {
 }
 
 hui.ui.Upload.Flash.support = function() {
-	if (hui.browser.chrome) {
-		//return {supported:false,multiple:true};
-	}
 	return {supported:hui.ui.Flash.getMajorVersion()>=10 && window.SWFUpload!==undefined,multiple:true};
 }
 

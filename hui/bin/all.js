@@ -25,57 +25,60 @@ var hui = {
 
 // TODO make this easier to optimize
 
-/** If the browser is opera */
-hui.browser.opera = /opera/i.test(navigator.userAgent);
-/** If the browser is any version of InternetExplorer */
-hui.browser.msie = !hui.browser.opera && /MSIE/.test(navigator.userAgent) || /Trident/.test(navigator.userAgent);
-/** If the browser is InternetExplorer 6 */
-hui.browser.msie6 = navigator.userAgent.indexOf('MSIE 6') !== -1;
-/** If the browser is InternetExplorer 7 */
-hui.browser.msie7 = navigator.userAgent.indexOf('MSIE 7') !== -1;
-/** If the browser is InternetExplorer 8 */
-hui.browser.msie8 = navigator.userAgent.indexOf('MSIE 8') !== -1;
-/** If the browser is InternetExplorer 9 */
-hui.browser.msie9 = navigator.userAgent.indexOf('MSIE 9') !== -1;
-/** If the browser is InternetExplorer 9 in compatibility mode */
-hui.browser.msie9compat = hui.browser.msie7 && navigator.userAgent.indexOf('Trident/5.0') !== -1;
-/** If the browser is InternetExplorer 10 */
-hui.browser.msie10 = navigator.userAgent.indexOf('MSIE 10') !== -1;
-/** If the browser is InternetExplorer 11 */
-hui.browser.msie11 = navigator.userAgent.indexOf('Trident/7.0') !== -1;
-/** If the browser is WebKit based */
-hui.browser.webkit = navigator.userAgent.indexOf('WebKit') !== -1;
-/** If the browser is any version of Safari */
-hui.browser.safari = navigator.userAgent.indexOf('Safari') !== -1;
-/** If the browser is any version of Chrome */
-hui.browser.chrome = navigator.userAgent.indexOf('Chrome') !== -1;
-/** The version of WebKit (null if not WebKit) */
-hui.browser.webkitVersion = null;
-/** If the browser is Gecko based */
-hui.browser.gecko = !hui.browser.webkit && !hui.browser.msie && navigator.userAgent.indexOf('Gecko') !== -1;
-/** If the browser is Gecko based */
-hui.browser.chrome = navigator.userAgent.indexOf('Chrome') !== -1;
-/** If the browser is safari on iPad */
-hui.browser.ipad = hui.browser.webkit && navigator.userAgent.indexOf('iPad') !== -1;
-/** If the browser is on Windows */
-hui.browser.windows = navigator.userAgent.indexOf('Windows') !== -1;
+(function(browser,agent,window) {
+	/** If the browser is any version of InternetExplorer */
+	browser.msie = !/opera/i.test(agent) && /MSIE/.test(agent) || /Trident/.test(agent);
+	/** If the browser is InternetExplorer 6 */
+	browser.msie6 = agent.indexOf('MSIE 6') !== -1;
+	/** If the browser is InternetExplorer 7 */
+	browser.msie7 = agent.indexOf('MSIE 7') !== -1;
+	/** If the browser is InternetExplorer 8 */
+	browser.msie8 = agent.indexOf('MSIE 8') !== -1;
+	/** If the browser is InternetExplorer 9 */
+	browser.msie9 = agent.indexOf('MSIE 9') !== -1;
+	/** If the browser is InternetExplorer 9 in compatibility mode */
+	browser.msie9compat = browser.msie7 && agent.indexOf('Trident/5.0') !== -1;
+	/** If the browser is InternetExplorer 10 */
+	browser.msie10 = agent.indexOf('MSIE 10') !== -1;
+	/** If the browser is InternetExplorer 11 */
+	browser.msie11 = agent.indexOf('Trident/7.0') !== -1;
+	/** If the browser is WebKit based */
+	browser.webkit = agent.indexOf('WebKit') !== -1;
+	/** If the browser is any version of Safari */
+	browser.safari = agent.indexOf('Safari') !== -1;
+	/** If the browser is any version of Chrome */
+	//browser.chrome = agent.indexOf('Chrome') !== -1;
+	/** The version of WebKit (null if not WebKit) */
+	browser.webkitVersion = null;
+	/** If the browser is Gecko based */
+	browser.gecko = !browser.webkit && !browser.msie && agent.indexOf('Gecko') !== -1;
+	/** If the browser is Gecko based */
+	//browser.chrome = agent.indexOf('Chrome') !== -1;
+	/** If the browser is safari on iPad */
+	browser.ipad = browser.webkit && agent.indexOf('iPad') !== -1;
+	/** If the browser is on Windows */
+	browser.windows = agent.indexOf('Windows') !== -1;
 
-/** If the browser supports CSS opacity */
-hui.browser.opacity = !hui.browser.msie6 && !hui.browser.msie7 && !hui.browser.msie8;
-/** If the browser supports CSS Media Queries */
-hui.browser.mediaQueries = hui.browser.opacity;
-/** If the browser supports CSS animations */
-hui.browser.animation = !hui.browser.msie6 && !hui.browser.msie7 && !hui.browser.msie8 && !hui.browser.msie9;
+	/** If the browser supports CSS opacity */
+	browser.opacity = !browser.msie6 && !browser.msie7 && !browser.msie8;
+	/** If the browser supports CSS Media Queries */
+	browser.mediaQueries = browser.opacity;
+	/** If the browser supports CSS animations */
+	browser.animation = !browser.msie6 && !browser.msie7 && !browser.msie8 && !browser.msie9;
 
-hui.browser.wordbreak = !hui.browser.msie6 && !hui.browser.msie7 && !hui.browser.msie8;
+	browser.wordbreak = !browser.msie6 && !browser.msie7 && !browser.msie8;
 
-hui.browser.touch = (!!('ontouchstart' in window) || (!!('onmsgesturechange' in window) && !!window.navigator.maxTouchPoints)) ? true : false;
+	browser.touch = (!!('ontouchstart' in window) || (!!('onmsgesturechange' in window) && !!window.navigator.maxTouchPoints)) ? true : false;
+
+	var result = /Safari\/([\d.]+)/.exec(agent);
+	if (result) {
+		browser.webkitVersion = parseFloat(result[1]);
+	}
+})(hui.browser,navigator.userAgent,window)
+
+
 
 (function() {
-	var result = /Safari\/([\d.]+)/.exec(navigator.userAgent);
-	if (result) {
-		hui.browser.webkitVersion = parseFloat(result[1]);
-	}
 })();
 
 
@@ -1616,7 +1619,7 @@ hui._onReady = function(delegate) {
  */
 hui.request = function(options) {
 	options = hui.override({method:'POST',async:true,headers:{Ajax:true}},options);
-	var transport = hui.request.createTransport();
+	var transport = new XMLHttpRequest();
 	if (!transport) {return;}
 	transport.onreadystatechange = function() {
 		try {
@@ -1742,49 +1745,6 @@ hui.request._buildPostBody = function(parameters) {
     }
 	return output;
 };
-
-/**
- * Creates a new XMLHttpRequest
- * @returns The request
- */
-hui.request.createTransport = function() {
-	try {
-		if (window.XMLHttpRequest) {
-			var req = new XMLHttpRequest();
-			if (req.readyState === null) {
-				req.readyState = 1;
-				req.addEventListener("load", function () {
-					req.readyState = 4;
-					if (typeof req.onreadystatechange == "function")
-						req.onreadystatechange();
-				}, false);
-			}
-			return req;
-		}
-		else if (window.ActiveXObject) {
-			return hui.request._getActiveX();
-		}
-	}
-	catch (ex) {
-	}
-	return null;
-};
-
-hui.request._getActiveX = function() {
-	var prefixes = ["MSXML2", "Microsoft", "MSXML", "MSXML3"];
-	for (var i = 0; i < prefixes.length; i++) {
-		try {
-			return new ActiveXObject(prefixes[i] + ".XmlHttp");
-		}
-		catch (ex) {}
-	}
-};
-
-
-
-
-
-
 
 ///////////////////// Style ///////////////////
 
@@ -2501,7 +2461,7 @@ hui.location = {
 
 
 if (window.define) {
-	define('hui');
+	define('hui',hui);
 }
 
 /////////////////////////// Animation ///////////////////////////
@@ -3083,14 +3043,12 @@ if (!Date.now) {
 (function() {
     var lastTime = 0;
     var vendors = ['ms', 'moz', 'webkit', 'o'];
-    if (!hui.browser.chrome) {
-        for(var x = 0; x < vendors.length && !window.requestAnimationFrame; ++x) {
-            window.requestAnimationFrame = window[vendors[x]+'RequestAnimationFrame'];
-            window.cancelAnimationFrame = window[vendors[x]+'CancelAnimationFrame']
-                                       || window[vendors[x]+'CancelRequestAnimationFrame'];
-        }
+    for(var x = 0; x < vendors.length && !window.requestAnimationFrame; ++x) {
+        window.requestAnimationFrame = window[vendors[x]+'RequestAnimationFrame'];
+        window.cancelAnimationFrame = window[vendors[x]+'CancelAnimationFrame']
+                                   || window[vendors[x]+'CancelRequestAnimationFrame'];
     }
-    if (!window.requestAnimationFrame) {
+	if (!window.requestAnimationFrame) {
         window.requestAnimationFrame = function(callback, element) {
             var currTime = Date.now();
             var timeToCall = Math.max(0, 16 - (currTime - lastTime));
@@ -5885,7 +5843,7 @@ hui.ui.require = function(names,func) {
 };
 
 if (window.define) {
-	define('hui.ui');
+	define('hui.ui',hui.ui);
 }
 
 hui.onReady(function() {
@@ -10297,6 +10255,10 @@ hui.ui.ImageViewer.prototype = {
 	
 }
 
+if (window.define) {
+	define('hui.ui.ImageViewer',hui.ui.ImageViewer);
+}
+
 /* EOF */
 
 /** @constructor */
@@ -11371,9 +11333,6 @@ hui.ui.Upload.Flash = function(parent) {
 }
 
 hui.ui.Upload.Flash.support = function() {
-	if (hui.browser.chrome) {
-		//return {supported:false,multiple:true};
-	}
 	return {supported:hui.ui.Flash.getMajorVersion()>=10 && window.SWFUpload!==undefined,multiple:true};
 }
 
@@ -13176,6 +13135,9 @@ hui.ui.SearchField.prototype = {
 	}
 }
 
+if (window.define) {
+	define('hui.ui.SearchField',hui.ui.SearchField);
+}
 /* EOF */
 
 /**
@@ -18723,6 +18685,78 @@ if (!document.querySelector) {
     return (elements.length) ? elements[0] : null;
   };
 }
+
+(function(global) {
+  if (!('window' in global && 'document' in global))
+    return;
+
+  //----------------------------------------------------------------------
+  //
+  // XMLHttpRequest
+  // https://xhr.spec.whatwg.org
+  //
+  //----------------------------------------------------------------------
+
+  // XMLHttpRequest interface
+  // Needed for: IE7-
+  global.XMLHttpRequest = global.XMLHttpRequest || function() {
+    try { return new ActiveXObject("Msxml2.XMLHTTP.6.0"); } catch (_) { }
+    try { return new ActiveXObject("Msxml2.XMLHTTP.3.0"); } catch (_) { }
+    try { return new ActiveXObject("Msxml2.XMLHTTP"); } catch (_) { }
+    throw Error("This browser does not support XMLHttpRequest.");
+  };
+
+  // XMLHttpRequest interface constants
+  // Needed for IE8-
+  XMLHttpRequest.UNSENT = 0;
+  XMLHttpRequest.OPENED = 1;
+  XMLHttpRequest.HEADERS_RECEIVED = 2;
+  XMLHttpRequest.LOADING = 3;
+  XMLHttpRequest.DONE = 4;
+
+  // FormData interface
+  // Needed for: IE9-
+  (function() {
+    if ('FormData' in global)
+      return;
+
+    function FormData(form) {
+      this._data = [];
+      if (!form) return;
+      for (var i = 0; i < form.elements.length; ++i) {
+        var element = form.elements[i];
+        if (element.name !== '')
+          this.append(element.name, element.value);
+      }
+    }
+
+    FormData.prototype = {
+      append: function(name, value /*, filename */) {
+        if ('Blob' in global && value instanceof global.Blob)
+          throw TypeError("Blob not supported");
+        name = String(name);
+        this._data.push([name, value]);
+      },
+
+      toString: function() {
+        return this._data.map(function(pair) {
+          return encodeURIComponent(pair[0]) + '=' + encodeURIComponent(pair[1]);
+        }).join('&');
+      }
+    };
+
+    global.FormData = FormData;
+    var send = global.XMLHttpRequest.prototype.send;
+    global.XMLHttpRequest.prototype.send = function(body) {
+      if (body instanceof FormData) {
+        this.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+        arguments[0] = body.toString();
+      }
+      return send.apply(this, arguments);
+    };
+  }());
+
+}(this));
 
 if (!Array.prototype.forEach) {
 

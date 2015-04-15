@@ -29,13 +29,6 @@ window._editor = {
         }
         this.ready(func);
     },
-    defer : function(func) {
-        if (this.scriptLoaded) {
-            func();
-        } else {
-            this.deferred[this.deferred.length] = func;
-        }
-    },
     _parts : {},
     /*
     _loadPart : function(info) {
@@ -57,10 +50,10 @@ window._editor = {
         }
     },*/
     loadPart : function(info) {
-        this.defer(function() {
+        require(['hui','hui.ui','op'],function() {
             _editor.loadScript(_editor.context+'style/basic/js/parts/' + info.name + '.js');
-            require(['op.part.'+info.name],info.$ready);            
-        })
+        });
+		require(['op.part.'+info.name],info.$ready);
     },
     loadCSS : function(href) {
         this.viewReady(function() {
@@ -103,7 +96,24 @@ window._editor = {
         }
         this.scriptLoaded = true;
     }
+
+    /**
+     * Finds ‹noscript class="js-async"› and turns its contents into real tags
+     */
+	/*
+    processNoscript : function() {
+		this.ready(function() {
+			var noscripts = document.getElementsByTagName('noscript');
+			for (var i = 0; i < noscripts.length; i++) {
+				var noscript = noscripts[i];
+				if (noscript.className=='js-async') {
+					noscript.insertAdjacentHTML('beforeBegin',noscript.firstChild.nodeValue);
+				}
+			}
+		});
+    }*/
 }
 
+//_editor.processNoscript();
 require(['hui','hui.ui','op'],function() {_editor.$scriptReady()});
 })(window,document);

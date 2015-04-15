@@ -1034,7 +1034,7 @@ hui.ui.require = function(names,func) {
 };
 
 if (window.define) {
-	define('hui.ui');
+	define('hui.ui',hui.ui);
 }
 
 hui.onReady(function() {
