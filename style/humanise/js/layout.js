@@ -17,12 +17,12 @@ require(['hui'],function() {
       hui.listen(this.nodes.text,'blur',this._blur.bind(this));
     },
     _toggle : function() {
-    	hui.cls.toggle(this.element,'layout_search_active');
-		window.setTimeout(function() {
-			try {
-				this.nodes.text.focus();
-			} catch (ignore) {}
-		}.bind(this),100)
+      hui.cls.toggle(this.element,'layout_search_active');
+      window.setTimeout(function() {
+        try {
+          this.nodes.text.focus();
+        } catch (ignore) {}
+      }.bind(this),100)
     },
     _focus : function() {
       hui.cls.add(this.element,'layout_search_active');

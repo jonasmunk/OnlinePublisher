@@ -1,6 +1,6 @@
 /********************* Common *******************/
 .layout_menu {
-  text-align: left;
+  padding: 5px 10px;
 }
 .layout_menu > li {
   vertical-align: top;

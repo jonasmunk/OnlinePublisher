@@ -2,9 +2,8 @@
 
   .layout_menu {
   	margin: 0;
-  	padding: 5px 10px;
+  	padding: 5px;
   	list-style: none;
-  	text-align: center;
   }
 
   .layout_menu_item {
@@ -30,7 +29,6 @@
 
   .layout_menu_item-first {
   	display: block;
-  	text-align: center;
   }
 
   .layout_menu_link-first {
@@ -55,7 +53,7 @@
 @include when(760px,inline) {
 
 	.layout_menu {
-		text-align: left;
+  	padding: 5px 10px;
 		
 		> li {
 			vertical-align: top;

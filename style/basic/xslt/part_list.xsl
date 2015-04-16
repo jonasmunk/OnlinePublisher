@@ -63,7 +63,7 @@ exclude-result-prefixes="l"
 </xsl:template>
 
 <xsl:template match="l:item[l:url]/l:title">
-	<h3><a href="{../l:url}" class="common"><span><xsl:apply-templates/></span></a></h3>
+	<h3><a href="{../l:url}" class="common common_link part_list_link"><span class="common_link_text part_list_link_text"><xsl:apply-templates/></span></a></h3>
 </xsl:template>
 
 <xsl:template match="l:item/l:text">

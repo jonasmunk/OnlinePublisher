@@ -74,8 +74,8 @@
 
 <xsl:template match="pn:news//o:link">
 	<xsl:if test="position()>1"><xsl:text> </xsl:text></xsl:if>
-	<a title="{@alternative}" class="common"><xsl:call-template name="util:link"/>
-		<span><xsl:value-of select="@title"/></span>
+	<a title="{@alternative}" class="common common_link part_news_link"><xsl:call-template name="util:link"/>
+		<span class="common_link_text part_news_link_text"><xsl:value-of select="@title"/></span>
 	</a>
 </xsl:template>
 

@@ -69,9 +69,8 @@ p.common, ul.common {
 
 .layout_menu {
   margin: 0;
-  padding: 5px 10px;
+  padding: 5px;
   list-style: none;
-  text-align: center;
 }
 
 .layout_menu_item {
@@ -97,7 +96,6 @@ p.common, ul.common {
 
 .layout_menu_item-first {
   display: block;
-  text-align: center;
 }
 
 .layout_menu_link-first {
@@ -118,7 +116,7 @@ p.common, ul.common {
 }
 @media screen and (min-width: 760px) {
   .layout_menu {
-    text-align: left;
+    padding: 5px 10px;
   }
   .layout_menu > li {
     vertical-align: top;
@@ -178,6 +176,10 @@ p.common, ul.common {
 
 .layout_inner_content {
   padding: 10px;
+}
+
+.layout_content {
+  overflow: hidden;
 }
 
 @media screen and (min-width: 560px) {

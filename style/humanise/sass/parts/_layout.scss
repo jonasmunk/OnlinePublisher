@@ -18,6 +18,10 @@
 	.layout_inner_content {
 		padding: 10px;
 	}
+  
+  .layout_content {
+    overflow: hidden;
+  }
 }
 
 @include when {
