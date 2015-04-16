@@ -74,16 +74,7 @@ var hui = {
 	if (result) {
 		browser.webkitVersion = parseFloat(result[1]);
 	}
-})(hui.browser,navigator.userAgent,window)
-
-
-
-(function() {
-})();
-
-
-
-
+})(hui.browser,navigator.userAgent,window);
 
 
 
