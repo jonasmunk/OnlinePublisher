@@ -103,7 +103,7 @@ body.editor,
   background: url("../gfx/graphics.png") 0 0 no-repeat;
 }
 
-@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 2dppx) {
   .layout_placards_text {
     background-image: url("../gfx/graphics_2x.png");
     background-size: 400px 907px;
@@ -176,7 +176,7 @@ p.common, ul.common {
   text-align: justify;
 }
 
-@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 2dppx) {
   .common_link {
     text-decoration: none;
     background-image: -moz-linear-gradient(top, rgba(0, 0, 0, 0) 99%, rgba(0, 0, 0, 0.5) 99%);

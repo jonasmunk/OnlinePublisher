@@ -81,3 +81,11 @@
 	}
 
 }
+
+@include when(all,msie_lt8) {
+	
+	.layout_menu_item {
+		display: inline;
+	}
+
+}

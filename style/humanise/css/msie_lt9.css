@@ -68,6 +68,21 @@
   opacity: 1;
 }
 
+.layout_search_icon {
+  background: url("../gfx/search.png");
+  display: inline-block;
+  width: 30px;
+  height: 30px;
+  position: absolute;
+  top: 10px;
+  right: 10px;
+}
+
+.layout_search_text {
+  padding: 8px 6px 0;
+  box-sizing: border-box;
+}
+
 .layout_info {
   margin: 20px 0;
   padding: 0 20px;
@@ -172,6 +187,12 @@ body, html {
   padding-left: 0px;
 }
 
+.layout_middle, .layout_head_body, .layout_base {
+  width: 980px;
+  padding-left: 20px;
+  padding-right: 20px;
+}
+
 .submenu {
   padding: 5px 10px;
 }
@@ -274,10 +295,4 @@ body, html {
   width: 990px;
   height: 310px;
   background: 495px 0px no-repeat;
-}
-
-.layout_middle, .layout_head_body, .layout_base {
-  width: 980px;
-  padding-left: 20px;
-  padding-right: 20px;
 }

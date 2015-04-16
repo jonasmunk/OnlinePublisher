@@ -9,7 +9,7 @@ $link-color: #0094FF;
 $line-color: #eee;
 
 @mixin when($size:all,$type:'async') {
-	@if ($target=='nomediaqueries' and $size!='all') {
+	@if ($target=='msie_lt9' and $size!='all') {
 		@content;
 	}
 	@else {
@@ -27,7 +27,7 @@ $line-color: #eee;
 }
 
 @mixin retina {
-  @media  (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+  @media  (-webkit-min-device-pixel-ratio: 2), (min-resolution: 2dppx) {
     @content;
   }
 }

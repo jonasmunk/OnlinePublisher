@@ -109,3 +109,11 @@
 	}
 
 }
+
+@include when(all,msie_lt9) {
+  .layout_middle, .layout_head_body, .layout_base {
+    width: 980px;
+    padding-left: 20px;
+    padding-right: 20px;
+  }
+}

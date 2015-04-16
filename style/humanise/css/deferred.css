@@ -358,7 +358,7 @@
   background: url("../gfx/graphics.png") 0 0 no-repeat;
 }
 
-@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 2dppx) {
   .layout_placards_text {
     background-image: url("../gfx/graphics_2x.png");
     background-size: 400px 907px;
@@ -414,7 +414,7 @@
   margin: 20px auto 10px;
 }
 
-@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 2dppx) {
   .layout_design {
     background-image: url("../gfx/graphics_2x.png");
     background-size: 400px 907px;

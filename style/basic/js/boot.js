@@ -72,7 +72,7 @@
         var noscripts = document.getElementsByTagName('noscript');
         for (var i = 0; i < noscripts.length; i++) {
           var noscript = noscripts[i];
-          if (noscript.className=='js-async') {
+          if (noscript.className=='js-async' && noscript.firstChild) {
             var x = document.createElement('div');
             x.innerHTML = noscript.firstChild.nodeValue;
             var c = x.childNodes;

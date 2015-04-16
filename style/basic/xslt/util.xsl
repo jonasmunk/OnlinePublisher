@@ -364,7 +364,7 @@ return n?n(t):void this.ready(t)},loadPart:function(e){require(["hui","hui.ui","
 for(variable in n)i.setAttribute(variable,n[variable])
 return i},inject:function(e){var n=t.getElementsByTagName("head")[0]
 n?n.appendChild(e):this.ready(function(){_editor.inject(e)})},processNoscript:function(){this.ready(function(){for(var e=t.getElementsByTagName("noscript"),n=0;n<e.length;n++){var i=e[n]
-if("js-async"==i.className){var a=t.createElement("div")
+if("js-async"==i.className&&i.firstChild){var a=t.createElement("div")
 a.innerHTML=i.firstChild.nodeValue
 for(var r=a.childNodes,n=0;n<r.length;n++)i.parentNode.insertBefore(r[n],i)}}})}},_editor.processNoscript()}(window,document)
 ]]></xsl:with-param>
@@ -424,6 +424,10 @@ for(var r=a.childNodes,n=0;n<r.length;n++)i.parentNode.insertBefore(r[n],i)}}})}
 
 <xsl:template name="util:style-lt-ie9">
 	<xsl:comment><![CDATA[[if lt IE 9]><link rel="stylesheet" type="text/css" href="]]><xsl:value-of select="$path"/><xsl:value-of select="$timestamp-url"/>style/<xsl:value-of select="$design"/><![CDATA[/css/msie_lt9.css"> </link><![endif]]]></xsl:comment>
+</xsl:template>
+
+<xsl:template name="util:style-lt-ie8">
+	<xsl:comment><![CDATA[[if lt IE 9]><link rel="stylesheet" type="text/css" href="]]><xsl:value-of select="$path"/><xsl:value-of select="$timestamp-url"/>style/<xsl:value-of select="$design"/><![CDATA[/css/msie_lt8.css"> </link><![endif]]]></xsl:comment>
 </xsl:template>
 
 <xsl:template name="util:style">
@@ -502,6 +506,8 @@ for(var r=a.childNodes,n=0;n<r.length;n++)i.parentNode.insertBefore(r[n],i)}}})}
     <noscript class="js-async">
     <link rel="stylesheet" type="text/css" href="{$href}" media="all"/>
     </noscript>
+	<!-- html5 -->
+	<xsl:comment><![CDATA[[if lt IE 9]><link rel="stylesheet" type="text/css" href="]]><xsl:value-of select="$href"/><![CDATA[" media="all"/><![endif]]]></xsl:comment>
 </xsl:template>
 
 <xsl:template name="util:load-font">
