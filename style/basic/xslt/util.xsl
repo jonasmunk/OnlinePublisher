@@ -354,17 +354,19 @@ require(['hui.ui'],function() {hui.ui.context='<xsl:value-of select="$path"/>';h
 <xsl:template name="util:_scripts-base">
     <xsl:call-template name="util:script-inline">
         <xsl:with-param name="file" select="'style/basic/js/boot.js'"/>
-        <xsl:with-param name="compiled"><![CDATA[!function(){function e(e,t){t in r?e(t,r[t]):n[t]?n[t].push(e):n[t]=[e]}function t(e,t){r[e]=t
-var i=n[e]
-i&&(i.forEach(function(i){i(e,t)}),n[e]=0)}function i(t,i){var n=t.length
-if(n){var r=[],a=0
-t.forEach(e.bind(0,function(e,d){r[t.indexOf(e)]=d,++a>=n&&i.apply(0,r)}))}else i()}var n={},r={}
-require=i,define=function(e,n,r){r?i(n,function(){t(e,r.apply(0,arguments))}):t(e,n)}}(),function(e,t){e._editor={deferred:[],scriptLoaded:!1,ready:function(i){"complete"==t.readyState?i():e.addEventListener?e.addEventListener("DOMContentLoaded",i,!1):t.addEventListener?t.addEventListener("load",i,!1):"undefined"!=typeof e.attachEvent&&e.attachEvent("onload",i)},viewReady:function(t){var i=e.requestAnimationFrame||e.mozRequestAnimationFrame||e.webkitRequestAnimationFrame||e.msRequestAnimationFrame
-return i?i(t):void this.ready(t)},_parts:{},loadPart:function(e){require(["hui","hui.ui","op"],function(){_editor.loadScript(_editor.context+"style/basic/js/parts/"+e.name+".js")}),require(["op.part."+e.name],e.$ready)},loadCSS:function(e){this.viewReady(function(){_editor.inject(_editor._build("link",{rel:"stylesheet",type:"text/css",href:e}))})},_loaded:{},loadScript:function(e){this._loaded[e]||(this._loaded[e]=1,_editor.inject(this._build("script",{async:"async",src:e})))},_build:function(e,i){var n=t.createElement(e)
-for(variable in i)n.setAttribute(variable,i[variable])
-return n},inject:function(e){var i=t.getElementsByTagName("head")[0]
-i?i.appendChild(e):this.ready(function(){_editor.inject(e)})},$scriptReady:function(){for(var e=0;e<this.deferred.length;e++)"function"==typeof this.deferred[e]&&this.deferred[e]()
-this.scriptLoaded=!0}},require(["hui","hui.ui","op"],function(){_editor.$scriptReady()})}(window,document)
+        <xsl:with-param name="compiled"><![CDATA[!function(){function e(e,t){t in a?e(t,a[t]):i[t]?i[t].push(e):i[t]=[e]}function t(e,t){a[e]=t
+var n=i[e]
+n&&(n.forEach(function(n){n(e,t)}),i[e]=0)}function n(t,n){var i=t.length
+if(i){var a=[],r=0
+t.forEach(e.bind(0,function(e,o){a[t.indexOf(e)]=o,++r>=i&&n.apply(0,a)}))}else n()}var i={},a={}
+require=n,define=function(e,i,a){a?n(i,function(){t(e,a.apply(0,arguments))}):t(e,i)}}(),function(e,t){e._editor={ready:function(n){"complete"==t.readyState?n():e.addEventListener?e.addEventListener("DOMContentLoaded",n,!1):t.addEventListener?t.addEventListener("load",n,!1):"undefined"!=typeof e.attachEvent&&e.attachEvent("onload",n)},viewReady:function(t){var n=e.requestAnimationFrame||e.mozRequestAnimationFrame||e.webkitRequestAnimationFrame||e.msRequestAnimationFrame
+return n?n(t):void this.ready(t)},loadPart:function(e){require(["hui","hui.ui","op"],function(){_editor.loadScript(_editor.context+"style/basic/js/parts/"+e.name+".js")}),require(["op.part."+e.name],e.$ready)},loadCSS:function(e){this.viewReady(function(){_editor.inject(_editor._build("link",{rel:"stylesheet",type:"text/css",href:e}))})},_loaded:{},loadScript:function(e){this._loaded[e]||(this._loaded[e]=1,_editor.inject(this._build("script",{async:"async",src:e})))},_build:function(e,n){var i=t.createElement(e)
+for(variable in n)i.setAttribute(variable,n[variable])
+return i},inject:function(e){var n=t.getElementsByTagName("head")[0]
+n?n.appendChild(e):this.ready(function(){_editor.inject(e)})},processNoscript:function(){this.ready(function(){for(var e=t.getElementsByTagName("noscript"),n=0;n<e.length;n++){var i=e[n]
+if("js-async"==i.className){var a=t.createElement("div")
+a.innerHTML=i.firstChild.nodeValue
+for(var r=a.childNodes,n=0;n<r.length;n++)i.parentNode.insertBefore(r[n],i)}}})}},_editor.processNoscript()}(window,document)
 ]]></xsl:with-param>
     </xsl:call-template>
     <script>_editor.context = '<xsl:value-of select="$path"/>';</script>
@@ -495,9 +497,10 @@ this.scriptLoaded=!0}},require(["hui","hui.ui","op"],function(){_editor.$scriptR
 
 <xsl:template name="util:lazy-style">
     <xsl:param name="href"/>
-    <script>_editor.loadCSS('<xsl:value-of select="$href"/>');</script>
-    <noscript><!-- class="js-async"-->
-    <link rel="stylesheet" type="text/css" href="{$href}"/>
+    <!--
+    <script>_editor.loadCSS('<xsl:value-of select="$href"/>');</script>-->
+    <noscript class="js-async">
+    <link rel="stylesheet" type="text/css" href="{$href}" media="all"/>
     </noscript>
 </xsl:template>
 
