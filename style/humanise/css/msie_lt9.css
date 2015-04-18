@@ -20,6 +20,10 @@
   padding: 5px 0;
 }
 
+.layout_search_icon:hover > path {
+  fill: #333;
+}
+
 .layout_search_body {
   overflow: hidden;
   display: block;
@@ -61,6 +65,19 @@
   height: 36px;
   cursor: pointer;
   top: 0;
+}
+
+.layout_search_reset {
+  top: 6px;
+  right: 4px;
+  width: 24px;
+  height: 24px;
+  background-color: transparent;
+  opacity: .5;
+  cursor: pointer;
+}
+.layout_search_reset:hover {
+  opacity: 1;
 }
 
 .layout_search_active .layout_search_body {
@@ -217,7 +234,7 @@ body, html {
   font-size: 12pt;
   line-height: 26px;
   border-bottom: none;
-  border-left: 1px solid #eeeeee;
+  border-left: 1px solid #eee;
 }
 
 .sidemenu_item {
@@ -259,7 +276,7 @@ body, html {
 }
 
 #poster {
-  background: #333333 url("../gfx/poster_bg.png");
+  background: #333 url("../gfx/poster_bg.png");
   cursor: pointer;
   overflow: hidden;
 }

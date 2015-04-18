@@ -159,7 +159,7 @@ body.editor,
 }
 
 .common_link_text {
-  color: #0094ff;
+  color: #0094FF;
 }
 
 .common_link:hover, .common_link:hover .common_link_text {
@@ -179,9 +179,9 @@ p.common, ul.common {
 @media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 2dppx) {
   .common_link {
     text-decoration: none;
-    background-image: -moz-linear-gradient(top, rgba(0, 0, 0, 0) 99%, rgba(0, 0, 0, 0.5) 99%);
-    background-image: -webkit-linear-gradient(top, rgba(0, 0, 0, 0) 98%, rgba(0, 0, 0, 0.5) 98%);
-    background-image: linear-gradient(top, rgba(0, 0, 0, 0) 98%, rgba(0, 0, 0, 0.5) 98%);
+    background-image: -moz-linear-gradient(top, transparent 99%, rgba(0, 0, 0, 0.5) 99%);
+    background-image: -webkit-linear-gradient(top, transparent 98%, rgba(0, 0, 0, 0.5) 98%);
+    background-image: linear-gradient(top, transparent 98%, rgba(0, 0, 0, 0.5) 98%);
     background-repeat: repeat-x;
   }
 }
@@ -283,7 +283,7 @@ p.common, ul.common {
 
 .part_horizontalrule {
   border: none;
-  border-bottom: solid 1px #eeeeee;
+  border-bottom: solid 1px #eee;
 }
 
 .part_news_item_title {
@@ -316,5 +316,5 @@ p.common, ul.common {
   padding: 6px 10px;
   display: block;
   text-decoration: none;
-  color: #0094ff;
+  color: #0094FF;
 }

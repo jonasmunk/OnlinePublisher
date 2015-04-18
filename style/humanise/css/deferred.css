@@ -85,7 +85,7 @@
 
 .part_horizontalrule {
   border: none;
-  border-bottom: solid 1px #eeeeee;
+  border-bottom: solid 1px #eee;
 }
 
 .part_news_item_title {
@@ -118,7 +118,7 @@
   padding: 6px 10px;
   display: block;
   text-decoration: none;
-  color: #0094ff;
+  color: #0094FF;
 }
 
 .layout_search_body {
@@ -127,12 +127,22 @@
   left: 0;
   background: #fafafa;
   right: 150px;
-  height: 50px;
   padding: 4px;
 }
 
 .layout_search_active .layout_search_body {
   display: block;
+}
+
+.layout_search_reset {
+  background: #f6f6f9 url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA3NjggNzY4Ij4NCjxwYXRoIGQ9Ik02MDggMTI4cTEzLjc1IDAgMjIuODc1IDkuMTI1dDkuMTI1IDIyLjg3NXEwIDEzLjUtOS4yNSAyMi43NWwtMjAxLjUgMjAxLjI1IDIwMS41IDIwMS4yNXE5LjI1IDkuMjUgOS4yNSAyMi43NSAwIDEzLjc1LTkuMTI1IDIyLjg3NXQtMjIuODc1IDkuMTI1cS0xMy41IDAtMjIuNzUtOS4yNWwtMjAxLjI1LTIwMS41LTIwMS4yNSAyMDEuNXEtOS4yNSA5LjI1LTIyLjc1IDkuMjUtMTMuNzUgMC0yMi44NzUtOS4xMjV0LTkuMTI1LTIyLjg3NXEwLTEzLjUgOS4yNS0yMi43NWwyMDEuNS0yMDEuMjUtMjAxLjUtMjAxLjI1cS05LjI1LTkuMjUtOS4yNS0yMi43NSAwLTEzLjc1IDkuMTI1LTIyLjg3NXQyMi44NzUtOS4xMjVxMTMuNSAwIDIyLjc1IDkuMjVsMjAxLjI1IDIwMS41IDIwMS4yNS0yMDEuNXE5LjI1LTkuMjUgMjIuNzUtOS4yNXoiLz4NCjwvc3ZnPg==");
+  border: none;
+  position: absolute;
+  font-size: 0;
+  right: -145px;
+  width: 42px;
+  height: 42px;
+  top: 3px;
 }
 
 .layout_search_icon {
@@ -147,6 +157,8 @@
   border: 1px solid #ccc;
   padding-left: 10px;
   font-size: 16px;
+  border-radius: 3px;
+  -webkit-appearance: none;
 }
 
 .layout_search_submit {
@@ -162,9 +174,14 @@
   border: none;
   font-size: 16px;
   border-radius: 3px;
+  -webkit-appearance: none;
 }
 
 @media screen and (min-width: 560px) {
+  .layout_search_icon:hover > path {
+    fill: #333;
+  }
+
   .layout_search_body {
     overflow: hidden;
     display: block;
@@ -206,6 +223,19 @@
     height: 36px;
     cursor: pointer;
     top: 0;
+  }
+
+  .layout_search_reset {
+    top: 6px;
+    right: 4px;
+    width: 24px;
+    height: 24px;
+    background-color: transparent;
+    opacity: .5;
+    cursor: pointer;
+  }
+  .layout_search_reset:hover {
+    opacity: 1;
   }
 
   .layout_search_active .layout_search_body {
@@ -274,7 +304,7 @@
   color: #333;
 }
 .layout_info:hover .common_link_text {
-  color: #0094ff;
+  color: #0094FF;
 }
 .layout_info:hover .layout_info_name {
   color: #333;
@@ -451,7 +481,7 @@
 }
 @media screen and (min-width: 1000px) {
   #poster {
-    background: #333333 url("../gfx/poster_bg.png");
+    background: #333 url("../gfx/poster_bg.png");
     cursor: pointer;
     overflow: hidden;
   }

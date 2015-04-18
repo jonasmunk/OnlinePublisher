@@ -6494,11 +6494,11 @@ require(['hui'],function() {
     },
     _toggle : function() {
       hui.cls.toggle(this.element,'layout_search_active');
-      window.setTimeout(function() {
-        try {
-          this.nodes.text.focus();
-        } catch (ignore) {}
-      }.bind(this),100)
+      try {
+        this.nodes.text.focus();
+      } catch (ignore) {}
+      //window.setTimeout(function() {
+      //}.bind(this),100)
     },
     _focus : function() {
       hui.cls.add(this.element,'layout_search_active');
