@@ -210,6 +210,9 @@ if ($editedSection==null) {
 					<field label="{Bottom; da:Bund}">
 						<style-length-input key="bottom"/>
 					</field>
+					<field label="{Column spacing; da:Kolonne-margen}">
+						<style-length-input key="spacing"/>
+					</field>
 				</fields>
 				<buttons top="5">
 					<button text="{Delete; da:Slet}" name="deleteRow">
@@ -309,16 +312,23 @@ function displayRows($pageId) {
 	$structure = DocumentTemplateEditor::getStructure($pageId);
 	
 	foreach ($structure as $row) {
-		echo '<table border="0" width="100%" cellpadding="0" cellspacing="0" id="row'.$row['id'].'" style="';
+    $spacing = $row['spacing'];
+    if (!$spacing) {
+      $spacing = '10px';
+    }
+    echo '<div style="margin: -' . $spacing . '">';
+    echo '<table border="0" width="100%" cellpadding="0" cellspacing="0" id="row'.$row['id'].'" style="';
 		if ($row['top']) {
 			echo 'margin-top: '.$row['top'].';';
 		}
 		if ($row['bottom']) {
 			echo 'margin-bottom: '.$row['bottom'].';';
 		}
+		echo 'border-spacing: '.$spacing.';';
 		echo '"><tr>';
 		displayColumns($row);
 		echo '</tr></table>';
+    echo '</div>';
 		echo "\n";
 	}
 }

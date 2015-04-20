@@ -12,6 +12,7 @@ body
 div.editor_body
 {
 	padding: 45px 15px 40px;
+  overflow: hidden;
 }
 
 form {

@@ -109,6 +109,7 @@ class DocumentTemplateController extends TemplateController
 			$output.= '<row';
 			$output.= ($row['top']!='' ? ' top="'.$row['top'].'"' : '');
 			$output.= ($row['bottom']!='' ? ' bottom="'.$row['bottom'].'"' : '');
+			$output.= ($row['spacing']!='' ? ' spacing="'.$row['spacing'].'"' : '');
 			$output.= '>';
 			$sql="select * from document_column where row_id=".$row['id']." order by `index`";
 			$result_col = Database::select($sql);

@@ -194,6 +194,7 @@ p.common, ul.common {
 
   .layout_inner_content_sidebar {
     margin-right: 30%;
+    overflow: hidden;
   }
 
   .layout_sidebar {

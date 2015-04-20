@@ -2,3 +2,7 @@
 .layout_menu_item {
   display: inline;
 }
+
+.submenu_item {
+  display: inline;
+}
