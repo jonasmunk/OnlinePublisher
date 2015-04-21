@@ -119,7 +119,7 @@
   padding: 6px 10px;
   display: block;
   text-decoration: none;
-  color: #0094FF;
+  color: #028CE0;
 }
 
 .layout_search_body {
@@ -305,7 +305,7 @@
   color: #333;
 }
 .layout_info:hover .common_link_text {
-  color: #0094FF;
+  color: #028CE0;
 }
 .layout_info:hover .layout_info_name {
   color: #333;

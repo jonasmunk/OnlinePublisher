@@ -29,11 +29,15 @@ a {
 }
 
 .common_link_text {
-  color: #0094FF;
+  color: #028CE0;
 }
 
 .common_link:hover, .common_link:hover .common_link_text {
-  color: #0076cc;
+  color: #026cad;
+}
+
+.common_link:visited .common_link_text {
+  color: #934DE0;
 }
 
 h1.common {

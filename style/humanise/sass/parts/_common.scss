@@ -18,6 +18,12 @@
 	{
 		color: darken($link-color,10%);
 	}
+  
+  .common_link:visited {
+    .common_link_text {
+      color: $link-visited-color;
+    }
+  }
 
 	h1.common
 	{
