@@ -20,7 +20,7 @@
   .part_header_1
   {
   	font-size: 38px;
-  	line-height: 1.105263158em;
+  	line-height: 1;
   }
 
   .part_header_2
@@ -154,6 +154,14 @@
 	  border: 1px solid #ddd;
 	  background: #fafafa;
 	  border-radius: 4px;
+  }
+  
+  .part_menu_item {
+    border-right: 1px solid #eee;
+    
+    &:last-child {
+      border: none;
+    }
   }
 	  
   .part_menu_link-bar {

@@ -58,3 +58,10 @@
 		padding-left: 15px;
 	}
 }
+
+@include when(760px) {
+  .scroll .sidemenu {
+    position: fixed;
+    top: 56px;
+  }
+}

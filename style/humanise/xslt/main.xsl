@@ -234,7 +234,7 @@
 </xsl:template>
 
 <xsl:template name="secondlevel">
-	<xsl:if test="//f:frame/h:hierarchy/h:item[descendant-or-self::*/@page=//p:page/@id]/h:item">
+	<xsl:if test="//f:frame/h:hierarchy/h:item[descendant-or-self::*/@page=//p:page/@id]/h:item[not(@hidden='true')]">
 		<ul>
 			<xsl:attribute name="class">
 				<xsl:text>submenu</xsl:text>

@@ -3,7 +3,7 @@
   box-sizing: border-box;
   -moz-box-sizing: border-box;
   -webkit-appearance: none;
-  background: #eee;
+  background: #eeeeee;
   border: none;
   font: inherit;
   height: 32px;
@@ -14,7 +14,7 @@
 /************ Headers ***********/
 .part_header_1 {
   font-size: 38px;
-  line-height: 1.105263158em;
+  line-height: 1;
 }
 
 .part_header_2 {
@@ -98,7 +98,7 @@
 
 .part_horizontalrule {
   border: none;
-  border-bottom: solid 1px #eee;
+  border-bottom: solid 1px #eeeeee;
 }
 
 .part_news_item_title {
@@ -125,13 +125,20 @@
   border-radius: 4px;
 }
 
+.part_menu_item {
+  border-right: 1px solid #eee;
+}
+.part_menu_item:last-child {
+  border: none;
+}
+
 .part_menu_link-bar {
   line-height: 22px;
   font-size: 18px;
   padding: 6px 10px;
   display: block;
   text-decoration: none;
-  color: #028CE0;
+  color: #028ce0;
 }
 
 .layout_search_body {
@@ -261,6 +268,7 @@
   padding: 10px;
   border: 1px solid #eee;
   border-width: 1px 0;
+  background: #fff;
 }
 .layout_info .common_link_text {
   color: #666;
@@ -317,7 +325,7 @@
   color: #333;
 }
 .layout_info:hover .common_link_text {
-  color: #028CE0;
+  color: #028ce0;
 }
 .layout_info:hover .layout_info_name {
   color: #333;
@@ -463,6 +471,22 @@
     background-size: 400px 907px;
   }
 }
+@media screen and (min-width: 760px) {
+  .layout_head {
+    transition: background-color 1s;
+    -moz-transition: background-color 1s;
+    -webkit-transition: background-color 1s;
+    -ms-transition: background-color 1s;
+  }
+
+  .scroll .layout_head {
+    background: rgba(255, 255, 255, 0.95);
+    box-shadow: 0 0 7px rgba(0, 0, 0, 0.2);
+  }
+  .scroll .layout_body {
+    min-height: 500px;
+  }
+}
 @media screen and (min-width: 980px) {
   body, html {
     height: 100%;
@@ -484,7 +508,7 @@
   }
 
   .layout_footer {
-    margin-top: -210px;
+    margin-top: -230px;
   }
 }
 @media screen and (min-width: 1000px) {
@@ -492,9 +516,15 @@
     padding-left: 0px;
   }
 }
+@media screen and (min-width: 760px) {
+  .scroll .sidemenu {
+    position: fixed;
+    top: 56px;
+  }
+}
 @media screen and (min-width: 1000px) {
   #poster {
-    background: #333 url("../gfx/poster_bg.png");
+    background: #333333 url("../gfx/poster_bg.png");
     cursor: pointer;
     overflow: hidden;
   }

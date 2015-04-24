@@ -1,23 +1,23 @@
 @include when(all,inline) {
-	.layout_middle,
-	.layout_head_body,
-	.layout_base {
-		position: relative;
-		max-width: 980px;
-		margin: 0 auto;
-	}
+  .layout_middle,
+  .layout_head_body,
+  .layout_base {
+    position: relative;
+    max-width: 980px;
+    margin: 0 auto;
+  }
 
-	.layout_head_body {
-		position: relative;
-	}
+  .layout_head_body {
+    position: relative;
+  }
 
-	.layout_head {
-		background: #f6f6f9;
-	}
+  .layout_head {
+    background: #f6f6f9;
+  }
 
-	.layout_inner_content {
-		padding: 10px;
-	}
+  .layout_inner_content {
+    padding: 10px;
+  }
   
   .layout_content {
     overflow: hidden;
@@ -25,93 +25,124 @@
 }
 
 @include when {
-	.layout_design {
-		background: url('../gfx/graphics.png') -172px -709px;
-		text-indent: -10000px;
-		width: 177px;
-		height: 191px;
-		display: block;
-		margin: 20px auto 10px;
-	}
-	
-	@include retina {
-		.layout_design {
-			background-image: url('../gfx/graphics_2x.png');
-			background-size: 400px 907px;
-		}		
-	}
+  .layout_design {
+    background: url('../gfx/graphics.png') -172px -709px;
+    text-indent: -10000px;
+    width: 177px;
+    height: 191px;
+    display: block;
+    margin: 20px auto 10px;
+  }
+  
+  @include retina {
+    .layout_design {
+      background-image: url('../gfx/graphics_2x.png');
+      background-size: 400px 907px;
+    }   
+  }
 }
 
 @include when(560px,inline) {
 
-	.layout_inner_content {
-		padding: 20px 10px;
-    }
+  .layout_inner_content {
+    padding: 20px 10px;
+  }
 }
 
 @include when(760px,inline) {
   
-    .layout_inner_content {
-		padding: 20px;
-    }
+  .layout_inner_content {
+    padding: 20px;
+  }
 
-	.layout_inner_content_sidebar {
-		margin-right: 30%;
+  .layout_inner_content_sidebar {
+    margin-right: 30%;
     overflow: hidden;
-	}
-	
-	.layout_sidebar {
-		width: 30%;
-		float: right;
-	}
-	
-	.layout_body {
-		overflow: hidden;
-	}
+  }
+  
+  .layout_sidebar {
+    width: 30%;
+    float: right;
+  }
+  
+  .layout_body {
+    overflow: hidden;
+  }
+  
+  .layout {
+    padding-top: 54px;
+  }
+  
+  .layout_head {
+    top: 0;
+    position: fixed;
+    width: 100%;
+    z-index: 9999;
+  }
+}
+
+@include when(760px) {
+  .layout_head {
+    transition: background-color 1s;
+    -moz-transition: background-color 1s;
+    -webkit-transition: background-color 1s;
+    -ms-transition: background-color 1s;
+  }
+
+  .scroll {
+    .layout_head {
+      background: rgba(255,255,255,.95);
+      box-shadow: 0 0 7px rgba(0,0,0,.2);
+    }
+    
+    .layout_body {
+      min-height: 500px;
+    }
+  }
 }
 
 
 
 @include when(980px) {
-	
-	body, html {
-		height: 100%;
-	}
-	
-	.layout_middle,
-	.layout_head_body,
-	.layout_base {
-		position: relative;
-		min-height: 100%;
-	}
-	
-	.layout_body {
-		min-height: 400px;
-	}
-	
-	.layout_base {
-		padding-bottom: 220px;
-	}
-	
-	.layout_footer
-	{
-		margin-top: -210px;
-	}
+  
+  body, html {
+    height: 100%;
+  }
+  
+  .layout_middle,
+  .layout_head_body,
+  .layout_base {
+    position: relative;
+    min-height: 100%;
+  }
+  
+  .layout_body {
+    min-height: 400px;
+  }
+  
+  .layout_base {
+    padding-bottom: 220px;
+  }
+  
+  .layout_footer
+  {
+    margin-top: -230px;
+  }
 }
 
 @include when(1000px,inline) {
-	
-	.layout_inner_content {
-		padding-left: 0px;
-		padding-right: 0;
-	}
+  
+  .layout_inner_content {
+    padding-left: 0px;
+    padding-right: 0;
+  }
 }
 
 @include when(1000px) {
-	
-	.layout_inner_content {
-		padding-left: 0px;
-	}
+  
+  .layout_inner_content {
+    padding-left: 0px;
+  }
 
 }
 
