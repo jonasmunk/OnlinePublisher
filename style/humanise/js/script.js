@@ -408,8 +408,10 @@ return"right"===e.align&&hui.cls.add(t,"hui_buttons_right"),"center"===e.align&&
 op.preview=!1,op.page=op.page||{id:null,path:null,template:null},op.ignite=function(){if(this.preview||(document.onkeydown=function(e){if(e=hui.event(e),e.returnKey&&e.shiftKey){e.stop()
 var t
 t=function(e){e=hui.event(e),e.returnKey&&(hui.unListen(document,"keyup",t),hui.browser.msie||op.user.internal?window.location=op.page.path+"Editor/index.php?page="+op.page.id:(e.stop(),op.showLogin()))},hui.listen(document,"keyup",t)}return!0},hui.request({url:op.context+"services/statistics/",parameters:{page:op.page.id,referrer:document.referrer,uri:document.location.href}})),hui.browser.msie7&&hui.onReady(function(){hui.cls.add(document.body.parentNode,"msie7")}),hui.browser.msie7||hui.browser.msie6){for(var e=hui.get.byClass(document.body,"shared_frame"),t=0;t<e.length;t++)e[t].style.width=e[t].clientWidth+"px",e[t].style.display="block"
-for(var i=hui.get.byClass(document.body,"document_row"),t=i.length-1;t>=0;t--){for(var n=hui.build("table",{"class":i[t].className,style:i[t].style.cssText}),o=hui.build("tbody",{parent:n}),s=hui.build("tr",{parent:o}),a=hui.get.byClass(i[t],"document_column"),u=0;u<a.length;u++)for(var r=a[u],h=hui.build("td",{"class":r.className,parent:s,style:r.style.cssText});r.firstChild;)h.appendChild(r.firstChild)
-i[t].parentNode.insertBefore(n,i[t]),hui.dom.remove(i[t])}}},op.showLogin=function(){if(this.loginBox)this.loginBox.show(),this.loginForm.focus()
+for(var i=hui.get.byClass(document.body,"document_row"),t=i.length-1;t>=0;t--){var n=i[t].style.cssText,o=10,s=n.match(/border-spacing: ([0-9]+)/m)
+s&&(o=s[1])
+for(var a=hui.build("table",{"class":i[t].className,style:n,cellSpacing:o}),u=hui.build("tbody",{parent:a}),r=hui.build("tr",{parent:u}),h=hui.get.byClass(i[t],"document_column"),l=0;l<h.length;l++)for(var d=h[l],c=hui.build("td",{"class":d.className,parent:r,style:d.style.cssText});d.firstChild;)c.appendChild(d.firstChild)
+i[t].parentNode.insertBefore(a,i[t]),hui.dom.remove(i[t])}}},op.showLogin=function(){if(this.loginBox)this.loginBox.show(),this.loginForm.focus()
 else{if(this.loadingLogin)return void hui.log("Aborting, the box is loading")
 this.loadingLogin=!0,hui.ui.showMessage({text:{en:"Loading...",da:"Indlæser..."},busy:!0,delay:300}),hui.ui.require(["Formula","Button","TextField"],function(){hui.ui.hideMessage()
 var e=this.loginBox=hui.ui.Box.create({width:300,title:{en:"Access control",da:"Adgangskontrol"},modal:!0,absolute:!0,closable:!0,curtainCloses:!0,padding:10})

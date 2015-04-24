@@ -2,8 +2,10 @@ if(!op)var op={}
 op.preview=!1,op.page=op.page||{id:null,path:null,template:null},op.ignite=function(){if(this.preview||(document.onkeydown=function(e){if(e=hui.event(e),e.returnKey&&e.shiftKey){e.stop()
 var i
 i=function(e){e=hui.event(e),e.returnKey&&(hui.unListen(document,"keyup",i),hui.browser.msie||op.user.internal?window.location=op.page.path+"Editor/index.php?page="+op.page.id:(e.stop(),op.showLogin()))},hui.listen(document,"keyup",i)}return!0},hui.request({url:op.context+"services/statistics/",parameters:{page:op.page.id,referrer:document.referrer,uri:document.location.href}})),hui.browser.msie7&&hui.onReady(function(){hui.cls.add(document.body.parentNode,"msie7")}),hui.browser.msie7||hui.browser.msie6){for(var e=hui.get.byClass(document.body,"shared_frame"),i=0;i<e.length;i++)e[i].style.width=e[i].clientWidth+"px",e[i].style.display="block"
-for(var t=hui.get.byClass(document.body,"document_row"),i=t.length-1;i>=0;i--){for(var o=hui.build("table",{"class":t[i].className,style:t[i].style.cssText}),s=hui.build("tbody",{parent:o}),n=hui.build("tr",{parent:s}),a=hui.get.byClass(t[i],"document_column"),r=0;r<a.length;r++)for(var h=a[r],u=hui.build("td",{"class":h.className,parent:n,style:h.style.cssText});h.firstChild;)u.appendChild(h.firstChild)
-t[i].parentNode.insertBefore(o,t[i]),hui.dom.remove(t[i])}}},op.showLogin=function(){if(this.loginBox)this.loginBox.show(),this.loginForm.focus()
+for(var t=hui.get.byClass(document.body,"document_row"),i=t.length-1;i>=0;i--){var o=t[i].style.cssText,s=10,n=o.match(/border-spacing: ([0-9]+)/m)
+n&&(s=n[1])
+for(var a=hui.build("table",{"class":t[i].className,style:o,cellSpacing:s}),r=hui.build("tbody",{parent:a}),h=hui.build("tr",{parent:r}),u=hui.get.byClass(t[i],"document_column"),l=0;l<u.length;l++)for(var d=u[l],p=hui.build("td",{"class":d.className,parent:h,style:d.style.cssText});d.firstChild;)p.appendChild(d.firstChild)
+t[i].parentNode.insertBefore(a,t[i]),hui.dom.remove(t[i])}}},op.showLogin=function(){if(this.loginBox)this.loginBox.show(),this.loginForm.focus()
 else{if(this.loadingLogin)return void hui.log("Aborting, the box is loading")
 this.loadingLogin=!0,hui.ui.showMessage({text:{en:"Loading...",da:"Indlæser..."},busy:!0,delay:300}),hui.ui.require(["Formula","Button","TextField"],function(){hui.ui.hideMessage()
 var e=this.loginBox=hui.ui.Box.create({width:300,title:{en:"Access control",da:"Adgangskontrol"},modal:!0,absolute:!0,closable:!0,curtainCloses:!0,padding:10})
