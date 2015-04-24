@@ -1,4 +1,16 @@
 /********************* Common *******************/
+.common_button {
+  box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  -webkit-appearance: none;
+  background: #eee;
+  border: none;
+  font: inherit;
+  height: 32px;
+  padding: 0 15px;
+  border-radius: 3px;
+}
+
 /************ Headers ***********/
 .part_header_1 {
   font-size: 38px;

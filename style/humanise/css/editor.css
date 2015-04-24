@@ -189,6 +189,18 @@ p.common, ul.common {
     background-repeat: repeat-x;
   }
 }
+.common_button {
+  box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  -webkit-appearance: none;
+  background: #eee;
+  border: none;
+  font: inherit;
+  height: 32px;
+  padding: 0 15px;
+  border-radius: 3px;
+}
+
 .common_header {
   margin: 0px;
   color: #333;

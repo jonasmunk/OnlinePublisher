@@ -447,6 +447,9 @@ $databaseTables = array(
 			array("updated","datetime","","","0000-00-00 00:00:00",""),
 			array("dynamic","tinyint(4)","","","0","")
 		),
+	'part_authentication' => array(
+			array("part_id","int(11)","","","0","")
+		),
 	'part_file' => array(
 			array("part_id","int(11)","","","0",""),
 			array("file_id","int(11)","","","0",""),

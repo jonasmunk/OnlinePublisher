@@ -1,5 +1,11 @@
 op.part.Authentication = function(options) {
 	this.element = hui.get(options.element);
+  this.nodes = {
+    form : 'part_authentication_form',
+		username : 'part_authentication_username',
+		password : 'part_authentication_password',
+		login : 'part_authentication_login'
+	};
 	hui.ui.extend(this);
 	this._attach();
 }
@@ -7,19 +13,12 @@ op.part.Authentication = function(options) {
 op.part.Authentication.prototype = {
 	busy : false,
 	
-	nodes : {
-		username : 'part_authentication_username',
-		password : 'part_authentication_password',
-		login : 'part_authentication_login'
-	},
 	_attach : function() {
-		var self = this;
-		hui.log(this.nodes.login);
-		hui.listen(this.nodes.login,'click',function(e) {
-			hui.stop(e);
-			self.login();
-		})
+		hui.listen(this.nodes.form,'submit',this.login.bind(this))
 	},
+  _setMessage : function(str) {
+    
+  },
 	login : function() {
 		var nodes = this.nodes;
 		var values = {

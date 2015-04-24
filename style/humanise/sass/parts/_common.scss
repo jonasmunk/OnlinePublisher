@@ -48,3 +48,16 @@
 	}
 
 }
+
+@include when(all) {
+  .common_button {
+    @include border-box;
+    @include no-appearance;
+    background: $button-color;
+    border: none;
+    font: inherit;
+    height: 32px;
+    padding: 0 15px;
+    border-radius: 3px;
+  }
+}

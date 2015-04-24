@@ -2,6 +2,8 @@ $color: #324d60;
 
 $highlight-color: #007AC5;
 
+$button-color: #eee;
+
 $link-color: #00A8A8;
 
 $link-color: #0094FF;
@@ -38,4 +40,13 @@ $line-color: #eee;
   @media  (-webkit-min-device-pixel-ratio: 2), (min-resolution: 2dppx) {
     @content;
   }
+}
+
+@mixin border-box {
+  box-sizing: border-box;
+  -moz-box-sizing: border-box;
+}
+
+@mixin no-appearance {
+  -webkit-appearance: none;
 }
