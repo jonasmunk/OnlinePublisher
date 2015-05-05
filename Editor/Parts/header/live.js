@@ -98,6 +98,7 @@ op.Editor.Header.prototype = {
 		}
 		if (this.part.level!=values.level) {
 			this.header = hui.dom.changeTag(this.header,'h'+values.level);
+      this.header.className = this.header.className.replace(/[0-9]/,values.level);
 			this.header.style.display = 'none'; // TODO: not sure why
 			this._changeSectionClass(values.level);
 			this.part.level = values.level;
