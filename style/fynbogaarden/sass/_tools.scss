@@ -1,0 +1,26 @@
+$serif-font: 'Lora', Georgia, "Book Antiqua", "Palatino", Times, serif;
+$serif-font-fallback: Georgia, "Book Antiqua", "Palatino", Times, serif;
+
+@mixin when($size:all,$type:'async') {
+	@if ($target=='msie_lt9' and $size!='all') {
+		@content;
+	}
+	@else {
+		@if ($target==$type or $target==editor) {
+			@if ($size=='all') {
+				@content;
+			}
+			@else {
+				@media screen and (min-width: $size) {
+					@content;
+				}    
+			}
+		}
+	}
+}
+
+@mixin retina {
+  @media  (-webkit-min-device-pixel-ratio: 2), (min-resolution: 2dppx) {
+    @content;
+  }
+}
