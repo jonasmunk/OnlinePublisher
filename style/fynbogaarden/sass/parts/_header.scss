@@ -1,0 +1,57 @@
+@include when(all,inline) {
+
+  .header {
+    background: url('../gfx/header.jpg') 50% 50%;
+    background-size: cover;
+    padding-bottom: 250px;
+  }
+  
+  .header_info {
+    background: rgba(25, 25, 33, 0.9);
+    padding: 20px 30px;
+    position: absolute;
+    right: 30px;
+    top: 20px;
+    color: #fff;
+    text-align: center;
+    line-height: 1;
+  }
+
+  .header_title {
+    font-size: 30px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.5);
+    margin-bottom: 10px;
+    padding-bottom: 10px;
+    font-weight: bold;
+  }
+
+  .header_title_more {
+    display: block;
+    font-style: italic;
+    font-size: 18px;
+    margin-top: 5px;
+    font-weight: normal;
+  }
+  
+  .header_info_phone_number {
+    color: #ff9578;
+    font-family: $serif-font-fallback;
+    font-size: 30px;
+    text-decoration: none;
+  }
+  
+  .header_info_phone {
+    margin-bottom: 10px;    
+  }
+  
+  .header_info_road {
+    font-size: 28px;
+    margin-bottom: 5px;
+  }
+}
+
+@include when(769px,inline) {
+  .header {
+    padding-bottom: 250 / 786 * 100%;
+  }
+}

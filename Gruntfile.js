@@ -20,6 +20,13 @@ module.exports = function(grunt) {
         options: {
           spawn: false,
         }
+      },
+      fynbogaarden: {
+        files: ['style/fynbogaarden/sass/**/*.scss'],
+        tasks: ['compass:fynbogaarden'],
+        options: {
+          spawn: false,
+        }
       }
     },
     compass: {
@@ -36,11 +43,25 @@ module.exports = function(grunt) {
           cssDir: "style/karenslyst/css",
 			    noLineComments: true,
         }
+      },
+      fynbogaarden: {
+        options: {
+          sassDir: "style/fynbogaarden/sass",
+          cssDir: "style/fynbogaarden/css",
+			    noLineComments: true,
+        }
       }
     },
-    clean: {
-      transfer: ["transfer"],
-    },
+    shell: {
+      transfer : {
+        command : function() {
+          return [
+            '/Users/jbm/Scripts/sites/transfer.sh www_fynbogaard_dk www.fynbogaard.dk',
+            '/Users/jbm/Scripts/sites/transfer.sh www.fynbogaard.dk'
+          ].join(' && ');
+        }
+      }
+    }
   });
 
   // Load plugins.
@@ -56,6 +77,8 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-jsdoc');
 
   // Default task(s).
+  grunt.registerTask('default', 'Standard tasks', ['watch']);
+  
   grunt.registerTask('default', 'Standard tasks', ['watch']);
 
 };

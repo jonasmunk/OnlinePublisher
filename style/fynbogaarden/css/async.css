@@ -1,0 +1,12 @@
+.part_text,
+.part_richtext {
+  font-size: 16px;
+}
+
+.part_header {
+  font-weight: normal;
+}
+
+.part_header_1 {
+  font-size: 42px;
+}
