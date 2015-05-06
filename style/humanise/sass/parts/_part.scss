@@ -101,7 +101,7 @@
   {
   	margin: 10px 0;
   }
-  
+
   /** Listing **/
 
   .part_listing
@@ -131,7 +131,7 @@
   {
   	font-size: 10pt;
   	font-weight: 400;
-  
+
     .windows & {
       font-weight: bold;
     }
@@ -141,36 +141,49 @@
   {
   	font-size: 10pt;
   	font-weight: 300;
-  
+
     .windows & {
       font-weight: 400;
     }
   }
-  
+
   /** Menu **/
-  
+
   .part_menu-bar {
 	  display: inline-block;
-	  border: 1px solid #ddd;
-	  background: #fafafa;
-	  border-radius: 4px;
+    font-size: 0;
   }
-  
+
   .part_menu_item {
-    border-right: 1px solid #eee;
-    
-    &:last-child {
-      border: none;
-    }
+    margin-right: -1px;
   }
-	  
+
   .part_menu_link-bar {
 	  line-height: 22px;
-	  font-size: 18px;
+	  font-size: 16px;
 	  padding: 6px 10px;
 	  display: block;
 	  text-decoration: none;
-	  color: $link-color;
+    color: #666;
+	  border: 1px solid #ddd;
   }
-  
+
+  .part_menu_link-bar:hover {
+    background: #f3f3f3;
+  }
+
+  .part_menu_link-bar-first {
+    border-radius: 4px 0 0 4px;
+  }
+
+  .part_menu_link-bar-last {
+    border-radius: 0 4px 4px 0;
+  }
+
+  .part_menu_link-bar-selected {
+	  color: $highlight-color;
+    background: #f3f3f3;
+    border-color: #ccc;
+  }
+
 }

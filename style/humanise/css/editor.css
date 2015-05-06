@@ -159,7 +159,7 @@ body.editor,
 }
 
 .common_link_text {
-  color: #028ce0;
+  color: #028CE0;
 }
 
 .common_link:hover, .common_link:hover .common_link_text {
@@ -167,7 +167,7 @@ body.editor,
 }
 
 .common_link:visited .common_link_text {
-  color: #934de0;
+  color: #934DE0;
 }
 
 h1.common {
@@ -183,9 +183,9 @@ p.common, ul.common {
 @media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 2dppx) {
   .common_link {
     text-decoration: none;
-    background-image: -moz-linear-gradient(top, rgba(0, 0, 0, 0) 99%, rgba(0, 0, 0, 0.5) 99%);
-    background-image: -webkit-linear-gradient(top, rgba(0, 0, 0, 0) 98%, rgba(0, 0, 0, 0.5) 98%);
-    background-image: linear-gradient(top, rgba(0, 0, 0, 0) 98%, rgba(0, 0, 0, 0.5) 98%);
+    background-image: -moz-linear-gradient(top, transparent 99%, rgba(0, 0, 0, 0.5) 99%);
+    background-image: -webkit-linear-gradient(top, transparent 98%, rgba(0, 0, 0, 0.5) 98%);
+    background-image: linear-gradient(top, transparent 98%, rgba(0, 0, 0, 0.5) 98%);
     background-repeat: repeat-x;
   }
 }
@@ -193,7 +193,7 @@ p.common, ul.common {
   box-sizing: border-box;
   -moz-box-sizing: border-box;
   -webkit-appearance: none;
-  background: #eeeeee;
+  background: #eee;
   border: none;
   font: inherit;
   height: 32px;
@@ -300,7 +300,7 @@ p.common, ul.common {
 
 .part_horizontalrule {
   border: none;
-  border-bottom: solid 1px #eeeeee;
+  border-bottom: solid 1px #eee;
 }
 
 .part_news_item_title {
@@ -322,23 +322,37 @@ p.common, ul.common {
 /** Menu **/
 .part_menu-bar {
   display: inline-block;
-  border: 1px solid #ddd;
-  background: #fafafa;
-  border-radius: 4px;
+  font-size: 0;
 }
 
 .part_menu_item {
-  border-right: 1px solid #eee;
-}
-.part_menu_item:last-child {
-  border: none;
+  margin-right: -1px;
 }
 
 .part_menu_link-bar {
   line-height: 22px;
-  font-size: 18px;
+  font-size: 16px;
   padding: 6px 10px;
   display: block;
   text-decoration: none;
-  color: #028ce0;
+  color: #666;
+  border: 1px solid #ddd;
+}
+
+.part_menu_link-bar:hover {
+  background: #f3f3f3;
+}
+
+.part_menu_link-bar-first {
+  border-radius: 4px 0 0 4px;
+}
+
+.part_menu_link-bar-last {
+  border-radius: 0 4px 4px 0;
+}
+
+.part_menu_link-bar-selected {
+  color: #007AC5;
+  background: #f3f3f3;
+  border-color: #ccc;
 }

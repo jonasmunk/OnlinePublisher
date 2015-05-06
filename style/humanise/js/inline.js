@@ -20,6 +20,3 @@ require(['hui'],function(hui) {
     }
   })
 })
-if (window.devicePixelRatio > 1) {
-	document.body.className+=' retina';
-}            

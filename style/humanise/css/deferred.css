@@ -3,7 +3,7 @@
   box-sizing: border-box;
   -moz-box-sizing: border-box;
   -webkit-appearance: none;
-  background: #eeeeee;
+  background: #eee;
   border: none;
   font: inherit;
   height: 32px;
@@ -98,7 +98,7 @@
 
 .part_horizontalrule {
   border: none;
-  border-bottom: solid 1px #eeeeee;
+  border-bottom: solid 1px #eee;
 }
 
 .part_news_item_title {
@@ -120,25 +120,39 @@
 /** Menu **/
 .part_menu-bar {
   display: inline-block;
-  border: 1px solid #ddd;
-  background: #fafafa;
-  border-radius: 4px;
+  font-size: 0;
 }
 
 .part_menu_item {
-  border-right: 1px solid #eee;
-}
-.part_menu_item:last-child {
-  border: none;
+  margin-right: -1px;
 }
 
 .part_menu_link-bar {
   line-height: 22px;
-  font-size: 18px;
+  font-size: 16px;
   padding: 6px 10px;
   display: block;
   text-decoration: none;
-  color: #028ce0;
+  color: #666;
+  border: 1px solid #ddd;
+}
+
+.part_menu_link-bar:hover {
+  background: #f3f3f3;
+}
+
+.part_menu_link-bar-first {
+  border-radius: 4px 0 0 4px;
+}
+
+.part_menu_link-bar-last {
+  border-radius: 0 4px 4px 0;
+}
+
+.part_menu_link-bar-selected {
+  color: #007AC5;
+  background: #f3f3f3;
+  border-color: #ccc;
 }
 
 .layout_search_body {
@@ -325,7 +339,7 @@
   color: #333;
 }
 .layout_info:hover .common_link_text {
-  color: #028ce0;
+  color: #028CE0;
 }
 .layout_info:hover .layout_info_name {
   color: #333;
@@ -524,7 +538,7 @@
 }
 @media screen and (min-width: 1000px) {
   #poster {
-    background: #333333 url("../gfx/poster_bg.png");
+    background: #333 url("../gfx/poster_bg.png");
     cursor: pointer;
     overflow: hidden;
   }

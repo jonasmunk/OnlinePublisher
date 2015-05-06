@@ -162,6 +162,7 @@
 .layout_inner_content_sidebar {
   margin-right: 30%;
   overflow: hidden;
+  padding-right: 0;
 }
 
 .layout_sidebar {
@@ -261,7 +262,7 @@ body, html {
   font-size: 12pt;
   line-height: 26px;
   border-bottom: none;
-  border-left: 1px solid #eeeeee;
+  border-left: 1px solid #eee;
 }
 
 .sidemenu_item {
@@ -308,7 +309,7 @@ body, html {
 }
 
 #poster {
-  background: #333333 url("../gfx/poster_bg.png");
+  background: #333 url("../gfx/poster_bg.png");
   cursor: pointer;
   overflow: hidden;
 }
