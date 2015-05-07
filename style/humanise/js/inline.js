@@ -6,7 +6,7 @@ require(['hui'],function(hui) {
   	hui.cls.add(document.body,'webkit');
   }
   var check = function() {
-    return document.body.scrollTop > 42;
+    return (document.documentElement.scrollTop || document.body.scrollTop) > 42;
   }
   var scrolling = check();
   if (scrolling) {
