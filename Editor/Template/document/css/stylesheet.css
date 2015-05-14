@@ -19,6 +19,14 @@ form {
 	margin: 0px;
 }
 
+.editor_row_container {
+  margin: -10px;
+}
+
+.editor_row {
+  border-spacing: 10px;
+}
+
 td.editor_column
 {
 	border: 1px solid #eee;

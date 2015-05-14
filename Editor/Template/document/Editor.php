@@ -312,19 +312,21 @@ function displayRows($pageId) {
 	$structure = DocumentTemplateEditor::getStructure($pageId);
 	
 	foreach ($structure as $row) {
-    $spacing = $row['spacing'];
-    if (!$spacing) {
-      $spacing = '10px';
-    }
-    echo '<div style="margin: -' . $spacing . '">';
-    echo '<table border="0" width="100%" cellpadding="0" cellspacing="0" id="row'.$row['id'].'" style="';
+    echo '<div class="editor_row_container"';
+		if ($row['spacing']) {
+		  echo 'margin: -'.$spacing.';';
+		}
+    echo '>';
+    echo '<table class="editor_row" border="0" width="100%" cellpadding="0" cellspacing="0" id="row'.$row['id'].'" style="';
 		if ($row['top']) {
 			echo 'margin-top: '.$row['top'].';';
 		}
 		if ($row['bottom']) {
 			echo 'margin-bottom: '.$row['bottom'].';';
 		}
-		echo 'border-spacing: '.$spacing.';';
+		if ($row['spacing']) {
+		  echo 'border-spacing: '.$spacing.';';
+		}
 		echo '"><tr>';
 		displayColumns($row);
 		echo '</tr></table>';
