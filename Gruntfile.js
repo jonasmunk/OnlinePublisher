@@ -1,4 +1,19 @@
 module.exports = function(grunt) {
+  
+  var clients = {
+    humanise : {
+      folder: 'www.humanise.dk',
+      database : 'www_humanise_dk'
+    },
+    lottemunk : {
+      folder: 'www.lottemunk.dk',
+      database : 'www_lottemunk_dk'
+    },
+    fynbogaard : {
+      folder : 'www.fynbogaard.dk',
+      database : 'www_fynbogaard_dk'
+    }
+  }
 
   // Project configuration.
   grunt.initConfig({
@@ -54,11 +69,21 @@ module.exports = function(grunt) {
     },
     shell: {
       transfer : {
-        command : function() {
+        command : function(client) {
+          if (!clients[client]) {
+            grunt.log.error('Client not found'); return;
+          }
           return [
-            '/Users/jbm/Scripts/sites/transfer.sh www_fynbogaard_dk www.fynbogaard.dk',
-            '/Users/jbm/Scripts/sites/transfer.sh www.fynbogaard.dk'
+            '/Users/jbm/Scripts/sites/transfer.sh ' + clients[client].database + ' ' + clients[client].folder
           ].join(' && ');
+        }
+      },
+      'switch' : {
+        command : function(client) {
+          if (!clients[client]) {
+            grunt.log.error('Client not found'); return;
+          }
+          return '/Users/jbm/Scripts/sites/switch.sh ' + clients[client].folder
         }
       }
     }
@@ -80,5 +105,17 @@ module.exports = function(grunt) {
   grunt.registerTask('default', 'Standard tasks', ['watch']);
   
   grunt.registerTask('default', 'Standard tasks', ['watch']);
+  
+  grunt.registerTask('switch', 'Switch to another client', function(client) {
+    grunt.task.run('shell:switch:'+client);
+  });
+  
+  grunt.registerTask('transfer', 'Transfer from production to local', function(client) {
+    grunt.task.run('shell:transfer:'+client);
+  });
+  
+  grunt.registerTask('deploy', 'Standard tasks', function() {
+    
+  });
 
 };
