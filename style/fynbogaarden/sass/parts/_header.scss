@@ -2,8 +2,10 @@
 
   .header {
     background: url('../gfx/header.jpg') 50% 50%;
+    background: url('../gfx/header_straight.jpg') 50% 50%;
     background-size: cover;
     padding-bottom: 250px;
+    position: relative;
   }
   
   .header_info {
@@ -23,6 +25,10 @@
     margin-bottom: 10px;
     padding-bottom: 10px;
     font-weight: bold;
+    padding-top: 25%;
+    font-size: 0;
+    background: url('../gfx/logo.svg') no-repeat;
+    background-size: contain;
   }
 
   .header_title_more {
@@ -31,6 +37,12 @@
     font-size: 18px;
     margin-top: 5px;
     font-weight: normal;
+  }
+  
+  .header_info_address {
+    display: block;
+    color: inherit;
+    text-decoration: none;
   }
   
   .header_info_phone_number {
@@ -53,5 +65,21 @@
 @include when(769px,inline) {
   .header {
     padding-bottom: 250 / 786 * 100%;
+  }
+  
+  .header_info {
+    width: 21.5%;
+    top: 10%;
+  }
+}
+
+@include when(1000px,inline) {
+
+  .header_title_more {
+    font-size: 24px;
+  }
+
+  .header_info_phone_number {
+    font-size: 40px;
   }
 }

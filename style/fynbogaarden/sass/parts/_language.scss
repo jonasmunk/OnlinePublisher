@@ -1,0 +1,57 @@
+@include when(all,inline) {
+  .language {
+    text-align: center;
+  }
+
+  .language_link {
+    font-size: 18px;
+    color: #635648;
+    text-decoration: none;
+    white-space: nowrap;
+    margin-left: 10px;
+    
+    &:before {
+      content: '';
+      display: inline-block;
+      width: 30px;
+      height: 30px;
+      vertical-align: middle;
+      margin-right: 5px;
+    }
+    
+  }
+
+  .language_link-english {
+    &:before {
+      background: url('../gfx/uk.op.svg');
+    }
+  }
+
+  .language_link-danish {
+    &:before {
+      background: url('../gfx/dk.op.svg');
+    }
+  }
+
+  .language_link-german {
+    &:before {
+      background: url('../gfx/de.op.svg');
+    }
+  }
+}
+
+@include when(769px,inline) {
+  .language {
+    text-align: right;
+  }
+
+  .language_link {
+    font-size: 24px;
+    
+    &:before {
+      width: 50px;
+      height: 50px;
+    }
+    
+  }
+}

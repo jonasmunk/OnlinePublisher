@@ -45,7 +45,7 @@
 		<xsl:call-template name="util:scripts-build"/>
 
 		<xsl:call-template name="util:load-font">
-			<xsl:with-param name="href" select="'http://fonts.googleapis.com/css?family=Lora'"/>
+			<xsl:with-param name="href" select="'http://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic'"/>
       <xsl:with-param name="family" select="'Lora'"/>
       <xsl:with-param name="class" select="'font_lora'"/>
 		</xsl:call-template>
@@ -94,10 +94,13 @@
     <div class="header_info">
       <p class="header_title">Fynbogaarden <span class="header_title_more"> Bed &amp; Breakfast</span></p>
       <p class="header_info_phone"><a class="header_info_phone_number" href="tel:004528776365">28 77 63 65</a></p>
-      <p class="header_info_road">Bjerrevej 318</p>
-      <p class="header_info_city">Bjerre, 8783 Hornsyld</p>
+      <a class="header_info_address" href="http://maps.apple.com/?lsp=9902&amp;auid=7975406826322305206&amp;sll=55.792058,9.845927&amp;q=Fynbogaarden&amp;hnear=Bjerrevej%20318,%208783%20Hornsyld,%20Danmark">
+        <p class="header_info_road">Bjerrevej 318</p>
+        <p class="header_info_city">Bjerre, 8783 Hornsyld</p>
+      </a>
     </div>
 	</header>
+  <!--
   <xsl:choose>
     <xsl:when test="//p:page/@id=//p:context/p:home/@page">
 
@@ -105,6 +108,7 @@
     <xsl:otherwise>
     </xsl:otherwise>
   </xsl:choose>
+  -->
 </xsl:template>
 
 <xsl:template match="p:content">
@@ -114,20 +118,25 @@
 	</div>
 </xsl:template>
 
-<xsl:template match="widget:poster">
-	<div class="poster poster_{@variant}">
-    	<div class="poster_body poster_body_{@variant}">
-    		<div class="poster_block poster_block_{@variant}">
-    		<h2 class="poster_title"><xsl:value-of select="widget:title"/></h2>
-    		<p class="poster_text"><xsl:value-of select="widget:text"/></p>
-            <!--
-    		<p class="poster_links">
-    			<a class="poster_link poster_link_havestue" href="/da/havestuen/">Mere om havestuen</a>
-    		</p>
-            -->
-    		</div>
-    	</div>
-    </div>
+<!--
+<language>
+  <english>Engelsk</english>
+</language>
+-->
+<xsl:template match="widget:language">
+	<div class="language">
+    <xsl:if test="$language!='en'">
+      <a href="/en/" class="language_link language_link-english">English</a>
+    </xsl:if>
+    <xsl:if test="$language!='da'">
+      <xsl:text> </xsl:text>
+      <a href="/" class="language_link language_link-danish">Dansk</a>
+    </xsl:if>
+    <xsl:if test="$language!='de'">
+      <xsl:text> </xsl:text>
+      <a href="/de/" class="language_link language_link-german">Deutch</a>      
+    </xsl:if>
+  </div>
 </xsl:template>
 
 <xsl:template match="widget:login">
