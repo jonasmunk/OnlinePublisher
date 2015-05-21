@@ -9,6 +9,12 @@
   }
   
   .part_header_1 {
-    font-size: 42px;
+    font-size: 32px;
   }
+}
+
+@include when(500px) {
+  .part_header_1 {
+    font-size: 42px;
+  }  
 }

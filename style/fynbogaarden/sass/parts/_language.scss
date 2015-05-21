@@ -1,21 +1,34 @@
 @include when(all,inline) {
   .language {
-    text-align: center;
+    text-align: right;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 10px;
+    padding-top: 674 / 1536 * 100%;
+    font-size: 0;
+    margin-top: -40px;
   }
 
   .language_link {
-    font-size: 18px;
+    font-size: 14px;
     color: #635648;
     text-decoration: none;
     white-space: nowrap;
     margin-left: 10px;
+    display: inline-block;
+    background: #fff;
+    background: rgba(255,255,255,.8);
+    border-radius: 15px;
+    padding-right: 10px;
+    line-height: 30px;
     
     &:before {
       content: '';
       display: inline-block;
       width: 30px;
       height: 30px;
-      vertical-align: middle;
+      vertical-align: bottom;
       margin-right: 5px;
     }
     
@@ -42,11 +55,16 @@
 
 @include when(769px,inline) {
   .language {
-    text-align: right;
+    position: static;
+    padding-top: 0;
+    margin: 0;
+    white-space: nowrap;
   }
 
   .language_link {
     font-size: 24px;
+    border-radius: 0;
+    line-height: 50px;
     
     &:before {
       width: 50px;

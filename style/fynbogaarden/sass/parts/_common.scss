@@ -24,5 +24,14 @@
 	a {
 		word-break: break-word;
 	}
+  
+  .common_link {
+    color: #eee;
+    color: rgba(0,0,0,.1);
+  }
+  
+  .common_link_text {
+    color: $link-color;
+  }
 }
 

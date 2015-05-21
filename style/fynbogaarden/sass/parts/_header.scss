@@ -3,29 +3,19 @@
   .header {
     background: url('../gfx/header.jpg') 50% 50%;
     background: url('../gfx/header_straight.jpg') 50% 50%;
+    background: url('../gfx/top.jpg') 50% 50%;
     background-size: cover;
-    padding-bottom: 250px;
+    padding-bottom: 674 / 1536 * 100%;
     position: relative;
-  }
-  
-  .header_info {
-    background: rgba(25, 25, 33, 0.9);
-    padding: 20px 30px;
-    position: absolute;
-    right: 30px;
-    top: 20px;
-    color: #fff;
-    text-align: center;
-    line-height: 1;
   }
 
   .header_title {
-    font-size: 30px;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.5);
-    margin-bottom: 10px;
-    padding-bottom: 10px;
+    position: absolute;
+    width: 50%;
+    top: 10px;
+    left: 10px;
     font-weight: bold;
-    padding-top: 25%;
+    padding-top: 89 / 370 * 50%;
     font-size: 0;
     background: url('../gfx/logo.svg') no-repeat;
     background-size: contain;
@@ -35,48 +25,44 @@
     display: block;
     font-style: italic;
     font-size: 18px;
-    margin-top: 5px;
     font-weight: normal;
-  }
-  
-  .header_info_address {
-    display: block;
-    color: inherit;
-    text-decoration: none;
-  }
-  
-  .header_info_phone_number {
-    color: #ff9578;
-    font-family: $serif-font-fallback;
-    font-size: 30px;
-    text-decoration: none;
-  }
-  
-  .header_info_phone {
-    margin-bottom: 10px;    
-  }
-  
-  .header_info_road {
-    font-size: 28px;
-    margin-bottom: 5px;
+    color: #fff;
+    text-shadow: 0 2px 4px #4C1A1E;
+    text-align: center;
   }
 }
 
-@include when(769px,inline) {
-  .header {
-    padding-bottom: 250 / 786 * 100%;
+@include when(500px,inline) {
+  .header_title {
+    width: 250px;
+    padding-top: 89 / 370 * 250px;
   }
+
+  .header_title_more {
+    font-size: 20px;
+  }
+
+  .header {
+    padding-bottom: 674 / 1536 * 100%;
+  }
+}
+
+@include when(700px,inline) {
   
-  .header_info {
-    width: 21.5%;
-    top: 10%;
+  .header_title {
+    left: 20px;
+    top: 20px;
+  }
+
+  .header_title_more {
+    font-size: 24px;
   }
 }
 
 @include when(1000px,inline) {
-
-  .header_title_more {
-    font-size: 24px;
+  .header_title {
+    left: 50%;
+    margin-left: -480px;
   }
 
   .header_info_phone_number {
