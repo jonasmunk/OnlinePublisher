@@ -114,11 +114,12 @@ a {
   .language_link {
     font-size: 24px;
     border-radius: 0;
-    line-height: 50px;
+    line-height: 40px;
+    padding: 0;
   }
   .language_link:before {
-    width: 50px;
-    height: 50px;
+    width: 40px;
+    height: 40px;
   }
 }
 .contact {

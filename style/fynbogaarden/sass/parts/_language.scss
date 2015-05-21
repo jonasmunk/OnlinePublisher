@@ -1,3 +1,5 @@
+$language-size: 40px;
+
 @include when(all,inline) {
   .language {
     text-align: right;
@@ -64,11 +66,12 @@
   .language_link {
     font-size: 24px;
     border-radius: 0;
-    line-height: 50px;
+    line-height: $language-size;
+    padding: 0;
     
     &:before {
-      width: 50px;
-      height: 50px;
+      width: $language-size;
+      height: $language-size;
     }
     
   }

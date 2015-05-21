@@ -12,12 +12,13 @@
   .header_title {
     position: absolute;
     width: 50%;
-    top: 10px;
-    left: 10px;
+    top: 0;
+    margin-top: 2%;
+    left: 2%;
     font-weight: bold;
     padding-top: 89 / 370 * 50%;
     font-size: 0;
-    background: url('../gfx/logo.svg') no-repeat;
+    background: url('../gfx/logo.outline.svg') no-repeat;
     background-size: contain;
   }
 
@@ -48,11 +49,6 @@
 }
 
 @include when(700px,inline) {
-  
-  .header_title {
-    left: 20px;
-    top: 20px;
-  }
 
   .header_title_more {
     font-size: 24px;
@@ -63,6 +59,8 @@
   .header_title {
     left: 50%;
     margin-left: -480px;
+    width: 25%;
+    padding-top: 89 / 370 * 25%;
   }
 
   .header_info_phone_number {

@@ -41,12 +41,13 @@ a {
 .header_title {
   position: absolute;
   width: 50%;
-  top: 10px;
-  left: 10px;
+  top: 0;
+  margin-top: 2%;
+  left: 2%;
   font-weight: bold;
   padding-top: 12.02703%;
   font-size: 0;
-  background: url("../gfx/logo.svg") no-repeat;
+  background: url("../gfx/logo.outline.svg") no-repeat;
   background-size: contain;
 }
 
@@ -75,11 +76,6 @@ a {
   }
 }
 @media screen and (min-width: 700px) {
-  .header_title {
-    left: 20px;
-    top: 20px;
-  }
-
   .header_title_more {
     font-size: 24px;
   }
@@ -88,6 +84,8 @@ a {
   .header_title {
     left: 50%;
     margin-left: -480px;
+    width: 25%;
+    padding-top: 6.01351%;
   }
 
   .header_info_phone_number {
@@ -168,11 +166,12 @@ a {
   .language_link {
     font-size: 24px;
     border-radius: 0;
-    line-height: 50px;
+    line-height: 40px;
+    padding: 0;
   }
   .language_link:before {
-    width: 50px;
-    height: 50px;
+    width: 40px;
+    height: 40px;
   }
 }
 @media screen and (max-width: 700px) {
