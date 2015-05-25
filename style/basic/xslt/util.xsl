@@ -316,9 +316,8 @@ ga('create', '<xsl:value-of select="$code"/>', {siteSpeedSampleRate : 20});ga('s
 		</xsl:otherwise>
 	</xsl:choose>
 	<script src="{$path}{$timestamp-url}style/basic/js/OnlinePublisher.js{$timestamp-query}"><xsl:comment/></script>
-    <xsl:call-template name="util:_scripts-config"/>
-    <xsl:call-template name="util:_scripts-preview"/>
-	<script>_editor.$scriptReady();</script>
+  <xsl:call-template name="util:_scripts-config"/>
+  <xsl:call-template name="util:_scripts-preview"/>
 </xsl:template>
 
 <xsl:template name="util:_scripts-preview">
@@ -327,13 +326,6 @@ ga('create', '<xsl:value-of select="$code"/>', {siteSpeedSampleRate : 20});ga('s
 		<script src="editor.js?version={$timestamp}"><xsl:comment/></script>
 		<script src="{$path}{$timestamp-url}Editor/Template/{$template}/js/editor.php{$timestamp-query}"><xsl:comment/></script>
 	</xsl:if>
-    
-    <!--
-	<xsl:if test="//movie:movie">
-		<script src="http://vjs.zencdn.net/4.1/video.js"><xsl:comment/></script>
-	</xsl:if>
-    -->
-    
 </xsl:template>
 
 <xsl:template name="util:_scripts-msie">
