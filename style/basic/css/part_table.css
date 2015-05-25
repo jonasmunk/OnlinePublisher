@@ -1,25 +1,25 @@
-div.part_table table
+.part_table table
 {
 	font-size: 12px;
 	border-spacing: 0;
 	border-collapse: collapse;
 }
 
-div.part_table thead th
+.part_table thead th
 {
 	border-bottom: 1px solid #eee;
 	padding: 1px 3px;
 	text-align: left;
 }
 
-div.part_table tfoot th
+.part_table tfoot th
 {
 	border-bottom: 1px solid #eee;
 	padding: 1px 3px;
 	text-align: left;
 }
 
-div.part_table td
+.part_table td
 {
 	border-bottom: 1px solid #eee;
 	padding: 1px 3px;
