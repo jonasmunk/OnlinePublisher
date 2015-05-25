@@ -11,10 +11,47 @@
   .part_header_1 {
     font-size: 32px;
   }
+  
+  .part_header_2 {
+    font-size: 28px;
+  }
+  
+  .part_table {
+    table {
+      font-size: 12px;
+    }
+    
+    thead th,
+    tfoot th,
+    td {
+      padding: 5px 10px 5px 0;
+    }
+  }
+  
+  .part_horizontalrule {
+    border: none;
+    background: url('../gfx/divider.svg') 50% 50%;
+    background-size: cover;
+    padding-bottom: 8%;
+  }
 }
 
 @include when(500px) {
   .part_header_1 {
     font-size: 42px;
-  }  
+  }
+
+  .part_header_2 {
+    font-size: 38px;
+  }
+
+  .part_horizontalrule {
+    padding-bottom: 52/1373 * 100%;
+  }
+
+  .part_table {
+    table {
+      font-size: 14px;      
+    }
+  }
 }

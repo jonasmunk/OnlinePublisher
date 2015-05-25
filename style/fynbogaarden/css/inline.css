@@ -185,6 +185,18 @@ a {
     padding-right: 0 !important;
   }
 
+  div.document_row {
+    display: block;
+  }
+
+  div.document_row_body {
+    display: block;
+  }
+
+  div.document_row_container {
+    margin: 0 !important;
+  }
+
   .part_image_image {
     max-width: 100%;
     height: auto;
@@ -196,12 +208,16 @@ a {
     width: 100%;
   }
 
-  .document_row_body {
+  div.document_row_body {
     display: table-row;
   }
 
   div.document_column {
     display: table-cell;
     vertical-align: top;
+  }
+
+  div.document_row_container {
+    margin: -10px;
   }
 }

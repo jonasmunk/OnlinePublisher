@@ -123,6 +123,13 @@
   </div>
 </xsl:template>
 
+
+<xsl:template match="widget:poster">
+  <div class="poster poster-{@variant}">
+    <div class="poster_body poster_body-{@variant}"><xsl:comment/></div>
+  </div>
+</xsl:template>
+
 <xsl:template match="widget:quote">
   <blockquote class="quote">
     <div class="quote_body">
