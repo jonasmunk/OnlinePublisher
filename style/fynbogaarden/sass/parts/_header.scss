@@ -67,3 +67,11 @@
     font-size: 40px;
   }
 }
+
+@include when(msie_lt9) {
+  .header_title {
+    background-image: url('../gfx/logo.outline.png');
+    width: 370px;
+    padding-top: 89px;
+  }
+}

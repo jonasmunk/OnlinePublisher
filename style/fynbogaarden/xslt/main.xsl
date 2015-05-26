@@ -53,7 +53,7 @@
     <xsl:call-template name="util:style-build">
       <xsl:with-param name="async" select="'false'"/>
     </xsl:call-template>
-    <xsl:call-template name="util:style-ie7"/>
+    <xsl:call-template name="util:style-lt-ie9"/>
   </head>
   <body>
     <div class="layout">
@@ -100,16 +100,16 @@
 -->
 <xsl:template match="widget:language">
   <div class="language">
-    <xsl:if test="$language!='en'">
-      <a href="/en/" class="language_link language_link-english">English</a>
+    <xsl:if test="$language!='en' and //p:page/p:context/p:translation[@language='en']">
+      <a href="{//p:page/p:context/p:translation[@language='en']/@path}" class="language_link language_link-english">English</a>
     </xsl:if>
-    <xsl:if test="$language!='da'">
+    <xsl:if test="$language!='da' and //p:page/p:context/p:translation[@language='da']">
       <xsl:text> </xsl:text>
-      <a href="/" class="language_link language_link-danish">Dansk</a>
+      <a href="{//p:page/p:context/p:translation[@language='da']/@path}" class="language_link language_link-danish">Dansk</a>
     </xsl:if>
-    <xsl:if test="$language!='de'">
+    <xsl:if test="$language!='de' and //p:page/p:context/p:translation[@language='de']">
       <xsl:text> </xsl:text>
-      <a href="/de/" class="language_link language_link-german">Deutch</a>      
+      <a href="{//p:page/p:context/p:translation[@language='de']/@path}" class="language_link language_link-german">Deutch</a>      
     </xsl:if>
   </div>
 </xsl:template>

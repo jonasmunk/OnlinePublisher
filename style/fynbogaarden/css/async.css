@@ -48,6 +48,26 @@
     font-size: 14px;
   }
 }
+@media screen and (min-width: msie_lt9) {
+  .header_title {
+    background-image: url("../gfx/logo.outline.png");
+    width: 370px;
+    padding-top: 89px;
+  }
+}
+@media screen and (min-width: msie_lt9) {
+  .language_link-english:before {
+    background: url("../gfx/uk.png");
+  }
+
+  .language_link-danish:before {
+    background: url("../gfx/dk.png");
+  }
+
+  .language_link-german:before {
+    background: url("../gfx/de.png");
+  }
+}
 .contact {
   max-width: 360px;
   margin: 0 auto;

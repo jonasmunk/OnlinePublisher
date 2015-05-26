@@ -76,3 +76,25 @@ $language-size: 40px;
     
   }
 }
+
+@include when(msie_lt9) {
+
+
+  .language_link-english {
+    &:before {
+      background: url('../gfx/uk.png');
+    }
+  }
+
+  .language_link-danish {
+    &:before {
+      background: url('../gfx/dk.png');
+    }
+  }
+
+  .language_link-german {
+    &:before {
+      background: url('../gfx/de.png');
+    }
+  }
+}
