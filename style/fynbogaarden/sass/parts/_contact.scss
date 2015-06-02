@@ -35,12 +35,14 @@
   .contact_mail {
     font-size: 16px;
     color: #bbb;
-    margin-top: 5px;
+    margin-top: 10px;
   }
   
   .contact_phone_link,
   .contact_mail_link {
     color: $link-color;
     text-decoration: none;
+    padding: 2px 2px;
+    margin: 0 -2px;
   }
 }

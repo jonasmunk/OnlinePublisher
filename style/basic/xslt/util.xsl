@@ -196,6 +196,27 @@ ga('create', '<xsl:value-of select="$code"/>', {siteSpeedSampleRate : 20});ga('s
 		<meta property="og:description" content="{p:meta/p:description}" />
 		<meta name="Description" content="{p:meta/p:description}"></meta>
 	</xsl:if>
+	<xsl:for-each select="//p:page/p:context/p:translation[@language and @language!=$language and not(@language=//p:page/@language)]">
+		<link rel="alternate" hreflang="{@language}">
+      <xsl:attribute name="href">
+        <xsl:choose>
+    		<xsl:when test="@path">
+					<xsl:choose>
+						<xsl:when test="starts-with(@path,'/')">
+							<xsl:value-of select="@path"/>
+						</xsl:when>
+						<xsl:otherwise>
+    			    <xsl:value-of select="$navigation-path"/><xsl:value-of select="@path"/>
+						</xsl:otherwise>
+					</xsl:choose>
+    		</xsl:when>
+    		<xsl:when test="@page">
+    			<xsl:value-of select="$navigation-path"/>?id=<xsl:value-of select="@page"/>
+    		</xsl:when>
+        </xsl:choose>
+      </xsl:attribute>
+    </link>
+	</xsl:for-each>
 </xsl:template>
 
 <xsl:template name="util:feedback">
