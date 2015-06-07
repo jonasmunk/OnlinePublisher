@@ -366,7 +366,7 @@ class ObjectService {
       Log::debug('Unable to get class for type='.$query->getType());
       return new SearchResult();
     }
-    $x =  ObjectService::find($parts);
+    $x =  ObjectService::_search($parts);
     $result = new SearchResult();
     $result->setList($x['result']);
     $result->setTotal($x['total']);
@@ -376,7 +376,7 @@ class ObjectService {
     return $result;
   }
 
-  static function find($query = array()) {
+  static function _search($query = array()) {
     $type = $query['type'];
     if (!$type) {
       return null;
