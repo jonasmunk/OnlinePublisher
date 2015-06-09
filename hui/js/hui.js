@@ -2103,13 +2103,6 @@ hui.drag = {
 		mover = function(e) {
 			e = hui.event(e);
 			e.stop(e);
-/*
-			var pos = {x:e.getLeft(),y:e.getTop(),time: Date.now()};
-			
-			var speed = (latest.x - pos.x) / (latest.time - pos.time);
-			hui.log(speed);
-			latest = pos;
-*/			
 			if (!moved && options.onBeforeMove) {
 				options.onBeforeMove(e);
 			}
