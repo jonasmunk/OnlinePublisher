@@ -39,9 +39,14 @@ hui.ui.Diagram.prototype = {
 		this.fire('added');
 	},
 	$$layout : function() {
-		this.width = this.element.clientWidth;	
-		this.height = this.element.clientHeight;
-		hui.log(this.width,this.height)
+		var newWidth = this.element.clientWidth;
+		var newHeight = this.element.clientHeight;
+		if (newWidth === this.width && newHeight === this.height) {
+			// Only re-layout if size actually changed
+			return;
+		}
+		this.width = newWidth;	
+		this.height = newHeight;
 		this.background.setSize(this.width,this.height);
 		this.layout.resize();
 		this.layout.resume();
