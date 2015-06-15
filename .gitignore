@@ -18,6 +18,7 @@ CVS
 .htaccess
 .sass-cache
 /node_modules
+/hui/node_modules
 
 profile_prepend.php
 profile_append.php
