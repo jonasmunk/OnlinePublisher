@@ -66,7 +66,5 @@ module.exports = function(grunt) {
   grunt.registerTask('default', 'Standard tasks', ['watch']);
   
   grunt.registerTask('test', ['qunit']);
-    
-  });
 
 };
