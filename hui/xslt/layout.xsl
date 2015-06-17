@@ -725,4 +725,35 @@
 	</div>
 </xsl:template>
 
+
+<!--doc title:'Skeleton' class:'hui.ui.Skeleton' module:'layout'
+-->
+
+<xsl:template match="gui:skeleton">
+  <div class="hui_skeleton" id="{generate-id()}">
+    <div class="hui_skeleton_navigation hui_context_sidebar">
+      <div class="hui_skeleton_resize"></div>
+      <xsl:apply-templates select="gui:navigation"/>
+    </div>
+    <div class="hui_skeleton_results">
+      <xsl:apply-templates select="gui:results"/>
+    </div>
+    <div class="hui_skeleton_actions">
+      <xsl:apply-templates select="gui:actions"/>
+    </div>
+    <div class="hui_skeleton_content">
+      <xsl:apply-templates select="gui:content"/>
+    </div>
+  </div>
+	<script type="text/javascript">
+    (function() {
+    	var <xsl:value-of select="generate-id()"/>_obj = new hui.ui.Skeleton({
+    		element : '<xsl:value-of select="generate-id()"/>'
+    		<xsl:if test="@name">,name : '<xsl:value-of select="@name"/>'</xsl:if>
+    	});
+    	<xsl:call-template name="gui:createobject"/>
+    })()
+	</script>
+</xsl:template>
+
 </xsl:stylesheet>

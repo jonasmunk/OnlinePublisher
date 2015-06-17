@@ -1,0 +1,7 @@
+$sidebar-color : #EBF0F7;
+$border-color : #ddd;
+
+@mixin border-box {
+  box-sizing: border-box;
+  -moz-box-sizing: border-box;
+}

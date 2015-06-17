@@ -73,6 +73,9 @@
 			<xsl:if test="//gui:timeline">
 				<link rel="stylesheet" href="{$context}/hui/{$pathVersion}css/timeline.css" type="text/css" media="screen" title="no title" charset="utf-8"/>
 			</xsl:if>
+			<xsl:if test="//gui:skeleton">
+				<link rel="stylesheet" href="{$context}/hui/{$pathVersion}css/skeleton.css" type="text/css" media="screen" title="no title" charset="utf-8"/>
+			</xsl:if>
 	
 			<xsl:for-each select="//gui:css">
 				<link rel="stylesheet" href="{@url}" type="text/css" media="screen" title="no title" charset="utf-8"/>
@@ -128,6 +131,9 @@
 			</xsl:if>
 			<xsl:if test="//gui:tiles">
 				<script src="{$context}/hui/{$pathVersion}js/Tiles.js" type="text/javascript" charset="utf-8"><xsl:comment/></script>
+			</xsl:if>
+			<xsl:if test="//gui:skeleton">
+				<script src="{$context}/hui/{$pathVersion}js/Skeleton.js" type="text/javascript" charset="utf-8"><xsl:comment/></script>
 			</xsl:if>
 			<xsl:if test="//gui:pages">
 				<link rel="stylesheet" href="{$context}/hui/{$pathVersion}css/pages.css" type="text/css" media="screen" title="no title" charset="utf-8"/>

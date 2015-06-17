@@ -833,7 +833,7 @@
 <xsl:template match="gui:slider">
 	<span class="hui_slider" id="{generate-id()}">
 		<xsl:if	test="@width"><xsl:attribute name="style">width: <xsl:value-of select="@width"/>px;</xsl:attribute></xsl:if>
-		<a href="javascript://"><xsl:comment/></a><span><xsl:comment/></span>
+		<a href="javascript://" class="hui_slider_knob"><xsl:comment/></a><span class="hui_slider_bar"><xsl:comment/></span>
 	</span>
 	<script type="text/javascript">
 		var <xsl:value-of select="generate-id()"/>_obj = new hui.ui.Slider({

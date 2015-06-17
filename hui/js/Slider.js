@@ -17,7 +17,7 @@ hui.ui.Slider = function(options) {
 
 hui.ui.Slider.create = function(options) {
 	options = hui.override({},options);
-	var e = options.element = hui.build('span',{'class':'hui_slider',html:'<a href="javascript://"></a><span></span>'});
+	var e = options.element = hui.build('span',{'class':'hui_slider',html:'<a href="javascript://" class="hui_slider_knob"></a><span class="hui_slider_bar"></span>'});
 	if (options.width) {
 		e.style.width = options.width+'px';
 	}
@@ -41,7 +41,8 @@ hui.ui.Slider.prototype = {
 			diff : event.getLeft()-pos.left,
 			max : this.element.clientWidth-this.handler.clientWidth-5
 		};
-		hui.cls.add(this.element,'hui_slider_active');
+		hui.cls.add(document.body,'hui_slider-grabbing');
+		hui.cls.add(this.handler,'hui_slider-grabbing');
 	},
 	_onMove : function(event) {
 		var left = event.getLeft()-this.dragInfo.left
@@ -53,7 +54,8 @@ hui.ui.Slider.prototype = {
 	},
 	_onAfterMove : function() {
 		this.dragging = false;
-		hui.cls.remove(this.element,'hui_slider_active');
+		hui.cls.remove(document.body,'hui_slider-grabbing');
+		hui.cls.remove(this.handler,'hui_slider-grabbing');
 		this.fire('valueChangedEnd',this.position);
 	},
 	
