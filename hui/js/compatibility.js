@@ -18,6 +18,17 @@ if (!Function.prototype.bind) {
 	};
 }
 
+// https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/Trim
+if (!String.prototype.trim) {
+  (function() {
+    // Make sure we trim BOM and NBSP
+    var rtrim = /^[\s\uFEFF\xA0]+|[\s\uFEFF\xA0]+$/g;
+    String.prototype.trim = function() {
+      return this.replace(rtrim, '');
+    };
+  })();
+}
+
 // MSIE 7-
 // https://gist.github.com/chrisjlee/8960575
 if (!document.querySelectorAll) {
