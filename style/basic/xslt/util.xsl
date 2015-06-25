@@ -519,7 +519,6 @@ for(var r=a.childNodes,n=0;n<r.length;n++)i.parentNode.insertBefore(r[n],i)}}})}
     <noscript class="js-async">
     <link rel="stylesheet" type="text/css" href="{$href}" media="all"/>
     </noscript>
-	<!-- html5 -->
 	<xsl:comment><![CDATA[[if lt IE 9]><link rel="stylesheet" type="text/css" href="]]><xsl:value-of select="$href"/><![CDATA[" media="all"/><![endif]]]></xsl:comment>
 </xsl:template>
 
