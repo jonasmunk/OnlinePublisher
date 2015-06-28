@@ -18,6 +18,14 @@ module.exports = function(grunt) {
     qunit: {
         all: ['test/phantom/*.html']
     },
+    jsdoc : {
+      dist : {
+        src: ['js/hui.js','js/ui.js','js/Component.js','js/Editable.js'],
+        options: {
+          destination: 'doc'
+        }
+      }
+    },
     compass: {
       full: {
         options: {
