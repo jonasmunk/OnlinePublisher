@@ -1,0 +1,34 @@
+div.hui_codeinput
+{
+	padding: 2px;
+}
+
+div.hui_codeinput textarea
+{
+	display: block;
+	width: 100%;
+	height: 200px;
+	box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	border-color: #BBBBBB #CCCCCC #DDDDDD;
+	border-style: solid;
+	border-width: 1px;
+	font-family: Monaco,monospace;
+	padding: 7px 9px;
+	color: #333;
+	line-height: 16px;
+	border-radius: 2px;
+	box-shadow: inset 0 1px 3px rgba(0,0,0,.15);
+	font-size: 11px;
+	-moz-tab-size:4; -o-tab-size:4; -webkit-tab-size:4; tab-size:4; 
+}
+/*
+	background: #247;
+	color: white;
+*/
+
+div.hui_codeinput textarea:focus
+{
+	border-color: #2678ff;
+	outline: 4px auto #2678ff;
+}

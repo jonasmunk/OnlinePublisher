@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+	<script src="head.js"></script>
+	<style>
+		body
+		{
+			margin: 0;
+			padding: 10px;
+		}
+		#one
+		{
+			color: red;
+			font-size: 12px;
+			font-family: Verdana,Tahoma,sans-serif;
+			border: 2px solid red;
+			width: 300px;
+			padding: 10px;
+		}
+	</style>
+</head>
+<body>
+	<div id="one">
+		Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+		Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. 
+		Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. 
+		Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+	</div>
+	
+	<div id="two" style="padding: 10px; padding-left: 20px;">
+		
+	</div>
+	
+	<script type="text/javascript">
+		var assert = hui.test.assert;
+		
+		hui.test.run([
+			function() {
+				assert.equals(hui.string.camelize('font-size'),'fontSize');
+				assert.equals(hui.string.camelize('fontSize'),'fontSize');
+				assert.equals(hui.string.camelize('color'),'color');
+			},
+			
+			function() { // One
+				assert.equals(hui.position.getTop('one'),10);
+				assert.equals(hui.get('one').clientWidth,320);
+				assert.equals(hui.style.get('one','width'),'300px');
+				assert.equals(hui.style.get('one','padding-top'),'10px');
+				assert.equals(hui.style.get('one','padding-right'),'10px');
+				
+				if (hui.browser.msie7 || hui.browser.msie8 || hui.browser.webkitVersion>=536) {
+					assert.equals(hui.style.get('one','padding'),'10px');
+				} else {
+					assert.equals(hui.style.get('one','padding'),'');
+				}
+				assert.equals(new hui.Color(hui.style.get('one','color')).toHex(),'#ff0000');
+				assert.equals(hui.style.get('one','font-size'),'12px');
+				assert.equals(hui.style.get('one','display'),'block');
+				assert.equals(hui.style.get('one','border-top-width'),'2px','Check top width');
+				if (hui.browser.msie7 || hui.browser.msie8 || hui.browser.webkitVersion>=536) {
+					assert.equals(hui.style.get('one','border-width'),'2px');
+				} else {
+					assert.equals(hui.style.get('one','border-width'),'');
+				}
+				if (hui.browser.opacity) {
+					assert.equals(hui.style.get('one','opacity'),'1','Check opacity');
+				} else {
+					assert.equals(hui.style.get('one','opacity'),undefined,'Check opacity');
+				}
+				if (hui.browser.webkit) {
+					assert.equals(hui.style.get('one','background-color'),'rgba(0, 0, 0, 0)','Check background color');
+					assert.equals(hui.style.get('one','line-height'),'normal');
+				} else if (hui.browser.msie) {
+					assert.equals(hui.style.get('one','background-color'),'transparent','Check background color');
+					assert.equals(hui.style.get('one','line-height'),'normal');
+				} else {
+					assert.equals(hui.style.get('one','background-color'),'transparent','Check background color');
+					assert.equals(hui.style.get('one','line-height'),'16px');
+				}
+				
+				var fontFamily = hui.style.get('one','font-family');
+				assert.true(fontFamily.indexOf('Verdana')!==-1);
+				assert.true(fontFamily.indexOf('Tahoma')!==-1);
+				assert.true(fontFamily.indexOf('sans-serif')!==-1);
+			},
+			function() { // Two
+				assert.equals(hui.style.get('two','padding'),'10px 10px 10px 20px','Check padding of #two');
+			},
+			function() { // Colors
+				
+				
+				var color = new hui.Color('red');
+				assert.equals(
+					color.toRGB() , 'rgb(255, 0, 0)'
+				);
+				assert.equals(color.toHex(),'#ff0000');
+
+				var color = new hui.Color('rgb(200, 0, 0)');
+				assert.equals(color.toRGB(),'rgb(200, 0, 0)');
+				assert.equals(color.toHex(),'#c80000');
+				
+				var color = new hui.Color('#f00');
+				assert.equals(color.toRGB(),'rgb(255, 0, 0)');
+
+				var color = new hui.Color('rgb(255, 0, 0)');
+				assert.equals(color.toHex(),'#ff0000');
+
+				var color = new hui.Color('rgb(100%, 0%, 0%)');
+				assert.equals(color.toHex(),'#ff0000');
+				
+				// failures
+				var color = new hui.Color('#ff00');
+				assert.false(color.ok);
+
+				var color = new hui.Color('');
+				assert.false(color.ok);
+
+				var color = new hui.Color();
+				assert.false(color.ok);
+			},
+			function() {
+				
+				var color = hui.Color.hex2rgb('#f00');
+				assert.equals(color.r,255);
+				assert.equals(color.g,0);
+				assert.equals(color.b,0);
+				
+				var color = hui.Color.hsv2rgb(90,1,1);
+				assert.equals(color[0],128);
+				assert.equals(color[1],255);
+				assert.equals(color[2],0);
+				
+				var color = hui.Color.rgb2hex([255,0,0]);
+				assert.equals(color,'#ff0000');
+			}
+		]);
+	</script>
+</body>
+</html>

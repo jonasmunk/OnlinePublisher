@@ -1,0 +1,16 @@
+div.hui_checkboxes
+{
+	margin-bottom: 5px;
+	font-size: 0;
+}
+
+div.hui_checkboxes a.hui_checkbox
+{
+	margin-right: 10px;
+}
+
+div.hui_checkboxes_vertical a.hui_checkbox
+{
+	display: block;
+	padding: 1px 5px 0px 0px;
+}

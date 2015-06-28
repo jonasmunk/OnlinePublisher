@@ -1,0 +1,143 @@
+div.hui_dock_body iframe
+{
+	height: 100%;
+	width: 100%;
+	border: none;
+	font-size: 0px;
+	background: #fff;
+	display: block;
+}
+
+div.hui_dock_internals
+{
+	height: 100%;
+	position: relative;
+}
+
+div.hui_dock_bar
+{
+	position: absolute;
+	width: 100%;
+} 
+
+div.hui_dock_body
+{
+	position: absolute;
+	width: 100%;
+	top: 0;
+	bottom: 0;
+}
+
+div.hui_dock_internals_bottom div.hui_dock_body
+{
+	bottom: 57px;
+}
+
+div.hui_dock_internals_bottom_tabs div.hui_dock_body
+{
+	bottom: 82px;
+}
+
+div.hui_dock_internals_bottom div.hui_dock_bar
+{
+	bottom: 0;
+}
+
+div.hui_dock_internals_top div.hui_dock_body
+{
+	top: 57px;
+}
+
+div.hui_dock_internals_top_tabs div.hui_dock_body
+{
+	top: 82px;
+}
+
+
+div.hui_dock_progress
+{
+	position: absolute;
+	height: 100%;
+	width: 100%;
+	background: url('../gfx/progress/spinner_white_48.gif') center center no-repeat;
+}
+
+/* Sidebar */
+
+div.hui_dock_sidebar
+{
+	background: #EBF0F7;
+	width: 199px;
+	border-right: 1px solid #bcd;
+	position: absolute;
+	top: 0;
+	left: 0;
+	bottom: 0;
+	overflow: hidden;
+}
+
+div.hui_dock_sidebar_main
+{
+	position: absolute;
+	top: 0;
+	right: 0;
+	bottom: 0;
+	left: 200px;
+}	
+
+div.hui_dock_sidebar_line
+{
+	position: absolute;
+	top: 0;
+	left: 195px;
+	bottom: 0;
+	width: 5px;
+}
+
+div.hui_dock_sidebar_collapsed div.hui_dock_sidebar_line
+{
+	background-color: #eee;
+	width: 9px;
+	border-right: 1px solid #ddd;
+	margin-left: -5px;
+	left: 5px;
+}
+
+div.hui_dock_sidebar_collapsed div.hui_dock_sidebar_line:hover
+{
+	background: #ddd;
+	border-color: #ccc;
+}
+
+div.hui_dock_sidebar_collapsed div.hui_dock_sidebar
+{
+	display: none;
+}
+
+div.hui_dock_sidebar_collapsed div.hui_dock_sidebar_main
+{
+	left: 10px;
+}
+
+div.hui_dock_sidebar_line:hover
+{
+	background: #ddd;
+	background: rgba(0,0,0,.1);
+	cursor: pointer;
+	cursor: col-resize;
+}
+
+div.hui_dock_sidebar_resizing
+{
+	cursor: col-resize;
+}
+
+div.hui_dock_sidebar_resizing div.hui_dock_sidebar_line
+{
+	display: none;
+}
+
+div.hui_dock_sidebar_resizing div.hui_dock_progress
+{
+	background: none;
+}

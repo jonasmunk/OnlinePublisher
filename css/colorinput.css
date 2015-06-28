@@ -1,0 +1,45 @@
+span.hui_colorinput
+{
+	display: inline-block;
+	position: relative;
+	vertical-align: middle;
+	margin-right: 24px;
+}
+
+span.hui_colorinput input
+{
+	border: 0px;
+	font-size: 9pt;
+	font-family: Monaco,monospace;
+	width: 60px;
+	border: none;
+	margin: 0;
+	margin-top: -1px;
+	padding: 0;
+	height: 18px;
+}
+
+span.hui_colorinput input:focus
+{
+	outline: none;
+}
+
+a.hui_colorinput
+{
+	top: 1px;
+	right: -22px;
+	position: absolute;
+	width: 20px;
+	height: 20px;
+	border: 1px solid #CCC;
+	border-radius: 2px;
+	margin-left: 3px;
+	margin-top: 1px;
+	text-decoration: none;
+	font-size: 13px;
+	font-family: Tahoma;
+	text-align: center;
+	color: #ccc;
+	line-height: 20px;
+	outline: none;
+}
