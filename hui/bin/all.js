@@ -109,6 +109,23 @@ hui.defer = function(func,bind) {
 	window.setTimeout(func);
 };
 
+hui.extend = function(subClass, superClass) {
+  var methods = subClass.prototype;
+  for (var p in superClass) {
+    if (superClass.hasOwnProperty(p)) {
+      subClass[p] = superClass[p];
+    }
+  }
+  function __() { this.constructor = subClass; }
+  __.prototype = superClass.prototype;
+  subClass.prototype = new __();
+  if (methods) {
+    for (var p in methods) {
+      subClass.prototype[p] = methods[p];
+    }    
+  }
+};
+
 /**
  * Override the properties on the first argument with properties from the last object
  * @param {Object} original The object to override
@@ -912,20 +929,16 @@ hui.collect = function(selectors,context) {
 
 /**
  * Builds an element with the «name» and «options»
- * <pre><strong>options:</strong> {
- *  html : '<em>markup</em>', 
- *  text : 'child text', 
- *  parent : «Element», 
- *  parentFirst : «Element», 
- *  class : 'css_class', 
- *  className : 'css_class', 
- *  style : 'color: blue;' 
- *}
  *
- * Additional properties will be set as attributes
- * </pre>
  * @param {String} name The name of the new element
  * @param {Object} options The options
+ * @param {String} options.html Inner HTML
+ * @param {String} options.text Inner text
+ * @param {String} options.className
+ * @param {String} options.class
+ * @param {Object} options.style Map of styles (see: hui.style.set)
+ * @param {Element} options.parent
+ * @param {Element} options.parentFirst
  * @param {Document} doc (Optional) The document to create the element for
  * @returns {Element} The new element
  */
@@ -1351,9 +1364,10 @@ hui.event = function(event) {
 	return new hui.Event(event);
 };
 
-/** @constructor
+/**
  * Wrapper for events
- * @param event The DOM event
+ * @class
+ * @param event {Event} The DOM event
  */
 hui.Event = function(event) {
 	this.huiEvent = true;
@@ -2103,13 +2117,6 @@ hui.drag = {
 		mover = function(e) {
 			e = hui.event(e);
 			e.stop(e);
-/*
-			var pos = {x:e.getLeft(),y:e.getTop(),time: Date.now()};
-			
-			var speed = (latest.x - pos.x) / (latest.time - pos.time);
-			hui.log(speed);
-			latest = pos;
-*/			
 			if (!moved && options.onBeforeMove) {
 				options.onBeforeMove(e);
 			}
@@ -2238,10 +2245,11 @@ hui.drag = {
 
 //////////////////////////// Preloader /////////////////////////
 
-/** @constructor
+/** 
  * A preloader for images
- * Events: imageDidLoad(index), imageDidGiveError(index), imageDidAbort(index), allImagesDidLoad
- * @param options {context:«prefix for urls»}
+ * @constructor
+ * @param options {Object}
+ * @param options.context {String} Prefix for all URLs
  */
 hui.Preloader = function(options) {
 	this.options = options || {};
@@ -2261,9 +2269,12 @@ hui.Preloader.prototype = {
 			this.images.push(imageOrImages);
 		}
 	},
-	/** Set the delegate (listener) */
-	setDelegate : function(d) {
-		this.delegate = d;
+	/**
+   * Set the delegate (listener)
+   * @param {Object} listener
+   */
+	setDelegate : function(listener) {
+		this.delegate = listener;
 	},
 	/**
 	 * Start loading images beginning at startIndex
@@ -2410,7 +2421,7 @@ hui.location = {
 		document.location.hash='#';
 	},
 	/** Sets a number of parameters
-	 * @param params Array of parameters [{name:'hep',value:'hey'}]
+	 * @param params {Array} Parameters [{name:'hep',value:'hey'}]
 	 */
 	setParameters : function(parms) {
 		var query = '';
@@ -2634,6 +2645,7 @@ hui.animation._parseStyle = function(value) {
 	} else {
 		var color = new hui.Color(value);
 		if (color.ok) {
+  		parsed.type = 'color';
 			parsed.value = {
 				red:color.r,
 				green:color.g,
@@ -2647,8 +2659,8 @@ hui.animation._parseStyle = function(value) {
 ///////////////////////////// Item ///////////////////////////////
 
 /** 
- * @constructor
  * An animation item describing what to animate on an element
+ * @constructor
  */
 hui.animation.Item = function(element) {
 	this.element = element;
@@ -2828,11 +2840,6 @@ hui.ease = {
 	flicker : function(value) {
 		if (value==1) return 1;
 		return Math.random()*value;
-	},
-	
-	linear: function(/* Decimal? */n){
-		// summary: A linear easing function
-		return n;
 	},
 
 	quadIn: function(/* Decimal? */n){
@@ -3019,7 +3026,6 @@ hui.ease = {
 	},
 
 	bounceInOut: function(/* Decimal? */n){
-		// summary: An easing function that "bounces" at the beginning and end of the Animation
 		if(n<0.5){ return hui.ease.bounceIn(n*2) / 2; }
 		return (hui.ease.bounceOut(n*2-1) / 2) + 0.5; // Decimal
 	}
@@ -5454,10 +5460,7 @@ hui.ui.extend = function(obj,options) {
 		hui.ui.latestObjectIndex++;
 		obj.name = 'unnamed'+hui.ui.latestObjectIndex;
 	}
-	if (hui.ui.objects[obj.name]) {
-		hui.log('Widget replaced: '+obj.name,hui.ui.objects[obj.name]);
-	}
-	hui.ui.objects[obj.name] = obj;
+  hui.ui.registerComponent(obj);
 	obj.delegates = [];
 	obj.listen = function(delegate) {
 		hui.array.add(this.delegates,delegate);
@@ -5502,6 +5505,14 @@ hui.ui.extend = function(obj,options) {
 		obj.nodes = hui.collect(obj.nodes,obj.element);
 	}
 };
+
+hui.ui.registerComponent = function(component) {
+	if (hui.ui.objects[component.name]) {
+		hui.log('Widget replaced: '+component.name,hui.ui.objects[component.name]);
+	}
+	hui.ui.objects[component.name] = component;
+  
+}
 
 /** Send a message to all ancestors of a widget */
 hui.ui.callAncestors = function(obj,method,value,event) {
@@ -5853,6 +5864,52 @@ hui.onReady(function() {
 });
 
 /* EOF */
+
+/**
+ * A component
+ * @constructor
+ * @param {Object} options
+ * @param {Element} options.element
+ * @param {String} options.name
+ */
+hui.ui.Component = function(options) {
+	this.name = options.name;
+	if (!this.name) {
+		hui.ui.latestObjectIndex++;
+		this.name = 'unnamed'+hui.ui.latestObjectIndex;
+	}
+	this.element = hui.get(options.element);
+  this.listeners = [];
+  if (this.nodes) {
+  	this.nodes = hui.collect(this.nodes,this.element);
+  }
+  hui.ui.registerComponent(this);
+}
+
+hui.ui.Component.prototype = {
+  /**
+   * Add event listener
+   * @param {Object} listener An object with methods for different events
+   */
+  listen : function(listener) {
+    this.listeners.push(listener);
+  },
+  fire : function(name,value,event) {
+  		return hui.ui.callDelegates(this,name,value,event);
+  },
+  /**
+   * Get the components root element
+   * @returns Element
+   */
+  getElement : function() {
+    return this.element;
+  },
+  destroy : function() {
+    if (this.element) {
+      hui.dom.remove(this.element);
+    }
+  }
+}
 
 /** A data source
  * @constructor
@@ -8684,7 +8741,7 @@ hui.ui.Selection.prototype = {
 			var node = hui.build('div',{'class':'hui_selection_item'});
 			item.element = node;
 			this.element.appendChild(node);
-			var inner = hui.build('span',{'class':'hui_selection_label',text:item.title});
+			var inner = hui.build('span',{'class':'hui_selection_label',text:item.title || item.text || ''});
 			if (item.icon) {
 				node.appendChild(hui.ui.createIcon(item.icon,16));
 			}
@@ -8756,8 +8813,8 @@ hui.ui.Selection.prototype = {
 /////////////////////////// Items ///////////////////////////
 
 /**
- * @constructor
  * A group of items loaded from a source
+ * @constructor
  * @param {Object} options The options : {element,name,source}
  */
 hui.ui.Selection.Items = function(options) {
@@ -8825,8 +8882,9 @@ hui.ui.Selection.Items.prototype = {
 		var hierarchical = this.isHierarchy(items);
 		var level = hui.build('div',{'class':'hui_selection_level',style:(open ? 'display:block' : 'display:none'),parent:parent});
 		hui.each(items,function(item) {
+      var text = item.text || item.title || '';
 			if (item.type=='title') {
-				hui.build('div',{'class':'hui_selection_title',html:'<span>'+item.title+'</span>',parent:level});
+				hui.build('div',{'class':'hui_selection_title',html:'<span>'+text+'</span>',parent:level});
 				return;
 			}
 			var hasChildren = item.children && item.children.length>0;
@@ -8850,7 +8908,7 @@ hui.ui.Selection.Items.prototype = {
 					self.toggle(disc,item);
 				});
 			}
-			var inner = hui.build('span',{'class':'hui_selection_label',text:item.title});
+			var inner = hui.build('span',{'class':'hui_selection_label',text:text});
 			if (item.icon) {
 				node.appendChild(hui.build('span',{'class':'hui_icon_1',style:'background-image: url('+hui.ui.getIconUrl(item.icon,16)+')'}));
 			}
@@ -8864,7 +8922,7 @@ hui.ui.Selection.Items.prototype = {
 				this.parent._onDoubleClick(item);
 			}.bind(this));
 			level.appendChild(node);
-			var info = {title:item.title,icon:item.icon,badge:item.badge,kind:item.kind,element:node,value:item.value};
+			var info = {title:text,icon:item.icon,badge:item.badge,kind:item.kind,element:node,value:item.value};
 			node.dragDropInfo = info;
 			this.items.push(info);
 			this.buildLevel(level,item.children,inc+1,subOpen);
@@ -12672,8 +12730,8 @@ hui.ui.Box.prototype = {
 };
 
 /**
- * @constructor
  * A wizard with a number of steps
+ * @constructor
  */
 hui.ui.Wizard = function(o) {
 	/** @private */
@@ -13958,8 +14016,8 @@ hui.ui.Flash = {
 /* EOF */
 
 /**
- * @constructor
  * A link
+ * @constructor
  */
 hui.ui.Link = function(options) {
 	this.options = options;
@@ -14181,7 +14239,12 @@ hui.ui.Links.prototype = {
 
 /**
  * @constructor
- * @param options The options { debug : «boolean», value : '«html»', autoHideToolbar : «boolean», style : '«css»', replace : «node-or-id»}
+ * @param options {Object} The options
+ * @param options.debug {boolean}
+ * @param options.value {String} The HTML to edit
+ * @param options.css {String}
+ * @param options.autoHideToolbar {boolean}
+ * @param options.replace {Element | String}
  */
 hui.ui.MarkupEditor = function(options) {
 	this.name = options.name;
@@ -17049,7 +17112,7 @@ hui.ui.Slider = function(options) {
 
 hui.ui.Slider.create = function(options) {
 	options = hui.override({},options);
-	var e = options.element = hui.build('span',{'class':'hui_slider',html:'<a href="javascript://"></a><span></span>'});
+	var e = options.element = hui.build('span',{'class':'hui_slider',html:'<a href="javascript://" class="hui_slider_knob"></a><span class="hui_slider_bar"></span>'});
 	if (options.width) {
 		e.style.width = options.width+'px';
 	}
@@ -17073,7 +17136,8 @@ hui.ui.Slider.prototype = {
 			diff : event.getLeft()-pos.left,
 			max : this.element.clientWidth-this.handler.clientWidth-5
 		};
-		hui.cls.add(this.element,'hui_slider_active');
+		hui.cls.add(document.body,'hui_slider-grabbing');
+		hui.cls.add(this.handler,'hui_slider-grabbing');
 	},
 	_onMove : function(event) {
 		var left = event.getLeft()-this.dragInfo.left
@@ -17085,7 +17149,8 @@ hui.ui.Slider.prototype = {
 	},
 	_onAfterMove : function() {
 		this.dragging = false;
-		hui.cls.remove(this.element,'hui_slider_active');
+		hui.cls.remove(document.body,'hui_slider-grabbing');
+		hui.cls.remove(this.handler,'hui_slider-grabbing');
 		this.fire('valueChangedEnd',this.position);
 	},
 	
@@ -20886,6 +20951,38 @@ hui.geometry = {
 }
 
 
+(function(_super) {
+
+  /**
+   * A component with a value
+   * @class
+   * @augments hui.ui.Component
+   * @param {Object} options
+   * @param {any} options.value The value
+   */
+  hui.ui.Editable = function(options) {
+    _super.call(this, options);
+    this.value = options.value;
+  }
+
+  hui.ui.Editable.prototype = {
+    setValue : function(value) {
+      this.value = value;
+    },
+    getValue : function() {
+      return this.value;
+    },
+    getElement : function() {
+      hui.log('Hijacked')
+      return _super.prototype.getElement.call(this);
+    }
+  }
+
+  hui.extend(hui.ui.Editable, _super);
+  
+})(hui.ui.Component)
+
+
 /**
  * Editing of documents composed of different parts
  *
@@ -22763,6 +22860,79 @@ hui.ui.ProgressIndicator.prototype = {
 		});		
 	}
 }
+
+(function (_super) {
+
+  /**
+   * A base skeleton
+   * @class
+   * @augments hui.ui.Component
+   * @param {Object} options
+   */
+  hui.ui.Skeleton = function(options) {
+    this.nodes = {
+      resizeNavigation : 'hui_skeleton_resize_navigation',
+      resizeResults : 'hui_skeleton_resize_results',
+      navigation : 'hui_skeleton_navigation',
+      results : 'hui_skeleton_results',
+      content : 'hui_skeleton_content',
+      actions : 'hui_skeleton_actions'
+    }
+    _super.call(this, options);
+    this._attach();
+  }
+  
+  hui.ui.Skeleton.prototype = {
+    _attach : function() {
+      var initial = 0,
+        navigation = this.nodes.navigation,
+        results = this.nodes.results,
+        content = this.nodes.content,
+        actions = this.nodes.actions,
+        navWidth, fullWidth, resultsWidth,
+        self = this;
+
+      hui.drag.register({
+        element : this.nodes.resizeNavigation,
+        onBeforeMove : function(e) {
+          initial = e.getLeft();
+          navWidth = navigation.clientWidth;
+          resultsWidth = results.clientWidth;
+          fullWidth = self.element.clientWidth;
+        },
+        onMove : function(e) {
+          var diff = e.getLeft() - initial;
+          navigation.style.width = ((navWidth + diff) / fullWidth * 100) + '%';
+          results.style.left = ((navWidth + diff) / fullWidth * 100) + '%';
+          content.style.left = ((navWidth + resultsWidth + diff + 1) / fullWidth * 100) + '%';
+          actions.style.left = ((navWidth + resultsWidth + diff + 1) / fullWidth * 100) + '%';
+        }
+      })
+
+      hui.drag.register({
+        element : this.nodes.resizeResults,
+        onBeforeMove : function(e) {
+          initial = e.getLeft();
+          navWidth = navigation.clientWidth;
+          resultsWidth = results.clientWidth;
+          fullWidth = self.element.clientWidth;
+        },
+        onMove : function(e) {
+          var diff = e.getLeft() - initial;
+          results.style.width = ((resultsWidth + diff) / fullWidth * 100) + '%';
+          content.style.left = ((navWidth + resultsWidth + diff + 1) / fullWidth * 100) + '%';
+          actions.style.left = ((navWidth + resultsWidth + diff + 1) / fullWidth * 100) + '%';
+        }
+      })
+    },
+    $$layout : function() {
+      hui.log(this.element.clientWidth)
+    }
+  }
+
+  hui.extend(hui.ui.Skeleton, _super);
+
+})(hui.ui.Component);
 
 /** @namespace */
 hui.test = {

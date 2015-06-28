@@ -8,6 +8,7 @@ document.write('<script type="text/javascript" src="'+_context+'/js/hui_xml.js">
 document.write('<script type="text/javascript" src="'+_context+'/lib/swfupload/swfupload.js"></script>');
 document.write('<script type="text/javascript" src="'+_context+'/lib/date.js"></script>');
 document.write('<script type="text/javascript" src="'+_context+'/js/ui.js"></script>');
+document.write('<script type="text/javascript" src="'+_context+'/js/Component.js"></script>');
 document.write('<script type="text/javascript" src="'+_context+'/js/Source.js"></script>');
 document.write('<script type="text/javascript" src="'+_context+'/js/DragDrop.js"></script>');
 document.write('<script type="text/javascript" src="'+_context+'/js/Window.js"></script>');
