@@ -109,6 +109,23 @@ hui.defer = function(func,bind) {
 	window.setTimeout(func);
 };
 
+hui.extend = function(subClass, superClass) {
+  var methods = subClass.prototype;
+  for (var p in superClass) {
+    if (superClass.hasOwnProperty(p)) {
+      subClass[p] = superClass[p];
+    }
+  }
+  function __() { this.constructor = subClass; }
+  __.prototype = superClass.prototype;
+  subClass.prototype = new __();
+  if (methods) {
+    for (var p in methods) {
+      subClass.prototype[p] = methods[p];
+    }    
+  }
+};
+
 /**
  * Override the properties on the first argument with properties from the last object
  * @param {Object} original The object to override
@@ -912,20 +929,16 @@ hui.collect = function(selectors,context) {
 
 /**
  * Builds an element with the «name» and «options»
- * <pre><strong>options:</strong> {
- *  html : '<em>markup</em>', 
- *  text : 'child text', 
- *  parent : «Element», 
- *  parentFirst : «Element», 
- *  class : 'css_class', 
- *  className : 'css_class', 
- *  style : 'color: blue;' 
- *}
  *
- * Additional properties will be set as attributes
- * </pre>
  * @param {String} name The name of the new element
  * @param {Object} options The options
+ * @param {String} options.html Inner HTML
+ * @param {String} options.text Inner text
+ * @param {String} options.className
+ * @param {String} options.class
+ * @param {Object} options.style Map of styles (see: hui.style.set)
+ * @param {Element} options.parent
+ * @param {Element} options.parentFirst
  * @param {Document} doc (Optional) The document to create the element for
  * @returns {Element} The new element
  */
@@ -1351,9 +1364,10 @@ hui.event = function(event) {
 	return new hui.Event(event);
 };
 
-/** @constructor
+/**
  * Wrapper for events
- * @param event The DOM event
+ * @class
+ * @param event {Event} The DOM event
  */
 hui.Event = function(event) {
 	this.huiEvent = true;
@@ -2231,10 +2245,11 @@ hui.drag = {
 
 //////////////////////////// Preloader /////////////////////////
 
-/** @constructor
+/** 
  * A preloader for images
- * Events: imageDidLoad(index), imageDidGiveError(index), imageDidAbort(index), allImagesDidLoad
- * @param options {context:«prefix for urls»}
+ * @constructor
+ * @param options {Object}
+ * @param options.context {String} Prefix for all URLs
  */
 hui.Preloader = function(options) {
 	this.options = options || {};
@@ -2254,9 +2269,12 @@ hui.Preloader.prototype = {
 			this.images.push(imageOrImages);
 		}
 	},
-	/** Set the delegate (listener) */
-	setDelegate : function(d) {
-		this.delegate = d;
+	/**
+   * Set the delegate (listener)
+   * @param {Object} listener
+   */
+	setDelegate : function(listener) {
+		this.delegate = listener;
 	},
 	/**
 	 * Start loading images beginning at startIndex
@@ -2403,7 +2421,7 @@ hui.location = {
 		document.location.hash='#';
 	},
 	/** Sets a number of parameters
-	 * @param params Array of parameters [{name:'hep',value:'hey'}]
+	 * @param params {Array} Parameters [{name:'hep',value:'hey'}]
 	 */
 	setParameters : function(parms) {
 		var query = '';
