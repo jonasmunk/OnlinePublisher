@@ -31,7 +31,7 @@
 		</results>
 		<actions>
       <bar variant="layout">
-      <button text="Click me"/>
+      <button text="Click me" small="true"/>
       <segmented>
         <item text="List"/>
         <item text="Grid"/>
