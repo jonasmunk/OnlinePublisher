@@ -1,7 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<checkboxes>
-	<checkbox label="Lorem ipsum" value="a"/>
-	<checkbox label="Dolor sit amet" value="b"/>
-	<checkbox label="Lorem ipsum" value="c"/>
-	<checkbox label="Dolor sit amet" value="d"/>
-</checkboxes>

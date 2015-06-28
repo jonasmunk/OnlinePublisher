@@ -1,8 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<gallery>
-	<image title="Lorem ipsum" value="a" icon="common/folder" kind="folder"/>
-	<image title="Dolor sit amet" value="b" icon="common/folder" kind="folder"/>
-	<image title="Consectetur adipisicing elit" value="c" icon="common/folder" kind="folder"/>
-	<image title="Sed do eiusmod tempor" value="d" icon="common/folder" kind="folder"/>
-	<image title="Sed do eiusmod tempor" value="e" icon="common/folder" kind="folder"/>
-</gallery>
