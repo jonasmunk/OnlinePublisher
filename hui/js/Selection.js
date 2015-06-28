@@ -172,7 +172,7 @@ hui.ui.Selection.prototype = {
 			var node = hui.build('div',{'class':'hui_selection_item'});
 			item.element = node;
 			this.element.appendChild(node);
-			var inner = hui.build('span',{'class':'hui_selection_label',text:item.title});
+			var inner = hui.build('span',{'class':'hui_selection_label',text:item.title || item.text || ''});
 			if (item.icon) {
 				node.appendChild(hui.ui.createIcon(item.icon,16));
 			}
@@ -313,8 +313,9 @@ hui.ui.Selection.Items.prototype = {
 		var hierarchical = this.isHierarchy(items);
 		var level = hui.build('div',{'class':'hui_selection_level',style:(open ? 'display:block' : 'display:none'),parent:parent});
 		hui.each(items,function(item) {
+      var text = item.text || item.title || '';
 			if (item.type=='title') {
-				hui.build('div',{'class':'hui_selection_title',html:'<span>'+item.title+'</span>',parent:level});
+				hui.build('div',{'class':'hui_selection_title',html:'<span>'+text+'</span>',parent:level});
 				return;
 			}
 			var hasChildren = item.children && item.children.length>0;
@@ -338,7 +339,7 @@ hui.ui.Selection.Items.prototype = {
 					self.toggle(disc,item);
 				});
 			}
-			var inner = hui.build('span',{'class':'hui_selection_label',text:item.title});
+			var inner = hui.build('span',{'class':'hui_selection_label',text:text});
 			if (item.icon) {
 				node.appendChild(hui.build('span',{'class':'hui_icon_1',style:'background-image: url('+hui.ui.getIconUrl(item.icon,16)+')'}));
 			}
@@ -352,7 +353,7 @@ hui.ui.Selection.Items.prototype = {
 				this.parent._onDoubleClick(item);
 			}.bind(this));
 			level.appendChild(node);
-			var info = {title:item.title,icon:item.icon,badge:item.badge,kind:item.kind,element:node,value:item.value};
+			var info = {title:text,icon:item.icon,badge:item.badge,kind:item.kind,element:node,value:item.value};
 			node.dragDropInfo = info;
 			this.items.push(info);
 			this.buildLevel(level,item.children,inc+1,subOpen);
