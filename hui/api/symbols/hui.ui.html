@@ -328,6 +328,8 @@ ul.inheritsList
 	
 	<li><a href="../symbols/hui.ui.Columns.html">hui.ui.Columns</a></li>
 	
+	<li><a href="../symbols/hui.ui.Component.html">hui.ui.Component</a></li>
+	
 	<li><a href="../symbols/hui.ui.DatePicker.html">hui.ui.DatePicker</a></li>
 	
 	<li><a href="../symbols/hui.ui.DateTimeField.html">hui.ui.DateTimeField</a></li>
@@ -345,6 +347,8 @@ ul.inheritsList
 	<li><a href="../symbols/hui.ui.Drawing.html">hui.ui.Drawing</a></li>
 	
 	<li><a href="../symbols/hui.ui.DropDown.html">hui.ui.DropDown</a></li>
+	
+	<li><a href="../symbols/hui.ui.Editable.html">hui.ui.Editable</a></li>
 	
 	<li><a href="../symbols/hui.ui.Editor.html">hui.ui.Editor</a></li>
 	
@@ -508,6 +512,8 @@ ul.inheritsList
 	
 	<li><a href="../symbols/hui.window.html">hui.window</a></li>
 	
+	<li><a href="../symbols/String.html">String</a></li>
+	
 </ul>
 <hr />
 			<!-- end publish.classesIndex -->
@@ -528,7 +534,7 @@ ul.inheritsList
 				
 				
 				
-					<br /><i>Defined in: </i> &lt;./../bin/all.js&gt;.
+					<br /><i>Defined in: </i> &lt;tools/../bin/all.js&gt;.
 				
 			</p>
 
@@ -559,6 +565,29 @@ ul.inheritsList
 <!-- ============================== properties summary ===================== -->
 			
 				
+				
+				<table class="summaryTable" cellspacing="0" summary="A summary of the fields documented in the class hui.ui.">
+					<caption>Field Summary</caption>
+					<thead>
+						<tr>
+							<th scope="col">Field Attributes</th>
+							<th scope="col">Field Name and Description</th>
+						</tr>
+					</thead>
+					<tbody>
+					
+						<tr>
+							<td class="attributes">&lt;static&gt; &nbsp;</td>
+							<td class="nameDescription">
+								<div class="fixedFont">
+								hui.ui.<b><a href="../symbols/hui.ui.html#.Skeleton">Skeleton</a></b>
+								</div>
+								<div class="description"></div>
+							</td>
+						</tr>
+					
+					</tbody>
+				</table>
 				
 				
 				
@@ -689,7 +718,8 @@ ul.inheritsList
  text : «String», // the text message
  okText : «String», // text of OK button
  cancelText «String», // text of cancel button
- $ok: «Function» // called when user clicks the OK button
+ $ok: «Function», // called when user clicks the OK button
+ $cancel: «Function» // called when user clicks the Cancel button
 }
 </pre></div>
 							</td>
@@ -977,6 +1007,15 @@ ul.inheritsList
 						<tr>
 							<td class="attributes">&lt;static&gt; &nbsp;</td>
 							<td class="nameDescription">
+								<div class="fixedFont">hui.ui.<b><a href="../symbols/hui.ui.html#.registerComponent">registerComponent</a></b>(component)
+								</div>
+								<div class="description"></div>
+							</td>
+						</tr>
+					
+						<tr>
+							<td class="attributes">&lt;static&gt; &nbsp;</td>
+							<td class="nameDescription">
 								<div class="fixedFont">hui.ui.<b><a href="../symbols/hui.ui.html#.reLayout">reLayout</a></b>()
 								</div>
 								<div class="description"></div>
@@ -1131,6 +1170,33 @@ ul.inheritsList
 			
 
 <!-- ============================== field details ========================== -->		
+			
+				<div class="sectionTitle">
+					Field Detail
+				</div>
+				
+					<a name=".Skeleton"> </a>
+					<div class="fixedFont">&lt;static&gt; 
+					
+					
+					<span class="light">hui.ui.</span><b>Skeleton</b>
+					
+					</div>
+					<div class="description">
+						
+						
+						
+					</div>
+					
+					
+
+						
+						
+						
+						
+
+					
+				
 			
 
 <!-- ============================== method details ========================= -->		
@@ -1634,7 +1700,8 @@ ul.inheritsList
  text : «String», // the text message
  okText : «String», // text of OK button
  cancelText «String», // text of cancel button
- $ok: «Function» // called when user clicks the OK button
+ $ok: «Function», // called when user clicks the OK button
+ $cancel: «Function» // called when user clicks the Cancel button
 }
 </pre>
 						
@@ -2126,7 +2193,7 @@ ul.inheritsList
 					<a name=".getText"> </a>
 					<div class="fixedFont">&lt;static&gt; 
 					
-					<span class="light">{String}</span>
+					<span class="light">{<a href="../symbols/String.html">String</a>}</span>
 					<span class="light">hui.ui.</span><b>getText</b>(key)
 					
 					</div>
@@ -2143,7 +2210,7 @@ ul.inheritsList
 							<dt class="heading">Parameters:</dt>
 							
 								<dt>
-									<span class="light fixedFont">{String}</span> <b>key</b>
+									<span class="light fixedFont">{<a href="../symbols/String.html">String</a>}</span> <b>key</b>
 									
 								</dt>
 								<dd>The key of the text</dd>
@@ -2157,7 +2224,7 @@ ul.inheritsList
 							<dl class="detailList">
 							<dt class="heading">Returns:</dt>
 							
-								<dd><span class="light fixedFont">{String}</span> The localized string</dd>
+								<dd><span class="light fixedFont">{<a href="../symbols/String.html">String</a>}</span> The localized string</dd>
 							
 							</dl>
 						
@@ -2819,6 +2886,42 @@ ul.inheritsList
 
 					<hr />
 				
+					<a name=".registerComponent"> </a>
+					<div class="fixedFont">&lt;static&gt; 
+					
+					
+					<span class="light">hui.ui.</span><b>registerComponent</b>(component)
+					
+					</div>
+					<div class="description">
+						
+						
+						
+					</div>
+					
+					
+					
+						
+							<dl class="detailList">
+							<dt class="heading">Parameters:</dt>
+							
+								<dt>
+									<b>component</b>
+									
+								</dt>
+								<dd></dd>
+							
+							</dl>
+						
+						
+						
+						
+						
+						
+						
+
+					<hr />
+				
 					<a name=".reLayout"> </a>
 					<div class="fixedFont">&lt;static&gt; 
 					
@@ -3318,7 +3421,7 @@ ul.inheritsList
 <!-- ============================== footer ================================= -->
 		<div class="fineprint" style="clear:both">
 			
-			Documentation generated by <a href="http://code.google.com/p/jsdoc-toolkit/" target="_blank">JsDoc Toolkit</a> 2.4.0 on Wed Mar 18 2015 20:08:28 GMT+0100 (CET)
+			Documentation generated by <a href="http://code.google.com/p/jsdoc-toolkit/" target="_blank">JsDoc Toolkit</a> 2.4.0 on Sun Jun 28 2015 18:00:18 GMT+0200 (CEST)
 		</div>
 	</body>
 </html>

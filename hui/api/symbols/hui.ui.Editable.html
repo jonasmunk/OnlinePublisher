@@ -5,7 +5,7 @@
 		<meta http-equiv="content-type" content="text/html; charset=utf-8" />
 		<meta name="generator" content="JsDoc Toolkit" />
 		
-		<title>JsDoc Reference - hui.ui.Formula.Field</title>
+		<title>JsDoc Reference - hui.ui.Editable</title>
 
 		<style type="text/css">
 			/* default.css */
@@ -523,12 +523,14 @@ ul.inheritsList
 <!-- ============================== class title ============================ -->
 			<h1 class="classTitle">
 				
-				Class hui.ui.Formula.Field
+				Class hui.ui.Editable
 			</h1>
 
 <!-- ============================== class summary ========================== -->			
 			<p class="description">
 				
+				<br />Extends
+					<a href="../symbols/hui.ui.Component.html">hui.ui.Component</a>.<br />
 				
 			
 				
@@ -540,7 +542,7 @@ ul.inheritsList
 
 <!-- ============================== constructor summary ==================== -->			
 			
-			<table class="summaryTable" cellspacing="0" summary="A summary of the constructor documented in the class hui.ui.Formula.Field.">
+			<table class="summaryTable" cellspacing="0" summary="A summary of the constructor documented in the class hui.ui.Editable.">
 				<caption>Class Summary</caption>
 				<thead>
 					<tr>
@@ -553,9 +555,9 @@ ul.inheritsList
 						<td class="attributes">&nbsp;</td>
 						<td class="nameDescription" >
 							<div class="fixedFont">
-								<b><a href="../symbols/hui.ui.Formula.Field.html#constructor">hui.ui.Formula.Field</a></b>(options)
+								<b><a href="../symbols/hui.ui.Editable.html#constructor">hui.ui.Editable</a></b>(options)
 							</div>
-							<div class="description">A form field</div>
+							<div class="description">A component with a value</div>
 						</td>
 					</tr>
 				</tbody>
@@ -569,7 +571,7 @@ ul.inheritsList
 			
 				
 				
-				<table class="summaryTable" cellspacing="0" summary="A summary of the methods documented in the class hui.ui.Formula.Field.">
+				<table class="summaryTable" cellspacing="0" summary="A summary of the methods documented in the class hui.ui.Editable.">
 					<caption>Method Summary</caption>
 					<thead>
 						<tr>
@@ -582,7 +584,25 @@ ul.inheritsList
 						<tr>
 							<td class="attributes">&nbsp;</td>
 							<td class="nameDescription">
-								<div class="fixedFont"><b><a href="../symbols/hui.ui.Formula.Field.html#setVisible">setVisible</a></b>(visible)
+								<div class="fixedFont"><b><a href="../symbols/hui.ui.Editable.html#getElement">getElement</a></b>()
+								</div>
+								<div class="description"></div>
+							</td>
+						</tr>
+					
+						<tr>
+							<td class="attributes">&nbsp;</td>
+							<td class="nameDescription">
+								<div class="fixedFont"><b><a href="../symbols/hui.ui.Editable.html#getValue">getValue</a></b>()
+								</div>
+								<div class="description"></div>
+							</td>
+						</tr>
+					
+						<tr>
+							<td class="attributes">&nbsp;</td>
+							<td class="nameDescription">
+								<div class="fixedFont"><b><a href="../symbols/hui.ui.Editable.html#setValue">setValue</a></b>(value)
 								</div>
 								<div class="description"></div>
 							</td>
@@ -592,6 +612,10 @@ ul.inheritsList
 				</table>
 				
 				
+				
+				<dl class="inheritsList">
+				<dt>Methods borrowed from class <a href="../symbols/hui.ui.Component.html">hui.ui.Component</a>: </dt><dd><a href="../symbols/hui.ui.Component.html#destroy">destroy</a>, <a href="../symbols/hui.ui.Component.html#fire">fire</a>, <a href="../symbols/hui.ui.Component.html#listen">listen</a></dd>
+				</dl>
 				
 			
 <!-- ============================== events summary ======================== -->
@@ -605,11 +629,11 @@ ul.inheritsList
 				</div>
 				
 				<div class="fixedFont">
-						<b>hui.ui.Formula.Field</b>(options)
+						<b>hui.ui.Editable</b>(options)
 				</div>
 				
 				<div class="description">
-					A form field
+					A component with a value
 					
 				</div>
 				
@@ -621,10 +645,16 @@ ul.inheritsList
 						<dt class="heading">Parameters:</dt>
 						
 							<dt>
-								 <b>options</b>
+								<span class="light fixedFont">{Object}</span>  <b>options</b>
 								
 							</dt>
 								<dd></dd>
+						
+							<dt>
+								<span class="light fixedFont">{any}</span>  <b>options.value</b>
+								
+							</dt>
+								<dd>The value</dd>
 						
 						</dl>
 					
@@ -647,11 +677,61 @@ ul.inheritsList
 					Method Detail
 				</div>
 				
-					<a name="setVisible"> </a>
+					<a name="getElement"> </a>
 					<div class="fixedFont">
 					
 					
-					<b>setVisible</b>(visible)
+					<b>getElement</b>()
+					
+					</div>
+					<div class="description">
+						
+						
+						
+					</div>
+					
+					
+					
+						
+						
+						
+						
+						
+						
+						
+
+					<hr />
+				
+					<a name="getValue"> </a>
+					<div class="fixedFont">
+					
+					
+					<b>getValue</b>()
+					
+					</div>
+					<div class="description">
+						
+						
+						
+					</div>
+					
+					
+					
+						
+						
+						
+						
+						
+						
+						
+
+					<hr />
+				
+					<a name="setValue"> </a>
+					<div class="fixedFont">
+					
+					
+					<b>setValue</b>(value)
 					
 					</div>
 					<div class="description">
@@ -667,7 +747,7 @@ ul.inheritsList
 							<dt class="heading">Parameters:</dt>
 							
 								<dt>
-									<b>visible</b>
+									<b>value</b>
 									
 								</dt>
 								<dd></dd>
