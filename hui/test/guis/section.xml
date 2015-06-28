@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet type="text/xsl" href="../xml/setup.xsl"?>
+<gui xmlns="uri:hui" pad="10" title="Box">
+	<window name="sectionWindow" title="Section" width="300">
+		<toolbar left="5" variant="window">
+			<icon text="Margins" icon="common/info" selected="true"/>
+			<icon text="Text" icon="common/info"/>
+		</toolbar>
+		<pages>
+			<page>
+				<formula padding="10">
+					<fields labels="above">
+						<field label="Left">
+							<style-length-input/>
+						</field>
+						<field label="Right">
+							<style-length-input/>
+						</field>
+						<field label="Top">
+							<style-length-input/>
+						</field>
+						<field label="Bottom">
+							<style-length-input/>
+						</field>
+					</fields>
+				</formula>
+			</page>
+		</pages>
+	</window>
+	<script>
+		hui.ui.listen({
+			$ready : function() {
+				sectionWindow.show();
+			}
+		})
+	</script>
+</gui>

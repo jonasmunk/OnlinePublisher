@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<items>
+	<item title="Lorem ipsum" value="a" icon="common/folder" kind="folder"/>
+	<item title="Dolor sit amet" value="b" icon="common/folder" kind="folder"/>
+	<item title="Consectetur adipisicing elit" value="c" icon="common/folder" kind="folder"/>
+	<item title="Sed do eiusmod tempor" value="d" icon="common/folder" kind="folder"/>
+</items>

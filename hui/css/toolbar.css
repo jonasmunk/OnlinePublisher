@@ -1,0 +1,524 @@
+div.hui_toolbar
+{
+	padding: 0px;
+	font-family: "Lucida Grande","Tahoma",sans-serif;
+	position: relative;
+	font-size: 0;
+	text-align: left;
+}
+
+
+div.hui_revealing_toolbar
+{
+	left: 0px;
+	overflow: hidden;
+	position: fixed;
+	top: 0px;
+	width: 100%;
+	height: 0px;
+	background: #eee;
+	border-bottom: 1px solid #aaa;
+}
+
+div.hui_toolbar span.hui_divider
+{
+	vertical-align: middle;
+	display: inline-block;
+	border-right: 1px solid #fff;
+	border-left: 1px solid #ccc;
+	height: 45px;
+	margin: 1px 5px 0px;
+}
+
+div.hui_toolbar_centered
+{
+	text-align: center;
+}
+
+div.hui_toolbar_right
+{
+	position: absolute;
+	right: 0;
+	top: 0;
+}
+
+div.hui_toolbar_body_fixed_height
+{
+	height: 56px;
+	overflow: hidden;
+}
+
+.hui_dock_tabs div.hui_toolbar_body
+{
+	padding-left: 5px;
+}
+
+.hui_dock_tabs div.hui_toolbar_right
+{
+	right: 5px;
+}
+
+
+/********************************** variants ************************/
+
+div.hui_toolbar_window
+{
+	border-top: 1px solid #ccc;
+	border-bottom: 1px solid #fff;
+}
+
+div.hui_toolbar_window div.hui_toolbar_body
+{
+	border-bottom: 1px solid #ccc;
+	border-top: 1px solid #fff;
+	padding-left: 3px;
+}
+
+div.hui_toolbar_dock
+{
+	border-bottom: 1px solid #ddd;
+	background: #CCC -webkit-gradient(linear, 0% 0%, 0% 100% , from(white), to(#F0F0F0));
+	background: -moz-linear-gradient(top, white, #F0F0F0);
+	filter: progid:DXImageTransform.Microsoft.gradient (GradientType=0, startColorstr=white, endColorstr=#F0F0F0);
+}
+
+/********************************** Icon ************************/
+
+
+a.hui_toolbar_icon
+{
+	margin-top: 1px;
+	height: 55px;
+	vertical-align: middle;
+	display: inline-block;
+	font-size: 0px;
+	text-align: center;
+	cursor: pointer;
+	text-decoration: none;
+}
+
+a.hui_toolbar_icon:active span.hui_icon
+{
+    -webkit-transform: scale(.9);
+    -moz-transform: scale(.9);
+    -ms-transform: scale(.9);
+    transform: scale(.9);
+}
+
+a.hui_toolbar_icon:focus
+{
+	background: url('../gfx/toolbar_bg.png') left 0 no-repeat;
+	outline: none;
+}
+
+a.hui_toolbar_icon:focus span.hui_toolbar_inner_icon
+{
+	background: url('../gfx/toolbar_bg.png') right -55px no-repeat;
+}
+
+a.hui_toolbar_icon:focus span.hui_toolbar_inner_icon span.hui_toolbar_inner_icon
+{
+	background: url('../gfx/toolbar_bg.png') left -110px repeat-x;
+}
+
+a.hui_toolbar_icon span.hui_toolbar_inner_icon
+{
+	display: block;
+}
+
+a.hui_toolbar_icon span.hui_toolbar_inner_icon span.hui_toolbar_inner_icon
+{
+	padding: 5px 0 0;
+	height: 50px;
+	margin: 0 7px;
+}
+
+a.hui_toolbar_icon_selected
+{
+	background: url('../gfx/toolbar_bg.png') left -165px no-repeat;
+}
+
+a.hui_toolbar_icon_selected span.hui_toolbar_inner_icon
+{
+	background: url('../gfx/toolbar_bg.png') right -220px no-repeat;
+	height: 55px;
+}
+
+a.hui_toolbar_icon_selected span.hui_toolbar_inner_icon span.hui_toolbar_inner_icon
+{
+	background: url('../gfx/toolbar_bg.png') left -275px repeat-x;
+	height: 51px;
+}
+
+a.hui_toolbar_icon span.hui_icon
+{
+	height: 32px;
+	width: 32px;
+	margin: 0px auto 1px auto;
+	display: inline-block;
+	position: relative;
+}
+
+span.hui_icon_overlay
+{
+	height: 32px;
+	width: 32px;
+	background: right bottom no-repeat;
+	display:inline-block;
+}
+
+span.hui_icon_badge
+{
+	background: #f00;
+	background: -webkit-gradient(linear, left top, left bottom, from(#f69), to(#f03));
+	border: 1px solid #d00;
+	color: #fff;
+	display:inline-block;
+	font-size: 10px;
+	height: 11px;
+	line-height: 11px;
+	position: absolute;
+	padding: 0 2px;
+	border-radius: 4px;
+	font-family: Arial;
+	right: -5px;
+	bottom: -2px;
+	box-shadow: 0 1px 2px rgba(0,0,0,.2);
+}
+
+
+a.hui_toolbar_icon:hover span.hui_icon
+{
+	background-position: 0px -32px;
+}
+
+a.hui_toolbar_icon strong
+{
+	font-size: 11px;
+	color: #345;
+	font-weight: normal;
+	display: block;
+}
+
+a.hui_toolbar_icon_disabled
+{
+	opacity: 0.3;
+	cursor: default;
+    filter: saturate(0);
+	-webkit-filter: saturate(0);
+}
+
+a.hui_toolbar_icon_disabled:hover span.hui_icon
+{
+	background-position: 0 0;
+}
+
+/********************** Buttons ********************/
+
+div.hui_toolbar a.hui_button
+{
+	margin: 0;
+	font-size: 12px;
+}
+
+/********************** Buttons ********************/
+
+div.hui_toolbar_badge
+{
+	vertical-align: middle;
+	display: inline-block;
+	background: url('../gfx/toolbar_badge.png') left top no-repeat;
+	height: 25px;
+	line-height: 22px;
+	font-size: 9pt;
+	padding-left: 8px;
+	margin: 15px 4px 0px 4px;
+}
+
+div.hui_toolbar_inner_badge
+{
+	background: url('../gfx/toolbar_badge.png') right -25px no-repeat;
+	padding-right: 8px;
+	height: 25px;
+	float: left;
+}
+
+div.hui_toolbar_inner_badge div.hui_toolbar_inner_badge
+{
+	background: url('../gfx/toolbar_badge.png') right -50px repeat-x;
+	padding: 0px 8px;
+}
+
+div.hui_toolbar_badge strong
+{
+	margin-right: 4px;
+	color: #666;
+}
+
+div.hui_toolbar_badge_icon
+{
+	width: 16px;
+	height: 16px;
+	float: left;
+	margin: 4px 3px 0px 0px;
+}
+
+/********************************* No labels **************************/
+
+div.hui_toolbar_nolabels
+{
+	height: auto;
+}
+
+div.hui_toolbar_nolabels a.hui_toolbar_icon
+{
+	height: 34px;	
+}
+
+div.hui_toolbar_nolabels a.hui_toolbar_icon strong
+{
+	display: none;
+}
+
+div.hui_toolbar_nolabels span.hui_toolbar_inner_icon span.hui_toolbar_inner_icon
+{
+	padding-top: 0;
+}
+
+div.hui_toolbar_nolabels .hui_toolbar_search
+{
+	height: 34px;
+}
+
+div.hui_toolbar_nolabels .hui_toolbar_search .hui_searchfield  
+{
+	margin-top: 4px;
+}
+
+div.hui_toolbar_nolabels div.hui_toolbar_search span
+{
+	display: none;
+}
+
+div.hui_toolbar_nolabels div.hui_divider 
+{
+	height: 30px;
+	margin-top: 3px;
+}
+
+/************************************ Border *****************************/
+
+div.hui_toolbar_border_top
+{
+	border-top: 1px solid #ddd;
+	padding: 0;
+}
+
+div.hui_toolbar_border_top div.hui_toolbar_body
+{
+	border-top: 1px solid #fff;
+	background: #f2f2f3;
+}
+
+div.hui_toolbar_border_bottom
+{
+	border-bottom: 1px solid #ddd;
+	padding: 0;
+}
+
+div.hui_toolbar_border_bottom div.hui_toolbar_body
+{
+	border-top: 1px solid #fff;
+	background: #f2f2f3;
+}
+
+div.hui_layout_top div.hui_toolbar_border_top, div.hui_layout_top div.hui_toolbar_border_top div.hui_toolbar_body
+{
+	padding: 0 6px;
+	width: 100%;
+	margin-left: -6px;
+}
+
+/************************************ Items *****************************/
+
+span.hui_toolbar_item
+{
+	display: inline-block;
+	vertical-align: middle;
+	padding: 0 5px;
+	height: 56px;
+}
+
+span.hui_toolbar_item_body
+{
+	display:block;
+	height: 39px;
+	text-align: center;
+}
+
+span.hui_toolbar_item span.hui_numberfield,
+span.hui_toolbar_item span.hui_colorinput
+{
+	top: 8px;
+}
+
+span.hui_toolbar_item a.hui_checkbox
+{
+	margin-top: 11px;
+}
+
+span.hui_toolbar_item a.hui_dropdown
+{
+	margin-top: 8px;
+}
+
+span.hui_toolbar_item span.hui_fontinput
+{
+	margin-top: 8px;
+}
+
+span.hui_toolbar_item span.hui_fontinput a.hui_dropdown
+{
+	margin-top: 0px;
+}
+
+span.hui_toolbar_item span.hui_searchfield
+{
+	margin-top: 8px;
+}
+
+span.hui_toolbar_item div.hui_datetime
+{
+	width: 170px;
+}
+
+/*span.hui_toolbar_item .hui_checkboxes
+{
+	padding-top: 11px;
+}*/
+
+span.hui_toolbar_item .hui_field
+{
+	padding-top: 8px;
+}
+
+span.hui_toolbar_item span.hui_segmented
+{
+	margin-top: 10px;
+}
+
+
+span.hui_toolbar_label
+{
+	color:#334455;
+	display:block;
+	font-size:11px;
+	text-align:center;
+}
+
+/********************************* Grid ******************************/
+
+span.hui_toolbar_grid
+{
+	height: 56px;
+	vertical-align: middle;
+	display: inline-block;
+}
+
+table.hui_toolbar_grid
+{
+	display: inline-table;
+	border-collapse: collapse;
+	vertical-align: middle;
+	position: relative;
+	top: 1px;
+}
+
+table.hui_toolbar_grid td
+{
+	padding: 0px;
+	height: 27px;
+}
+
+table.hui_toolbar_grid th
+{
+	color: #334455;
+	font-size: 11px;
+	font-weight: normal;
+	padding-right: 2px;
+	padding-left: 5px;
+	text-align: right;
+	height: 27px;
+	padding: 0px 2px 0 0;
+}
+
+label.hui_toolbar_grid
+{
+	font-size: 11px;
+	color: #334455;
+	vertical-align: middle;
+}
+
+
+/************************** More ************************/
+
+span.hui_toolbar_more
+{
+	display: inline-block;
+}
+
+a.hui_toolbar_more
+{
+	display: inline-block;
+	font-size: 12px;
+	border-radius: 9px;
+	height: 18px;
+	background: #e4e4e4;
+	line-height: 18px;
+	padding: 0 10px;
+	color: #666;
+	text-decoration: none;
+	margin: 0 5px;
+	cursor: pointer;
+}
+
+a.hui_toolbar_more:hover
+{
+	background: #ddd;
+	color: #333;
+}
+
+a.hui_toolbar_more_default
+{
+	background: #CCC -webkit-linear-gradient(top, #eee, #F0F0F0);
+	padding: 0 5px;
+	box-shadow: inset 0 0 3px rgba(0,0,0,.1);
+	font-size: 12px;
+	text-align: center;
+}
+
+a.hui_toolbar_more_default:hover
+{
+	box-shadow: inset 0 0 3px rgba(0,0,0,.3);
+	background: #CCC -webkit-linear-gradient(top, #ccc, #F0F0F0);
+}
+
+.hui_tabs_tab_light a.hui_toolbar_more
+{
+	background: #f3f3f3;
+}
+
+.hui_tabs_tab_light a.hui_toolbar_more:hover
+{
+	background: #eaeaea;
+}
+
+span.hui_toolbar_more_content
+{
+	display: none;
+}
+
+span.hui_toolbar_more_expanded span.hui_toolbar_more_content
+{
+	display: inline-block;
+}

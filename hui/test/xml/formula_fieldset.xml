@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet type="text/xsl" href="setup.xsl"?>
+<gui xmlns="uri:hui" pad="10" title="Formula">
+	<controller name="controller" source="formula.js"/>
+	<source name="itemsSource" url="data/source_items.xml"/>
+	<box width="600" title="Title with toolbars" variant="textured" padding="10">
+		<toolbar>
+			<icon icon="common/color" title="Hep hey!" selected="true"/>
+			<icon icon="common/folder" title="Show values" name="showValues"/>
+			<icon icon="common/settings" title="Hep hey!" disabled="true"/>
+			<icon icon="common/folder" title="Show window" click="win.show();"/>
+		</toolbar>
+		<formula name="formula1">
+			<fieldset legend="This is a group">
+				<fields labels="above">
+					<field label="Brugernavn:">
+						<text-input key="username"/>
+					</field>
+					<field label="Kodeord:">
+						<text-input secret="true" key="password"/>
+					</field>
+					<field label="Template:">
+						<dropdown key="template" value="2">
+							<item title="Lorem inpsum" value="1"/>
+							<item title="Consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua" value="2"/>
+							<item title="Ut enim ad minim veniam" value="3"/>
+							<item title="Excepteur sint occaecat" value="4"/>
+						</dropdown>
+					</field>
+				</fields>
+			</fieldset>
+			<space height="10"/>
+			<fieldset legend="This is a group">
+				<fields labels="above">
+					<field label="Notat:">
+						<text-input lines="6" key="note"/>
+					</field>
+					<field label="Number:">
+						<number-input key="number"/>
+					</field>
+					<field label="Number (min -300):">
+						<number-input key="number2" min="-300"/>
+					</field>
+					<field label="Number (min 300):">
+						<number-input key="number2" min="300"/>
+					</field>
+					<field label="Style length:">
+						<style-length-input key="style" value="15px"/>
+					</field>
+				</fields>
+			</fieldset>
+			<buttons top="10">
+				<button title="Gem" highlighted="true"/>
+				<button title="Slet"/>
+				<button title="Annuller"/>
+			</buttons>
+		</formula>
+	</box>
+</gui>

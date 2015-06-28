@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet type="text/xsl" href="setup.xsl"?>
+<gui xmlns="uri:hui" pad="10" title="Style">
+	<box width="600" title="Picker!" padding="10">
+		<toolbar>
+			
+		</toolbar>
+		<picker title="Please select one..." item-width="92" item-height="120" shadow="true">
+			<item title="Ridiculus Ligula" value="1" image="../gfx/thumbnail.png" />
+			<item title="Ridiculus Ligula" value="2" image="../gfx/thumbnail.png" />
+			<item title="Ridiculus Ligula" value="3" image="../gfx/thumbnail.png" />
+			<item title="Ridiculus Ligula" value="4" image="../gfx/thumbnail.png" />
+			<item title="Ridiculus Ligula" value="5" image="../gfx/thumbnail.png" />
+			<item title="Ridiculus Ligula" value="6" image="../gfx/thumbnail.png" />
+			<item title="Ridiculus Ligula" value="7" image="../gfx/thumbnail.png" />
+			<item title="Ridiculus Ligula" value="8" image="../gfx/thumbnail.png" />
+			<item title="Ridiculus Ligula" value="9" image="../gfx/thumbnail.png" />
+			<item title="Ridiculus Ligula" value="a" image="../gfx/thumbnail.png" />
+			<item title="Ridiculus Ligula" value="b" image="../gfx/thumbnail.png" />
+			<item title="Ridiculus Ligula" value="c" image="../gfx/thumbnail.png" />
+			<item title="Ridiculus Ligula" value="d" image="../gfx/thumbnail.png" />
+			<item title="Ridiculus Ligula" value="e" image="../gfx/thumbnail.png" />
+			<item title="Ridiculus Ligula" value="f" image="../gfx/thumbnail.png" />
+			<item title="Ridiculus Ligula" value="g" image="../gfx/thumbnail.png" />
+		</picker>
+	</box>
+</gui>

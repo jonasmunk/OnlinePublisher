@@ -1,0 +1,158 @@
+@import url('msie.css');
+
+body.hui, html.hui
+{
+	overflow-y: auto;
+	overflow-x: auto;
+}
+
+
+div.hui_body
+{
+	position: fixed;
+	bottom: 0;
+	top: 0;
+	left: 0;
+	right: 0;
+}
+
+table.hui_view
+{
+	height: auto;
+}
+
+table.hui_calendar_weekview div.hui_calendar_event
+{
+	width: 17.8%;
+}
+
+td.view_toolbar
+{
+	height: 58px;
+}
+
+a.hui_toolbar_icon, span.hui_toolbar_item, span.hui_divider, span.hui_toolbar_grid
+{
+	vertical-align: top;
+}
+
+span.hui_divider
+{
+	top: 5px;
+	position: relative;
+}
+
+table.hui_toolbar_grid
+{
+	display: inline;
+}
+
+div.hui_toolbar_icon div.hui_icon
+{
+	margin: 0px;
+}
+
+a.hui_toolbar_icon_disabled
+{
+	filter: alpha(opacity = 30);
+	background-color: #F2F2F3;
+}
+
+a.hui_button_disabled
+{
+	filter: alpha(opacity = 50);
+	background-color: #e7e7e7;
+}
+
+div.hui_window_dark a.hui_button_disabled
+{
+	background-color: #333;
+}
+
+div.hui_toolbar_icon_disabled div.hui_icon
+{
+	background-position: 0 -64px;
+}
+
+div.hui_toolbar_icon_disabled span
+{
+	color: #999;
+}
+
+div.hui_window_content
+{
+	height: 1%;
+}
+
+.hui_picker_item_selected, .hui_picker_item_selected:hover
+{
+	background-color: #3875D7;
+}
+
+div.hui_box_body
+{
+	height: 1%;
+}
+
+input.hui_formula_text
+{
+	margin-top: 0;
+}
+
+textarea.hui_formula_text
+{
+	overflow-y: auto;
+}
+
+span.hui_field_content, div.hui_list, div.hui_box_middle
+{
+	zoom: 1;
+}
+
+
+.hui_overflow
+{
+	position: static;
+	width: 100%;
+}
+
+span.hui_upload_button_input input
+{
+	filter: alpha(opacity = 0);
+}
+
+em.hui_button_icon_notext
+{
+	margin-top: 6px;
+}
+
+/********************** layout ****************/
+
+table.hui_layout
+{
+	height: auto;
+	border-collapse: collapse;
+}
+
+table.hui_layout_middle
+{
+	border-collapse: collapse;
+}
+
+td.hui_layout_center
+{
+	width: 100%;
+}
+
+span.hui_formula_text_multiline
+{
+	position: relative;
+	display: block;
+}
+
+/********************** Tabs ****************/
+
+div.hui_tabs_bar li
+{
+	display: inline;
+}

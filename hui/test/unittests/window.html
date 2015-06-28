@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+	<script src="head.js"></script>
+	<script charset="utf-8" type="text/javascript" src="../../js/Window.js"></script>
+	<script charset="utf-8" type="text/javascript" src="../../js/Alert.js"></script>
+</head>
+<body>
+	<script type="text/javascript">
+		var win;
+		hui.test.run([
+			function() {
+				win = hui.ui.Window.create({title:'This is the window title',width:200,name:'myWindow'});
+				hui.test.assertEquals(hui.ui.get('myWindow'),win,'Could get window by name');
+			},
+			function() {
+				win.show();
+				hui.test.assertVisible(win.getElement(),'Window is visible');
+			},
+			1000,
+			function(){
+				win.toggle();
+			},
+			1000,
+			function() {
+				hui.test.assertNotVisible(win.getElement(),'Window is not visible');
+			},
+			function() {
+				win.show();
+				win.setTitle('Hey hey hep!');
+				win.add(hui.build('div',{text:'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.'}));
+			},
+			function() {
+				var closeEventFired;
+				win.listen({$userClosedWindow:function() {
+					closeEventFired=true;
+				}});
+				var close = hui.get.firstByClass(win.getElement(),'hui_window_close');
+				hui.test.click(close,function() {
+					hui.test.assertTrue(closeEventFired,'userClosedWindow was fired');
+					win.show();
+				});
+			},
+			1000,
+			function() {
+				hui.ui.showMessage({text:'Dark variant',duration: 1000});
+				win.setVariant('dark');
+			},
+			1000,
+			function() {
+				hui.ui.showMessage({text:'Light variant',duration: 1000});
+				win.setVariant('light');
+			}
+		]);
+	</script>
+</body>
+</html>

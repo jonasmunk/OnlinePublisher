@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet type="text/xsl" href="../xml/setup.xsl"?>
+<gui xmlns="uri:hui" padding="10" title="Start">
+	<box width="500" title="Søgning">
+		<toolbar>
+			<icon icon="common/save" text="Gem" name="saveButton" disabled="true"/>
+		</toolbar>
+		<formula padding="10" name="formula">
+			<fields>
+				<field label="Titel">
+					<text-input/>
+				</field>
+				<field label="Tekst">
+					<text-input multiline="true"/>
+				</field>
+			</fields>
+			<fieldset legend="Sider">
+				<fields>
+				<field label="Opførsel">
+					<dropdown value="inactive">
+						<item value="inactive" text="Inaktiv"/>
+						<item value="possible" text="Kan vælges"/>
+						<item value="active" text="Altid aktiv"/>
+						<item value="automatic" text="Valgt på forhånd"/>
+					</dropdown>
+				</field>
+				<field label="Tekst">
+					<text-input/>
+				</field>
+				</fields>
+			</fieldset>
+		</formula>
+	</box>
+	
+	<script>
+		hui.ui.listen({
+			$valuesChanged$formula : function() {
+				saveButton.enable();
+				hui.ui.stress(saveButton);
+			},
+			$click$saveButton : function() {
+				hui.ui.showMessage({text:'Informationen er gemt',duration:2000})
+				saveButton.disable();
+			}
+		})
+	</script>
+</gui>

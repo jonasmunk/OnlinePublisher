@@ -1,0 +1,25 @@
+{
+  "name": "HumaniseUI",
+  "version": "1.0.0",
+  "description": "CMS",
+  "main": "index.js",
+  "scripts": {
+    "test": "test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/in2isoft/OnlinePublisher.git"
+  },
+  "author": "Jonas Brinkmann Munk",
+  "license": "Free",
+  "bugs": {
+    "url": "https://github.com/in2isoft/OnlinePublisher/issues"
+  },
+  "homepage": "https://github.com/in2isoft/OnlinePublisher",
+  "devDependencies": {
+    "grunt-contrib-jshint": "^0.10.0",
+    "grunt-contrib-qunit": "^0.5.2",
+    "grunt-contrib-watch": "^0.6.1",
+    "grunt-lint5": "^0.3.0"
+  }
+}

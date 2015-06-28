@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<items>
+	<item title="Front page" value="1" icon="common/page" kind="page"/>
+	<item title="Copyright" value="432432" icon="common/page" kind="page"/>
+	<item title="Contact" value="7654754" icon="common/page" kind="page"/>
+	<item title="Search" value="41431" icon="common/page" kind="page"/>
+</items>

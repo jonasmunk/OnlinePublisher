@@ -1,0 +1,68 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+	<title>HUI</title>
+	<link charset="utf-8" title="front" media="screen" type="text/css" href="../../css/dev.css" rel="stylesheet" />
+	<!--[if lt IE 7]>
+		<link rel="stylesheet" type="text/css" href="../../css/msie6.css"> </link>
+	<![endif]-->
+	<!--[if IE 7]>
+		<link rel="stylesheet" type="text/css" href="../../css/msie7.css"> </link>
+	<![endif]-->
+	<script charset="utf-8" type="text/javascript" src="../../js/hui.js"></script>
+	<script charset="utf-8" type="text/javascript" src="../../js/hui_animation.js"></script>
+	<script charset="utf-8" type="text/javascript" src="../../js/hui_color.js"></script>
+	<script charset="utf-8" type="text/javascript" src="../../js/ui.js"></script>
+	<script charset="utf-8" type="text/javascript" src="../../js/Bar.js"></script>
+	<script charset="utf-8" type="text/javascript" src="../../js/SearchField.js"></script>
+	<script charset="utf-8" type="text/javascript" src="../../js/List.js"></script>
+	<script charset="utf-8" type="text/javascript" src="../../js/Layout.js"></script>
+	<script charset="utf-8" type="text/javascript" src="../../js/Window.js"></script>
+	<script charset="utf-8" type="text/javascript" src="../../js/Finder.js"></script>
+	<script charset="utf-8" type="text/javascript" src="../../js/Overflow.js"></script>
+	<script charset="utf-8" type="text/javascript" src="../../js/Columns.js"></script>
+	<script charset="utf-8" type="text/javascript" src="../../js/Selection.js"></script>
+	<script charset="utf-8" type="text/javascript" src="../../js/Source.js"></script>
+	<script charset="utf-8" type="text/javascript" src="../../js/Overlay.js"></script>
+	<script charset="utf-8" type="text/javascript" src="../../js/DragDrop.js"></script>
+	<script type="text/javascript" charset="utf-8">
+		hui.ui.state = '';
+		hui.ui.context = '../../..';
+	</script>
+</head>
+
+<body>
+    <script type="text/hui">
+        <!--
+            <gui xmlns="uri:hui" padding="20" title="Box">
+            
+            </gui>
+        -->
+    </script>
+	<script type="text/javascript" charset="utf-8">
+        
+        (function() {
+            var xsl = '<?xml version="1.0" encoding="UTF-8"?>'+
+                '<xsl:stylesheet xmlns="http://www.w3.org/1999/xhtml" xmlns:xsl="http://www.w3.org/1999/XSL/Transform">'+
+                '<xsl:variable name="dev">true</xsl:variable>'+
+                		'<xsl:variable name="profile">true</xsl:variable>'+
+                		'<xsl:variable name="version">true</xsl:variable>'+
+                		'<xsl:variable name="pathVersion">true</xsl:variable>'+
+                		'<xsl:variable name="context">true</xsl:variable>'+
+                		'<xsl:variable name="language">true</xsl:variable>'+
+                '<xsl:include href="/~jonasmunk/onlinepublisher/hui/xslt/gui.xsl"/>'+
+		        '<xsl:template match="/"><xsl:apply-templates/></xsl:template>'+
+                '</xsl:stylesheet>';
+            xsl = hui.xml.parse(xsl);
+            hui.log(xsl);
+			var xml = hui.xml.parse('<?xml version="1.0"?><gui xmlns="uri:hui" padding="20" title="Box"></gui>');
+    		var result = hui.xml.transform(xml,xsl);
+            hui.log(result);
+            hui.log(hui.xml.serialize(result));
+            
+        })()
+		
+	</script>
+	<button onclick="">Button</button>
+</body>
+</html>

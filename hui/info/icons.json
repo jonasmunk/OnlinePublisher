@@ -1,0 +1,729 @@
+{
+    "application": {
+        "calendars": [
+            16, 
+            32
+        ], 
+        "developer": [
+            16, 
+            32
+        ], 
+        "files": [
+            16, 
+            32
+        ], 
+        "inbox": [
+            16, 
+            32
+        ], 
+        "news": [
+            16, 
+            32
+        ], 
+        "pages": [
+            16, 
+            32
+        ], 
+        "persons": [
+            16, 
+            32
+        ], 
+        "photos": [
+            16, 
+            32
+        ], 
+        "shop": [
+            16, 
+            32
+        ], 
+        "statistics": [
+            16, 
+            32
+        ], 
+        "water": [
+            16, 
+            32
+        ]
+    }, 
+    "colorpicker": {
+        "swatches": [
+            16
+        ], 
+        "wheel_brightness": [
+            16
+        ], 
+        "wheel_pastels": [
+            16
+        ], 
+        "wheel_saturated": [
+            16
+        ]
+    }, 
+    "common": {
+        "calendar": [
+            16, 
+            32
+        ], 
+        "clean": [
+            32
+        ], 
+        "close": [
+            16, 
+            32
+        ], 
+        "color": [
+            16, 
+            32
+        ], 
+        "delete": [
+            16, 
+            24, 
+            32
+        ], 
+        "design": [
+            32
+        ], 
+        "dogcow": [
+            32
+        ], 
+        "draft": [
+            16
+        ], 
+        "duplicate": [
+            16, 
+            32
+        ], 
+        "edit": [
+            16, 
+            32
+        ], 
+        "email": [
+            16, 
+            32
+        ], 
+        "files": [
+            16
+        ], 
+        "flag": [
+            32
+        ], 
+        "folder": [
+            16, 
+            32
+        ], 
+        "folder_grey": [
+            16
+        ], 
+        "frame": [
+            32
+        ], 
+        "gauge": [
+            16, 
+            32
+        ], 
+        "hierarchy": [
+            16, 
+            32
+        ], 
+        "hierarchy_item": [
+            16, 
+            32
+        ], 
+        "image": [
+            16, 
+            32
+        ], 
+        "info": [
+            16, 
+            32
+        ], 
+        "info_small": [
+            32
+        ], 
+        "internet": [
+            16, 
+            32
+        ], 
+        "larger": [
+            32
+        ], 
+        "letter": [
+            16, 
+            32
+        ], 
+        "lifebuoy": [
+            128, 
+            64
+        ], 
+        "link": [
+            16, 
+            32
+        ], 
+        "move_left": [
+            32
+        ], 
+        "move_right": [
+            32
+        ], 
+        "new": [
+            16, 
+            32
+        ], 
+        "news": [
+            16, 
+            32
+        ], 
+        "next": [
+            32
+        ], 
+        "note": [
+            32
+        ], 
+        "object": [
+            16, 
+            32
+        ], 
+        "ok": [
+            32
+        ], 
+        "page": [
+            16, 
+            32
+        ], 
+        "pagereference": [
+            16
+        ], 
+        "pause": [
+            32
+        ], 
+        "person": [
+            16, 
+            32
+        ], 
+        "phone": [
+            16
+        ], 
+        "play": [
+            16, 
+            32
+        ], 
+        "previous": [
+            32
+        ], 
+        "product": [
+            16, 
+            32
+        ], 
+        "refresh": [
+            32
+        ], 
+        "save": [
+            32
+        ], 
+        "search": [
+            16, 
+            32
+        ], 
+        "security": [
+            16, 
+            32
+        ], 
+        "settings": [
+            16, 
+            32
+        ], 
+        "smaller": [
+            32
+        ], 
+        "smiley": [
+            32
+        ], 
+        "stamp": [
+            128, 
+            64
+        ], 
+        "star": [
+            16, 
+            32
+        ], 
+        "stop": [
+            16, 
+            24, 
+            32
+        ], 
+        "success": [
+            16, 
+            24, 
+            32
+        ], 
+        "template": [
+            32
+        ], 
+        "time": [
+            16, 
+            32
+        ], 
+        "tools": [
+            16, 
+            32
+        ], 
+        "upload": [
+            64
+        ], 
+        "user": [
+            16, 
+            32
+        ], 
+        "view": [
+            32
+        ], 
+        "warning": [
+            16, 
+            24, 
+            32
+        ], 
+        "water": [
+            16, 
+            32
+        ]
+    }, 
+    "edit": {
+        "clear": [
+            16
+        ], 
+        "decrease_font_size": [
+            16
+        ], 
+        "increase_font_size": [
+            16
+        ], 
+        "text_align_center": [
+            16
+        ], 
+        "text_align_justify": [
+            16
+        ], 
+        "text_align_left": [
+            16
+        ], 
+        "text_align_right": [
+            16
+        ], 
+        "text_bold": [
+            16
+        ], 
+        "text_italic": [
+            16
+        ], 
+        "text_underline": [
+            16
+        ]
+    }, 
+    "file": {
+        "generic": [
+            16, 
+            32
+        ], 
+        "text": [
+            32
+        ]
+    }, 
+    "flag": {
+        "de": [
+            16
+        ], 
+        "dk": [
+            16
+        ], 
+        "gb": [
+            16
+        ]
+    }, 
+    "geo": {
+        "map": [
+            16, 
+            32
+        ]
+    }, 
+    "input": {
+        "datetime": [
+            14
+        ]
+    }, 
+    "inset": {
+        "cross": [
+            16
+        ], 
+        "globe": [
+            16
+        ], 
+        "public": [
+            16
+        ], 
+        "stamp": [
+            32
+        ], 
+        "tools": [
+            16
+        ], 
+        "user": [
+            16
+        ], 
+        "view": [
+            32
+        ]
+    }, 
+    "layout": {
+        "layout": [
+            32
+        ], 
+        "row": [
+            32
+        ]
+    }, 
+    "monochrome": {
+        "archive": [
+            16
+        ], 
+        "arrow_right_light": [
+            16
+        ], 
+        "attachment": [
+            16
+        ], 
+        "checkmark": [
+            16
+        ], 
+        "close": [
+            16
+        ], 
+        "crosshairs": [
+            16
+        ], 
+        "delete": [
+            16
+        ], 
+        "dot": [
+            16
+        ], 
+        "edit": [
+            16
+        ], 
+        "email": [
+            16
+        ], 
+        "expand": [
+            16
+        ], 
+        "feed": [
+            16
+        ], 
+        "file": [
+            16
+        ], 
+        "gear": [
+            16, 
+            32
+        ], 
+        "globe": [
+            16
+        ], 
+        "graph": [
+            16
+        ], 
+        "hierarchy": [
+            16
+        ], 
+        "image": [
+            16
+        ], 
+        "info": [
+            16
+        ], 
+        "info_light": [
+            16
+        ], 
+        "invisible": [
+            16
+        ], 
+        "latitude": [
+            16
+        ], 
+        "layout": [
+            16
+        ], 
+        "link": [
+            16
+        ], 
+        "lock": [
+            12
+        ], 
+        "longitude": [
+            16
+        ], 
+        "loudspeaker": [
+            32
+        ], 
+        "message": [
+            32
+        ], 
+        "new": [
+            16
+        ], 
+        "news": [
+            16
+        ], 
+        "next": [
+            16
+        ], 
+        "nomenu": [
+            16
+        ], 
+        "nosearch": [
+            16
+        ], 
+        "note": [
+            16
+        ], 
+        "nuclear": [
+            16
+        ], 
+        "package": [
+            16
+        ], 
+        "person": [
+            16
+        ], 
+        "pin": [
+            16
+        ], 
+        "play": [
+            16
+        ], 
+        "previous": [
+            16
+        ], 
+        "recycle": [
+            16
+        ], 
+        "round_arrow_down": [
+            16
+        ], 
+        "round_arrow_left": [
+            16
+        ], 
+        "round_arrow_right": [
+            16
+        ], 
+        "round_arrow_up": [
+            16
+        ], 
+        "round_question": [
+            16
+        ], 
+        "round_x": [
+            16
+        ], 
+        "search": [
+            16
+        ], 
+        "stamp": [
+            16
+        ], 
+        "stop": [
+            16
+        ], 
+        "text": [
+            16
+        ], 
+        "view": [
+            16
+        ], 
+        "warning": [
+            12, 
+            16
+        ]
+    }, 
+    "overlay": {
+        "change": [
+            32
+        ], 
+        "delete": [
+            32
+        ], 
+        "download": [
+            32
+        ], 
+        "edit": [
+            32
+        ], 
+        "new": [
+            32
+        ], 
+        "new_monochrome": [
+            32
+        ], 
+        "search": [
+            32
+        ], 
+        "stop": [
+            32
+        ], 
+        "success": [
+            32
+        ], 
+        "upload": [
+            32
+        ], 
+        "view": [
+            32
+        ], 
+        "warning": [
+            32
+        ]
+    }, 
+    "part": {
+        "news": [
+            16
+        ]
+    }, 
+    "status": {
+        "paused": [
+            16
+        ], 
+        "running": [
+            16
+        ], 
+        "waiting": [
+            16
+        ]
+    }, 
+    "style": {
+        "align_center": [
+            16
+        ], 
+        "align_left": [
+            16
+        ], 
+        "align_right": [
+            16
+        ], 
+        "float_left": [
+            16
+        ], 
+        "float_none": [
+            16
+        ], 
+        "float_right": [
+            16
+        ], 
+        "font_variant_normal": [
+            16
+        ], 
+        "font_variant_smallcaps": [
+            16
+        ], 
+        "list-style-circle": [
+            16
+        ], 
+        "list-style-decimal": [
+            16
+        ], 
+        "list-style-disc": [
+            16
+        ], 
+        "list-style-lower-alpha": [
+            16
+        ], 
+        "list-style-lower-roman": [
+            16
+        ], 
+        "list-style-square": [
+            16
+        ], 
+        "list-style-upper-alpha": [
+            16
+        ], 
+        "list-style-upper-roman": [
+            16
+        ], 
+        "text_align_center": [
+            16
+        ], 
+        "text_align_justify": [
+            16
+        ], 
+        "text_align_left": [
+            16
+        ], 
+        "text_align_right": [
+            16
+        ], 
+        "text_bold": [
+            16
+        ], 
+        "text_decoration_linethrough": [
+            16
+        ], 
+        "text_decoration_overline": [
+            16
+        ], 
+        "text_decoration_underline": [
+            16
+        ], 
+        "text_italic": [
+            16
+        ], 
+        "text_normal": [
+            16
+        ], 
+        "text_transform_capitalize": [
+            16
+        ], 
+        "text_transform_lowercase": [
+            16
+        ], 
+        "text_transform_none": [
+            16
+        ], 
+        "text_transform_uppercase": [
+            16
+        ]
+    }, 
+    "table": {
+        "cell": [
+            32
+        ], 
+        "column": [
+            32
+        ], 
+        "row": [
+            32
+        ]
+    }, 
+    "transparent": {
+        "play": [
+            64
+        ], 
+        "playstroke": [
+            64
+        ], 
+        "warning": [
+            64
+        ]
+    }, 
+    "view": {
+        "calendar": [
+            16
+        ], 
+        "gallery": [
+            16
+        ], 
+        "graph": [
+            16
+        ], 
+        "list": [
+            16
+        ]
+    }
+}
