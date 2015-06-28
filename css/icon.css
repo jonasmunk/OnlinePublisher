@@ -1,0 +1,84 @@
+span.hui_icon_1, span.hui_icon_16, a.hui_icon_16
+{
+	display: inline-block;
+	width: 16px;
+	height: 16px;
+	vertical-align: middle;
+}
+
+a.hui_icon_16:hover
+{
+	background-position: 0 -16px;
+}
+
+span.hui_icon_2, span.hui_icon_32, a.hui_icon_32
+{
+	display: inline-block;
+	width: 32px;
+	height: 32px;
+	vertical-align: middle;
+}
+
+span.hui_icon_12, a.hui_icon_12
+{
+	display: inline-block;
+	width: 12px;
+	height: 12px;
+	vertical-align: middle;
+}
+
+span.hui_icon_24
+{
+	display: inline-block;
+	width: 24px;
+	height: 24px;
+	vertical-align: middle;
+}
+
+span.hui_icon_64
+{
+	display: inline-block;
+	width: 64px;
+	height: 64px;
+	vertical-align: middle;
+}
+
+span.hui_icon_128
+{
+	display: inline-block;
+	width: 128px;
+	height: 128px;
+	vertical-align: middle;
+}
+
+a.hui_icon_labeled
+{
+	display: inline-block;	
+	vertical-align: middle;
+	text-align: center;
+	text-decoration: none;
+}
+
+a.hui_icon_labeled strong
+{
+	display: block;
+	color: #333;
+	font-size: 12px;
+	font-weight: normal;
+	margin-top: 2px;
+}
+
+a.hui_icon_labeled_128 strong
+{
+	font-size: 18px;
+}
+
+a.hui_icon_labeled:hover span.hui_icon_64
+{
+	background-position: 0 -64px;
+}
+
+a.hui_icon_labeled:hover span.hui_icon_128
+{
+	background-position: 0 -128px;
+}

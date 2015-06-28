@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet type="text/xsl" href="setup.xsl"?>
+<gui xmlns="uri:hui" padding="10" title="Calendar">
+	<controller name="controller" source="diagram.js"/>
+    <source name="diagramSource" url="data/diagram_model.json"/>
+	<structure>
+		<top>
+			<toolbar>
+				<icon icon="common/folder" title="Ny gruppe" name="newGroup" overlay="new"/>
+				<icon icon="common/folder" title="Ny type" name="newType" overlay="new"/>
+				<right>
+					<search title="Søgning"/>
+				</right>
+			</toolbar>
+		</top>
+		<middle>
+			<left>
+				<sidebar>
+					<selection value="all" name="selector">
+						<item icon="common/time" title="Altid" value="all"/>
+						<item icon="common/folder" title="Database" value="database"/>
+						<item icon="common/person" title="Alle objekter" value="object"/>
+					</selection>
+				</sidebar>
+			</left>
+			<center>
+				<diagram name="diagram" source="diagramSource"/>
+			</center>
+		</middle>
+		<bottom>
+			
+		</bottom>
+	</structure>
+</gui>

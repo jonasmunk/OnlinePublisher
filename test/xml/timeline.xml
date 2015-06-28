@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet type="text/xsl" href="setup.xsl"?>
+<gui xmlns="uri:hui" pad="10" title="Timeline">
+	<controller name="controller" source="timeline.js"/>
+	<structure>
+		<top>
+			<toolbar>
+				<icon icon="common/folder" title="Ny gruppe" name="newGroup" overlay="new"/>
+				<icon icon="common/folder" title="Ny type" name="newType" overlay="new"/>
+				<right>
+					<search title="Søgning"/>
+				</right>
+			</toolbar>
+		</top>
+		<middle>
+			<left>
+				<sidebar>
+					<selection value="all" name="selector">
+						<item icon="common/time" title="Altid" value="all"/>
+					</selection>
+				</sidebar>
+			</left>
+			<center>
+				<overflow>
+					<timeline name="timeline"/>
+				</overflow>
+			</center>
+		</middle>
+		<bottom>
+			
+		</bottom>
+	</structure>
+</gui>

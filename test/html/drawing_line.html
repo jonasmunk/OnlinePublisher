@@ -1,0 +1,66 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+	<title>HUI</title>
+	<link charset="utf-8" title="front" media="screen" type="text/css" href="../../css/dev.css" rel="stylesheet" />
+	<!--[if lt IE 7]>
+		<link rel="stylesheet" type="text/css" href="../../css/msie6.css"> </link>
+	<![endif]-->
+	<!--[if IE 7]>
+		<link rel="stylesheet" type="text/css" href="../../css/msie7.css"> </link>
+	<![endif]-->
+	<script charset="utf-8" type="text/javascript" src="../../js/hui.js"></script>
+	<script charset="utf-8" type="text/javascript" src="../../js/hui_animation.js"></script>
+	<script charset="utf-8" type="text/javascript" src="../../js/hui_color.js"></script>
+	<script charset="utf-8" type="text/javascript" src="../../js/ui.js"></script>
+	<script charset="utf-8" type="text/javascript" src="../../js/Drawing.js"></script>
+
+	<script type="text/javascript" charset="utf-8">
+		hui.onReady(function() {
+			var d = hui.ui.Drawing.create({width:'100%',height:'100%',parent:'drawing'});
+			var line1 = d.addLine({from:{x:10,y:50},to:{x:120,y:230},width:1,color:'#000',end:{symbol:'arrow'}});
+			
+			var line2 = d.addLine({from:{x:40,y:80},to:{x:60,y:20},width:1,color:'#000',end:{symbol:'arrow'}});
+			
+			hui.animate({
+				node : line2,
+				duration : 4000,
+				ease : hui.ease.elastic,
+				$render : function(obj,pos) {
+					line1.setFrom({x:pos*50,y:pos*50});
+					line1.setTo({x:pos*100,y:pos*80});
+				}
+			});
+			hui.drag.register({
+				element : 'drawing',
+				_line : null,
+				onStart : function() {
+					hui.log('start')
+				},
+				onBeforeMove : function(e) {
+					e = hui.event(e);
+					this._line = d.addLine({from:{x:e.getLeft(),y:e.getTop()},to:{x:e.getLeft(),y:e.getTop()},width:1,color:'#aaa',end:{symbol:'arrow'}});
+				},
+				onMove : function(e) {
+					e = hui.event(e);
+					this._line.setTo({x:e.getLeft(),y:e.getTop()});
+				}
+			})
+		})
+	</script>
+	<style>
+		html,body,div.drawing
+		{
+			width: 100%;
+			height: 100%;
+			margin: 0;
+			cursor: crosshair;
+		}
+	</style>
+</head>
+
+<body>
+	<div id="drawing"></div>
+
+</body>
+</html>

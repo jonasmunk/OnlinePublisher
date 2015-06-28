@@ -1,0 +1,139 @@
+span.hui_searchfield
+{
+	display: inline-block;
+	height: 25px;
+	background: url('../gfx/search_field.png') left top no-repeat;
+	text-align: left;
+	position: relative;
+	cursor: text;
+	width: 100px;
+	font-size: 0;
+	line-height: 0;
+	vertical-align: middle;
+}
+
+span.hui_searchfield span
+{
+	display: block;
+	height: 25px;
+	background: url('../gfx/search_field.png') right -25px no-repeat;
+}
+
+span.hui_searchfield span span
+{
+	height: 25px;
+	background-position: right -50px;
+	background-repeat: repeat-x;
+	margin: 0 13px 0 21px;
+	padding: 0 7px 0 2px;
+}
+
+span.hui_searchfield input
+{
+	border: none;
+	background: none;
+	font-size: 12px;
+	height: 16px;
+	margin: 5px 0 0;
+	padding: 0;
+	width: 100%;
+	outline: none;
+}
+
+a.hui_searchfield_reset
+{
+	position: absolute;
+	right: 6px;
+	top: 6px;
+	width: 13px;
+	height: 13px;
+	display: none;
+	font-size: 0;
+	background: url('../gfx/search_field.png') left -300px;
+    cursor: pointer;
+}
+
+a.hui_searchfield_reset:hover
+{
+	background-position: 0 -313px;
+}
+
+span.hui_searchfield_dirty a, span.hui_searchfield_focus_dirty a
+{
+	display: block;
+}
+
+em.hui_searchfield_placeholder
+{
+	position: absolute;
+	font-style: normal;
+	color: #999;
+	font-size: 11px;
+	line-height: 17px;
+	left: 25px;
+	height: 17px;
+	top: 4px;
+	font-family: "Lucida Grande","Lucida Sans Unicode",sans-serif;
+}
+
+span.hui_searchfield_dirty em,span.hui_searchfield_focus em, span.hui_searchfield_focus_dirty em
+{
+	display: none;
+}
+
+span.hui_searchfield_adaptive
+{
+	width: 100%;
+	min-width: 30px;
+}
+
+/*** Focus ***/
+
+span.hui_searchfield_focus
+{
+	background-position: 0 -75px;
+}
+
+span.hui_searchfield_focus span
+{
+	background-position: right -100px;
+}
+
+span.hui_searchfield_focus span span
+{
+	background-position: 0 -125px;
+}
+
+
+
+span.hui_searchfield_dirty
+{
+	background-position: 0 -150px;
+}
+
+span.hui_searchfield_dirty span
+{
+	background-position: right -175px;
+}
+
+span.hui_searchfield_dirty span span
+{
+	background-position: 0 -200px;
+}
+
+
+
+span.hui_searchfield_focus_dirty
+{
+	background-position: 0 -225px;
+}
+
+span.hui_searchfield_focus_dirty span
+{
+	background-position: right -250px;
+}
+
+span.hui_searchfield_focus_dirty span span
+{
+	background-position: 0 -275px;
+}

@@ -1,0 +1,37 @@
+/******************************** Token field *************************/
+
+div.hui_tokenfield
+{
+	overflow: hidden;
+	padding-top: 2px;
+	padding-left: 3px;
+}
+
+input.hui_tokenfield_token
+{
+	border-color: #BBBBBB #CCCCCC #DDDDDD;
+	border-style:solid;
+	border-width: 1px;
+	width: 50px;
+	margin: 0 5px 5px 0;
+	padding: 1px 0px;
+    border-radius: 2px;
+	-webkit-box-shadow: inset 0 1px 3px #ddd;
+    box-shadow: inset 0 1px 3px #ddd;
+	font-size: 9pt;
+	text-indent: 2px;
+}
+
+input.hui_tokenfield_token:focus
+{
+	border-color: #2678ff;
+	outline: 4px auto #2678ff;
+}
+
+div.hui_context_dark input.hui_tokenfield_token
+{
+	background: #222;
+	border: 1px solid #444;
+	color: #fff;
+	-webkit-box-shadow: inset 0 1px 3px #000;
+}
