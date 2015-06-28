@@ -100,6 +100,22 @@
       min-height: 500px;
     }
   }
+  
+  @supports (-webkit-backdrop-filter: none) or (backdrop-filter: none) {
+    .layout_head {
+      -webkit-backdrop-filter: blur(8px);
+      //-webkit-backdrop-filter: blur(8px) brightness(1.15);
+    }
+    .scroll {
+      .layout_head {
+        background: rgba(255,255,255,0.6);
+      }
+      
+      .layout_menu_link {
+        text-shadow: 0 0 10px #fff;
+      }
+    }
+  }
 }
 
 
