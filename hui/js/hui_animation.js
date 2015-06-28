@@ -177,6 +177,7 @@ hui.animation._parseStyle = function(value) {
 	} else {
 		var color = new hui.Color(value);
 		if (color.ok) {
+  		parsed.type = 'color';
 			parsed.value = {
 				red:color.r,
 				green:color.g,
@@ -190,8 +191,8 @@ hui.animation._parseStyle = function(value) {
 ///////////////////////////// Item ///////////////////////////////
 
 /** 
- * @constructor
  * An animation item describing what to animate on an element
+ * @constructor
  */
 hui.animation.Item = function(element) {
 	this.element = element;
@@ -371,11 +372,6 @@ hui.ease = {
 	flicker : function(value) {
 		if (value==1) return 1;
 		return Math.random()*value;
-	},
-	
-	linear: function(/* Decimal? */n){
-		// summary: A linear easing function
-		return n;
 	},
 
 	quadIn: function(/* Decimal? */n){
@@ -562,7 +558,6 @@ hui.ease = {
 	},
 
 	bounceInOut: function(/* Decimal? */n){
-		// summary: An easing function that "bounces" at the beginning and end of the Animation
 		if(n<0.5){ return hui.ease.bounceIn(n*2) / 2; }
 		return (hui.ease.bounceOut(n*2-1) / 2) + 0.5; // Decimal
 	}
