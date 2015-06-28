@@ -1,6 +1,6 @@
 /**
- * @constructor
  * A wizard with a number of steps
+ * @constructor
  */
 hui.ui.Wizard = function(o) {
 	/** @private */

@@ -1,6 +1,11 @@
 /**
  * @constructor
- * @param options The options { debug : «boolean», value : '«html»', autoHideToolbar : «boolean», style : '«css»', replace : «node-or-id»}
+ * @param options {Object} The options
+ * @param options.debug {boolean}
+ * @param options.value {String} The HTML to edit
+ * @param options.css {String}
+ * @param options.autoHideToolbar {boolean}
+ * @param options.replace {Element | String}
  */
 hui.ui.MarkupEditor = function(options) {
 	this.name = options.name;

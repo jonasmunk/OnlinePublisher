@@ -1,6 +1,6 @@
 /**
- * @constructor
  * A link
+ * @constructor
  */
 hui.ui.Link = function(options) {
 	this.options = options;
