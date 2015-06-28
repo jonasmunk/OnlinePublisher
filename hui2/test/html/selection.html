@@ -1,0 +1,61 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+	<title>HUI</title>
+	<link charset="utf-8" title="front" media="screen" type="text/css" href="../../css/dev.css" rel="stylesheet" />
+	<!--[if lt IE 7]>
+		<link rel="stylesheet" type="text/css" href="../../css/msie6.css"> </link>
+	<![endif]-->
+	<!--[if IE 7]>
+		<link rel="stylesheet" type="text/css" href="../../css/msie7.css"> </link>
+	<![endif]-->
+	<script charset="utf-8" type="text/javascript" src="../../js/hui.js"></script>
+	<script charset="utf-8" type="text/javascript" src="../../js/hui_animation.js"></script>
+	<script charset="utf-8" type="text/javascript" src="../../js/hui_color.js"></script>
+	<script charset="utf-8" type="text/javascript" src="../../js/ui.js"></script>
+	<script charset="utf-8" type="text/javascript" src="../../js/Window.js"></script>
+	<script charset="utf-8" type="text/javascript" src="../../js/Alert.js"></script>
+	<script charset="utf-8" type="text/javascript" src="../../js/Button.js"></script>
+	<script charset="utf-8" type="text/javascript" src="../../js/Layout.js"></script>
+	<script charset="utf-8" type="text/javascript" src="../../js/Columns.js"></script>
+	<script charset="utf-8" type="text/javascript" src="../../js/Picker.js"></script>
+	<script charset="utf-8" type="text/javascript" src="../../js/Selection.js"></script>
+	<script type="text/javascript" charset="utf-8">
+		hui.ui.state = '';
+		hui.ui.context = '../../..';
+	</script>
+</head>
+
+<body>
+<script type="text/javascript" charset="utf-8">
+	var items = [
+		{title:'Basal',icon:'common/color',	     value:'basic'},
+		{title:'Moderne',icon:'common/color',    value:'modern'},
+		{title:'Tegneserie',icon:'common/color', value:'cartoon'},
+		{title:'Ocean',icon:'common/color',      value:'ocean'},
+		{title:'Snow',icon:'common/color',       value:'snow'},
+		{title:'Beach',icon:'common/color',      value:'beach'}
+	];
+	var objects = [
+		{key:'basic',title:'Basal',image:'../gfx/thumbnail.png'},
+		{key:'modern',title:'Moderne',image:'../gfx/thumbnail.png'},
+		{key:'cartoon',title:'Tegneserie',image:'../gfx/thumbnail.png'},
+		{key:'ocean',title:'Ocean',image:'../gfx/thumbnail.png'},
+		{key:'snow',title:'Snow',image:'../gfx/thumbnail.png'},
+		{key:'beach',title:'Beach',image:'../gfx/thumbnail.png'}
+	];
+		var win = hui.ui.Window.create({variant:'dark',padding:5,width:400});
+		var cols = hui.ui.Columns.create();
+		win.add(cols);
+		var s = hui.ui.Selection.create(null,{width:100});
+		s.setObjects(items);
+		cols.addToColumn(0,s);
+		var picker = hui.ui.Picker.create('templatePicker',{itemWidth:92,itemHeight:120});
+		picker.setObjects(objects);
+		cols.addToColumn(1,picker);
+		cols.setColumnStyle(0,{'paddingRight':'10px'});
+		win.show();
+</script>
+
+</body>
+</html>

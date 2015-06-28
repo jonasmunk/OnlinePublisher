@@ -1,0 +1,181 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet type="text/xsl" href="../xml/setup.xsl"?>
+<gui xmlns="uri:hui" title="System" padding="10">
+	<source name="hierarchySource" url="data/hierarchy.xml"/>
+	<source name="listSource" url="data/list_pages.xml"/>
+	<source name="languagesSource" url="data/languages.xml"/>
+	
+	<structure>
+		<top>
+			<toolbar>
+				<icon icon="common/page" title="Ny side" overlay="new" click="newPage.show()"/>
+				<more>
+					<icon icon="common/hierarchy_item" title="Nyt punkt" overlay="new" click="newPage.show()"/>
+					<icon icon="common/hierarchy" title="Nyt hierarki" overlay="new" click="box.show()"/>
+					<icon icon="common/template" title="Ny skabelon" overlay="new" click="newPage.show()"/>
+				</more>
+				<divider/>
+				<icon icon="common/edit" title="Edit" name="edit" disabled="true"/>
+				<icon icon="common/info" title="Info" name="info" disabled="true"/>
+				<icon icon="common/view" title="Show" name="view" disabled="true"/>
+				<icon icon="common/delete" title="Delete" name="delete" disabled="true">
+					<confirm text="Are you sure? It cannot be undone" ok="Yes, delete" cancel="Cancel"/>
+				</icon>
+				<icon icon="common/internet" overlay="upload" title="Udgiv ændringer" click="pages.next()"/>
+				<right>
+					<field label="Søgning">
+						<searchfield/>
+					</field>
+				</right>
+			</toolbar>
+		</top>
+		<middle>
+			<left>
+				<overflow>
+					<selection value="user" name="selector">
+						<item icon="common/page" title="Alle sider" value="all"/>
+						<item icon="common/time" title="Seneste" badge="10" value="latest"/>
+						<item icon="common/draft" title="Klader" badge="5" value="drafts"/>
+						<item icon="common/duplicate" title="Skabeloner" badge="2" value="templates"/>
+						<item icon="common/star" title="Favorites" badge="12" value="favorites"/>
+						<title>Hierarkier</title>
+						<items source="hierarchySource"/>
+						<title>Sprog</title>
+						<item icon="flag/dk" title="Dansk" value="da"/>
+						<item icon="flag/gb" title="Engelsk" value="en"/>
+						<title>Grupper</title>
+						<item icon="common/folder" title="Mine sider" value="warnings"/>
+						<title>Oversigter</title>
+						<item icon="monochrome/news" title="Nyheder" value="news"/>
+						<item icon="monochrome/warning" title="Advarsler" value="warnings"/>
+						<item icon="monochrome/edit" title="Ændret" value="changed"/>
+						<item icon="monochrome/delete" title="Uden menupunk" value="nomenu"/>
+						<item icon="monochrome/archive" title="Arkiveret" value="archive"/>
+					</selection>
+				</overflow>
+			</left>
+			<center>
+				<pages height="full" name="pages">
+					<page key="list">
+						<split>
+							<row height="40%">
+								<overflow>
+									<list name="list" source="listSource"/>
+								</overflow>
+							</row>
+							<row height="20%">
+								<overflow>
+									<list name="list" source="listSource"/>
+								</overflow>
+							</row>
+							<row>
+								
+								<bar variant="layout">
+									<text text="Jonas Munk"/>
+									<right>
+									<button text="Hey" small="true"/>
+									</right>
+								</bar>
+								<overflow>
+									<columns height="full">
+										<column>
+											<bar variant="layout">
+											</bar>
+											<overflow>
+												<list source="listSource"/>
+											</overflow>
+										</column>
+										<column width="30%">
+											<split>
+												<row>
+													<bar variant="layout">
+														<text text="Parents"/>
+													</bar>
+													<overflow>
+														<list source="listSource"/>
+													</overflow>
+												</row>
+												<row>
+													<bar variant="layout">
+														<text text="Children"/>
+													</bar>
+													<overflow>
+														<list source="listSource"/>
+													</overflow>
+												</row>
+												<row>
+													<bar variant="layout">
+														<text text="Permissions"/>
+														<right>
+															<segmented variant="inset">
+																<item text="Hep"/>
+																<item text="Hey"/>
+															</segmented>
+															<button text="Add permission" small="true"/>
+														</right>
+													</bar>
+													<overflow>
+														<list source="listSource"/>
+													</overflow>
+												</row>
+											</split>
+										</column>
+									</columns>
+								</overflow>
+								
+							</row>
+						</split>
+					</page>
+					
+					<page key="viewpage" background="wood">
+						<bar variant="layout">
+							<button text="Close" click="pages.next()" small="true"/>
+						</bar>
+						<columns flexible="true">
+							<column width="200px">
+							</column>
+							<column>
+								<box>
+								<formula>
+									<fields>
+										<field label="Beskrivelse:">
+											<text-input lines="6"/>
+										</field>
+										<field label="Sti:">
+											<text-input/>
+										</field>
+										<!--
+										<field label="Nøgleord:">
+											<text-input/>
+										</field>
+										<field label="Dato:">
+											<datetime-input/>
+										</field>
+										-->
+										<field label="Sprog:">
+											<dropdown/>
+										</field>
+										<field label="Design:">
+											<dropdown/>
+										</field>
+										<field label="Opsætning:">
+											<dropdown/>
+										</field>
+										<field label="Inaktiv:">
+											<checkbox/>
+										</field>
+									</fields>
+								</formula>
+								</box>
+							</column>
+						</columns>
+					</page>
+				</pages>
+			</center>
+		</middle>
+		<bottom>
+			
+		</bottom>
+	</structure>
+
+</gui>

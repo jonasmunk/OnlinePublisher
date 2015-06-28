@@ -1,0 +1,87 @@
+div.hui_overlay
+{
+	display: none;
+	position: absolute;
+	height: 40px;
+	background: url('../gfx/overlay_24.png') left top no-repeat;
+	padding-left: 7px;
+	font-size: 0;
+}
+
+div.hui_inner_overlay
+{
+	background: url('../gfx/overlay_24.png') right -40px no-repeat;
+	padding-right: 7px;
+	height: 40px;
+	white-space: nowrap;
+}
+
+div.hui_inner_overlay div.hui_inner_overlay
+{
+	background: url('../gfx/overlay_24.png') left -80px repeat-x;
+	padding: 0px;
+}
+
+div.hui_overlay_icon
+{
+	width: 32px;
+	height: 32px;
+	float: left;
+	margin: 3px 1px 0px;
+}
+
+div.hui_overlay a.hui_button
+{
+	vertical-align: top;
+	margin-top: 5px;
+	margin-left: 2px;
+}
+
+
+div.hui_overlay a.hui_button, div.hui_overlay a.hui_button span
+{
+	background-image: url('../gfx/button_overlay.png');
+	color: #fff;
+}
+
+div.hui_overlay a.hui_button_highlighted, div.hui_overlay a.hui_button_highlighted span
+{
+	background-image: url('../gfx/button_overlay_highlighted.png');
+}
+
+span.hui_overlay_text
+{
+	display: inline-block;
+	line-height: 33px;
+	vertical-align: top;
+	height: 30px;
+	padding: 0 10px;
+	color: #fff;
+	font-family: "Lucida Grande","Lucida Sans Unicode",sans-serif;
+	font-size: 12px;
+	margin-top: 2px;
+	cursor: default;
+}
+
+/*** Light variant ***/
+
+div.hui_overlay_light
+{
+	background: #fafafa;
+	border: 1px solid #eee;
+	border-radius: 4px;
+	padding: 0 3px;
+	height: 36px;
+}
+
+div.hui_overlay_light div.hui_inner_overlay
+{
+	background: none;
+	padding: 0;
+	height: 36px;
+}
+
+div.hui_overlay_light div.hui_overlay_icon
+{
+	margin-top: 2px;
+}

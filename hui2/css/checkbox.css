@@ -1,0 +1,62 @@
+a.hui_checkbox
+{
+	overflow: hidden;
+	font-size: 10pt;
+	line-height: 20px;
+	cursor: pointer;
+	color: #004A80;
+	display: inline-block;
+	outline: none;
+	text-decoration: none;
+	vertical-align: middle;
+}
+
+a.hui_checkbox span
+{
+	float: left;
+	width: 20px;
+	height: 20px;
+	margin-right: 2px;
+}
+
+a.hui_checkbox span span
+{
+	background: url('../gfx/checkbox.png') no-repeat;
+	margin: 0;
+}
+
+a.hui_checkbox:hover span span
+{
+	background-position: 0 -20px;
+}
+
+a.hui_checkbox:active span span
+{
+	background-position: 0 -40px;
+}
+
+a.hui_checkbox_focused
+{
+	text-shadow: #3366ff 0px 0px 2px;
+	color: #002244;
+}
+
+a.hui_checkbox_focused span
+{
+	background: url('../gfx/checkbox.png') 0 -120px no-repeat;
+}
+
+a.hui_checkbox_selected span span
+{
+	background-position: 0px -60px;
+}
+
+a.hui_checkbox_selected:hover span span
+{
+	background-position: 0px -80px;
+}
+
+a.hui_checkbox_selected:active span span
+{
+	background-position: 0px -100px;
+}

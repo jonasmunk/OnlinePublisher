@@ -1,0 +1,599 @@
+div.hui_list
+{
+	font-family: "Lucida Grande", "Lucida Sans Unicode", sans-serif;
+	/*padding-right: 10px;*/
+	min-height: 100%;
+}
+
+div.hui_list_body
+{
+}
+
+div.hui_list table
+{
+	width: 100%;
+	border-collapse: collapse;
+	border-spacing: 0;
+	background: #fff;
+}
+
+div.hui_list th
+{
+	text-align: left;
+	font-size: 9pt;
+	background: #fafafa;
+	text-shadow: 0 1px 0px white;
+	color: #334455;
+	vertical-align: top;
+	line-height: 21px;
+	height: 21px;
+	background: url('../gfx/list_header.png') repeat-x;
+	cursor: default;
+	padding: 0px 5px;
+	font-weight: normal;
+	white-space: nowrap;
+}
+
+div.hui_list th span
+{
+	display: block;
+}
+
+div.hui_list th.sortable:hover
+{
+	cursor: pointer;
+	background: url('../gfx/list_header.png') left -21px repeat-x;
+}
+
+div.hui_list th.sort_ascending, 
+div.hui_list th.sort_descending
+{
+	background: url('../gfx/list_header.png') left -42px repeat-x;
+	color: #000;
+}
+
+div.hui_list th.sort_ascending:hover, 
+div.hui_list th.sort_descending:hover
+{
+	background: url('../gfx/list_header.png') left -63px repeat-x;
+}
+
+div.hui_list th.sort_ascending span
+{
+	background: url('../gfx/list_ascending.png') right center no-repeat;
+}
+
+div.hui_list th.sort_descending span
+{
+	background: url('../gfx/list_descending.png') right center no-repeat;
+}
+
+div.hui_list td
+{
+	font-size: 9pt;
+	border-bottom: 1px solid #eee;
+	padding: 2px 5px;
+	vertical-align: top;
+	cursor: default;
+}
+
+.hui_list_wrap
+{
+    word-break: break-word;
+}
+
+.hui_list_object
+{
+	overflow: hidden;
+	padding-bottom: 2px;
+	line-height: 16px;
+	display: inline-block;
+	margin-right: 7px;
+}
+
+div.hui_list .hui_list_object .hui_icon
+{
+	margin: 0 2px 0 0;
+}
+
+div.hui_list .hui_icon
+{
+	margin: 1px 4px 1px 1px;
+	float: left;
+}
+
+div.hui_list del
+{
+	color: #999;
+}
+
+span.hui_list_icons
+{
+	white-space: nowrap;
+	font-size: 0;
+	vertical-align: top;
+	display: inline-block;
+	padding-left: 3px;
+}
+
+span.hui_list_icons .hui_icon
+{
+	float: none;
+	margin: 0 3px 0 0;
+}
+
+div.hui_list .hui_icon_12
+{
+	margin-top: 1px;
+}
+
+
+.hui_list_revealing
+{
+	visibility: hidden;
+}
+
+div.hui_list tr:hover .hui_list_revealing
+{
+	visibility: visible;
+}
+
+tbody.hui_list_selectable tr:hover
+{
+	background-color: #EBF0F7;
+	background-color: #fafafa;
+	cursor: pointer;
+}
+
+.hui_list_icon_action:hover
+{
+	background-position: 0px -16px;
+	cursor: pointer;
+}
+
+div.hui_list tr.hui_list_selected,
+div.hui_list tr.hui_list_selected:hover
+{
+	background-color: #3875d7;
+	background: -moz-linear-gradient(top, #92BCFA, #5580ee);
+	background: -webkit-gradient(linear, left top, left bottom, from(#92BCFA), to(#5580ee));
+	text-shadow: 0 -1px 0px #5070cc;
+}
+
+div.hui_list tr.hui_list_selected td
+{
+	color: #fff;
+}
+
+div.hui_list tr.hui_list_selected p.hui_list_dimmed
+{
+	color: #def;
+}
+
+div.hui_list .window_page
+{
+	display: none;
+}
+
+div.hui_list_navigation
+{
+	display: none;
+	/*background: url('../gfx/list_navigation.png');*/
+	
+    background: #ccc -webkit-gradient(linear, 0% 0%, 0% 100% , from(#fff), to(rgb(240, 240, 240)));
+	background: -moz-linear-gradient(top, #fff, rgb(240,240,240));
+    filter: progid:DXImageTransform.Microsoft.gradient (GradientType=0, startColorstr=#ffffff, endColorstr=#eeeeee);
+	border-bottom: 1px solid #ccc;
+	height: 26px;
+	padding: 0px 3px;
+}
+
+span.hui_list_count
+{
+	float: right;
+	color: #666;
+	height: 26px;
+	line-height: 26px;
+	font-size: 12px;
+	padding-right: 7px;
+}
+
+div.hui_list_selection
+{
+	margin-top: 1px;
+	float: left;
+	height: 24px;
+	/*background: url('../gfx/list_box.png') repeat-x;*/
+}
+
+div.hui_list_selection div
+{
+	height: 24px;
+	/*background: url('../gfx/list_box.png') left -24px no-repeat;*/
+}
+
+div.hui_list_selection div div
+{
+	height: 24px;
+	/*background: url('../gfx/list_box.png') right -48px no-repeat;*/
+	padding: 0px 2px;
+}
+
+div.hui_list_selection a
+{
+	font-size: 11px;
+	cursor: pointer;
+	color: #666;
+	float: left;
+	height: 16px;
+	margin-top: 4px;
+	line-height: 16px;
+	padding: 0px 4px;
+    border-radius: 4px;
+}
+
+div.hui_list_selection span
+{
+	float: left;
+	height: 16px;
+	margin-top: 4px;
+	line-height: 16px;
+}
+
+div.hui_list_selection a:hover
+{
+	background: #ddd;
+	color: #000;
+}
+
+div.hui_list_selection a.hui_list_selected
+{
+	background: #3875D7;
+	background: #bbb;
+	box-shadow: 0 1px 1px #666666 inset;
+	color: #fff;
+}
+
+p.hui_list_line
+{
+	margin: 0;
+	overflow: hidden;
+}
+
+p.hui_list_dimmed, 
+td.hui_list_dimmed
+{
+	color: #999;
+}
+
+p.hui_list_minor
+{
+	font-size: 10px;
+}
+
+p.hui_list_mini
+{
+	font-size: 9px;
+}
+
+span.hui_list_badge
+{
+	font-size: 9px;
+	padding: 1px 4px;
+	border: 1px solid #eee;
+	border-radius: 3px;
+	margin-left: 4px;
+	color: #999;
+}
+
+div.hui_list tr:hover span.hui_list_badge
+{
+	border-color: #ccc;
+	color: #666;
+}
+
+tr.hui_list_selected span.hui_list_badge, div.hui_list tr.hui_list_selected:hover span.hui_list_badge
+{
+	color: #def;
+	border-color: #def;
+}
+
+div.hui_list_busy td
+{
+	color: #999;
+}
+
+span.hui_list_progress
+{
+	display: inline-block;
+	width: 100%;
+	height: 10px;
+	padding: 1px;
+	border: 1px solid #ddd;
+	background: #fff;
+	border-radius: 7px;
+	margin-top: 2px;
+}
+
+span.hui_list_progress span
+{
+	height: 100%;
+	display: block;
+	background: #ddd;
+	border-radius: 5px;
+}
+
+
+/** errors **/
+
+div.hui_list_error_content
+{
+	display: none;
+}
+
+div.hui_list_error td
+{
+	color: red;
+}
+
+div.hui_list_error div.hui_list_error_content
+{
+	display: block;
+}
+
+p.hui_list_error_text
+{
+	background: url('../gfx/warning_large.png') center 13px no-repeat;
+	padding-top: 50px;
+	font-size: 12px;
+	text-align: center;
+	color: #999;
+	margin: 0;
+}
+
+div.hui_list td a.hui_button
+{
+	margin: -2px 0;
+}
+
+div.hui_list_busy
+{
+	min-height: 26px;
+}
+
+div.hui_list_progress
+{
+	position: absolute;
+	display: none;
+	background: #fff url('../gfx/progress/spinner_white_16.gif') center center no-repeat;
+	height: 20px;
+	width: 20px;
+	margin: 2px;
+	border: 1px solid #eee;
+	border-radius: 3px;
+}
+
+div.hui_list_busy_large div.hui_list_progress
+{
+	height: 100%;
+	width: 100%;
+	background: url('../gfx/progress/spinner_white_32.gif') center center no-repeat;
+	margin: 0;
+	border: none;
+	border-radius: none;
+}
+
+div.hui_list_busy div.hui_list_progress
+{
+	display: block;
+}
+
+div.hui_list tr.hui_drop td
+{
+	background: #779cd6 url('../gfx/hover_bg.png');
+}
+
+/************** Checkbox *************/
+
+a.hui_list_checkbox
+{
+	display: inline-block;
+	border: 1px solid #ddd;
+	background: #fff;
+	border-radius: 2px;
+	width: 12px;
+	height: 12px;
+	margin-top: 2px;
+	background: #eee;
+    background: #eee -webkit-gradient(linear, 0% 0%, 0% 100% , from(#fff), to(rgb(240, 240, 240)));
+	background: -moz-linear-gradient(top, #fff, rgb(240,240,240));
+    filter: progid:DXImageTransform.Microsoft.gradient (GradientType=0, startColorstr=#ffffff, endColorstr=#eeeeee);
+	font-weight: bold;
+	overflow: hidden;
+	text-indent: -20px;
+	text-shadow: none;
+	cursor: pointer;
+}
+
+a.hui_list_checkbox:hover
+{
+	border: 1px solid #bbb;
+}
+
+tr.hui_list_checked
+{
+	background: #ffe;
+	background: #eaf3ff;
+}
+
+div.hui_list tbody.hui_list_selectable tr.hui_list_checked:hover
+{
+	background: #f6f6e5;
+	background: #ddeafd;
+}
+
+div.hui_list tr.hui_list_checked td
+{
+	border-color: #d6e6fa;
+}
+
+tr.hui_list_checked a.hui_list_checkbox
+{
+	filter: none;
+	background: #fafafa url('../gfx/sprite.png');
+	background-image: url('../gfx/sprite.png'), -webkit-gradient(linear, 0% 0%, 0% 100% , from(#fff), to(rgb(240, 240, 240)));
+	background-image: url('../gfx/sprite.png'), -moz-linear-gradient(top, #fff, rgb(240,240,240));
+	background-image: url('../gfx/sprite.png'), -ms-linear-gradient(top, #fff, rgb(240,240,240));
+	background-position: -2px 0;
+	border: 1px solid #bbb;
+}
+
+td.hui_list_checkbox
+{
+	text-align: center;
+}
+
+div.hui_list table thead th.list_check
+{
+	text-align: center;
+	cursor: pointer;
+	width: 1%;
+}
+
+a.list_check_all
+{
+	display: inline-block;
+	width: 16px;
+	height: 12px;
+	background: url('../gfx/sprite.png') 0px -14px;
+	cursor: pointer;
+}
+
+/* Ordering */
+
+.hui_list_order {
+  width: 16px;
+  vertical-align: middle;
+}
+
+.hui_list_order_handler {
+  display: inline-block;
+  border: 3px solid #ddd;
+  border-width: 3px 0;
+  height: 3px;
+  width: 16px;
+	cursor: move;
+	cursor: -webkit-grab;
+	cursor: -moz-grab;
+}
+
+/* Native drop */
+
+div.hui_list_drop
+{
+	background: #fff url('../gfx/hover_bg.png');
+}
+
+div.hui_list_drop table
+{
+	background: none;
+}
+
+
+
+
+/*** Light variant ***/
+
+div.hui_list_light th
+{
+	background: none;
+	border-bottom: 1px solid #ddd;
+	color: #aaa;
+}
+
+div.hui_list_light th.sortable:hover
+{
+	background: #f6f6f6;
+	color: #666;
+}
+
+div.hui_list_light th.sort_ascending, 
+div.hui_list_light th.sort_descending
+{
+	background: none;
+	color: #000;
+	font-weight: bold;
+}
+
+div.hui_list_light th.sort_ascending:hover, 
+div.hui_list_light th.sort_descending:hover
+{
+	background: #f6f6f6;
+	color: #000;
+}
+
+div.hui_list_light div.hui_list_navigation
+{
+	background: none;
+	border-bottom: 1px solid #eee;
+}
+
+div.hui_list_light div.hui_list_selection a.hui_list_selected
+{
+	box-shadow: none;
+}
+
+/*** White variant ***/
+
+div.hui_list_white table
+{
+	background: none;
+	color: #fff;
+}
+
+div.hui_list_white tr:hover
+{
+	background-color: rgba(255,255,255,.1);
+}
+
+div.hui_list_white p.hui_list_dimmed, 
+div.hui_list_white td.hui_list_dimmed
+{
+	color: rgba(255,255,255,.7);
+}
+
+div.hui_list_white td
+{
+	border-color: rgba(255,255,255,.1);
+}
+
+div.hui_list_empty
+{
+	display: none;
+}
+
+/*** Transparent variant ***/
+
+div.hui_list_transparent td
+{
+	border: none;
+	padding: 0;
+}
+
+div.hui_list_transparent table
+{
+	background: none;
+}
+
+
+
+
+div.hui_list_cell_card
+{
+	margin: 5px 5px 2px 5px;
+	background: #fff;
+	border: 1px solid #ddd;
+	border-color: #f3f3f3 #e3e3e3 #ccc;
+	box-shadow: 0 1px 3px rgba(0,0,0,.1);
+	padding: 2px 4px;
+}

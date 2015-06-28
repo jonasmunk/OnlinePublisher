@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet type="text/xsl" href="setup.xsl"?>
+<gui xmlns="uri:hui" title="Skeleton">
+
+	<controller name="controller" source="skeleton.js"/>
+	<source name="itemsSource" url="data/source_items.xml"/>
+
+	<skeleton>
+		<navigation>
+			<overflow>
+			<selection value="user" name="selector">
+				<item icon="common/person" title="Brugere" value="user"/>
+				<item icon="common/folder" title="Database" value="database" kind="folder"/>
+				<item icon="common/person" title="Alle objekter" value="object"/>
+				<title>Lorem ipsum</title>
+				<items source="itemsSource"/>
+				<title>Lorem ipsum</title>
+				<items source="itemsSource"/>
+				<title>Lorem ipsum</title>
+				<items source="itemsSource"/>
+			</selection>
+			</overflow>
+		</navigation>
+		<results>
+      <bar variant="layout">
+        <searchfield adaptive="true"/>
+      </bar>
+			<overflow>
+				<list name="list" url="data/list_users.xml"/>
+			</overflow>
+		</results>
+		<actions>
+      <bar variant="layout">
+      <button text="Click me"/>
+      <segmented>
+        <item text="List"/>
+        <item text="Grid"/>
+      </segmented>
+      <dropdown>
+        <item text="Hello"/>
+      </dropdown>
+      <button icon="common/new" variant="light" plain="true"/>
+      </bar>
+    </actions>
+		<content>
+      <html>
+        <h1>This is the content</h1>
+      </html>
+    </content>
+	</skeleton>
+
+</gui>

@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet type="text/xsl" href="setup.xsl"?>
+<gui xmlns="uri:hui" title="Tiles" background="white" padding="5">
+	<style>
+		body
+		{
+			-webkit-perspective: 1000;
+		}
+		
+		.title,.text
+		{
+			font-family: 'Helvetica Neue'; font-weight: 100; color: #fff;
+		}
+		.title
+		{
+			margin: 0 10px;
+			font-size: 32px;
+		}
+		.text
+		{
+			margin: 3px 10px 0;
+			font-weight: 300;
+			font-size: 14px;
+			letter-spacing: 1px;
+		}
+	</style>
+		<tiles space="10">
+			<tile width="40" height="40" top="0" left="0" background="#06d" name="developmentTile">
+				<actions>
+					<icon icon="monochrome/info"/>
+					<icon icon="monochrome/edit" key="edit"/>
+				</actions>
+				<title>Development</title>
+			</tile>
+			<tile width="20" height="60" top="40" left="0" background="#f03" name="helpTile">
+				<actions>
+					<icon icon="monochrome/gear" key="settings"/>
+				</actions>
+				<p class="title">Help</p>
+				<formula padding="5">
+					<fields labels="above">
+						<field>
+							<text-input multiline="true"/>
+						</field>
+						<buttons>
+							<button text="Send" highlighted="true" small="true"/>
+						</buttons>
+					</fields>
+				</formula>
+			</tile>
+			<tile width="20" height="60" top="40" left="20" background="#0a3" name="newsTile">
+				<actions>
+					<icon icon="monochrome/gear" key="full"/>
+					<icon icon="monochrome/round_arrow_left" key="previous"/>
+					<icon icon="monochrome/round_arrow_right" key="next"/>
+				</actions>
+				<title>News</title>
+				<pages name="newsPages">
+					<page>
+						<p class="text">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+					</page>
+					<page>
+						<p class="text">Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</p>
+					</page>
+					<page>
+						<formula padding="5">
+							<fields labels="above">
+								<field>
+									<text-input multiline="true"/>
+								</field>
+								<buttons>
+									<button text="Send" highlighted="true" small="true"/>
+								</buttons>
+							</fields>
+						</formula>
+					</page>
+				</pages>
+			</tile>
+			<tile width="30" height="50" top="0" left="40" background="#eee">
+			</tile>
+			<tile width="30" height="50" top="50" left="40" variant="light">
+				<list name="list" url="data/list_latest_items.xml" selectable="false"/>
+			</tile>
+			<tile width="30" height="100" top="0" left="70" variant="light">
+				<title>Latest News</title>
+				<list name="list" url="data/list_news.xml" selectable="false"/>
+			</tile>
+		</tiles>
+		
+		<boundpanel name="developmentPanel" width="200">
+			<formula name="developmentFormula">
+				<fields labels="above">
+					<field label="Title">
+						<text-input/>
+					</field>
+					<buttons>
+						<button text="Cancel" click="developmentPanel.hide()" small="true"/>
+						<button text="Save" highlighted="true" small="true"/>
+					</buttons>
+				</fields>
+			</formula>			
+		</boundpanel>
+		<script>
+			hui.ui.listen({
+				$clickIcon$newsTile : function(info) {
+					if (info.key=='next') {
+						newsPages.next();
+					} else if (info.key=='previous') {
+						newsPages.previous();
+					} else if (info.key=='full') {
+						newsTile.toggleFullScreen();
+					}
+				},
+				$clickIcon$developmentTile : function(info) {
+					if (info.key=='edit') {
+						developmentPanel.position(developmentTile);
+						developmentPanel.show();
+						developmentFormula.focus();
+					}
+				},
+				$clickIcon$helpTile : function(info) {
+					helpTile.toggleFullScreen();
+				}
+			})
+		</script>
+</gui>

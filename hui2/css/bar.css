@@ -1,0 +1,433 @@
+div.hui_bar
+{
+	background: url('../gfx/bar_light.png');
+	height: 30px;
+	text-align: left;
+}
+
+div.hui_bar_body
+{
+	height: 30px;
+	font-size: 0;
+	background: url('../gfx/bar_light.png') left -30px no-repeat;
+}
+
+div.hui_bar_right
+{
+	float: right;
+	height: 30px;
+	background: url('../gfx/bar_light.png') right -30px no-repeat;
+}
+
+div.hui_bar_left
+{
+	height: 30px;
+}
+
+div.hui_bar_absolute
+{
+	position: absolute;
+	visibility: hidden;
+	left: -1000px;
+	top: -1000px;
+}
+
+span.gui_bar_space
+{
+	display: inline-block;
+	width: 5px;
+}
+
+/*************** Button **************/
+
+a.hui_bar_button
+{
+	display: inline-block;
+	height: 30px;
+	line-height: 30px;
+	padding: 0 10px;
+	background: url('../gfx/bar_light.png') right -30px no-repeat;
+	text-decoration: none;
+	vertical-align: top;
+	cursor: pointer;
+}
+
+a.hui_bar_button:focus
+{
+	outline: none;
+}
+
+div.hui_bar_right a.hui_bar_button
+{
+	background-position: left -30px;
+}
+
+span.hui_bar_button_text
+{
+	color: #444;
+	vertical-align: middle;
+	font-size: 13px;
+	margin-left: 5px;
+	text-shadow: 0 1px 0 #eee;
+	font-family: "Lucida Grande","Lucida Sans Unicode",sans-serif;
+}
+
+div.hui_bar a.hui_bar_button:hover
+{
+	background: url('../gfx/bar_light.png') left -60px repeat-x;
+}
+
+a.hui_bar_button span.hui_icon_16
+{
+	vertical-align: top;
+	margin-top: 7px;
+}
+
+a.hui_bar_button:hover span.hui_icon_16
+{
+	background-position: 0 -16px;
+}
+
+a.hui_bar_button:hover span.hui_bar_button_text
+{
+	color: #000;
+}
+
+div.hui_bar  a.hui_bar_button_selected, div.hui_bar a.hui_bar_button_selected:hover
+{
+	background: url('../gfx/bar_light.png') left -90px repeat-x;
+}
+
+a.hui_bar_button_selected span.hui_icon_16
+{
+	background-position: 0 -32px;
+}
+
+a.hui_bar_button_selected span.hui_bar_button_text
+{
+	color: #0054a6;	
+}
+
+/******************* window variant ***************/
+
+div.hui_bar_window, div.hui_bar_window div.hui_bar_body, div.hui_bar_window div.hui_bar_left, div.hui_bar_window div.hui_bar_right
+{
+	background: none;
+	height: 25px;
+}
+
+div.hui_bar_window
+{
+	border-top: 1px solid #D6D6D6;
+	border-bottom: 1px solid #D6D6D6;
+}
+
+div.hui_bar_window div.hui_bar_body
+{
+	border-top: 1px solid #F3F3F3;
+	border-bottom: 1px solid #F3F3F3;
+}
+
+div.hui_bar_window span.hui_segmented
+{
+	margin-top: 1px;
+}
+
+/******************* window mini variant ***************/
+
+div.hui_bar_window_mini
+{
+    background: #ccc -webkit-gradient(linear, 0% 0%, 0% 100% , from(#fff), to(rgb(240, 240, 240)));
+	background: -moz-linear-gradient(top, #fff, rgb(240,240,240));
+	background: -webkit-linear-gradient(top, #fff, rgb(240,240,240));
+	background: -ms-linear-gradient(top, #fff, rgb(240,240,240));
+	background: linear-gradient(top, #fff, rgb(240,240,240));
+    filter: progid:DXImageTransform.Microsoft.gradient (GradientType=0, startColorstr=#ffffff, endColorstr=#eeeeee);
+	height: 24px;
+}
+
+div.hui_window_light div.hui_bar_window_mini
+{
+    background: #fafafa;
+	border-top: 1px solid #ddd;
+	border-bottom: 1px solid #ddd;
+	padding: 0 5px;
+}
+
+div.hui_bar_window_mini div.hui_bar_body
+{
+	background: none;
+	height: 24px;
+}
+
+div.hui_bar_window_mini div.hui_bar_right
+{
+	height: 24px;
+	background: none;
+}
+
+div.hui_bar_window_mini div.hui_bar_left
+{
+	height: 24px;
+}
+
+
+div.hui_bar_window_mini a.hui_bar_button
+{
+	height: 24px;
+	line-height: 24px;
+	background: none;
+	border: 1px solid transparent;
+	border-width: 0 1px;
+	padding: 0 4px;	
+}
+
+div.hui_bar_window_mini a.hui_bar_button:hover
+{
+	background: #eee;
+	border-color: #ddd;
+}
+
+div.hui_bar_window_mini a.hui_bar_button span.hui_icon_16
+{
+	vertical-align: top;
+	margin-top: 4px;
+}
+
+div.hui_bar_window_mini a.hui_bar_button_selected, div.hui_bar_window_mini a.hui_bar_button_selected:hover
+{
+    background: #ccc -webkit-gradient(linear, 0% 0%, 0% 100% , from(#bbb), to(#ddd));
+	background: -moz-linear-gradient(top, #bbb, #ddd);
+	background: -webkit-linear-gradient(top, #bbb, #ddd);
+	background: -ms-linear-gradient(top, #bbb, #ddd);
+	background: linear-gradient(top, #bbb, #ddd);
+    filter: progid:DXImageTransform.Microsoft.gradient (GradientType=0, startColorstr=#bbbbbb, endColorstr=#dddddd);
+	border-color: #bbb;
+}
+
+div.hui_bar_window_mini_top
+{
+	border-top: 1px solid #ddd;
+}
+
+div.hui_bar_window_mini_bottom
+{
+	border-top: 1px solid #ddd;
+}
+
+/******************* layout variant ***************/
+
+div.hui_bar_layout
+{
+    background: #ccc -webkit-gradient(linear, 0% 0%, 0% 100% , from(#fff), to(rgb(240, 240, 240)));
+	background: -moz-linear-gradient(top, #fff, rgb(240,240,240));
+	background: -webkit-linear-gradient(top, #fff, rgb(240,240,240));
+	background: -ms-linear-gradient(top, #fff, rgb(240,240,240));
+	background: linear-gradient(top, #fff, rgb(240,240,240));
+    filter: progid:DXImageTransform.Microsoft.gradient (GradientType=0, startColorstr=#ffffff, endColorstr=#eeeeee);
+	height: 28px;
+	border: none;
+	border-bottom: 1px solid #ddd;
+}
+
+div.hui_bar_layout div.hui_bar_body
+{
+	height: 28px;
+	background: none;
+	padding: 0 3px;
+}
+
+div.hui_bar_layout a.hui_bar_button
+{
+	height: 28px;
+	line-height: 28px;
+	background: none;
+	padding: 0 2px;
+}
+
+div.hui_bar_layout a.hui_button
+{
+	margin-top: 2px;
+}
+
+div.hui_bar_layout a.hui_bar_button span.hui_icon_16
+{
+	margin-top: 5px;
+}
+
+div.hui_bar_layout a.hui_bar_button:hover
+{
+	background: none;
+}
+
+div.hui_bar_layout div.hui_bar_right, div.hui_bar_layout div.hui_bar_left
+{
+	height: 28px;
+	border: none;
+	background: none;
+}
+
+div.hui_bar_layout span.hui_bar_text
+{
+	color: #666;
+    display: inline-block;
+    font-family: "Lucida Grande","Lucida Sans Unicode",sans-serif;
+    font-size: 12px;
+    line-height: 28px;
+    padding: 0 5px;
+    text-shadow: 0 1px 0 #FFFFFF;
+	vertical-align: top;
+}
+
+div.hui_bar_layout span.hui_bar_text_header
+{
+	color: #445566;
+	font-weight: bold;
+}
+
+div.hui_bar_layout span.hui_segmented
+{
+	margin-top: 3px;
+	vertical-align: top;
+}
+
+div.hui_bar_layout span.hui_segmented_inset
+{
+	margin-top: 4px;	
+}
+
+div.hui_bar_layout span.hui_searchfield
+{
+	margin-top: 2px;
+}
+
+/******************* Mini variant *****************/
+
+div.hui_bar_mini
+{
+	height: 22px;
+	background: #fafafa;
+	border: 1px solid #ddd;
+	border-radius: 3px;
+}
+
+div.hui_bar_mini div.hui_bar_body
+{
+	height: 22px;
+	background: none;
+	padding: 0 3px;
+}
+
+div.hui_bar_mini a.hui_bar_button
+{
+	height: 22px;
+	line-height: 22px;
+	background: none;
+	padding: 0 2px;
+}
+
+div.hui_bar_mini a.hui_bar_button span.hui_icon_16
+{
+	margin-top: 3px;
+}
+
+div.hui_bar_mini span.hui_bar_button_text
+{
+	font-size: 11px;
+}
+
+
+div.hui_bar_mini a.hui_bar_button:hover
+{
+	background: #ddd;
+}
+
+div.hui_bar_mini span.hui_bar_divider
+{
+	display: inline-block;
+	height: 22px;
+	border-left: 1px solid #ddd;
+	margin: 0 3px;
+}
+
+
+/******************* Layout mini variant ***************/
+
+div.hui_bar_layout_mini
+{
+    background: #ccc -webkit-gradient(linear, 0% 0%, 0% 100% , from(#fff), to(rgb(240, 240, 240)));
+	background: -moz-linear-gradient(top, #fff, rgb(240,240,240));
+	background: -webkit-linear-gradient(top, #fff, rgb(240,240,240));
+	background: -ms-linear-gradient(top, #fff, rgb(240,240,240));
+	background: linear-gradient(top, #fff, rgb(240,240,240));
+    filter: progid:DXImageTransform.Microsoft.gradient (GradientType=0, startColorstr=#ffffff, endColorstr=#eeeeee);
+	height: 22px;
+	border-bottom: 1px solid #ddd;
+}
+
+div.hui_bar_layout_mini div.hui_bar_body
+{
+	background: none;
+	height: 22px;
+	overflow: hidden;
+}
+
+div.hui_bar_layout_mini div.hui_bar_right
+{
+	height: 22px;
+	background: none;
+}
+
+div.hui_bar_layout_mini div.hui_bar_left
+{
+	height: 22px;
+}
+
+
+div.hui_bar_layout_mini a.hui_bar_button
+{
+	height: 22px;
+	line-height: 22px;
+	background: none;
+	border: 1px solid transparent;
+	border-width: 0 1px;
+	padding: 0 5px;	
+}
+
+div.hui_bar_layout_mini a.hui_bar_button:hover
+{
+	background: #eee;
+	border-color: #ddd;
+}
+
+div.hui_bar_layout_mini a.hui_bar_button span.hui_icon_16
+{
+	vertical-align: top;
+	margin-top: 3px;
+}
+
+div.hui_bar_layout_mini a.hui_bar_button_selected, div.hui_bar_layout_mini a.hui_bar_button_selected:hover
+{
+    background: #ccc -webkit-gradient(linear, 0% 0%, 0% 80% , from(#abc), to(#EBF0F7));
+	background: -moz-linear-gradient(top, #bbb, #ddd);
+	background: -ms-linear-gradient(top, #bbb, #ddd);
+	background: -webkit-linear-gradient(top, #bbb, #ddd);
+	background: linear-gradient(top, #bbb, #ddd);
+    filter: progid:DXImageTransform.Microsoft.gradient (GradientType=0, startColorstr=#bbbbbb, endColorstr=#dddddd);
+	border-color: #bbb;
+}
+
+div.hui_bar_layout_mini a.hui_bar_button_selected span.hui_icon_16
+{
+	background-position: 0 -16px;
+}
+
+div.hui_bar_layout_mini_top
+{
+	border-top: 1px solid #ddd;
+}
+
+div.hui_bar_layout_mini_bottom
+{
+	border-top: 1px solid #ddd;
+}
