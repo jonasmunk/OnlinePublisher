@@ -45,4 +45,39 @@
 	</script>
 </xsl:template>
 
+<!--doc title:'DatePicker' class:'hui.ui.DatePicker' module:'input'
+<datepicker name="«name»"/>
+-->
+<xsl:template match="gui:datepicker">
+
+  <div class="hui_datepicker" id="{generate-id()}">
+    <div class="hui_datepicker_header">
+      <a class="hui_datepicker_next"></a>
+      <a class="hui_datepicker_previous"></a>
+      <strong>Juni 2015</strong>
+    </div>
+    <table>
+      <thead><tr><th>Søn</th><th>Man</th><th>Tir</th><th>Ons</th><th>Tor</th><th>Fre</th><th>Lør</th></tr></thead>
+      <tbody>
+        <tr><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+        <tr><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+        <tr><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+        <tr><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+        <tr><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+        <tr><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+      </tbody>
+    </table>
+  </div>
+	<script type="text/javascript">
+    (function() {
+  		var <xsl:value-of select="generate-id()"/>_obj = new hui.ui.DatePicker({
+  			element : '<xsl:value-of select="generate-id()"/>',
+  			name : '<xsl:value-of select="@name"/>'
+  		});
+  		<xsl:call-template name="gui:createobject"/>
+    })()
+	</script>
+
+</xsl:template>
+
 </xsl:stylesheet>
