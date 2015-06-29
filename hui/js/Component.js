@@ -4,6 +4,7 @@
  * @param {Object} options
  * @param {Element} options.element
  * @param {String} options.name
+ * @param {Object} options.listen A listener
  */
 hui.ui.Component = function(options) {
 	this.name = options.name;
@@ -12,9 +13,12 @@ hui.ui.Component = function(options) {
 		this.name = 'unnamed'+hui.ui.latestObjectIndex;
 	}
 	this.element = hui.get(options.element);
-  this.listeners = [];
+  this.delegates = [];
   if (this.nodes) {
   	this.nodes = hui.collect(this.nodes,this.element);
+  }
+  if (options.listen) {
+    this.listen(options.listen);
   }
   hui.ui.registerComponent(this);
 }
@@ -25,7 +29,7 @@ hui.ui.Component.prototype = {
    * @param {Object} listener An object with methods for different events
    */
   listen : function(listener) {
-    this.listeners.push(listener);
+    this.delegates.push(listener);
   },
   fire : function(name,value,event) {
   		return hui.ui.callDelegates(this,name,value,event);
