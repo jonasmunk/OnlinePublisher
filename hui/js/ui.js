@@ -31,16 +31,16 @@ hui.ui = {
 };
 
 /**
- * Get a widget by name
- * @param nameOrWidget {Widget | String} Get a widget by name, if the parameter is already a widget it is returned
- * @return {Widget} The widget with the name or undefined
+ * Get a component by name
+ * @param nameOrComponent {hui.ui.Component | String} Get a component by name, if the parameter is already a component it is returned
+ * @return {hui.ui.Component} The component with the name or undefined
  */
-hui.ui.get = function(nameOrWidget) {
-	if (nameOrWidget) {
-		if (nameOrWidget.element) {
-			return nameOrWidget;
+hui.ui.get = function(nameOrComponent) {
+	if (nameOrComponent) {
+		if (nameOrComponent.element) {
+			return nameOrComponent;
 		}
-		return hui.ui.objects[nameOrWidget];
+		return hui.ui.objects[nameOrComponent];
 	}
 };
 
