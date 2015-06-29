@@ -26,6 +26,14 @@ module.exports = function(grunt) {
         }
       }
     },
+    jsdoc : {
+      dist : {
+        src: ['js/*.js'],
+        options: {
+          destination: 'doc'
+        }
+      }
+    },
     compass: {
       full: {
         options: {
