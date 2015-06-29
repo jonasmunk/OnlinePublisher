@@ -1,6 +1,7 @@
 /**
  * Overflow with scroll bars
- * @param {Object} The options
+ * @param options {Object} The options
+ * @param options.dynamic {boolean} If the overflow show adjust its height
  * @constructor
  */
 hui.ui.Overflow = function(options) {
@@ -15,10 +16,14 @@ hui.ui.Overflow = function(options) {
 
 hui.ui.Overflow.create = function(options) {
 	options = options || {};
-	var e = options.element = hui.build('div',{'class':'hui_overflow',html:'<div class="hui_overflow_top"></div><div class="hui_overflow_bottom"></div>'});
+  var attributes = {
+    'class' : 'hui_overflow',
+    html : '<div class="hui_overflow_top"></div><div class="hui_overflow_bottom"></div>'
+  };
 	if (options.height) {
-		e.style.height=options.height+'px';
+		attributes.style = {height:options.height+'px'};
 	}
+	options.element = hui.build('div',attributes);
 	return new hui.ui.Overflow(options);
 }
 
@@ -68,9 +73,9 @@ hui.ui.Overflow.prototype = {
 	/** @private */
 	$visibilityChanged : function() {
 		if (hui.dom.isVisible(this.element)) {
-            this.$$layout();
-        }
+      this.$$layout();
     }
+  }
 }
 
 /* EOF */
