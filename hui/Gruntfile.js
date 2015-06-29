@@ -16,7 +16,7 @@ module.exports = function(grunt) {
       }
     },
     qunit: {
-        all: ['test/phantom/*.html']
+      all: ['test/phantom/*.html']
     },
     jsdoc : {
       dist : {
@@ -34,31 +34,16 @@ module.exports = function(grunt) {
 			    noLineComments: true,
         }
       }
-    }/*,
+    },
     shell: {
-      transfer : {
-        command : function(client) {
-          if (!clients[client]) {
-            grunt.log.error('Client not found'); return;
-          }
-          return [
-            '/Users/jbm/Scripts/sites/transfer.sh ' + clients[client].database + ' ' + clients[client].folder
-          ].join(' && ');
-        }
-      },
-      'switch' : {
-        command : function(client) {
-          if (!clients[client]) {
-            grunt.log.error('Client not found'); return;
-          }
-          return '/Users/jbm/Scripts/sites/switch.sh ' + clients[client].folder
-        }
+      all : {
+        command : 'tools/all.sh'
       }
-    }*/
+    }
   });
 
   // Load plugins.
-  grunt.loadNpmTasks('grunt-contrib-concat');
+  //grunt.loadNpmTasks('grunt-contrib-concat');
   grunt.loadNpmTasks('grunt-contrib-jshint');
   grunt.loadNpmTasks('grunt-contrib-symlink');
   grunt.loadNpmTasks('grunt-contrib-uglify');
@@ -71,8 +56,13 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-jsdoc');
 
   // Default task(s).
-  grunt.registerTask('default', 'Standard tasks', ['watch']);
+  grunt.registerTask('default', 'Watch', ['watch']);
   
-  grunt.registerTask('test', ['qunit']);
-
+  //grunt.registerTask('test', ['qunit']);
+  grunt.registerTask('test', 'Run tests', function(testname) {
+    if(!!testname) {
+      grunt.config('qunit.all', ['test/phantom/' + testname + '.html']);
+    }
+    grunt.task.run('qunit:all');
+  });
 };
