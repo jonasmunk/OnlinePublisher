@@ -14,6 +14,8 @@
     </item>
     <item icon="common/folder" title="HTML tests" value="HTML tests">
         <item icon="common/page" title="alert" value="html/alert.html"/>
+        <item icon="common/page" title="angular" value="html/angular.html"/>
+        <item icon="common/page" title="angular_todo" value="html/angular_todo.html"/>
         <item icon="common/page" title="animation" value="html/animation.html"/>
         <item icon="common/page" title="arbor" value="html/arbor.html"/>
         <item icon="common/page" title="bar" value="html/bar.html"/>
@@ -35,6 +37,7 @@
         <item icon="common/page" title="formula" value="html/formula.html"/>
         <item icon="common/page" title="graphviz" value="html/graphviz.html"/>
         <item icon="common/page" title="imagepaster" value="html/imagepaster.html"/>
+        <item icon="common/page" title="imageviewer" value="html/imageviewer.html"/>
         <item icon="common/page" title="infoview" value="html/infoview.html"/>
         <item icon="common/page" title="jquery" value="html/jquery.html"/>
         <item icon="common/page" title="LocationPicker" value="html/LocationPicker.html"/>
@@ -78,6 +81,7 @@
         <item icon="common/page" title="pages" value="xml/pages.xml"/>
         <item icon="common/page" title="picker" value="xml/picker.xml"/>
         <item icon="common/page" title="rendering" value="xml/rendering.xml"/>
+        <item icon="common/page" title="skeleton" value="xml/skeleton.xml"/>
         <item icon="common/page" title="split" value="xml/split.xml"/>
         <item icon="common/page" title="structure" value="xml/structure.xml"/>
         <item icon="common/page" title="style" value="xml/style.xml"/>
@@ -88,6 +92,7 @@
         <item icon="common/page" title="windows" value="xml/windows.xml"/>
     </item>
     <item icon="common/folder" title="Complete GUIs" value="Complete GUIs">
+        <item icon="common/page" title="animation" value="guis/animation.xml"/>
         <item icon="common/page" title="articles" value="guis/articles.xml"/>
         <item icon="common/page" title="competence" value="guis/competence.xml"/>
         <item icon="common/page" title="editor_properties" value="guis/editor_properties.xml"/>

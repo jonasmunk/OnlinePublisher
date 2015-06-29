@@ -5,7 +5,7 @@
 		<meta http-equiv="content-type" content="text/html; charset=utf-8" />
 		<meta name="generator" content="JsDoc Toolkit" />
 		
-		<title>JsDoc Reference - hui.ui.ObjectList.Object</title>
+		<title>JsDoc Reference - hui.ui.Component</title>
 
 		<style type="text/css">
 			/* default.css */
@@ -523,7 +523,7 @@ ul.inheritsList
 <!-- ============================== class title ============================ -->
 			<h1 class="classTitle">
 				
-				Class hui.ui.ObjectList.Object
+				Class hui.ui.Component
 			</h1>
 
 <!-- ============================== class summary ========================== -->			
@@ -540,7 +540,7 @@ ul.inheritsList
 
 <!-- ============================== constructor summary ==================== -->			
 			
-			<table class="summaryTable" cellspacing="0" summary="A summary of the constructor documented in the class hui.ui.ObjectList.Object.">
+			<table class="summaryTable" cellspacing="0" summary="A summary of the constructor documented in the class hui.ui.Component.">
 				<caption>Class Summary</caption>
 				<thead>
 					<tr>
@@ -553,9 +553,9 @@ ul.inheritsList
 						<td class="attributes">&nbsp;</td>
 						<td class="nameDescription" >
 							<div class="fixedFont">
-								<b><a href="../symbols/hui.ui.ObjectList.Object.html#constructor">hui.ui.ObjectList.Object</a></b>(index, data, list)
+								<b><a href="../symbols/hui.ui.Component.html#constructor">hui.ui.Component</a></b>(options)
 							</div>
-							<div class="description"></div>
+							<div class="description">A component</div>
 						</td>
 					</tr>
 				</tbody>
@@ -569,7 +569,7 @@ ul.inheritsList
 			
 				
 				
-				<table class="summaryTable" cellspacing="0" summary="A summary of the methods documented in the class hui.ui.ObjectList.Object.">
+				<table class="summaryTable" cellspacing="0" summary="A summary of the methods documented in the class hui.ui.Component.">
 					<caption>Method Summary</caption>
 					<thead>
 						<tr>
@@ -582,7 +582,7 @@ ul.inheritsList
 						<tr>
 							<td class="attributes">&nbsp;</td>
 							<td class="nameDescription">
-								<div class="fixedFont"><b><a href="../symbols/hui.ui.ObjectList.Object.html#getData">getData</a></b>()
+								<div class="fixedFont"><b><a href="../symbols/hui.ui.Component.html#destroy">destroy</a></b>()
 								</div>
 								<div class="description"></div>
 							</td>
@@ -591,7 +591,7 @@ ul.inheritsList
 						<tr>
 							<td class="attributes">&nbsp;</td>
 							<td class="nameDescription">
-								<div class="fixedFont"><b><a href="../symbols/hui.ui.ObjectList.Object.html#getElement">getElement</a></b>()
+								<div class="fixedFont"><b><a href="../symbols/hui.ui.Component.html#fire">fire</a></b>(name, value, event)
 								</div>
 								<div class="description"></div>
 							</td>
@@ -600,9 +600,18 @@ ul.inheritsList
 						<tr>
 							<td class="attributes">&nbsp;</td>
 							<td class="nameDescription">
-								<div class="fixedFont"><b><a href="../symbols/hui.ui.ObjectList.Object.html#valueDidChange">valueDidChange</a></b>()
+								<div class="fixedFont"><b><a href="../symbols/hui.ui.Component.html#getElement">getElement</a></b>()
 								</div>
-								<div class="description"></div>
+								<div class="description">Get the components root element</div>
+							</td>
+						</tr>
+					
+						<tr>
+							<td class="attributes">&nbsp;</td>
+							<td class="nameDescription">
+								<div class="fixedFont"><b><a href="../symbols/hui.ui.Component.html#listen">listen</a></b>(listener)
+								</div>
+								<div class="description">Add event listener</div>
 							</td>
 						</tr>
 					
@@ -623,11 +632,11 @@ ul.inheritsList
 				</div>
 				
 				<div class="fixedFont">
-						<b>hui.ui.ObjectList.Object</b>(index, data, list)
+						<b>hui.ui.Component</b>(options)
 				</div>
 				
 				<div class="description">
-					
+					A component
 					
 				</div>
 				
@@ -639,19 +648,19 @@ ul.inheritsList
 						<dt class="heading">Parameters:</dt>
 						
 							<dt>
-								 <b>index</b>
+								<span class="light fixedFont">{Object}</span>  <b>options</b>
 								
 							</dt>
 								<dd></dd>
 						
 							<dt>
-								 <b>data</b>
+								<span class="light fixedFont">{Element}</span>  <b>options.element</b>
 								
 							</dt>
 								<dd></dd>
 						
 							<dt>
-								 <b>list</b>
+								<span class="light fixedFont">{String}</span>  <b>options.name</b>
 								
 							</dt>
 								<dd></dd>
@@ -677,11 +686,11 @@ ul.inheritsList
 					Method Detail
 				</div>
 				
-					<a name="getData"> </a>
+					<a name="destroy"> </a>
 					<div class="fixedFont">
 					
 					
-					<b>getData</b>()
+					<b>destroy</b>()
 					
 					</div>
 					<div class="description">
@@ -692,6 +701,54 @@ ul.inheritsList
 					
 					
 					
+						
+						
+						
+						
+						
+						
+						
+
+					<hr />
+				
+					<a name="fire"> </a>
+					<div class="fixedFont">
+					
+					
+					<b>fire</b>(name, value, event)
+					
+					</div>
+					<div class="description">
+						
+						
+						
+					</div>
+					
+					
+					
+						
+							<dl class="detailList">
+							<dt class="heading">Parameters:</dt>
+							
+								<dt>
+									<b>name</b>
+									
+								</dt>
+								<dd></dd>
+							
+								<dt>
+									<b>value</b>
+									
+								</dt>
+								<dd></dd>
+							
+								<dt>
+									<b>event</b>
+									
+								</dt>
+								<dd></dd>
+							
+							</dl>
 						
 						
 						
@@ -710,7 +767,7 @@ ul.inheritsList
 					
 					</div>
 					<div class="description">
-						
+						Get the components root element
 						
 						
 					</div>
@@ -721,27 +778,45 @@ ul.inheritsList
 						
 						
 						
+						
+							<dl class="detailList">
+							<dt class="heading">Returns:</dt>
+							
+								<dd>Element</dd>
+							
+							</dl>
 						
 						
 						
 
 					<hr />
 				
-					<a name="valueDidChange"> </a>
+					<a name="listen"> </a>
 					<div class="fixedFont">
 					
 					
-					<b>valueDidChange</b>()
+					<b>listen</b>(listener)
 					
 					</div>
 					<div class="description">
-						
+						Add event listener
 						
 						
 					</div>
 					
 					
 					
+						
+							<dl class="detailList">
+							<dt class="heading">Parameters:</dt>
+							
+								<dt>
+									<span class="light fixedFont">{Object}</span> <b>listener</b>
+									
+								</dt>
+								<dd>An object with methods for different events</dd>
+							
+							</dl>
 						
 						
 						
@@ -764,7 +839,7 @@ ul.inheritsList
 <!-- ============================== footer ================================= -->
 		<div class="fineprint" style="clear:both">
 			
-			Documentation generated by <a href="http://code.google.com/p/jsdoc-toolkit/" target="_blank">JsDoc Toolkit</a> 2.4.0 on Mon Jun 29 2015 14:38:48 GMT+0200 (CEST)
+			Documentation generated by <a href="http://code.google.com/p/jsdoc-toolkit/" target="_blank">JsDoc Toolkit</a> 2.4.0 on Mon Jun 29 2015 14:38:47 GMT+0200 (CEST)
 		</div>
 	</body>
 </html>
