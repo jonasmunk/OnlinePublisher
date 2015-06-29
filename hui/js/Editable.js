@@ -14,13 +14,19 @@
 
   hui.ui.Editable.prototype = {
     setValue : function(value) {
+      var changed = value !== this.value;
       this.value = value;
+      changed && this.fireValueChange();
     },
     getValue : function() {
       return this.value;
     },
+  	fireValueChange : function() {
+  		this.fire('valueChanged',this.value);
+  		hui.ui.firePropertyChange(this,'value',this.value);
+  		hui.ui.callAncestors(this,'childValueChanged',this.value);
+  	},
     getElement : function() {
-      hui.log('Hijacked')
       return _super.prototype.getElement.call(this);
     }
   }
