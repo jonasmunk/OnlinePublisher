@@ -654,10 +654,7 @@ hui.ui.extend = function(obj,options) {
 		hui.ui.latestObjectIndex++;
 		obj.name = 'unnamed'+hui.ui.latestObjectIndex;
 	}
-	if (hui.ui.objects[obj.name]) {
-		hui.log('Widget replaced: '+obj.name,hui.ui.objects[obj.name]);
-	}
-	hui.ui.objects[obj.name] = obj;
+  hui.ui.registerComponent(obj);
 	obj.delegates = [];
 	obj.listen = function(delegate) {
 		hui.array.add(this.delegates,delegate);
@@ -702,6 +699,14 @@ hui.ui.extend = function(obj,options) {
 		obj.nodes = hui.collect(obj.nodes,obj.element);
 	}
 };
+
+hui.ui.registerComponent = function(component) {
+	if (hui.ui.objects[component.name]) {
+		hui.log('Widget replaced: '+component.name,hui.ui.objects[component.name]);
+	}
+	hui.ui.objects[component.name] = component;
+  
+}
 
 /** Send a message to all ancestors of a widget */
 hui.ui.callAncestors = function(obj,method,value,event) {

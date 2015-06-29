@@ -732,10 +732,11 @@
 <xsl:template match="gui:skeleton">
   <div class="hui_skeleton" id="{generate-id()}">
     <div class="hui_skeleton_navigation hui_context_sidebar">
-      <div class="hui_skeleton_resize"></div>
+      <div class="hui_skeleton_resize hui_skeleton_resize_navigation"></div>
       <xsl:apply-templates select="gui:navigation"/>
     </div>
     <div class="hui_skeleton_results">
+      <div class="hui_skeleton_resize hui_skeleton_resize_results"></div>
       <xsl:apply-templates select="gui:results"/>
     </div>
     <div class="hui_skeleton_actions">

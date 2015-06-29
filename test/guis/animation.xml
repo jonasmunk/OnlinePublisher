@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet type="text/xsl" href="../xml/setup.xsl"?>
+<gui xmlns="uri:hui" title="Animation">
+  <controller source="animation.js"/>
+
+	<window name="settingsWindow" width="300" title="Settings">
+    <formula name="settingsForm" padding="10">
+      <fields>
+        <field label="Easing">
+          <dropdown name="easing" key="ease"/>
+        </field>
+        <field label="Duration">
+          <number-input min="0" max="10000" key="duration" value="1000"/>
+        </field>
+      </fields>
+      <buttons>
+        <button highlighted="true" text="GO" submit="true"/>
+      </buttons>
+    </formula>
+  </window>
+
+  <html>
+    <style>
+      .container {
+        width: 400px;
+        height: 20px;
+        background: #eee;
+        margin: 30px;
+      }
+      
+      .box {
+        background: red;
+        width: 20px;
+        height: 20px;
+      }
+    </style>
+    <div class="container">
+      <div class="box" id="subject1"></div>
+    </div>
+  </html>
+
+</gui>

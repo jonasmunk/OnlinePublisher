@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?xml-stylesheet type="text/xsl" href="setup.xsl"?>
-<gui xmlns="uri:hui" pad="10" title="Calendar">
-	<controller name="controller" source="controller.js"/>
+<gui xmlns="uri:hui" padding="10" title="Calendar">
 	<structure>
 		<top>
 			<toolbar>
@@ -14,13 +13,12 @@
 		</top>
 		<middle>
 			<left>
-				<sidebar>
-					<selection value="all" name="selector">
-						<item icon="common/time" title="Altid" value="all"/>
-						<item icon="common/folder" title="Database" value="database"/>
-						<item icon="common/person" title="Alle objekter" value="object"/>
-					</selection>
-				</sidebar>
+				<selection value="all" name="selector">
+					<item icon="common/time" title="Altid" value="all"/>
+					<item icon="common/folder" title="Database" value="database"/>
+					<item icon="common/person" title="Alle objekter" value="object"/>
+				</selection>
+        <datepicker/>
 			</left>
 			<center>
 				<overflow>

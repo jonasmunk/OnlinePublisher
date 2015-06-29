@@ -53,6 +53,7 @@ jsFiles = [
     'lib/swfupload/swfupload.js',
     'lib/date.js',
     'js/ui.js',
+    'js/Component.js',
     'js/Source.js',
     'js/DragDrop.js',
     'js/Window.js',

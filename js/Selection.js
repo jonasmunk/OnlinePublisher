@@ -244,8 +244,8 @@ hui.ui.Selection.prototype = {
 /////////////////////////// Items ///////////////////////////
 
 /**
- * @constructor
  * A group of items loaded from a source
+ * @constructor
  * @param {Object} options The options : {element,name,source}
  */
 hui.ui.Selection.Items = function(options) {
