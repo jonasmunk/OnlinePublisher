@@ -63,7 +63,8 @@
       })
     },
     $$layout : function() {
-      hui.log(this.element.clientWidth)
+      var h = this.nodes.actions.clientHeight;
+      this.nodes.content.style.top = h + 'px'
     }
   }
 
