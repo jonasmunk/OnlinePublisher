@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet type="text/xsl" href="setup.xsl"?>
+<gui xmlns="uri:hui" padding="10" title="Calendar">
+	<structure>
+		<top>
+			<toolbar>
+				<icon icon="common/folder" title="Ny gruppe" name="newGroup" overlay="new"/>
+				<icon icon="common/folder" title="Ny type" name="newType" overlay="new"/>
+				<right>
+					<search title="Søgning"/>
+				</right>
+			</toolbar>
+		</top>
+		<middle>
+			<left>
+        <rows height="full">
+          <row min="100" max="content">
+      				<selection value="all" name="selector">
+      					<item icon="common/time" title="Altid" value="all"/>
+      					<item icon="common/folder" title="Database" value="database"/>
+      					<item icon="common/person" title="Alle objekter" value="object"/>
+      					<item icon="common/time" title="Altid" value="x"/>
+      					<item icon="common/folder" title="Database" value="y"/>
+      					<item icon="common/person" title="Alle objekter" value="z"/>
+      					<item icon="common/time" title="Altid" value="a"/>
+      					<item icon="common/folder" title="Database" value="b"/>
+      					<item icon="common/person" title="Alle objekter" value="c"/>
+      				</selection>
+          </row>
+          <row height="content">
+            <bar variant="layout">
+              <searchfield adaptive="true"/>
+            </bar>
+          </row>
+          <row>
+            <overflow>
+      				<selection value="all" name="selector">
+      					<item icon="common/time" title="Altid" value="all"/>
+      					<item icon="common/folder" title="Database" value="database"/>
+      					<item icon="common/person" title="Alle objekter" value="object"/>
+      					<item icon="common/time" title="Altid" value="x"/>
+      					<item icon="common/folder" title="Database" value="y"/>
+      					<item icon="common/person" title="Alle objekter" value="z"/>
+      					<item icon="common/time" title="Altid" value="a"/>
+      					<item icon="common/folder" title="Database" value="b"/>
+      					<item icon="common/person" title="Alle objekter" value="c"/>
+      				</selection>
+            </overflow>
+          </row>
+          <row height="content">
+            <datepicker/>
+          </row>
+        </rows>
+			</left>
+			<center>
+        <rows>
+          <row height="content">
+            <bar variant="layout">
+              <searchfield adaptive="true"/>
+            </bar>
+          </row>
+          <row>        
+    				<overflow>
+    					<calendar name="calendar" endHour="17" startHour="7"/>
+    				</overflow>
+          </row>
+        </rows>
+			</center>
+		</middle>
+		<bottom>
+			
+		</bottom>
+	</structure>
+</gui>

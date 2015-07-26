@@ -9,7 +9,7 @@ hui.ui.TimeLine = function(options) {
 	this.element = hui.get(options.element);
 	hui.ui.extend(this);
 	hui.onReady(this._start.bind(this));
-}
+};
 
 hui.ui.TimeLine.prototype = {
 	_attach : function() {
@@ -52,6 +52,4 @@ hui.ui.TimeLine.prototype = {
 	pause : function() {
 		this.paused = true;
 	}
-}
-
-/* EOF */
+};

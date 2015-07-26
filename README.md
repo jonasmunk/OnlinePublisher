@@ -1,4 +1,4 @@
 # hui
 Humanise User Interface
 
-Hep hey
+A library for web user interfaces

@@ -124,5 +124,3 @@ hui.ui.Alert.prototype = {
 		this.buttons.add(button);
 	}
 };
-
-/* EOF */

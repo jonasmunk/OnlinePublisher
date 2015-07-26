@@ -14,7 +14,7 @@ hui.ui.Calendar = function(o) {
 	if (this.options.source) {
 		this.options.source.listen(this);
 	}
-}
+};
 
 hui.ui.Calendar.prototype = {
 	show : function() {
@@ -49,7 +49,7 @@ hui.ui.Calendar.prototype = {
 		var nodes = hui.get.byClass(this.element,'hui_calendar_event');
 		for (var i=0; i < nodes.length; i++) {
 			hui.dom.remove(nodes[i]);
-		};
+		}
 		this.hideEventViewer();
 	},
 	/** @private */
@@ -78,7 +78,7 @@ hui.ui.Calendar.prototype = {
 			if (typeof(e.endTime)!='object') {
 				e.endTime = new Date(parseInt(e.endTime)*1000);
 			}
-		};
+		}
 		this.setBusy(false);
 		this.clearEvents();
 		this.events = events;
@@ -108,7 +108,7 @@ hui.ui.Calendar.prototype = {
 			
 			window.setTimeout(function() {
 				hui.effect.bounceIn({element:node});
-			},Math.random()*200)
+			},Math.random()*200);
 			hui.listen(node,'click',function() {
 				self.eventWasClicked(node);
 			});
@@ -130,7 +130,7 @@ hui.ui.Calendar.prototype = {
 			var date = new Date(first.getTime());
 			date.setDate(date.getDate()+i);
 			hui.dom.setText(days[i],date.dateFormat('l \\d. d M'));
-		};
+		}
 	},
 	/** @private */
 	buildUI : function() {
@@ -141,7 +141,9 @@ hui.ui.Calendar.prototype = {
 		previous.listen(this);
 		this.toolbar.add(previous);
 		var today = hui.ui.Button.create({name:'huiCalendarToday',text:'Idag'});
-		today.click(function() {this.setDate(new Date())}.bind(this));
+		today.click(function() {
+      this.setDate(new Date());
+    }.bind(this));
 		this.toolbar.add(today);
 		var next = hui.ui.Button.create({name:'huiCalendarNext',text:'',icon:'monochrome/next'});
 		next.listen(this);
@@ -160,7 +162,7 @@ hui.ui.Calendar.prototype = {
 				hui.cls.add(node,'hui_calendar_time_last');
 			}
 			time.appendChild(node);
-		};
+		}
 	},
 	/** @private */
 	$click$huiCalendarPrevious : function() {
@@ -265,6 +267,4 @@ hui.ui.Calendar.prototype = {
 			this.eventViewerPanel.hide();
 		}
 	}
-}
-
-/* EOF */
+};

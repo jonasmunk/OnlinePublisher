@@ -144,6 +144,58 @@
 </xsl:template>
 
 
+<!--doc title:'Rows' module:'layout'
+<rows space="«pixels»" flexible="«boolean»" height="«'full'»">
+    <column width="«css-length»">
+        ···
+    </column>
+    <column width="«css-length»">
+    ···
+    </column>
+</row>
+-->
+<xsl:template match="gui:rows">
+  <div id="{generate-id()}">
+    <xsl:attribute name="class">
+      <xsl:text>hui_rows</xsl:text>
+    </xsl:attribute>
+    <xsl:apply-templates select="gui:row"/>
+  </div>
+	<script type="text/javascript">
+    (function() {
+  		var <xsl:value-of select="generate-id()"/>_obj = new hui.ui.Rows({
+  			element : '<xsl:value-of select="generate-id()"/>',
+  			<xsl:if test="@name">,name:'<xsl:value-of select="@name"/>'</xsl:if>
+  		});
+  		<xsl:call-template name="gui:createobject"/>
+    })()
+	</script>
+</xsl:template>
+
+<xsl:template match="gui:rows/gui:row">
+  <div>
+    <xsl:attribute name="class">
+      <xsl:text>hui_rows_row</xsl:text>
+      <xsl:if test="@size='adapt'">
+        <xsl:text> hui_rows_row-adapt</xsl:text>        
+      </xsl:if>
+      <xsl:if test="@size='min'">
+        <xsl:text> hui_rows_row-min</xsl:text>        
+      </xsl:if>
+    </xsl:attribute>
+    <xsl:attribute name="data">
+      <xsl:text>{"min":"</xsl:text>
+      <xsl:value-of select="@min"/>
+      <xsl:text>","max":"</xsl:text>
+      <xsl:value-of select="@max"/>
+      <xsl:text>","height":"</xsl:text>
+      <xsl:value-of select="@height"/>
+      <xsl:text>"}</xsl:text>
+    </xsl:attribute>
+    <xsl:apply-templates/>
+		<xsl:comment/>
+  </div>
+</xsl:template>
 
 <!--doc title:'Header' module:'layout'
 <header icon="«icon»">«text»</header>

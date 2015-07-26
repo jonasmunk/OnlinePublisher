@@ -328,6 +328,8 @@ ul.inheritsList
 	
 	<li><a href="../symbols/hui.ui.Columns.html">hui.ui.Columns</a></li>
 	
+	<li><a href="../symbols/hui.ui.Component.html">hui.ui.Component</a></li>
+	
 	<li><a href="../symbols/hui.ui.DatePicker.html">hui.ui.DatePicker</a></li>
 	
 	<li><a href="../symbols/hui.ui.DateTimeField.html">hui.ui.DateTimeField</a></li>
@@ -345,6 +347,8 @@ ul.inheritsList
 	<li><a href="../symbols/hui.ui.Drawing.html">hui.ui.Drawing</a></li>
 	
 	<li><a href="../symbols/hui.ui.DropDown.html">hui.ui.DropDown</a></li>
+	
+	<li><a href="../symbols/hui.ui.Editable.html">hui.ui.Editable</a></li>
 	
 	<li><a href="../symbols/hui.ui.Editor.html">hui.ui.Editor</a></li>
 	
@@ -460,6 +464,8 @@ ul.inheritsList
 	
 	<li><a href="../symbols/hui.ui.Selection.Items.html">hui.ui.Selection.Items</a></li>
 	
+	<li><a href="../symbols/hui.ui.Skeleton.html">hui.ui.Skeleton</a></li>
+	
 	<li><a href="../symbols/hui.ui.Slider.html">hui.ui.Slider</a></li>
 	
 	<li><a href="../symbols/hui.ui.Source.html">hui.ui.Source</a></li>
@@ -528,7 +534,7 @@ ul.inheritsList
 				
 				
 				
-					<br /><i>Defined in: </i> &lt;./../bin/all.js&gt;.
+					<br /><i>Defined in: </i> &lt;tools/../bin/all.js&gt;.
 				
 			</p>
 
@@ -590,7 +596,8 @@ ul.inheritsList
  duration : 1000, // 1sec 
  ease : function(num) {},
  $complete : function() {}
-}</div>
+}
+TODO Document options.property, options.value</div>
 							</td>
 						</tr>
 					
@@ -608,19 +615,7 @@ ul.inheritsList
 							<td class="nameDescription">
 								<div class="fixedFont">hui.<b><a href="../symbols/hui.html#.build">build</a></b>(name, options, doc)
 								</div>
-								<div class="description">Builds an element with the «name» and «options»
-<pre><strong>options:</strong> {
- html : '<em>markup</em>', 
- text : 'child text', 
- parent : «Element», 
- parentFirst : «Element», 
- class : 'css_class', 
- className : 'css_class', 
- style : 'color: blue;' 
-}
-
-Additional properties will be set as attributes
-</pre></div>
+								<div class="description">Builds an element with the «name» and «options»</div>
 							</td>
 						</tr>
 					
@@ -657,6 +652,15 @@ Additional properties will be set as attributes
 								<div class="fixedFont">hui.<b><a href="../symbols/hui.html#.event">event</a></b>(event)
 								</div>
 								<div class="description">Creates an event wrapper for an event</div>
+							</td>
+						</tr>
+					
+						<tr>
+							<td class="attributes">&lt;static&gt; &nbsp;</td>
+							<td class="nameDescription">
+								<div class="fixedFont">hui.<b><a href="../symbols/hui.html#.extend">extend</a></b>(subClass, superClass)
+								</div>
+								<div class="description"></div>
 							</td>
 						</tr>
 					
@@ -908,6 +912,7 @@ Additional properties will be set as attributes
  ease : function(num) {},
  $complete : function() {}
 }
+TODO Document options.property, options.value
 						
 						
 					</div>
@@ -1016,18 +1021,6 @@ Additional properties will be set as attributes
 					</div>
 					<div class="description">
 						Builds an element with the «name» and «options»
-<pre><strong>options:</strong> {
- html : '<em>markup</em>', 
- text : 'child text', 
- parent : «Element», 
- parentFirst : «Element», 
- class : 'css_class', 
- className : 'css_class', 
- style : 'color: blue;' 
-}
-
-Additional properties will be set as attributes
-</pre>
 						
 						
 					</div>
@@ -1049,6 +1042,48 @@ Additional properties will be set as attributes
 									
 								</dt>
 								<dd>The options</dd>
+							
+								<dt>
+									<span class="light fixedFont">{String}</span> <b>options.html</b>
+									
+								</dt>
+								<dd>Inner HTML</dd>
+							
+								<dt>
+									<span class="light fixedFont">{String}</span> <b>options.text</b>
+									
+								</dt>
+								<dd>Inner text</dd>
+							
+								<dt>
+									<span class="light fixedFont">{String}</span> <b>options.className</b>
+									
+								</dt>
+								<dd></dd>
+							
+								<dt>
+									<span class="light fixedFont">{String}</span> <b>options.class</b>
+									
+								</dt>
+								<dd></dd>
+							
+								<dt>
+									<span class="light fixedFont">{Object}</span> <b>options.style</b>
+									
+								</dt>
+								<dd>Map of styles (see: hui.style.set)</dd>
+							
+								<dt>
+									<span class="light fixedFont">{Element}</span> <b>options.parent</b>
+									
+								</dt>
+								<dd></dd>
+							
+								<dt>
+									<span class="light fixedFont">{Element}</span> <b>options.parentFirst</b>
+									
+								</dt>
+								<dd></dd>
 							
 								<dt>
 									<span class="light fixedFont">{Document}</span> <b>doc</b>
@@ -1239,6 +1274,48 @@ If «items» is an object «func» is called with each (key,value)
 								<dd><span class="light fixedFont">{<a href="../symbols/hui.Event.html">hui.Event</a>}</span> An event wrapper</dd>
 							
 							</dl>
+						
+						
+						
+
+					<hr />
+				
+					<a name=".extend"> </a>
+					<div class="fixedFont">&lt;static&gt; 
+					
+					
+					<span class="light">hui.</span><b>extend</b>(subClass, superClass)
+					
+					</div>
+					<div class="description">
+						
+						
+						
+					</div>
+					
+					
+					
+						
+							<dl class="detailList">
+							<dt class="heading">Parameters:</dt>
+							
+								<dt>
+									<b>subClass</b>
+									
+								</dt>
+								<dd></dd>
+							
+								<dt>
+									<b>superClass</b>
+									
+								</dt>
+								<dd></dd>
+							
+							</dl>
+						
+						
+						
+						
 						
 						
 						
@@ -1791,7 +1868,7 @@ If «items» is an object «func» is called with each (key,value)
 					<a name=".request"> </a>
 					<div class="fixedFont">&lt;static&gt; 
 					
-					<span class="light">{XMLHttpRequest}</span>
+					<span class="light">{<a href="../symbols/_global_.html#XMLHttpRequest">XMLHttpRequest</a>}</span>
 					<span class="light">hui.</span><b>request</b>(options)
 					
 					</div>
@@ -1853,7 +1930,7 @@ If «items» is an object «func» is called with each (key,value)
 							<dl class="detailList">
 							<dt class="heading">Returns:</dt>
 							
-								<dd><span class="light fixedFont">{XMLHttpRequest}</span> The transport</dd>
+								<dd><span class="light fixedFont">{<a href="../symbols/_global_.html#XMLHttpRequest">XMLHttpRequest</a>}</span> The transport</dd>
 							
 							</dl>
 						
@@ -2006,7 +2083,7 @@ If «items» is an object «func» is called with each (key,value)
 <!-- ============================== footer ================================= -->
 		<div class="fineprint" style="clear:both">
 			
-			Documentation generated by <a href="http://code.google.com/p/jsdoc-toolkit/" target="_blank">JsDoc Toolkit</a> 2.4.0 on Wed Mar 18 2015 20:08:27 GMT+0100 (CET)
+			Documentation generated by <a href="http://code.google.com/p/jsdoc-toolkit/" target="_blank">JsDoc Toolkit</a> 2.4.0 on Mon Jun 29 2015 14:38:46 GMT+0200 (CEST)
 		</div>
 	</body>
 </html>

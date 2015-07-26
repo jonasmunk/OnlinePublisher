@@ -4837,18 +4837,17 @@ hui.ui = {
 };
 
 /**
- * Get a widget by name
- * @param nameOrWidget {Widget | String} Get a widget by name, if the parameter is already a widget it is returned
- * @return {Widget} The widget with the name or null
+ * Get a component by name
+ * @param nameOrComponent {hui.ui.Component | String} Get a component by name, if the parameter is already a component it is returned
+ * @return {hui.ui.Component} The component with the name or undefined
  */
-hui.ui.get = function(nameOrWidget) {
-	if (nameOrWidget) {
-		if (nameOrWidget.element) {
-			return nameOrWidget;
+hui.ui.get = function(nameOrComponent) {
+	if (nameOrComponent) {
+		if (nameOrComponent.element) {
+			return nameOrComponent;
 		}
-		return hui.ui.objects[nameOrWidget];
+		return hui.ui.objects[nameOrComponent];
 	}
-	return null;
 };
 
 
@@ -4944,9 +4943,9 @@ hui.ui.confirmOverlay = function(options) {
  * @param widget {Widget} The widget to destroy 
  */
 hui.ui.destroy = function(widget) {
-    if (typeof(widget.destroy)=='function') {
-        widget.destroy();
-    }
+  if (typeof(widget.destroy)=='function') {
+    widget.destroy();
+  }
 	delete(hui.ui.objects[widget.name]);
 };
 
@@ -4954,7 +4953,7 @@ hui.ui.destroyDescendants = function(widgetOrElement) {
 	var desc = hui.ui.getDescendants(widgetOrElement);
 	var objects = hui.ui.objects;
 	for (var i=0; i < desc.length; i++) {
-        hui.ui.destroy(desc[i]);
+    hui.ui.destroy(desc[i]);
 	}
 };
 
@@ -5871,6 +5870,7 @@ hui.onReady(function() {
  * @param {Object} options
  * @param {Element} options.element
  * @param {String} options.name
+ * @param {Object} options.listen A listener
  */
 hui.ui.Component = function(options) {
 	this.name = options.name;
@@ -5879,9 +5879,12 @@ hui.ui.Component = function(options) {
 		this.name = 'unnamed'+hui.ui.latestObjectIndex;
 	}
 	this.element = hui.get(options.element);
-  this.listeners = [];
+  this.delegates = [];
   if (this.nodes) {
   	this.nodes = hui.collect(this.nodes,this.element);
+  }
+  if (options.listen) {
+    this.listen(options.listen);
   }
   hui.ui.registerComponent(this);
 }
@@ -5892,7 +5895,7 @@ hui.ui.Component.prototype = {
    * @param {Object} listener An object with methods for different events
    */
   listen : function(listener) {
-    this.listeners.push(listener);
+    this.delegates.push(listener);
   },
   fire : function(name,value,event) {
   		return hui.ui.callDelegates(this,name,value,event);
@@ -12991,7 +12994,8 @@ hui.ui.InfoView.prototype = {
 
 /**
  * Overflow with scroll bars
- * @param {Object} The options
+ * @param options {Object} The options
+ * @param options.dynamic {boolean} If the overflow show adjust its height
  * @constructor
  */
 hui.ui.Overflow = function(options) {
@@ -13006,10 +13010,14 @@ hui.ui.Overflow = function(options) {
 
 hui.ui.Overflow.create = function(options) {
 	options = options || {};
-	var e = options.element = hui.build('div',{'class':'hui_overflow',html:'<div class="hui_overflow_top"></div><div class="hui_overflow_bottom"></div>'});
+  var attributes = {
+    'class' : 'hui_overflow',
+    html : '<div class="hui_overflow_top"></div><div class="hui_overflow_bottom"></div>'
+  };
 	if (options.height) {
-		e.style.height=options.height+'px';
+		attributes.style = {height:options.height+'px'};
 	}
+	options.element = hui.build('div',attributes);
 	return new hui.ui.Overflow(options);
 }
 
@@ -13059,9 +13067,9 @@ hui.ui.Overflow.prototype = {
 	/** @private */
 	$visibilityChanged : function() {
 		if (hui.dom.isVisible(this.element)) {
-            this.$$layout();
-        }
+      this.$$layout();
     }
+  }
 }
 
 /* EOF */
@@ -17955,6 +17963,43 @@ hui.ui.ObjectInput.prototype = {
     }
 }
 
+(function (_super) {
+
+  /**
+   * Vertical rows
+   * @class
+   * @augments hui.ui.Component
+   * @param {Object} options
+   */
+  hui.ui.Rows = function(options) {
+    _super.call(this, options);
+    this.rows = [];
+    this._attach();
+  }
+  
+  hui.ui.Rows.prototype = {
+    _attach : function() {
+      var children = hui.get.children(this.element);
+      for (var i = 0; i < children.length; i++) {
+        this.rows.push({
+          node : children[i]
+        });
+      }
+    },
+    $$layout : function() {
+      this.element.style.height = this.element.parentNode.clientHeight + 'px';
+      var count = this.rows.length;
+      for (var i = 0; i < count; i++) {
+        var row = this.rows[i];
+        row.node.style.height = (100/count) + '%';
+      }
+    }
+  }
+
+  hui.extend(hui.ui.Rows, _super);
+
+})(hui.ui.Component);
+
 /**
  * A chart (line / column etc.)
  * <pre><strong>options:</strong> {
@@ -20967,13 +21012,19 @@ hui.geometry = {
 
   hui.ui.Editable.prototype = {
     setValue : function(value) {
+      var changed = value !== this.value;
       this.value = value;
+      changed && this.fireValueChange();
     },
     getValue : function() {
       return this.value;
     },
+  	fireValueChange : function() {
+  		this.fire('valueChanged',this.value);
+  		hui.ui.firePropertyChange(this,'value',this.value);
+  		hui.ui.callAncestors(this,'childValueChanged',this.value);
+  	},
     getElement : function() {
-      hui.log('Hijacked')
       return _super.prototype.getElement.call(this);
     }
   }
@@ -22926,7 +22977,8 @@ hui.ui.ProgressIndicator.prototype = {
       })
     },
     $$layout : function() {
-      hui.log(this.element.clientWidth)
+      var h = this.nodes.actions.clientHeight;
+      this.nodes.content.style.top = h + 'px'
     }
   }
 

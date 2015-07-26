@@ -18,87 +18,88 @@
  * @param {Object} deleagte The options if first param is an element
  * 
  */
-hui.animate = function(options,property,value,duration,delegate) {
-	if (typeof(options)=='string' || hui.dom.isElement(options)) {
-		hui.animation.get(options).animate(null,value,property,duration,delegate);
-	} else {
-		var item = hui.animation.get(options.node);
-		if (options.property) {
-			item.animate(null,options.value,options.property,options.duration,options);
-		}
-		else if (!options.css) {
-			item.animate(null,'','',options.duration,options);
-		} else {
-			var o = options;
-			for (var prop in options.css) {
-				item.animate(null,options.css[prop],prop,options.duration,o);
-				o = hui.override({},options);
-				o.$complete = undefined;
-			}
-		}
-	}
-}
+hui.animate = function(options, property, value, duration, delegate) {
+  if (typeof(options) == 'string' || hui.dom.isElement(options)) {
+    hui.animation.get(options).animate(null, value, property, duration, delegate);
+  } else {
+    var item = hui.animation.get(options.node);
+    if (options.property) {
+      item.animate(null, options.value, options.property, options.duration, options);
+    } else if (!options.css) {
+      item.animate(null, '', '', options.duration, options);
+    } else {
+      var o = options;
+      for (var prop in options.css) {
+        item.animate(null, options.css[prop], prop, options.duration, o);
+        o = hui.override({}, options);
+        o.$complete = undefined;
+      }
+    }
+  }
+};
+
 
 /** @namespace */
 hui.animation = {
-	objects : {},
-	running : false,
-	latestId : 0,
-	/** Get an animation item for a node */
-	get : function(element) {
-		element = hui.get(element);
-		if (!element.huiAnimationId) {
-			element.huiAnimationId = this.latestId++;
-		}
-		if (!this.objects[element.huiAnimationId]) {
-			this.objects[element.huiAnimationId] = new hui.animation.Item(element);
-		}
-		return this.objects[element.huiAnimationId];
-	},
-	/** Start animating any pending tasks */ 
-	start : function() {
-		if (!this.running) {
-			hui.animation._render();
-		}
-	}
+  objects: {},
+  running: false,
+  latestId: 0,
+  /** Get an animation item for a node */
+  get: function(element) {
+    element = hui.get(element);
+    if (!element.huiAnimationId) {
+      element.huiAnimationId = this.latestId++;
+    }
+    if (!this.objects[element.huiAnimationId]) {
+      this.objects[element.huiAnimationId] = new hui.animation.Item(element);
+    }
+    return this.objects[element.huiAnimationId];
+  },
+  /** Start animating any pending tasks */
+  start: function() {
+    if (!this.running) {
+      hui.animation._render();
+    }
+  }
 };
+
 
 hui.animation._lengthUpater = function(element,v,work) {
 	element.style[work.property] = (work.from+(work.to-work.from)*v)+(work.unit!=null ? work.unit : '');
 }
 
-hui.animation._transformUpater = function(element,v,work) {
-	var t = work.transform;
-	var str = '';
-	if (t.rotate) {
-		str+=' rotate('+(t.rotate.from+(t.rotate.to-t.rotate.from)*v)+t.rotate.unit+')';
-	}
-	if (t.scale) {
-		str+=' scale('+(t.scale.from+(t.scale.to-t.scale.from)*v)+')';
-	}
-	element.style[hui.animation.TRANSFORM]=str;
-}
+hui.animation._transformUpater = function(element, v, work) {
+  var t = work.transform;
+  var str = '';
+  if (t.rotate) {
+    str += ' rotate(' + (t.rotate.from + (t.rotate.to - t.rotate.from) * v) + t.rotate.unit + ')';
+  }
+  if (t.scale) {
+    str += ' scale(' + (t.scale.from + (t.scale.to - t.scale.from) * v) + ')';
+  }
+  element.style[hui.animation.TRANSFORM] = str;
+};
 
-hui.animation._colorUpater = function(element,v,work) {
-	var red = Math.round(work.from.red+(work.to.red-work.from.red)*v);
-	var green = Math.round(work.from.green+(work.to.green-work.from.green)*v);
-	var blue = Math.round(work.from.blue+(work.to.blue-work.from.blue)*v);
-	value = 'rgb('+red+','+green+','+blue+')';
-	element.style[work.property]=value;
-}
+hui.animation._colorUpater = function(element, v, work) {
+  var red = Math.round(work.from.red + (work.to.red - work.from.red) * v);
+  var green = Math.round(work.from.green + (work.to.green - work.from.green) * v);
+  var blue = Math.round(work.from.blue + (work.to.blue - work.from.blue) * v);
+  value = 'rgb(' + red + ',' + green + ',' + blue + ')';
+  element.style[work.property] = value;
+};
 
-hui.animation._propertyUpater = function(element,v,work) {
+hui.animation._propertyUpater = function(element, v, work) {
 	element[work.property] = Math.round(work.from+(work.to-work.from)*v);
 }
 
-hui.animation._ieOpacityUpdater = function(element,v,work) {
-	var opacity = (work.from+(work.to-work.from)*v);
-	if (opacity==1) {
-		element.style.removeAttribute('filter');
-	} else {
-		element.style['filter']='alpha(opacity='+(opacity*100)+')';
-	}
-}
+hui.animation._ieOpacityUpdater = function(element, v, work) {
+  var opacity = (work.from + (work.to - work.from) * v);
+  if (opacity == 1) {
+    element.style.removeAttribute('filter');
+  } else {
+    element.style.filter = 'alpha(opacity=' + (opacity * 100) + ')';
+  }
+};
 
 hui.animation._render = function() {
 	hui.animation.running = true;
@@ -154,7 +155,7 @@ hui.animation._render = function() {
 	} else {
 		hui.animation.running = false;
 	}
-}
+};
 
 hui.animation._parseStyle = function(value) {
 	var parsed = {type:null,value:null,unit:null};
@@ -186,7 +187,7 @@ hui.animation._parseStyle = function(value) {
 		}
 	}
 	return parsed;
-}
+};
 
 ///////////////////////////// Item ///////////////////////////////
 
@@ -197,7 +198,7 @@ hui.animation._parseStyle = function(value) {
 hui.animation.Item = function(element) {
 	this.element = element;
 	this.work = [];
-}
+};
 
 hui.animation.Item.prototype.animate = function(from,to,property,duration,delegate) {
 	var work = this.getWork(hui.string.camelize(property));
@@ -241,7 +242,7 @@ hui.animation.Item.prototype.animate = function(from,to,property,duration,delega
 	}
 	work.end = work.start+duration;
 	hui.animation.start();
-}
+};
 
 hui.animation.TRANSFORM = hui.browser.gecko ? 'MozTransform' : 'WebkitTransform';
 
@@ -274,7 +275,7 @@ hui.animation.Item.parseTransform = function(value,element) {
 	}
 	
 	return result;
-}
+};
 
 hui.animation.Item.prototype._getIEOpacity = function(element) {
 	var filter = hui.style.get(element,'filter').toLowerCase();
@@ -284,7 +285,7 @@ hui.animation.Item.prototype._getIEOpacity = function(element) {
 	} else {
 		return 1;
 	}
-}
+};
 
 hui.animation.Item.prototype.getWork = function(property) {
 	for (var i = this.work.length - 1; i >= 0; i--) {
@@ -295,7 +296,7 @@ hui.animation.Item.prototype.getWork = function(property) {
 	var work = {property:property};
 	this.work[this.work.length] = work;
 	return work;
-}
+};
 
 /////////////////////////////// Loop ///////////////////////////////////
 
@@ -304,7 +305,7 @@ hui.animation.Loop = function(recipe) {
 	this.recipe = recipe;
 	this.position = -1;
 	this.running = false;
-}
+};
 
 hui.animation.Loop.prototype.next = function() {
 	this.position++;
@@ -323,12 +324,12 @@ hui.animation.Loop.prototype.next = function() {
 		time = item.wait;
 	}
 	window.setTimeout(function() {self.next()},time);
-}
+};
 
 hui.animation.Loop.prototype.start = function() {
 	this.running=true;
 	this.next();
-}
+};
 
 /** @namespace */
 hui.ease = {

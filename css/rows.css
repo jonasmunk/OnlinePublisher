@@ -1,0 +1,26 @@
+.hui_rows {
+  overflow: hidden;
+}
+
+.hui_rows_row {
+  overflow: hidden;
+}
+
+/*
+.hui_rows
+{
+	display: flex;
+  flex-direction: column;
+  height: 100%;
+  overflow: hidden;
+}
+
+.hui_rows_row-min
+{
+  flex-shrink: 1;
+}
+
+.hui_rows_row-adapt
+{
+  flex-grow: 1;
+}*/

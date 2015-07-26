@@ -191,9 +191,9 @@ hui.ui.BoundPanel.prototype = {
 	 */
 	position : function(options) {
 		var node,
-			position,
-            nodeOffset,
-            nodeScrollOffset;
+      position,
+      nodeOffset,
+      nodeScrollOffset;
 		if (options.getElement) {
 			node = options.getElement();
 		} else if (options.element) {
@@ -241,7 +241,7 @@ hui.ui.BoundPanel.prototype = {
 		if (position=='vertical') {
 			vertical = vertical > 0.5 ? 0.9 : 0.1;
 		}
-		
+		var min, max;
 		if (vertical <= 0.1) {
 			this.relativePosition='top';
 			this.arrow.className = 'hui_boundpanel_arrow hui_boundpanel_arrow_top';
@@ -273,8 +273,8 @@ hui.ui.BoundPanel.prototype = {
 			top = nodeOffset.top+(nodeHeight-panelDimensions.height) / 2;
 			//top = Math.min(top,viewportHeight-panelDimensions.height+(windowScrollOffset.top+nodeScrollOffset.top));
 			top-= (nodeScrollOffset.top-windowScrollOffset.top);
-			var min = windowScrollOffset.top + 3;
-			var max = windowScrollOffset.top + (viewportHeight-panelDimensions.height) - 3;
+			min = windowScrollOffset.top + 3;
+			max = windowScrollOffset.top + (viewportHeight-panelDimensions.height) - 3;
 			top = Math.min(Math.max(top,min),max);
 			arrowTop = nodeOffset.top - top;
 			arrowTop -= (nodeScrollOffset.top-windowScrollOffset.top);
@@ -293,8 +293,8 @@ hui.ui.BoundPanel.prototype = {
 			top = nodeOffset.top + (nodeHeight-panelDimensions.height) / 2;
 			//top = Math.min(top,viewportHeight-panelDimensions.height+(windowScrollOffset.top+nodeScrollOffset.top));
 			top-= (nodeScrollOffset.top-windowScrollOffset.top);
-			var min = windowScrollOffset.top + 3;
-			var max = windowScrollOffset.top + (viewportHeight - panelDimensions.height)-3;
+			min = windowScrollOffset.top + 3;
+			max = windowScrollOffset.top + (viewportHeight - panelDimensions.height)-3;
 			top = Math.min(Math.max(top,min),max);
 			arrowTop = nodeOffset.top-top;
 			arrowTop -= (nodeScrollOffset.top - windowScrollOffset.top);
@@ -322,5 +322,3 @@ hui.ui.BoundPanel.prototype = {
         hui.dom.remove(this.element);
     }
 };
-
-/* EOF */
