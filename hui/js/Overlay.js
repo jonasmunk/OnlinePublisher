@@ -145,6 +145,6 @@ hui.ui.Overlay.prototype = {
 		hui.ui.destroyDescendants(this.content);
 		this.content.innerHTML='';
 	}
-}
+};
 
 /* EOF */

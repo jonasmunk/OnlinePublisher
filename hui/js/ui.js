@@ -190,8 +190,8 @@ hui.ui.getDescendants = function(widgetOrElement) {
 					if (d[i]==o[j].element) {
 						desc.push(o[j]);
 					}
-				};
-			};
+				}
+			}
 		}
 	}
 	return desc;
@@ -703,9 +703,8 @@ hui.ui.registerComponent = function(component) {
 	if (hui.ui.objects[component.name]) {
 		hui.log('Widget replaced: '+component.name,hui.ui.objects[component.name]);
 	}
-	hui.ui.objects[component.name] = component;
-  
-}
+	hui.ui.objects[component.name] = component;  
+};
 
 /** Send a message to all ancestors of a widget */
 hui.ui.callAncestors = function(obj,method,value,event) {

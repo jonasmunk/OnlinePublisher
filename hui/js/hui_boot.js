@@ -24,6 +24,5 @@ hui.ready = function(delegate) {
 		} else {
 			window.onload = delegate;
 		}
-	}
-    
-}
+	}  
+};

@@ -3511,18 +3511,17 @@ hui.ui = {
 };
 
 /**
- * Get a widget by name
- * @param nameOrWidget {Widget | String} Get a widget by name, if the parameter is already a widget it is returned
- * @return {Widget} The widget with the name or null
+ * Get a component by name
+ * @param nameOrComponent {hui.ui.Component | String} Get a component by name, if the parameter is already a component it is returned
+ * @return {hui.ui.Component} The component with the name or undefined
  */
-hui.ui.get = function(nameOrWidget) {
-	if (nameOrWidget) {
-		if (nameOrWidget.element) {
-			return nameOrWidget;
+hui.ui.get = function(nameOrComponent) {
+	if (nameOrComponent) {
+		if (nameOrComponent.element) {
+			return nameOrComponent;
 		}
-		return hui.ui.objects[nameOrWidget];
+		return hui.ui.objects[nameOrComponent];
 	}
-	return null;
 };
 
 
@@ -3618,9 +3617,9 @@ hui.ui.confirmOverlay = function(options) {
  * @param widget {Widget} The widget to destroy 
  */
 hui.ui.destroy = function(widget) {
-    if (typeof(widget.destroy)=='function') {
-        widget.destroy();
-    }
+  if (typeof(widget.destroy)=='function') {
+    widget.destroy();
+  }
 	delete(hui.ui.objects[widget.name]);
 };
 
@@ -3628,7 +3627,7 @@ hui.ui.destroyDescendants = function(widgetOrElement) {
 	var desc = hui.ui.getDescendants(widgetOrElement);
 	var objects = hui.ui.objects;
 	for (var i=0; i < desc.length; i++) {
-        hui.ui.destroy(desc[i]);
+    hui.ui.destroy(desc[i]);
 	}
 };
 

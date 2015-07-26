@@ -10,7 +10,7 @@ hui.ui.Checkbox = function(o) {
 	this.value = o.value==='true' || o.value===true;
 	hui.ui.extend(this);
 	this.addBehavior();
-}
+};
 
 /**
  * Creates a new checkbox
@@ -21,7 +21,7 @@ hui.ui.Checkbox.create = function(o) {
 		hui.cls.add(e,'hui_checkbox_selected');
 	}
 	return new hui.ui.Checkbox(o);
-}
+};
 
 hui.ui.Checkbox.prototype = {
 	/** @private */
@@ -66,4 +66,4 @@ hui.ui.Checkbox.prototype = {
 	getLabel : function() {
 		return this.options.label;
 	}
-}
+};

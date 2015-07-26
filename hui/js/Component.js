@@ -45,5 +45,16 @@ hui.ui.Component.prototype = {
     if (this.element) {
       hui.dom.remove(this.element);
     }
-  }
+  },
+	valueForProperty : function(property) {
+	  return this[property];
+	},
+	fireValueChange : function() {
+		this.fire('valueChanged',this.value);
+		hui.ui.firePropertyChange(this,'value',this.value);
+		hui.ui.callAncestors(this,'childValueChanged',this.value);
+	},
+	fireSizeChange : function() {
+		hui.ui.callAncestors(this,'$$childSizeChanged');
+	}
 }
