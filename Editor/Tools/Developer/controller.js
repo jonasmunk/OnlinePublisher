@@ -77,9 +77,15 @@ hui.ui.listen({
 		diagram.contract();
 	},
     
-    // Queries...
+  // Queries...
     
-    $valueChanged$queryInput : function(value) {
-        queryOutput.setValue(value);
-    }
+  $valueChanged$queryInput : function(value) {
+		hui.ui.request({
+			url : 'data/Query.php',
+			parameters : {query:value},
+			$text : function(value) {
+        queryOutput.setValue(value);			  
+			}
+		})
+  }
 });
