@@ -107,12 +107,12 @@
                             </xsl:if>
                         </xsl:attribute>
                         <span class="part_image_adaptive_inner" style="padding-bottom: {$ratio}%;">
-                        <img src="{$src}" width="{$width}"  height="{$height}" alt="" class="part_image_image part_image_adaptive" id="part_image_{generate-id()}"/>				
+                        <img src="{$src}" width="{round($width)}"  height="{round($height)}" alt="" class="part_image_image part_image_adaptive" id="part_image_{generate-id()}"/>				
                         </span>
                     </div>
                 </xsl:when>
 			    <xsl:otherwise>
-                    <img src="{$src}" width="{$width}"  height="{$height}" alt="" class="part_image_image" id="part_image_{generate-id()}"/>				
+                    <img src="{$src}" width="{round($width)}"  height="{round($height)}" alt="" class="part_image_image" id="part_image_{generate-id()}"/>				
                 </xsl:otherwise>
 			</xsl:choose>
         </xsl:with-param>
