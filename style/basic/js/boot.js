@@ -76,8 +76,9 @@
             var x = document.createElement('div');
             x.innerHTML = noscript.firstChild.nodeValue;
             var c = x.childNodes;
-            for (var i = 0; i < c.length; i++) {
-              noscript.parentNode.insertBefore(c[i],noscript);
+            while (c.length) {
+              var removed = x.removeChild(c[0]);
+              noscript.parentNode.insertBefore(removed,noscript);
             }
           }
         }
