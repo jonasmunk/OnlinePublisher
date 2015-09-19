@@ -92,4 +92,12 @@ class ConfigurationService {
 		}
 		return $url;
 	}
+  
+  static function getImagePath($filename) {
+		global $CONFIG,$basePath;
+    if (isset($CONFIG['dataDir'])) {
+      return $basePath.$CONFIG['dataDir'].'images/'.$filename;
+    }
+  	return $basePath.'images/'.$filename;
+  }
 }
