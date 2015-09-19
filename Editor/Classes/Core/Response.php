@@ -92,7 +92,7 @@ class Response {
 	static function sendStatus($number,$text=null) {
         http_response_code($number);
 		if ($text) {
-			echo '<!DOCTYPE html><html><head><title>'.$text.'</title></head><body><h1>'.$text.'</h1></body><p>'.$number.' '.$key.'</p></html>';
+			echo '<!DOCTYPE html><html><head><title>'.$text.'</title></head><body><h1>'.$text.'</h1></body><p>'.$number.'</p></html>';
 		}
 	}
 }
