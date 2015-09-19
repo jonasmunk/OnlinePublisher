@@ -61,4 +61,4 @@ hui.ui.ObjectInput.prototype = {
         this.value = value;
         this._render();
     }
-}
+};
