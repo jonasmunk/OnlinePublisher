@@ -44,14 +44,14 @@ foreach ($parameters as $parameter) {
 if ($recipe['width'] == null && $recipe['height'] == null && $recipe['scale'] == null && count($recipe['filters']) == 0 && !$recipe['format']) {
 	$sql = 'select `filename`,`type`,`width`,`height` from image where object_id='.Database::int($id);
 	if ($row = Database::selectFirst($sql)) {
-		$path = $basePath.'images/'.$row['filename'];
-        if (file_exists($path)) {
-    		ImageTransformationService::sendFile($path,$row['type']);            
-        } else if (ConfigurationService::isDebug()) {
-            Response::redirect(getPlaceholder($recipe,$row));
-        } else {
-		    Response::notFound();
-        }
+		$path = ConfigurationService::getImagePath($row['filename']);
+    if (file_exists($path)) {
+  		ImageTransformationService::sendFile($path,$row['type']);
+    } else if (ConfigurationService::isDebug()) {
+      Response::redirect(getPlaceholder($recipe,$row));
+    } else {
+	    Response::notFound();
+    }
 	}
 	exit;
 }
@@ -62,19 +62,19 @@ if (file_exists($cache)) {
 } else {
 	$sql = 'select `filename`,`type`,`width`,`height` from image where object_id='.Database::int($id);
 	if ($row = Database::selectFirst($sql)) {
-		$recipe['path'] = $basePath.'images/'.$row['filename'];
+		$recipe['path'] = ConfigurationService::getImagePath($row['filename']);
 		if (Request::getBoolean('nocache')) {
 			ImageTransformationService::transform($recipe);
 		} else {
 			$recipe['destination'] = $cache;
 			ImageTransformationService::transform($recipe);
-            if (file_exists($cache)) {
-    			ImageTransformationService::sendFile($cache,$recipe['format']);                
-        	} else if (ConfigurationService::isDebug()) {
-                Response::redirect(getPlaceholder($recipe,$row));
-            } else {
-        		Response::internalServerError('Unable to transform image');
-            }
+      if (file_exists($cache)) {
+  			ImageTransformationService::sendFile($cache,$recipe['format']);                
+    	} else if (ConfigurationService::isDebug()) {
+        Response::redirect(getPlaceholder($recipe,$row));
+      } else {
+    		Response::internalServerError('Unable to transform image');
+      }
 		}
 	} else if (ConfigurationService::isDebug()) {
         Response::redirect(getPlaceholder($recipe,$row));
