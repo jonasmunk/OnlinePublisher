@@ -379,7 +379,8 @@ return i},inject:function(e){var n=t.getElementsByTagName("head")[0]
 n?n.appendChild(e):this.ready(function(){_editor.inject(e)})},processNoscript:function(){this.ready(function(){for(var e=t.getElementsByTagName("noscript"),n=0;n<e.length;n++){var i=e[n]
 if("js-async"==i.className&&i.firstChild){var a=t.createElement("div")
 a.innerHTML=i.firstChild.nodeValue
-for(var r=a.childNodes,n=0;n<r.length;n++)i.parentNode.insertBefore(r[n],i)}}})}},_editor.processNoscript()}(window,document)
+for(var r=a.childNodes;r.length;){var o=a.removeChild(r[0])
+i.parentNode.insertBefore(o,i)}}}})}},_editor.processNoscript()}(window,document)
 ]]></xsl:with-param>
     </xsl:call-template>
     <script>_editor.context = '<xsl:value-of select="$path"/>';</script>
@@ -529,14 +530,14 @@ for(var r=a.childNodes,n=0;n<r.length;n++)i.parentNode.insertBefore(r[n],i)}}})}
     <xsl:param name="class" select="'font'"/>
     <xsl:call-template name="util:script-inline">
         <xsl:with-param name="file" select="'style/basic/js/boot_fonts.js'"/>
-        <xsl:with-param name="compiled"><![CDATA[!function(e,t,l){l.loadFont=function(o){if(e.localStorage&&localStorage.getItem(o.href))t.body.className+=" "+o.cls
-else{var a=o.weights||["normal"]
-a=["300","400","700"]
-for(var n=a.length,i=function(l){var a=t.createElement("div")
-a.style.position="absolute",a.style.whiteSpace="nowrap",a.style.top="-9999px",a.style.font="400px fantasy",a.innerHTML="Am-i#w^o",t.body.appendChild(a)
-var i=a.clientWidth
-a.style.fontFamily="'"+o.family+"',fantasy",a.style.fontWeight=l
-var s,r=.01;(s=function(){r*=1.5,0==i||i!=a.clientWidth?(n--,0==n&&(t.body.className+=" "+o.cls,e.localStorage&&localStorage.setItem(o.href,"1")),a.parentNode.removeChild(a)):e.setTimeout(s,r)})()},s=0;s<a.length;s++)i(a[s])}l.inject(l._build("link",{rel:"stylesheet",type:"text/css",href:o.href}))}}(window,document,_editor)
+        <xsl:with-param name="compiled"><![CDATA[!function(e,t,l){l.loadFont=function(o){for(var n=o.weights||["normal"],i={},a=n.length,s=function(l){var n=t.createElement("div")
+n.style.position="absolute",n.style.whiteSpace="nowrap",n.style.top="-9999px",n.style.left="-9999px",n.style.font="999px fantasy",n.style.fontWeight=l,n.innerHTML="Am-i#w^o",t.body.appendChild(n)
+var s=n.clientWidth
+n.style.fontFamily="'"+o.family+"',fantasy"
+var r,c=.01;(r=function(){c*=1.5
+var f=n.clientWidth
+0==s||s!=f&&!i[f]?(a--,console.log("found: "+l+","+s+"/"+n.clientWidth),0==a&&(console.log("finished: "+o.family),t.body.className+=" "+o.cls,e.localStorage&&localStorage.setItem(o.href,"1")),i[f]=1,n.parentNode.removeChild(n)):e.setTimeout(r,c)})()},r=0;r<n.length;r++)s(n[r])
+l.inject(l._build("link",{rel:"stylesheet",type:"text/css",href:o.href}))}}(window,document,_editor)
 ]]></xsl:with-param>
     </xsl:call-template>
     <script>_editor.loadFont({href:'<xsl:value-of select="$href"/>',family:'<xsl:value-of select="$family"/>',cls:'<xsl:value-of select="$class"/>'<xsl:if test="$weights!=''">,weights:'<xsl:value-of select="$weights"/>'.split(',')</xsl:if>});</script>

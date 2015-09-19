@@ -81,6 +81,7 @@
         <item icon="common/page" title="pages" value="xml/pages.xml"/>
         <item icon="common/page" title="picker" value="xml/picker.xml"/>
         <item icon="common/page" title="rendering" value="xml/rendering.xml"/>
+        <item icon="common/page" title="rows" value="xml/rows.xml"/>
         <item icon="common/page" title="skeleton" value="xml/skeleton.xml"/>
         <item icon="common/page" title="split" value="xml/split.xml"/>
         <item icon="common/page" title="structure" value="xml/structure.xml"/>

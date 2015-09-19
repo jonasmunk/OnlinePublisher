@@ -5,7 +5,7 @@
 		<meta http-equiv="content-type" content="text/html; charset=utf-8" />
 		<meta name="generator" content="JsDoc Toolkit" />
 		
-		<title>JsDoc Reference - hui.selection</title>
+		<title>JsDoc Reference - hui.ui.Rows</title>
 
 		<style type="text/css">
 			/* default.css */
@@ -525,12 +525,14 @@ ul.inheritsList
 <!-- ============================== class title ============================ -->
 			<h1 class="classTitle">
 				
-				Namespace hui.selection
+				Class hui.ui.Rows
 			</h1>
 
 <!-- ============================== class summary ========================== -->			
 			<p class="description">
 				
+				<br />Extends
+					<a href="../symbols/hui.ui.Component.html">hui.ui.Component</a>.<br />
 				
 			
 				
@@ -542,8 +544,8 @@ ul.inheritsList
 
 <!-- ============================== constructor summary ==================== -->			
 			
-			<table class="summaryTable" cellspacing="0" summary="A summary of the constructor documented in the class hui.selection.">
-				<caption>Namespace Summary</caption>
+			<table class="summaryTable" cellspacing="0" summary="A summary of the constructor documented in the class hui.ui.Rows.">
+				<caption>Class Summary</caption>
 				<thead>
 					<tr>
 						<th scope="col">Constructor Attributes</th>
@@ -555,9 +557,9 @@ ul.inheritsList
 						<td class="attributes">&nbsp;</td>
 						<td class="nameDescription" >
 							<div class="fixedFont">
-								<b><a href="../symbols/hui.selection.html#constructor">hui.selection</a></b>
+								<b><a href="../symbols/hui.ui.Rows.html#constructor">hui.ui.Rows</a></b>(options)
 							</div>
-							<div class="description"></div>
+							<div class="description">Vertical rows</div>
 						</td>
 					</tr>
 				</tbody>
@@ -571,7 +573,7 @@ ul.inheritsList
 			
 				
 				
-				<table class="summaryTable" cellspacing="0" summary="A summary of the methods documented in the class hui.selection.">
+				<table class="summaryTable" cellspacing="0" summary="A summary of the methods documented in the class hui.ui.Rows.">
 					<caption>Method Summary</caption>
 					<thead>
 						<tr>
@@ -582,47 +584,20 @@ ul.inheritsList
 					<tbody>
 					
 						<tr>
-							<td class="attributes">&lt;static&gt; &nbsp;</td>
+							<td class="attributes">&nbsp;</td>
 							<td class="nameDescription">
-								<div class="fixedFont">hui.selection.<b><a href="../symbols/hui.selection.html#.clear">clear</a></b>()
-								</div>
-								<div class="description">Clear the text selection</div>
-							</td>
-						</tr>
-					
-						<tr>
-							<td class="attributes">&lt;static&gt; &nbsp;</td>
-							<td class="nameDescription">
-								<div class="fixedFont">hui.selection.<b><a href="../symbols/hui.selection.html#.enable">enable</a></b>(on)
+								<div class="fixedFont"><b><a href="../symbols/hui.ui.Rows.html#$$childSizeChanged">$$childSizeChanged</a></b>()
 								</div>
 								<div class="description"></div>
 							</td>
 						</tr>
 					
 						<tr>
-							<td class="attributes">&lt;static&gt; &nbsp;</td>
+							<td class="attributes">&nbsp;</td>
 							<td class="nameDescription">
-								<div class="fixedFont">hui.selection.<b><a href="../symbols/hui.selection.html#.get">get</a></b>(doc)
+								<div class="fixedFont"><b><a href="../symbols/hui.ui.Rows.html#$$layout">$$layout</a></b>()
 								</div>
 								<div class="description"></div>
-							</td>
-						</tr>
-					
-						<tr>
-							<td class="attributes">&lt;static&gt; &nbsp;</td>
-							<td class="nameDescription">
-								<div class="fixedFont">hui.selection.<b><a href="../symbols/hui.selection.html#.getNode">getNode</a></b>(doc)
-								</div>
-								<div class="description"></div>
-							</td>
-						</tr>
-					
-						<tr>
-							<td class="attributes">&lt;static&gt; &nbsp;</td>
-							<td class="nameDescription">
-								<div class="fixedFont">hui.selection.<b><a href="../symbols/hui.selection.html#.getText">getText</a></b>(doc)
-								</div>
-								<div class="description">Get the selected text</div>
 							</td>
 						</tr>
 					
@@ -630,6 +605,10 @@ ul.inheritsList
 				</table>
 				
 				
+				
+				<dl class="inheritsList">
+				<dt>Methods borrowed from class <a href="../symbols/hui.ui.Component.html">hui.ui.Component</a>: </dt><dd><a href="../symbols/hui.ui.Component.html#destroy">destroy</a>, <a href="../symbols/hui.ui.Component.html#fire">fire</a>, <a href="../symbols/hui.ui.Component.html#fireSizeChange">fireSizeChange</a>, <a href="../symbols/hui.ui.Component.html#fireValueChange">fireValueChange</a>, <a href="../symbols/hui.ui.Component.html#getElement">getElement</a>, <a href="../symbols/hui.ui.Component.html#listen">listen</a>, <a href="../symbols/hui.ui.Component.html#valueForProperty">valueForProperty</a></dd>
+				</dl>
 				
 			
 <!-- ============================== events summary ======================== -->
@@ -639,21 +618,32 @@ ul.inheritsList
 			
 			<div class="details"><a name="constructor"> </a>
 				<div class="sectionTitle">
-					Namespace Detail
+					Class Detail
 				</div>
 				
 				<div class="fixedFont">
-						<b>hui.selection</b>
+						<b>hui.ui.Rows</b>(options)
 				</div>
 				
 				<div class="description">
-					
+					Vertical rows
 					
 				</div>
 				
 				
 				
 				
+					
+						<dl class="detailList">
+						<dt class="heading">Parameters:</dt>
+						
+							<dt>
+								<span class="light fixedFont">{Object}</span>  <b>options</b>
+								
+							</dt>
+								<dd></dd>
+						
+						</dl>
 					
 					
 					
@@ -674,15 +664,15 @@ ul.inheritsList
 					Method Detail
 				</div>
 				
-					<a name=".clear"> </a>
-					<div class="fixedFont">&lt;static&gt; 
+					<a name="$$childSizeChanged"> </a>
+					<div class="fixedFont">
 					
 					
-					<span class="light">hui.selection.</span><b>clear</b>()
+					<b>$$childSizeChanged</b>()
 					
 					</div>
 					<div class="description">
-						Clear the text selection
+						
 						
 						
 					</div>
@@ -699,47 +689,11 @@ ul.inheritsList
 
 					<hr />
 				
-					<a name=".enable"> </a>
-					<div class="fixedFont">&lt;static&gt; 
+					<a name="$$layout"> </a>
+					<div class="fixedFont">
 					
 					
-					<span class="light">hui.selection.</span><b>enable</b>(on)
-					
-					</div>
-					<div class="description">
-						
-						
-						
-					</div>
-					
-					
-					
-						
-							<dl class="detailList">
-							<dt class="heading">Parameters:</dt>
-							
-								<dt>
-									<b>on</b>
-									
-								</dt>
-								<dd></dd>
-							
-							</dl>
-						
-						
-						
-						
-						
-						
-						
-
-					<hr />
-				
-					<a name=".get"> </a>
-					<div class="fixedFont">&lt;static&gt; 
-					
-					
-					<span class="light">hui.selection.</span><b>get</b>(doc)
+					<b>$$layout</b>()
 					
 					</div>
 					<div class="description">
@@ -750,89 +704,6 @@ ul.inheritsList
 					
 					
 					
-						
-							<dl class="detailList">
-							<dt class="heading">Parameters:</dt>
-							
-								<dt>
-									<b>doc</b>
-									
-								</dt>
-								<dd></dd>
-							
-							</dl>
-						
-						
-						
-						
-						
-						
-						
-
-					<hr />
-				
-					<a name=".getNode"> </a>
-					<div class="fixedFont">&lt;static&gt; 
-					
-					
-					<span class="light">hui.selection.</span><b>getNode</b>(doc)
-					
-					</div>
-					<div class="description">
-						
-						
-						
-					</div>
-					
-					
-					
-						
-							<dl class="detailList">
-							<dt class="heading">Parameters:</dt>
-							
-								<dt>
-									<b>doc</b>
-									
-								</dt>
-								<dd></dd>
-							
-							</dl>
-						
-						
-						
-						
-						
-						
-						
-
-					<hr />
-				
-					<a name=".getText"> </a>
-					<div class="fixedFont">&lt;static&gt; 
-					
-					
-					<span class="light">hui.selection.</span><b>getText</b>(doc)
-					
-					</div>
-					<div class="description">
-						Get the selected text
-						
-						
-					</div>
-					
-					
-					
-						
-							<dl class="detailList">
-							<dt class="heading">Parameters:</dt>
-							
-								<dt>
-									<b>doc</b>
-									
-								</dt>
-								<dd>The document, defaults to current document</dd>
-							
-							</dl>
 						
 						
 						
@@ -855,7 +726,7 @@ ul.inheritsList
 <!-- ============================== footer ================================= -->
 		<div class="fineprint" style="clear:both">
 			
-			Documentation generated by <a href="http://code.google.com/p/jsdoc-toolkit/" target="_blank">JsDoc Toolkit</a> 2.4.0 on Fri Aug 21 2015 10:01:37 GMT+0200 (CEST)
+			Documentation generated by <a href="http://code.google.com/p/jsdoc-toolkit/" target="_blank">JsDoc Toolkit</a> 2.4.0 on Fri Aug 21 2015 10:01:38 GMT+0200 (CEST)
 		</div>
 	</body>
 </html>
