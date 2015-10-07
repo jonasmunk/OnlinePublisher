@@ -18,7 +18,7 @@ class TestLogin extends UnitTestCase {
         $this->assertEqual(200,$response->getStatusCode());
         $obj = Strings::fromJSON($response->getBody());
         $this->assertFalse($obj->success);
-        $this->assertNotNull($response->getHeader('Set-Cookie'));
+        $this->assertNull($response->getHeader('Set-Cookie'));
 
         $url = ConfigurationService::getCompleteBaseUrl().'Editor/index.php';
         $request = new WebRequest($url);
