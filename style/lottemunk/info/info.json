@@ -12,6 +12,7 @@
             "style/lottemunk/css/overwrite.css",
             "style/lottemunk/css/main.css",
             "style/lottemunk/css/front.css",
+            "style/lottemunk/css/widgets.css",
             "style/lottemunk/css/front_adaption.css"
         ]
     }
