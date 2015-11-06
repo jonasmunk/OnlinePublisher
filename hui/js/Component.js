@@ -57,4 +57,4 @@ hui.ui.Component.prototype = {
 	fireSizeChange : function() {
 		hui.ui.callAncestors(this,'$$childSizeChanged');
 	}
-}
+};

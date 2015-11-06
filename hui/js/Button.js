@@ -21,8 +21,12 @@ hui.ui.Button = function(options) {
 	this.enabled = !hui.cls.has(this.element,'hui_button_disabled');
 	hui.ui.extend(this);
 	this._attach();
+  // TODO: Deprecated!
 	if (options.listener) {
 		this.listen(options.listener);
+	}
+	if (options.listen) {
+		this.listen(options.listen);
 	}
 };
 

@@ -292,4 +292,4 @@ hui.ui.DropDown.prototype = {
             hui.dom.remove(this.selector);
         }
     }
-}
+};

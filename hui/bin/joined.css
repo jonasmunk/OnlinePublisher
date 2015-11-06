@@ -620,20 +620,24 @@ a.hui_button_highlighted {
 	}
 }*/
 
+a.hui_button_light {
+  margin: 2px;
+}
+
 a.hui_button_light, a.hui_button_light span
 {
 	background: none;
-	height: 26px;
-	line-height: 26px;
+	height: 24px;
+	line-height: 24px;
 	font-family: Georgia,serif;
 	font-family: "Lucida Grande","Lucida Sans Unicode",sans-serif;
-	font-size: 14px;
+	font-size: 13px;
 }
 
 a.hui_button_light, a.hui_button_light:focus
 {
 	border: 1px solid #ddd;
-	border-radius: 4px;
+	border-radius: 3px;
     background: -webkit-gradient(linear, 0% 0%, 0% 100% , from(#fff), to(#f6f6f6));
 	background: -moz-linear-gradient(top, #fff, #f6f6f6);
     filter: progid:DXImageTransform.Microsoft.gradient (GradientType=0, startColorstr=#ffffff, endColorstr=#f6f6f6);
@@ -653,15 +657,15 @@ a.hui_button_light:hover
 a.hui_button_light:active
 {
 	border-color: #dadada;
-    background: -webkit-gradient(linear, 0% 0%, 0% 100% , from(#eee), to(#fafafa));
+  background: -webkit-gradient(linear, 0% 0%, 0% 100% , from(#eee), to(#fafafa));
 	background: -moz-linear-gradient(top, #eee, #fafafa);
-    filter: progid:DXImageTransform.Microsoft.gradient (GradientType=0, startColorstr=#eeeeee, endColorstr=#fafafa);
+  filter: progid:DXImageTransform.Microsoft.gradient (GradientType=0, startColorstr=#eeeeee, endColorstr=#fafafa);
 }
 
 a.hui_button_light:focus
 {
-	border-color: rgb(1,105,255);
-	box-shadow: 0 0 4px rgb(1,105,255);
+  border-color: rgb(0, 105, 255);
+  box-shadow: 0 0 1px 1px rgba(1,105,255,0.6), inset 0 0 1px 1px rgba(1,105,255,0.6);
 }
 
 
@@ -1251,10 +1255,16 @@ form.hui_formula div.hui_buttons_body
 	float: right;
 }
 
-form.hui_formula a.hui_button
+.hui_formula .hui_button
 {
 	margin-left: 2px;
 	margin-right: 0px;
+}
+
+.hui_formula .hui_button_light
+{
+	margin-left: 4px;
+	margin-right: 2px;
 }
 
 /******************************* Object list **************************/
@@ -2649,6 +2659,32 @@ div.hui_window_back
 	border: 1px solid #555;
 }
 
+
+/********************** Busy ********************/
+
+.hui_window_busy
+{
+	position: absolute;
+  top: 26px;
+  bottom: 8px;
+  left: 5px;
+  right: 5px;
+	background: rgba(233, 233, 234, .7);
+  z-index: 1;
+}
+
+.hui_window_busy span
+{
+	position: absolute;
+	width: 100%;
+	text-align: center;
+	top: 30%;
+	background:  url('../gfx/progress/spinner_white_32.gif') center top no-repeat;
+	padding-top: 35px;
+	font-size: 12px;
+	text-shadow: 0 1px white;
+}
+
 /********************************** Light **************************/
 
 div.hui_window_light
@@ -2705,6 +2741,14 @@ div.hui_window_light div.hui_window_content div.hui_window_content
 	background-image: none;
 }
 
+.hui_window_light .hui_window_busy
+{
+  top: 26px;
+  bottom: 1px;
+  left: 1px;
+  right: 1px;
+	background: rgba(255, 255, 255, .7);
+}
 
 /********************************** Dark **************************/
 
@@ -2795,29 +2839,11 @@ div.hui_window_news div.hui_window_body
 	margin: 0;
 }
 
-div.hui_window_busy
-{
-	position: absolute;
-	margin-left: 5px;
-	background: rgba(233, 233, 234, .7);
-}
-
-div.hui_window_busy span
-{
-	position: absolute;
-	width: 100%;
-	text-align: center;
-	top: 30%;
-	background:  url('../gfx/progress/spinner_white_32.gif') center top no-repeat;
-	padding-top: 35px;
-	font-size: 12px;
-	text-shadow: 0 1px white;
-}
-
-div.hui_window_news div.hui_window_busy
+.hui_window_news .hui_window_busy
 {
 	background: rgba(255, 255, 255, .7);
-	margin: 0;
+	left: 0;
+  right: 0;
 }
 
 div.hui_list
@@ -7232,100 +7258,89 @@ span.hui_radiobuttons_disabled
 
 /*********************************** Number **********************************/
 
-span.hui_numberfield
-{
-	display: inline-block;
-	background: url('../gfx/number.png') -11px top no-repeat;
-	height: 25px;
-	position: relative;
-	font-size: 0;
-	vertical-align: middle;
-	width: 100%;
+span.hui_numberfield {
+  display: inline-block;
+  background: url('../gfx/number.png') -11px top no-repeat;
+  height: 25px;
+  position: relative;
+  font-size: 0;
+  vertical-align: middle;
+  width: 100%;
 }
 
-span.hui_numberfield span
-{
-	display: inline-block;
-	background: url('../gfx/number.png') right -50px no-repeat;
-	height: 25px;
-	width: 100%;
-	padding-left: 6px;
-	box-sizing: border-box;
-	-moz-box-sizing: border-box;
-	padding-right: 17px;
+span.hui_numberfield span {
+  display: inline-block;
+  background: url('../gfx/number.png') right -50px no-repeat;
+  height: 25px;
+  width: 100%;
+  padding-left: 6px;
+  box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  padding-right: 17px;
 }
 
-span.hui_numberfield span span
-{
-	background: url('../gfx/number.png') left -25px repeat-x;
-	line-height: 0;
-	padding: 0 2px 0 0;
-	margin: 0;
+span.hui_numberfield span span {
+  background: url('../gfx/number.png') left -25px repeat-x;
+  line-height: 0;
+  padding: 0 2px 0 0;
+  margin: 0;
 }
 
-span.hui_numberfield input
-{
-	border: none;
-	background: none;
-	width: 100%;
-	font-family: Verdana, sans-serif;
-	font-size: 9pt;
-	padding: 0;
-	height: 16px;
-	margin: 5px 0 0 -2px;
-	text-align: right;
-	line-height: 16px;
-	vertical-align: top;
+span.hui_numberfield input {
+  border: none;
+  background: none;
+  width: 100%;
+  font-family: Verdana, sans-serif;
+  font-size: 9pt;
+  padding: 0;
+  height: 16px;
+  margin: 5px 0 0 -2px;
+  text-align: right;
+  line-height: 16px;
+  vertical-align: top;
 }
 
-span.hui_numberfield input:focus
-{
-	outline: none;
+span.hui_numberfield input:focus {
+  outline: none;
 }
 
-a.hui_numberfield_up
-{
-	position: absolute;
-	width: 15px;
-	height: 10px;
-	right: 2px;
-	top: 2px;
+a.hui_numberfield_up {
+  position: absolute;
+  width: 15px;
+  height: 10px;
+  right: 2px;
+  top: 2px;
 }
 
-a.hui_numberfield_down
-{
-	position: absolute;
-	width: 15px;
-	height: 10px;
-	right: 2px;
-	bottom: 3px;
+a.hui_numberfield_down {
+  position: absolute;
+  width: 15px;
+  height: 10px;
+  right: 2px;
+  bottom: 3px;
 }
 
 a.hui_numberfield_up:hover, 
-a.hui_numberfield_down:hover
-{
-	background: rgba(0,0,0,.1);
+a.hui_numberfield_down:hover {
+  background: rgba(0,0,0,.1);
 }
 
-span.hui_numberfield_focused
-{
-	background-position: -11px -75px;
+span.hui_numberfield_focused {
+  background-position: -11px -75px;
 }
 
-span.hui_numberfield_focused span
-{
-	background-position: right -125px;
+span.hui_numberfield_focused span {
+  background-position: right -125px;
 }
 
-span.hui_numberfield_focused span span
-{
-	background-position: left -100px;
+span.hui_numberfield_focused span span {
+  background-position: left -100px;
 }
 
-em.hui_numberfield_units
-{
-	vertical-align: middle;
+em.hui_numberfield_units {
+  vertical-align: middle;
 }
+
 
 div.hui_rendering
 {
@@ -7802,10 +7817,37 @@ div.hui_markupeditor
 }
 
 .hui_objectinput_text {
-    font-size: 12px;
-    display: inline-block;
-    vertical-align: middle;
-	line-height: 16px;
+  font-size: 12px;
+  display: inline-block;
+  vertical-align: middle;
+  line-height: 16px;
+  padding-left: 2px;
+}
+
+.hui_objectinput_object {
+  font-size: 12px;
+  line-height: 1;
+  margin-bottom: 3px;
+  padding-left: 2px;
+}
+
+.hui_objectinput_title {
+  margin: 0 3px;
+  cursor: default;
+  vertical-align: middle;
+}
+
+.hui_objectinput_delete {
+  visibility: hidden;
+  margin-left: 5px;
+}
+
+.hui_objectinput_object:hover .hui_objectinput_delete {
+  visibility: visible;
+}
+
+.hui_objectinput_actions .hui_button {
+  margin: 0;
 }
 
 .hui_rows {
