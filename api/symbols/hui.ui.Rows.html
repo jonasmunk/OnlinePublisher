@@ -5,7 +5,7 @@
 		<meta http-equiv="content-type" content="text/html; charset=utf-8" />
 		<meta name="generator" content="JsDoc Toolkit" />
 		
-		<title>JsDoc Reference - hui.ui.StyleLength</title>
+		<title>JsDoc Reference - hui.ui.Rows</title>
 
 		<style type="text/css">
 			/* default.css */
@@ -525,12 +525,14 @@ ul.inheritsList
 <!-- ============================== class title ============================ -->
 			<h1 class="classTitle">
 				
-				Class hui.ui.StyleLength
+				Class hui.ui.Rows
 			</h1>
 
 <!-- ============================== class summary ========================== -->			
 			<p class="description">
 				
+				<br />Extends
+					<a href="../symbols/hui.ui.Component.html">hui.ui.Component</a>.<br />
 				
 			
 				
@@ -542,7 +544,7 @@ ul.inheritsList
 
 <!-- ============================== constructor summary ==================== -->			
 			
-			<table class="summaryTable" cellspacing="0" summary="A summary of the constructor documented in the class hui.ui.StyleLength.">
+			<table class="summaryTable" cellspacing="0" summary="A summary of the constructor documented in the class hui.ui.Rows.">
 				<caption>Class Summary</caption>
 				<thead>
 					<tr>
@@ -555,9 +557,9 @@ ul.inheritsList
 						<td class="attributes">&nbsp;</td>
 						<td class="nameDescription" >
 							<div class="fixedFont">
-								<b><a href="../symbols/hui.ui.StyleLength.html#constructor">hui.ui.StyleLength</a></b>(o)
+								<b><a href="../symbols/hui.ui.Rows.html#constructor">hui.ui.Rows</a></b>(options)
 							</div>
-							<div class="description">A date and time field</div>
+							<div class="description">Vertical rows</div>
 						</td>
 					</tr>
 				</tbody>
@@ -571,7 +573,7 @@ ul.inheritsList
 			
 				
 				
-				<table class="summaryTable" cellspacing="0" summary="A summary of the methods documented in the class hui.ui.StyleLength.">
+				<table class="summaryTable" cellspacing="0" summary="A summary of the methods documented in the class hui.ui.Rows.">
 					<caption>Method Summary</caption>
 					<thead>
 						<tr>
@@ -582,9 +584,9 @@ ul.inheritsList
 					<tbody>
 					
 						<tr>
-							<td class="attributes">&lt;static&gt; &nbsp;</td>
+							<td class="attributes">&nbsp;</td>
 							<td class="nameDescription">
-								<div class="fixedFont">hui.ui.StyleLength.<b><a href="../symbols/hui.ui.StyleLength.html#.create">create</a></b>(options)
+								<div class="fixedFont"><b><a href="../symbols/hui.ui.Rows.html#$$childSizeChanged">$$childSizeChanged</a></b>()
 								</div>
 								<div class="description"></div>
 							</td>
@@ -593,43 +595,7 @@ ul.inheritsList
 						<tr>
 							<td class="attributes">&nbsp;</td>
 							<td class="nameDescription">
-								<div class="fixedFont"><b><a href="../symbols/hui.ui.StyleLength.html#focus">focus</a></b>()
-								</div>
-								<div class="description"></div>
-							</td>
-						</tr>
-					
-						<tr>
-							<td class="attributes">&nbsp;</td>
-							<td class="nameDescription">
-								<div class="fixedFont"><b><a href="../symbols/hui.ui.StyleLength.html#getValue">getValue</a></b>()
-								</div>
-								<div class="description"></div>
-							</td>
-						</tr>
-					
-						<tr>
-							<td class="attributes">&nbsp;</td>
-							<td class="nameDescription">
-								<div class="fixedFont"><b><a href="../symbols/hui.ui.StyleLength.html#reset">reset</a></b>()
-								</div>
-								<div class="description"></div>
-							</td>
-						</tr>
-					
-						<tr>
-							<td class="attributes">&nbsp;</td>
-							<td class="nameDescription">
-								<div class="fixedFont"><b><a href="../symbols/hui.ui.StyleLength.html#setInitialValue">setInitialValue</a></b>(value)
-								</div>
-								<div class="description"></div>
-							</td>
-						</tr>
-					
-						<tr>
-							<td class="attributes">&nbsp;</td>
-							<td class="nameDescription">
-								<div class="fixedFont"><b><a href="../symbols/hui.ui.StyleLength.html#setValue">setValue</a></b>(value)
+								<div class="fixedFont"><b><a href="../symbols/hui.ui.Rows.html#$$layout">$$layout</a></b>()
 								</div>
 								<div class="description"></div>
 							</td>
@@ -639,6 +605,10 @@ ul.inheritsList
 				</table>
 				
 				
+				
+				<dl class="inheritsList">
+				<dt>Methods borrowed from class <a href="../symbols/hui.ui.Component.html">hui.ui.Component</a>: </dt><dd><a href="../symbols/hui.ui.Component.html#destroy">destroy</a>, <a href="../symbols/hui.ui.Component.html#fire">fire</a>, <a href="../symbols/hui.ui.Component.html#fireSizeChange">fireSizeChange</a>, <a href="../symbols/hui.ui.Component.html#fireValueChange">fireValueChange</a>, <a href="../symbols/hui.ui.Component.html#getElement">getElement</a>, <a href="../symbols/hui.ui.Component.html#listen">listen</a>, <a href="../symbols/hui.ui.Component.html#valueForProperty">valueForProperty</a></dd>
+				</dl>
 				
 			
 <!-- ============================== events summary ======================== -->
@@ -652,11 +622,11 @@ ul.inheritsList
 				</div>
 				
 				<div class="fixedFont">
-						<b>hui.ui.StyleLength</b>(o)
+						<b>hui.ui.Rows</b>(options)
 				</div>
 				
 				<div class="description">
-					A date and time field
+					Vertical rows
 					
 				</div>
 				
@@ -668,7 +638,7 @@ ul.inheritsList
 						<dt class="heading">Parameters:</dt>
 						
 							<dt>
-								 <b>o</b>
+								<span class="light fixedFont">{Object}</span>  <b>options</b>
 								
 							</dt>
 								<dd></dd>
@@ -694,47 +664,11 @@ ul.inheritsList
 					Method Detail
 				</div>
 				
-					<a name=".create"> </a>
-					<div class="fixedFont">&lt;static&gt; 
-					
-					
-					<span class="light">hui.ui.StyleLength.</span><b>create</b>(options)
-					
-					</div>
-					<div class="description">
-						
-						
-						
-					</div>
-					
-					
-					
-						
-							<dl class="detailList">
-							<dt class="heading">Parameters:</dt>
-							
-								<dt>
-									<b>options</b>
-									
-								</dt>
-								<dd></dd>
-							
-							</dl>
-						
-						
-						
-						
-						
-						
-						
-
-					<hr />
-				
-					<a name="focus"> </a>
+					<a name="$$childSizeChanged"> </a>
 					<div class="fixedFont">
 					
 					
-					<b>focus</b>()
+					<b>$$childSizeChanged</b>()
 					
 					</div>
 					<div class="description">
@@ -755,11 +689,11 @@ ul.inheritsList
 
 					<hr />
 				
-					<a name="getValue"> </a>
+					<a name="$$layout"> </a>
 					<div class="fixedFont">
 					
 					
-					<b>getValue</b>()
+					<b>$$layout</b>()
 					
 					</div>
 					<div class="description">
@@ -770,103 +704,6 @@ ul.inheritsList
 					
 					
 					
-						
-						
-						
-						
-						
-						
-						
-
-					<hr />
-				
-					<a name="reset"> </a>
-					<div class="fixedFont">
-					
-					
-					<b>reset</b>()
-					
-					</div>
-					<div class="description">
-						
-						
-						
-					</div>
-					
-					
-					
-						
-						
-						
-						
-						
-						
-						
-
-					<hr />
-				
-					<a name="setInitialValue"> </a>
-					<div class="fixedFont">
-					
-					
-					<b>setInitialValue</b>(value)
-					
-					</div>
-					<div class="description">
-						
-						
-						
-					</div>
-					
-					
-					
-						
-							<dl class="detailList">
-							<dt class="heading">Parameters:</dt>
-							
-								<dt>
-									<b>value</b>
-									
-								</dt>
-								<dd></dd>
-							
-							</dl>
-						
-						
-						
-						
-						
-						
-						
-
-					<hr />
-				
-					<a name="setValue"> </a>
-					<div class="fixedFont">
-					
-					
-					<b>setValue</b>(value)
-					
-					</div>
-					<div class="description">
-						
-						
-						
-					</div>
-					
-					
-					
-						
-							<dl class="detailList">
-							<dt class="heading">Parameters:</dt>
-							
-								<dt>
-									<b>value</b>
-									
-								</dt>
-								<dd></dd>
-							
-							</dl>
 						
 						
 						

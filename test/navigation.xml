@@ -72,6 +72,7 @@
         <item icon="common/page" title="dropdown" value="xml/dropdown.xml"/>
         <item icon="common/page" title="formula" value="xml/formula.xml"/>
         <item icon="common/page" title="formula_fieldset" value="xml/formula_fieldset.xml"/>
+        <item icon="common/page" title="formula_objectinput" value="xml/formula_objectinput.xml"/>
         <item icon="common/page" title="formula_special" value="xml/formula_special.xml"/>
         <item icon="common/page" title="graph" value="xml/graph.xml"/>
         <item icon="common/page" title="graphviz" value="xml/graphviz.xml"/>
@@ -81,6 +82,7 @@
         <item icon="common/page" title="pages" value="xml/pages.xml"/>
         <item icon="common/page" title="picker" value="xml/picker.xml"/>
         <item icon="common/page" title="rendering" value="xml/rendering.xml"/>
+        <item icon="common/page" title="rows" value="xml/rows.xml"/>
         <item icon="common/page" title="skeleton" value="xml/skeleton.xml"/>
         <item icon="common/page" title="split" value="xml/split.xml"/>
         <item icon="common/page" title="structure" value="xml/structure.xml"/>

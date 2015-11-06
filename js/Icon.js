@@ -35,4 +35,4 @@ hui.ui.Icon.prototype = {
 		inner.className = 'hui_icon_'+this.size;
 		inner.style.backgroundImage = 'url('+hui.ui.getIconUrl(this.options.icon,this.size)+')';
 	}
-}
+};

@@ -355,10 +355,16 @@ form.hui_formula div.hui_buttons_body
 	float: right;
 }
 
-form.hui_formula a.hui_button
+.hui_formula .hui_button
 {
 	margin-left: 2px;
 	margin-right: 0px;
+}
+
+.hui_formula .hui_button_light
+{
+	margin-left: 4px;
+	margin-right: 2px;
 }
 
 /******************************* Object list **************************/

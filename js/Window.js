@@ -117,7 +117,7 @@ hui.ui.Window.prototype = {
 	hide : function() {
 		if (!this.visible) return;
 		if (hui.browser.opacity) {
-			hui.animate(this.element,'opacity',0,100,{onComplete:function() {
+			hui.animate(this.element,'opacity',0,100,{$complete:function() {
 				this.element.style.display='none';
 				hui.ui.callVisible(this);
 			}.bind(this)});
@@ -172,8 +172,6 @@ hui.ui.Window.prototype = {
 			}
 			curtain.innerHTML = hui.isString(stringOrBoolean) ? '<span>'+stringOrBoolean+'</span>' : '<span></span>';
 			curtain.style.display = '';
-			curtain.style.height = this.content.clientHeight+'px';
-			curtain.style.width = this.content.clientWidth+'px';			
 		}.bind(this),300);
 	},
 	

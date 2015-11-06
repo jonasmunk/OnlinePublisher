@@ -128,6 +128,32 @@ div.hui_window_back
 	border: 1px solid #555;
 }
 
+
+/********************** Busy ********************/
+
+.hui_window_busy
+{
+	position: absolute;
+  top: 26px;
+  bottom: 8px;
+  left: 5px;
+  right: 5px;
+	background: rgba(233, 233, 234, .7);
+  z-index: 1;
+}
+
+.hui_window_busy span
+{
+	position: absolute;
+	width: 100%;
+	text-align: center;
+	top: 30%;
+	background:  url('../gfx/progress/spinner_white_32.gif') center top no-repeat;
+	padding-top: 35px;
+	font-size: 12px;
+	text-shadow: 0 1px white;
+}
+
 /********************************** Light **************************/
 
 div.hui_window_light
@@ -184,6 +210,14 @@ div.hui_window_light div.hui_window_content div.hui_window_content
 	background-image: none;
 }
 
+.hui_window_light .hui_window_busy
+{
+  top: 26px;
+  bottom: 1px;
+  left: 1px;
+  right: 1px;
+	background: rgba(255, 255, 255, .7);
+}
 
 /********************************** Dark **************************/
 
@@ -274,27 +308,9 @@ div.hui_window_news div.hui_window_body
 	margin: 0;
 }
 
-div.hui_window_busy
-{
-	position: absolute;
-	margin-left: 5px;
-	background: rgba(233, 233, 234, .7);
-}
-
-div.hui_window_busy span
-{
-	position: absolute;
-	width: 100%;
-	text-align: center;
-	top: 30%;
-	background:  url('../gfx/progress/spinner_white_32.gif') center top no-repeat;
-	padding-top: 35px;
-	font-size: 12px;
-	text-shadow: 0 1px white;
-}
-
-div.hui_window_news div.hui_window_busy
+.hui_window_news .hui_window_busy
 {
 	background: rgba(255, 255, 255, .7);
-	margin: 0;
+	left: 0;
+  right: 0;
 }

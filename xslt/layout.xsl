@@ -527,6 +527,7 @@
 		<xsl:attribute name="class">hui_bg_<xsl:value-of select="@background"/></xsl:attribute>
 	</xsl:if>
 	<xsl:apply-templates/>
+  <xsl:comment/>
 </div>
 <script type="text/javascript">
 	var <xsl:value-of select="generate-id()"/>_obj = new hui.ui.Fragment({

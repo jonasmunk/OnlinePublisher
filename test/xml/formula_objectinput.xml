@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet type="text/xsl" href="setup.xsl"?>
+<gui xmlns="uri:hui" padding="10" title="Object input">
+  <source name="itemsSource" url="data/items_languages.xml"/>
+  <box width="600" title="Object input" variant="textured" padding="10">
+    <formula name="formula">
+      <fields labels="above">
+        <field label="Author">
+          <object-input key="author">
+            <finder title="Select person" list-url="data/list_users.xml"/>
+          </object-input>
+        </field>
+        <field label="Others">
+          <object-input key="others" multi="true">
+            <finder title="Select person" list-url="data/list_users.xml"/>
+          </object-input>
+        </field>
+      </fields>
+    </formula>
+  </box>
+
+  <code-input name="debug"/>
+  <script>
+    hui.ui.listen({
+    	$valuesChanged$formula : function(values) {
+    		debug.setValue(hui.string.toJSON(values));
+    	}
+    });
+  </script>
+
+</gui>
