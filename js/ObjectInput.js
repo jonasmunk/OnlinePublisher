@@ -98,7 +98,7 @@
     reset : function() {
       this.setValue(null);
     }
-  }
+  };
 
   hui.extend(hui.ui.ObjectInput, _super);
 

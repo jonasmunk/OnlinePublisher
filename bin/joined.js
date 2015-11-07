@@ -18074,11 +18074,12 @@ hui.ui.NumberValidator.prototype = {
     reset : function() {
       this.setValue(null);
     }
-  }
+  };
 
   hui.extend(hui.ui.ObjectInput, _super);
 
 })(hui.ui.Component);
+
 
 (function (_super) {
 
