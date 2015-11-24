@@ -10,6 +10,7 @@
  xmlns:text="http://uri.in2isoft.com/onlinepublisher/part/text/1.0/"
  xmlns:i="http://uri.in2isoft.com/onlinepublisher/class/image/1.0/"
  xmlns:o="http://uri.in2isoft.com/onlinepublisher/class/object/1.0/"
+ xmlns:part="http://uri.in2isoft.com/onlinepublisher/part/1.0/"
  xmlns:imagegallery="http://uri.in2isoft.com/onlinepublisher/part/imagegallery/1.0/"
  xmlns:widget="http://uri.in2isoft.com/onlinepublisher/part/widget/1.0/"
  exclude-result-prefixes="p f h util widget imagegallery o i text header"
@@ -32,7 +33,7 @@
         </nav>
     </header>
 
-    <xsl:apply-templates select="p:content"/>
+    <xsl:apply-templates select="p:content//widget:widget"/>
         
     <section id="humanise">
         <article>
@@ -53,15 +54,15 @@
 <xsl:template match="widget:broen">
   <section id="broen">
     <div class="left broen_text">
-      <h2><xsl:value-of select="widget:title"/></h2>
+      <h2><xsl:value-of select="widget:title"/><xsl:comment/></h2>
       <xsl:for-each select="widget:p">
         <p><xsl:value-of select="."/></p>
       </xsl:for-each>
       <p><a class="button" href="{widget:link/@url}"><xsl:value-of select="widget:link"/></a></p>   
     </div>
     <div class="right" style="background: #eee">
-      <div class="vert50  broen_photo2"><xsl:comment/></div>
-      <div class="vert50  broen_photo3"><xsl:comment/></div>
+      <div class="vert50 broen_photo2"><xsl:comment/></div>
+      <div class="vert50 broen_photo3"><xsl:comment/></div>
     </div>
     <div class="middle broen_photo1"><xsl:comment/></div>
   </section>
@@ -170,7 +171,7 @@
 
 <xsl:template match="widget:reel">
   <section id="reel">
-      <div class="content" id="reelContent">
+    <div class="content" id="reelContent">
       <div class="holes"><xsl:comment/></div>
       <div class="frames">
           <figure class="frame1"><xsl:comment/></figure>
@@ -183,7 +184,7 @@
           <figure class="frame8"><xsl:comment/></figure>
       </div>
       <div class="holes"><xsl:comment/></div>
-      </div>
+    </div>
   </section>
 </xsl:template>
 
