@@ -72,6 +72,7 @@
         <item icon="common/page" title="dropdown" value="xml/dropdown.xml"/>
         <item icon="common/page" title="formula" value="xml/formula.xml"/>
         <item icon="common/page" title="formula_fieldset" value="xml/formula_fieldset.xml"/>
+        <item icon="common/page" title="formula_objectinput" value="xml/formula_objectinput.xml"/>
         <item icon="common/page" title="formula_special" value="xml/formula_special.xml"/>
         <item icon="common/page" title="graph" value="xml/graph.xml"/>
         <item icon="common/page" title="graphviz" value="xml/graphviz.xml"/>

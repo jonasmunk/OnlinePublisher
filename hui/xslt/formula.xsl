@@ -335,22 +335,33 @@
 <object-input name="«text»" key="«text»"/>
 -->
 <xsl:template match="gui:object-input">
-	<span class="hui_objectinput" id="{generate-id()}">
-        <span class="hui_objectinput_text">No value</span>
-        <a class="hui_button hui_button_small hui_objectinput_choose" href="javascript://"><span><span>Vælg...</span></span></a>
-        <a class="hui_button hui_button_small hui_objectinput_remove" href="javascript://"><span><span>Remove</span></span></a>
+	<div class="hui_objectinput" id="{generate-id()}">
+    <div class="hui_objectinput_list">
+      <span class="hui_objectinput_text">No value</span>      
+    </div>
+    <a class="hui_button hui_button_small hui_objectinput_choose" href="javascript://"><span><span>Select...</span></span></a>
+    <a class="hui_button hui_button_disabled hui_button_small hui_objectinput_remove" href="javascript://"><span><span>Remove</span></span></a>
 		<xsl:comment/>
-	</span>
+	</div>
+
 	<script type="text/javascript">
 		var <xsl:value-of select="generate-id()"/>_obj = new hui.ui.ObjectInput({
 			element:'<xsl:value-of select="generate-id()"/>'
 			<xsl:if test="@name">,name:'<xsl:value-of select="@name"/>'</xsl:if>
 			<xsl:if test="@key">,key:'<xsl:value-of select="@key"/>'</xsl:if>
-            <xsl:if test="gui:finder">
-                ,finder : {
-                    url : '<xsl:value-of select="gui:finder/@url"/>'
-                }
-            </xsl:if>
+      <xsl:if test="gui:finder">
+          ,finder : {
+            url : '<xsl:value-of select="gui:finder/@url"/>',
+  					title : '<xsl:value-of select="gui:finder/@title"/>',
+  					list : {url:'<xsl:value-of select="gui:finder/@list-url"/>'},
+  					selection : {
+  						url : '<xsl:value-of select="gui:finder/@selection-url"/>',
+  						value : '<xsl:value-of select="gui:finder/@selection-value"/>',
+  						parameter : '<xsl:value-of select="gui:finder/@selection-parameter"/>'
+  					},
+  					search : {parameter : '<xsl:value-of select="gui:finder/@search-parameter"/>'}
+          }
+      </xsl:if>
 		});
 		<xsl:call-template name="gui:createobject"/>
 	</script>
@@ -710,7 +721,7 @@
 			</xsl:if>
 			<xsl:if test="gui:finder">
 				,finder : {
-                    url : '<xsl:value-of select="gui:finder/@url"/>',
+          url : '<xsl:value-of select="gui:finder/@url"/>',
 					title : '<xsl:value-of select="gui:finder/@title"/>',
 					list : {url:'<xsl:value-of select="gui:finder/@list-url"/>'},
 					selection : {

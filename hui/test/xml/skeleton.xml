@@ -26,7 +26,7 @@
         <searchfield adaptive="true"/>
       </bar>
 			<overflow>
-				<list name="list" url="data/list_users.xml"/>
+				<list name="list" url="data/list_users.xml" variant="light"/>
 			</overflow>
 		</results>
 		<actions>

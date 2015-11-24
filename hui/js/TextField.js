@@ -28,6 +28,9 @@ hui.ui.TextField = function(options) {
 	this._attach();
 }
 
+// TODO: Temporarily until TextField is renamed to TextInput
+hui.ui.TextInput = hui.ui.TextField;
+
 
 /**
  * Creates a new text field
