@@ -74,7 +74,7 @@ var ctrl = {
 		var head = hui.get('head'),
 			title = hui.get('title'),
 			job = hui.get('job'),
-			broen = hui.get('broen'),
+			broen = hui.find('.js_broen'),
 			about = hui.get('about'),
 			press = hui.get('pressphotos'),
 			theater = hui.get('theater'),
@@ -87,8 +87,6 @@ var ctrl = {
 			theater_photo = hui.get.firstByClass(theater,'photo'),
 			theaters = hui.get.firstByClass(theater,'theaters'),
 			reelContent = hui.get('reelContent');
-		
-		
 		
 		
 		

@@ -1,5 +1,23 @@
+a.button {
+  display: inline-block;
+  height: 40px;
+  line-height: 40px;
+  padding: 0 20px;
+  border-radius: 5px;
+  text-decoration: none;
+  background: #fafafa;
+  text-decoration: none;
+  border: 1px solid #eee;
+  color: #36a;
+}
+
+a.button:hover {
+  background: #f0f0f0;
+  border: 1px solid #ddd;
+}
+
 /************ Broen ************/
-#broen {
+.broen {
   background: #462758;
   background-image: linear-gradient(bottom, #312757 5%, #462758 77%);
   background-image: -o-linear-gradient(bottom, #312757 5%, #462758 77%);
@@ -11,28 +29,34 @@
   height: 360px;
 }
 
-#broen div.left {
+.broen_left {
   vertical-align: top;
   float: left;
   width: 40%;
   height: 100%;
 }
 
-#broen div.middle,
-#broen div.right {
+.broen_middle,
+.broen_right {
   vertical-align: top;
   float: right;
   width: 30%;
   height: 100%;
 }
 
-.broen_text h2 {
+.broen_right_photo {
+  height: 50%;
+}
+
+.broen_title {
   font-size: 4em;
   text-align: center;
   color: #fff;
   color: rgba(255, 255, 255, 0.8);
   margin-top: 74px;
   line-height: 1em;
+  font-family: Cinzel;
+  font-weight: normal;
 }
 
 .broen_text p {
@@ -57,25 +81,22 @@
   border: 1px solid rgba(255, 255, 255, 0.2);
 }
 
-div.broen_photo1 {
-  background: url("../gfx/broen1.jpg") 70% 50%;
+.broen_photo {
   -webkit-background-size: cover;
   -moz-background-size: cover;
   background-size: cover;
 }
-
-div.broen_photo2 {
-  background: url("../gfx/broen2.jpg") 50% 50%;
-  -webkit-background-size: cover;
-  -moz-background-size: cover;
-  background-size: cover;
+.broen_photo-1 {
+  background-image: url("../gfx/broen1.jpg");
+  background-position: 70% 50%;
 }
-
-div.broen_photo3 {
-  background: url("../gfx/broen3.jpg") 30% 50%;
-  -webkit-background-size: cover;
-  -moz-background-size: cover;
-  background-size: cover;
+.broen_photo-2 {
+  background-image: url("../gfx/broen2.jpg");
+  background-position: 50% 50%;
+}
+.broen_photo-3 {
+  background-image: url("../gfx/broen3.jpg");
+  background-position: 30% 50%;
 }
 
 /************ Om mig ************/
@@ -95,6 +116,8 @@ div.broen_photo3 {
   font-size: 36pt;
   color: #005952;
   padding: 40px 0 10px;
+  font-weight: normal;
+  font-family: Cinzel;
   font-weight: normal;
 }
 
@@ -270,6 +293,8 @@ ul.icons a {
   color: #fff;
   color: rgba(255, 255, 255, 0.8);
   padding-top: 74px;
+  font-family: Cinzel;
+  font-weight: normal;
 }
 
 #pressphotos.invisible article {
@@ -441,6 +466,10 @@ ul.icons a {
   height: auto;
   font-size: 0;
 }
+.editor #reel {
+  width: 400px;
+  overflow: hidden;
+}
 
 #reel div.holes {
   height: 35px;
@@ -459,6 +488,7 @@ ul.icons a {
   height: 300px;
   width: 400px;
   background: #eee;
+  margin: 0;
 }
 
 #reel figure.frame1 {

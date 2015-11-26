@@ -30,14 +30,6 @@
 	-moz-transition: background-color 1s ease-out;
 }
 
-.front h1, 
-.front h2
-{
-	font-family: Cinzel;
-	margin: 0;
-	font-weight: normal;
-}
-
 .front header
 {
 	height: 246px;
@@ -107,31 +99,8 @@ section
 	height: 100%;
 }
 
-.vert50
-{
-	height: 50%;
-}
 
 
-a.button
-{
-	display: inline-block;
-	height: 40px;
-	line-height: 40px;
-	padding: 0 20px;
-	border-radius: 5px;
-	text-decoration: none;
-	background: #fafafa;
-	text-decoration: none;
-	border: 1px solid #eee;
-	color: #36a;
-}
-
-a.button:hover
-{
-	background: #f0f0f0;
-	border: 1px solid #ddd;
-}
 
 
 
