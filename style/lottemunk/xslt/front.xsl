@@ -73,9 +73,9 @@
   <section id="about">
     <a name="about"><xsl:comment/></a>
     <xsl:call-template name="util:languages"><xsl:with-param name="tag" select="'p'"/></xsl:call-template>
-    <h2><xsl:value-of select="widget:title"/></h2>
+    <h2><xsl:value-of select="widget:title"/><xsl:comment/></h2>
     <div class="text">
-      <p class="text"><xsl:value-of select="widget:text"/></p>
+      <p class="text"><xsl:value-of select="widget:text"/><xsl:comment/></p>
       <p class="cv">
         <xsl:choose>
             <xsl:when test="//p:page/p:meta/p:language='en'">
@@ -91,10 +91,10 @@
       <li><a href="http://dk.linkedin.com/pub/lotte-munk/18/473/554" class="icon-linkedin"><xsl:comment/></a></li>
       <xsl:choose>
         <xsl:when test="//p:page/p:meta/p:language='en'">
-            <li><a href="http://en.wikipedia.org/wiki/Lotte_Munk" class="icon-wikipedia"><xsl:comment/></a></li>
+          <li><a href="http://en.wikipedia.org/wiki/Lotte_Munk" class="icon-wikipedia"><xsl:comment/></a></li>
         </xsl:when>
         <xsl:otherwise>
-            <li><a href="http://da.wikipedia.org/wiki/Lotte_Munk" class="icon-wikipedia"><xsl:comment/></a></li>
+          <li><a href="http://da.wikipedia.org/wiki/Lotte_Munk" class="icon-wikipedia"><xsl:comment/></a></li>
         </xsl:otherwise>
       </xsl:choose>
       <li><a href="https://www.facebook.com/Lottemunk69" class="icon-facebook"><xsl:comment/></a></li>
@@ -109,53 +109,47 @@
  
 <xsl:template match="widget:photos">
   <section id="pressphotos">
-      <!--
-      <div id="background1">
-          <div><xsl:comment/></div>
-      </div>
-          -->
-      <div class="block">
+    <div class="block">
       <a name="photos"><xsl:comment/></a>
-          <div class="press_left"><xsl:comment/></div>
-          <article>
-              <h2><xsl:value-of select="//header:header[@level=2]"/><xsl:comment/></h2>
-              
-              <xsl:choose>
-                  <xsl:when test="//p:page/p:meta/p:language='en'">
-                      <p><a href="{$path}en/photos/"><span>More photos &#8250;</span></a></p>
-                      <p><a href="javascript://" onclick="photoGallery.show();"><span>Slide show &#8250;</span></a></p>
-                  </xsl:when>
-                  <xsl:otherwise>
-                      <p><a href="{$path}fotografier/"><span>Flere fotos &#8250;</span></a></p>
-                      <p><a href="javascript://" onclick="photoGallery.show();"><span>Lysbilleder &#8250;</span></a></p>
-                  </xsl:otherwise>
-              </xsl:choose>
-          </article>
-          <div class="press_right"><xsl:comment/></div>
-      </div>
+      <div class="press_left"><xsl:comment/></div>
+      <article>
+        <h2><xsl:value-of select="//header:header[@level=2]"/><xsl:comment/></h2>
+        <xsl:choose>
+          <xsl:when test="//p:page/p:meta/p:language='en'">
+            <p><a href="{$path}en/photos/"><span>More photos &#8250;</span></a></p>
+            <p><a href="javascript://" onclick="photoGallery.show();"><span>Slide show &#8250;</span></a></p>
+          </xsl:when>
+          <xsl:otherwise>
+            <p><a href="{$path}fotografier/"><span>Flere fotos &#8250;</span></a></p>
+            <p><a href="javascript://" onclick="photoGallery.show();"><span>Lysbilleder &#8250;</span></a></p>
+          </xsl:otherwise>
+        </xsl:choose>
+      </article>
+      <div class="press_right"><xsl:comment/></div>
+    </div>
       
-      <script type="text/javascript">
-          require(['hui.ui.ImageViewer'],function() {
-              var images = [];
-              <xsl:for-each select="//imagegallery:imagegallery//o:object">
-                  images.push({
-                      id : <xsl:value-of select="@id"/>,
-                      width : <xsl:value-of select="o:sub/i:image/i:width"/>,
-                      height : <xsl:value-of select="o:sub/i:image/i:height"/>,
-                      text : '<xsl:value-of select="o:note"/>'
-                  })
-              </xsl:for-each>
+    <script type="text/javascript">
+        require(['hui.ui.ImageViewer'],function() {
+            var images = [];
+            <xsl:for-each select="//imagegallery:imagegallery//o:object">
+                images.push({
+                    id : <xsl:value-of select="@id"/>,
+                    width : <xsl:value-of select="o:sub/i:image/i:width"/>,
+                    height : <xsl:value-of select="o:sub/i:image/i:height"/>,
+                    text : '<xsl:value-of select="o:note"/>'
+                })
+            </xsl:for-each>
 
-              window.photoGallery = hui.ui.ImageViewer.create({
-                  maxWidth : 2000,
-                  maxHeight : 2000,
-                  perimeter : 40,
-                  sizeSnap : 10,
-                  images : images,
-                  listener : op.imageViewerDelegate
-              });
-          });
-      </script>
+            window.photoGallery = hui.ui.ImageViewer.create({
+                maxWidth : 2000,
+                maxHeight : 2000,
+                perimeter : 40,
+                sizeSnap : 10,
+                images : images,
+                listener : op.imageViewerDelegate
+            });
+        });
+    </script>
   </section>
 </xsl:template> 
 
