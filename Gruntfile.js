@@ -42,6 +42,13 @@ module.exports = function(grunt) {
         options: {
           spawn: false,
         }
+      },
+      lottemunk: {
+        files: ['style/lottemunk/scss/**/*.scss'],
+        tasks: ['compass:lottemunk'],
+        options: {
+          spawn: false,
+        }
       }
     },
     compass: {
@@ -63,6 +70,13 @@ module.exports = function(grunt) {
         options: {
           sassDir: "style/fynbogaarden/sass",
           cssDir: "style/fynbogaarden/css",
+			    noLineComments: true,
+        }
+      },
+      lottemunk: {
+        options: {
+          sassDir: "style/lottemunk/scss",
+          cssDir: "style/lottemunk/css",
 			    noLineComments: true,
         }
       }
