@@ -799,12 +799,14 @@ var ctrl = {
 				hui.cls.set(about,'visible',pos<.8)
 			}
 		})
-		hui.parallax.listen({
-			element : reelContent,
-			$scroll : function(pos) {
-				reelContent.style.marginLeft = (pos*-400-100)+'px';
-			}
-		})
+    if (reelContent) {
+  		hui.parallax.listen({
+  			element : reelContent,
+  			$scroll : function(pos) {
+  				reelContent.style.marginLeft = (pos*-400-100)+'px';
+  			}
+  		})
+    }
 		/*
 		if (hui.browser.animation) {
 			hui.parallax.listen({
@@ -822,45 +824,47 @@ var ctrl = {
 				background1_body.style.marginTop = (pos*200-250)+'px';
 			}
 		})*/
-		hui.parallax.listen({
-			element : theater,
-			//darkened : false,
-			$scroll : function(pos) {
-				var dark = pos>0 && pos<1;
-				if (this.darkened!=dark) {
-					hui.cls.set(document.body,'full',dark);
-					/*
-					if (hui.browser.animation) {
-						hui.cls.set(document.body,'dark',dark);
-					} else {
-						hui.animate({node:document.body,css:{'background-color':dark ? '#000' : '#fff'},duration:1000});
-					}*/
-					this.darkened = dark;
-				}
-				var show = pos>.3 && pos<.7;
-				if (this.shown!=show) {
-					if (show) {
-						hui.animate({node:theater_photo,css:{opacity:show ? 1 : 0},ease:hui.ease.flicker,duration:3000,$complete : function() {
-							if (hui.browser.animation) {
-								hui.cls.set(theater,'final',pos>0 && pos<1);
-							} else {
-								hui.animate({node:theaters,css:{opacity:show ? 1 : 0},ease:hui.ease.slowFast,duration:5000});
-							}
-						}});
-					}
-					this.shown = show;
-				}
-			}
-		})
-		hui.parallax.listen({
-			$resize : function(width,height) {
-				theater.style.height = Math.round(height*1)+'px';
-				if (!hui.browser.mediaQueries) {
-					hui.cls.set(document.body,'small',width<1200);
-				}
-				currentWidth = width;
-			}
-		})
+    if (theater) {
+  		hui.parallax.listen({
+  			element : theater,
+  			//darkened : false,
+  			$scroll : function(pos) {
+  				var dark = pos>0 && pos<1;
+  				if (this.darkened!=dark) {
+  					hui.cls.set(document.body,'full',dark);
+  					/*
+  					if (hui.browser.animation) {
+  						hui.cls.set(document.body,'dark',dark);
+  					} else {
+  						hui.animate({node:document.body,css:{'background-color':dark ? '#000' : '#fff'},duration:1000});
+  					}*/
+  					this.darkened = dark;
+  				}
+  				var show = pos>.3 && pos<.7;
+  				if (this.shown!=show) {
+  					if (show) {
+  						hui.animate({node:theater_photo,css:{opacity:show ? 1 : 0},ease:hui.ease.flicker,duration:3000,$complete : function() {
+  							if (hui.browser.animation) {
+  								hui.cls.set(theater,'final',pos>0 && pos<1);
+  							} else {
+  								hui.animate({node:theaters,css:{opacity:show ? 1 : 0},ease:hui.ease.slowFast,duration:5000});
+  							}
+  						}});
+  					}
+  					this.shown = show;
+  				}
+  			}
+  		})
+  		hui.parallax.listen({
+  			$resize : function(width,height) {
+  				theater.style.height = Math.round(height*1)+'px';
+  				if (!hui.browser.mediaQueries) {
+  					hui.cls.set(document.body,'small',width<1200);
+  				}
+  				currentWidth = width;
+  			}
+  		})
+    }
 		hui.parallax.start();
 	}
 }

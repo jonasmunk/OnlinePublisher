@@ -1,33 +1,28 @@
 
 /* hui/bin/joined.site.js */
 /** @namespace */
-var hui = {
-	/** @namespace */
-	browser : {},
-	KEY_BACKSPACE : 8,
-    KEY_TAB : 9,
-    KEY_RETURN : 13,
-    KEY_ESC : 27,
-    KEY_LEFT : 37,
-    KEY_UP : 38,
-    KEY_RIGHT : 39,
-    KEY_DOWN : 40,
-    KEY_DELETE : 46,
-    KEY_HOME : 36,
-    KEY_END : 35,
-    KEY_PAGEUP : 33,
-    KEY_PAGEDOWN : 34,
-    KEY_INSERT : 45
-};
+window.hui = window.hui || {};
 
 
 
+(function(hui,agent,window) {
+  hui.KEY_BACKSPACE = 8;
+  hui.KEY_TAB = 9;
+  hui.KEY_RETURN = 13;
+  hui.KEY_ESC = 27;
+  hui.KEY_LEFT = 37;
+  hui.KEY_UP = 38;
+  hui.KEY_RIGHT = 39;
+  hui.KEY_DOWN = 40;
+  hui.KEY_DELETE = 46;
+  hui.KEY_HOME = 36;
+  hui.KEY_END = 35;
+  hui.KEY_PAGEUP = 33;
+  hui.KEY_PAGEDOWN = 34;
+  hui.KEY_INSERT = 45;
 
-//////////////////////// Browser //////////////////////////
-
-// TODO make this easier to optimize
-
-(function(browser,agent,window) {
+  var browser = hui.browser = {};
+  
 	/** If the browser is any version of InternetExplorer */
 	browser.msie = !/opera/i.test(agent) && /MSIE/.test(agent) || /Trident/.test(agent);
 	/** If the browser is InternetExplorer 6 */
@@ -76,7 +71,7 @@ var hui = {
 	if (result) {
 		browser.webkitVersion = parseFloat(result[1]);
 	}
-})(hui.browser,navigator.userAgent,window);
+})(hui,navigator.userAgent,window);
 
 
 
@@ -101,7 +96,7 @@ hui.log = function(obj) {
 
 /**
  * Defer a function so it will fire when the current "thread" is done
- * @param {Function} func The fundtion to defer
+ * @param {Function} func The function to defer
  * @param {Object} ?bind Optional, the object to bind "this" to
  */
 hui.defer = function(func,bind) {
@@ -1216,6 +1211,9 @@ hui.cls = {
 		if (element.className==className) {
 			return true;
 		}
+    if (element.className.animVal!==undefined) {
+      return false; // TODO (handle SVG stuff)
+    }
 		var a = element.className.split(/\s+/);
 		for (var i = 0; i < a.length; i++) {
 			if (a[i] == className) {
@@ -1530,12 +1528,27 @@ hui.onReady = function(func) {
 	}
 };
 
+hui.onDraw = function(func) {
+  window.setTimeout(func,13);
+}
+
+hui.onDraw = (function(vendors,window) {
+  var found = window.requestAnimationFrame;
+  for(var x = 0; x < vendors.length && !found; ++x) {
+      found = window[vendors[x]+'RequestAnimationFrame'];
+  }
+  return found ? found.bind(window) : hui.onDraw;
+})(['ms', 'moz', 'webkit', 'o'],window);
+
 /**
  * Execute a function when the DOM is ready
  * @param delegate The function to execute
  */
 hui._onReady = function(delegate) {
-	if(window.addEventListener) {
+  if (document.readyState == 'interactive') {
+    window.setTimeout(delegate);
+  }
+	else if(window.addEventListener) {
 		window.addEventListener('DOMContentLoaded',delegate,false);
 	}
 	else if(typeof document.addEventListener != 'undefined')
@@ -2621,7 +2634,7 @@ hui.animation._render = function() {
 		}
 	}
 	if (next) {
-		window.requestAnimationFrame(hui.animation._render);
+		hui.onDraw(hui.animation._render);
 	} else {
 		hui.animation.running = false;
 	}
@@ -3039,31 +3052,6 @@ if (!Date.now) {
     return new Date().getTime();
   };
 }
-
-(function() {
-    var lastTime = 0;
-    var vendors = ['ms', 'moz', 'webkit', 'o'];
-    for(var x = 0; x < vendors.length && !window.requestAnimationFrame; ++x) {
-        window.requestAnimationFrame = window[vendors[x]+'RequestAnimationFrame'];
-        window.cancelAnimationFrame = window[vendors[x]+'CancelAnimationFrame']
-                                   || window[vendors[x]+'CancelRequestAnimationFrame'];
-    }
-	if (!window.requestAnimationFrame) {
-        window.requestAnimationFrame = function(callback, element) {
-            var currTime = Date.now();
-            var timeToCall = Math.max(0, 16 - (currTime - lastTime));
-            var id = window.setTimeout(function() { callback(currTime + timeToCall); },
-              0);
-            lastTime = currTime + timeToCall;
-            return id;
-        };
-    }
-    if (!window.cancelAnimationFrame) {
-        window.cancelAnimationFrame = function(id) {
-            clearTimeout(id);
-        };
-    }
-}());
 
 /** @constructor
  * @param str The color like red or rgb(255, 0, 0) or #ff0000 or rgb(100%, 0%, 0%)
@@ -5593,8 +5581,12 @@ hui.ui.Button = function(options) {
 	this.enabled = !hui.cls.has(this.element,'hui_button_disabled');
 	hui.ui.extend(this);
 	this._attach();
+  // TODO: Deprecated!
 	if (options.listener) {
 		this.listen(options.listener);
+	}
+	if (options.listen) {
+		this.listen(options.listen);
 	}
 };
 

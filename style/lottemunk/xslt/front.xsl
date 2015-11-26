@@ -10,6 +10,7 @@
  xmlns:text="http://uri.in2isoft.com/onlinepublisher/part/text/1.0/"
  xmlns:i="http://uri.in2isoft.com/onlinepublisher/class/image/1.0/"
  xmlns:o="http://uri.in2isoft.com/onlinepublisher/class/object/1.0/"
+ xmlns:part="http://uri.in2isoft.com/onlinepublisher/part/1.0/"
  xmlns:imagegallery="http://uri.in2isoft.com/onlinepublisher/part/imagegallery/1.0/"
  xmlns:widget="http://uri.in2isoft.com/onlinepublisher/part/widget/1.0/"
  exclude-result-prefixes="p f h util widget imagegallery o i text header"
@@ -32,7 +33,7 @@
         </nav>
     </header>
 
-    <xsl:apply-templates select="p:content"/>
+    <xsl:apply-templates select="p:content//widget:widget"/>
         
     <section id="humanise">
         <article>
@@ -51,68 +52,58 @@
 
 
 <xsl:template match="widget:broen">
-  <section id="broen">
-    <div class="left broen_text">
-      <h2><xsl:value-of select="widget:title"/></h2>
+  <section id="broen" class="broen js_broen">
+    <div class="broen_left broen_text">
+      <h2 class="broen_title"><xsl:value-of select="widget:title"/><xsl:comment/></h2>
       <xsl:for-each select="widget:p">
         <p><xsl:value-of select="."/></p>
       </xsl:for-each>
       <p><a class="button" href="{widget:link/@url}"><xsl:value-of select="widget:link"/></a></p>   
     </div>
-    <div class="right" style="background: #eee">
-      <div class="vert50  broen_photo2"><xsl:comment/></div>
-      <div class="vert50  broen_photo3"><xsl:comment/></div>
+    <div class="broen_right" style="background: #eee">
+      <div class="broen_right_photo broen_photo broen_photo-2"><xsl:comment/></div>
+      <div class="broen_right_photo broen_photo broen_photo-3"><xsl:comment/></div>
     </div>
-    <div class="middle broen_photo1"><xsl:comment/></div>
+    <div class="broen_middle broen_photo broen_photo-1"><xsl:comment/></div>
   </section>
 </xsl:template>
 
+
 <xsl:template match="widget:about">
   <section id="about">
-      <a name="about"><xsl:comment/></a>
-      <xsl:call-template name="util:languages"><xsl:with-param name="tag" select="'p'"/></xsl:call-template>
-      <h2>Om mig</h2>
-      <div class="text">
-      <p class="text">
-      <xsl:choose>
-          <xsl:when test="//text:text[1]">
-              <xsl:value-of select="//text:text[1]"/>
-          </xsl:when>
-          <xsl:otherwise>
-              <xsl:text>
-                  Jeg er Lotte Munk, uddannet skuespiller fra Århus Teaters skuespillerskole. Efter endt uddannelse blev jeg ansat i teatrets faste skuespillerensemble. I dag har jeg min base i København, hvor jeg arbejder alsidigt og bredt indenfor film/tv og teater.
-              </xsl:text>
-          </xsl:otherwise>
-      </xsl:choose>
-      </p>
+    <a name="about"><xsl:comment/></a>
+    <xsl:call-template name="util:languages"><xsl:with-param name="tag" select="'p'"/></xsl:call-template>
+    <h2><xsl:value-of select="widget:title"/></h2>
+    <div class="text">
+      <p class="text"><xsl:value-of select="widget:text"/></p>
       <p class="cv">
-          <xsl:choose>
-              <xsl:when test="//p:page/p:meta/p:language='en'">
-                  <a class="button" href="{$path}en/cv/"><span>View my CV &#8250;</span></a>
-              </xsl:when>
-              <xsl:otherwise>
-                  <a class="button" href="{$path}cv/"><span>Se mit CV &#8250;</span></a>
-              </xsl:otherwise>
-          </xsl:choose>
+        <xsl:choose>
+            <xsl:when test="//p:page/p:meta/p:language='en'">
+                <a class="button" href="{$path}en/cv/"><span>View my CV &#8250;</span></a>
+            </xsl:when>
+            <xsl:otherwise>
+                <a class="button" href="{$path}cv/"><span>Se mit CV &#8250;</span></a>
+            </xsl:otherwise>
+        </xsl:choose>
       </p>
-      </div>
-      <ul class="icons">
-          <li><a href="http://dk.linkedin.com/pub/lotte-munk/18/473/554" class="icon-linkedin"><xsl:comment/></a></li>
-          <xsl:choose>
-              <xsl:when test="//p:page/p:meta/p:language='en'">
-                  <li><a href="http://en.wikipedia.org/wiki/Lotte_Munk" class="icon-wikipedia"><xsl:comment/></a></li>
-              </xsl:when>
-              <xsl:otherwise>
-                  <li><a href="http://da.wikipedia.org/wiki/Lotte_Munk" class="icon-wikipedia"><xsl:comment/></a></li>
-              </xsl:otherwise>
-          </xsl:choose>
-          <li><a href="https://www.facebook.com/Lottemunk69" class="icon-facebook"><xsl:comment/></a></li>
-      </ul>
-      <div class="contact">
-          <p class="address"><span class="icon icon-map"><xsl:comment/></span><a href="http://maps.apple.com/?q=55.639482,12.616404&amp;sspn=0.000774,0.001983&amp;sll=55.639542,12.616527"><span>Ny Skelgårdsvej 6<br/>2770 Kastrup, Danmark</span></a></p>
-          <p class="email"><span class="icon icon-mail"><xsl:comment/></span><a href="mailto:2be@lottemunk.dk"><span>2be@lottemunk.dk</span></a></p>
-          <p class="phone"><span class="icon icon-phone"><xsl:comment/></span><a href="tel:004526368412"><span>+45 <strong>26 36 84 12</strong></span></a></p>
-      </div>
+    </div>
+    <ul class="icons">
+      <li><a href="http://dk.linkedin.com/pub/lotte-munk/18/473/554" class="icon-linkedin"><xsl:comment/></a></li>
+      <xsl:choose>
+        <xsl:when test="//p:page/p:meta/p:language='en'">
+            <li><a href="http://en.wikipedia.org/wiki/Lotte_Munk" class="icon-wikipedia"><xsl:comment/></a></li>
+        </xsl:when>
+        <xsl:otherwise>
+            <li><a href="http://da.wikipedia.org/wiki/Lotte_Munk" class="icon-wikipedia"><xsl:comment/></a></li>
+        </xsl:otherwise>
+      </xsl:choose>
+      <li><a href="https://www.facebook.com/Lottemunk69" class="icon-facebook"><xsl:comment/></a></li>
+    </ul>
+    <div class="contact">
+      <p class="address"><span class="icon icon-map"><xsl:comment/></span><a href="http://maps.apple.com/?q=55.639482,12.616404&amp;sspn=0.000774,0.001983&amp;sll=55.639542,12.616527"><span>Ny Skelgårdsvej 6<br/>2770 Kastrup, Danmark</span></a></p>
+      <p class="email"><span class="icon icon-mail"><xsl:comment/></span><a href="mailto:2be@lottemunk.dk"><span>2be@lottemunk.dk</span></a></p>
+      <p class="phone"><span class="icon icon-phone"><xsl:comment/></span><a href="tel:004526368412"><span>+45 <strong>26 36 84 12</strong></span></a></p>
+    </div>
   </section>
 </xsl:template>
  
@@ -170,7 +161,7 @@
 
 <xsl:template match="widget:reel">
   <section id="reel">
-      <div class="content" id="reelContent">
+    <div class="content" id="reelContent">
       <div class="holes"><xsl:comment/></div>
       <div class="frames">
           <figure class="frame1"><xsl:comment/></figure>
@@ -183,7 +174,7 @@
           <figure class="frame8"><xsl:comment/></figure>
       </div>
       <div class="holes"><xsl:comment/></div>
-      </div>
+    </div>
   </section>
 </xsl:template>
 
