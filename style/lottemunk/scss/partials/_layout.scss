@@ -2,14 +2,18 @@
 
   .layout_content
   {
-    padding: 0 10px 10px;
+    padding: 20px 10px 10px;
+    
+    .part_section_header_1 {
+      padding-right: 60px;
+    }
   }
 
   .layout_languages {
     text-align: right;
     position: absolute;
     right: 10px;
-    margin: 10px 0 0;
+    margin: 0;
   }
 
   .layout_language {
@@ -47,10 +51,14 @@
   
   .layout_content
   {
-  	padding: 10px 20px;
+  	padding: 30px 20px;
   	max-width: 900px;
   	margin: 0 auto;
   	position: relative;
+    
+    .part_section_header_1 {
+      padding-right: 180px;
+    }
   }
 }
 
@@ -63,7 +71,6 @@
 
   .layout_languages {
   	right: 20px;
-  	margin: 20px 0 0;
     
     .front & {
       top: auto;

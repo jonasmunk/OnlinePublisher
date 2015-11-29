@@ -62,7 +62,7 @@
     <h2 class="about_title"><xsl:value-of select="widget:title"/><xsl:comment/></h2>
     <div class="about_body">
       <p class="about_text"><xsl:value-of select="widget:text"/><xsl:comment/></p>
-      <p class="cv">
+      <div>
         <xsl:choose>
           <xsl:when test="//p:page/p:meta/p:language='en'">
             <a class="about_button" href="{$path}en/cv/">View my CV</a>
@@ -71,7 +71,7 @@
             <a class="about_button" href="{$path}cv/">Se mit CV</a>
           </xsl:otherwise>
         </xsl:choose>
-      </p>
+      </div>
     </div>
     <ul class="about_icons">
       <li><a href="http://dk.linkedin.com/pub/lotte-munk/18/473/554" class="icon-linkedin"><xsl:comment/></a></li>
@@ -86,9 +86,18 @@
       <li><a href="https://www.facebook.com/Lottemunk69" class="icon-facebook"><xsl:comment/></a></li>
     </ul>
     <div class="about_contact">
-      <p class="address"><span class="icon icon-map"><xsl:comment/></span><a href="http://maps.apple.com/?q=55.639482,12.616404&amp;sspn=0.000774,0.001983&amp;sll=55.639542,12.616527"><span>Ny Skelgårdsvej 6<br/>2770 Kastrup, Danmark</span></a></p>
-      <p class="email"><span class="icon icon-mail"><xsl:comment/></span><a href="mailto:2be@lottemunk.dk"><span>2be@lottemunk.dk</span></a></p>
-      <p class="phone"><span class="icon icon-phone"><xsl:comment/></span><a href="tel:004526368412"><span>+45 <strong>26 36 84 12</strong></span></a></p>
+      <p class="about_contact_item address">
+        <span class="icon icon-map"><xsl:comment/></span>
+        <a href="http://maps.apple.com/?q=55.639482,12.616404&amp;sspn=0.000774,0.001983&amp;sll=55.639542,12.616527"><span>Ny Skelgårdsvej 6<br/>2770 Kastrup, Danmark</span></a>
+      </p>
+      <p class="about_contact_item email">
+        <span class="icon icon-mail"><xsl:comment/></span>
+        <a href="mailto:2be@lottemunk.dk"><span>2be@lottemunk.dk</span></a>
+      </p>
+      <p class="about_contact_item phone">
+        <span class="icon icon-phone"><xsl:comment/></span>
+        <a href="tel:004526368412"><span>+45 <strong>26 36 84 12</strong></span></a>
+      </p>
     </div>
   </section>
 </xsl:template>

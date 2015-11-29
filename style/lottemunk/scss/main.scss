@@ -49,6 +49,12 @@ body
 		max-width: 100%;
 		height: auto;
 	}
+  
+  .part_section_image {
+    float: none !important;
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+  }
 }
 
 @media screen and (min-width: 700px) {

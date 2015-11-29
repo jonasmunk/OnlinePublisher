@@ -163,12 +163,13 @@ a.button:hover
 
 #reel
 {
-	height: auto;
-	font-size: 0;
+  height: auto;
+  font-size: 0;
+  overflow: hidden;
+  width: 100%;
   
   .editor & {
     width: 400px;
-    overflow: hidden;
   }
 }
 
@@ -248,6 +249,8 @@ a.button:hover
 	margin: 0;
 	text-align: center;
 	font-size: 52pt;
+  font-weight: normal;
+  font-family: Cinzel;
 }
 
 #theater article

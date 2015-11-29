@@ -1,12 +1,4 @@
-@media screen and (min-width: 1586px) {
 
-	header
-	{
-		-webkit-background-size: cover;
-		-moz-background-size: cover;
-		background-size: cover;
-	}
-}
 
 @media screen and (max-width: 1200px) {
 	
@@ -52,61 +44,10 @@
 
 
 
-body.small #video
-{
-	height: auto;
-}
-
-body.small #video iframe
-{
-	width: 100%;
-}
-
-body.small #video article
-{
-	position: static;
-	margin: 0;
-	background: #000;
-}
-
-body.small #video_poster {
-    height: 480px;
-    width: 100%;
-}
-
-
-body.small #video article h2 span
-{
-	display: inline;
-}
-
-body.small #video article h2
-{
-	padding: 20px 0;
-}
-
-body.small #video article p
-{
-	margin: -10px 0 10px;
-}
-
-
-
-
 
 
 
 @media screen and (max-width: 640px){
-	html {
-		font-size: 100%;
-	}
-	body.front
-	{
-		padding-top: 0;
-	}
-	
-	
-		
 	/** Video **/
 	
 	#reel {

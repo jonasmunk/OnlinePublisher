@@ -119,6 +119,43 @@
     padding: 0 5px;
     text-decoration: none;
   }
+
+  .front .header {
+    height: 246px;
+    z-index: 3;
+    top: 0;
+    width: 100%;
+  }
+  .front .header_title {
+    font-size: 80px;
+  }
+  .front .header_job {
+    left: 10px;
+    top: 180px;
+  }
+
+  .desktop .front .header {
+    position: fixed;
+    -webkit-transform: translate3d(0, 0, 0);
+    -moz-transform: translate3d(0, 0, 0);
+    -ms-transform: translate3d(0, 0, 0);
+    transform: translate3d(0, 0, 0);
+    -webkit-transition: -webkit-transform 2s ease-in-out;
+    -moz-transition: -moz-transform 2s ease-in-out;
+    -ms-transition: -ms-transform 2s ease-in-out;
+    transition: transform 2s ease-in-out;
+  }
+
+  .desktop .is-full .header {
+    -webkit-transform: translate3d(0, -100px, 0);
+    -moz-transform: translate3d(0, -100px, 0);
+    -ms-transform: translate3d(0, -100px, 0);
+    transform: translate3d(0, -100px, 0);
+  }
+
+  .desktop .is-full .header_menu_link {
+    color: #aaa;
+  }
 }
 @media screen and (min-width: 760px) {
   .header_menu_link {
@@ -127,14 +164,17 @@
   }
 }
 .layout_content {
-  padding: 0 10px 10px;
+  padding: 20px 10px 10px;
+}
+.layout_content .part_section_header_1 {
+  padding-right: 60px;
 }
 
 .layout_languages {
   text-align: right;
   position: absolute;
   right: 10px;
-  margin: 10px 0 0;
+  margin: 0;
 }
 
 .layout_language {
@@ -165,10 +205,13 @@
   }
 
   .layout_content {
-    padding: 10px 20px;
+    padding: 30px 20px;
     max-width: 900px;
     margin: 0 auto;
     position: relative;
+  }
+  .layout_content .part_section_header_1 {
+    padding-right: 180px;
   }
 }
 @media screen and (min-width: 900px) {
@@ -178,7 +221,6 @@
 
   .layout_languages {
     right: 20px;
-    margin: 20px 0 0;
   }
   .front .layout_languages {
     top: auto;
@@ -187,6 +229,7 @@
 .layout_footer {
   text-align: center;
   padding: 20px 0 40px;
+  background: #fff;
 }
 
 .layout_footer_link {
@@ -279,6 +322,12 @@ body {
   .part_image_image {
     max-width: 100%;
     height: auto;
+  }
+
+  .part_section_image {
+    float: none !important;
+    padding-left: 0 !important;
+    padding-right: 0 !important;
   }
 }
 @media screen and (min-width: 700px) {

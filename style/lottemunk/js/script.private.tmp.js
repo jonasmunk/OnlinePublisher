@@ -759,10 +759,17 @@ var ctrl = {
 			min : 0,
 			max : 246,
 			$scroll : function(pos) {
-				head.style.height = ((1-pos)*146+100)+'px';
-				title.style.fontSize = ((1-pos)*30+50)+'px';
-				job.style.left = (hui.ease.fastSlow(pos)*250+10)+'px';
-				job.style.top = ((pos)*-135+180)+'px';
+        if (currentWidth < 600) {
+          head.style.height = '';
+          title.style.fontSize = '';
+  				job.style.left = '';
+  				job.style.top = '';
+        } else {
+  				head.style.height = ((1-pos)*146+100)+'px';
+  				title.style.fontSize = ((1-pos)*30+50)+'px';
+  				job.style.left = (hui.ease.fastSlow(pos)*250+10)+'px';
+  				job.style.top = ((pos)*-135+180)+'px';
+        }
 				hui.style.setOpacity(broen,1-hui.ease.quadOut(pos));
 			}
 		})
@@ -789,9 +796,9 @@ var ctrl = {
   			$scroll : function(pos) {
   				var dark = pos>0 && pos<1;
   				if (this.darkened!=dark) {
-  					hui.cls.set(document.body,'full',dark);
+  					hui.cls.set(document.body,'is-full',dark);
   					if (hui.browser.animation) {
-  						hui.cls.set(document.body,'dark',dark);
+  						hui.cls.set(document.body,'is-dark',dark);
   					} else {
   						hui.animate({node:document.body,css:{'background-color':dark ? '#000' : '#fff'},duration:1000});
   					}

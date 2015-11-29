@@ -1,5 +1,8 @@
 .front {
-  background-color: #fff;
+  -webkit-transition: background-color 1s ease-out;
+  -moz-transition: background-color 1s ease-out;
+  -ms-transition: background-color 1s ease-out;
+  transition: background-color 1s ease-out;
 }
 .front .document_row,
 .front .document_row_body,
@@ -10,59 +13,12 @@
   margin: 0;
 }
 
-.dark {
+.is-dark {
   background-color: #000;
 }
 
-.desktop .front {
-  /*	background: url('../gfx/bg.jpg') 50% 50%;*/
-  background-attachment: fixed;
-  padding-top: 286px;
-  -webkit-transition: background-color 1s ease-out;
-  -moz-transition: background-color 1s ease-out;
-  -ms-transition: background-color 1s ease-out;
-  transition: background-color 1s ease-out;
-}
-
-.front header {
-  height: 246px;
-  z-index: 3;
-  top: 0;
-  width: 100%;
-}
-
-.desktop .front header {
-  position: fixed;
-  -webkit-transform: translate3d(0, 0, 0);
-  -moz-transform: translate3d(0, 0, 0);
-  -webkit-transition: -webkit-transform 2s ease-in-out;
-  -moz-transition: -moz-transform 2s ease-in-out;
-}
-
-.desktop .full header {
-  -webkit-transform: translate3d(0, -100px, 0);
-  -moz-transform: translate3d(0, -100px, 0);
-}
-
-.desktop .full header nav a {
-  color: #aaa;
-}
-
-.front header h1 {
-  font-size: 80px;
-}
-
-.front header p {
-  left: 10px;
-  top: 170px;
-}
-
-.front footer {
-  padding: 100px 0;
-  background: #fff;
-}
-
-section {
-  width: 100%;
-  overflow: hidden;
+@media screen and (min-width: 600px) {
+  .desktop .front {
+    padding-top: 286px;
+  }
 }

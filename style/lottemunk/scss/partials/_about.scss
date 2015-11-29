@@ -8,7 +8,7 @@
   }
   
   .about_title {
-    background: url('../gfx/avatar.jpg') 50% 0 no-repeat;
+    background: url('../gfx/avatar2.jpg') 50% 0 no-repeat;
     padding-top: 270px;
     font-size: 36pt;
     color: #733392;
@@ -22,7 +22,7 @@
     line-height: 1.3em;
   	color: #666;
   	padding: 0 20px;
-    margin: 0 auto;
+    margin: 0 auto 20px;
     max-width: 700px
   }
 
@@ -31,18 +31,17 @@
   	display: inline-block;
   	height: 44px;
   	line-height: 46px;
+    font-size: 18px;
   	padding: 0 20px;
   	border-radius: 5px;
   	text-decoration: none;
-  	background: #fafafa;
+  	background: #733392;
   	text-decoration: none;
-  	border: 1px solid #eee;
     font-weight: 400;
-  	color: #733392;
+  	color: #fff;
     
     &:hover {
-    	background: #f0f0f0;
-    	border: 1px solid #ddd;      
+    	background: #572D6B;
     }
   }
   
@@ -72,7 +71,7 @@
     a {
     	font-size: 48px;
     	text-decoration: none;
-      @include transition(all .5s ease-in-out);
+      @include transition(all .3s ease-in-out);
     	color: #999;
     	margin-left: 10px;
     	margin-right: 10px;
@@ -91,7 +90,7 @@
       .about.visible & {
       	margin-left: 10px;
       	margin-right: 10px;
-      	color: #999;
+      	color: #A296A9;
     
         &:hover {
           color: #733392;
@@ -103,25 +102,26 @@
   .about_contact
   {
   	margin-top: 40px;
+    padding: 0 20px;
+  }
+
+  .about_contact_item {
+  	display: inline-block;
+  	vertical-align: middle;
+  	padding: 10px 40px 10px 40px;
+  	position: relative;
+  	min-height: 32px;
+  	text-align: left;
     
-    p {
-    	display: inline-block;
-    	vertical-align: middle;
-    	padding: 10px 40px 10px 40px;
-    	position: relative;
-    	min-height: 32px;
-    	text-align: left;
-      
-      &.address {
-        font-size: 1em;
-        
-        .icon {
-        	font-size: 40px;
-        	width: 40px;
-        	height: 40px;
-        	top: 5px;
-        	left: -4px;
-        }
+    &.address {
+      font-size: 1em;
+
+      .icon {
+      	font-size: 40px;
+      	width: 40px;
+      	height: 40px;
+      	top: 5px;
+      	left: -4px;
       }
     }
   }
@@ -144,7 +144,7 @@
 
   .about_contact span.icon
   {
-  	color: #999;
+  	color: #A296A9;
   	font-size: 32px;
   	width: 32px;
   	height: 32px;

@@ -121,6 +121,44 @@
     text-decoration: none;
   }
 
+
+  .front {
+
+    .header {
+    	height: 246px;
+    	z-index: 3;
+    	top: 0;
+    	width: 100%;
+    }
+  
+    .header_title {
+    	font-size: 80px;
+    }
+  
+    .header_job {
+    	left: 10px;
+    	top: 180px;
+    }
+  }
+
+  .desktop .front .header {
+  	position: fixed;
+  	@include transform(translate3d(0,0,0));
+  	-webkit-transition: -webkit-transform 2s ease-in-out;
+  	-moz-transition: -moz-transform 2s ease-in-out;
+  	-ms-transition: -ms-transform 2s ease-in-out;
+  	transition: transform 2s ease-in-out;
+  }
+
+  .desktop .is-full .header
+  {
+  	@include transform(translate3d(0,-100px,0));
+  }
+
+  .desktop .is-full .header_menu_link
+  {
+  	color: #aaa;
+  }
 }
 
 
