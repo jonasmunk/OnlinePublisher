@@ -6509,7 +6509,7 @@ var ctrl = {
 		var head = hui.get('head'),
 			title = hui.get('title'),
 			job = hui.get('job'),
-			broen = hui.get('broen'),
+			broen = hui.find('.js_broen'),
 			about = hui.get('about'),
 			press = hui.get('pressphotos'),
 			theater = hui.get('theater'),
@@ -6522,8 +6522,6 @@ var ctrl = {
 			theater_photo = hui.get.firstByClass(theater,'photo'),
 			theaters = hui.get.firstByClass(theater,'theaters'),
 			reelContent = hui.get('reelContent');
-		
-		
 		
 		
 		
@@ -6544,36 +6542,12 @@ var ctrl = {
 			$scroll : function(pos) {
 				head.style.height = ((1-pos)*146+100)+'px';
 				title.style.fontSize = ((1-pos)*30+50)+'px';
-				job.style.left = (hui.ease.fastSlow(pos)*260+10)+'px';
-				job.style.top = ((pos)*-133+170)+'px';
+				job.style.left = (hui.ease.fastSlow(pos)*250+10)+'px';
+				job.style.top = ((pos)*-135+180)+'px';
 				hui.style.setOpacity(broen,1-hui.ease.quadOut(pos));
 			}
 		})
-		/*
-		hui.parallax.listen({
-			min : 300,
-			max : 500,
-			$scroll : function(pos) {
-				nav.style.width = Math.max(menuWidth,(1-hui.ease.slowFastSlow(pos))*currentWidth)+'px';
-				nav.style.bottom = (hui.ease.slowFastSlow(pos)*40-40)+'px';
-			}
-		});
-		hui.parallax.listen({
-			min : 0,
-			max : 700,
-			$scroll : function(pos) {
-				if (hui.browser.animation) {
-					hui.cls.set(document.body,'full',pos==1);
-				} else {
-					hui.animate({
-						node : head,
-						css : {'margin-top':pos==1 ? '-100px' : '0px'},
-						duration : 2000,
-						ease : pos==1 ? hui.ease.fastSlow : hui.ease.bounce
-					});
-				}
-			}
-		});*/
+    
 		hui.parallax.listen({
 			element : about,
 			$scroll : function(pos) {
@@ -6588,23 +6562,7 @@ var ctrl = {
   			}
   		})
     }
-		/*
-		if (hui.browser.animation) {
-			hui.parallax.listen({
-				element : press,
-				$scroll : function(pos) {
-					hui.cls.set(press,'invisible',!(pos>.2 && pos<.8));
-					hui.cls.set(press,'saturated',pos>.1 && pos<.9)
-				}
-			})
-		}*/
-		/*
-		hui.parallax.listen({
-			element : background1,
-			$scroll : function(pos) {
-				background1_body.style.marginTop = (pos*200-250)+'px';
-			}
-		})*/
+    
     if (theater) {
   		hui.parallax.listen({
   			element : theater,
@@ -6613,12 +6571,11 @@ var ctrl = {
   				var dark = pos>0 && pos<1;
   				if (this.darkened!=dark) {
   					hui.cls.set(document.body,'full',dark);
-  					/*
   					if (hui.browser.animation) {
   						hui.cls.set(document.body,'dark',dark);
   					} else {
   						hui.animate({node:document.body,css:{'background-color':dark ? '#000' : '#fff'},duration:1000});
-  					}*/
+  					}
   					this.darkened = dark;
   				}
   				var show = pos>.3 && pos<.7;
