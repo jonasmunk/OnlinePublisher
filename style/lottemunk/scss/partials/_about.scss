@@ -1,0 +1,179 @@
+@include when {
+  
+  .about
+  {
+  	text-align: center;
+  	padding: 50px 0;
+    position: relative;
+  }
+  
+  .about_title {
+    background: url('../gfx/avatar.jpg') 50% 0 no-repeat;
+    padding-top: 270px;
+    font-size: 36pt;
+    color: #733392;
+    font-family: Cinzel;
+    font-weight: normal;
+    margin: 0;
+  }
+  
+  .about_text {
+    font-size: 1.5em;
+    line-height: 1.3em;
+  	color: #666;
+  	padding: 0 20px;
+    margin: 0 auto;
+    max-width: 700px
+  }
+
+  .about_button
+  {
+  	display: inline-block;
+  	height: 44px;
+  	line-height: 46px;
+  	padding: 0 20px;
+  	border-radius: 5px;
+  	text-decoration: none;
+  	background: #fafafa;
+  	text-decoration: none;
+  	border: 1px solid #eee;
+    font-weight: 400;
+  	color: #733392;
+    
+    &:hover {
+    	background: #f0f0f0;
+    	border: 1px solid #ddd;      
+    }
+  }
+  
+  .about_body {
+    .desktop & {
+      @include transform(scale(.7) translate(0,-40px));
+      @include transition(transform .5s ease-in-out);
+    }
+    
+    .desktop .visible & {
+      @include transform(scale(1) translate(0,0));
+    }
+  }
+
+
+  .about_icons
+  {
+  	text-align: center;
+  	margin: 50px 0 0;
+  	list-style: none;
+  	padding: 0;
+  
+    li {
+  	  display: inline-block;
+    }
+  
+    a {
+    	font-size: 48px;
+    	text-decoration: none;
+      @include transition(all .5s ease-in-out);
+    	color: #999;
+    	margin-left: 10px;
+    	margin-right: 10px;
+    
+
+  
+      .desktop &
+      {
+      	margin-left: 40px;
+      	margin-right: 40px;
+      	color: #fff;
+      }
+    
+
+  
+      .about.visible & {
+      	margin-left: 10px;
+      	margin-right: 10px;
+      	color: #999;
+    
+        &:hover {
+          color: #733392;
+        }
+      }
+    }
+  }
+  
+  .about_contact
+  {
+  	margin-top: 40px;
+    
+    p {
+    	display: inline-block;
+    	vertical-align: middle;
+    	padding: 10px 40px 10px 40px;
+    	position: relative;
+    	min-height: 32px;
+    	text-align: left;
+      
+      &.address {
+        font-size: 1em;
+        
+        .icon {
+        	font-size: 40px;
+        	width: 40px;
+        	height: 40px;
+        	top: 5px;
+        	left: -4px;
+        }
+      }
+    }
+  }
+
+  .about_contact p.email,
+  .about_contact p.phone
+  {
+  	font-size: 1.6em;
+  }
+
+  .about_contact p.phone
+  {
+  	color: #999;
+  }
+
+  .about_contact p.phone strong
+  {
+  	color: #333;
+  }
+
+  .about_contact span.icon
+  {
+  	color: #999;
+  	font-size: 32px;
+  	width: 32px;
+  	height: 32px;
+  	position: absolute;
+  	left: 0;
+  	top: 10px;
+  }
+
+
+  .about_contact a
+  {
+  	text-decoration: none;
+  }
+
+  .about_contact a span
+  {
+  	color: #0076a3;
+  }
+
+  .about_contact a:hover span
+  {
+  	text-decoration: underline;
+  }
+}
+
+@include when(600px) {
+  
+  .about
+  {
+  	padding: 80px 0;
+  }
+}

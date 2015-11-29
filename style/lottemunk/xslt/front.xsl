@@ -17,36 +17,22 @@
  >
  
 <xsl:template name="front">
-    <header id="head">
-        <a name="top"><xsl:comment/></a>
-        <h1 id="title">Lotte Munk</h1>
-        <p id="job">
-            <xsl:choose>
-                <xsl:when test="//p:page/p:meta/p:language='en'"><xsl:text>Actress</xsl:text></xsl:when>
-                <xsl:otherwise><xsl:text>Skuespiller</xsl:text></xsl:otherwise>
-            </xsl:choose>
-        </p>
-        <nav id="navigation">
-            <ul>
-                <xsl:apply-templates select="f:frame/h:hierarchy/h:item"/>
-            </ul>               
-        </nav>
-    </header>
 
-    <xsl:apply-templates select="p:content//widget:widget"/>
-        
-    <section id="humanise">
-        <article>
-            <p>This site has been carefully crafted<br/>
-            analysed and executed<br/>
-            from the engineering inside<br/>
-            to the design on the outside<br/>
-            by hand and mind<br/>
-            - by Humanise</p>
-            <p><a href="http://www.humanise.dk/"><span>Visit Humanise »</span></a></p>
-        </article>
-    </section>
-    
+  <xsl:call-template name="header"/>
+
+  <xsl:apply-templates select="p:content//widget:widget"/>
+      
+  <section id="humanise" class="humanise">
+    <div class="humanise_body">
+      <p>This site has been carefully crafted<br/>
+      analysed and executed<br/>
+      from the engineering inside<br/>
+      to the design on the outside<br/>
+      by hand and mind<br/>
+      - by Humanise</p>
+      <p><a href="http://www.humanise.dk/"><span>Visit Humanise »</span></a></p>
+    </div>
+  </section>
     
 </xsl:template>
 
@@ -70,24 +56,24 @@
 
 
 <xsl:template match="widget:about">
-  <section id="about">
+  <xsl:call-template name="util:languages"><xsl:with-param name="tag" select="'p'"/></xsl:call-template>
+  <section id="about" class="about">
     <a name="about"><xsl:comment/></a>
-    <xsl:call-template name="util:languages"><xsl:with-param name="tag" select="'p'"/></xsl:call-template>
-    <h2><xsl:value-of select="widget:title"/><xsl:comment/></h2>
-    <div class="text">
-      <p class="text"><xsl:value-of select="widget:text"/><xsl:comment/></p>
+    <h2 class="about_title"><xsl:value-of select="widget:title"/><xsl:comment/></h2>
+    <div class="about_body">
+      <p class="about_text"><xsl:value-of select="widget:text"/><xsl:comment/></p>
       <p class="cv">
         <xsl:choose>
-            <xsl:when test="//p:page/p:meta/p:language='en'">
-                <a class="button" href="{$path}en/cv/"><span>View my CV &#8250;</span></a>
-            </xsl:when>
-            <xsl:otherwise>
-                <a class="button" href="{$path}cv/"><span>Se mit CV &#8250;</span></a>
-            </xsl:otherwise>
+          <xsl:when test="//p:page/p:meta/p:language='en'">
+            <a class="about_button" href="{$path}en/cv/">View my CV</a>
+          </xsl:when>
+          <xsl:otherwise>
+            <a class="about_button" href="{$path}cv/">Se mit CV</a>
+          </xsl:otherwise>
         </xsl:choose>
       </p>
     </div>
-    <ul class="icons">
+    <ul class="about_icons">
       <li><a href="http://dk.linkedin.com/pub/lotte-munk/18/473/554" class="icon-linkedin"><xsl:comment/></a></li>
       <xsl:choose>
         <xsl:when test="//p:page/p:meta/p:language='en'">
@@ -99,7 +85,7 @@
       </xsl:choose>
       <li><a href="https://www.facebook.com/Lottemunk69" class="icon-facebook"><xsl:comment/></a></li>
     </ul>
-    <div class="contact">
+    <div class="about_contact">
       <p class="address"><span class="icon icon-map"><xsl:comment/></span><a href="http://maps.apple.com/?q=55.639482,12.616404&amp;sspn=0.000774,0.001983&amp;sll=55.639542,12.616527"><span>Ny Skelgårdsvej 6<br/>2770 Kastrup, Danmark</span></a></p>
       <p class="email"><span class="icon icon-mail"><xsl:comment/></span><a href="mailto:2be@lottemunk.dk"><span>2be@lottemunk.dk</span></a></p>
       <p class="phone"><span class="icon icon-phone"><xsl:comment/></span><a href="tel:004526368412"><span>+45 <strong>26 36 84 12</strong></span></a></p>
@@ -108,25 +94,25 @@
 </xsl:template>
  
 <xsl:template match="widget:photos">
-  <section id="pressphotos">
-    <div class="block">
+  <div id="pressphotos" class="photos">
       <a name="photos"><xsl:comment/></a>
-      <div class="press_left"><xsl:comment/></div>
-      <article>
-        <h2><xsl:value-of select="//header:header[@level=2]"/><xsl:comment/></h2>
+      <div class="photos_photo photos_photo-left"><xsl:comment/></div>
+      <div class="photos_middle">
+        <h2 class="photos_title"><xsl:value-of select="//header:header[@level=2]"/><xsl:comment/></h2>
+        <ul class="photos_items">
         <xsl:choose>
           <xsl:when test="//p:page/p:meta/p:language='en'">
-            <p><a href="{$path}en/photos/"><span>More photos &#8250;</span></a></p>
-            <p><a href="javascript://" onclick="photoGallery.show();"><span>Slide show &#8250;</span></a></p>
+            <li class="photos_item"><a class="photos_link" href="{$path}en/photos/">More photos</a></li>
+            <li class="photos_item"><a class="photos_link" href="javascript://" onclick="photoGallery.show();">Slide show</a></li>
           </xsl:when>
           <xsl:otherwise>
-            <p><a href="{$path}fotografier/"><span>Flere fotos &#8250;</span></a></p>
-            <p><a href="javascript://" onclick="photoGallery.show();"><span>Lysbilleder &#8250;</span></a></p>
+            <li class="photos_item"><a class="photos_link" href="{$path}fotografier/">Flere fotos</a></li>
+            <li class="photos_item"><a class="photos_link" href="javascript://" onclick="photoGallery.show();">Lysbilleder</a></li>
           </xsl:otherwise>
         </xsl:choose>
-      </article>
-      <div class="press_right"><xsl:comment/></div>
-    </div>
+        </ul>
+      </div>
+      <div class="photos_photo photos_photo-right"><xsl:comment/></div>
       
     <script type="text/javascript">
         require(['hui.ui.ImageViewer'],function() {
@@ -150,7 +136,7 @@
             });
         });
     </script>
-  </section>
+  </div>
 </xsl:template> 
 
 <xsl:template match="widget:reel">

@@ -1,0 +1,134 @@
+@include when {
+	.header
+	{
+		background: #000;
+		margin: 0;
+	}
+	
+	.header_title {
+  	font-family: Cinzel;
+    margin: 0;
+    text-align: center;
+    color: #fff;
+    font-size: 40px;
+    line-height: 1;
+    padding-top: 5px;
+    text-rendering: geometricPrecision;
+    letter-spacing: 2px;
+	}
+	
+	.header_job {
+		color: #948fa3;
+    text-align: center;
+    text-align: center;
+    font-size: 20px;
+		line-height: 1em;
+	}
+	
+	.header_navigation {
+    margin-top: 10px;
+	}
+  
+  .header_menu {
+    display: block;
+    margin: 0 10px;
+    padding: 5px 0;
+		text-align: center;
+    border-top: 1px solid #333;
+  }
+
+	.header_menu_item {
+    display: inline-block;
+  }
+  
+  .header_menu_link {
+    display: inline-block;
+    color: #fff;
+    height: 30px;
+    line-height: 30px;
+    padding: 0 5px;
+    text-decoration: none;
+    font-size: 16px;
+  }
+}
+
+@include when (600px) {
+  .header
+  {
+  	height: 100px;
+  	background: #333 url('../gfx/header.jpg') 50% 50%;
+	  background-size: cover;	
+  	color: #351a38;
+  	position: relative;
+    margin-bottom: 40px;
+  }
+
+  .header_title
+  {
+  	font-size: 50px;
+    width: 360px;
+    padding: 0 0 0 10px;
+    line-height: .9;
+  	position: absolute;
+  	left: 0;
+  	top: 28px;
+  	text-shadow: 0 0 10px #fff; 
+  	font-family: Cinzel;
+    color: #351A38;
+  	margin: 0;
+  	font-weight: normal;
+  }
+
+  .header_job
+  {
+    left: 260px;
+    top: 45px;
+    position: absolute;
+    font-size: 24px;
+    width: 360px;
+    margin: 0;
+    text-align: center;
+    text-shadow: 0 0px 10px rgba(0, 0, 0, 1);
+    color: #fff;
+  }
+  
+  .header_navigation {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    margin: 0 0 -40px;
+    @include vertical-gradient(#1a2128, #0d0d0d);
+  }
+
+
+  .header_menu
+  {
+    text-align: left;
+    margin: 0;
+    border: none;
+    padding: 0 10px;
+    margin: 0 auto;
+  }
+  
+  .header_menu_link {
+    display: inline-block;
+    color: #fff;
+    height: 40px;
+    line-height: 40px;
+    font-size: 14px;
+    padding: 0 5px;
+    text-decoration: none;
+  }
+
+}
+
+
+@include when (760px) {
+
+  
+  .header_menu_link {
+    font-size: 18px;
+    padding: 0 15px;
+  }
+}

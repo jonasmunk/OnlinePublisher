@@ -1,0 +1,125 @@
+$target : 'screen';
+
+@import 'tools';
+
+a.common
+{
+	color: #ddd;
+	cursor: pointer;
+}
+
+a.common span
+{
+	color: #0073b9;
+}
+	
+a.common:hover, a.common:hover span
+{
+	color: #005aae;
+}
+
+h2.common,
+h3.common,
+h4.common,
+h5.common,
+h6.common,
+p.common,
+ul.common,
+.common_font,
+.part_header,
+.part_richtext
+{
+	font-family: 'Merriweather',Georgia,"Book Antiqua", "Palatino",Times,serif;
+}
+
+.part_header {
+  word-break: break-word;
+}
+
+h1.common, .part_header_1
+{
+	font-family: Cinzel,Georgia,"Book Antiqua", "Palatino",Times,serif;
+}
+
+h1.common,h2.common,h3.common,h4.common,h5.common,h6.common
+{
+	margin: 0px;
+	color: #000;
+	font-weight: normal;
+}
+
+p.common, 
+ul.common,
+.part_text,
+div.part_richtext,
+div.part_listing span.part_listing_first
+{
+	font-size: 10pt;
+	line-height: 160%;
+	color: #333;
+	font-weight: 400;
+}
+
+div.part_listing, textarea.part_listing {
+	font-size: 10pt;
+	color: #333;
+}
+
+.part_header
+{
+	color: #000;
+	font-weight: normal;
+}
+
+h1.part_header, textarea.part_header_1
+{
+	font-size: 32pt;
+}
+
+
+
+
+div.part_table table
+{
+	font-size: 1em;
+	border-spacing: 0;
+	border-collapse: collapse;
+}
+
+div.part_table thead th
+{
+	border-bottom: 1px solid #eee;
+	padding: 1px 3px;
+	text-align: left;
+}
+
+div.part_table tfoot th
+{
+	border-bottom: 1px solid #eee;
+	padding: 1px 3px;
+	text-align: left;
+}
+
+div.part_table td
+{
+	border-bottom: 1px solid #eee;
+	padding: 3px 3px;
+}
+
+
+
+
+.part_horizontalrule
+{
+	border: none;
+	border-bottom: solid 1px #ddd;
+}
+
+.part_movie_text {
+	font-weight: normal;
+	font-size: 24px;
+}
+
+.part_movie_text_inner {
+	padding-top: 2px;
+}

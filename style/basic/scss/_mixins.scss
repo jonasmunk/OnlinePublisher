@@ -1,0 +1,36 @@
+@mixin when($size:any) {
+  @if ($size!=any) {
+    @media screen and (min-width: $size) {
+      @content;
+    }
+  }
+  @else {
+    @content;
+  }
+}
+
+@mixin transition($value) {
+	-webkit-transition: $value;
+	-moz-transition: $value;
+	-ms-transition: $value;
+	transition: $value;
+}
+
+@mixin transform($value) {
+	-webkit-transform: $value;
+	-moz-transform: $value;
+	-ms-transform: $value;
+	transform: $value;
+}
+
+
+@mixin vertical-gradient($start-colour, $end-colour) {
+    background-color: $start-colour;
+    background-image: -webkit-gradient(linear, left top, left bottom, from($start-colour), to($end-colour));
+    background-image: -webkit-linear-gradient(top, $start-colour, $end-colour);
+    background-image:    -moz-linear-gradient(top, $start-colour, $end-colour);
+    background-image:     -ms-linear-gradient(top, $start-colour, $end-colour);
+    background-image:      -o-linear-gradient(top, $start-colour, $end-colour);
+    background-image:         linear-gradient(top, $start-colour, $end-colour);
+    filter:            progid:DXImageTransform.Microsoft.gradient(start-colourStr='#{$start-colour}', end-colourStr='#{$end-colour}');
+}
