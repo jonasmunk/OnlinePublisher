@@ -107,7 +107,7 @@
       <a name="photos"><xsl:comment/></a>
       <div class="photos_photo photos_photo-left"><xsl:comment/></div>
       <div class="photos_middle">
-        <h2 class="photos_title"><xsl:value-of select="//header:header[@level=2]"/><xsl:comment/></h2>
+        <h2 class="photos_title"><xsl:value-of select="widget:title"/><xsl:comment/></h2>
         <ul class="photos_items">
         <xsl:choose>
           <xsl:when test="//p:page/p:meta/p:language='en'">
