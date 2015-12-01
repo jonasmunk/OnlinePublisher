@@ -133,9 +133,7 @@
 <xsl:template match="widget:quote">
   <blockquote class="quote">
     <div class="quote_body">
-    <xsl:copy-of select="document('../gfx/curl_box_top.min.svg')" />
     <p class="quote_text"><xsl:apply-templates select="widget:text"/> <span class="quote_name">– <xsl:value-of select="widget:name"/></span></p>
-    <xsl:copy-of select="document('../gfx/curl_box_bottom.min.svg')" />
     </div>
   </blockquote>
 </xsl:template>
