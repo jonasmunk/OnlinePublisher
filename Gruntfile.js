@@ -1,19 +1,11 @@
 module.exports = function(grunt) {
+
+  var clients = {};
   
-  var clients = {
-    humanise : {
-      folder: 'www.humanise.dk',
-      database : 'www_humanise_dk'
-    },
-    lottemunk : {
-      folder: 'www.lottemunk.dk',
-      database : 'www_lottemunk_dk'
-    },
-    fynbogaard : {
-      folder : 'www.fynbogaard.dk',
-      database : 'www_fynbogaard_dk'
-    }
-  }
+  (function() {
+    var dev = grunt.file.readJSON('Config/dev.json');
+    clients = dev.clients;
+  })();  
 
   // Project configuration.
   grunt.initConfig({
@@ -88,7 +80,7 @@ module.exports = function(grunt) {
             grunt.log.error('Client not found'); return;
           }
           return [
-            '/Users/jbm/Scripts/sites/transfer.sh ' + clients[client].database + ' ' + clients[client].folder
+            'scripts/transfer.sh ' + clients[client].production.database + ' ' + clients[client].production.folder
           ].join(' && ');
         }
       },
@@ -97,7 +89,23 @@ module.exports = function(grunt) {
           if (!clients[client]) {
             grunt.log.error('Client not found'); return;
           }
-          return '/Users/jbm/Scripts/sites/switch.sh ' + clients[client].folder
+          return 'scripts/switch.sh ' + clients[client].folder
+        }
+      },
+      'stage' : {
+        command : function(client) {
+          if (clients[client] && clients[client].staging) {
+            return 'scripts/deploy.sh ' + clients[client].staging.folder;
+          }
+          return '';
+        }
+      },
+      'deploy' : {
+        command : function(client) {
+          if (clients[client] && clients[client].production) {
+            return 'scripts/deploy.sh ' + clients[client].production.folder;
+          }
+          return '';
         }
       }
     }
@@ -115,21 +123,22 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-contrib-clean');
   grunt.loadNpmTasks('grunt-jsdoc');
 
-  // Default task(s).
-  grunt.registerTask('default', 'Standard tasks', ['watch']);
-  
   grunt.registerTask('default', 'Standard tasks', ['watch']);
   
   grunt.registerTask('switch', 'Switch to another client', function(client) {
     grunt.task.run('shell:switch:'+client);
+  });
+
+  grunt.registerTask('stage', 'Stage a client', function(client) {
+    grunt.task.run('shell:stage:' + client);
+  });
+
+  grunt.registerTask('deploy', 'Deploy a client', function(client) {
+    grunt.task.run('shell:deploy:' + client);
   });
   
   grunt.registerTask('transfer', 'Transfer from production to local', function(client) {
     grunt.task.run('shell:transfer:'+client);
   });
   
-  grunt.registerTask('deploy', 'Standard tasks', function() {
-    
-  });
-
 };

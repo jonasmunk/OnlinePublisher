@@ -1,9 +1,11 @@
 Config/Setup.php
+Config/dev.json
 CVS
 .DS_Store
 .project
 .settings
 .cvsignore
+/scripts
 /files
 /public/*
 !files/.htaccess
