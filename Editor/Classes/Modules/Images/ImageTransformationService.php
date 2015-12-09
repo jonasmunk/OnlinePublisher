@@ -134,7 +134,7 @@ class ImageTransformationService {
 	static function transform($recipe) {
 		$image = ImageTransformationService::loadImage($recipe['path']);
 		if ($image==null) {
-			Log::debug('Unable to load image: '.$recipe['path']);
+			Log::warn('Unable to load image: '.$recipe['path']);
 			return;
 		}
 		$originalInfo = ImageTransformationService::getImageInfo($recipe['path']);
