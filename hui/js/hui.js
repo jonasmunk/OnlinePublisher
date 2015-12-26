@@ -905,7 +905,7 @@ hui.find = function(selector,context) {
 	return (context || document).querySelector(selector);
 }
 
-if (document.querySelector) {
+if (!document.querySelector) {
   hui.find = function(selector,context) {
     context = context || document.documentElement;
     if (selector[0] == '.') {
