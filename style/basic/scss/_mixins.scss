@@ -23,6 +23,11 @@
 	transform: $value;
 }
 
+@mixin border-box {
+	box-sizing: border-box;
+	-moz-box-sizing: border-box;
+}
+
 
 @mixin vertical-gradient($start-colour, $end-colour) {
     background-color: $start-colour;
