@@ -748,7 +748,7 @@ Y.prototype.load=function(a){a(this.p)};function Z(a,b){this.d=a;this.f=b}Z.prot
 <xsl:template name="util:language">
 	<a class="layout_language layout_language_{@language}">
 		<xsl:call-template name="util:link"/>
-		<span>
+		<span class="layout_language_text">
 		<xsl:choose>
 			<xsl:when test="@language='da'">Dansk version</xsl:when>
 			<xsl:when test="@language='en'">English version</xsl:when>
