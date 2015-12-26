@@ -2,25 +2,37 @@
   
   .about
   {
+    margin: 20px 0;
   	text-align: center;
   	padding: 50px 0;
     position: relative;
+    padding-top: 270px;
+    
+    &:before {
+      content: '';
+      width: 254px;
+      height: 254px;
+      position: absolute;
+      background: url('../gfx/avatar2.jpg') 50% 0 no-repeat;
+      left: 50%;
+      margin-left: (254px/-2);
+      top: 0;
+    };
   }
   
   .about_title {
-    background: url('../gfx/avatar2.jpg') 50% 0 no-repeat;
-    padding-top: 270px;
     font-size: 36pt;
     color: #733392;
-    font-family: Cinzel;
+    font-family: $header-font;
     font-weight: normal;
-    margin: 0;
+    font-style: italic;
+    margin: 0 0 15px;
   }
   
   .about_text {
-    font-size: 1.5em;
-    line-height: 1.3em;
-  	color: #666;
+    font-size: 18px;
+    line-height: 1.4em;
+  	color: #777;
   	padding: 0 20px;
     margin: 0 auto 20px;
     max-width: 700px
@@ -28,31 +40,13 @@
 
   .about_button
   {
-  	display: inline-block;
-  	height: 44px;
-  	line-height: 46px;
-    font-size: 18px;
-  	padding: 0 20px;
-  	border-radius: 5px;
-  	text-decoration: none;
   	background: #733392;
-  	text-decoration: none;
-    font-weight: 400;
   	color: #fff;
+    border: none;
     
     &:hover {
     	background: #572D6B;
-    }
-  }
-  
-  .about_body {
-    .desktop & {
-      @include transform(scale(.7) translate(0,-40px));
-      @include transition(transform .5s ease-in-out);
-    }
-    
-    .desktop .visible & {
-      @include transform(scale(1) translate(0,0));
+      border: none;
     }
   }
 
@@ -63,39 +57,48 @@
   	margin: 50px 0 0;
   	list-style: none;
   	padding: 0;
+    font-size: 0;
+  }
   
-    li {
-  	  display: inline-block;
+  .about_icons_item {
+	  display: inline-block;    
+  }
+  
+  .about_icon {
+    @include transition(all .1s ease-in-out);
+  	margin-left: 10px;
+  	margin-right: 10px;
+    display: inline-block;
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    border: 1px solid #ccc;
+    text-align: center;
+    text-decoration: none;
+    color: $main-color;
+    cursor: pointer;
+    overflow: hidden;
+    
+    &:hover {
+      background: #eee;
     }
-  
-    a {
-    	font-size: 48px;
-    	text-decoration: none;
-      @include transition(all .3s ease-in-out);
-    	color: #999;
-    	margin-left: 10px;
-    	margin-right: 10px;
     
-
-  
-      .desktop &
-      {
-      	margin-left: 40px;
-      	margin-right: 40px;
-      	color: #fff;
-      }
+    &-linkedin {
+      @include icon-before(linkedin);
+    }
+    &-facebook {
+      @include icon-before(facebook);
+    }
+    &-wikipedia {
+      @include icon-before(wikipedia);
+    }
     
-
-  
-      .about.visible & {
-      	margin-left: 10px;
-      	margin-right: 10px;
-      	color: #A296A9;
-    
-        &:hover {
-          color: #733392;
-        }
-      }
+    &:before {
+      font-size: 30px;
+      line-height: 60px;
+    }
+    &-wikipedia:before {
+      line-height: 66px;
     }
   }
   
@@ -106,24 +109,11 @@
   }
 
   .about_contact_item {
-  	display: inline-block;
   	vertical-align: middle;
-  	padding: 10px 40px 10px 40px;
   	position: relative;
   	min-height: 32px;
-  	text-align: left;
-    
-    &.address {
-      font-size: 1em;
-
-      .icon {
-      	font-size: 40px;
-      	width: 40px;
-      	height: 40px;
-      	top: 5px;
-      	left: -4px;
-      }
-    }
+    line-height: 1.3;
+    margin-bottom: 10px;
   }
 
   .about_contact p.email,
@@ -142,21 +132,11 @@
   	color: #333;
   }
 
-  .about_contact span.icon
-  {
-  	color: #A296A9;
-  	font-size: 32px;
-  	width: 32px;
-  	height: 32px;
-  	position: absolute;
-  	left: 0;
-  	top: 10px;
-  }
-
 
   .about_contact a
   {
   	text-decoration: none;
+    color: #ddd;
   }
 
   .about_contact a span
@@ -164,16 +144,56 @@
   	color: #0076a3;
   }
 
-  .about_contact a:hover span
+  .about_contact a:hover
   {
   	text-decoration: underline;
   }
 }
 
 @include when(600px) {
+
+  .about {
+    margin: 40px 0;
+  }
+
+}
+
+@include when(800px) {
+  .about {
+    padding: 0 20px 0 320px;
+    max-width: 960px;
+    margin: 60px auto;
+    @include border-box;
+    text-align: left;
+    position: relative;
+    min-height: 400px;
+    
+    &:before {
+      margin: 0;
+      left: 20px;
+    }
+  }
   
-  .about
-  {
-  	padding: 80px 0;
+  .about_text {
+    padding: 0;
+    font-size: 24px;
+    font-weight: 200;
+    margin-bottom: 30px;
+  }
+  
+  .about_icons {
+    margin: 0;
+    text-align: right;
+    margin-top: -50px;
+  }
+  
+  .about_contact {
+    padding: 0;
+    width: 254px;
+    margin: 20px 0 0;
+    text-align: center;
+    position: absolute;
+    left: 20px;
+    top: 254px;
   }
 }

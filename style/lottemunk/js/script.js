@@ -1,4 +1,4 @@
-if(window.hui=window.hui||{},function(e,i,t){e.KEY_BACKSPACE=8,e.KEY_TAB=9,e.KEY_RETURN=13,e.KEY_ESC=27,e.KEY_LEFT=37,e.KEY_UP=38,e.KEY_RIGHT=39,e.KEY_DOWN=40,e.KEY_DELETE=46,e.KEY_HOME=36,e.KEY_END=35,e.KEY_PAGEUP=33,e.KEY_PAGEDOWN=34,e.KEY_INSERT=45
+function easeInout(e){return(2*e-1)*(2*e-1)*-1+1}if(window.hui=window.hui||{},function(e,i,t){e.KEY_BACKSPACE=8,e.KEY_TAB=9,e.KEY_RETURN=13,e.KEY_ESC=27,e.KEY_LEFT=37,e.KEY_UP=38,e.KEY_RIGHT=39,e.KEY_DOWN=40,e.KEY_DELETE=46,e.KEY_HOME=36,e.KEY_END=35,e.KEY_PAGEUP=33,e.KEY_PAGEDOWN=34,e.KEY_INSERT=45
 var n=e.browser={}
 n.msie=!/opera/i.test(i)&&/MSIE/.test(i)||/Trident/.test(i),n.msie6=-1!==i.indexOf("MSIE 6"),n.msie7=-1!==i.indexOf("MSIE 7"),n.msie8=-1!==i.indexOf("MSIE 8"),n.msie9=-1!==i.indexOf("MSIE 9"),n.msie9compat=n.msie7&&-1!==i.indexOf("Trident/5.0"),n.msie10=-1!==i.indexOf("MSIE 10"),n.msie11=-1!==i.indexOf("Trident/7.0"),n.webkit=-1!==i.indexOf("WebKit"),n.safari=-1!==i.indexOf("Safari"),n.webkitVersion=null,n.gecko=!n.webkit&&!n.msie&&-1!==i.indexOf("Gecko"),n.ipad=n.webkit&&-1!==i.indexOf("iPad"),n.windows=-1!==i.indexOf("Windows"),n.opacity=!n.msie6&&!n.msie7&&!n.msie8,n.mediaQueries=n.opacity,n.animation=!(n.msie6||n.msie7||n.msie8||n.msie9),n.wordbreak=!n.msie6&&!n.msie7&&!n.msie8,n.touch="ontouchstart"in t||"onmsgesturechange"in t&&t.navigator.maxTouchPoints?!0:!1
 var o=/Safari\/([\d.]+)/.exec(i)
@@ -481,4 +481,12 @@ hui.browser.animation||(hui.style.setOpacity(d,0),hui.style.setOpacity(c,0)),hui
 this.darkened!=i&&(hui.cls.set(document.body,"is-full",i),hui.browser.animation?hui.cls.set(document.body,"is-dark",i):hui.animate({node:document.body,css:{"background-color":i?"#000":"#fff"},duration:1e3}),this.darkened=i)
 var t=e>.3&&.7>e
 this.shown!=t&&(t&&hui.animate({node:d,css:{opacity:t?1:0},ease:hui.ease.flicker,duration:3e3,$complete:function(){hui.browser.animation?hui.cls.set(u,"final",e>0&&1>e):hui.animate({node:c,css:{opacity:t?1:0},ease:hui.ease.slowFast,duration:5e3})}}),this.shown=t)}}),hui.parallax.listen({$resize:function(e,i){u.style.height=Math.round(1*i)+"px",hui.browser.mediaQueries||hui.cls.set(document.body,"small",1200>e),p=e}})),hui.parallax.start()}}}}
-hui.onReady(ctrl.attach.bind(ctrl))
+hui.onReady(ctrl.attach.bind(ctrl)),hui.onReady(function(){var e=hui.get.byClass(document.body,"js-photo")
+hui.each(e,function(e){var i=hui.find(".js-photo-effect",e),t=hui.position.get(e),n={width:e.clientWidth,height:e.clientHeight}
+hui.listen(window,"mousemove",function(e){e=hui.event(e)
+var o=(e.getLeft()-t.left)/n.width,s=(e.getTop()-t.top)/n.height
+i.style.marginLeft=20*o+"px",i.style.marginTop=20*s+"px"
+var a=hui.between(0,easeInout(o),1)*hui.between(0,easeInout(s),1)
+i.style.opacity=a})})}),require(["hui"],function(e){var i=function(i){this.element=i.element,e.listen(this.element,"click",this._click.bind(this))}
+i.prototype={_click:function(){this.element.innerHTML='<iframe width="640" height="480" src="http://www.youtube.com/embed/2k5DfFfNcO8?autoplay=1" frameborder="0" allowfullscreen="allowfullscreen"></iframe>'}}
+for(var t=e.get.byClass("js-movie-poster"),n=0;n<t.length;n++)new i({element:t[n]})})

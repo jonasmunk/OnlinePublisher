@@ -10,10 +10,8 @@
   }
 
   .layout_languages {
-    text-align: right;
-    position: absolute;
-    right: 10px;
-    margin: 0;
+    text-align: center;
+    margin: 20px 0;
   }
 
   .layout_language {
@@ -24,11 +22,11 @@
   	background: url('../gfx/flags.png') 0 0 no-repeat;
   	line-height: 39px;
   	height: 39px;
-  	padding-left: 45px;
-    
-    > span {
-      display: none;
-    }
+  	padding-left: 39px;
+  }
+  
+  .layout_language_text {
+    padding-left: 5px;
   }
 
   .layout_language_da {
@@ -37,17 +35,21 @@
   
 }
 
-@include when(600px) {
-  
+@include when(500px) {
   .layout_languages {
-    right: 20px;
+    position: absolute;
+    right: 10px;
+    top: 18px;
+    margin: 0;
+    font-size: 0;
   }
+  
+  .layout_language_text {
+    display: none;
+  }
+}
 
-  .layout_language {
-    > span {
-      display: inline;
-    }
-  }
+@include when(600px) {
   
   .layout_content
   {
@@ -68,12 +70,11 @@
   {
   	padding: 60px 20px;
   }
+}
 
+@include when(960px) {
   .layout_languages {
-  	right: 20px;
-    
-    .front & {
-      top: auto;
-    }
+    right: 50%;
+    margin-right: -480px;
   }
 }

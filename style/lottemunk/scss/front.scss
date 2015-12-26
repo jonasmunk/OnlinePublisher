@@ -22,9 +22,3 @@
   }
   
 }
-
-@include when(600px) {
-  .desktop .front {
-  	padding-top: 286px;
-  }
-}

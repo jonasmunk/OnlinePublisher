@@ -40,25 +40,24 @@
 		<xsl:call-template name="util:style-ie8"/>
 		<xsl:call-template name="util:scripts-build"/>
 		<xsl:call-template name="util:style-build">
-          <xsl:with-param name="async" select="'false'"/>
+        <xsl:with-param name="async" select="'false'"/>
     </xsl:call-template>
 		<xsl:call-template name="util:lazy-style">
       <xsl:with-param name="href">
         <xsl:value-of select="$path"/><xsl:value-of select="$timestamp-url"/><xsl:text>style/lottemunk/fonts/Lotte-Munk/style.css</xsl:text>
       </xsl:with-param>
     </xsl:call-template>
-		<xsl:call-template name="util:lazy-fonts">
-			<xsl:with-param name="google" select="'Cinzel|Merriweather:400,300,300italic,400italic,700|Gloria+Hallelujah'"/>
-		</xsl:call-template>
+    <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Lora:400,400italic|Martel:400,700,300,200|Gloria+Hallelujah"/>
 		<meta name="viewport" content="user-scalable=yes, initial-scale = 1, maximum-scale = 10, minimum-scale = 0.2"/>
 	</head>
 </xsl:template>
 
 <xsl:template name="body">
 	<body>
+    <xsl:call-template name="header"/>
+		<xsl:call-template name="util:languages"><xsl:with-param name="tag" select="'p'"/></xsl:call-template>
 		<xsl:choose>
 			<xsl:when test="//p:page/p:context/p:home[@page=//p:page/@id]">
-				<xsl:attribute name="class">front</xsl:attribute>
 				<xsl:call-template name="front"/>
 			</xsl:when>
 			<xsl:otherwise>
@@ -74,7 +73,7 @@
 </xsl:template>
 
 <xsl:template name="header">
-	<header id="head" class="header">
+	<header class="header">
 		<h1 id="title" class="header_title">Lotte Munk</h1>
 		<p id="job" class="header_job">
 			<xsl:choose>
@@ -82,7 +81,7 @@
 				<xsl:otherwise><xsl:text>Skuespiller</xsl:text></xsl:otherwise>
 			</xsl:choose>
 		</p>
-		<nav id="navigation" class="header_navigation">
+		<nav class="header_navigation">
 			<ul class="header_menu">
 				<xsl:apply-templates select="f:frame/h:hierarchy/h:item"/>
 			</ul>				
@@ -91,10 +90,8 @@
 </xsl:template>
 
 <xsl:template name="page">
-  <xsl:call-template name="header"/>
 	<div class="layout">
 		<div class="layout_content">
-			<xsl:call-template name="util:languages"><xsl:with-param name="tag" select="'p'"/></xsl:call-template>
 			<xsl:apply-templates select="p:content"/>
 			<xsl:comment/>
 		</div>
@@ -108,12 +105,13 @@
 	<xsl:if test="not(@hidden='true')">
 		<xsl:variable name="style">
 			<xsl:choose>
-				<xsl:when test="//p:page/@id=@page"><xsl:text>header_menu_item-selected</xsl:text></xsl:when>
-				<xsl:when test="descendant-or-self::*/@page=//p:page/@id"><xsl:text>header_menu_item-highlighted</xsl:text></xsl:when>
+				<xsl:when test="//p:page/@id=@page"><xsl:text>selected</xsl:text></xsl:when>
+				<xsl:when test="descendant-or-self::*/@page=//p:page/@id"><xsl:text>highlighted</xsl:text></xsl:when>
+        <xsl:otherwise>normal</xsl:otherwise>
 			</xsl:choose>
 		</xsl:variable>
-		<li class="header_menu_item {$style}">
-			<a class="header_menu_link">
+		<li class="header_menu_item header_menu_item-{$style}">
+			<a class="header_menu_link header_menu_link-{$style}">
 				<xsl:attribute name="data-path"><xsl:value-of select="@path"/></xsl:attribute>
 				<xsl:call-template name="util:link"/>
 				<xsl:value-of select="@title"/>

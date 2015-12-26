@@ -16,9 +16,3 @@
 .is-dark {
   background-color: #000;
 }
-
-@media screen and (min-width: 600px) {
-  .desktop .front {
-    padding-top: 286px;
-  }
-}

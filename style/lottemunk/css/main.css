@@ -1,30 +1,32 @@
 .header {
-  background: #000;
   margin: 0;
+  max-width: 960px;
+  margin: 0 auto;
+  padding: 10px 0 0;
+  position: relative;
 }
 
 .header_title {
-  font-family: Cinzel;
+  font-family: "Lora", Georgia, "Book Antiqua", "Palatino", Times, serif;
+  font-weight: normal;
+  font-style: italic;
   margin: 0;
   text-align: center;
-  color: #fff;
-  font-size: 40px;
+  font-size: 52px;
   line-height: 1;
-  padding-top: 5px;
   text-rendering: geometricPrecision;
-  letter-spacing: 2px;
 }
 
 .header_job {
-  color: #948fa3;
+  font-family: "Lora", Georgia, "Book Antiqua", "Palatino", Times, serif;
+  font-weight: normal;
+  font-style: italic;
   text-align: center;
-  text-align: center;
-  font-size: 20px;
+  margin: 0 0 15px;
+  font-size: 24px;
   line-height: 1em;
-}
-
-.header_navigation {
-  margin-top: 10px;
+  letter-spacing: 1px;
+  color: #999;
 }
 
 .header_menu {
@@ -32,7 +34,8 @@
   margin: 0 10px;
   padding: 5px 0;
   text-align: center;
-  border-top: 1px solid #333;
+  border-top: 1px solid #eee;
+  border-bottom: 1px solid #eee;
 }
 
 .header_menu_item {
@@ -41,126 +44,84 @@
 
 .header_menu_link {
   display: inline-block;
-  color: #fff;
+  color: #6d6671;
   height: 30px;
-  line-height: 30px;
+  line-height: 32px;
   padding: 0 5px;
   text-decoration: none;
   font-size: 16px;
+  position: relative;
+  font-weight: normal;
+}
+.header_menu_link:hover {
+  color: #AF74CC;
+}
+.header_menu_link-selected {
+  color: #733392;
+  font-weight: 600;
 }
 
 @media screen and (min-width: 600px) {
-  .header {
-    height: 100px;
-    background: #333 url("../gfx/header.jpg") 50% 50%;
-    background-size: cover;
-    color: #351a38;
-    position: relative;
-    margin-bottom: 40px;
-  }
-
-  .header_title {
-    font-size: 50px;
-    width: 360px;
-    padding: 0 0 0 10px;
-    line-height: .9;
-    position: absolute;
-    left: 0;
-    top: 28px;
-    text-shadow: 0 0 10px #fff;
-    font-family: Cinzel;
-    color: #351A38;
-    margin: 0;
-    font-weight: normal;
-  }
-
-  .header_job {
-    left: 260px;
-    top: 45px;
-    position: absolute;
-    font-size: 24px;
-    width: 360px;
-    margin: 0;
-    text-align: center;
-    text-shadow: 0 0px 10px black;
-    color: #fff;
-  }
-
-  .header_navigation {
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    margin: 0 0 -40px;
-    background-color: #1a2128;
-    background-image: -webkit-gradient(linear, left top, left bottom, from(#1a2128), to(#0d0d0d));
-    background-image: -webkit-linear-gradient(top, #1a2128, #0d0d0d);
-    background-image: -moz-linear-gradient(top, #1a2128, #0d0d0d);
-    background-image: -ms-linear-gradient(top, #1a2128, #0d0d0d);
-    background-image: -o-linear-gradient(top, #1a2128, #0d0d0d);
-    background-image: linear-gradient(top, #1a2128, #0d0d0d);
-    filter: progid:DXImageTransform.Microsoft.gradient(start-colourStr='#1a2128', end-colourStr='#0d0d0d');
-  }
-
-  .header_menu {
-    text-align: left;
-    margin: 0;
-    border: none;
-    padding: 0 10px;
-    margin: 0 auto;
-  }
-
   .header_menu_link {
-    display: inline-block;
-    color: #fff;
-    height: 40px;
-    line-height: 40px;
-    font-size: 14px;
-    padding: 0 5px;
-    text-decoration: none;
-  }
-
-  .front .header {
-    height: 246px;
-    z-index: 3;
-    top: 0;
-    width: 100%;
-  }
-  .front .header_title {
-    font-size: 80px;
-  }
-  .front .header_job {
-    left: 10px;
-    top: 180px;
-  }
-
-  .desktop .front .header {
-    position: fixed;
-    -webkit-transform: translate3d(0, 0, 0);
-    -moz-transform: translate3d(0, 0, 0);
-    -ms-transform: translate3d(0, 0, 0);
-    transform: translate3d(0, 0, 0);
-    -webkit-transition: -webkit-transform 2s ease-in-out;
-    -moz-transition: -moz-transform 2s ease-in-out;
-    -ms-transition: -ms-transform 2s ease-in-out;
-    transition: transform 2s ease-in-out;
-  }
-
-  .desktop .is-full .header {
-    -webkit-transform: translate3d(0, -100px, 0);
-    -moz-transform: translate3d(0, -100px, 0);
-    -ms-transform: translate3d(0, -100px, 0);
-    transform: translate3d(0, -100px, 0);
-  }
-
-  .desktop .is-full .header_menu_link {
-    color: #aaa;
+    padding: 0 10px;
+    font-size: 18px;
   }
 }
 @media screen and (min-width: 760px) {
   .header_menu_link {
-    font-size: 18px;
-    padding: 0 15px;
+    font-size: 20px;
+    height: 44px;
+    line-height: 46px;
+  }
+}
+@media screen and (min-width: 960px) {
+  .header {
+    padding-top: 70px;
+  }
+
+  .header_menu {
+    padding-left: 300px;
+    text-align: left;
+    border-top: none;
+    margin: 0;
+  }
+
+  .header_title {
+    position: absolute;
+    left: 20px;
+    top: 30px;
+    width: 254px;
+    font-size: 48px;
+  }
+
+  .header_job {
+    position: absolute;
+    left: 20px;
+    width: 254px;
+    font-size: 24px;
+    top: 85px;
+  }
+
+  .header_menu_link {
+    font-size: 20px;
+    font-weight: 200;
+    height: 50px;
+    line-height: 52px;
+    padding: 0 20px;
+  }
+  .header_menu_link-selected {
+    font-weight: 700;
+  }
+  .header_menu_link-selected:after {
+    content: '';
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    left: 50%;
+    bottom: 0;
+    position: absolute;
+    background: #733392;
+    margin: 0 0 -8px -3px;
   }
 }
 .layout_content {
@@ -171,10 +132,8 @@
 }
 
 .layout_languages {
-  text-align: right;
-  position: absolute;
-  right: 10px;
-  margin: 0;
+  text-align: center;
+  margin: 20px 0;
 }
 
 .layout_language {
@@ -185,25 +144,31 @@
   background: url("../gfx/flags.png") 0 0 no-repeat;
   line-height: 39px;
   height: 39px;
-  padding-left: 45px;
+  padding-left: 39px;
 }
-.layout_language > span {
-  display: none;
+
+.layout_language_text {
+  padding-left: 5px;
 }
 
 .layout_language_da {
   background-position: 0 -39px;
 }
 
-@media screen and (min-width: 600px) {
+@media screen and (min-width: 500px) {
   .layout_languages {
-    right: 20px;
+    position: absolute;
+    right: 10px;
+    top: 18px;
+    margin: 0;
+    font-size: 0;
   }
 
-  .layout_language > span {
-    display: inline;
+  .layout_language_text {
+    display: none;
   }
-
+}
+@media screen and (min-width: 600px) {
   .layout_content {
     padding: 30px 20px;
     max-width: 900px;
@@ -218,12 +183,11 @@
   .layout_content {
     padding: 60px 20px;
   }
-
+}
+@media screen and (min-width: 960px) {
   .layout_languages {
-    right: 20px;
-  }
-  .front .layout_languages {
-    top: auto;
+    right: 50%;
+    margin-right: -480px;
   }
 }
 .layout_footer {
@@ -298,7 +262,7 @@ body {
   font-size: 87.5%;
   margin: 0;
   padding: 0;
-  font-family: Merriweather;
+  font-family: 'Martel';
   font-weight: 300;
   background: #fff;
 }

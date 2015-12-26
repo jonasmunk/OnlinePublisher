@@ -18,8 +18,6 @@
  
 <xsl:template name="front">
 
-  <xsl:call-template name="header"/>
-
   <xsl:apply-templates select="p:content//widget:widget"/>
       
   <section id="humanise" class="humanise">
@@ -56,7 +54,6 @@
 
 
 <xsl:template match="widget:about">
-  <xsl:call-template name="util:languages"><xsl:with-param name="tag" select="'p'"/></xsl:call-template>
   <section id="about" class="about">
     <a name="about"><xsl:comment/></a>
     <h2 class="about_title"><xsl:value-of select="widget:title"/><xsl:comment/></h2>
@@ -65,41 +62,103 @@
       <div>
         <xsl:choose>
           <xsl:when test="//p:page/p:meta/p:language='en'">
-            <a class="about_button" href="{$path}en/cv/">View my CV</a>
+            <a class="button button-right about_button" href="{$path}en/cv/">View my CV</a>
           </xsl:when>
           <xsl:otherwise>
-            <a class="about_button" href="{$path}cv/">Se mit CV</a>
+            <a class="button button-right about_button" href="{$path}cv/">Se mit CV</a>
           </xsl:otherwise>
         </xsl:choose>
       </div>
     </div>
     <ul class="about_icons">
-      <li><a href="http://dk.linkedin.com/pub/lotte-munk/18/473/554" class="icon-linkedin"><xsl:comment/></a></li>
+      <li class="about_icons_item"><a class="about_icon about_icon-linkedin" href="http://dk.linkedin.com/pub/lotte-munk/18/473/554"><xsl:comment/></a></li>
       <xsl:choose>
         <xsl:when test="//p:page/p:meta/p:language='en'">
-          <li><a href="http://en.wikipedia.org/wiki/Lotte_Munk" class="icon-wikipedia"><xsl:comment/></a></li>
+          <li class="about_icons_item"><a class="about_icon about_icon-wikipedia" href="http://en.wikipedia.org/wiki/Lotte_Munk"><xsl:comment/></a></li>
         </xsl:when>
         <xsl:otherwise>
-          <li><a href="http://da.wikipedia.org/wiki/Lotte_Munk" class="icon-wikipedia"><xsl:comment/></a></li>
+          <li class="about_icons_item"><a class="about_icon about_icon-wikipedia" href="http://da.wikipedia.org/wiki/Lotte_Munk"><xsl:comment/></a></li>
         </xsl:otherwise>
       </xsl:choose>
-      <li><a href="https://www.facebook.com/Lottemunk69" class="icon-facebook"><xsl:comment/></a></li>
+      <li class="about_icons_item"><a class="about_icon about_icon-facebook" href="https://www.facebook.com/Lottemunk69"><xsl:comment/></a></li>
     </ul>
     <div class="about_contact">
-      <p class="about_contact_item address">
-        <span class="icon icon-map"><xsl:comment/></span>
-        <a href="http://maps.apple.com/?q=55.639482,12.616404&amp;sspn=0.000774,0.001983&amp;sll=55.639542,12.616527"><span>Ny Skelgårdsvej 6<br/>2770 Kastrup, Danmark</span></a>
-      </p>
       <p class="about_contact_item email">
-        <span class="icon icon-mail"><xsl:comment/></span>
         <a href="mailto:2be@lottemunk.dk"><span>2be@lottemunk.dk</span></a>
       </p>
       <p class="about_contact_item phone">
-        <span class="icon icon-phone"><xsl:comment/></span>
         <a href="tel:004526368412"><span>+45 <strong>26 36 84 12</strong></span></a>
+      </p>
+      <p class="about_contact_item address">
+        <a href="http://maps.apple.com/?q=55.639482,12.616404&amp;sspn=0.000774,0.001983&amp;sll=55.639542,12.616527">
+          <span>Ny Skelgårdsvej 6<br/>2770 Kastrup, Danmark</span>
+        </a>
       </p>
     </div>
   </section>
+</xsl:template>
+
+<xsl:template match="widget:photography">
+  <div class="photography">
+    <h2 class="photography_title">Fotografier</h2>
+    <span class="photography_item">
+    <span class="photography_photo photography_photo-left js-photo">
+      <span class="photography_effect photography_effect-alt js-photo-effect"><xsl:comment/></span>
+      <img class="photography_photo_img" src="{$path}services/images/?id=735&amp;width=300&amp;height=480&amp;method=crop&amp;format=jpg"/>
+    </span>
+    </span>
+
+
+    <span class="photography_item photography_item-center">
+    <span class="photography_photo photography_photo-center js-photo">
+      <span class="photography_effect js-photo-effect"><xsl:comment/></span>
+      <img class="photography_photo_img" src="{$path}services/images/?id=734&amp;width=418&amp;height=626&amp;method=crop&amp;format=jpg"/>
+    </span>
+    </span>
+
+
+    <span class="photography_item">
+    <span class="photography_photo photography_photo-right js-photo">
+      <span class="photography_effect photography_effect-alt js-photo-effect"><xsl:comment/></span>
+      <img class="photography_photo_img" src="{$path}services/images/?id=736&amp;width=300&amp;height=480&amp;method=crop&amp;format=jpg"/>
+    </span>
+    </span>
+
+    <p class="photography_actions">
+      <xsl:choose>
+        <xsl:when test="//p:page/p:meta/p:language='en'">
+          <a class="photography_action button" href="{$path}en/photos/">More photos</a>
+          <a class="photography_action button" href="javascript://" onclick="photoGallery.show();">Slide show</a>
+        </xsl:when>
+        <xsl:otherwise>
+          <a class="photography_action button" href="{$path}fotografier/">Flere fotos</a>
+          <a class="photography_action button" href="javascript://" onclick="photoGallery.show();">Lysbilleder</a>
+        </xsl:otherwise>
+      </xsl:choose>
+    </p>
+  </div>
+  <script type="text/javascript">
+      require(['hui.ui.ImageViewer'],function() {
+          var images = [];
+          <xsl:for-each select="//imagegallery:imagegallery//o:object">
+              images.push({
+                  id : <xsl:value-of select="@id"/>,
+                  width : <xsl:value-of select="o:sub/i:image/i:width"/>,
+                  height : <xsl:value-of select="o:sub/i:image/i:height"/>,
+                  text : '<xsl:value-of select="o:note"/>'
+              })
+          </xsl:for-each>
+
+          window.photoGallery = hui.ui.ImageViewer.create({
+              maxWidth : 2000,
+              maxHeight : 2000,
+              perimeter : 40,
+              sizeSnap : 10,
+              images : images,
+              listener : op.imageViewerDelegate
+          });
+      });
+  </script>
 </xsl:template>
  
 <xsl:template match="widget:photos">
@@ -166,6 +225,31 @@
     </div>
   </section>
 </xsl:template>
+
+<xsl:template match="widget:movies">
+  <div class="movies">
+    <h2 class="movies_title"><xsl:value-of select="widget:title"/></h2>
+    <p class="movies_text"><xsl:apply-templates select="widget:text"/></p>
+    <div class="movies_body">
+      <div class="movies_more">
+        <xsl:for-each select="widget:movie">
+        <div class="movies_item">
+          <div class="movies_video js-movie-poster" data-key="{@key}">
+            <span class="movies_video_title"><xsl:value-of select="@title"/></span>
+          </div>
+        </div>
+        </xsl:for-each>
+      </div>
+    </div>
+    <p class="movies_actions">
+      <xsl:for-each select="widget:button">
+        <a class="button button-right movies_button" href="{$path}{@path}"><xsl:value-of select="."/></a>
+      </xsl:for-each>
+    </p>
+  </div>
+</xsl:template>
+
+<xsl:template match="widget:movies//widget:br"><br/></xsl:template>
 
 <xsl:template match="widget:video">
   <section id="video">

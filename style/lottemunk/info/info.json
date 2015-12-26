@@ -4,7 +4,8 @@
 	"owner" : "Property of Lotte Munk",
     "build" : {
         "js" : [
-            "style/lottemunk/js/lottemunk.js"
+            "style/lottemunk/js/lottemunk.js",
+            "style/lottemunk/js/movies.js"
         ],
         "css" : [
             "style/basic/css/shared.css",

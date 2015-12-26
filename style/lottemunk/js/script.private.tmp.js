@@ -1,4 +1,4 @@
-/* ["style\/lottemunk\/js\/lottemunk.js"] */
+/* ["style\/lottemunk\/js\/lottemunk.js","style\/lottemunk\/js\/movies.js"] */
 
 
 /* style/basic/js/OnlinePublisher.js */
@@ -834,3 +834,45 @@ var ctrl = {
 }
 
 hui.onReady(ctrl.attach.bind(ctrl));
+
+function easeInout(num) {
+  return (num*2-1) * (num*2-1) * -1 +1;
+}
+
+hui.onReady(function() {
+  var photos = hui.get.byClass(document.body,'js-photo');
+  //photos = [photos[0]];
+  hui.each(photos,function(photo) {
+    var effect = hui.find('.js-photo-effect',photo);
+    var pos = hui.position.get(photo);
+    var size = {width:photo.clientWidth,height:photo.clientHeight};
+    hui.listen(window,'mousemove',function(e) {
+      e = hui.event(e);
+      var horz = (e.getLeft() - pos.left) / size.width;
+      var vert = (e.getTop() - pos.top) / size.height;
+      effect.style.marginLeft = (horz * 20) + 'px';
+      effect.style.marginTop = (vert * 20) + 'px';
+      var op = hui.between(0,easeInout(horz),1) * hui.between(0,easeInout(vert),1);
+      effect.style.opacity = op;
+    })    
+  })
+})
+/* style/lottemunk/js/movies.js */
+require(['hui'],function(hui) {
+  
+  var MoviePoster = function(options) {
+    this.element = options.element;
+    hui.listen(this.element,'click',this._click.bind(this));
+  }
+    
+  MoviePoster.prototype = {
+    _click : function() {
+      this.element.innerHTML = '<iframe width="640" height="480" src="http://www.youtube.com/embed/2k5DfFfNcO8?autoplay=1" frameborder="0" allowfullscreen="allowfullscreen"></iframe>'
+    }
+  }
+  
+  var p = hui.get.byClass('js-movie-poster');
+  for (var i = 0; i < p.length; i++) {
+    new MoviePoster({element:p[i]});
+  }
+});

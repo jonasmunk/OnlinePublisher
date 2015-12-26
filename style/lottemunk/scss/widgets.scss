@@ -2,29 +2,12 @@ $target : 'screen';
 
 @import 'tools';
 
+@import 'partials/button';
 @import 'partials/broen';
 @import 'partials/photos';
 @import 'partials/about';
-
-a.button
-{
-	display: inline-block;
-	height: 40px;
-	line-height: 40px;
-	padding: 0 20px;
-	border-radius: 5px;
-	text-decoration: none;
-	background: #fafafa;
-	text-decoration: none;
-	border: 1px solid #eee;
-	color: #36a;
-}
-
-a.button:hover
-{
-	background: #f0f0f0;
-	border: 1px solid #ddd;
-}
+@import 'partials/photography';
+@import 'partials/movies';
 
 
 
