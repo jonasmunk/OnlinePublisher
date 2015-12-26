@@ -100,4 +100,12 @@ class ConfigurationService {
     }
   	return $basePath.'images/'.$filename;
   }
+  
+  static function getDataPath($path) {
+		global $CONFIG,$basePath;
+    if (isset($CONFIG['dataDir'])) {
+      return FileSystemService::join($basePath . $CONFIG['dataDir'], $path);
+    }
+    return FileSystemService::join($basePath, $path);
+  }
 }

@@ -293,9 +293,9 @@ class ImageService {
 		if (Strings::isBlank($fileName)) {
 			$fileName = FileSystemService::getFileBaseName($tempPath);
 		}
-        $fileName = FileSystemService::safeFilename($fileName);
+    $fileName = FileSystemService::safeFilename($fileName);
 		
-		$uploadDir = FileSystemService::join($basePath,'images');
+		$uploadDir = ConfigurationService::getDataPath('images');
 		$filePath = FileSystemService::join($uploadDir,$fileName);
 		
 		// Make sure the file has the correct extension
