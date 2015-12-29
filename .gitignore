@@ -5,7 +5,7 @@ CVS
 .project
 .settings
 .cvsignore
-/scripts
+Config/scripts
 /files
 /public/*
 !files/.htaccess

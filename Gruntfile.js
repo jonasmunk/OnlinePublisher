@@ -95,7 +95,7 @@ module.exports = function(grunt) {
       'stage' : {
         command : function(client) {
           if (clients[client] && clients[client].staging) {
-            return 'scripts/deploy.sh ' + clients[client].staging.folder;
+            return 'Config/scripts/deploy.sh ' + clients[client].staging.folder;
           }
           return '';
         }
@@ -103,7 +103,7 @@ module.exports = function(grunt) {
       'deploy' : {
         command : function(client) {
           if (clients[client] && clients[client].production) {
-            return 'scripts/deploy.sh ' + clients[client].production.folder;
+            return 'Config/scripts/deploy.sh ' + clients[client].production.folder;
           }
           return '';
         }

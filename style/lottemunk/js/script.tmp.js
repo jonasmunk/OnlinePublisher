@@ -6536,6 +6536,7 @@ var ctrl = {
 			hui.style.setOpacity(theater_photo,0);
 			hui.style.setOpacity(theaters,0);
 		}
+    /*
 		hui.parallax.listen({
 			min : 0,
 			max : 246,
@@ -6553,7 +6554,7 @@ var ctrl = {
         }
 				hui.style.setOpacity(broen,1-hui.ease.quadOut(pos));
 			}
-		})
+		})*/
     
 		hui.parallax.listen({
 			element : about,
@@ -6627,6 +6628,12 @@ hui.onReady(function() {
     var effect = hui.find('.js-photo-effect',photo);
     var pos = hui.position.get(photo);
     var size = {width:photo.clientWidth,height:photo.clientHeight};
+    hui.ui.listen({
+      $$afterResize : function() {
+        pos = hui.position.get(photo);
+        size = {width:photo.clientWidth,height:photo.clientHeight};
+      }
+    })
     hui.listen(window,'mousemove',function(e) {
       e = hui.event(e);
       var horz = (e.getLeft() - pos.left) / size.width;
@@ -6643,16 +6650,17 @@ require(['hui'],function(hui) {
   
   var MoviePoster = function(options) {
     this.element = options.element;
+    this.key = this.element.getAttribute('data-key');
     hui.listen(this.element,'click',this._click.bind(this));
   }
     
   MoviePoster.prototype = {
     _click : function() {
-      this.element.innerHTML = '<iframe width="640" height="480" src="http://www.youtube.com/embed/2k5DfFfNcO8?autoplay=1" frameborder="0" allowfullscreen="allowfullscreen"></iframe>'
+      this.element.innerHTML = '<iframe class="movies_iframe" width="640" height="480" src="http://www.youtube.com/embed/' +this.key + '?autoplay=1" frameborder="0" allowfullscreen="allowfullscreen"></iframe>'
     }
   }
   
-  var p = hui.get.byClass('js-movie-poster');
+  var p = hui.get.byClass(document.body,'js-movie-poster');
   for (var i = 0; i < p.length; i++) {
     new MoviePoster({element:p[i]});
   }
