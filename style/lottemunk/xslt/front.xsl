@@ -138,7 +138,7 @@
     </p>
   </div>
   <script type="text/javascript">
-      require(['hui.ui.ImageViewer'],function() {
+      require(['hui.ui.ImageViewer','op'],function() {
           var images = [];
           <xsl:for-each select="//imagegallery:imagegallery//o:object">
               images.push({
@@ -183,7 +183,7 @@
       <div class="photos_photo photos_photo-right"><xsl:comment/></div>
       
     <script type="text/javascript">
-        require(['hui.ui.ImageViewer'],function() {
+        require(['hui.ui.ImageViewer','op'],function() {
             var images = [];
             <xsl:for-each select="//imagegallery:imagegallery//o:object">
                 images.push({
