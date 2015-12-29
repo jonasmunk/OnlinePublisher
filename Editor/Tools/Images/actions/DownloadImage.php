@@ -7,12 +7,12 @@ require_once '../../../Include/Private.php';
 
 $id = Request::getInt('id');
 
-$file = Image::load($id);
-if ($file) {
-	$path = $basePath.'/images/'.$file->getFilename();
+$image = Image::load($id);
+if ($image) {
+	$path = ConfigurationService::getImagePath($image->getFilename());
 	if (file_exists($path) && is_readable($path)) {
-		header("Content-Disposition: attachment; filename=".$file->getFilename());
-		header("Content-Type: ".$file->getMimeType());
+		header("Content-Disposition: attachment; filename=" . $image->getFilename());
+		header("Content-Type: ".$image->getMimeType());
 		header("Content-Length: " . filesize($path));
 		readfile($path);			
 	} else {
