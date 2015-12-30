@@ -2,17 +2,22 @@
   .button
   {
   	display: inline-block;
-  	height: 40px;
-  	line-height: 42px;
-  	padding: 0 20px;
-  	border-radius: 20px;
+  	height: 36px;
+  	line-height: 38px;
+  	padding: 0 15px;
+  	border-radius: 18px;
   	text-decoration: none;
-  	background: #fafafa;
+  	//background: #fafafa;
   	text-decoration: none;
   	border: 1px solid #eee;
   	color: #36a;
-    font-size: 20px;
+    font-size: 16px;
     font-weight: 400;
+    
+    &:hover {
+    	background: rgba(0,0,0,.05);
+    	border-color: #ddd;
+    }
     
     &-right {
       padding-right: 15px;
@@ -20,15 +25,41 @@
       @include icon-after(right) {
         vertical-align: top;
         position: relative;
-        line-height: 38px;
+        line-height: 36px;
         right: -5px;
       }
     }
+    
+    .is-dark &,
+    &-dark {
+  	  border: 2px solid #999;
+      height: 34px;
+      color: #fff;
+      
+      &:hover {
+  	    border-color: #fff;
+    	  background: rgba(255,255,255,.2);
+      }
+    }
   }
+}
 
-  .button:hover
+@include when(600px) {
+  .button
   {
-  	background: #f0f0f0;
-  	border: 1px solid #ddd;
+  	height: 40px;
+  	line-height: 42px;
+  	padding: 0 20px;
+  	border-radius: 20px;
+    font-size: 20px;
+    
+    &:after {
+      line-height: 38px;
+    }
+    
+    .is-dark &,
+    &-dark {
+      height: 38px;
+    }
   }
 }

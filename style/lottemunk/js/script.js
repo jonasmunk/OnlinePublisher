@@ -239,17 +239,17 @@ else{var u,r,h,l=6*a,d=Math.floor(l),c=t*(1-i),f=t*(1-i*(l-d)),p=t*(1-i*(1-(l-d)
 0===d?(u=t,r=p,h=c):1===d?(u=f,r=t,h=c):2==d?(u=c,r=t,h=p):3==d?(u=c,r=f,h=t):4==d?(u=p,r=c,h=t):(u=t,r=c,h=f),n=Math.round(255*u),o=Math.round(255*r),s=Math.round(255*h)}return new Array(n,o,s)},hui.Color.rgb2hsv=function(e,i,t){e/=255,i/=255,t/=255
 var n,o,s=Math.min(Math.min(e,i),t),a=Math.max(Math.max(e,i),t),u=a
 return a==s?o=0:a==e?o=60*((i-t)/(a-s))%360:a==i?o=60*((t-e)/(a-s))+120:a==t&&(o=60*((e-i)/(a-s))+240),0>o&&(o+=360),n=0===a?0:1-s/a,[Math.round(o),Math.round(100*n),Math.round(100*u)]},hui.Color.rgb2hex=function(e){for(var i="#",t=0;3>t;t++){var n=parseInt(e[t]).toString(16)
-n.length<2&&(n="0"+n),i+=n}return i},!function(e,i,t){function n(e,i){m(e,function(e){return!i(e)})}function o(e,t){var n=i.createElement("script"),o=l
-n.onload=n.onerror=n[g]=function(){n[f]&&!/^c|loade/.test(n[f])||o||(n.onload=n[g]=null,o=1,t())},n.async=1,n.src=e,s.insertBefore(n,s.firstChild)}var s=i.getElementsByTagName("head")[0],a={},u={},r={},h={},l=!1,d="push",c="DOMContentLoaded",f="readyState",p="addEventListener",g="onreadystatechange",m=function(e,i){for(var t=0,n=e.length;n>t;++t)if(!i(e[t]))return l
+n.length<2&&(n="0"+n),i+=n}return i},!function(e,i,t){function n(e,i){g(e,function(e){return!i(e)})}function o(e,t){var n=i.createElement("script"),o=l
+n.onload=n.onerror=n[m]=function(){n[f]&&!/^c|loade/.test(n[f])||o||(n.onload=n[m]=null,o=1,t())},n.async=1,n.src=e,s.insertBefore(n,s.firstChild)}var s=i.getElementsByTagName("head")[0],a={},u={},r={},h={},l=!1,d="push",c="DOMContentLoaded",f="readyState",p="addEventListener",m="onreadystatechange",g=function(e,i){for(var t=0,n=e.length;n>t;++t)if(!i(e[t]))return l
 return 1}
 !i[f]&&i[p]&&(i[p](c,function w(){i.removeEventListener(c,w,l),i[f]="complete"},l),i[f]="loading")
-var v=function(e,i,s){function l(e){return e.call?e():a[e]}function c(){if(!--y){a[g]=1,p&&p()
-for(var e in r)m(e.split("|"),l)&&!n(r[e],l)&&(r[e]=[])}}e=e[d]?e:[e]
-var f=i&&i.call,p=f?i:s,g=f?e.join(""):i,y=e.length
-return t(function(){n(e,function(e){return h[e]?(g&&(u[g]=1),void c()):(h[e]=1,g&&(u[g]=1),void o(v.path?v.path+e+".js":e,c))})},0),v}
+var v=function(e,i,s){function l(e){return e.call?e():a[e]}function c(){if(!--y){a[m]=1,p&&p()
+for(var e in r)g(e.split("|"),l)&&!n(r[e],l)&&(r[e]=[])}}e=e[d]?e:[e]
+var f=i&&i.call,p=f?i:s,m=f?e.join(""):i,y=e.length
+return t(function(){n(e,function(e){return h[e]?(m&&(u[m]=1),void c()):(h[e]=1,m&&(u[m]=1),void o(v.path?v.path+e+".js":e,c))})},0),v}
 v.get=o,v.ready=function(e,i,t){e=e[d]?e:[e]
 var o=[]
-return!n(e,function(e){a[e]||o[d](e)})&&m(e,function(e){return a[e]})?i():!function(e){r[e]=r[e]||[],r[e][d](i),t&&t(o)}(e.join("|")),v}
+return!n(e,function(e){a[e]||o[d](e)})&&g(e,function(e){return a[e]})?i():!function(e){r[e]=r[e]||[],r[e][d](i),t&&t(o)}(e.join("|")),v}
 var y=e.$script
 v.noConflict=function(){return e.$script=y,this},"undefined"!=typeof module&&module.exports?module.exports=v:e.hui.require=v}(this,document,setTimeout),hui.parallax={_listeners:[],_init:function(){this._listening||(this._listening=!0,hui.listen(window,"scroll",this._scroll.bind(this)),hui.listen(window,"resize",this._resize.bind(this)))},_resize:function(){for(var e=this._listeners.length-1;e>=0;e--){var i=this._listeners[e]
 i.$resize&&i.$resize(hui.window.getViewWidth(),hui.window.getViewHeight())}this._scroll()},_scroll:function(){for(var e=hui.window.getScrollTop(),i=hui.window.getViewHeight(),t=this._listeners.length-1;t>=0;t--){var n=this._listeners[t]
@@ -468,25 +468,31 @@ var e=this.options.elements
 this.pos==e.length&&(this.pos=0)
 var i=e[this.pos]
 hui.style.setOpacity(i,0),hui.style.set(i,{display:"block",zIndex:this.z}),hui.animate(i,"opacity",1,this.options.transition,{ease:hui.ease.slowFastSlow,onComplete:function(){window.setTimeout(this.next.bind(this),this.options.wait)}.bind(this)})}},window.define&&define("op.Dissolver")
-var ctrl={attach:function(){if(hui.cls.has(document.body,"front")){var e=hui.get.firstByTag(t,"nav"),i={"/":"top","/cv/":"about","":"theater","/fotografier/":"photos","/kommunikation/":"communication","/film/":"movies","/en/":"top","/en/cv/":"about","":"theater","/en/photos/":"photos","/en/communication-training/":"communication","/en/movie-clips/":"movies"}
-if(hui.listen(e,"click",function(e){e=hui.event(e),e.stop()
+var ctrl={attach:function(){var e=hui.get.firstByTag(t,"nav"),i={"/":"top","/cv/":"about","":"theater","/fotografier/":"photos","/kommunikation/":"communication","/film/":"movies","/en/":"top","/en/cv/":"about","":"theater","/en/photos/":"photos","/en/communication-training/":"communication","/en/movie-clips/":"movies"}
+if(hui.listen(e,"click",function(e){e=hui.event(e)
 var t=e.findByTag("a")
 if(t){var n=i[t.getAttribute("data-path")]
 if(!n)return
-for(var o=hui.get.byTag(document.body,"a"),s=0;s<o.length;s++)if(n==o[s].getAttribute("name"))return void hui.window.scrollTo({element:o[s].parentNode,duration:1e3,top:"theater"==n?40:140})}}),hui.listen("handmade","click",function(e){hui.stop(e)
+for(var o=hui.get.byTag(document.body,"a"),s=0;s<o.length;s++)if(n==o[s].getAttribute("name"))return e.stop(),void hui.window.scrollTo({element:o[s].parentNode,duration:1e3,top:"theater"==n?40:140})}}),hui.listen("handmade","click",function(e){hui.stop(e)
 var i=hui.get("humanise")
 i.style.display="block",window.setTimeout(function(){hui.cls.add(i,"visible")})}),hui.listen("video_poster","click",function(){hui.get("video_poster").innerHTML='<iframe width="640" height="480" src="http://www.youtube.com/embed/2k5DfFfNcO8?autoplay=1" frameborder="0" allowfullscreen="allowfullscreen"><xsl:comment/></iframe>'}),!hui.browser.touch){hui.cls.add(document.body.parentNode,"desktop")
-for(var t=hui.get("head"),n=(hui.get("title"),hui.get("job"),hui.find(".js_broen"),hui.get("about")),o=(hui.get("pressphotos"),hui.get("theater")),s=hui.get("background1"),a=(hui.get.firstByTag(s,"div"),hui.get("background2")),u=(hui.get.firstByTag(a,"div"),hui.get("background3")),r=(hui.get.firstByTag(u,"div"),hui.get.firstByClass(o,"photo")),h=hui.get.firstByClass(o,"theaters"),l=hui.get("reelContent"),d=hui.window.getViewWidth(),c=0,f=hui.get.byTag(e,"li"),p=f.length-1;p>=0;p--)c+=f[p].clientWidth+10
-hui.browser.animation||(hui.style.setOpacity(r,0),hui.style.setOpacity(h,0)),hui.parallax.listen({element:n,$scroll:function(e){hui.cls.set(n,"visible",.8>e)}}),l&&hui.parallax.listen({element:l,$scroll:function(e){l.style.marginLeft=-400*e-100+"px"}}),o&&(hui.parallax.listen({element:o,$scroll:function(e){var i=e>0&&1>e
+for(var t=hui.get("head"),n=(hui.get("title"),hui.get("job"),hui.find(".js_broen"),hui.get("about")),o=(hui.get("pressphotos"),hui.find(".theater")),s=hui.get("background1"),a=(hui.get.firstByTag(s,"div"),hui.get("background2")),u=(hui.get.firstByTag(a,"div"),hui.get("background3")),r=(hui.get.firstByTag(u,"div"),hui.find(".theater_photo",o)),h=hui.find(".theater_stages",o),l=hui.get("reelContent"),d=hui.window.getViewWidth(),c=0,f=hui.get.byTag(e,"li"),p=f.length-1;p>=0;p--)c+=f[p].clientWidth+10
+hui.browser.animation||(hui.style.setOpacity(r,0),hui.style.setOpacity(h,0)),hui.parallax.listen({element:n,$scroll:function(e){hui.cls.set(n,"visible",.8>e)}}),l&&hui.parallax.listen({element:l,$scroll:function(e){l.style.marginLeft=-400*e-100+"px"}})
+var m=0
+o&&(hui.parallax.listen({element:o,$scroll:function(e){var i=e>.2&&.8>e&&m>700
 this.darkened!=i&&(hui.cls.set(document.body,"is-full",i),hui.browser.animation?hui.cls.set(document.body,"is-dark",i):hui.animate({node:document.body,css:{"background-color":i?"#000":"#fff"},duration:1e3}),this.darkened=i)
 var t=e>.3&&.7>e
-this.shown!=t&&(t&&hui.animate({node:r,css:{opacity:t?1:0},ease:hui.ease.flicker,duration:3e3,$complete:function(){hui.browser.animation?hui.cls.set(o,"final",e>0&&1>e):hui.animate({node:h,css:{opacity:t?1:0},ease:hui.ease.slowFast,duration:5e3})}}),this.shown=t)}}),hui.parallax.listen({$resize:function(e,i){o.style.height=Math.round(1*i)+"px",hui.browser.mediaQueries||hui.cls.set(document.body,"small",1200>e),d=e}})),hui.parallax.start()}}}}
+this.shown!=t&&(t&&hui.animate({node:r,css:{opacity:t?1:0},ease:hui.ease.flicker,duration:3e3,$complete:function(){hui.browser.animation?hui.cls.set(o,"is-final",e>0&&1>e):hui.animate({node:h,css:{opacity:t?1:0},ease:hui.ease.slowFast,duration:5e3})}}),this.shown=t)}}),hui.parallax.listen({$resize:function(e,i){m=e,o.style.height=e>700?Math.round(.8*i)+"px":"",hui.browser.mediaQueries||hui.cls.set(document.body,"small",1200>e),d=e}})),hui.parallax.start()}}}
 hui.onReady(ctrl.attach.bind(ctrl)),hui.onReady(function(){var e=hui.get.byClass(document.body,"js-photo")
 hui.each(e,function(e){var i=hui.find(".js-photo-effect",e),t=hui.position.get(e),n={width:e.clientWidth,height:e.clientHeight}
 hui.ui.listen({$$afterResize:function(){t=hui.position.get(e),n={width:e.clientWidth,height:e.clientHeight}}}),hui.listen(window,"mousemove",function(e){e=hui.event(e)
 var o=(e.getLeft()-t.left)/n.width,s=(e.getTop()-t.top)/n.height
 i.style.marginLeft=20*o+"px",i.style.marginTop=20*s+"px"
 var a=hui.between(0,easeInout(o),1)*hui.between(0,easeInout(s),1)
-i.style.opacity=a})})}),require(["hui"],function(e){var i=function(i){this.element=i.element,this.key=this.element.getAttribute("data-key"),e.listen(this.element,"click",this._click.bind(this))}
-i.prototype={_click:function(){this.element.innerHTML='<iframe class="movies_iframe" width="640" height="480" src="http://www.youtube.com/embed/'+this.key+'?autoplay=1" frameborder="0" allowfullscreen="allowfullscreen"></iframe>'}}
+i.style.opacity=a})})}),require(["hui"],function(e){var i=function(i){this.element=i.element,this.key=this.element.getAttribute("data-video"),e.listen(this.element,"click",this._click.bind(this))}
+i.prototype={_click:function(){this._moveTop(),i.active&&i.active.disable()
+var t="http://www.youtube.com/embed/"+this.key,n='<iframe class="movies_iframe" width="640" height="480" src="'+t+'?autoplay=1" frameborder="0" allowfullscreen="allowfullscreen"></iframe>'
+e.build("div",{"class":"movies_player",html:n,parent:this.element}),i.active=this},_moveTop:function(){var i=this.element.parentNode,t=i.parentNode,n=e.find(".movies_item",t)
+n!=i&&(t.removeChild(n),t.insertBefore(n,i),t.removeChild(i),n=e.find(".movies_item",t),t.insertBefore(i,n))},disable:function(){var i=e.find(".movies_player",this.element)
+e.dom.remove(i)}}
 for(var t=e.get.byClass(document.body,"js-movie-poster"),n=0;n<t.length;n++)new i({element:t[n]})})

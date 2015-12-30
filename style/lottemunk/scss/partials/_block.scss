@@ -1,0 +1,40 @@
+@include when {
+  .block {
+    margin: 60px 0;
+  }
+
+  .block_title {
+    font-size: 30px;
+    font-family: $header-font;
+    font-style: italic;
+    font-weight: normal;
+  }
+}
+
+@include when(600px) {
+  
+  .block_title {
+    font-size: 40px;
+  }
+  
+}
+
+@include when(700px) {
+  
+  .block_title {
+    font-size: 50px;
+  }
+  
+}
+
+@include when(960px) {
+
+  .block {
+    margin: 120px 0;
+  }
+
+  .block_title {
+    font-size: 60px;
+  }
+  
+}

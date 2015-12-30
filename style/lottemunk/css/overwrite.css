@@ -21,14 +21,15 @@ ul.common,
 .common_font,
 .part_header,
 .part_richtext {
-  font-family: 'Merriweather',Georgia,"Book Antiqua", "Palatino",Times,serif;
+  font-family: 'Martel',Georgia,"Book Antiqua", "Palatino",Times,serif;
 }
 
 .part_header {
   word-break: break-word;
 }
 
-h1.common, .part_header_1 {
+h1.common, .part_header_1,
+h2.common, .part_header_2 {
   font-family: "Lora", Georgia, "Book Antiqua", "Palatino", Times, serif;
 }
 
@@ -43,7 +44,7 @@ ul.common,
 .part_text,
 div.part_richtext,
 div.part_listing span.part_listing_first {
-  font-size: 10pt;
+  font-size: 13pt;
   line-height: 160%;
   color: #333;
   font-weight: 400;

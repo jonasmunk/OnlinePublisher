@@ -85,38 +85,6 @@
 	#video_poster p span {
 		display: block;
 	}
-
-
-
-	/** Theater **/
-	
-	#theater {
-		height: 520px;
-	}
-	
-	#theater div.photo {
-		opacity: 1;
-		bottom: 70px;
-		width: 342px;
-		height: 197px;
-		margin-left: -170px;
-		-webkit-background-size: cover;
-		-moz-background-size: cover;
-		background-size: cover;	
-	}
-	
-	#theater p.link {
-		bottom: 25px;
-	}
-	
-	#theater article {
-		left: 10px;
-		right: 10px;
-	}
-	
-	#theater p {
-		line-height: 1.2em;
-	}
 	
 	
 	/** Communication **/

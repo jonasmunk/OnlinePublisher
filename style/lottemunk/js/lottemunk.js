@@ -4,9 +4,6 @@ var ctrl = {
 		
 	attach : function() {
 		
-		if (!hui.cls.has(document.body,'front')) {
-			return;
-		}
 		
 		var nav = hui.get.firstByTag(head,'nav');
 	
@@ -29,16 +26,16 @@ var ctrl = {
 		
 		hui.listen(nav,'click',function(e) {
 			e = hui.event(e);
-			e.stop();
 			var a = e.findByTag('a');
 			if (a) {
-				var hash = paths[a.getAttribute('data-path')]
+				var hash = paths[a.getAttribute('data-path')];
 				if (!hash) {
 					return;
 				}
 				var links = hui.get.byTag(document.body,'a');
 				for (var i = 0; i < links.length; i++) {
 					if (hash == links[i].getAttribute('name')) {
+            e.stop();
 						hui.window.scrollTo({
 							element : links[i].parentNode,
 							duration : 1000,
@@ -77,15 +74,15 @@ var ctrl = {
 			broen = hui.find('.js_broen'),
 			about = hui.get('about'),
 			press = hui.get('pressphotos'),
-			theater = hui.get('theater'),
+			theater = hui.find('.theater'),
 			background1 = hui.get('background1'),
 			background1_body = hui.get.firstByTag(background1,'div'),
 			background2 = hui.get('background2'),
 			background2_body = hui.get.firstByTag(background2,'div'),
 			background3 = hui.get('background3'),
 			background3_body = hui.get.firstByTag(background3,'div'),
-			theater_photo = hui.get.firstByClass(theater,'photo'),
-			theaters = hui.get.firstByClass(theater,'theaters'),
+			theater_photo = hui.find('.theater_photo',theater),
+			theaters = hui.find('.theater_stages',theater),
 			reelContent = hui.get('reelContent');
 		
 		
@@ -135,13 +132,13 @@ var ctrl = {
   			}
   		})
     }
-    
+    var curWidth = 0;
     if (theater) {
   		hui.parallax.listen({
   			element : theater,
   			//darkened : false,
   			$scroll : function(pos) {
-  				var dark = pos>0 && pos<1;
+  				var dark = pos>0.2 && pos<.8 && curWidth > 700;
   				if (this.darkened!=dark) {
   					hui.cls.set(document.body,'is-full',dark);
   					if (hui.browser.animation) {
@@ -156,7 +153,7 @@ var ctrl = {
   					if (show) {
   						hui.animate({node:theater_photo,css:{opacity:show ? 1 : 0},ease:hui.ease.flicker,duration:3000,$complete : function() {
   							if (hui.browser.animation) {
-  								hui.cls.set(theater,'final',pos>0 && pos<1);
+  								hui.cls.set(theater,'is-final',pos>0 && pos<1);
   							} else {
   								hui.animate({node:theaters,css:{opacity:show ? 1 : 0},ease:hui.ease.slowFast,duration:5000});
   							}
@@ -168,7 +165,8 @@ var ctrl = {
   		})
   		hui.parallax.listen({
   			$resize : function(width,height) {
-  				theater.style.height = Math.round(height*1)+'px';
+          curWidth = width;
+  				theater.style.height = width > 700 ? Math.round(height*.8)+'px' : '';
   				if (!hui.browser.mediaQueries) {
   					hui.cls.set(document.body,'small',width<1200);
   				}

@@ -7,6 +7,11 @@
     padding: 10px 0 0;
     position: relative;
 	}
+  
+  .header_logo {
+    display: block;
+    color: inherit;
+  }
 	
 	.header_title {
   	font-family: $header-font;
@@ -14,7 +19,7 @@
     font-style: italic;
     margin: 0;
     text-align: center;
-    font-size: 52px;
+    font-size: 42px;
     line-height: 1;
     text-rendering: geometricPrecision;
 	}
@@ -25,7 +30,7 @@
     font-style: italic;
     text-align: center;
     margin: 0 0 15px;
-    font-size: 24px;
+    font-size: 18px;
 		line-height: 1em;
     letter-spacing: 1px;
     color: #999;
@@ -67,6 +72,14 @@
 }
 
 @include when (600px) {
+	
+	.header_title {
+    font-size: 52px;
+  }
+
+	.header_job {
+    font-size: 24px;
+	}
 
   .header_menu_link {
     padding: 0 10px;

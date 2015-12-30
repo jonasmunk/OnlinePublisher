@@ -47,7 +47,7 @@
         <xsl:value-of select="$path"/><xsl:value-of select="$timestamp-url"/><xsl:text>style/lottemunk/fonts/Lotte-Munk/style.css</xsl:text>
       </xsl:with-param>
     </xsl:call-template>
-    <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Lora:400,400italic|Martel:400,700,300,200|Gloria+Hallelujah"/>
+    <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Lora:400,400italic|Martel:400,700,300,200|Cinzel:400|Gloria+Hallelujah"/>
 		<meta name="viewport" content="user-scalable=yes, initial-scale = 1, maximum-scale = 10, minimum-scale = 0.2"/>
 	</head>
 </xsl:template>
@@ -74,13 +74,15 @@
 
 <xsl:template name="header">
 	<header class="header">
-		<h1 id="title" class="header_title">Lotte Munk</h1>
-		<p id="job" class="header_job">
-			<xsl:choose>
-				<xsl:when test="//p:page/p:meta/p:language='en'"><xsl:text>Actress</xsl:text></xsl:when>
-				<xsl:otherwise><xsl:text>Skuespiller</xsl:text></xsl:otherwise>
-			</xsl:choose>
-		</p>
+    <a href="/" class="header_logo">
+  		<h1 id="title" class="header_title">Lotte Munk</h1>
+  		<p id="job" class="header_job">
+  			<xsl:choose>
+  				<xsl:when test="//p:page/p:meta/p:language='en'"><xsl:text>Actress</xsl:text></xsl:when>
+  				<xsl:otherwise><xsl:text>Skuespiller</xsl:text></xsl:otherwise>
+  			</xsl:choose>
+  		</p>
+    </a>
 		<nav class="header_navigation">
 			<ul class="header_menu">
 				<xsl:apply-templates select="f:frame/h:hierarchy/h:item"/>

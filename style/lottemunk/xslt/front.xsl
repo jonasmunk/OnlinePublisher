@@ -54,9 +54,8 @@
 
 
 <xsl:template match="widget:about">
-  <section id="about" class="about">
-    <a name="about"><xsl:comment/></a>
-    <h2 class="about_title"><xsl:value-of select="widget:title"/><xsl:comment/></h2>
+  <section id="about" class="about block">
+    <h2 class="block_title about_title"><xsl:value-of select="widget:title"/><xsl:comment/></h2>
     <div class="about_body">
       <p class="about_text"><xsl:value-of select="widget:text"/><xsl:comment/></p>
       <div>
@@ -99,12 +98,14 @@
 </xsl:template>
 
 <xsl:template match="widget:photography">
-  <div class="photography">
-    <h2 class="photography_title">Fotografier</h2>
+  
+  <div class="photography block">
+      <a name="photos"><xsl:comment/></a>
+    <h2 class="block_title photography_title">Fotografier</h2>
     <span class="photography_item">
     <span class="photography_photo photography_photo-left js-photo">
       <span class="photography_effect photography_effect-alt js-photo-effect"><xsl:comment/></span>
-      <img class="photography_photo_img" src="{$path}services/images/?id=735&amp;width=300&amp;height=480&amp;method=crop&amp;format=jpg"/>
+      <img class="photography_photo_img" src="{$path}services/images/?id={widget:photo[1]/@id}&amp;width=300&amp;height=480&amp;method=crop&amp;format=jpg"/>
     </span>
     </span>
 
@@ -112,7 +113,7 @@
     <span class="photography_item photography_item-center">
     <span class="photography_photo photography_photo-center js-photo">
       <span class="photography_effect js-photo-effect"><xsl:comment/></span>
-      <img class="photography_photo_img" src="{$path}services/images/?id=734&amp;width=418&amp;height=626&amp;method=crop&amp;format=jpg"/>
+      <img class="photography_photo_img" src="{$path}services/images/?id={widget:photo[2]/@id}&amp;width=418&amp;height=626&amp;method=crop&amp;format=jpg"/>
     </span>
     </span>
 
@@ -120,19 +121,19 @@
     <span class="photography_item">
     <span class="photography_photo photography_photo-right js-photo">
       <span class="photography_effect photography_effect-alt js-photo-effect"><xsl:comment/></span>
-      <img class="photography_photo_img" src="{$path}services/images/?id=736&amp;width=300&amp;height=480&amp;method=crop&amp;format=jpg"/>
+      <img class="photography_photo_img" src="{$path}services/images/?id={widget:photo[3]/@id}&amp;width=300&amp;height=480&amp;method=crop&amp;format=jpg"/>
     </span>
     </span>
 
     <p class="photography_actions">
       <xsl:choose>
         <xsl:when test="//p:page/p:meta/p:language='en'">
-          <a class="photography_action button" href="{$path}en/photos/">More photos</a>
           <a class="photography_action button" href="javascript://" onclick="photoGallery.show();">Slide show</a>
+          <a class="photography_action button button-right" href="{$path}en/photos/">More photos</a>
         </xsl:when>
         <xsl:otherwise>
-          <a class="photography_action button" href="{$path}fotografier/">Flere fotos</a>
           <a class="photography_action button" href="javascript://" onclick="photoGallery.show();">Lysbilleder</a>
+          <a class="photography_action button button-right" href="{$path}fotografier/">Flere fotos</a>
         </xsl:otherwise>
       </xsl:choose>
     </p>
@@ -227,14 +228,21 @@
 </xsl:template>
 
 <xsl:template match="widget:movies">
-  <div class="movies">
-    <h2 class="movies_title"><xsl:value-of select="widget:title"/></h2>
+  <div class="movies block">
+    <h2 class="block_title movies_title"><xsl:value-of select="widget:title"/></h2>
     <p class="movies_text"><xsl:apply-templates select="widget:text"/></p>
     <div class="movies_body">
       <div class="movies_more">
         <xsl:for-each select="widget:movie">
         <div class="movies_item">
-          <div class="movies_video js-movie-poster" data-key="{@key}">
+          <div data-video="{@video}">
+            <xsl:attribute name="class">
+              <xsl:text>movies_video js-movie-poster</xsl:text>
+              <xsl:text> movies_video-</xsl:text><xsl:value-of select="@key"/>
+              <xsl:if test="position()=1">
+                <xsl:text> movies_video-highlighted</xsl:text>
+              </xsl:if>
+            </xsl:attribute>
             <span class="movies_video_title"><xsl:value-of select="@title"/></span>
           </div>
         </div>
@@ -242,6 +250,7 @@
       </div>
     </div>
     <p class="movies_actions">
+      <a class="button movies_button" href="https://www.youtube.com/channel/UCkyzyp5M68jcfZ-phZdPX4Q/videos">YouTube-kanal</a>
       <xsl:for-each select="widget:button">
         <a class="button button-right movies_button" href="{$path}{@path}"><xsl:value-of select="."/></a>
       </xsl:for-each>
@@ -281,59 +290,61 @@
 </xsl:template>
 
 <xsl:template match="widget:theater">
-  <section id="theater">
+  <div class="theater js-theater" id="theater">
       <a name="theater"><xsl:comment/></a>
-      <article>
+      <article class="theater_body">
           <xsl:choose>
               <xsl:when test="//p:page/p:meta/p:language='en'">
-                  <h2>Theater</h2>
-                  <p>Art can express complicated stories concerning the essence of humanity, and of our terms of life on earth, art can dream big and scandalously, unfold existence in all its grandeur and horror.</p>
+                  <h2 class="theater_title">Theater</h2>
+                  <p class="theater_text">Art can express complicated stories concerning the essence of humanity, and of our terms of life on earth, art can dream big and scandalously, unfold existence in all its grandeur and horror.</p>
               </xsl:when>
               <xsl:otherwise>
-                  <h2>Teater</h2>
-                  <p>Kunsten kan fortælle indviklede historier om menneskets væsen og vilkår i verden, den kan drømme stort og skandaløst, folde eksistensen ud i al sin storhed og gru.</p>
+                  <h2 class="theater_title">Teater</h2>
+                  <p class="theater_text">Kunsten kan fortælle indviklede historier om menneskets væsen og vilkår i verden, den kan drømme stort og skandaløst, folde eksistensen ud i al sin storhed og gru.</p>
               </xsl:otherwise>
           </xsl:choose>
       </article>
-      <ul class="theaters">
-          <li class="theater1">Teamteatret</li>
-          <li class="theater2">Det Kongelige Teater</li>
-          <li class="theater3">Teater FÅR302</li>
-          <li class="theater4">Husets Teater</li>
-          <li class="theater5">Anemoneteatret</li>
-          <li class="theater6">Århus Teater</li>
+      <ul class="theater_stages">
+        <li class="theater_stage theater_stage-1">Teamteatret</li>
+        <li class="theater_stage theater_stage-2">Det Kongelige Teater</li>
+        <li class="theater_stage theater_stage-3">Teater FÅR302</li>
+        <li class="theater_stage theater_stage-4">Husets Teater</li>
+        <li class="theater_stage theater_stage-5">Anemoneteatret</li>
+        <li class="theater_stage theater_stage-6">Århus Teater</li>
       </ul>
-      <div class="photo"><xsl:comment/></div>
-      <xsl:choose>
+      <div class="theater_photo js-theater-photo"><xsl:comment/></div>
+      <p class="theater_actions">
+        <xsl:choose>
           <xsl:when test="//p:page/p:meta/p:language='en'">
-              <p class="link"><a class="button" href="{$path}en/cv/"><span>View my CV &#8250;</span></a></p>
+            <a class="button button-dark button-right" href="{$path}en/cv/">View my CV</a>
           </xsl:when>
           <xsl:otherwise>
-              <p class="link"><a class="button" href="{$path}cv/"><span>Se mit CV &#8250;</span></a></p>
+            <a class="button button-dark button-right" href="{$path}cv/">Se mit CV</a>
           </xsl:otherwise>
-      </xsl:choose>
-  </section>
+        </xsl:choose>
+      </p>
+  </div>
 </xsl:template>
 
 <xsl:template match="widget:communication">
-  <section id="communication">
+  <section id="communication" class="communication">
       <article>
         <a name="communication"><xsl:comment/></a>
         <div>
             <xsl:choose>
                 <xsl:when test="//p:page/p:meta/p:language='en'">
-                    <h2>Coaching</h2>
-                    <p>I also use the technique of acting in my work as communication coach, where I utilise the <strong>tools of theatrical work</strong> to give participants the opportunity to <strong>learn by doing</strong>. It is always my goal to bring forward personal insights for the individual person, and an awareness of their own means of communication. Giving very personal and <strong>constructive feedback</strong> is of very high priority for me.</p>
-                    <p class="link"><a class="button" href="{$path}en/communication-training/"><span>About Coaching &#8250;</span></a></p>
+                    <h2 class="communication_title">Coaching</h2>
+                    <p class="communication_text">I also use the technique of acting in my work as communication coach, where I utilise the <strong>tools of theatrical work</strong> to give participants the opportunity to <strong>learn by doing</strong>. It is always my goal to bring forward personal insights for the individual person, and an awareness of their own means of communication. Giving very personal and <strong>constructive feedback</strong> is of very high priority for me.</p>
+                    <p class="link"><a class="button button-right" href="{$path}en/communication-training/"><span>About Coaching</span></a></p>
                 </xsl:when>
                 <xsl:otherwise>
-                    <h2>Kommunikations<span>træning</span></h2>
-                    <p>Skuespillerteknikken anvender jeg også som kommunikationsrådgiver, hvor jeg bruger <strong>teaterets redskaber</strong> til at give en <strong>oplevelsesbaseret læring</strong>.  Jeg prøver altid  at formidle en indsigt i det enkelte menneskes måde at kommunikere på. At give en meget personlig og <strong>konstruktiv feedback</strong>, er noget jeg vægter meget højt.</p>
-                    <p class="link"><a class="button" href="{$path}kommunikation/"><span>Mere om kommunikationstræning &#8250;</span></a></p>
+                    <h2 class="communication_title">Kommunikations<span>træning</span></h2>
+                    <p class="communication_text">Skuespillerteknikken anvender jeg også som kommunikationsrådgiver, hvor jeg bruger <strong>teaterets redskaber</strong> til at give en <strong>oplevelsesbaseret læring</strong>.  Jeg prøver altid  at formidle en indsigt i det enkelte menneskes måde at kommunikere på. At give en meget personlig og <strong>konstruktiv feedback</strong>, er noget jeg vægter meget højt.</p>
+                    <p class="link"><a class="button button-right" href="{$path}kommunikation/"><span>Mere om kommunikationstræning</span></a></p>
                 </xsl:otherwise>
             </xsl:choose>              
           </div>
-          <figure><xsl:comment/></figure>
+          <figure class="communication_image"><xsl:comment/></figure>
       </article>
   </section>
 </xsl:template>

@@ -3,7 +3,6 @@
 @include when {
   .front
   {
-  	@include transition(background-color 1s ease-out);
   
     .document_row,
     .document_row_body,
@@ -16,9 +15,12 @@
     }
   }
 
-  .is-dark
-  {
-  	background-color: #000;
+  body {
+  	@include transition(background-color .5s ease-out);
+
+    &.is-dark {
+    	background-color: #000;
+    }
   }
   
 }

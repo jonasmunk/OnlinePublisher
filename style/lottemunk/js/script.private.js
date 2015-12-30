@@ -58,25 +58,31 @@ var e=this.options.elements
 this.pos==e.length&&(this.pos=0)
 var i=e[this.pos]
 hui.style.setOpacity(i,0),hui.style.set(i,{display:"block",zIndex:this.z}),hui.animate(i,"opacity",1,this.options.transition,{ease:hui.ease.slowFastSlow,onComplete:function(){window.setTimeout(this.next.bind(this),this.options.wait)}.bind(this)})}},window.define&&define("op.Dissolver")
-var ctrl={attach:function(){if(hui.cls.has(document.body,"front")){var e=hui.get.firstByTag(t,"nav"),i={"/":"top","/cv/":"about","":"theater","/fotografier/":"photos","/kommunikation/":"communication","/film/":"movies","/en/":"top","/en/cv/":"about","":"theater","/en/photos/":"photos","/en/communication-training/":"communication","/en/movie-clips/":"movies"}
-if(hui.listen(e,"click",function(e){e=hui.event(e),e.stop()
+var ctrl={attach:function(){var e=hui.get.firstByTag(t,"nav"),i={"/":"top","/cv/":"about","":"theater","/fotografier/":"photos","/kommunikation/":"communication","/film/":"movies","/en/":"top","/en/cv/":"about","":"theater","/en/photos/":"photos","/en/communication-training/":"communication","/en/movie-clips/":"movies"}
+if(hui.listen(e,"click",function(e){e=hui.event(e)
 var t=e.findByTag("a")
 if(t){var o=i[t.getAttribute("data-path")]
 if(!o)return
-for(var n=hui.get.byTag(document.body,"a"),s=0;s<n.length;s++)if(o==n[s].getAttribute("name"))return void hui.window.scrollTo({element:n[s].parentNode,duration:1e3,top:"theater"==o?40:140})}}),hui.listen("handmade","click",function(e){hui.stop(e)
+for(var n=hui.get.byTag(document.body,"a"),s=0;s<n.length;s++)if(o==n[s].getAttribute("name"))return e.stop(),void hui.window.scrollTo({element:n[s].parentNode,duration:1e3,top:"theater"==o?40:140})}}),hui.listen("handmade","click",function(e){hui.stop(e)
 var i=hui.get("humanise")
 i.style.display="block",window.setTimeout(function(){hui.cls.add(i,"visible")})}),hui.listen("video_poster","click",function(){hui.get("video_poster").innerHTML='<iframe width="640" height="480" src="http://www.youtube.com/embed/2k5DfFfNcO8?autoplay=1" frameborder="0" allowfullscreen="allowfullscreen"><xsl:comment/></iframe>'}),!hui.browser.touch){hui.cls.add(document.body.parentNode,"desktop")
-for(var t=hui.get("head"),o=(hui.get("title"),hui.get("job"),hui.find(".js_broen"),hui.get("about")),n=(hui.get("pressphotos"),hui.get("theater")),s=hui.get("background1"),a=(hui.get.firstByTag(s,"div"),hui.get("background2")),r=(hui.get.firstByTag(a,"div"),hui.get("background3")),h=(hui.get.firstByTag(r,"div"),hui.get.firstByClass(n,"photo")),u=hui.get.firstByClass(n,"theaters"),l=hui.get("reelContent"),d=hui.window.getViewWidth(),c=0,p=hui.get.byTag(e,"li"),g=p.length-1;g>=0;g--)c+=p[g].clientWidth+10
-hui.browser.animation||(hui.style.setOpacity(h,0),hui.style.setOpacity(u,0)),hui.parallax.listen({element:o,$scroll:function(e){hui.cls.set(o,"visible",.8>e)}}),l&&hui.parallax.listen({element:l,$scroll:function(e){l.style.marginLeft=-400*e-100+"px"}}),n&&(hui.parallax.listen({element:n,$scroll:function(e){var i=e>0&&1>e
+for(var t=hui.get("head"),o=(hui.get("title"),hui.get("job"),hui.find(".js_broen"),hui.get("about")),n=(hui.get("pressphotos"),hui.find(".theater")),s=hui.get("background1"),a=(hui.get.firstByTag(s,"div"),hui.get("background2")),r=(hui.get.firstByTag(a,"div"),hui.get("background3")),h=(hui.get.firstByTag(r,"div"),hui.find(".theater_photo",n)),u=hui.find(".theater_stages",n),l=hui.get("reelContent"),d=hui.window.getViewWidth(),c=0,p=hui.get.byTag(e,"li"),g=p.length-1;g>=0;g--)c+=p[g].clientWidth+10
+hui.browser.animation||(hui.style.setOpacity(h,0),hui.style.setOpacity(u,0)),hui.parallax.listen({element:o,$scroll:function(e){hui.cls.set(o,"visible",.8>e)}}),l&&hui.parallax.listen({element:l,$scroll:function(e){l.style.marginLeft=-400*e-100+"px"}})
+var m=0
+n&&(hui.parallax.listen({element:n,$scroll:function(e){var i=e>.2&&.8>e&&m>700
 this.darkened!=i&&(hui.cls.set(document.body,"is-full",i),hui.browser.animation?hui.cls.set(document.body,"is-dark",i):hui.animate({node:document.body,css:{"background-color":i?"#000":"#fff"},duration:1e3}),this.darkened=i)
 var t=e>.3&&.7>e
-this.shown!=t&&(t&&hui.animate({node:h,css:{opacity:t?1:0},ease:hui.ease.flicker,duration:3e3,$complete:function(){hui.browser.animation?hui.cls.set(n,"final",e>0&&1>e):hui.animate({node:u,css:{opacity:t?1:0},ease:hui.ease.slowFast,duration:5e3})}}),this.shown=t)}}),hui.parallax.listen({$resize:function(e,i){n.style.height=Math.round(1*i)+"px",hui.browser.mediaQueries||hui.cls.set(document.body,"small",1200>e),d=e}})),hui.parallax.start()}}}}
+this.shown!=t&&(t&&hui.animate({node:h,css:{opacity:t?1:0},ease:hui.ease.flicker,duration:3e3,$complete:function(){hui.browser.animation?hui.cls.set(n,"is-final",e>0&&1>e):hui.animate({node:u,css:{opacity:t?1:0},ease:hui.ease.slowFast,duration:5e3})}}),this.shown=t)}}),hui.parallax.listen({$resize:function(e,i){m=e,n.style.height=e>700?Math.round(.8*i)+"px":"",hui.browser.mediaQueries||hui.cls.set(document.body,"small",1200>e),d=e}})),hui.parallax.start()}}}
 hui.onReady(ctrl.attach.bind(ctrl)),hui.onReady(function(){var e=hui.get.byClass(document.body,"js-photo")
 hui.each(e,function(e){var i=hui.find(".js-photo-effect",e),t=hui.position.get(e),o={width:e.clientWidth,height:e.clientHeight}
 hui.ui.listen({$$afterResize:function(){t=hui.position.get(e),o={width:e.clientWidth,height:e.clientHeight}}}),hui.listen(window,"mousemove",function(e){e=hui.event(e)
 var n=(e.getLeft()-t.left)/o.width,s=(e.getTop()-t.top)/o.height
 i.style.marginLeft=20*n+"px",i.style.marginTop=20*s+"px"
 var a=hui.between(0,easeInout(n),1)*hui.between(0,easeInout(s),1)
-i.style.opacity=a})})}),require(["hui"],function(e){var i=function(i){this.element=i.element,this.key=this.element.getAttribute("data-key"),e.listen(this.element,"click",this._click.bind(this))}
-i.prototype={_click:function(){this.element.innerHTML='<iframe class="movies_iframe" width="640" height="480" src="http://www.youtube.com/embed/'+this.key+'?autoplay=1" frameborder="0" allowfullscreen="allowfullscreen"></iframe>'}}
+i.style.opacity=a})})}),require(["hui"],function(e){var i=function(i){this.element=i.element,this.key=this.element.getAttribute("data-video"),e.listen(this.element,"click",this._click.bind(this))}
+i.prototype={_click:function(){this._moveTop(),i.active&&i.active.disable()
+var t="http://www.youtube.com/embed/"+this.key,o='<iframe class="movies_iframe" width="640" height="480" src="'+t+'?autoplay=1" frameborder="0" allowfullscreen="allowfullscreen"></iframe>'
+e.build("div",{"class":"movies_player",html:o,parent:this.element}),i.active=this},_moveTop:function(){var i=this.element.parentNode,t=i.parentNode,o=e.find(".movies_item",t)
+o!=i&&(t.removeChild(o),t.insertBefore(o,i),t.removeChild(i),o=e.find(".movies_item",t),t.insertBefore(i,o))},disable:function(){var i=e.find(".movies_player",this.element)
+e.dom.remove(i)}}
 for(var t=e.get.byClass(document.body,"js-movie-poster"),o=0;o<t.length;o++)new i({element:t[o]})})
