@@ -5,16 +5,17 @@
     margin: 20px 0;
   	text-align: center;
     position: relative;
-    padding-top: 270px;
+    padding-top: 210px;
     
     &:before {
       content: '';
-      width: 254px;
-      height: 254px;
+      width: 200px;
+      height: 200px;
       position: absolute;
       background: url('../gfx/avatar2.jpg') 50% 0 no-repeat;
+      background-size: contain;
       left: 50%;
-      margin-left: (254px/-2);
+      margin-left: (200px/-2);
       top: 0;
     };
   }
@@ -150,8 +151,14 @@
 
   .about {
     margin: 40px 0;
+    padding-top: 270px;
+    
+    &:before {
+      width: 254px;
+      height: 254px;
+      margin-left: (254px/-2);
+    };
   }
-
 }
 
 @include when(760px) {

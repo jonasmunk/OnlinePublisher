@@ -10,8 +10,9 @@
   }
 
   .layout_languages {
-    text-align: center;
-    margin: 20px 0;
+    position: absolute;
+    right: 10px;
+    margin-top: 15px;
   }
 
   .layout_language {
@@ -26,7 +27,7 @@
   }
   
   .layout_language_text {
-    padding-left: 5px;
+    display: none;
   }
 
   .layout_language_da {
@@ -37,15 +38,10 @@
 
 @include when(500px) {
   .layout_languages {
-    position: absolute;
     right: 10px;
     top: 18px;
     margin: 0;
     font-size: 0;
-  }
-  
-  .layout_language_text {
-    display: none;
   }
 }
 

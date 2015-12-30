@@ -48,7 +48,10 @@ $target : 'screen';
   {
   	margin: 0px;
   	color: #000;
-  	font-weight: normal;
+  }
+  
+  h1.common,h2.common {
+    font-weight: normal;
   }
 
   p.common, 
@@ -57,7 +60,7 @@ $target : 'screen';
   div.part_richtext,
   div.part_listing span.part_listing_first
   {
-  	font-size: 13pt;
+  	font-size: 18px;
   	line-height: 160%;
   	color: #333;
   	font-weight: 400;
@@ -66,6 +69,10 @@ $target : 'screen';
   div.part_listing, textarea.part_listing {
   	font-size: 10pt;
   	color: #333;
+  }
+
+  .part_table {
+    overflow: auto;
   }
 
   .part_header
@@ -80,8 +87,17 @@ $target : 'screen';
     line-height: 1;
   }
 
-  .part_table {
-    overflow: auto;
+  .part_header_2
+  {
+  	font-size: 26px;
+    line-height: 1;
+  }
+
+  .part_header_3
+  {
+  	font-size: 18px;
+    font-weight: bold;
+    line-height: 1;
   }
 
 

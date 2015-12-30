@@ -331,16 +331,17 @@
   margin: 20px 0;
   text-align: center;
   position: relative;
-  padding-top: 270px;
+  padding-top: 210px;
 }
 .about:before {
   content: '';
-  width: 254px;
-  height: 254px;
+  width: 200px;
+  height: 200px;
   position: absolute;
   background: url("../gfx/avatar2.jpg") 50% 0 no-repeat;
+  background-size: contain;
   left: 50%;
-  margin-left: -127px;
+  margin-left: -100px;
   top: 0;
 }
 
@@ -485,6 +486,12 @@
 @media screen and (min-width: 600px) {
   .about {
     margin: 40px 0;
+    padding-top: 270px;
+  }
+  .about:before {
+    width: 254px;
+    height: 254px;
+    margin-left: -127px;
   }
 }
 @media screen and (min-width: 760px) {
