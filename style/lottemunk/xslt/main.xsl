@@ -42,11 +42,13 @@
 		<xsl:call-template name="util:style-build">
         <xsl:with-param name="async" select="'false'"/>
     </xsl:call-template>
+    <!--
 		<xsl:call-template name="util:lazy-style">
       <xsl:with-param name="href">
         <xsl:value-of select="$path"/><xsl:value-of select="$timestamp-url"/><xsl:text>style/lottemunk/fonts/Lotte-Munk/style.css</xsl:text>
       </xsl:with-param>
     </xsl:call-template>
+      -->
     <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Lora:400,400italic|Martel:400,700,300,200|Cinzel:400|Gloria+Hallelujah"/>
 		<meta name="viewport" content="user-scalable=yes, initial-scale = 1, maximum-scale = 10, minimum-scale = 0.2"/>
 	</head>

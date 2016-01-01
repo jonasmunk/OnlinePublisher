@@ -2,28 +2,26 @@
   .communication
   {
   	text-align: center;
-  	height: auto;
-  	padding: 60px 0;
   }
 
   .communication_title
   {
-    font-family: $header-font;
-    font-style: italic;
-  	font-size: 36pt;
   	color: #005952;
   	padding: 40px 0 10px;
-  	font-weight: normal;
     
     .is-dark & {
       color: #fff;
     }
   }
 
+  .communication_title_part {
+    display: block;
+  }
+
   .communication_text
   {
   	margin: 0 auto;
-  	font-size: 1.3em;
+  	font-size: 16px;
   	line-height: 1.5em;
     max-width: 700px;
     padding: 0 20px;
@@ -33,24 +31,43 @@
     }
   }
 
-  #communication p.link
+  .communication_actions
   {
-  	margin: 20px 0;
-  	font-size: 1.1em;
+  	margin: 10px 0;
   }
 
   .communication_image
   {
   	background: url('../gfx/train.png') 50% 50% no-repeat;
   	height: 410px;
+    background-size: contain;
+    margin: 0 40px;
   }
 }
 
-@include when {
+@include when(500px) {
+  .communication_title_part {
+    display: inline;
+  }
+}
+
+@include when(700px) {
+
+  .communication_text {
+    font-size: 18px;
+  }
+
+  .communication_actions
+  {
+  	margin: 40px 0;
+  }
+
+}
+
+@include when(960px) {
 
   .communication
   {
   	padding: 120px 0;
   }
-
 }

@@ -12,6 +12,7 @@
   
   .movies_text {
     font-family: $summary-font;
+    font-size: 16px;
     line-height: 1.2;
     margin: 10px 0 20px;
     color: #1d3e50;
@@ -154,6 +155,10 @@
 
 @include when(760px) {
 
+  
+  .movies_text {
+    font-size: 18px;
+  }
   
   .movies_more {
     margin: 5px 10px 0;

@@ -29,8 +29,10 @@
   }
   
   .photography_item {
-    display: block;
-    margin-bottom: 1px;
+    display: none;
+    &-center {
+      display: block;
+    }
   }
   
   .photography_photo {

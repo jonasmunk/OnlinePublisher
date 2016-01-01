@@ -1,10 +1,10 @@
-function easeInout(e){return(2*e-1)*(2*e-1)*-1+1}if(!op)var op={}
+if(!op)var op={}
 op.preview=!1,op.page=op.page||{id:null,path:null,template:null},op.ignite=function(){if(this.preview||(document.onkeydown=function(e){if(e=hui.event(e),e.returnKey&&e.shiftKey){e.stop()
 var i
 i=function(e){e=hui.event(e),e.returnKey&&(hui.unListen(document,"keyup",i),hui.browser.msie||op.user.internal?window.location=op.page.path+"Editor/index.php?page="+op.page.id:(e.stop(),op.showLogin()))},hui.listen(document,"keyup",i)}return!0},hui.request({url:op.context+"services/statistics/",parameters:{page:op.page.id,referrer:document.referrer,uri:document.location.href}})),hui.browser.msie7&&hui.onReady(function(){hui.cls.add(document.body.parentNode,"msie7")}),hui.browser.msie7||hui.browser.msie6){for(var e=hui.get.byClass(document.body,"shared_frame"),i=0;i<e.length;i++)e[i].style.width=e[i].clientWidth+"px",e[i].style.display="block"
 for(var t=hui.get.byClass(document.body,"document_row"),i=t.length-1;i>=0;i--){var o=t[i].style.cssText,n=10,s=o.match(/border-spacing: ([0-9]+)/m)
 s&&(n=s[1])
-for(var a=hui.build("table",{"class":t[i].className,style:o,cellSpacing:n}),r=hui.build("tbody",{parent:a}),h=hui.build("tr",{parent:r}),u=hui.get.byClass(t[i],"document_column"),l=0;l<u.length;l++)for(var d=u[l],c=hui.build("td",{"class":d.className,parent:h,style:d.style.cssText});d.firstChild;)c.appendChild(d.firstChild)
+for(var a=hui.build("table",{"class":t[i].className,style:o,cellSpacing:n}),r=hui.build("tbody",{parent:a}),h=hui.build("tr",{parent:r}),l=hui.get.byClass(t[i],"document_column"),u=0;u<l.length;u++)for(var d=l[u],c=hui.build("td",{"class":d.className,parent:h,style:d.style.cssText});d.firstChild;)c.appendChild(d.firstChild)
 t[i].parentNode.insertBefore(a,t[i]),hui.dom.remove(t[i])}}},op.showLogin=function(){if(this.loginBox)this.loginBox.show(),this.loginForm.focus()
 else{if(this.loadingLogin)return void hui.log("Aborting, the box is loading")
 this.loadingLogin=!0,hui.ui.showMessage({text:{en:"Loading...",da:"Indlæser..."},busy:!0,delay:300}),hui.ui.require(["Formula","Button","TextField"],function(){hui.ui.hideMessage()
@@ -58,31 +58,31 @@ var e=this.options.elements
 this.pos==e.length&&(this.pos=0)
 var i=e[this.pos]
 hui.style.setOpacity(i,0),hui.style.set(i,{display:"block",zIndex:this.z}),hui.animate(i,"opacity",1,this.options.transition,{ease:hui.ease.slowFastSlow,onComplete:function(){window.setTimeout(this.next.bind(this),this.options.wait)}.bind(this)})}},window.define&&define("op.Dissolver")
-var ctrl={attach:function(){var e=hui.get.firstByTag(t,"nav"),i={"/":"top","/cv/":"about","":"theater","/fotografier/":"photos","/kommunikation/":"communication","/film/":"movies","/en/":"top","/en/cv/":"about","":"theater","/en/photos/":"photos","/en/communication-training/":"communication","/en/movie-clips/":"movies"}
-if(hui.listen(e,"click",function(e){e=hui.event(e)
+var ctrl={attach:function(){var e=hui.find("nav"),i={"/":"top","/cv/":"about","":"theater","/fotografier/":"photos","/kommunikation/":"communication","/film/":"movies","/en/":"top","/en/cv/":"about","":"theater","/en/photos/":"photos","/en/communication-training/":"communication","/en/movie-clips/":"movies"}
+hui.listen(e,"click",function(e){e=hui.event(e)
 var t=e.findByTag("a")
 if(t){var o=i[t.getAttribute("data-path")]
 if(!o)return
 for(var n=hui.get.byTag(document.body,"a"),s=0;s<n.length;s++)if(o==n[s].getAttribute("name"))return e.stop(),void hui.window.scrollTo({element:n[s].parentNode,duration:1e3,top:"theater"==o?40:140})}}),hui.listen("handmade","click",function(e){hui.stop(e)
 var i=hui.get("humanise")
-i.style.display="block",window.setTimeout(function(){hui.cls.add(i,"visible")})}),hui.listen("video_poster","click",function(){hui.get("video_poster").innerHTML='<iframe width="640" height="480" src="http://www.youtube.com/embed/2k5DfFfNcO8?autoplay=1" frameborder="0" allowfullscreen="allowfullscreen"><xsl:comment/></iframe>'}),!hui.browser.touch){hui.cls.add(document.body.parentNode,"desktop")
-for(var t=hui.get("head"),o=(hui.get("title"),hui.get("job"),hui.find(".js_broen"),hui.get("about")),n=(hui.get("pressphotos"),hui.find(".theater")),s=hui.get("background1"),a=(hui.get.firstByTag(s,"div"),hui.get("background2")),r=(hui.get.firstByTag(a,"div"),hui.get("background3")),h=(hui.get.firstByTag(r,"div"),hui.find(".theater_photo",n)),u=hui.find(".theater_stages",n),l=hui.get("reelContent"),d=hui.window.getViewWidth(),c=0,p=hui.get.byTag(e,"li"),g=p.length-1;g>=0;g--)c+=p[g].clientWidth+10
-hui.browser.animation||(hui.style.setOpacity(h,0),hui.style.setOpacity(u,0)),hui.parallax.listen({element:o,$scroll:function(e){hui.cls.set(o,"visible",.8>e)}}),l&&hui.parallax.listen({element:l,$scroll:function(e){l.style.marginLeft=-400*e-100+"px"}})
-var m=0
-n&&(hui.parallax.listen({element:n,$scroll:function(e){var i=e>.2&&.8>e&&m>700
-this.darkened!=i&&(hui.cls.set(document.body,"is-full",i),hui.browser.animation?hui.cls.set(document.body,"is-dark",i):hui.animate({node:document.body,css:{"background-color":i?"#000":"#fff"},duration:1e3}),this.darkened=i)
-var t=e>.3&&.7>e
-this.shown!=t&&(t&&hui.animate({node:h,css:{opacity:t?1:0},ease:hui.ease.flicker,duration:3e3,$complete:function(){hui.browser.animation?hui.cls.set(n,"is-final",e>0&&1>e):hui.animate({node:u,css:{opacity:t?1:0},ease:hui.ease.slowFast,duration:5e3})}}),this.shown=t)}}),hui.parallax.listen({$resize:function(e,i){m=e,n.style.height=e>700?Math.round(.8*i)+"px":"",hui.browser.mediaQueries||hui.cls.set(document.body,"small",1200>e),d=e}})),hui.parallax.start()}}}
-hui.onReady(ctrl.attach.bind(ctrl)),hui.onReady(function(){var e=hui.get.byClass(document.body,"js-photo")
-hui.each(e,function(e){var i=hui.find(".js-photo-effect",e),t=hui.position.get(e),o={width:e.clientWidth,height:e.clientHeight}
-hui.ui.listen({$$afterResize:function(){t=hui.position.get(e),o={width:e.clientWidth,height:e.clientHeight}}}),hui.listen(window,"mousemove",function(e){e=hui.event(e)
-var n=(e.getLeft()-t.left)/o.width,s=(e.getTop()-t.top)/o.height
-i.style.marginLeft=20*n+"px",i.style.marginTop=20*s+"px"
-var a=hui.between(0,easeInout(n),1)*hui.between(0,easeInout(s),1)
-i.style.opacity=a})})}),require(["hui"],function(e){var i=function(i){this.element=i.element,this.key=this.element.getAttribute("data-video"),e.listen(this.element,"click",this._click.bind(this))}
+i.style.display="block",window.setTimeout(function(){hui.cls.add(i,"visible")})})
+var t=hui.find(".theater"),o=hui.find(".theater_photo",t),n=hui.find(".theater_stages",t),s=hui.window.getViewWidth()
+if(hui.browser.animation||(hui.style.setOpacity(o,0),hui.style.setOpacity(n,0)),t){var a=!1
+hui.parallax.listen({element:t,$scroll:function(e){var i=e>.2&&.8>e&&s>700
+a!=i&&(hui.cls.set(document.body,"is-full",i),hui.browser.animation?hui.cls.set(document.body,"is-dark",i):hui.animate({node:document.body,css:{"background-color":i?"#000":"#fff"},duration:1e3}),a=i)
+var r=e>.3&&.7>e
+this.shown!=r&&(r&&hui.animate({node:o,css:{opacity:r?1:0},ease:hui.ease.flicker,duration:3e3,$complete:function(){hui.browser.animation?hui.cls.set(t,"is-final",e>0&&1>e):hui.animate({node:n,css:{opacity:r?1:0},ease:hui.ease.slowFast,duration:5e3})}}),this.shown=r)}}),hui.parallax.listen({$resize:function(e,i){t.style.height=e>700?Math.round(.8*i)+"px":"",hui.browser.mediaQueries||hui.cls.set(document.body,"small",1200>e),s=e}})}hui.parallax.start()}}
+hui.onReady(ctrl.attach.bind(ctrl)),require(["hui"],function(e){var i=function(i){this.element=i.element,this.key=this.element.getAttribute("data-video"),e.listen(this.element,"click",this._click.bind(this))}
 i.prototype={_click:function(){this._moveTop(),i.active&&i.active.disable()
 var t="http://www.youtube.com/embed/"+this.key,o='<iframe class="movies_iframe" width="640" height="480" src="'+t+'?autoplay=1" frameborder="0" allowfullscreen="allowfullscreen"></iframe>'
 e.build("div",{"class":"movies_player",html:o,parent:this.element}),i.active=this},_moveTop:function(){var i=this.element.parentNode,t=i.parentNode,o=e.find(".movies_item",t)
 o!=i&&(t.removeChild(o),t.insertBefore(o,i),t.removeChild(i),o=e.find(".movies_item",t),t.insertBefore(i,o))},disable:function(){var i=e.find(".movies_player",this.element)
 e.dom.remove(i)}}
-for(var t=e.get.byClass(document.body,"js-movie-poster"),o=0;o<t.length;o++)new i({element:t[o]})})
+for(var t=e.get.byClass(document.body,"js-movie-poster"),o=0;o<t.length;o++)new i({element:t[o]})}),require(["hui"],function(e){var i=function(e){return(2*e-1)*(2*e-1)*-1+1}
+e.onReady(function(){var t=e.get.byClass(document.body,"js-photo")
+e.each(t,function(t){var o=e.find(".js-photo-effect",t),n=e.position.get(t),s={width:t.clientWidth,height:t.clientHeight}
+e.ui.listen({$$afterResize:function(){n=e.position.get(t),s={width:t.clientWidth,height:t.clientHeight}}}),e.listen(window,"mousemove",function(t){t=e.event(t)
+var a=(t.getLeft()-n.left)/s.width,r=(t.getTop()-n.top)/s.height
+o.style.marginLeft=20*a+"px",o.style.marginTop=20*r+"px"
+var h=e.between(0,i(a),1)*e.between(0,i(r),1)
+o.style.opacity=h})})})})

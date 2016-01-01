@@ -30,6 +30,10 @@
       }
     }
     
+    &-dense {
+      font-size: 12px;
+    }
+    
     .is-dark &,
     &-dark {
   	  border: 2px solid #999;
@@ -40,6 +44,14 @@
   	    border-color: #fff;
     	  background: rgba(255,255,255,.2);
       }
+    }
+  }
+}
+
+@include when(500px) {
+  .button {
+    &-dense {
+      font-size: 16px;
     }
   }
 }

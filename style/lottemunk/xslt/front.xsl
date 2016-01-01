@@ -36,7 +36,7 @@
 
 
 <xsl:template match="widget:broen">
-  <section id="broen" class="broen js_broen">
+  <section id="broen" class="block broen js_broen">
     <div class="broen_left broen_text">
       <h2 class="broen_title"><xsl:value-of select="widget:title"/><xsl:comment/></h2>
       <xsl:for-each select="widget:p">
@@ -82,14 +82,14 @@
       <li class="about_icons_item"><a class="about_icon about_icon-facebook" href="https://www.facebook.com/Lottemunk69"><xsl:comment/></a></li>
     </ul>
     <div class="about_contact">
-      <p class="about_contact_item email">
-        <a href="mailto:2be@lottemunk.dk"><span>2be@lottemunk.dk</span></a>
+      <p class="about_contact_item">
+        <a class="about_contact_link about_email" href="mailto:2be@lottemunk.dk"><span>2be@lottemunk.dk</span></a>
       </p>
-      <p class="about_contact_item phone">
-        <a href="tel:004526368412"><span>+45 <strong>26 36 84 12</strong></span></a>
+      <p class="about_contact_item">
+        <a class="about_contact_link about_phone" href="tel:004526368412"><span>+45 <strong>26 36 84 12</strong></span></a>
       </p>
-      <p class="about_contact_item address">
-        <a href="http://maps.apple.com/?q=55.639482,12.616404&amp;sspn=0.000774,0.001983&amp;sll=55.639542,12.616527">
+      <p class="about_contact_item">
+        <a class="about_contact_link about_address" href="http://maps.apple.com/?q=55.639482,12.616404&amp;sspn=0.000774,0.001983&amp;sll=55.639542,12.616527">
           <span>Ny Skelgårdsvej 6<br/>2770 Kastrup, Danmark</span>
         </a>
       </p>
@@ -327,20 +327,20 @@
 </xsl:template>
 
 <xsl:template match="widget:communication">
-  <section id="communication" class="communication">
+  <section id="communication" class="block communication">
       <article>
         <a name="communication"><xsl:comment/></a>
         <div>
             <xsl:choose>
                 <xsl:when test="//p:page/p:meta/p:language='en'">
-                    <h2 class="communication_title">Coaching</h2>
+                    <h2 class="block_title communication_title">Coaching</h2>
                     <p class="communication_text">I also use the technique of acting in my work as communication coach, where I utilise the <strong>tools of theatrical work</strong> to give participants the opportunity to <strong>learn by doing</strong>. It is always my goal to bring forward personal insights for the individual person, and an awareness of their own means of communication. Giving very personal and <strong>constructive feedback</strong> is of very high priority for me.</p>
-                    <p class="link"><a class="button button-right" href="{$path}en/communication-training/"><span>About Coaching</span></a></p>
+                    <p class="communication_actions"><a class="button button-right" href="{$path}en/communication-training/"><span>About Coaching</span></a></p>
                 </xsl:when>
                 <xsl:otherwise>
-                    <h2 class="communication_title">Kommunikations<span>træning</span></h2>
+                    <h2 class="block_title communication_title">Kommunikations<span class="communication_title_part">træning</span></h2>
                     <p class="communication_text">Skuespillerteknikken anvender jeg også som kommunikationsrådgiver, hvor jeg bruger <strong>teaterets redskaber</strong> til at give en <strong>oplevelsesbaseret læring</strong>.  Jeg prøver altid  at formidle en indsigt i det enkelte menneskes måde at kommunikere på. At give en meget personlig og <strong>konstruktiv feedback</strong>, er noget jeg vægter meget højt.</p>
-                    <p class="link"><a class="button button-right" href="{$path}kommunikation/"><span>Mere om kommunikationstræning</span></a></p>
+                    <p class="communication_actions"><a class="button button-dense button-right" href="{$path}kommunikation/"><span>Mere om kommunikationstræning</span></a></p>
                 </xsl:otherwise>
             </xsl:choose>              
           </div>

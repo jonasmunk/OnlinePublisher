@@ -5779,7 +5779,7 @@ hui.ui.Buttons.prototype = {
 
 /* EOF */
 
-/* ["style\/lottemunk\/js\/lottemunk.js","style\/lottemunk\/js\/movies.js"] */
+/* ["style\/lottemunk\/js\/lottemunk.js","style\/lottemunk\/js\/movies.js","style\/lottemunk\/js\/photos.js"] */
 
 
 /* style/basic/js/OnlinePublisher.js */
@@ -6440,7 +6440,7 @@ var ctrl = {
 	attach : function() {
 		
 		
-		var nav = hui.get.firstByTag(head,'nav');
+		var nav = hui.find('nav');
 	
 		var paths = {
 			'/' : 'top',
@@ -6491,97 +6491,32 @@ var ctrl = {
 			})
 		})
 		
-		
-		hui.listen('video_poster','click',function() {
-			hui.get('video_poster').innerHTML = '<iframe width="640" height="480" src="http://www.youtube.com/embed/2k5DfFfNcO8?autoplay=1" frameborder="0" allowfullscreen="allowfullscreen"><xsl:comment/></iframe>';
-		});
-
-		// The rest is just non-touch...
-		
-		if (hui.browser.touch) {
-			return;
-		}
-		hui.cls.add(document.body.parentNode,'desktop');
-		
-		var head = hui.get('head'),
-			title = hui.get('title'),
-			job = hui.get('job'),
-			broen = hui.find('.js_broen'),
-			about = hui.get('about'),
-			press = hui.get('pressphotos'),
-			theater = hui.find('.theater'),
-			background1 = hui.get('background1'),
-			background1_body = hui.get.firstByTag(background1,'div'),
-			background2 = hui.get('background2'),
-			background2_body = hui.get.firstByTag(background2,'div'),
-			background3 = hui.get('background3'),
-			background3_body = hui.get.firstByTag(background3,'div'),
+		var theater = hui.find('.theater'),
 			theater_photo = hui.find('.theater_photo',theater),
-			theaters = hui.find('.theater_stages',theater),
-			reelContent = hui.get('reelContent');
+      theaters = hui.find('.theater_stages',theater);
 		
 		
 		
 		var currentWidth = hui.window.getViewWidth();
-		var menuWidth = 0;
-		var items = hui.get.byTag(nav,'li');
-		for (var i = items.length - 1; i >= 0; i--) {
-			menuWidth+=items[i].clientWidth+10;
-		}
 		
 		if (!hui.browser.animation) {
 			hui.style.setOpacity(theater_photo,0);
 			hui.style.setOpacity(theaters,0);
 		}
-    /*
-		hui.parallax.listen({
-			min : 0,
-			max : 246,
-			$scroll : function(pos) {
-        if (currentWidth < 600) {
-          head.style.height = '';
-          title.style.fontSize = '';
-  				job.style.left = '';
-  				job.style.top = '';
-        } else {
-  				head.style.height = ((1-pos)*146+100)+'px';
-  				title.style.fontSize = ((1-pos)*30+50)+'px';
-  				job.style.left = (hui.ease.fastSlow(pos)*250+10)+'px';
-  				job.style.top = ((pos)*-135+180)+'px';
-        }
-				hui.style.setOpacity(broen,1-hui.ease.quadOut(pos));
-			}
-		})*/
-    
-		hui.parallax.listen({
-			element : about,
-			$scroll : function(pos) {
-				hui.cls.set(about,'visible',pos<.8)
-			}
-		})
-    if (reelContent) {
-  		hui.parallax.listen({
-  			element : reelContent,
-  			$scroll : function(pos) {
-  				reelContent.style.marginLeft = (pos*-400-100)+'px';
-  			}
-  		})
-    }
-    var curWidth = 0;
     if (theater) {
+      var darkened = false;
   		hui.parallax.listen({
   			element : theater,
-  			//darkened : false,
   			$scroll : function(pos) {
-  				var dark = pos>0.2 && pos<.8 && curWidth > 700;
-  				if (this.darkened!=dark) {
+  				var dark = pos>0.2 && pos<.8 && currentWidth > 700;
+  				if (darkened!=dark) {
   					hui.cls.set(document.body,'is-full',dark);
   					if (hui.browser.animation) {
   						hui.cls.set(document.body,'is-dark',dark);
   					} else {
   						hui.animate({node:document.body,css:{'background-color':dark ? '#000' : '#fff'},duration:1000});
   					}
-  					this.darkened = dark;
+  					darkened = dark;
   				}
   				var show = pos>.3 && pos<.7;
   				if (this.shown!=show) {
@@ -6600,7 +6535,6 @@ var ctrl = {
   		})
   		hui.parallax.listen({
   			$resize : function(width,height) {
-          curWidth = width;
   				theater.style.height = width > 700 ? Math.round(height*.8)+'px' : '';
   				if (!hui.browser.mediaQueries) {
   					hui.cls.set(document.body,'small',width<1200);
@@ -6614,35 +6548,6 @@ var ctrl = {
 }
 
 hui.onReady(ctrl.attach.bind(ctrl));
-
-function easeInout(num) {
-  return (num*2-1) * (num*2-1) * -1 +1;
-}
-
-hui.onReady(function() {
-  var photos = hui.get.byClass(document.body,'js-photo');
-  //photos = [photos[0]];
-  hui.each(photos,function(photo) {
-    var effect = hui.find('.js-photo-effect',photo);
-    var pos = hui.position.get(photo);
-    var size = {width:photo.clientWidth,height:photo.clientHeight};
-    hui.ui.listen({
-      $$afterResize : function() {
-        pos = hui.position.get(photo);
-        size = {width:photo.clientWidth,height:photo.clientHeight};
-      }
-    })
-    hui.listen(window,'mousemove',function(e) {
-      e = hui.event(e);
-      var horz = (e.getLeft() - pos.left) / size.width;
-      var vert = (e.getTop() - pos.top) / size.height;
-      effect.style.marginLeft = (horz * 20) + 'px';
-      effect.style.marginTop = (vert * 20) + 'px';
-      var op = hui.between(0,easeInout(horz),1) * hui.between(0,easeInout(vert),1);
-      effect.style.opacity = op;
-    })    
-  })
-})
 /* style/lottemunk/js/movies.js */
 require(['hui'],function(hui) {
   
@@ -6686,4 +6591,37 @@ require(['hui'],function(hui) {
   for (var i = 0; i < p.length; i++) {
     new MoviePoster({element:p[i]});
   }
+});
+/* style/lottemunk/js/photos.js */
+require(['hui'],function(hui) {
+
+  var easeInout = function(num) {
+    return (num*2-1) * (num*2-1) * -1 + 1;
+  }
+
+  hui.onReady(function() {
+    var photos = hui.get.byClass(document.body,'js-photo');
+    //photos = [photos[0]];
+    hui.each(photos,function(photo) {
+      var effect = hui.find('.js-photo-effect',photo);
+      var pos = hui.position.get(photo);
+      var size = {width:photo.clientWidth,height:photo.clientHeight};
+      hui.ui.listen({
+        $$afterResize : function() {
+          pos = hui.position.get(photo);
+          size = {width:photo.clientWidth,height:photo.clientHeight};
+        }
+      })
+      hui.listen(window,'mousemove',function(e) {
+        e = hui.event(e);
+        var horz = (e.getLeft() - pos.left) / size.width;
+        var vert = (e.getTop() - pos.top) / size.height;
+        effect.style.marginLeft = (horz * 20) + 'px';
+        effect.style.marginTop = (vert * 20) + 'px';
+        var op = hui.between(0,easeInout(horz),1) * hui.between(0,easeInout(vert),1);
+        effect.style.opacity = op;
+      })    
+    })
+  })
+
 });

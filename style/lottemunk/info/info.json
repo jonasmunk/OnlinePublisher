@@ -5,16 +5,17 @@
     "build" : {
         "js" : [
             "style/lottemunk/js/lottemunk.js",
-            "style/lottemunk/js/movies.js"
+            "style/lottemunk/js/movies.js",
+            "style/lottemunk/js/photos.js"
         ],
         "css" : [
+            "style/lottemunk/css/fonts.css",
             "style/basic/css/shared.css",
             "@parts",
             "style/lottemunk/css/overwrite.css",
             "style/lottemunk/css/main.css",
             "style/lottemunk/css/front.css",
-            "style/lottemunk/css/widgets.css",
-            "style/lottemunk/css/front_adaption.css"
+            "style/lottemunk/css/widgets.css"
         ]
     }
 }
