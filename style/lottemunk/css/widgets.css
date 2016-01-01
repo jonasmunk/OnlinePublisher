@@ -83,7 +83,11 @@
     font-size: 40px;
   }
 }
-@media screen and (min-width: 700px) {
+@media screen and (min-width: 760px) {
+  .block {
+    margin: 100px 0;
+  }
+
   .block_title {
     font-size: 50px;
   }
@@ -817,6 +821,10 @@
   }
 }
 @media screen and (min-width: 760px) {
+  .movies {
+    padding: 40px 0;
+  }
+
   .movies_text {
     font-size: 18px;
   }
@@ -871,7 +879,8 @@
 
 .communication_title {
   color: #005952;
-  padding: 40px 0 10px;
+  margin: 0 0 20px;
+  line-height: 1;
 }
 .is-dark .communication_title {
   color: #fff;
@@ -959,9 +968,10 @@
   display: none;
 }
 
-@media screen and (min-width: 700px) {
+@media screen and (min-width: 760px) {
   .theater {
     height: 700px;
+    padding: 60px 0;
   }
 
   .theater_title {
@@ -980,7 +990,7 @@
     position: absolute;
     width: 683px;
     height: 394px;
-    bottom: 12%;
+    bottom: 15%;
     left: 50%;
     margin: -197px 0 0 -342px;
     background: url("../gfx/theater.jpg");
@@ -989,7 +999,7 @@
 
   .theater_actions {
     position: absolute;
-    bottom: 5%;
+    bottom: 8%;
     left: 0;
     right: 0;
     z-index: 1;

@@ -19,7 +19,11 @@
   
 }
 
-@include when(700px) {
+@include when(760px) {
+
+  .block {
+    margin: 100px 0;
+  }
   
   .block_title {
     font-size: 50px;

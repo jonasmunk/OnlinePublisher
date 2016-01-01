@@ -155,6 +155,9 @@
 
 @include when(760px) {
 
+  .movies {
+    padding: 40px 0;
+  }
   
   .movies_text {
     font-size: 18px;

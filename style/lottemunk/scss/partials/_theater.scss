@@ -42,10 +42,11 @@
   }
 }
 
-@include when(700px) {
+@include when(760px) {
 
   .theater {
   	height: 700px;
+    padding: 60px 0;
   }
 
   .theater_title
@@ -67,7 +68,7 @@
   	position: absolute;
   	width: 683px;
   	height: 394px;
-  	bottom: 12%;
+  	bottom: 15%;
   	left: 50%;
   	margin: -197px 0 0 -342px;
   	background: url('../gfx/theater.jpg');
@@ -77,7 +78,7 @@
   .theater_actions
   {
   	position: absolute;
-  	bottom: 5%;
+  	bottom: 8%;
   	left: 0;
   	right: 0;
   	z-index: 1;
