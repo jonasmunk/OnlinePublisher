@@ -21,6 +21,9 @@ class ListWriter {
 		if (@$options['checkboxes']==true) {
 			echo ' checkboxes="true"';
 		}
+		if (isset($options['ordering']) && $options['ordering']==true) {
+			echo ' ordering="true"';
+		}
 		echo '>';
 		return $this;
 	}

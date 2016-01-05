@@ -6,7 +6,6 @@
 require_once '../../../Include/Private.php';
 
 $subset = Request::getString('subset');
-$text = Request::getString('text');
 
 if ($subset=='pages') {
 	listPages();
@@ -15,10 +14,10 @@ if ($subset=='pages') {
 } else if ($subset=='persons') {
 	listPersons();
 } else {
-	listImages($text);
+	listImages();
 }
 
-function listImages($text) {
+function listImages() {
 
 	$subset = Request::getString('subset');
 	$group = Request::getInt('group',null);
@@ -26,21 +25,22 @@ function listImages($text) {
 	$text = Request::getString('text');
 	$windowSize = Request::getInt('windowSize',30);
 	$windowPage = Request::getInt('windowPage',0);
-	$sort = Request::getString('sort','title');
+	$sort = Request::getString('sort','object.title');
 	$direction = Request::getString('direction','ascending');
-	
+  
+  $isGroup = $group !== null && $group > 0;
+  	
 	$query = Query::after('image')->withText($text)->withWindowSize($windowSize)->withWindowPage($windowPage)->withDirection($direction)->orderBy($sort);
-	if ($group===-1) {
+	if ($group === -1) {
 		$query->withCustom('nogroup',true);
 	} else if ($group) {
 		$query->withCustom('group',$group);
 	}
 	if ($subset=='latest') {
-		$query->withCustom('createdAfter',Dates::addDays(mktime(),-1));
+		$query->withCustom('createdAfter',Dates::addDays(time(),-1));
 	} else if ($subset=='unused') {
 		$query->withCustom('unused',true);
 	}
-
 
 	$result = $query->search();
 	$list = $result->getList();
@@ -48,16 +48,19 @@ function listImages($text) {
 	$writer = new ListWriter();
 
 	$writer->
-	startList(array('unicode'=>true,'checkboxes'=>true))->
+	startList(['unicode'=>true,'checkboxes'=>true,'ordering'=>$isGroup])->
 		sort($sort,$direction)->
-		window(array('total'=>$result->getTotal(),'size'=>$windowSize,'page'=>$windowPage))->
+		window(['total'=>$result->getTotal(),'size'=>$windowSize,'page'=>$windowPage])->
 		startHeaders()->
-			header(array('title'=>array('Image','da'=>'Billede'),'width'=>40))->
-			header(array('title'=>array('Size', 'da'=>'Størrelse')))->
-			header(array('title'=>array('Height', 'da'=>'Højde')))->
-			header(array('title'=>array('Width', 'da'=>'Bredde')))->
-			header(array('title'=>'Type'))->
-		endHeaders();
+			header(['title'=>['Image', 'da'=>'Billede'], 'width'=>40, 'key' => 'object.title', 'sortable' => true])->
+			header(['title'=>['Size', 'da'=>'Størrelse'], 'key' => 'image.size', 'sortable' => true])->
+			header(['title'=>['Height', 'da'=>'Højde'], 'key' => 'image.height', 'sortable' => true])->
+			header(['title'=>['Width', 'da'=>'Bredde'], 'key' => 'image.width', 'sortable' => true])->
+			header(['title'=>'Type']);
+  if ($isGroup) {
+    $writer->header(['title'=>'Position','width'=>1]);
+  }
+	$writer->endHeaders();
 
 
 	foreach ($list as $image) {
@@ -77,8 +80,17 @@ function listImages($text) {
 			endCell()->
 			startCell()->
 				text(FileService::mimeTypeToLabel($image->getMimetype()))->
-			endCell()->
-		endRow();	
+			endCell();
+    if ($isGroup) {
+      $writer->startCell(['wrap'=>false])->
+        text(1)->
+      	startIcons()->
+      		icon(array('icon'=>'monochrome/round_arrow_up','revealing'=>true,'action'=>true,'data'=>array('action'=>'moveItem','direction'=>'up')))->
+      		icon(array('icon'=>'monochrome/round_arrow_down','revealing'=>true,'action'=>true,'data'=>array('action'=>'moveItem','direction'=>'down')))->
+      	endIcons()->
+      endCell();
+    }
+		$writer->endRow();	
 	}
 
 	$writer->endList();
