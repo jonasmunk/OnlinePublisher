@@ -18,8 +18,8 @@
       })
     }
     this.nodes = {
-      text : 'hui_objectinput_text',
-      list : 'hui_objectinput_list'
+      text : '.hui_objectinput_text',
+      list : '.hui_objectinput_list'
     };
     this.choose = null;
     this.remove = null;

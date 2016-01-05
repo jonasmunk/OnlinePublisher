@@ -8,12 +8,12 @@
    */
   hui.ui.Skeleton = function(options) {
     this.nodes = {
-      resizeNavigation : 'hui_skeleton_resize_navigation',
-      resizeResults : 'hui_skeleton_resize_results',
-      navigation : 'hui_skeleton_navigation',
-      results : 'hui_skeleton_results',
-      content : 'hui_skeleton_content',
-      actions : 'hui_skeleton_actions'
+      resizeNavigation : '.hui_skeleton_resize_navigation',
+      resizeResults : '.hui_skeleton_resize_results',
+      navigation : '.hui_skeleton_navigation',
+      results : '.hui_skeleton_results',
+      content : '.hui_skeleton_content',
+      actions : '.hui_skeleton_actions'
     }
     _super.call(this, options);
     this._attach();

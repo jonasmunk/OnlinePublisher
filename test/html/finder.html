@@ -35,9 +35,10 @@
 	<script type="text/javascript" charset="utf-8">
 		hui.onReady(function() {
 			var finder = hui.ui.Finder.create({
+        
 				title : 'Select page',
 				list : {url:'data/list_pages.xml'},
-				selection : {url:'data/finder_selection.xml'}
+        search : {parameter:'text'}
 			});
 			finder.listen({
 				$select : function(obj) {
@@ -46,35 +47,6 @@
 			})
 			finder.show();
 		})
-		
-		hui.request({url:'../../xslt/gui.xsl',$success : function(t) {
-            //return;
-			var xml = hui.xml.parse('<?xml version="1.0"?><gui xmlns="uri:hui" padding="20" title="Box"></gui>');
-			var xsl = t.responseXML;
-			var result = hui.xml.transform(xml,xsl);
-			if (result) {
-				document.body.appendChild(result);
-			}
-			hui.log(xml);
-			hui.log(xsl);
-			hui.log(result);
-		}});
-        
-        (function() {
-            return;
-            var xsl = '<?xml version="1.0" encoding="UTF-8"?>'+
-                '<xsl:stylesheet xmlns="http://www.w3.org/1999/xhtml" xmlns:xsl="http://www.w3.org/1999/XSL/Transform">'+
-                '<xsl:include href="layout.xsl"/>'+
-                '<xsl:template match="page"><div><xsl:value-of select="."/></div></xsl:template>'+
-                '</xsl:stylesheet>';
-
-			var xml = '<?xml version="1.0"?><page>dsfsfs</page>';
-    		var result = hui.xml.transform(hui.xml.parse(xml),hui.xml.parse(xsl));
-            hui.log(result);
-            hui.log(hui.xml.serialize(result));
-            
-        })()
-		
 	</script>
 	<button onclick="">Button</button>
 </body>
