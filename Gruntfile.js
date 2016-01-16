@@ -79,17 +79,23 @@ module.exports = function(grunt) {
           if (!clients[client]) {
             grunt.log.error('Client not found'); return;
           }
-          return [
-            'scripts/transfer.sh ' + clients[client].production.database + ' ' + clients[client].production.folder
-          ].join(' && ');
+          return 'Config/scripts/transfer.sh '
+            + clients[client].production.database + ' ' 
+            + clients[client].production.folder + ' ' 
+            + clients[client].local.database + ' ' 
+            + clients[client].local.data;
         }
       },
-      'switch' : {
+      transfer_staging : {
         command : function(client) {
           if (!clients[client]) {
             grunt.log.error('Client not found'); return;
           }
-          return 'scripts/switch.sh ' + clients[client].folder
+          return 'Config/scripts/transfer.sh '
+            + clients[client].staging.database + ' ' 
+            + clients[client].staging.folder + ' ' 
+            + clients[client].local.database + ' ' 
+            + clients[client].local.data;
         }
       },
       'stage' : {
@@ -125,10 +131,6 @@ module.exports = function(grunt) {
 
   grunt.registerTask('default', 'Standard tasks', ['watch']);
   
-  grunt.registerTask('switch', 'Switch to another client', function(client) {
-    grunt.task.run('shell:switch:'+client);
-  });
-
   grunt.registerTask('stage', 'Stage a client', function(client) {
     grunt.task.run('shell:stage:' + client);
   });
@@ -137,8 +139,12 @@ module.exports = function(grunt) {
     grunt.task.run('shell:deploy:' + client);
   });
   
-  grunt.registerTask('transfer', 'Transfer from production to local', function(client) {
+  grunt.registerTask('get', 'Transfer from production to local', function(client) {
     grunt.task.run('shell:transfer:'+client);
+  });
+
+  grunt.registerTask('get-staging', 'Transfer from production to local', function(client) {
+    grunt.task.run('shell:transfer_staging:'+client);
   });
   
 };
