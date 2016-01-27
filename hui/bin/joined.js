@@ -905,10 +905,21 @@ hui.find = function(selector,context) {
 	return (context || document).querySelector(selector);
 }
 
+if (!document.querySelector) {
+  hui.find = function(selector,context) {
+    context = context || document.documentElement;
+    if (selector[0] == '.') {
+      return hui.get.firstByClass(context,selector.substr(1));
+    } else {
+      return hui.get.firstByTag(context,selector);
+    }
+  }
+}
+
 hui.collect = function(selectors,context) {
 	var copy = {};
 	for (key in selectors) {
-		copy[key] = hui.get.firstByClass(context,selectors[key]);
+		copy[key] = hui.find(selectors[key],context);
 	}
 	return copy;
 }
@@ -3422,7 +3433,7 @@ hui.parallax = {
     this._listening = true;
     hui.listen(window,'scroll',this._scroll.bind(this));
     hui.listen(window,'resize',this._resize.bind(this));
-    
+    hui.onReady(this._resize.bind(this));
   },
   _resize : function() {
     for (var i = this._listeners.length - 1; i >= 0; i--) {
@@ -3470,11 +3481,7 @@ hui.parallax = {
   
   listen : function(info) {
     this._listeners.push(info);
-  },
-  
-  start : function() {
     this._init();
-    this._resize();
   }
 };
 
@@ -17994,8 +18001,8 @@ hui.ui.NumberValidator.prototype = {
       })
     }
     this.nodes = {
-      text : 'hui_objectinput_text',
-      list : 'hui_objectinput_list'
+      text : '.hui_objectinput_text',
+      list : '.hui_objectinput_list'
     };
     this.choose = null;
     this.remove = null;

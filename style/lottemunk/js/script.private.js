@@ -71,7 +71,7 @@ if(hui.browser.animation||(hui.style.setOpacity(o,0),hui.style.setOpacity(n,0)),
 hui.parallax.listen({element:t,$scroll:function(e){var i=e>.2&&.8>e&&s>700
 a!=i&&(hui.cls.set(document.body,"is-full",i),hui.browser.animation?hui.cls.set(document.body,"is-dark",i):hui.animate({node:document.body,css:{"background-color":i?"#000":"#fff"},duration:1e3}),a=i)
 var r=e>.3&&.7>e
-this.shown!=r&&(r&&hui.animate({node:o,css:{opacity:r?1:0},ease:hui.ease.flicker,duration:3e3,$complete:function(){hui.browser.animation?hui.cls.set(t,"is-final",e>0&&1>e):hui.animate({node:n,css:{opacity:r?1:0},ease:hui.ease.slowFast,duration:5e3})}}),this.shown=r)}}),hui.parallax.listen({$resize:function(e,i){t.style.height=e>700?Math.round(.8*i)+"px":"",hui.browser.mediaQueries||hui.cls.set(document.body,"small",1200>e),s=e}})}hui.parallax.start()}}
+this.shown!=r&&(r&&hui.animate({node:o,css:{opacity:r?1:0},ease:hui.ease.flicker,duration:3e3,$complete:function(){hui.browser.animation?hui.cls.set(t,"is-final",e>0&&1>e):hui.animate({node:n,css:{opacity:r?1:0},ease:hui.ease.slowFast,duration:5e3})}}),this.shown=r)}}),hui.parallax.listen({$resize:function(e,i){t.style.height=e>700?Math.round(.8*i)+"px":"",hui.browser.mediaQueries||hui.cls.set(document.body,"small",1200>e),s=e}})}}}
 hui.onReady(ctrl.attach.bind(ctrl)),require(["hui"],function(e){var i=function(i){this.element=i.element,this.key=this.element.getAttribute("data-video"),e.listen(this.element,"click",this._click.bind(this))}
 i.prototype={_click:function(){this._moveTop(),i.active&&i.active.disable()
 var t="http://www.youtube.com/embed/"+this.key,o='<iframe class="movies_iframe" width="640" height="480" src="'+t+'?autoplay=1" frameborder="0" allowfullscreen="allowfullscreen"></iframe>'

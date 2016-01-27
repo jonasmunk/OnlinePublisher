@@ -762,7 +762,6 @@ var ctrl = {
   			}
   		})
     }
-		hui.parallax.start();
 	}
 }
 
