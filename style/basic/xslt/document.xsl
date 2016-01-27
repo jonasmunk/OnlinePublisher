@@ -51,7 +51,7 @@
     		<div class="document_row">
     			<xsl:variable name="style">
     				<xsl:if test="@spacing!=''">
-                        <xsl:text>border-collapse: separate; width: auto;</xsl:text>
+              <xsl:text>border-collapse: separate;</xsl:text>
     					<xsl:text>border-spacing:</xsl:text><xsl:value-of select="@spacing"/><xsl:text>;</xsl:text>
     				</xsl:if>
     				<xsl:if test="@top!=''">
