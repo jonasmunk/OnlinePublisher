@@ -146,5 +146,13 @@ module.exports = function(grunt) {
   grunt.registerTask('get-staging', 'Transfer from production to local', function(client) {
     grunt.task.run('shell:transfer_staging:'+client);
   });
+
+  grunt.registerTask('get-test', 'Transfer from production to local', function(client) {
+    grunt.task.run('shell:transfer_staging:'+client);
+  });
+
+  grunt.registerTask('get-stage', 'Transfer from production to local', function(client) {
+    grunt.task.run('shell:transfer_staging:'+client);
+  });
   
 };
