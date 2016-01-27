@@ -128,8 +128,6 @@ $target : 'screen';
   	padding: 3px 3px;
   }
 
-
-
   .part_horizontalrule
   {
   	border: none;
@@ -137,12 +135,25 @@ $target : 'screen';
   }
 
   .part_movie_text {
-  	font-weight: normal;
-  	font-size: 24px;
+    font-weight: normal;
+    font-size: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    top: 50%;
+    background: linear-gradient(rgba(0,0,0,0),rgba(0,0,0,.5));
   }
 
   .part_movie_text_inner {
-  	padding-top: 2px;
+    background: none;
+    padding: 10px 0;
+    display: block;
+    font-size: 16px;
+    line-height: 1;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
   }
 }
 
