@@ -11,7 +11,7 @@
   }
   
   .movies_text {
-    font-family: $summary-font;
+    font-family: $text-font;
     font-size: 16px;
     line-height: 1.2;
     margin: 10px 0 20px;
@@ -88,7 +88,7 @@
   }
   
   .movies_video_title {
-    font-family: $summary-font;
+    font-family: $text-font;
     line-height: 1;
     color: #fff;
     position: absolute;

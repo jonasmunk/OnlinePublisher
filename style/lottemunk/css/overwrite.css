@@ -21,7 +21,7 @@ ul.common,
 .common_font,
 .part_header,
 .part_richtext {
-  font-family: 'Martel',Georgia,"Book Antiqua", "Palatino",Times,serif;
+  font-family: "Merriweather", Georgia, "Book Antiqua", "Palatino", Times, serif;
 }
 
 .part_header {
@@ -29,7 +29,8 @@ ul.common,
 }
 
 h1.common, .part_header_1,
-h2.common, .part_header_2 {
+h2.common, .part_header_2,
+h3.common, .part_header_3 {
   font-family: "Lora", Georgia, "Book Antiqua", "Palatino", Times, serif;
 }
 
@@ -88,19 +89,16 @@ div.part_listing, textarea.part_listing {
   border-spacing: 0;
   border-collapse: collapse;
 }
-
 .part_table thead th {
   border-bottom: 1px solid #eee;
   padding: 1px 3px;
   text-align: left;
 }
-
 .part_table tfoot th {
   border-bottom: 1px solid #eee;
   padding: 1px 3px;
   text-align: left;
 }
-
 .part_table td {
   border-bottom: 1px solid #eee;
   padding: 3px 3px;

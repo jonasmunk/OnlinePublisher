@@ -691,7 +691,7 @@
 }
 
 .movies_text {
-  font-family: "Martel", Georgia, "Book Antiqua", "Palatino", Times, serif;
+  font-family: "Merriweather", Georgia, "Book Antiqua", "Palatino", Times, serif;
   font-size: 16px;
   line-height: 1.2;
   margin: 10px 0 20px;
@@ -761,7 +761,7 @@
 }
 
 .movies_video_title {
-  font-family: "Martel", Georgia, "Book Antiqua", "Palatino", Times, serif;
+  font-family: "Merriweather", Georgia, "Book Antiqua", "Palatino", Times, serif;
   line-height: 1;
   color: #fff;
   position: absolute;
