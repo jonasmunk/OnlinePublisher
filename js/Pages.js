@@ -131,6 +131,7 @@ hui.ui.Pages.prototype = {
                 }
                 hui.ui.reLayout();
                 hui.ui.callVisible(this);
+            		this.fireSizeChange();
             }.bind(this)
         });
 	}
