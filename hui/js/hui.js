@@ -936,7 +936,7 @@ hui.collect = function(selectors,context) {
 /**
  * Builds an element with the «name» and «options»
  *
- * @param {String} name The name of the new element
+ * @param {String} name The name of the new element (. adds class)
  * @param {Object} options The options
  * @param {String} options.html Inner HTML
  * @param {String} options.text Inner text
@@ -949,9 +949,20 @@ hui.collect = function(selectors,context) {
  * @returns {Element} The new element
  */
 hui.build = function(name,options,doc) {
-	
 	doc = doc || document;
-    var e = doc.createElement(name);
+  var cls = '';
+	if (name.indexOf('.') !== -1) {
+	  var split = name.split('.');
+    name = split[0];
+    for (var i = 1; i < split.length; i++) {
+      if (i>1) {cls+=' '};
+      cls+=split[i];
+    }
+	}
+  var e = doc.createElement(name);
+  if (cls) {
+    e.className = cls;
+  }
 	if (options) {
 		for (var prop in options) {
 			if (prop=='text') {
@@ -1036,7 +1047,7 @@ hui.position = {
 	      top += element.scrollTop  || 0;
 	      left += element.scrollLeft || 0;
 	      element = element.parentNode;
-		  if (element.tagName === 'HTML') {
+		  if (element && element.tagName === 'HTML') {
 			  break; // TODO Temporary hack - Chrome has the same scrollTop on html as on body
 		  }
 	    } while (element);
@@ -1317,15 +1328,18 @@ hui.cls = {
  * @param {Element} element The element to listen on
  * @param {String} type The event to listen for
  * @param {Function} listener The function to be called
- * @param {boolean} ?useCapture If the listener should "capture"
+ * @param {object} ?bindTo Bind the listener to it
  */
-hui.listen = function(element,type,listener,useCapture) {
+hui.listen = function(element,type,listener,bindTo) {
 	element = hui.get(element);
 	if (!element) {
 		return;
 	}
+  if (bindTo) {
+    listener = listener.bind(bindTo)
+  }
 	if(document.addEventListener) {
-		element.addEventListener(type,listener,useCapture ? true : false);
+		element.addEventListener(type,listener);
 	} else {
 		element.attachEvent('on'+type, listener);
 	}
@@ -2036,13 +2050,22 @@ hui.effect = {
 	 * @param {Object} options {element : «Element», duration : «milliseconds» }
 	 */
 	shake : function(options) {
-		var e = hui.ui.getElement(options.element);
-		hui.cls.add(options.element,'hui_effect_shake');
+    this._do(options.element,'hui_effect_shake',options.duration || 1000);
+	},
+	/**
+	 * Make an element shake
+	 * @param {Object} options {element : «Element», duration : «milliseconds» }
+	 */
+	tada : function(options) {
+    this._do(options.element,'hui_effect_tada',1000);
+	},
+  _do : function(e,cls,time) {
+    e = hui.ui.getElement(e);
+		hui.cls.add(e,cls);
 		window.setTimeout(function() {
-			hui.cls.remove(options.element,'hui_effect_shake');
-		},options.duration || 1000);
-	
-	}
+			hui.cls.remove(e,cls);
+		},time);    
+  }
 };
 
 
