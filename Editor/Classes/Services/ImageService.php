@@ -16,6 +16,10 @@ class ImageService {
 	static function getUsedImageIds() {
 		// Image parts
 	    $sql = "select image_id as id from part_image".
+		// Text parts
+	    " union select image_id as id from part_text".
+		// Movie parts
+	    " union select image_id as id from part_movie".
 		// Persons
 	    " union select image_id as id from person,image".
 	        " where person.image_id=image.object_id".
@@ -103,13 +107,24 @@ class ImageService {
 		$sql = "select image_id,object.title as image_title,page.title as page_title,page.id as page_id,'image' as part,'document' as template".
 			" from `part_image`,document_section,page,object".
 			" where part_image.part_id=document_section.part_id and page.id=document_section.page_id and part_image.image_id=object.id".
+
 		" union select image_id,object.title as image_title,page.title as page_title,page.id as page_id,'text' as part,'document' as template".
 			" from part_text,document_section,page,object".
 			" where part_text.part_id=document_section.part_id and page.id=document_section.page_id and part_text.image_id=object.id".
+
 		" union select distinct object.id as image_id,object.title as image_title,page.title as page_title,page.id as page_id,'imagegallery' as part,'document' as template".
 			" from part_imagegallery,imagegroup,imagegroup_image,document_section,page,object".
 			" where part_imagegallery.part_id=document_section.part_id and page.id=document_section.page_id".
-				" and part_imagegallery.imagegroup_id=imagegroup_image.imagegroup_id and imagegroup_image.image_id=object.id".
+			" and part_imagegallery.imagegroup_id=imagegroup_image.imagegroup_id and imagegroup_image.image_id=object.id".
+
+    " union select image_id,object.title as image_title,page.title as page_title,page.id as page_id,'movie' as part,'document' as template" .
+        " from `part_movie`,document_section,page,object".
+        " where part_movie.part_id=document_section.part_id and page.id=document_section.page_id and part_movie.image_id=object.id" .
+
+    " union select image_id,object.title as image_title,page.title as page_title,page.id as page_id,'text' as part,'document' as template " .
+        " from `part_text`,document_section,page,object" .
+        "  where part_text.part_id=document_section.part_id and page.id=document_section.page_id and part_text.image_id=object.id" .
+
 		" order by page_title,part,image_title";
 
  		return Database::selectAll($sql);

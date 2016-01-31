@@ -210,7 +210,7 @@ hui.ui.listen({
 				imageGroups.setValue(data.groups);
 				imageWindow.show();
 				imageFormula.focus();
-				hui.build('img',{src:'../../../services/images/?id='+id+'&width=150',parent:photo});
+				hui.build('img',{src:'../../../services/images/?id='+id+'&width=150',parent:photo,title:id});
 			}.bind(this)
 		});
 	},
