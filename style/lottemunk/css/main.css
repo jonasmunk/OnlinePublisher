@@ -276,6 +276,13 @@ body {
   font-family: "Merriweather", Georgia, "Book Antiqua", "Palatino", Times, serif;
   font-weight: 300;
   background: #fff;
+  -webkit-transition: background-color 0.5s ease-out;
+  -moz-transition: background-color 0.5s ease-out;
+  -ms-transition: background-color 0.5s ease-out;
+  transition: background-color 0.5s ease-out;
+}
+body.is-dark {
+  background-color: #000;
 }
 
 @media screen and (max-width: 700px) {

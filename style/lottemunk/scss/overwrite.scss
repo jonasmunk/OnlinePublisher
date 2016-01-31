@@ -8,30 +8,14 @@ $target : 'screen';
   {
   	color: #ddd;
   	cursor: pointer;
-  }
-
-  a.common span
-  {
-  	color: #0073b9;
-  }
-	
-  a.common:hover, a.common:hover span
-  {
-  	color: #005aae;
-  }
-
-  h2.common,
-  h3.common,
-  h4.common,
-  h5.common,
-  h6.common,
-  p.common,
-  ul.common,
-  .common_font,
-  .part_header,
-  .part_richtext
-  {
-  	font-family: $text-font;
+    
+    span {
+    	color: #0073b9;      
+    }
+    
+    &:hover, &:hover span {
+      color: #005aae;
+    }
   }
 
   .part_header {
@@ -45,21 +29,34 @@ $target : 'screen';
   	font-family: $header-font;
   }
 
-  h1.common,h2.common,h3.common,h4.common,h5.common,h6.common
+  h4.common,
+  h5.common,
+  h6.common,
+  p.common,
+  ul.common,
+  .common_font,
+  .part_header,
+  .part_richtext
+  {
+  	font-family: $text-font;
+  }
+
+  .common_header
   {
   	margin: 0px;
   	color: #000;
   }
   
-  h1.common,h2.common {
+  h1.common,
+  h2.common {
     font-weight: normal;
   }
 
   p.common, 
   ul.common,
   .part_text,
-  div.part_richtext,
-  div.part_listing span.part_listing_first
+  .part_richtext,
+  .part_listing_first
   {
   	font-size: 18px;
   	line-height: 160%;
@@ -67,13 +64,9 @@ $target : 'screen';
   	font-weight: 400;
   }
 
-  div.part_listing, textarea.part_listing {
+  .part_listing {
   	font-size: 10pt;
   	color: #333;
-  }
-
-  .part_table {
-    overflow: auto;
   }
 
   .part_header
@@ -102,6 +95,8 @@ $target : 'screen';
   }
 
   .part_table {
+    overflow: auto;
+
     table {
     	font-size: 1em;
     	border-spacing: 0;
@@ -157,7 +152,6 @@ $target : 'screen';
 }
 
 @include when(600px) {
-
 
   .part_header_1
   {

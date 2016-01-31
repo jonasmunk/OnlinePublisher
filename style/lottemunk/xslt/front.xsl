@@ -35,24 +35,6 @@
 </xsl:template>
 
 
-<xsl:template match="widget:broen">
-  <section id="broen" class="block broen js_broen">
-    <div class="broen_left broen_text">
-      <h2 class="broen_title"><xsl:value-of select="widget:title"/><xsl:comment/></h2>
-      <xsl:for-each select="widget:p">
-        <p><xsl:value-of select="."/></p>
-      </xsl:for-each>
-      <p><a class="button" href="{widget:link/@url}"><xsl:value-of select="widget:link"/></a></p>   
-    </div>
-    <div class="broen_right" style="background: #eee">
-      <div class="broen_right_photo broen_photo broen_photo-2"><xsl:comment/></div>
-      <div class="broen_right_photo broen_photo broen_photo-3"><xsl:comment/></div>
-    </div>
-    <div class="broen_middle broen_photo broen_photo-1"><xsl:comment/></div>
-  </section>
-</xsl:template>
-
-
 <xsl:template match="widget:about">
   <section id="about" class="about block">
     <h2 class="block_title about_title"><xsl:value-of select="widget:title"/><xsl:comment/></h2>
@@ -162,71 +144,6 @@
       });
   </script>
 </xsl:template>
- 
-<xsl:template match="widget:photos">
-  <div id="pressphotos" class="photos">
-      <a name="photos"><xsl:comment/></a>
-      <div class="photos_photo photos_photo-left"><xsl:comment/></div>
-      <div class="photos_middle">
-        <h2 class="photos_title"><xsl:value-of select="widget:title"/><xsl:comment/></h2>
-        <ul class="photos_items">
-        <xsl:choose>
-          <xsl:when test="//p:page/p:meta/p:language='en'">
-            <li class="photos_item"><a class="photos_link" href="{$path}en/photos/">More photos</a></li>
-            <li class="photos_item"><a class="photos_link" href="javascript://" onclick="photoGallery.show();">Slide show</a></li>
-          </xsl:when>
-          <xsl:otherwise>
-            <li class="photos_item"><a class="photos_link" href="{$path}fotografier/">Flere fotos</a></li>
-            <li class="photos_item"><a class="photos_link" href="javascript://" onclick="photoGallery.show();">Lysbilleder</a></li>
-          </xsl:otherwise>
-        </xsl:choose>
-        </ul>
-      </div>
-      <div class="photos_photo photos_photo-right"><xsl:comment/></div>
-      
-    <script type="text/javascript">
-        require(['hui.ui.ImageViewer','op'],function() {
-            var images = [];
-            <xsl:for-each select="//imagegallery:imagegallery//o:object">
-                images.push({
-                    id : <xsl:value-of select="@id"/>,
-                    width : <xsl:value-of select="o:sub/i:image/i:width"/>,
-                    height : <xsl:value-of select="o:sub/i:image/i:height"/>,
-                    text : '<xsl:value-of select="o:note"/>'
-                })
-            </xsl:for-each>
-
-            window.photoGallery = hui.ui.ImageViewer.create({
-                maxWidth : 2000,
-                maxHeight : 2000,
-                perimeter : 40,
-                sizeSnap : 10,
-                images : images,
-                listener : op.imageViewerDelegate
-            });
-        });
-    </script>
-  </div>
-</xsl:template> 
-
-<xsl:template match="widget:reel">
-  <section id="reel">
-    <div class="content" id="reelContent">
-      <div class="holes"><xsl:comment/></div>
-      <div class="frames">
-          <figure class="frame1"><xsl:comment/></figure>
-          <figure class="frame2"><xsl:comment/></figure>
-          <figure class="frame3"><xsl:comment/></figure>
-          <figure class="frame4"><xsl:comment/></figure>
-          <figure class="frame5"><xsl:comment/></figure>
-          <figure class="frame6"><xsl:comment/></figure>
-          <figure class="frame7"><xsl:comment/></figure>
-          <figure class="frame8"><xsl:comment/></figure>
-      </div>
-      <div class="holes"><xsl:comment/></div>
-    </div>
-  </section>
-</xsl:template>
 
 <xsl:template match="widget:movies">
   <div class="movies block">
@@ -261,34 +178,6 @@
 
 <xsl:template match="widget:movies//widget:br"><br/></xsl:template>
 
-<xsl:template match="widget:video">
-  <section id="video">
-      <a name="movies"><xsl:comment/></a>
-      <article>
-          <xsl:choose>
-              <xsl:when test="//p:page/p:meta/p:language='en'">
-                  <h2>TV<span> · </span>Adds<span> · </span>Movies</h2>
-                  <p><a href="{$path}en/movie-clips/"><span>More clips &#8250;</span></a></p>
-              </xsl:when>
-              <xsl:otherwise>
-                  <h2>TV<span> · </span>reklame<span> · </span>film</h2>
-                  <p><a href="{$path}film/"><span>Flere filmklip &#8250;</span></a></p>
-              </xsl:otherwise>
-          </xsl:choose>
-      </article>
-      <div class="teaser" id="video_poster">
-          <a class="icon-play"><xsl:comment/></a>
-          <xsl:choose>
-              <xsl:when test="//p:page/p:meta/p:language='en'">
-                  <p>Clip from <span>The Bridge II</span></p>
-              </xsl:when>
-              <xsl:otherwise>
-                  <p>Klip fra <span>Broen II</span></p>
-              </xsl:otherwise>
-          </xsl:choose>
-      </div>
-  </section>
-</xsl:template>
 
 <xsl:template match="widget:theater">
   <div class="theater js-theater" id="theater">

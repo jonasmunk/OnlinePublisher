@@ -26,6 +26,11 @@ body
 	font-family: $text-font;
 	font-weight: 300;
 	background: #fff;
+	@include transition(background-color .5s ease-out);
+
+  &.is-dark {
+  	background-color: #000;
+  }
 }
 
 @media screen and (max-width: 700px) {
