@@ -314,7 +314,7 @@ function displayRows($pageId) {
 	foreach ($structure as $row) {
     echo '<div class="editor_row_container"';
 		if ($row['spacing']) {
-		  echo 'margin: -'.$spacing.';';
+		  echo 'style="margin: -'.$row['spacing'].';"';
 		}
     echo '>';
     echo '<table class="editor_row" border="0" width="100%" cellpadding="0" cellspacing="0" id="row'.$row['id'].'" style="';
@@ -325,7 +325,7 @@ function displayRows($pageId) {
 			echo 'margin-bottom: '.$row['bottom'].';';
 		}
 		if ($row['spacing']) {
-		  echo 'border-spacing: '.$spacing.';';
+		  echo 'border-spacing: '.$row['spacing'].';';
 		}
 		echo '"><tr>';
 		displayColumns($row);
