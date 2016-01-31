@@ -469,22 +469,14 @@ hui.style.set(e.container,{height:e.container.clientHeight+"px",position:"relati
 var e=this.options.elements
 this.pos==e.length&&(this.pos=0)
 var i=e[this.pos]
-hui.style.setOpacity(i,0),hui.style.set(i,{display:"block",zIndex:this.z}),hui.animate(i,"opacity",1,this.options.transition,{ease:hui.ease.slowFastSlow,onComplete:function(){window.setTimeout(this.next.bind(this),this.options.wait)}.bind(this)})}},window.define&&define("op.Dissolver")
-var ctrl={attach:function(){var e=hui.find("nav"),i={"/":"top","/cv/":"about","":"theater","/fotografier/":"photos","/kommunikation/":"communication","/film/":"movies","/en/":"top","/en/cv/":"about","":"theater","/en/photos/":"photos","/en/communication-training/":"communication","/en/movie-clips/":"movies"}
-hui.listen(e,"click",function(e){e=hui.event(e)
-var t=e.findByTag("a")
-if(t){var n=i[t.getAttribute("data-path")]
+hui.style.setOpacity(i,0),hui.style.set(i,{display:"block",zIndex:this.z}),hui.animate(i,"opacity",1,this.options.transition,{ease:hui.ease.slowFastSlow,onComplete:function(){window.setTimeout(this.next.bind(this),this.options.wait)}.bind(this)})}},window.define&&define("op.Dissolver"),hui.onReady(function(){var e={"/":"top","/cv/":"about","":"theater","/fotografier/":"photos","/kommunikation/":"communication","/film/":"movies","/en/":"top","/en/cv/":"about","":"theater","/en/photos/":"photos","/en/communication-training/":"communication","/en/movie-clips/":"movies"},i=hui.find("nav")
+hui.listen(i,"click",function(i){i=hui.event(i)
+var t=i.findByTag("a")
+if(t){var n=e[t.getAttribute("data-path")]
 if(!n)return
-for(var o=hui.get.byTag(document.body,"a"),s=0;s<o.length;s++)if(n==o[s].getAttribute("name"))return e.stop(),void hui.window.scrollTo({element:o[s].parentNode,duration:1e3,top:"theater"==n?40:140})}}),hui.listen("handmade","click",function(e){hui.stop(e)
+for(var o=hui.get.byTag(document.body,"a"),s=0;s<o.length;s++)if(n==o[s].getAttribute("name"))return i.stop(),void hui.window.scrollTo({element:o[s].parentNode,duration:1e3,top:"theater"==n?40:140})}}),hui.listen("handmade","click",function(e){hui.stop(e)
 var i=hui.get("humanise")
-i.style.display="block",window.setTimeout(function(){hui.cls.add(i,"visible")})})
-var t=hui.find(".theater"),n=hui.find(".theater_photo",t),o=hui.find(".theater_stages",t),s=hui.window.getViewWidth()
-if(hui.browser.animation||(hui.style.setOpacity(n,0),hui.style.setOpacity(o,0)),t){var a=!1
-hui.parallax.listen({element:t,$scroll:function(e){var i=e>.2&&.8>e&&s>700
-a!=i&&(hui.cls.set(document.body,"is-full",i),hui.browser.animation?hui.cls.set(document.body,"is-dark",i):hui.animate({node:document.body,css:{"background-color":i?"#000":"#fff"},duration:1e3}),a=i)
-var u=e>.3&&.7>e
-this.shown!=u&&(u&&hui.animate({node:n,css:{opacity:u?1:0},ease:hui.ease.flicker,duration:3e3,$complete:function(){hui.browser.animation?hui.cls.set(t,"is-final",e>0&&1>e):hui.animate({node:o,css:{opacity:u?1:0},ease:hui.ease.slowFast,duration:5e3})}}),this.shown=u)}}),hui.parallax.listen({$resize:function(e,i){t.style.height=e>700?Math.round(.8*i)+"px":"",hui.browser.mediaQueries||hui.cls.set(document.body,"small",1200>e),s=e}})}}}
-hui.onReady(ctrl.attach.bind(ctrl)),require(["hui"],function(e){var i=function(i){this.element=i.element,this.key=this.element.getAttribute("data-video"),e.listen(this.element,"click",this._click.bind(this))}
+i.style.display="block",window.setTimeout(function(){hui.cls.add(i,"visible")})})}),require(["hui"],function(e){var i=function(i){this.element=i.element,this.key=this.element.getAttribute("data-video"),e.listen(this.element,"click",this._click.bind(this))}
 i.prototype={_click:function(){this._moveTop(),i.active&&i.active.disable()
 var t="http://www.youtube.com/embed/"+this.key,n='<iframe class="movies_iframe" width="640" height="480" src="'+t+'?autoplay=1" frameborder="0" allowfullscreen="allowfullscreen"></iframe>'
 e.build("div",{"class":"movies_player",html:n,parent:this.element}),i.active=this},_moveTop:function(){var i=this.element.parentNode,t=i.parentNode,n=e.find(".movies_item",t)
@@ -493,8 +485,13 @@ e.dom.remove(i)}}
 for(var t=e.get.byClass(document.body,"js-movie-poster"),n=0;n<t.length;n++)new i({element:t[n]})}),require(["hui"],function(e){var i=function(e){return(2*e-1)*(2*e-1)*-1+1}
 e.onReady(function(){var t=e.get.byClass(document.body,"js-photo")
 e.each(t,function(t){var n=e.find(".js-photo-effect",t),o=e.position.get(t),s={width:t.clientWidth,height:t.clientHeight}
-e.ui.listen({$$afterResize:function(){o=e.position.get(t),s={width:t.clientWidth,height:t.clientHeight}}}),e.listen(window,"mousemove",function(t){t=e.event(t)
+e.ui.listen({$$afterResize:function(){o=e.position.get(t),s={width:t.clientWidth,height:t.clientHeight}}}),e.listen(t,"click",function(i){e.stop(i),e.ui.get("photoGallery").showById(t.getAttribute("data-id"))}),e.listen(window,"mousemove",function(t){t=e.event(t)
 var a=(t.getLeft()-o.left)/s.width,u=(t.getTop()-o.top)/s.height
 n.style.marginLeft=20*a+"px",n.style.marginTop=20*u+"px"
 var r=e.between(0,i(a),1)*e.between(0,i(u),1)
-n.style.opacity=r})})})})
+n.style.opacity=r})})})}),require(["hui"],function(e){var i=e.find(".theater"),t=e.find(".theater_photo",i),n=e.find(".theater_stages",i)
+if(i){var o=e.window.getViewWidth(),s=!1
+e.browser.animation||(e.style.setOpacity(t,0),e.style.setOpacity(n,0)),e.parallax.listen({element:i,$scroll:function(a){var u=a>.2&&.8>a&&o>700
+s!=u&&(e.cls.set(document.body,"is-full",u),e.browser.animation?e.cls.set(document.body,"is-dark",u):e.animate({node:document.body,css:{"background-color":u?"#000":"#fff"},duration:1e3}),s=u)
+var r=a>.3&&.7>a
+this.shown!=r&&(r&&e.animate({node:t,css:{opacity:r?1:0},ease:e.ease.flicker,duration:3e3,$complete:function(){e.browser.animation?e.cls.set(i,"is-final",a>0&&1>a):e.animate({node:n,css:{opacity:r?1:0},ease:e.ease.slowFast,duration:5e3})}}),this.shown=r)}}),e.parallax.listen({$resize:function(t,n){i.style.height=t>700?Math.round(.8*n)+"px":"",e.browser.mediaQueries||e.cls.set(document.body,"small",1200>t),o=t}})}})
