@@ -6,7 +6,6 @@ require(['hui'],function(hui) {
 
   hui.onReady(function() {
     var photos = hui.get.byClass(document.body,'js-photo');
-    //photos = [photos[0]];
     hui.each(photos,function(photo) {
       var effect = hui.find('.js-photo-effect',photo);
       var pos = hui.position.get(photo);
@@ -17,6 +16,10 @@ require(['hui'],function(hui) {
           size = {width:photo.clientWidth,height:photo.clientHeight};
         }
       })
+      hui.listen(photo,'click',function(e) {
+        hui.stop(e);
+        hui.ui.get('photoGallery').showById(photo.getAttribute('data-id'));
+      });
       hui.listen(window,'mousemove',function(e) {
         e = hui.event(e);
         var horz = (e.getLeft() - pos.left) / size.width;

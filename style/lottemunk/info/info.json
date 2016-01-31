@@ -6,7 +6,8 @@
         "js" : [
             "style/lottemunk/js/lottemunk.js",
             "style/lottemunk/js/movies.js",
-            "style/lottemunk/js/photos.js"
+            "style/lottemunk/js/photos.js",
+            "style/lottemunk/js/theater.js"
         ],
         "css" : [
             "style/lottemunk/css/fonts.css",

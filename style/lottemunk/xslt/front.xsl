@@ -100,39 +100,39 @@
 <xsl:template match="widget:photography">
   
   <div class="photography block">
-      <a name="photos"><xsl:comment/></a>
+    <a name="photos"><xsl:comment/></a>
     <h2 class="block_title photography_title">Fotografier</h2>
     <span class="photography_item">
-    <span class="photography_photo photography_photo-left js-photo">
-      <span class="photography_effect photography_effect-alt js-photo-effect"><xsl:comment/></span>
-      <img class="photography_photo_img" src="{$path}services/images/?id={widget:photo[1]/@id}&amp;width=300&amp;height=480&amp;method=crop&amp;format=jpg"/>
-    </span>
+      <span class="photography_photo photography_photo-left js-photo" data-id="{widget:photo[1]/@id}">
+        <span class="photography_effect photography_effect-alt js-photo-effect"><xsl:comment/></span>
+        <img class="photography_photo_img" src="{$path}services/images/?id={widget:photo[1]/@id}&amp;width=300&amp;height=480&amp;method=crop&amp;sharpen=true&amp;format=jpg"/>
+      </span>
     </span>
 
 
     <span class="photography_item photography_item-center">
-    <span class="photography_photo photography_photo-center js-photo">
-      <span class="photography_effect js-photo-effect"><xsl:comment/></span>
-      <img class="photography_photo_img" src="{$path}services/images/?id={widget:photo[2]/@id}&amp;width=418&amp;height=626&amp;method=crop&amp;format=jpg"/>
-    </span>
+      <span class="photography_photo photography_photo-center js-photo" data-id="{widget:photo[2]/@id}">
+        <span class="photography_effect js-photo-effect"><xsl:comment/></span>
+        <img class="photography_photo_img" src="{$path}services/images/?id={widget:photo[2]/@id}&amp;width=418&amp;height=626&amp;method=crop&amp;sharpen=true&amp;format=jpg"/>
+      </span>
     </span>
 
 
     <span class="photography_item">
-    <span class="photography_photo photography_photo-right js-photo">
-      <span class="photography_effect photography_effect-alt js-photo-effect"><xsl:comment/></span>
-      <img class="photography_photo_img" src="{$path}services/images/?id={widget:photo[3]/@id}&amp;width=300&amp;height=480&amp;method=crop&amp;format=jpg"/>
-    </span>
+      <span class="photography_photo photography_photo-right js-photo" data-id="{widget:photo[3]/@id}">
+        <span class="photography_effect photography_effect-alt js-photo-effect"><xsl:comment/></span>
+        <img class="photography_photo_img" src="{$path}services/images/?id={widget:photo[3]/@id}&amp;width=300&amp;height=480&amp;method=crop&amp;sharpen=true&amp;format=jpg"/>
+      </span>
     </span>
 
     <p class="photography_actions">
       <xsl:choose>
         <xsl:when test="//p:page/p:meta/p:language='en'">
-          <a class="photography_action button" href="javascript://" onclick="photoGallery.show();">Slide show</a>
+          <a class="photography_action button" href="javascript://" onclick="hui.ui.get('photoGallery').show();">Slide show</a>
           <a class="photography_action button button-right" href="{$path}en/photos/">More photos</a>
         </xsl:when>
         <xsl:otherwise>
-          <a class="photography_action button" href="javascript://" onclick="photoGallery.show();">Lysbilleder</a>
+          <a class="photography_action button" href="javascript://" onclick="hui.ui.get('photoGallery').show();">Lysbilleder</a>
           <a class="photography_action button button-right" href="{$path}fotografier/">Flere fotos</a>
         </xsl:otherwise>
       </xsl:choose>
@@ -150,13 +150,14 @@
               })
           </xsl:for-each>
 
-          window.photoGallery = hui.ui.ImageViewer.create({
-              maxWidth : 2000,
-              maxHeight : 2000,
-              perimeter : 40,
-              sizeSnap : 10,
-              images : images,
-              listener : op.imageViewerDelegate
+          hui.ui.ImageViewer.create({
+            name : 'photoGallery',
+            maxWidth : 2000,
+            maxHeight : 2000,
+            perimeter : 40,
+            sizeSnap : 10,
+            images : images,
+            listener : op.imageViewerDelegate
           });
       });
   </script>
