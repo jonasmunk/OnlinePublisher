@@ -6469,11 +6469,31 @@ Poster = function() {
 	this.right = hui.get('poster_right');
 	this.progress = hui.get('poster_loader');
 	this.context = 'style/in2isoft/gfx/';
-	this.leftImages = ['poster_in2isoft_image.png','poster_publisher_image.png','poster_in2igui_image.png','poster_onlineobjects_image.png'];
-	this.rightImages = ['poster_in2isoft_text.png','poster_publisher_text.png','poster_in2igui_text.png','poster_onlineobjects_text.png'];
+	this.leftImages = [
+    'poster_in2isoft_image.png',
+    'poster_publisher_image.png',
+    'poster_in2igui_image.png',
+    'poster_onlineobjects_image.png'
+  ];
+	this.rightImages = [
+    'poster_in2isoft_text.png',
+    'poster_publisher_text.png',
+    'poster_in2igui_text.png',
+    'poster_onlineobjects_text.png'
+  ];
 
-	this.leftImages = ['poster_humanise_image.png','poster_editor_image.png','poster_hui_image.png','poster_onlineobjects_image.png'];
-	this.rightImages = ['poster_humanise_text.png','poster_editor_text.png','poster_hui_text.png','poster_onlineobjects_text.png'];
+	this.leftImages = [
+    'poster_humanise_image.png',
+    'poster_editor_image.png', 
+    'poster_hui_image.png',
+    'poster_onlineobjects_image.png'
+  ];
+	this.rightImages = [
+    'poster_humanise_text.png',
+    'poster_editor_text.png',
+    'poster_hui_text.png',
+    'poster_onlineobjects_text.png'
+  ];
 
 	this.links = ['om/','produkter/onlinepublisher/','teknologi/in2iGui/','produkter/onlineobjects/'];
 	this.leftPos = -1;
@@ -6498,7 +6518,9 @@ Poster.prototype.start = function() {
 			hui.get('poster_left_inner').style.backgroundImage='url(\''+base+self.leftImages[self.leftPos]+'\')';
 
 			self.rightPos++;
-			if (self.rightPos>=self.rightImages.length) self.rightPos=0;
+			if (self.rightPos>=self.rightImages.length) {
+        self.rightPos=0;
+      }
 			hui.get('poster_right_inner').style.backgroundImage='url(\''+base+self.rightImages[self.rightPos]+'\')';
 		},
 		{duration:1000},
@@ -6538,8 +6560,8 @@ require(['hui'],function() {
 
   SearchField.prototype = {
     nodes : {
-      icon : 'layout_search_icon',
-      text : 'layout_search_text'
+      icon : '.layout_search_icon',
+      text : '.layout_search_text'
     },
     _attach : function() {
       hui.listen(this.nodes.icon,'click',this._toggle.bind(this));

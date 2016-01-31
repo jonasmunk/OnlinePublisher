@@ -6473,8 +6473,8 @@ require(['hui'],function() {
 
   SearchField.prototype = {
     nodes : {
-      icon : 'layout_search_icon',
-      text : 'layout_search_text'
+      icon : '.layout_search_icon',
+      text : '.layout_search_text'
     },
     _attach : function() {
       hui.listen(this.nodes.icon,'click',this._toggle.bind(this));
