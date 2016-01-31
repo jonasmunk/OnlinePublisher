@@ -936,7 +936,7 @@ hui.collect = function(selectors,context) {
 /**
  * Builds an element with the «name» and «options»
  *
- * @param {String} name The name of the new element
+ * @param {String} name The name of the new element (. adds class)
  * @param {Object} options The options
  * @param {String} options.html Inner HTML
  * @param {String} options.text Inner text
@@ -949,9 +949,20 @@ hui.collect = function(selectors,context) {
  * @returns {Element} The new element
  */
 hui.build = function(name,options,doc) {
-	
 	doc = doc || document;
-    var e = doc.createElement(name);
+  var cls = '';
+	if (name.indexOf('.') !== -1) {
+	  var split = name.split('.');
+    name = split[0];
+    for (var i = 1; i < split.length; i++) {
+      if (i>1) {cls+=' '};
+      cls+=split[i];
+    }
+	}
+  var e = doc.createElement(name);
+  if (cls) {
+    e.className = cls;
+  }
 	if (options) {
 		for (var prop in options) {
 			if (prop=='text') {
@@ -1036,7 +1047,7 @@ hui.position = {
 	      top += element.scrollTop  || 0;
 	      left += element.scrollLeft || 0;
 	      element = element.parentNode;
-		  if (element.tagName === 'HTML') {
+		  if (element && element.tagName === 'HTML') {
 			  break; // TODO Temporary hack - Chrome has the same scrollTop on html as on body
 		  }
 	    } while (element);
@@ -1317,15 +1328,18 @@ hui.cls = {
  * @param {Element} element The element to listen on
  * @param {String} type The event to listen for
  * @param {Function} listener The function to be called
- * @param {boolean} ?useCapture If the listener should "capture"
+ * @param {object} ?bindTo Bind the listener to it
  */
-hui.listen = function(element,type,listener,useCapture) {
+hui.listen = function(element,type,listener,bindTo) {
 	element = hui.get(element);
 	if (!element) {
 		return;
 	}
+  if (bindTo) {
+    listener = listener.bind(bindTo)
+  }
 	if(document.addEventListener) {
-		element.addEventListener(type,listener,useCapture ? true : false);
+		element.addEventListener(type,listener);
 	} else {
 		element.attachEvent('on'+type, listener);
 	}
@@ -2036,13 +2050,22 @@ hui.effect = {
 	 * @param {Object} options {element : «Element», duration : «milliseconds» }
 	 */
 	shake : function(options) {
-		var e = hui.ui.getElement(options.element);
-		hui.cls.add(options.element,'hui_effect_shake');
+    this._do(options.element,'hui_effect_shake',options.duration || 1000);
+	},
+	/**
+	 * Make an element shake
+	 * @param {Object} options {element : «Element», duration : «milliseconds» }
+	 */
+	tada : function(options) {
+    this._do(options.element,'hui_effect_tada',1000);
+	},
+  _do : function(e,cls,time) {
+    e = hui.ui.getElement(e);
+		hui.cls.add(e,cls);
 		window.setTimeout(function() {
-			hui.cls.remove(options.element,'hui_effect_shake');
-		},options.duration || 1000);
-	
-	}
+			hui.cls.remove(e,cls);
+		},time);    
+  }
 };
 
 
@@ -9577,8 +9600,7 @@ hui.ui.BoundPanel.prototype = {
 	addSpace : function(height) {
 		this.add(hui.build('div',{style:'font-size:0px;height:'+height+'px'}));
 	},
-	/** @private */
-	getDimensions : function() {
+	_getDimensions : function() {
 		var width, height;
 		if (this.element.style.display=='none') {
 			this.element.style.visibility='hidden';
@@ -9593,10 +9615,22 @@ hui.ui.BoundPanel.prototype = {
 		}
 		return {width:width,height:height};
 	},
+	$$childSizeChanged : function() {
+    this._rePosition();
+	},
+  $$layout : function() {
+    this._rePosition();
+  },
+  _rePosition : function() {
+    if (this._latest) {
+      this.position(this._latest);
+    }    
+  },
 	/** Position the panel at a node
 	 * @param {Node} node The node the panel should be positioned at 
 	 */
 	position : function(options) {
+    this._latest = options;
 		var node,
       position,
       nodeOffset,
@@ -9608,34 +9642,32 @@ hui.ui.BoundPanel.prototype = {
 			position = options.position;
 		} else if (options.rect) {
 			position = options.position;
-            node = {
-                offsetWidth : options.rect.width,
-                offsetHeight : options.rect.height
-            };
-            nodeOffset = {
-                left : options.rect.left, 
-                top : options.rect.top
-            };
-            nodeScrollOffset = {left: 0, top: 0};
+      node = {
+        offsetWidth : options.rect.width,
+        offsetHeight : options.rect.height
+      };
+      nodeOffset = {
+        left : options.rect.left, 
+        top : options.rect.top
+      };
+      nodeScrollOffset = {left: 0, top: 0};
 		} else {
 			node = hui.get(options);
 		}
 		
-        if (!nodeOffset) {
-            nodeOffset = {left:hui.position.getLeft(node),top:hui.position.getTop(node)};            
-        }
-        if (!nodeScrollOffset) {
-            nodeScrollOffset = hui.position.getScrollOffset(node);
-        }
+    if (!nodeOffset) {
+      nodeOffset = {left:hui.position.getLeft(node),top:hui.position.getTop(node)};            
+    }
+    if (!nodeScrollOffset) {
+      nodeScrollOffset = hui.position.getScrollOffset(node);
+    }
         
 		var windowScrollOffset = {left:hui.window.getScrollLeft(),top:hui.window.getScrollTop()};
 		var nodeLeft = nodeOffset.left-windowScrollOffset.left+hui.window.getScrollLeft();
 		var nodeWidth = node.clientWidth || node.offsetWidth;
 		var nodeHeight = node.clientHeight || node.offsetHeight;
         
-		
-        
-		var panelDimensions = this.getDimensions();
+		var panelDimensions = this._getDimensions();
 		var viewportWidth = hui.window.getViewWidth();
 		var viewportHeight = hui.window.getViewHeight();
         
@@ -9724,10 +9756,10 @@ hui.ui.BoundPanel.prototype = {
 			this.element.style.left = left + 'px';
 		}
 	},
-    destroy : function() {
+  destroy : function() {
 		hui.ui.hideCurtain(this);
-        hui.dom.remove(this.element);
-    }
+    hui.dom.remove(this.element);
+  }
 };
 
 /**
@@ -13237,10 +13269,12 @@ hui.ui.Fragment.prototype = {
 	},
 	setHTML : function(html) {
 		this.element.innerHTML = html;
+    this.fireSizeChange();
 	},
 	setContent : function(htmlWidgetOrNode) {
 		this.element.innerHTML = '';
 		this.element.appendChild(htmlWidgetOrNode);
+    this.fireSizeChange();
 	}
 }
 
@@ -22532,6 +22566,37 @@ hui.ui.Graph.Raphael = {
 	}
 }
 
+hui.onReady(function() {
+  var configs = document.getElementsByTagName('noscript');
+  for (var i = 0; i < configs.length; i++) {
+    var type = configs[i].getAttribute('data-type');
+    if (type) {
+      var options = hui.string.fromJSON(configs[i].textContent);
+      options.element = configs[i].parentNode;
+      new hui.ui[type](options);
+    }
+  }
+})
+
+hui.onReady(function() {
+  var configs = document.querySelectorAll('*[data-hui]');
+  for (var i = 0; i < configs.length; i++) {
+    var type = configs[i].getAttribute('data-hui');
+    if (type) {
+      var children = configs[i].childNodes;
+      var options = {};
+      for (var j = children.length - 1; j >= 0; j--) {
+        if (children[j].nodeType == 8) {
+          options = hui.string.fromJSON(children[j].nodeValue);
+          break;
+        }
+      }
+      options.element = configs[i];
+      new hui.ui[type](options);
+    }
+  }
+})
+
 if (window.hui===undefined) {
     hui = {};
 }
@@ -22984,6 +23049,7 @@ hui.ui.Pages.prototype = {
                 }
                 hui.ui.reLayout();
                 hui.ui.callVisible(this);
+            		this.fireSizeChange();
             }.bind(this)
         });
 	}

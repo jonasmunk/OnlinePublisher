@@ -170,8 +170,7 @@ hui.ui.BoundPanel.prototype = {
 	addSpace : function(height) {
 		this.add(hui.build('div',{style:'font-size:0px;height:'+height+'px'}));
 	},
-	/** @private */
-	getDimensions : function() {
+	_getDimensions : function() {
 		var width, height;
 		if (this.element.style.display=='none') {
 			this.element.style.visibility='hidden';
@@ -186,10 +185,22 @@ hui.ui.BoundPanel.prototype = {
 		}
 		return {width:width,height:height};
 	},
+	$$childSizeChanged : function() {
+    this._rePosition();
+	},
+  $$layout : function() {
+    this._rePosition();
+  },
+  _rePosition : function() {
+    if (this._latest) {
+      this.position(this._latest);
+    }    
+  },
 	/** Position the panel at a node
 	 * @param {Node} node The node the panel should be positioned at 
 	 */
 	position : function(options) {
+    this._latest = options;
 		var node,
       position,
       nodeOffset,
@@ -201,34 +212,32 @@ hui.ui.BoundPanel.prototype = {
 			position = options.position;
 		} else if (options.rect) {
 			position = options.position;
-            node = {
-                offsetWidth : options.rect.width,
-                offsetHeight : options.rect.height
-            };
-            nodeOffset = {
-                left : options.rect.left, 
-                top : options.rect.top
-            };
-            nodeScrollOffset = {left: 0, top: 0};
+      node = {
+        offsetWidth : options.rect.width,
+        offsetHeight : options.rect.height
+      };
+      nodeOffset = {
+        left : options.rect.left, 
+        top : options.rect.top
+      };
+      nodeScrollOffset = {left: 0, top: 0};
 		} else {
 			node = hui.get(options);
 		}
 		
-        if (!nodeOffset) {
-            nodeOffset = {left:hui.position.getLeft(node),top:hui.position.getTop(node)};            
-        }
-        if (!nodeScrollOffset) {
-            nodeScrollOffset = hui.position.getScrollOffset(node);
-        }
+    if (!nodeOffset) {
+      nodeOffset = {left:hui.position.getLeft(node),top:hui.position.getTop(node)};            
+    }
+    if (!nodeScrollOffset) {
+      nodeScrollOffset = hui.position.getScrollOffset(node);
+    }
         
 		var windowScrollOffset = {left:hui.window.getScrollLeft(),top:hui.window.getScrollTop()};
 		var nodeLeft = nodeOffset.left-windowScrollOffset.left+hui.window.getScrollLeft();
 		var nodeWidth = node.clientWidth || node.offsetWidth;
 		var nodeHeight = node.clientHeight || node.offsetHeight;
         
-		
-        
-		var panelDimensions = this.getDimensions();
+		var panelDimensions = this._getDimensions();
 		var viewportWidth = hui.window.getViewWidth();
 		var viewportHeight = hui.window.getViewHeight();
         
@@ -317,8 +326,8 @@ hui.ui.BoundPanel.prototype = {
 			this.element.style.left = left + 'px';
 		}
 	},
-    destroy : function() {
+  destroy : function() {
 		hui.ui.hideCurtain(this);
-        hui.dom.remove(this.element);
-    }
+    hui.dom.remove(this.element);
+  }
 };
