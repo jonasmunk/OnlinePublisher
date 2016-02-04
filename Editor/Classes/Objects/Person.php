@@ -272,12 +272,12 @@ class Person extends Object {
 	
 	function addCustomSearch($query,&$parts) {
 		$custom = $query->getCustom();
-		if ($custom['group']>0) {
+		if (isset($custom['group'])) {
 			$parts['tables'][] = 'persongroup_person';
 			$parts['limits'][] = 'persongroup_person.person_id = object.id';
 			$parts['limits'][] = 'persongroup_person.persongroup_id = '.Database::int($custom['group']);
 		}
-		if ($custom['mailinglist']>0) {
+		if (isset($custom['mailinglist'])) {
 			$parts['tables'][] = 'person_mailinglist';
 			$parts['limits'][] = 'person_mailinglist.person_id = object.id';
 			$parts['limits'][] = 'person_mailinglist.mailinglist_id = '.Database::int($custom['mailinglist']);
