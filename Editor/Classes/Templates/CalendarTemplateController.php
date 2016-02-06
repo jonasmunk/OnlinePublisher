@@ -86,7 +86,7 @@ class CalendarTemplateController extends TemplateController
 			$events = array_merge($events,Event::getSimpleEvents($eventQuery));
 		}
         Database::free($result);
-		usort($events,array('Calendarsource','_startDateComparator'));
+		usort($events,'Calendarsource::_startDateComparator');
 		return $events;
 	}
 

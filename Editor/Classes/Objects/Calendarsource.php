@@ -253,7 +253,7 @@ class Calendarsource extends Object {
 		$events = array();
 		$sql = "select id,summary,description,url,recurring,uniqueid,location,unix_timestamp(startdate) as startdate,unix_timestamp(enddate) as enddate,`duration`".
 		" from calendarsource_event where calendarsource_id=".$this->id." and recurring=0";
-		if ($query['startDate'] && $query['endDate']) {
+		if (isset($query['startDate']) && isset($query['endDate'])) {
 			$sql.=" and not (startdate>".Database::datetime($query['endDate'])." or endDate<".Database::datetime($query['startDate']).")";
 		}
 		$sql.=" order by startdate desc";
@@ -284,8 +284,8 @@ class Calendarsource extends Object {
 	}
 	
 	function _analyzeReccursion($row, &$events,$query) {
-		// Skip if until<startdate
-		if ($row['until']>0 && $row['until']<$query['startDate']) {
+		// Skip if until < startdate
+		if ($row['until'] > 0 && $row['until'] < @$query['startDate']) {
 			return;
 		}
 		if ($row['frequency']=='DAILY' || $row['frequency']=='WEEKLY' || $row['frequency']=='MONTHLY' || $row['frequency']=='YEARLY') {
@@ -297,13 +297,13 @@ class Calendarsource extends Object {
 					$futureEvents = $this->_createFutureEvents($row,$row['frequency'],$i);
 					foreach ($futureEvents as $futureEvent) {
 						$event = $this->_buildEvent($futureEvent);
-						if ($event['startDate']>$query['endDate']) {
+						if ($event['startDate'] > @$query['endDate']) {
 							$running = false;
 						} elseif ($row['count']>0 && $row['count']<=$i) {
 							$running = false;
 						} elseif ($row['until']>0 && $row['until']<$event['startDate']) {
 							$running = false;
-						} elseif ($event['startDate']>$query['startDate']) {
+						} elseif ($event['startDate'] > @$query['startDate']) {
 							$events[] = $event;
 						}
 					}
@@ -352,7 +352,7 @@ class Calendarsource extends Object {
 		usort($events,array('Calendarsource','_startDateComparator'));
 	}
 	
-	function _startDateComparator($a, $b) {
+	static function _startDateComparator($a, $b) {
 		$a = $a['startDate'];
 		$b = $b['startDate'];
 		if (!$a) $a=0;
