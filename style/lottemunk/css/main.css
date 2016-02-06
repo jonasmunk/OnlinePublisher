@@ -77,43 +77,35 @@
   }
 
   .header_menu_link {
-    padding: 0 10px;
+    padding: 0 15px;
     font-size: 18px;
   }
 }
 @media screen and (min-width: 760px) {
-  .header_menu_link {
-    font-size: 20px;
-    height: 44px;
-    line-height: 46px;
-  }
-}
-@media screen and (min-width: 960px) {
   .header {
-    padding-top: 70px;
+    padding-top: 50px;
   }
 
   .header_menu {
-    padding-left: 300px;
+    padding-left: 265px;
     text-align: left;
     border-top: none;
     margin: 0;
   }
 
-  .header_title {
+  .header_logo {
     position: absolute;
     left: 20px;
-    top: 30px;
-    width: 254px;
-    font-size: 48px;
+    top: 20px;
+  }
+
+  .header_title {
+    font-size: 42px;
   }
 
   .header_job {
-    position: absolute;
-    left: 20px;
-    width: 254px;
-    font-size: 24px;
-    top: 85px;
+    font-size: 20px;
+    margin: 6px 0 0;
   }
 
   .header_menu_link {
@@ -121,7 +113,7 @@
     font-weight: 200;
     height: 50px;
     line-height: 52px;
-    padding: 0 20px;
+    padding: 0 15px;
   }
   .header_menu_link-selected {
     font-weight: 700;
@@ -136,6 +128,33 @@
     position: absolute;
     background: #733392;
     margin: 0 0 -8px -3px;
+  }
+}
+@media screen and (min-width: 960px) {
+  .header_logo {
+    left: 30px;
+  }
+
+  .header {
+    padding-top: 70px;
+  }
+
+  .header_menu_link {
+    padding: 0 20px;
+  }
+
+  .header_menu {
+    padding-left: 300px;
+  }
+
+  .header_title {
+    font-size: 48px;
+    margin-top: 10px;
+  }
+
+  .header_job {
+    font-size: 24px;
+    margin: 9px 0 0;
   }
 }
 .layout_content {
@@ -186,14 +205,6 @@
     margin: 0 auto;
     position: relative;
   }
-  .layout_content .part_section_header_1 {
-    padding-right: 180px;
-  }
-}
-@media screen and (min-width: 900px) {
-  .layout_content {
-    padding: 60px 20px;
-  }
 }
 @media screen and (min-width: 960px) {
   .layout_languages {
@@ -203,7 +214,7 @@
 }
 .layout_footer {
   text-align: center;
-  padding: 20px 0 40px;
+  padding: 40px 0;
   background: #fff;
 }
 
@@ -237,9 +248,9 @@
   -moz-background-size: cover;
   background-size: cover;
   overflow: hidden;
-  -webkit-transition: height 1s cubic-bezier(0.48, 0, 0.21, 1);
   -moz-transition: height 1s cubic-bezier(0.48, 0, 0.21, 1);
-  -ms-transition: height 1s cubic-bezier(0.48, 0, 0.21, 1);
+  -o-transition: height 1s cubic-bezier(0.48, 0, 0.21, 1);
+  -webkit-transition: height 1s cubic-bezier(0.48, 0, 0.21, 1);
   transition: height 1s cubic-bezier(0.48, 0, 0.21, 1);
 }
 .humanise.visible {
@@ -276,9 +287,9 @@ body {
   font-family: "Merriweather", Georgia, "Book Antiqua", "Palatino", Times, serif;
   font-weight: 300;
   background: #fff;
-  -webkit-transition: background-color 0.5s ease-out;
   -moz-transition: background-color 0.5s ease-out;
-  -ms-transition: background-color 0.5s ease-out;
+  -o-transition: background-color 0.5s ease-out;
+  -webkit-transition: background-color 0.5s ease-out;
   transition: background-color 0.5s ease-out;
 }
 body.is-dark {

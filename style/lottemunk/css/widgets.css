@@ -154,25 +154,21 @@
 
 .about_icons_item {
   display: inline-block;
+  vertical-align: top;
 }
 
 .about_icon {
-  -webkit-transition: all 0.1s ease-in-out;
-  -moz-transition: all 0.1s ease-in-out;
-  -ms-transition: all 0.1s ease-in-out;
-  transition: all 0.1s ease-in-out;
-  margin-left: 10px;
-  margin-right: 10px;
+  margin: 0 5px;
   display: inline-block;
-  width: 60px;
-  height: 60px;
+  width: 54px;
+  height: 54px;
   border-radius: 50%;
   border: 1px solid #ccc;
   text-align: center;
   text-decoration: none;
   color: #733392;
   cursor: pointer;
-  overflow: hidden;
+  position: relative;
 }
 .about_icon:hover {
   background: #eee;
@@ -210,12 +206,50 @@
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
+.about_icon-youtube:before {
+  font-family: 'Lotte-Munk';
+  content: "";
+  speak: none;
+  font-weight: normal;
+  font-variant: normal;
+  text-transform: none;
+  line-height: 1;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
 .about_icon:before {
   font-size: 30px;
-  line-height: 60px;
+  line-height: 54px;
 }
 .about_icon-wikipedia:before {
-  line-height: 66px;
+  line-height: 60px;
+}
+.about_icon-youtube:before {
+  font-size: 32px;
+  line-height: 52px;
+}
+
+.about_icon_text {
+  font-size: 14px;
+  position: absolute;
+  left: 50%;
+  top: 100%;
+  width: 90px;
+  margin: 5px 0 0 -45px;
+  background: #77687D;
+  color: #fff;
+  border-radius: 30px;
+  line-height: 24px;
+  height: 22px;
+  opacity: 0;
+  font-weight: 400;
+  -moz-transition: opacity 0.3s;
+  -o-transition: opacity 0.3s;
+  -webkit-transition: opacity 0.3s;
+  transition: opacity 0.3s;
+}
+.about_icon:hover .about_icon_text {
+  opacity: 1;
 }
 
 .about_contact {
@@ -285,6 +319,10 @@
     margin: 0 0 0 10px;
   }
 
+  .about_button {
+    padding: 0 15px;
+  }
+
   .about_text {
     padding: 0;
     font-size: 18px;
@@ -295,7 +333,7 @@
   .about_icons {
     margin: 0;
     text-align: right;
-    margin-top: -50px;
+    margin-top: -48px;
   }
 
   .about_contact {
@@ -307,6 +345,31 @@
     left: 20px;
     top: 200px;
     padding: 0;
+  }
+}
+@media screen and (min-width: 860px) {
+  .about_button {
+    padding: 0 20px;
+  }
+
+  .about_icons {
+    margin-top: -52px;
+  }
+
+  .about_icon {
+    width: 60px;
+    height: 60px;
+  }
+  .about_icon:before {
+    font-size: 30px;
+    line-height: 60px;
+  }
+  .about_icon-wikipedia:before {
+    line-height: 66px;
+  }
+  .about_icon-youtube:before {
+    font-size: 36px;
+    line-height: 58px;
   }
 }
 @media screen and (min-width: 960px) {
@@ -488,11 +551,11 @@
   content: '';
   background-image: url("../gfx/play.svg");
   background-repeat: no-repeat;
-  width: 20px;
-  height: 20px;
+  width: 12px;
+  height: 12px;
   position: absolute;
-  right: 10px;
-  bottom: 10px;
+  right: 5px;
+  bottom: 5px;
 }
 .movies_item:first-child .movies_video {
   padding-bottom: 55%;
@@ -540,7 +603,7 @@
 }
 
 .movies_more {
-  margin: 5px 5px 0;
+  margin: 5px 1px 0;
   font-size: 0;
 }
 
@@ -550,13 +613,13 @@
   vertical-align: top;
   box-sizing: border-box;
   -moz-box-sizing: border-box;
-  padding: 5px 5px 0;
+  padding: 2px 1px 0;
 }
 .movies_item:first-child {
   display: block;
   width: auto;
-  padding: 0 0 5px;
-  margin: 0 -5px;
+  padding: 0;
+  margin: 0 -1px;
 }
 
 .movies_actions {
@@ -565,11 +628,31 @@
 
 .movies_button {
   border-color: #d6d6cd;
-  background: none;
+  background: #F3F5F1;
   color: #01507b;
   margin: 0 5px;
 }
 
+@media screen and (min-width: 400px) {
+  .movies_more {
+    margin: 5px 5px 0;
+  }
+
+  .movies_item {
+    padding: 5px 5px 0;
+  }
+  .movies_item:first-child {
+    padding: 0 0 5px;
+    margin: 0 -5px;
+  }
+
+  .movies_video:before {
+    width: 20px;
+    height: 20px;
+    right: 10px;
+    bottom: 10px;
+  }
+}
 @media screen and (min-width: 500px) {
   .movies_video_title {
     font-size: 14px;
@@ -587,6 +670,10 @@
     padding: 40px 0;
   }
 
+  .movies_title {
+    margin: 0 0 30px;
+  }
+
   .movies_text {
     font-size: 18px;
   }
@@ -601,6 +688,10 @@
   .movies_item:first-child {
     padding: 0 0 10px;
     margin: 0 -10px;
+  }
+
+  .movies_actions {
+    margin: 40px 0 0;
   }
 }
 @media screen and (min-width: 1000px) {

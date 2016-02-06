@@ -1,4 +1,5 @@
 @import '../../basic/scss/mixins';
+@import "compass/css3/transition";
 
 $header-font: 'Lora',Georgia,"Book Antiqua", "Palatino",Times,serif;
 $text-font: 'Merriweather',Georgia,"Book Antiqua", "Palatino",Times,serif;
@@ -9,7 +10,8 @@ $icons : (
   right : '\e902',
   linkedin : '\e000',
   wikipedia : '\e003',
-  facebook : '\e002'
+  facebook : '\e002',
+  youtube : '\e904'
 );
 
 @mixin icon-before($icon) {

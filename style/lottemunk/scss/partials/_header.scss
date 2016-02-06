@@ -83,48 +83,37 @@
 	}
 
   .header_menu_link {
-    padding: 0 10px;
+    padding: 0 15px;
     font-size: 18px;
   }
 }
 
-
 @include when (760px) {
-
-  .header_menu_link {
-    font-size: 20px;
-    height: 44px;
-    line-height: 46px;
-  }
-}
-
-@include when (960px) {
   
   .header {
-    padding-top: 70px;
+    padding-top: 50px;
   }
 
   .header_menu {
-    padding-left: 300px;
+    padding-left: 265px;
     text-align: left;
     border-top: none;
     margin: 0;
   }
   
-  .header_title {
+  .header_logo {
     position: absolute;
     left: 20px;
-    top: 30px;
-    width: 254px;
-    font-size: 48px;
+    top: 20px;
+  }
+  
+  .header_title {
+    font-size: 42px;
   }
   
   .header_job {
-    position: absolute;
-    left: 20px;
-    width: 254px;
-    font-size: 24px;
-    top: 85px;
+    font-size: 20px;
+    margin: 6px 0 0;
   }
 
   .header_menu_link {
@@ -132,7 +121,7 @@
     font-weight: 200;
     height: 50px;
     line-height: 52px;
-    padding: 0 20px;
+    padding: 0 15px;
     
     &-selected {
       font-weight: 700;
@@ -149,5 +138,35 @@
         margin: 0 0 -8px -3px;
       }
     }
+  }
+}
+
+@include when (960px) {
+
+  
+  .header_logo {
+    left: 30px;
+  }
+  
+  .header {
+    padding-top: 70px;
+  }
+
+  .header_menu_link {
+    padding: 0 20px;
+  }
+  
+  .header_menu {
+    padding-left: 300px;
+  }
+  
+  .header_title {
+    font-size: 48px;
+    margin-top: 10px;
+  }
+  
+  .header_job {
+    font-size: 24px;
+    margin: 9px 0 0;
   }
 }

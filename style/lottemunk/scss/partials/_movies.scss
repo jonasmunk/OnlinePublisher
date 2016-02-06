@@ -50,11 +50,11 @@
       content: '';
       background-image: url('../gfx/play.svg');
       background-repeat: no-repeat;
-      width: 20px;
-      height: 20px;
+      width: 12px;
+      height: 12px;
       position: absolute;
-      right: 10px;
-      bottom: 10px;
+      right: 5px;
+      bottom: 5px;
     };
     
     .movies_item:first-child & {
@@ -106,7 +106,7 @@
   }
   
   .movies_more {
-    margin: 5px 5px 0;
+    margin: 5px 1px 0;
     font-size: 0;
   }
   
@@ -115,13 +115,13 @@
     width: 1/3 * 100%;
     vertical-align: top;
     @include border-box;
-    padding: 5px 5px 0;
+    padding: 2px 1px 0;
     
     &:first-child {
       display: block;
       width: auto;
-      padding: 0 0 5px;
-      margin: 0 -5px;
+      padding: 0;
+      margin: 0 -1px;
     }
   }
   
@@ -131,10 +131,36 @@
   
   .movies_button {
     border-color: #d6d6cd;
-    background: none;
+    background: #F3F5F1;
     color: #01507b;
     margin: 0 5px;
   }
+}
+
+@include when(400px) {
+  
+  .movies_more {
+    margin: 5px 5px 0;
+  }
+  
+  .movies_item {
+    padding: 5px 5px 0;
+    
+    &:first-child {
+      padding: 0 0 5px;
+      margin: 0 -5px;
+    }
+  }
+  
+  .movies_video {
+    &:before {
+      width: 20px;
+      height: 20px;
+      right: 10px;
+      bottom: 10px;
+    }
+  }
+  
 }
 
 @include when(500px) {
@@ -154,9 +180,14 @@
 }
 
 @include when(760px) {
-
+  
   .movies {
     padding: 40px 0;
+  }
+
+  
+  .movies_title {
+    margin: 0 0 30px;
   }
   
   .movies_text {
@@ -174,6 +205,10 @@
       padding: 0 0 10px;
       margin: 0 -10px;
     }
+  }
+
+  .movies_actions {
+    margin: 40px 0 0;
   }
 }
 

@@ -54,18 +54,6 @@
   	max-width: 900px;
   	margin: 0 auto;
   	position: relative;
-    
-    .part_section_header_1 {
-      padding-right: 180px;
-    }
-  }
-}
-
-@include when(900px) {
-
-  .layout_content
-  {
-  	padding: 60px 20px;
   }
 }
 

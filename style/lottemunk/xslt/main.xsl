@@ -76,7 +76,13 @@
 
 <xsl:template name="header">
 	<header class="header">
-    <a href="/" class="header_logo">
+    <a class="header_logo">
+      <xsl:attribute name="href">
+				<xsl:choose>
+					<xsl:when test="//p:page/p:meta/p:language='en'">/en/</xsl:when>
+					<xsl:otherwise>/</xsl:otherwise>
+				</xsl:choose>
+      </xsl:attribute>
   		<h1 id="title" class="header_title">Lotte Munk</h1>
   		<p id="job" class="header_job">
   			<xsl:choose>

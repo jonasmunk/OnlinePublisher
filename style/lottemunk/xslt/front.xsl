@@ -52,16 +52,33 @@
       </div>
     </div>
     <ul class="about_icons">
-      <li class="about_icons_item"><a class="about_icon about_icon-linkedin" href="http://dk.linkedin.com/pub/lotte-munk/18/473/554"><xsl:comment/></a></li>
+      <li class="about_icons_item">
+        <a class="about_icon about_icon-youtube" href="https://www.youtube.com/channel/UCkyzyp5M68jcfZ-phZdPX4Q/videos">
+          <span class="about_icon_text">YouTube</span>
+        </a>
+      </li>
+      <li class="about_icons_item">
+        <a class="about_icon about_icon-linkedin" href="http://dk.linkedin.com/pub/lotte-munk/18/473/554">
+          <span class="about_icon_text">LinkedIn</span>
+        </a>
+      </li>
       <xsl:choose>
         <xsl:when test="//p:page/p:meta/p:language='en'">
-          <li class="about_icons_item"><a class="about_icon about_icon-wikipedia" href="http://en.wikipedia.org/wiki/Lotte_Munk"><xsl:comment/></a></li>
+          <li class="about_icons_item"><a class="about_icon about_icon-wikipedia" href="http://en.wikipedia.org/wiki/Lotte_Munk">
+            <span class="about_icon_text">Wikipedia</span>
+        </a></li>
         </xsl:when>
         <xsl:otherwise>
-          <li class="about_icons_item"><a class="about_icon about_icon-wikipedia" href="http://da.wikipedia.org/wiki/Lotte_Munk"><xsl:comment/></a></li>
+          <li class="about_icons_item"><a class="about_icon about_icon-wikipedia" href="http://da.wikipedia.org/wiki/Lotte_Munk">
+            <span class="about_icon_text">Wikipedia</span>
+          </a></li>
         </xsl:otherwise>
       </xsl:choose>
-      <li class="about_icons_item"><a class="about_icon about_icon-facebook" href="https://www.facebook.com/Lottemunk69"><xsl:comment/></a></li>
+      <li class="about_icons_item">
+        <a class="about_icon about_icon-facebook" href="https://www.facebook.com/Lottemunk69">
+          <span class="about_icon_text">Facebook</span>
+        </a>
+      </li>
     </ul>
     <div class="about_contact">
       <p class="about_contact_item">

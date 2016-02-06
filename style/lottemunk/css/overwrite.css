@@ -11,54 +11,15 @@ a.common:hover, a.common:hover span {
 
 .part_header {
   word-break: break-word;
-}
-
-h1.common, .part_header_1,
-h2.common, .part_header_2,
-h3.common, .part_header_3 {
-  font-family: "Lora", Georgia, "Book Antiqua", "Palatino", Times, serif;
-}
-
-h4.common,
-h5.common,
-h6.common,
-p.common,
-ul.common,
-.common_font,
-.part_header,
-.part_richtext {
-  font-family: "Merriweather", Georgia, "Book Antiqua", "Palatino", Times, serif;
-}
-
-.common_header {
   margin: 0px;
   color: #000;
-}
-
-h1.common,
-h2.common {
   font-weight: normal;
 }
 
-p.common,
-ul.common,
-.part_text,
-.part_richtext,
-.part_listing_first {
-  font-size: 18px;
-  line-height: 160%;
-  color: #333;
-  font-weight: 400;
-}
-
-.part_listing {
-  font-size: 10pt;
-  color: #333;
-}
-
-.part_header {
-  color: #000;
-  font-weight: normal;
+.part_header_1,
+.part_header_2,
+.part_header_3 {
+  font-family: "Lora", Georgia, "Book Antiqua", "Palatino", Times, serif;
 }
 
 .part_header_1 {
@@ -77,6 +38,20 @@ ul.common,
   line-height: 1;
 }
 
+.part_text,
+.part_richtext,
+.part_listing_first {
+  font-size: 18px;
+  line-height: 160%;
+  color: #333;
+  font-weight: 400;
+}
+
+.part_listing {
+  font-size: 10pt;
+  color: #333;
+}
+
 .part_table {
   overflow: auto;
 }
@@ -87,22 +62,23 @@ ul.common,
 }
 .part_table thead th {
   border-bottom: 1px solid #eee;
-  padding: 1px 3px;
+  padding: 3px;
   text-align: left;
 }
 .part_table tfoot th {
   border-bottom: 1px solid #eee;
-  padding: 1px 3px;
+  padding: 3px;
   text-align: left;
 }
 .part_table td {
   border-bottom: 1px solid #eee;
-  padding: 3px 3px;
+  padding: 3px;
 }
 
 .part_horizontalrule {
   border: none;
   border-bottom: solid 1px #ddd;
+  margin: 20px 0;
 }
 
 .part_movie_text {
@@ -131,5 +107,18 @@ ul.common,
   .part_header_1 {
     font-size: 42px;
     line-height: 1;
+  }
+
+  .part_horizontalrule {
+    margin: 30px 0;
+  }
+}
+@media screen and (min-width: 760px) {
+  .part_section_header_1 {
+    padding: 20px 0 30px;
+  }
+
+  .part_horizontalrule {
+    margin: 40px 0;
   }
 }
