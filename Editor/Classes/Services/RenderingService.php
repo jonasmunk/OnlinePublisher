@@ -430,7 +430,7 @@ class RenderingService {
       return $row['authentication_page_id'];
     }
     else {
-            Log::debug($sql.$id);
+      Log::debug($sql.$id);
       return false;
     }
   }
@@ -489,8 +489,6 @@ class RenderingService {
       echo $output;
       if (!$page['secure'] && !$page['dynamic'] && !$page['framedynamic']) {
         CacheService::createPageCache($page['id'],$path,$html);
-      } else {
-          Log::debug('secure: '.$page['secure'].' ,dynamic'.$page['dynamic'].',framedynamic'.$page['framedynamic']);
       }
     }
   }
