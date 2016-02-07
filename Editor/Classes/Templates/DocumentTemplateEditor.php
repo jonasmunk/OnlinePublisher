@@ -556,6 +556,41 @@ class DocumentTemplateEditor
     return $modified;
   }
   
+  /** TODO: refactor using shared code with fixStructure */
+  static function check($pageId) {
+    $problems = [];
+    $structure = DocumentTemplateEditor::getStructure($pageId);
+    if (!$structure) {
+      return;
+    }
+    $rowIndex = 1;
+    foreach ($structure as $row) {
+      if ($row['index'] !== $rowIndex) {
+        $problems[] = [
+          'description' => 'Row with id='.$row['id'].' has index='.$row['index'].' but should be index='.$rowIndex
+        ];
+      }
+      $columnIndex = 1;
+      foreach ($row['columns'] as $column) {
+        if ($column['index'] !== $columnIndex) {
+          $problems[] = 'Column with id='.$column['id'].' has index='.$column['index'].' but should be index='.$columnIndex;
+        }
+        
+        $sectionIndex = 1;
+        foreach ($column['sections'] as $section) {
+          if ($section['index'] !== $sectionIndex) {
+            $problems[] = 'Section with id='.$section['id'].' has index='.$section['index'].' but should be index='.$sectionIndex;
+          }
+          $sectionIndex++;
+        }
+        
+        $columnIndex++;
+      }
+      $rowIndex++;
+    }
+    return $problems;
+  }
+  
   static function getStructure($id) {
     $sql = "select 
       document_row.id as row_id, 

@@ -26,6 +26,7 @@ $HUMANISE_EDITOR_CLASSES = array (
     'CalendarTemplateController' => 'Templates/CalendarTemplateController.php',
     'DocumentTemplateController' => 'Templates/DocumentTemplateController.php',
     'DocumentTemplateEditor' => 'Templates/DocumentTemplateEditor.php',
+    'DocumentTemplateInspector' => 'Templates/DocumentTemplateInspector.php',
     'GuestbookTemplateController' => 'Templates/GuestbookTemplateController.php',
     'HtmlTemplateController' => 'Templates/HtmlTemplateController.php',
     'SearchTemplate' => 'Templates/SearchTemplate.php',
@@ -187,6 +188,7 @@ $HUMANISE_EDITOR_CLASSES = array (
     'LinkView' => 'Modules/Links/LinkView.php',
     'Inspection' => 'Modules/Inspection/Inspection.php',
     'InspectionService' => 'Modules/Inspection/InspectionService.php',
+    'Inspector' => 'Modules/Inspection/Inspector.php',
     'Gradient' => 'Modules/Images/Gradient.php',
     'ImageTransformationRecipe' => 'Modules/Images/ImageTransformationRecipe.php',
     'ImageTransformationService' => 'Modules/Images/ImageTransformationService.php',
@@ -245,6 +247,10 @@ $HUMANISE_EDITOR_CLASSES = array (
   ),
   'interfaces' => 
   array (
+    'Inspector' => 
+    array (
+      0 => 'DocumentTemplateInspector',
+    ),
     'Loadable' => 
     array (
       0 => 'Frame',
