@@ -44,13 +44,18 @@
     margin: 0;
     font-size: 0;
   }
+
+  .layout_content
+  {
+    padding: 20px 20px 10px;
+  }
 }
 
 @include when(600px) {
   
   .layout_content
   {
-  	padding: 30px 20px;
+  	padding: 30px 40px;
   	max-width: 900px;
   	margin: 0 auto;
   	position: relative;
