@@ -18,9 +18,11 @@ $target : 'screen';
     }
   }
 
+
   //··········· Header ············
 
   .part_header {
+  	font-family: $text-font;
     word-break: break-word;
   	margin: 0px;
   	color: #000;
@@ -52,7 +54,7 @@ $target : 'screen';
     font-weight: bold;
     line-height: 1;
   }
-  
+
 
   //··········· Text ············
 
@@ -60,8 +62,9 @@ $target : 'screen';
   .part_richtext,
   .part_listing_first
   {
-  	font-size: 18px;
-  	line-height: 160%;
+  	font-family: $text-font;
+  	font-size: 16px;
+  	line-height: 1.4em;
   	color: #333;
   	font-weight: 400;
   }
@@ -70,6 +73,7 @@ $target : 'screen';
   	font-size: 10pt;
   	color: #333;
   }
+
 
   //··········· Table ············
 
@@ -101,12 +105,18 @@ $target : 'screen';
     
   }
 
+
+  //··········· HR ············
+
   .part_horizontalrule
   {
   	border: none;
   	border-bottom: solid 1px #ddd;
     margin: 20px 0;
   }
+
+
+  //··········· Movie ············
 
   .part_movie_text {
     font-weight: normal;
@@ -143,7 +153,14 @@ $target : 'screen';
   {
     margin: 30px 0;
   }
-  
+
+  .part_text,
+  .part_richtext,
+  .part_listing_first
+  {
+  	font-size: 18px;
+  	line-height: 1.6em;
+  }
 }
 
 @include when(760px) {
