@@ -149,6 +149,11 @@ $target : 'screen';
     line-height: 1;
   }
 
+  .part_header_2
+  {
+  	font-size: 32px;
+  }
+
   .part_horizontalrule
   {
     margin: 30px 0;
@@ -165,7 +170,12 @@ $target : 'screen';
 
 @include when(760px) {
   .part_section_header_1 {
-    padding: 20px 0 30px;
+    padding: 0 0 30px;
+  }
+
+  .part_header_1
+  {
+  	font-size: 52px;
   }
 
   .part_horizontalrule
