@@ -35,9 +35,6 @@
 	<link href='http://fonts.googleapis.com/css?family=Ovo' rel='stylesheet' type='text/css'/>
 	-->
 	<xsl:call-template name="util:style"/>
-	<xsl:call-template name="util:style-ie6"/>
-	<xsl:call-template name="util:style-ie7"/>
-	<xsl:call-template name="util:style-ie8"/>
 	<xsl:call-template name="util:scripts"/>
 	
 </head>
