@@ -366,7 +366,7 @@ function displayColumns(&$row) {
 		echo "\n";
 		echo '<td class="editor_column" data-id="'.$column['id'].'" id="column'.$column['id'].'" style="'.$style.'"';
 		echo ' onmouseover="controller.columnOver(this)" onmouseout="controller.columnOut(this)"';
-		echo ' oncontextmenu="return controller.showColumnMenu(this,event,'.$column['id'].','.$row['index'].','.$row['id'].','.$row['index'].');">';
+		echo ' oncontextmenu="return controller.showColumnMenu(this,event,'.$column['id'].','.$column['index'].','.$row['id'].','.$row['index'].');">';
 		displaySections($column,$row);
 		echo "</td>\n";
 	}
