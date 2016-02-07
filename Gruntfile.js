@@ -138,6 +138,10 @@ module.exports = function(grunt) {
   grunt.registerTask('deploy', 'Deploy a client', function(client) {
     grunt.task.run('shell:deploy:' + client);
   });
+
+  grunt.registerTask('put', 'Deploy a client', function(client) {
+    grunt.task.run('shell:deploy:' + client);
+  });
   
   grunt.registerTask('get', 'Transfer from production to local', function(client) {
     grunt.task.run('shell:transfer:'+client);
