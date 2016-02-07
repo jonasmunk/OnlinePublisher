@@ -204,7 +204,7 @@
 }
 @media screen and (min-width: 600px) {
   .layout_content {
-    padding: 30px 40px;
+    padding: 40px;
     max-width: 900px;
     margin: 0 auto;
     position: relative;
@@ -214,6 +214,10 @@
   .layout_languages {
     right: 50%;
     margin-right: -480px;
+  }
+
+  .layout_content {
+    padding: 60px 40px;
   }
 }
 .layout_footer {

@@ -111,6 +111,10 @@ a.common:hover, a.common:hover span {
     line-height: 1;
   }
 
+  .part_header_2 {
+    font-size: 32px;
+  }
+
   .part_horizontalrule {
     margin: 30px 0;
   }
@@ -124,7 +128,11 @@ a.common:hover, a.common:hover span {
 }
 @media screen and (min-width: 760px) {
   .part_section_header_1 {
-    padding: 20px 0 30px;
+    padding: 0 0 30px;
+  }
+
+  .part_header_1 {
+    font-size: 52px;
   }
 
   .part_horizontalrule {

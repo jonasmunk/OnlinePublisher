@@ -1,9 +1,9 @@
-div.part_file
+.part_file
 {
 	overflow: hidden;
 }
 
-div.part_file div
+.part_file div
 {
 	background: url('../../basic/gfx/file_bg.png') top left repeat-x;
 	height: 55px;
@@ -12,49 +12,48 @@ div.part_file div
 	margin-bottom: 10px;
 }
 
-div.part_file div div
+.part_file div div
 {
 	background: url('../../basic/gfx/file_left.png') top left no-repeat;
 	height: 55px;
 }
 
-div.part_file div div div
+.part_file div div div
 {
 	background: url('../../basic/gfx/file_right.png') top right no-repeat;
 	height: 55px;
 	padding-right: 20px;
 }
 
-div.part_file p
+.part_file_title
 {
-	margin: 0px;
+	margin: 10px 0 0;
+	font-size: 10pt;
+  line-height: 18px;
 	padding-left: 60px;
 }
 
-div.part_file p.part_file_title
+.part_file_info
 {
-	margin-top: 10px;
-	font-size: 10pt;
-}
-
-div.part_file p.part_file_info
-{
+	padding-left: 60px;
 	font-size: 10px;
+  line-height: 12px;
 	color: #888;
-	padding-top: 2px;
+  margin: 0;
 }
 
-div.part_file a
+.part_file a
 {
 	color: #ccc;
 }
 
-div.part_file a span
+.part_file a span
 {
 	color: #004EFF;
 }
 
-div.part_file a:hover, div.part_file a:hover span
+.part_file a:hover,
+.part_file a:hover span
 {
 	color: #0033AA;
 }
