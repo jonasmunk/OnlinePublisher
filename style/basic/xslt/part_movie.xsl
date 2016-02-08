@@ -7,7 +7,7 @@
  xmlns:f="http://uri.in2isoft.com/onlinepublisher/class/file/1.0/"
  xmlns:img="http://uri.in2isoft.com/onlinepublisher/class/image/1.0/"
  xmlns:o="http://uri.in2isoft.com/onlinepublisher/class/object/1.0/"
- exclude-result-prefixes="f p o"
+ exclude-result-prefixes="f p o img"
  >
 
 <xsl:template match="p:movie">

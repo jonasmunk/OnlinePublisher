@@ -10,7 +10,7 @@
  xmlns:movie="http://uri.in2isoft.com/onlinepublisher/part/movie/1.0/"
  xmlns:util="http://uri.in2isoft.com/onlinepublisher/util/"
  xmlns:part="http://uri.in2isoft.com/onlinepublisher/part/1.0/"
- exclude-result-prefixes="p f h header text util part"
+ exclude-result-prefixes="p f h header text util part movie"
  >
 
 <xsl:variable name="only-inline" select="'!true'" />
