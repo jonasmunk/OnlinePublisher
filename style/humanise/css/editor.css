@@ -287,6 +287,11 @@ p.common, ul.common {
   font-size: 11pt;
   font-weight: 300;
   word-spacing: 1px;
+  color: #ddd;
+}
+
+.part_listing_text {
+  color: #333;
 }
 
 .part_listing_first {

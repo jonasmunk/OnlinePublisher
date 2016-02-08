@@ -60,7 +60,7 @@ $target : 'screen';
 
   .part_text,
   .part_richtext,
-  .part_listing_first
+  .part_listing
   {
   	font-family: $text-font;
   	font-size: 16px;
@@ -71,7 +71,11 @@ $target : 'screen';
 
   .part_listing {
   	font-size: 10pt;
-  	color: #333;
+  	color: #ddd;
+  }
+  
+  .part_listing_text {
+    color: #333;
   }
 
 
@@ -161,7 +165,7 @@ $target : 'screen';
 
   .part_text,
   .part_richtext,
-  .part_listing_first
+  .part_listing
   {
   	font-size: 18px;
   	line-height: 1.6em;

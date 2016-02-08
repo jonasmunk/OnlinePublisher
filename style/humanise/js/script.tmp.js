@@ -6554,6 +6554,9 @@ require(['hui'],function() {
 
   var SearchField = function(options) {
     this.element = options.element;
+    if (!this.element) {
+      return;
+    }
     this.nodes = hui.collect(this.nodes,this.element);
     this._attach();
   }

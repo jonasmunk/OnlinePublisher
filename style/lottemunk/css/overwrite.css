@@ -41,7 +41,7 @@ a.common:hover, a.common:hover span {
 
 .part_text,
 .part_richtext,
-.part_listing_first {
+.part_listing {
   font-family: "Merriweather", Georgia, "Book Antiqua", "Palatino", Times, serif;
   font-size: 16px;
   line-height: 1.4em;
@@ -51,6 +51,10 @@ a.common:hover, a.common:hover span {
 
 .part_listing {
   font-size: 10pt;
+  color: #ddd;
+}
+
+.part_listing_text {
   color: #333;
 }
 
@@ -121,7 +125,7 @@ a.common:hover, a.common:hover span {
 
   .part_text,
   .part_richtext,
-  .part_listing_first {
+  .part_listing {
     font-size: 18px;
     line-height: 1.6em;
   }

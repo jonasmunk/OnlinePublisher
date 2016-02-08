@@ -18,31 +18,40 @@
 	<xsl:template match="l:list[l:item]">
 		<xsl:choose>
 			<xsl:when test="@type='1'">
-				<ol style="list-style-type: decimal;"><xsl:apply-templates/></ol>
+				<ol class="part_listing_list part_listing_list-decimal"><xsl:apply-templates/></ol>
 			</xsl:when>
 			<xsl:when test="@type='a'">
-				<ol style="list-style-type: lower-alpha;"><xsl:apply-templates/></ol>
+				<ol class="part_listing_list part_listing_list-loweralpha"><xsl:apply-templates/></ol>
 			</xsl:when>
 			<xsl:when test="@type='A'">
-				<ol style="list-style-type: upper-alpha;"><xsl:apply-templates/></ol>
+				<ol class="part_listing_list part_listing_list-upperalpha"><xsl:apply-templates/></ol>
 			</xsl:when>
 			<xsl:when test="@type='i'">
-				<ol style="list-style-type: lower-roman;"><xsl:apply-templates/></ol>
+				<ol class="part_listing_list part_listing_list-lowerroman"><xsl:apply-templates/></ol>
 			</xsl:when>
 			<xsl:when test="@type='I'">
-				<ol style="list-style-type: upper-roman;"><xsl:apply-templates/></ol>
+				<ol class="part_listing_list part_listing_list-upperroman"><xsl:apply-templates/></ol>
 			</xsl:when>
-			<xsl:when test="@type and @type!=''">
-				<ul style="list-style: {@type};"><xsl:apply-templates/></ul>
+			<xsl:when test="@type='disc'">
+				<ul class="part_listing_list part_listing_list-disc"><xsl:apply-templates/></ul>
+			</xsl:when>
+			<xsl:when test="@type='circle'">
+				<ul class="part_listing_list part_listing_list-circle"><xsl:apply-templates/></ul>
+			</xsl:when>
+			<xsl:when test="@type='square'">
+				<ul class="part_listing_list part_listing_list-square"><xsl:apply-templates/></ul>
 			</xsl:when>
 			<xsl:otherwise>
-				<ul style="list-style: {@type};"><xsl:apply-templates/></ul>
+				<ul class="part_listing_list" style="list-style-type: {@type};"><xsl:apply-templates/></ul>
 			</xsl:otherwise>
 		</xsl:choose>
 	</xsl:template>
 
 	<xsl:template match="l:item">
-		<li><xsl:attribute name="class">part_listing_<xsl:value-of select="position()"/></xsl:attribute><span class="part_listing"><xsl:apply-templates/></span></li>
+		<li>
+      <xsl:attribute name="class">part_listing_item part_listing_item-<xsl:value-of select="position()"/></xsl:attribute>
+      <span class="part_listing_text"><xsl:apply-templates/></span>
+    </li>
 	</xsl:template>
 
 	<xsl:template match="l:style">
