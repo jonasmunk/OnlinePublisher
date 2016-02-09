@@ -68,6 +68,19 @@
   }
 }
 
+@include when(1200px,inline) {
+  .header {
+    padding-bottom: 674 / 1536 * 1200px;
+  }
+
+  .header_title {
+    width: 300px;
+    padding-top: 72px;
+  }
+  
+}
+
+
 @include when(msie_lt9) {
   .header_title {
     background-image: url('../gfx/logo.outline.png');

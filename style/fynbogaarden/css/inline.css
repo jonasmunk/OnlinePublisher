@@ -92,6 +92,16 @@ a {
     font-size: 40px;
   }
 }
+@media screen and (min-width: 1200px) {
+  .header {
+    padding-bottom: 526.5625px;
+  }
+
+  .header_title {
+    width: 300px;
+    padding-top: 72px;
+  }
+}
 .layout_content {
   max-width: 960px;
   margin: 20px auto;
