@@ -18,8 +18,8 @@ function group($id) {
 	$feed = new Feed();
 	$feed->setTitle('Nyheder');
 	$feed->setDescription('Nyheder');
-	$feed->setPubDate(gmmktime());
-	$feed->setLastBuildDate(gmmktime());
+	$feed->setPubDate(time());
+	$feed->setLastBuildDate(time());
 	$feed->setLink(ConfigurationService::getBaseUrl());
 
 

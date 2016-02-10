@@ -20,7 +20,7 @@ class FeedSerializer {
 	}
 	
 	function sendHeaders() {
-		header("Last-Modified: " . gmdate("D, d M Y H:i:s",gmmktime()) . " GMT");
+		header("Last-Modified: " . gmdate("D, d M Y H:i:s",time()) . " GMT");
 		header('Content-type: application/rss+xml; charset=utf-8');
 	}
 	
@@ -40,7 +40,7 @@ class FeedSerializer {
 		$this->buildTextTag('generator',$feed->getGenerator()).
 		$this->buildTextTag('webMaster',$feed->getWebMaster()).
 		$this->buildTextTag('managingEditor',$feed->getManagingEditor());
-		$items =& $feed->getItems();
+		$items = $feed->getItems();
 		foreach ($items as $item) {
 			$xml.='<item>'.
 			$this->buildTextTag('title',$item->getTitle()).
