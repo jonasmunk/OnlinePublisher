@@ -2,11 +2,13 @@ op.part.ImageGallery = function(options) {
   this.options = options;
   this.element = hui.get(options.element);
   this.images = options.images;
-    if (options.variant=='masonry') {
+  if (options.variant=='masonry') {
     new op.part.ImageGallery.Masonry({
-        element : options.element
+      element : options.element,
+      height : options.height
     });
-    } else if (options.variant=='changing') {
+  }
+  else if (options.variant=='changing') {
     op.part.ImageGallery.changing.init(this.element);
   }
   this._attach();
@@ -91,7 +93,7 @@ op.part.ImageGallery.Masonry = function(options) {
   this.element = hui.get(options.element);
   this.name = options.name;
   
-  this.height = 200;
+  this.height = parseInt(options.height,10) || 200;
   this.items = [];
   this.latestWidth = 0;
   
@@ -120,7 +122,7 @@ op.part.ImageGallery.Masonry.prototype = {
     if (Math.abs(this.latestWidth-fullWidth)<100) {
       return;
     }
-    hui.log('_rebuild');
+    //hui.log('_rebuild');
     this.latestWidth = fullWidth;
     var rows = [];
     var row = [];
@@ -150,6 +152,9 @@ op.part.ImageGallery.Masonry.prototype = {
       }
       var adjustment = fullWidth/total;
       var pos = 0;
+
+      var rowHeight = Number.MAX_VALUE;
+
       for (var j = 0; j < row.length; j++) {
         var last = j == row.length - 1;
         var info = row[j], item = info.item;
@@ -162,18 +167,26 @@ op.part.ImageGallery.Masonry.prototype = {
             percent -= 0.1;
           }
         }
+        info.percent = percent;
+        rowHeight = Math.min(rowHeight, (percent/100 * fullWidth) * item.height/item.width );
+      }
+      rowHeight = Math.floor(rowHeight);
+      for (var j = 0; j < row.length; j++) {
+        var last = j == row.length - 1;
+        var info = row[j], item = info.item;
+        var percent = info.percent;
+
         var cls = last ? 'part_imagegallery_masonry_item part_imagegallery_masonry_item_last' : 'part_imagegallery_masonry_item';
-        var height = row.length==1 ? fullWidth/item.width * item.height : this.height;
         if (item.element) {
           item.element.style.width = percent + '%';
-          item.element.style.height = height + 'px';
+          item.element.style.height = rowHeight + 'px';
           item.element.className = cls;
         } else {
           item.element = hui.build('a',{
             'class' : cls,
             style : {
               width : percent + '%', 
-              height : height + 'px'
+              height : rowHeight + 'px'
             },
             'data-id' : item.id,
             'data' : item.index,
@@ -181,12 +194,15 @@ op.part.ImageGallery.Masonry.prototype = {
           });
         }
       }
+      for (var j = 0; j < row.length; j++) {
+        row[j].item.element.style.height = rowHeight + 'px'
+      }
     }
     this._reveal();
   },
   _getUrl : function(item,info) {
     var ratio = window.devicePixelRatio || 1;
-    return op.context+'services/images/?id=' + item.id + '&width=' + (info.width * ratio) + '&height=' + (info.height * ratio);
+    return op.context+'services/images/?id=' + item.id + '&width=' + (info.width * ratio) + '&height=' + (info.height * ratio) + '&method=crop';
   },
   _reveal : function() {
     var min = hui.window.getScrollTop();
@@ -203,6 +219,7 @@ op.part.ImageGallery.Masonry.prototype = {
         continue;
       }
       var height = item.element.clientHeight;
+      //var width = item.element.clientWidth;
       var width = Math.round(item.width/item.height * height);
       item.element.style.backgroundImage = 'url(' + this._getUrl(item,{width:width,height:height}) + ')';
       item.revealed = true;
