@@ -54,8 +54,8 @@ hui.ui.Box.create = function(options) {
 
 hui.ui.Box.prototype = {
 	nodes : {
-    	body : 'hui_box_body',
-    	close : 'hui_box_close'
+    	body : '.hui_box_body',
+    	close : '.hui_box_close'
 	},
 	_close : function(e) {
 		hui.stop(e);

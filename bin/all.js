@@ -9854,17 +9854,17 @@ hui.ui.ImageViewer.create = function(options) {
 hui.ui.ImageViewer.prototype = {
 
 	nodes : {
-		viewer : 'hui_imageviewer_viewer',
-		innerViewer : 'hui_imageviewer_inner_viewer',
+		viewer : '.hui_imageviewer_viewer',
+		innerViewer : '.hui_imageviewer_inner_viewer',
 
-		status : 'hui_imageviewer_status',
-		text : 'hui_imageviewer_text',
+		status : '.hui_imageviewer_status',
+		text : '.hui_imageviewer_text',
 
-		previous : 'hui_imageviewer_previous',
-		controller : 'hui_imageviewer_controller',
-		next : 'hui_imageviewer_next',
-		play : 'hui_imageviewer_play',
-		close : 'hui_imageviewer_close'
+		previous : '.hui_imageviewer_previous',
+		controller : '.hui_imageviewer_controller',
+		next : '.hui_imageviewer_next',
+		play : '.hui_imageviewer_play',
+		close : '.hui_imageviewer_close'
 	},
 
 	_attach : function() {
@@ -12693,8 +12693,8 @@ hui.ui.Box.create = function(options) {
 
 hui.ui.Box.prototype = {
 	nodes : {
-    	body : 'hui_box_body',
-    	close : 'hui_box_close'
+    	body : '.hui_box_body',
+    	close : '.hui_box_close'
 	},
 	_close : function(e) {
 		hui.stop(e);
@@ -22565,6 +22565,37 @@ hui.ui.Graph.Raphael = {
 		};
 	}
 }
+
+hui.onReady(function() {
+  var configs = document.getElementsByTagName('noscript');
+  for (var i = 0; i < configs.length; i++) {
+    var type = configs[i].getAttribute('data-type');
+    if (type) {
+      var options = hui.string.fromJSON(configs[i].textContent);
+      options.element = configs[i].parentNode;
+      new hui.ui[type](options);
+    }
+  }
+})
+
+hui.onReady(function() {
+  var configs = document.querySelectorAll('*[data-hui]');
+  for (var i = 0; i < configs.length; i++) {
+    var type = configs[i].getAttribute('data-hui');
+    if (type) {
+      var children = configs[i].childNodes;
+      var options = {};
+      for (var j = children.length - 1; j >= 0; j--) {
+        if (children[j].nodeType == 8) {
+          options = hui.string.fromJSON(children[j].nodeValue);
+          break;
+        }
+      }
+      options.element = configs[i];
+      new hui.ui[type](options);
+    }
+  }
+})
 
 if (window.hui===undefined) {
     hui = {};

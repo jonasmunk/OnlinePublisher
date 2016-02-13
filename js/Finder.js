@@ -89,11 +89,11 @@ hui.ui.Finder.prototype = {
   },
   _buildBody : function() {
     var opts = this.options;
-    var layout = hui.ui.Layout.create();
+    var layout = hui.ui.Structure.create();
     this.window.add(layout);
 
     var left = hui.ui.Overflow.create({dynamic:true});
-    layout.addToLeft(left);
+    layout.addLeft(left);
 
     var list = this.list = hui.ui.List.create();
 
@@ -107,7 +107,7 @@ hui.ui.Finder.prototype = {
       var bar = hui.ui.Bar.create({
         variant: 'layout'
       });
-      layout.addToCenter(bar);
+      layout.addCenter(bar);
       if (opts.search) {
         var search = hui.ui.SearchField.create({
           expandedWidth: 200
@@ -121,7 +121,7 @@ hui.ui.Finder.prototype = {
       }
     }
     var right = hui.ui.Overflow.create({dynamic:true});
-    layout.addToCenter(right);
+    layout.addCenter(right);
     right.add(this.list);
 
 

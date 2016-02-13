@@ -12,7 +12,7 @@ hui.ui.Layout = function(options) {
 hui.ui.Layout.create = function(options) {
 	options = hui.override({text:'',highlighted:false,enabled:true},options);
 	
-	options.element = hui.dom.parseToNode('<table class="hui_layout"><tbody class="hui_layout"><tr class="hui_layout_middle"><td class="hui_layout_middle">'+
+	options.element = hui.dom.parse('<table class="hui_layout"><tbody class="hui_layout"><tr class="hui_layout_middle"><td class="hui_layout_middle">'+
 			'<table class="hui_layout_middle"><tr>'+
 			'<td class="hui_layout_left hui_context_sidebar"><div class="hui_layout_left"></div></td>'+
 			'<td class="hui_layout_center"></td>'+

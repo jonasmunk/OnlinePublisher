@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet type="text/xsl" href="setup.xsl"?>
+<gui xmlns="uri:hui" title="Structure" padding="10">
+	<controller name="controller" source="list.js"/>
+	<source name="itemsSource" url="data/source_items.xml"/>
+	<structure>
+		<middle>
+			<left>
+				<overflow>
+				<selection value="user" name="selector">
+					<item icon="common/person" title="Brugere" value="user"/>
+					<item icon="common/folder" title="Database" value="database" kind="folder"/>
+					<item icon="common/person" title="Alle objekter" value="object"/>
+					<title>Hey</title>
+					<items source="itemsSource"/>
+				</selection>
+				</overflow>
+			</left>
+			<center>
+				<toolbar labels="false" border="bottom">
+					<button title="Opret"/>
+					<button title="Opret"/>
+					<button title="Opret"/>
+				</toolbar>
+				<overflow>
+					<list name="list" url="data/list_users.xml"/>
+				</overflow>
+				<toolbar labels="false" border="top">
+					<button title="Opret"/>
+					<button title="Opret"/>
+					<button title="Opret"/>
+				</toolbar>
+			</center>
+		</middle>
+	</structure>
+</gui>
