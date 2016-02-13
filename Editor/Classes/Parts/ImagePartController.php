@@ -14,11 +14,11 @@ class ImagePartController extends PartController
 		parent::PartController('image');
 	}
 		
-	function setLatestUploadId($id) {
+	static function setLatestUploadId($id) {
 		$_SESSION['part.image.latest_upload_id'] = $id;
 	}
 	
-	function getLatestUploadId() {
+	static function getLatestUploadId() {
 		return $_SESSION['part.image.latest_upload_id'];
 	}
 	

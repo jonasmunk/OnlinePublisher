@@ -5,9 +5,6 @@
  */
 require_once '../../Include/Private.php';
 
-// hide warnings
-error_reporting(E_ERROR);
-
 $response = ImageService::createUploadedImage();
 
 if ($response->getSuccess()) {
