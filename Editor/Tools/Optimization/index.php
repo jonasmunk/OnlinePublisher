@@ -12,6 +12,8 @@ $gui='
 	<source name="listSource" url="data/List.php">
 		<parameter key="windowPage" value="@list.window.page"/>
 		<parameter key="kind" value="@selector.value"/>
+		<parameter key="sort" value="@list.sort.key"/>
+		<parameter key="direction" value="@list.sort.direction"/>
 	</source>
 	
 	<source name="profilesSource" url="data/ListProfiles.php"/>

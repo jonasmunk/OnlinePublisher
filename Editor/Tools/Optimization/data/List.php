@@ -92,8 +92,8 @@ function listWords() {
 	Database::free($result);
 	
 	$enStopWords = array("a","able","about","across","after","all","almost","also","am","among","an","and","any","are","as","at","be","because","been","but","by","can","cannot","could","dear","did","do","does","either","else","ever","every","for","from","get","got","had","has","have","he","her","hers","him","his","how","however","i","if","in","into","is","it","its","just","least","let","like","likely","may","me","might","most","must","my","neither","no","nor","not","of","off","often","on","only","or","other","our","own","rather","said","say","says","she","should","since","so","some","than","that","the","their","them","then","there","these","they","this","tis","to","too","twas","us","wants","was","we","were","what","when","where","which","while","who","whom","why","will","with","would","yet","you","your");
-	$daStopWords = array("og","i","jeg","det","at","en","den","til","er","som","på","de","med","han","af","for","ikke","der","var","mig","sig","men","et","har","om","vi","min","havde","ham","hun","nu","over","da","fra","du","ud","sin","dem","os","op","man","hans","hvor","eller","hvad","skal","selv","her","alle","vil","blev","kunne","ind","når","være","dog","noget","ville","jo","deres","efter","ned","skulle","denne","end","dette","mit","også","under","have","dig","anden","hende","mine","alt","meget","sit","sine","vor","mod","disse","hvis","din","nogle","hos","blive","mange","ad","bliver","hendes","været","thi","jer","sådan");
-	$newStopWords = array("nye","one","now","new","ved","use","such","kan","more","used","mere","så","se","samt","hver","");
+	$daStopWords = array("og","i","jeg","det","at","en","den","til","er","som","pÃ¥","de","med","han","af","for","ikke","der","var","mig","sig","men","et","har","om","vi","min","havde","ham","hun","nu","over","da","fra","du","ud","sin","dem","os","op","man","hans","hvor","eller","hvad","skal","selv","her","alle","vil","blev","kunne","ind","nÃ¥r","vÃ¦re","dog","noget","ville","jo","deres","efter","ned","skulle","denne","end","dette","mit","ogsÃ¥","under","have","dig","anden","hende","mine","alt","meget","sit","sine","vor","mod","disse","hvis","din","nogle","hos","blive","mange","ad","bliver","hendes","vÃ¦ret","thi","jer","sÃ¥dan");
+	$newStopWords = array("nye","one","now","new","ved","use","such","kan","more","used","mere","sÃ¥","se","samt","hver","");
 	$words = preg_split("/[\s,]+/",strtolower($allText));
 	array_walk($words, 'wordTrimmer');
 	$words = array_diff($words,array_merge($enStopWords,$daStopWords,$newStopWords));
@@ -153,17 +153,22 @@ function listWarning() {
 }
 
 function listPageNotFound() {
-	
-	$result = LogService::getPageNotFoundOverview();
+  
+  $sort = Request::getString('sort','last');
+  $dir = Request::getString('direction','descending');
+
+  $query = ['sort'=>$sort,'direction'=>$dir];
+	$result = LogService::getPageNotFoundOverview($query);
 	
 	$writer = new ListWriter();
 
 	$writer->startList();
+  $writer->sort($sort,$dir);
 	$writer->startHeaders();
-	$writer->header(array('title'=>array('Hit count','da'=>'Antal forspørgsler')));
-	$writer->header(array('title'=>array('From','da'=>'Fra')));
-	$writer->header(array('title'=>array('To','da'=>'Til')));
-	$writer->header(array('title'=>array('Path','da'=>'Sti')));
+	$writer->header(['title'=>['Hit count','da'=>'Antal forspÃ¸rgsler'],'sortable'=>true,'key'=>'count']);
+	$writer->header(['title'=>['From','da'=>'Fra'],'sortable'=>true,'key'=>'first']);
+	$writer->header(['title'=>['To','da'=>'Til'],'sortable'=>true,'key'=>'last']);
+	$writer->header(['title'=>['Path','da'=>'Sti'],'sortable'=>true,'key'=>'message']);
 	$writer->endHeaders();
 
 
