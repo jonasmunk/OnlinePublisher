@@ -16,11 +16,15 @@
 	border-width: 0;
 }
 
+.part_image_adaptive_container {
+  display: block;
+}
+
 .part_image_adaptive_container-center {
 	margin: 0 auto;
 }
 
-.part_image-right .part_image_adaptive_container {
+.part_image_adaptive_container-right {
 	margin: 0 0 0 auto;
 }
 
@@ -29,13 +33,13 @@
 	display: inline-block;
 	position: relative;
 	width: 100%;
-	text-align: left;
 }
 
 .part_image_adaptive {
 	position: absolute;
 	width: 100%;
-	height: auto;	
+	height: auto;
+  left: 0;
 }
 
 .part_image_text

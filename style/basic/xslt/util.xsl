@@ -907,11 +907,16 @@ Y.prototype.load=function(a){a(this.p)};function Z(a,b){this.d=a;this.f=b}Z.prot
 
 <xsl:template name="util:wrap-in-frame">
     <xsl:param name="variant"/>
+    <xsl:param name="adaptive"/>
     <xsl:param name="content"/>
     
 	<xsl:choose>
 		<xsl:when test="$variant!=''">
-			<span class="shared_frame shared_frame_{$variant}">
+			<span>
+        <xsl:attribute name="class">
+          <xsl:text>shared_frame shared_frame_</xsl:text><xsl:value-of select="$variant"/>
+          <xsl:if test="$adaptive='true'"> shared_frame-adaptive</xsl:if>
+        </xsl:attribute>
 				<span class="shared_frame_{$variant}_top"><span class="shared_frame_{$variant}_top_inner"><span class="shared_frame_{$variant}_top_innermost"><xsl:comment/></span></span></span>
 				<span class="shared_frame_{$variant}_middle">
 					<span class="shared_frame_{$variant}_middle_inner">

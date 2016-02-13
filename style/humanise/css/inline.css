@@ -331,13 +331,13 @@ p.common, ul.common {
   display: none;
 }
 
-@media screen and (min-width: 1000px) {
+@media screen and (min-width: 700px) {
   #poster {
     display: block;
-    width: 980px;
     height: 310px;
     background: #333;
     margin-top: 20px;
+    position: relative;
   }
 
   #poster_loader {

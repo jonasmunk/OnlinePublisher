@@ -554,44 +554,33 @@
     top: 56px;
   }
 }
-@media screen and (min-width: 1000px) {
+@media screen and (min-width: 700px) {
   #poster {
     background: #333 url("../gfx/poster_bg.png");
     cursor: pointer;
     overflow: hidden;
   }
 
-  #poster_body {
-    width: 990px;
-    position: relative;
-    left: 50%;
-    margin-left: -495px;
-  }
-
   #poster_left {
-    float: left;
-    height: 310px;
-    width: 495px;
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 48%;
     overflow: hidden;
+    margin-left: -50%;
+    background: 100% 0px no-repeat;
   }
 
   #poster_right {
-    float: left;
-    height: 310px;
-    width: 495px;
+    position: absolute;
+    top: 0;
+    right: 0;
+    height: 100%;
+    width: 48%;
     overflow: hidden;
-  }
-
-  #poster_left_inner {
-    width: 990px;
-    height: 310px;
-    background: 245px 0px no-repeat;
-  }
-
-  #poster_right_inner {
-    width: 990px;
-    height: 310px;
-    background: 495px 0px no-repeat;
+    margin-right: -50%;
+    background: 0 0px no-repeat;
   }
 }
 .call-to-action {

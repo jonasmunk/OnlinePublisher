@@ -11,18 +11,22 @@
 	<xsl:template match="map:map[@frame]">
 		<span>
 			<xsl:attribute name="class">
-                <xsl:text>part_map</xsl:text>
-				<xsl:if test="not(@width) and @provider='google-interactive'">
-					<xsl:text> shared_frame_adaptive</xsl:text>
-				</xsl:if>
+        <xsl:text>part_map</xsl:text>
 			</xsl:attribute>
-            
-            <xsl:call-template name="util:wrap-in-frame">
-                <xsl:with-param name="variant" select="@frame"/>
-                <xsl:with-param name="content">
-                    <xsl:call-template name="map:internal"/>
-                </xsl:with-param>
-            </xsl:call-template>            
+      <xsl:variable name="adaptive">
+        <xsl:choose>
+          <xsl:when test="not(@width) and @provider='google-interactive'">
+            <xsl:text>true</xsl:text>
+          </xsl:when>
+        </xsl:choose>
+      </xsl:variable>
+      <xsl:call-template name="util:wrap-in-frame">
+        <xsl:with-param name="variant" select="@frame"/>
+        <xsl:with-param name="adaptive" select="$adaptive"/>
+        <xsl:with-param name="content">
+          <xsl:call-template name="map:internal"/>
+        </xsl:with-param>
+      </xsl:call-template>            
 		</span>
 	</xsl:template>
 
