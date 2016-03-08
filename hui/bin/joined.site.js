@@ -525,9 +525,9 @@ hui.dom = {
 		}
 		return null;
 	},
-	parseToNode : function(html) {
+	parse : function(html) {
 		var dummy = hui.build('div',{html:html});
-		return hui.get.firstChild(dummy,'table');
+		return hui.get.firstChild(dummy);
 	},
 	clear : function(node) {
 		var children = node.childNodes;

@@ -525,9 +525,9 @@ hui.dom = {
 		}
 		return null;
 	},
-	parseToNode : function(html) {
+	parse : function(html) {
 		var dummy = hui.build('div',{html:html});
-		return hui.get.firstChild(dummy,'table');
+		return hui.get.firstChild(dummy);
 	},
 	clear : function(node) {
 		var children = node.childNodes;
@@ -12439,7 +12439,7 @@ hui.ui.Layout = function(options) {
 hui.ui.Layout.create = function(options) {
 	options = hui.override({text:'',highlighted:false,enabled:true},options);
 	
-	options.element = hui.dom.parseToNode('<table class="hui_layout"><tbody class="hui_layout"><tr class="hui_layout_middle"><td class="hui_layout_middle">'+
+	options.element = hui.dom.parse('<table class="hui_layout"><tbody class="hui_layout"><tr class="hui_layout_middle"><td class="hui_layout_middle">'+
 			'<table class="hui_layout_middle"><tr>'+
 			'<td class="hui_layout_left hui_context_sidebar"><div class="hui_layout_left"></div></td>'+
 			'<td class="hui_layout_center"></td>'+
@@ -16978,11 +16978,11 @@ hui.ui.Finder.prototype = {
   },
   _buildBody : function() {
     var opts = this.options;
-    var layout = hui.ui.Layout.create();
+    var layout = hui.ui.Structure.create();
     this.window.add(layout);
 
     var left = hui.ui.Overflow.create({dynamic:true});
-    layout.addToLeft(left);
+    layout.addLeft(left);
 
     var list = this.list = hui.ui.List.create();
 
@@ -16996,7 +16996,7 @@ hui.ui.Finder.prototype = {
       var bar = hui.ui.Bar.create({
         variant: 'layout'
       });
-      layout.addToCenter(bar);
+      layout.addCenter(bar);
       if (opts.search) {
         var search = hui.ui.SearchField.create({
           expandedWidth: 200
@@ -17010,7 +17010,7 @@ hui.ui.Finder.prototype = {
       }
     }
     var right = hui.ui.Overflow.create({dynamic:true});
-    layout.addToCenter(right);
+    layout.addCenter(right);
     right.add(this.list);
 
 
@@ -17213,7 +17213,29 @@ hui.ui.Structure = function(options) {
 	hui.ui.extend(this);
 }
 
+hui.ui.Structure.create = function(options) {
+	options = hui.override({},options);
+	
+	options.element = hui.dom.parse('<div class="hui_structure">'+
+			'<div class="hui_structure_middle">'+
+			'<div class="hui_structure_left"></div>'+
+			'<div class="hui_structure_center"></div>'+
+			'</div>'+
+			'</div>');
+	return new hui.ui.Structure(options);
+}
+
 hui.ui.Structure.prototype = {
+	
+	addLeft : function(widget) {
+		var tbody = hui.get.firstByClass(this.element,'hui_structure_left');
+		tbody.appendChild(widget.element);
+	},
+	
+	addCenter : function(widget) {
+		var tbody = hui.get.firstByClass(this.element,'hui_structure_center');
+		tbody.appendChild(widget.element);
+	},
 	$$layout : function() {
 		var t = hui.get.firstByClass(this.element,'hui_structure_top');
 		var b = hui.get.firstByClass(this.element,'hui_structure_bottom');
