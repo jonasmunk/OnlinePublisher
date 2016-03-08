@@ -2,7 +2,7 @@
  * @constructor
  */
 hui.ui.Source = function(options) {
-	this.options = hui.override({url:null,dwr:null,parameters:[],lazy:false},options);
+	this.options = hui.override({url:null,parameters:[],lazy:false},options);
 	this.name = options.name;
 	this.data = null;
 	this.parameters = [];
@@ -111,37 +111,22 @@ hui.ui.Source.prototype = {
 				$exception : function(e,t) {
 					hui.log('Exception while loading source...')
 					hui.log(e)
-					self.end();
+					self._end();
 				},
 				$forbidden : function() {
 					hui.ui.handleForbidden(self);
 					hui.ui.callDelegates(self,'sourceFailed');
-					self.end();
+					self._end();
 				},
 				$failure : function(t) {
 					hui.log('sourceFailed');
 					hui.ui.callDelegates(self,'sourceFailed');
-					self.end();
+					self._end();
 				}
 			});
-		} else if (this.options.dwr) {
-			var pair = this.options.dwr.split('.');
-			var facade = eval(pair[0]);
-			var method = pair[1];
-			var args = facade[method].argumentNames();
-			for (var k=0; k < args.length; k++) {
-				if (this.parameters[k]) {
-					args[k]=this.parameters[k].value===undefined ? null : this.parameters[k].value;
-				}
-			};
-			args[args.length-1]=function(r) {self.parseDWR(r)};
-			this.busy=true;
-			hui.ui.callDelegates(this,'sourceIsBusy');
-			facade[method].apply(facade,args);
 		}
 	},
-	/** @private */
-	end : function() {
+	_end : function() {
 		this.busy = false;
 		hui.ui.callDelegates(this,'sourceIsNotBusy');
 		if (this.pendingRefresh) {
@@ -160,7 +145,7 @@ hui.ui.Source.prototype = {
 			}
 			this.fire('objectsLoaded',json);
 		}
-		this.end();
+		this._end();
 	},
 	/** @private */
 	parseXML : function(doc) {
@@ -172,12 +157,6 @@ hui.ui.Source.prototype = {
 		} else if (doc.documentElement.tagName=='articles') {
 			this.fire('articlesLoaded',doc);
 		}
-	},
-	/** @private */
-	parseDWR : function(data) {
-		this.data = data;
-		this.fire('objectsLoaded',data);
-		this.end();
 	},
 	addParameter : function(parm) {
 		this.parameters.push(parm);
@@ -206,16 +185,6 @@ hui.ui.Source.prototype = {
 			}
 		};
 		this.refreshLater();
-	}
-}
-
-// TODO Remove this when DWR support is removed
-if (!Function.prototype.argumentNames) {
-	Function.prototype.argumentNames = function() {
-		var names = this.toString().match(/^[\s\(]*function[^(]*\(([^)]*)\)/)[1]
-			.replace(/\/\/.*?[\r\n]|\/\*(?:.|[\r\n])*?\*\//g, '')
-			.replace(/\s+/g, '').split(',');
-		return names.length == 1 && !names[0] ? [] : names;
 	}
 }
 /* EOF */

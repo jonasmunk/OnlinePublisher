@@ -66,12 +66,14 @@ hui.ui._resize = function() {
 	hui.ui.reLayout();
 	window.clearTimeout(this._delayedResize);
 	if (!hui.ui._resizeFirst) {
-		this._delayedResize = window.setTimeout(hui.ui._afterResize,1000);
+		this._delayedResize = window.setTimeout(hui.ui._afterResize,500);
 	}
 };
 
 hui.ui._afterResize = function() {
-	hui.ui.callSuperDelegates(hui.ui,'$afterResize');
+  hui.onDraw(function() {
+  	hui.ui.callSuperDelegates(hui.ui,'$afterResize');    
+  })
 };
 
 /**
