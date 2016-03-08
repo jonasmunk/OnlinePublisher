@@ -9,7 +9,7 @@ module.exports = function(grunt) {
     watch: {
       scss: {
         files: ['scss/**/*.scss'],
-        tasks: ['compass'],
+        tasks: ['sass'],
         options: {
           spawn: false,
         }
@@ -26,13 +26,16 @@ module.exports = function(grunt) {
         }
       }
     },
-    compass: {
-      full: {
-        options: {
-          sassDir: "scss",
-          cssDir: "css",
-			    noLineComments: true,
-        }
+    sass: {
+      reader: {
+        options : {sourcemap:'none'},
+        files: [{
+          expand: true,
+          cwd: 'scss',
+          src: ['*.scss'],
+          dest: 'css',
+          ext: '.css'
+        }]
       }
     },
     shell: {
@@ -50,9 +53,9 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-contrib-qunit');
   grunt.loadNpmTasks('grunt-shell');
   grunt.loadNpmTasks('grunt-contrib-watch');
-  grunt.loadNpmTasks('grunt-contrib-compass');
   grunt.loadNpmTasks('grunt-contrib-copy');
   grunt.loadNpmTasks('grunt-contrib-clean');
+  grunt.loadNpmTasks('grunt-contrib-sass');
   grunt.loadNpmTasks('grunt-jsdoc');
 
   // Default task(s).

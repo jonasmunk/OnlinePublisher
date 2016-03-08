@@ -80,7 +80,7 @@ window.hui = window.hui || {};
  * @param {Object} obj The object to log
  */
 hui.log = function(obj) {
-	try {
+	if (window.console && window.console.log) {
 		if (arguments.length==1) {
 			console.log(obj);
 		}
@@ -89,7 +89,7 @@ hui.log = function(obj) {
 		} else {
 			console.log(arguments);			
 		}
-	} catch (ignore) {}
+	}
 };
 
 /**
@@ -905,6 +905,13 @@ hui.find = function(selector,context) {
 	return (context || document).querySelector(selector);
 }
 
+hui.findAll = function(selector,context) {
+	var nl = (context || document).querySelectorAll(selector),
+    l=[];
+  for(var i=0, ll=nl.length; i!=ll; l.push(nl[i++]));
+  return l;
+}
+
 if (!document.querySelector) {
   hui.find = function(selector,context) {
     context = context || document.documentElement;
@@ -1665,27 +1672,18 @@ hui.request = function(options) {
 	var transport = new XMLHttpRequest();
 	if (!transport) {return;}
 	transport.onreadystatechange = function() {
-		try {
-			if (transport.readyState == 4) {
-				if (transport.status == 200 && options.$success) {
-					options.$success(transport);
-				} else if (transport.status == 403 && options.$forbidden) {
-					options.$forbidden(transport);
-				} else if (transport.status !== 0 && options.$failure) {
-					options.$failure(transport);
-				} else if (transport.status === 0 && options.$abort) {
-					options.$abort(transport);
-				}
-				if (options.$finally) {
-					options.$finally();
-				}
+		if (transport.readyState == 4) {
+			if (transport.status == 200 && options.$success) {
+				options.$success(transport);
+			} else if (transport.status == 403 && options.$forbidden) {
+				options.$forbidden(transport);
+			} else if (transport.status !== 0 && options.$failure) {
+				options.$failure(transport);
+			} else if (transport.status === 0 && options.$abort) {
+				options.$abort(transport);
 			}
-			//hui.request._forget(transport);
-		} catch (e) {
-			if (options.$exception) {
-				options.$exception(e,transport);
-			} else {
-				throw e;
+			if (options.$finally) {
+				options.$finally();
 			}
 		}
 	};

@@ -2,7 +2,7 @@ if(window.hui=window.hui||{},function(e,t,i){e.KEY_BACKSPACE=8,e.KEY_TAB=9,e.KEY
 var n=e.browser={}
 n.msie=!/opera/i.test(t)&&/MSIE/.test(t)||/Trident/.test(t),n.msie6=-1!==t.indexOf("MSIE 6"),n.msie7=-1!==t.indexOf("MSIE 7"),n.msie8=-1!==t.indexOf("MSIE 8"),n.msie9=-1!==t.indexOf("MSIE 9"),n.msie9compat=n.msie7&&-1!==t.indexOf("Trident/5.0"),n.msie10=-1!==t.indexOf("MSIE 10"),n.msie11=-1!==t.indexOf("Trident/7.0"),n.webkit=-1!==t.indexOf("WebKit"),n.safari=-1!==t.indexOf("Safari"),n.webkitVersion=null,n.gecko=!n.webkit&&!n.msie&&-1!==t.indexOf("Gecko"),n.ipad=n.webkit&&-1!==t.indexOf("iPad"),n.windows=-1!==t.indexOf("Windows"),n.opacity=!n.msie6&&!n.msie7&&!n.msie8,n.mediaQueries=n.opacity,n.animation=!(n.msie6||n.msie7||n.msie8||n.msie9),n.wordbreak=!n.msie6&&!n.msie7&&!n.msie8,n.touch="ontouchstart"in i||"onmsgesturechange"in i&&i.navigator.maxTouchPoints?!0:!1
 var o=/Safari\/([\d.]+)/.exec(t)
-o&&(n.webkitVersion=parseFloat(o[1]))}(hui,navigator.userAgent,window),hui.log=function(e){try{1==arguments.length?console.log(e):2==arguments.length?console.log(arguments[0],arguments[1]):console.log(arguments)}catch(t){}},hui.defer=function(e,t){t&&(e=e.bind(t)),window.setTimeout(e)},hui.extend=function(e,t){function i(){this.constructor=e}var n=e.prototype
+o&&(n.webkitVersion=parseFloat(o[1]))}(hui,navigator.userAgent,window),hui.log=function(e){window.console&&window.console.log&&(1==arguments.length?console.log(e):2==arguments.length?console.log(arguments[0],arguments[1]):console.log(arguments))},hui.defer=function(e,t){t&&(e=e.bind(t)),window.setTimeout(e)},hui.extend=function(e,t){function i(){this.constructor=e}var n=e.prototype
 for(var o in t)t.hasOwnProperty(o)&&(e[o]=t[o])
 if(i.prototype=t.prototype,e.prototype=new i,n)for(var o in n)e.prototype[o]=n[o]},hui.override=function(e,t){if(t)for(var i in t)e[i]=t[i]
 return e},hui.each=function(e,t){var i
@@ -58,7 +58,7 @@ if(o)return o}return null},hui.get.firstParentByTag=function(e,t){for(var i=e;i;
 i=i.parentNode}return null},hui.get.firstParentByClass=function(e){for(var t=e;t;){if(hui.cls.has(t))return t
 t=t.parentNode}return null},hui.get.firstByTag=function(e,t){if(e=hui.get(e)||document.body,e.querySelector&&"*"!==t)return e.querySelector(t)
 var i=e.getElementsByTagName(t)
-return i[0]},hui.get.firstChild=hui.dom.firstChild,hui.find=function(e,t){return(t||document).querySelector(e)},document.querySelector||(hui.find=function(e,t){return t=t||document.documentElement,"."==e[0]?hui.get.firstByClass(t,e.substr(1)):hui.get.firstByTag(t,e)}),hui.collect=function(e,t){var i={}
+return i[0]},hui.get.firstChild=hui.dom.firstChild,hui.find=function(e,t){return(t||document).querySelector(e)},hui.findAll=function(e,t){for(var i=(t||document).querySelectorAll(e),n=[],o=0,s=i.length;o!=s;n.push(i[o++]));return n},document.querySelector||(hui.find=function(e,t){return t=t||document.documentElement,"."==e[0]?hui.get.firstByClass(t,e.substr(1)):hui.get.firstByTag(t,e)}),hui.collect=function(e,t){var i={}
 for(key in e)i[key]=hui.find(e[key],t)
 return i},hui.build=function(e,t,i){i=i||document
 var n=""
@@ -106,8 +106,7 @@ else if("undefined"!=typeof window.attachEvent)window.attachEvent("onload",e)
 else if("function"==typeof window.onload){var t=window.onload
 window.onload=function(){t(),e()}}else window.onload=e},hui.request=function(e){e=hui.override({method:"POST",async:!0,headers:{Ajax:!0}},e)
 var t=new XMLHttpRequest
-if(t){t.onreadystatechange=function(){try{4==t.readyState&&(200==t.status&&e.$success?e.$success(t):403==t.status&&e.$forbidden?e.$forbidden(t):0!==t.status&&e.$failure?e.$failure(t):0===t.status&&e.$abort&&e.$abort(t),e.$finally&&e.$finally())}catch(i){if(!e.$exception)throw i
-e.$exception(i,t)}}
+if(t){t.onreadystatechange=function(){4==t.readyState&&(200==t.status&&e.$success?e.$success(t):403==t.status&&e.$forbidden?e.$forbidden(t):0!==t.status&&e.$failure?e.$failure(t):0===t.status&&e.$abort&&e.$abort(t),e.$finally&&e.$finally())}
 var i=e.method.toUpperCase()
 t.open(i,e.url,e.async)
 var n=null
@@ -259,7 +258,7 @@ if(n.$scroll)if(n.debug&&!n.debugElement&&(n.debugElement=hui.build("div",{style
 o+=n.element.clientHeight/2
 var s=o-e,a=s/t
 n.debugElement&&(n.debugElement.style.top=o+"px",n.debugElement.innerHTML="<span>"+a+"</span>"),n.$scroll(a)}else{var u=(e-n.min)/(n.max-n.min),r=hui.between(0,u,1)
-n._latest!==r&&(n.$scroll(r),n._latest=r)}}},listen:function(e){this._listeners.push(e),this._init()}},hui.ui={domReady:!1,context:"",language:"en",objects:{},delegates:[],state:"default",latestObjectIndex:0,latestIndex:500,latestPanelIndex:1e3,latestAlertIndex:1500,latestTopIndex:2e3,toolTips:{},confirmOverlays:{},delayedUntilReady:[],texts:{request_error:{en:"An error occurred on the server",da:"Der skete en fejl på serveren"},"continue":{en:"Continue",da:"Fortsæt"},reload_page:{en:"Reload page",da:"Indæs siden igen"},access_denied:{en:"Access denied, maybe you are nolonger logged in",da:"Adgang nægtet, du er måske ikke længere logget ind"}}},hui.ui.get=function(e){return e?e.element?e:hui.ui.objects[e]:void 0},hui.ui.onReady=function(e){return hui.ui.domReady?e():hui.browser.gecko&&hui.string.endsWith(document.baseURI,"xml")?void window.setTimeout(e,1e3):void hui.ui.delayedUntilReady.push(e)},hui.ui._frameLoaded=function(e){hui.ui.callSuperDelegates(this,"frameLoaded",e)},hui.ui._resize=function(){hui.ui.reLayout(),window.clearTimeout(this._delayedResize),hui.ui._resizeFirst||(this._delayedResize=window.setTimeout(hui.ui._afterResize,1e3))},hui.ui._afterResize=function(){hui.ui.callSuperDelegates(hui.ui,"$afterResize")},hui.ui.confirmOverlay=function(e){var t,i=e.element
+n._latest!==r&&(n.$scroll(r),n._latest=r)}}},listen:function(e){this._listeners.push(e),this._init()}},hui.ui={domReady:!1,context:"",language:"en",objects:{},delegates:[],state:"default",latestObjectIndex:0,latestIndex:500,latestPanelIndex:1e3,latestAlertIndex:1500,latestTopIndex:2e3,toolTips:{},confirmOverlays:{},delayedUntilReady:[],texts:{request_error:{en:"An error occurred on the server",da:"Der skete en fejl på serveren"},"continue":{en:"Continue",da:"Fortsæt"},reload_page:{en:"Reload page",da:"Indæs siden igen"},access_denied:{en:"Access denied, maybe you are nolonger logged in",da:"Adgang nægtet, du er måske ikke længere logget ind"}}},hui.ui.get=function(e){return e?e.element?e:hui.ui.objects[e]:void 0},hui.ui.onReady=function(e){return hui.ui.domReady?e():hui.browser.gecko&&hui.string.endsWith(document.baseURI,"xml")?void window.setTimeout(e,1e3):void hui.ui.delayedUntilReady.push(e)},hui.ui._frameLoaded=function(e){hui.ui.callSuperDelegates(this,"frameLoaded",e)},hui.ui._resize=function(){hui.ui.reLayout(),window.clearTimeout(this._delayedResize),hui.ui._resizeFirst||(this._delayedResize=window.setTimeout(hui.ui._afterResize,500))},hui.ui._afterResize=function(){hui.onDraw(function(){hui.ui.callSuperDelegates(hui.ui,"$afterResize")})},hui.ui.confirmOverlay=function(e){var t,i=e.element
 i||(i=document.body),e.widget&&(i=e.widget.getElement()),hui.ui.confirmOverlays[i]?(t=hui.ui.confirmOverlays[i],t.clear()):(t=hui.ui.Overlay.create({modal:!0}),hui.ui.confirmOverlays[i]=t),e.text&&t.addText(hui.ui.getTranslated(e.text))
 var n=hui.ui.Button.create({text:hui.ui.getTranslated(e.okText)||"OK",highlighted:"true"})
 n.click(function(){e.onOk?e.onOk():e.$ok&&e.$ok(),t.hide()}),t.add(n)
