@@ -153,13 +153,13 @@ div.layout_header
 
 div.layout_logo
 {
-	background: white url('../gfx/sprite.png') 0px -320px no-repeat;
-	position: absolute;
-	box-shadow: 0 1px 3px #AAA;
-	width: 170px;
-	right: 20px;
-	top: 18px;
-	height: 160px;
+  background: white url('../gfx/sprite.png') -164px -334px no-repeat;
+  position: absolute;
+  box-shadow: 0 1px 3px #AAA;
+  width: 200px;
+  right: 20px;
+  top: 18px;
+  height: 160px;
 }
 
 div.layout_header_content
