@@ -144,7 +144,7 @@ class DOMUtils {
 	}
 	
 	static function stripNamespaces($str) {
-		return preg_replace('/ xmlns="[\\w:\\/.]*"/e','',$str);
+		return preg_replace_callback('/ xmlns="[\\w:\\/.]*"/',function($matches) {return '';},$str);
 	}
 	
 	static function getInnerXML($node,$encoding="ISO-8859-15") {
