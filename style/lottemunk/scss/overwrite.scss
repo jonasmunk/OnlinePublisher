@@ -29,26 +29,26 @@ $target : 'screen';
   	font-weight: normal;
   }
 
-  .part_header_1,
-  .part_header_2,
-  .part_header_3
+  .part_header-1,
+  .part_header-2,
+  .part_header-3
   {
   	font-family: $header-font;
   }
 
-  .part_header_1
+  .part_header-1
   {
   	font-size: 32px;
     line-height: 1;
   }
 
-  .part_header_2
+  .part_header-2
   {
   	font-size: 26px;
     line-height: 1;
   }
 
-  .part_header_3
+  .part_header-3
   {
   	font-size: 18px;
     font-weight: bold;
@@ -147,13 +147,13 @@ $target : 'screen';
 
 @include when(600px) {
 
-  .part_header_1
+  .part_header-1
   {
   	font-size: 42px;
     line-height: 1;
   }
 
-  .part_header_2
+  .part_header-2
   {
   	font-size: 32px;
   }
@@ -173,11 +173,11 @@ $target : 'screen';
 }
 
 @include when(760px) {
-  .part_section_header_1 {
+  .part_section_header-1 {
     padding: 0 0 30px;
   }
 
-  .part_header_1
+  .part_header-1
   {
   	font-size: 52px;
   }

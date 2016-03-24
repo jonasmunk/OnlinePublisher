@@ -83,18 +83,18 @@ p.common, ul.common
 	font-weight: 300;
 }
 
-.part_header_1
+.part_header-1
 {
 	color: #3080CB;
 }
 
-h1.part_header, textarea.part_header_1
+h1.part_header, textarea.part_header-1
 {
 	font-size: 38px;
 	line-height: 42px;
 }
 
-h2.part_header, textarea.part_header_2
+h2.part_header, textarea.part_header-2
 {
 	font-size: 19pt;
 	line-height: 21pt;
@@ -102,21 +102,21 @@ h2.part_header, textarea.part_header_2
 }
 
 
-h3.part_header, textarea.part_header_3
+h3.part_header, textarea.part_header-3
 {
 	font-size: 14pt;
 	line-height: 16pt;
 	font-weight: 400;
 }
 
-h4.part_header, textarea.part_header_4,
-h5.part_header, textarea.part_header_5,
-h6.part_header, textarea.part_header_6
+h4.part_header, textarea.part_header-4,
+h5.part_header, textarea.part_header-5,
+h6.part_header, textarea.part_header-6
 {
 	font-weight: 400;
 }
 
-div.part_section_header_3
+div.part_section_header-3
 {
 	padding-bottom: 5px;
 }

@@ -74,7 +74,7 @@ class HeaderPartController extends PartController
 	
 	function editor($part,$context) {
 		return
-		'<textarea class="part_header common_font part_header_'.$part->getLevel().'" name="text" id="part_header_textarea" style="border: 1px solid lightgrey; width: 100%; background: transparent; padding: 0; -webkit-box-sizing: border-box; -moz-box-sizing: border-box; box-sizing: border-box; '.$this->buildCSSStyle($part).'">'.
+		'<textarea class="part_header common_font part_header-'.$part->getLevel().'" name="text" id="part_header_textarea" style="border: 1px solid lightgrey; width: 100%; background: transparent; padding: 0; -webkit-box-sizing: border-box; -moz-box-sizing: border-box; box-sizing: border-box; '.$this->buildCSSStyle($part).'">'.
         Strings::escapeEncodedXML($part->getText()).
 		'</textarea>'.
 		'<input type="hidden" name="level" value="'.$part->getLevel().'"/>'.
@@ -102,7 +102,7 @@ class HeaderPartController extends PartController
 	}
 	
 	function getSectionClass($part) {
-		return 'part_section_header_'.$part->getLevel();
+		return 'part_section_header-'.$part->getLevel();
 	}
 	
 	function buildSub($part,$context) {

@@ -49,11 +49,11 @@ a {
   font-weight: normal;
 }
 
-.part_header_1 {
+.part_header-1 {
   font-size: 32px;
 }
 
-.part_header_2 {
+.part_header-2 {
   font-size: 28px;
 }
 
@@ -74,11 +74,11 @@ a {
 }
 
 @media screen and (min-width: 500px) {
-  .part_header_1 {
+  .part_header-1 {
     font-size: 42px;
   }
 
-  .part_header_2 {
+  .part_header-2 {
     font-size: 38px;
   }
 

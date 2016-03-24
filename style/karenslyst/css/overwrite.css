@@ -59,22 +59,22 @@ p.common, ul.common
 	font-family: 'Playfair Display', Georgia, "Book Antiqua", "Palatino", Times, serif;
 }
 
-.part_header_1 {
+.part_header-1 {
 	font-size: 48pt;
 	line-height: 1.1;
 }
 
-.part_header_2 {
+.part_header-2 {
 	font-size: 32pt;
 	line-height: 1.1;
 }
 
-.part_header_3 {
+.part_header-3 {
 	font-size: 24pt;
 	line-height: 1.1;
 }
 
-.part_header_4 {
+.part_header-4 {
 	font-size: 18pt;
 	line-height: 1.1;
 }
