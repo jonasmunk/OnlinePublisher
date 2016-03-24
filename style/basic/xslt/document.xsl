@@ -140,7 +140,7 @@
 				<xsl:choose>
 					<xsl:when test="part:part">part_section part_section_<xsl:value-of select="part:part/@type"/>
 					<!-- Hack to make headers margins work -->
-					<xsl:if test="part:part/@type='header'"> part_section_header_<xsl:value-of select="part:part/part:sub/ph:header/@level"/></xsl:if>
+					<xsl:if test="part:part/@type='header'"> part_section_header-<xsl:value-of select="part:part/part:sub/ph:header/@level"/></xsl:if>
 				</xsl:when>
 				</xsl:choose>
 			</xsl:attribute>
