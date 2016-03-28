@@ -41,6 +41,13 @@ module.exports = function(grunt) {
         options: {
           spawn: false,
         }
+      },
+      jonasmunk: {
+        files: ['style/jonasmunk/scss/**/*.scss'],
+        tasks: ['sass:jonasmunk'],
+        options: {
+          spawn: false,
+        }
       }
     },
     compass: {
@@ -71,6 +78,18 @@ module.exports = function(grunt) {
           cssDir: "style/lottemunk/css",
 			    noLineComments: true,
         }
+      }
+    },
+    sass : {
+      jonasmunk: {
+        options : {sourcemap:'none'},
+        files: [{
+          expand: true,
+          cwd: 'style/jonasmunk/scss',
+          src: ['*.scss'],
+          dest: 'style/jonasmunk/css',
+          ext: '.css'
+        }]
       }
     },
     shell: {
@@ -125,6 +144,7 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-shell');
   grunt.loadNpmTasks('grunt-contrib-watch');
   grunt.loadNpmTasks('grunt-contrib-compass');
+  grunt.loadNpmTasks('grunt-contrib-sass');
   grunt.loadNpmTasks('grunt-contrib-copy');
   grunt.loadNpmTasks('grunt-contrib-clean');
   grunt.loadNpmTasks('grunt-jsdoc');
