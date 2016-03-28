@@ -108,8 +108,8 @@
 		<p class="part_poster_text"><xsl:value-of select="p:text"/><xsl:comment/></p>
 		<xsl:for-each select="p:link">
 			<p class="part_poster_link">				
-				<a class="common"><xsl:call-template name="util:link"/>
-					<span><xsl:value-of select="."/></span>
+				<a class="common_link"><xsl:call-template name="util:link"/>
+					<span class="common_link_text"><xsl:value-of select="."/></span>
 				</a>
 			</p>
 		</xsl:for-each>

@@ -1,0 +1,169 @@
+@import 'shared';
+@import 'parts/bio';
+
+.theme_cv {
+	background: url('../gfx/white_plaster.png');
+
+  .layout_header {
+    opacity: .5;
+
+    &:after {
+      display: none;
+    }
+  }
+  
+  .layout
+  {
+  	width: 1004px;
+  	background: url('../gfx/white_plaster.png');
+    max-width: 1004px;
+  }
+
+  .layout_content
+  {
+  	background: url('../gfx/layout_paper.png') 0 0 repeat-y;
+  	padding: 20px 40px 40px;
+    margin: 10px 0;
+
+    &:before {
+      content: '';
+      position: absolute;
+    	height: 14px;
+    	width: 1004px;
+    	background: url('../gfx/layout_paper.png') -2008px 0;
+      margin: -34px 0 0 -40px;
+    }
+
+    &:after {
+      content: '';
+      position: absolute;
+    	height: 14px;
+    	width: 1004px;
+    	background: url('../gfx/layout_paper.png') -1004px 0;
+      margin: 40px 0 0 -40px;
+    }
+  }
+
+  .layout_footer
+  {
+  	padding: 60px 0;
+  	height: auto;
+  }
+  
+  .layout_designed
+  {
+  	height: 181px;
+  	width: 162px;
+  	background: url('../gfx/handmade.png');
+    font-size: 0;
+    padding: 0;
+  }
+}
+
+
+
+/*************** CV theme *****************/
+
+
+
+
+.theme_cv {
+  .layout_content,
+  .part_header,
+  .part_text,
+  .part_listing,
+  .part_poster {
+  	font-family: 'Open Sans','Helvetica Neue','Helvetica',Arial,sans-serif;	    
+  }
+  
+  .part_header-1,
+  .part_header-2 {
+  	font-weight: 200;
+  	color: #999;
+  	letter-spacing: -0px;
+  	text-indent: -2px;    
+  	line-height: 1em;    
+  }
+
+  .part_header-1 {
+  	font-size: 42pt;
+  }
+
+  .part_header-2 {
+  	font-size: 28pt;
+  }
+
+  .part_poster_title
+  {
+  	font-weight: 200;
+  	font-size: 18pt;
+  }
+
+  .part_poster_text
+  {
+  	font-weight: 200;
+  	font-size: 12pt;
+  }
+
+  .part_section_header-2
+  {
+  	padding-top: 20px;
+  	padding-bottom: 5px;
+  }
+
+  .part_text,
+  .part_listing
+  {
+  	font-weight: 300;
+  	font-size: 12pt;
+  	line-height: 1.4em;
+  	color: #333;
+  }
+
+  .part_listing_first
+  {
+  	font-size: 12pt;
+  	font-weight: 400;
+  }
+
+  strong
+  {
+  	font-weight: 400;
+  }
+
+  .layout_submenu
+  {
+  	font-family: 'Open Sans','Helvetica Neue','Helvetica',Arial,sans-serif;	
+  	list-style: none;
+  	margin: -15px -20px 20px -25px;
+  	padding: 0 5px 8px;
+  	border-bottom: 1px solid #eee;
+    
+    &_item {
+    	display: inline-block;      
+    }
+
+    &_link {
+    	text-decoration: none;
+    	color: #888;
+    	font-size: 11pt;
+    	padding: 0 10px;
+    	font-weight: 300;
+    	height: 28px;
+    	line-height: 28px;
+    	display: inline-block;
+    	border-radius: 5px;
+
+      &:hover {
+        color: #000;
+      }
+      
+      &.is-selected {
+      	font-weight: 400;
+      	color: #000;
+      	background: #fafafa;
+      	border: 1px solid #eee;        
+      }
+    }
+  }
+}

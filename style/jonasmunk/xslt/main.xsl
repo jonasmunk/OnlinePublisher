@@ -9,6 +9,7 @@
  xmlns:o="http://uri.in2isoft.com/onlinepublisher/class/object/1.0/"
  xmlns:util="http://uri.in2isoft.com/onlinepublisher/util/"
  xmlns:html="http://uri.in2isoft.com/onlinepublisher/publishing/html/1.0/"
+ xmlns:widget="http://uri.in2isoft.com/onlinepublisher/part/widget/1.0/"
  exclude-result-prefixes="p f h n o html util"
  >
   <xsl:output encoding="UTF-8" method="xml" omit-xml-declaration="yes"/>
@@ -28,6 +29,8 @@
       		<xsl:value-of select="f:frame/@title"/>
       	</title>
       	<xsl:call-template name="util:metatags"/>
+        <link href='https://fonts.googleapis.com/css?family=Neuton:400,300,500,600' rel='stylesheet' type='text/css'/>
+        <link href='https://fonts.googleapis.com/css?family=Roboto+Slab:400,300,100,700' rel='stylesheet' type='text/css'/>
       	<xsl:if test="//p:design/p:parameter[@key='theme']">
       		<link href='http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,400,600,300,200' rel='stylesheet' type='text/css'/>
       		<link href='http://fonts.googleapis.com/css?family=Source+Sans+Pro:200' rel='stylesheet' type='text/css'/>
@@ -47,19 +50,21 @@
       		</xsl:when>
       		<xsl:otherwise>
       			<div class="layout">
-      				<div class="layout_navigation">
-      					<xsl:call-template name="util:navigation-first-level"/>
-      				</div>
-      				<div class="layout_top">
-      					<xsl:comment/>
-      				</div>
+              <div class="layout_header">
+                <a class="layout_logo">
+                  <xsl:attribute name="href">
+                    <xsl:choose>
+                      <xsl:when test="//p:context/p:home/@path"><xsl:value-of select="//p:context/p:home/@path"/></xsl:when>
+                      <xsl:when test="//p:context/p:home/@page">?id=<xsl:value-of select="//p:context/p:home/@page"/></xsl:when>
+                    </xsl:choose>
+                  </xsl:attribute>
+                  <xsl:text>Jonas Munk</xsl:text>
+                </a>
+    					<xsl:call-template name="navigation-first-level"/>
+              </div>
       				<div class="layout_content">
-      					<xsl:call-template name="util:navigation-second-level"/>
-      					<xsl:call-template name="util:navigation-third-level"/>
+      					<xsl:call-template name="navigation-second-level"/>
       					<xsl:apply-templates select="p:content"/>
-      					<xsl:comment/>
-      				</div>
-      				<div class="layout_bottom">
       					<xsl:comment/>
       				</div>
       				<div class="layout_footer">
@@ -73,8 +78,81 @@
     </html>
   </xsl:template>
 
+  <xsl:template name="navigation-first-level">
+  	<xsl:if test="//f:frame/h:hierarchy/h:item[not(@hidden='true')]">
+  		<ul class="layout_menu">
+  			<xsl:for-each select="//f:frame/h:hierarchy/h:item">
+  				<xsl:if test="not(@hidden='true')">
+  					<li class="layout_menu_item">
+  						<a>
+                <xsl:attribute name="class">
+                  <xsl:text>layout_menu_link</xsl:text>
+      						<xsl:choose>
+      							<xsl:when test="//p:page/@id=@page"><xsl:text> is-selected</xsl:text></xsl:when>
+      							<xsl:when test="descendant-or-self::*/@page=//p:page/@id"><xsl:text> is-active</xsl:text></xsl:when>
+      						</xsl:choose>
+                </xsl:attribute>
+  							<xsl:call-template name="util:link"/>
+  							<xsl:value-of select="@title"/>
+  						</a>
+  					</li>
+  				</xsl:if>
+  			</xsl:for-each>
+  		</ul>
+  	</xsl:if>
+  </xsl:template>
+  
+  <xsl:template name="navigation-second-level">
+  	<xsl:if test="//f:frame/h:hierarchy/h:item[descendant-or-self::*/@page=//p:page/@id]/h:item[not(@hidden='true')]">
+  		<ul class="layout_submenu">
+  			<xsl:for-each select="//f:frame/h:hierarchy/h:item[descendant-or-self::*/@page=//p:page/@id]/h:item">
+  				<xsl:if test="not(@hidden='true')">
+  					<li class="layout_submenu_item">
+  						<a>
+                <xsl:attribute name="class">
+                  <xsl:text>layout_submenu_link</xsl:text>
+      						<xsl:choose>
+      							<xsl:when test="//p:page/@id=@page"><xsl:text> is-selected</xsl:text></xsl:when>
+      							<xsl:when test="descendant-or-self::*/@page=//p:page/@id"><xsl:text> is-active</xsl:text></xsl:when>
+      						</xsl:choose>
+                </xsl:attribute>
+  							<xsl:call-template name="util:link"/>
+  							<xsl:value-of select="@title"/>
+  						</a>
+  					</li>
+  				</xsl:if>
+  			</xsl:for-each>
+  		</ul>
+  	</xsl:if>
+  </xsl:template>
 
-
-
+  <xsl:template match="widget:bio">
+    <ul class="bio">
+      <xsl:for-each select="widget:event">
+      	<li class="bio_event">
+      		<span class="bio_time">
+            <xsl:value-of select="@from"/>
+            <span class="bio_time_divider"> &#8594; </span>
+            <xsl:value-of select="@to"/>
+          </span>
+          <strong class="bio_title"><xsl:value-of select="widget:title"/></strong>, <span class="bio_place"><xsl:value-of select="widget:place"/></span>
+          <xsl:if test="widget:link or widget:point">
+      		<ol class="bio_points">
+            <xsl:for-each select="widget:point">
+        			<li class="bio_point"><strong><xsl:value-of select="@prefix"/>: </strong><xsl:value-of select="."/></li>
+            </xsl:for-each>
+            <xsl:if test="widget:link">
+        			<li class="bio_point">
+                <xsl:for-each select="widget:link">
+            			<a href="{@href}" class="common_link"><span class="common_link_text"><xsl:value-of select="."/></span></a><xsl:text> </xsl:text>
+                </xsl:for-each>
+              </li>
+            </xsl:if>
+      		</ol>
+          </xsl:if>
+      	</li>
+      </xsl:for-each>
+    </ul>
+  </xsl:template>
 
 </xsl:stylesheet>
