@@ -1,4 +1,4 @@
-@include when {
+@include if {
 	.layout_placards {
 		list-style: none;
 		background: #f8f8f9;
@@ -82,7 +82,7 @@
 }
 
 
-@include when(760px) {
+@include if((width: 760px)) {
 	.layout_placards
 	{
 		border: 1px solid #ddd;
@@ -107,7 +107,7 @@
 	}
 }
 
-@include when(980px) {
+@include if((width: 980px)) {
 	.layout_placards
 	{
 		border: 1px solid #ddd;

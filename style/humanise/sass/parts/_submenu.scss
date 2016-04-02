@@ -1,4 +1,4 @@
-@include when(all,inline) {
+@include if((target: inline)) {
   
 	.submenu {
 		margin: 0;
@@ -29,7 +29,7 @@
 }
 
 
-@include when(760px,inline) {
+@include if((width: 760px, target: inline)) {
   
 	.submenu {
 		padding: 5px 10px;
@@ -40,7 +40,7 @@
 	}
 }
 
-@include when(1000px,inline) {
+@include if((width: 1000px, target: inline)) {
 	
 	.submenu {
 		padding-left: 0px;
@@ -52,7 +52,7 @@
 	}
 }
 
-@include when(all,msie_lt8) {
+@include if((target: msie_lt8)) {
 	
 	.submenu_item {
 		display: inline;

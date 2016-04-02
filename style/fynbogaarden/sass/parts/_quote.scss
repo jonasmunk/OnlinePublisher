@@ -1,4 +1,4 @@
-@include when {
+@include if {
   .quote {
     max-width: 800px;
     margin: 0 auto;
@@ -60,14 +60,14 @@
   }
 }
 
-@include when(400px) {
+@include if((width: 400px)) {
 
   .quote_text {
     font-size: 18px;
   }
 }
 
-@include when(600px) {
+@include if((width: 600px)) {
 
   .quote {
     max-width: 800px;
@@ -99,7 +99,7 @@
   }
 }
 
-@include when(769px) {
+@include if((width: 769px)) {
   .quote_text {
     font-size: 28px;
     padding-left: 130px;

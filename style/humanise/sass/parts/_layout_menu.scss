@@ -1,4 +1,4 @@
-@include when(all,inline) {
+@include if((target: inline)) {
 
   .layout_menu {
   	margin: 0;
@@ -50,7 +50,7 @@
   
 }
 
-@include when(760px,inline) {
+@include if((width: 760px, target: inline)) {
 
 	.layout_menu {
   	padding: 5px 10px;
@@ -72,7 +72,7 @@
 
 }
 
-@include when(1000px,inline) {
+@include if((width: 1000px, target: inline)) {
 	
 	.layout_menu {
 		padding: 5px 0;
@@ -80,7 +80,7 @@
 
 }
 
-@include when(all,msie_lt8) {
+@include if((target: msie_lt8)) {
 	
 	.layout_menu_item {
 		display: inline;

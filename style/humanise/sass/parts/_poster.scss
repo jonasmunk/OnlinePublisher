@@ -1,10 +1,10 @@
-@include when(all,inline) {
+@include if((target: inline)) {
 	#poster {
   	display: none;	  
 	}
 }
 
-@include when(700px,inline) {
+@include if((width: 700px, target: inline)) {
 	#poster
 	{
 		display: block;
@@ -30,7 +30,7 @@
   
 }
 
-@include when(700px) {
+@include if((width: 700px)) {
 	#poster
 	{
 		background: #333 url('../gfx/poster_bg.png');

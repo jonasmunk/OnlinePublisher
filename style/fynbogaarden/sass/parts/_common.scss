@@ -1,4 +1,4 @@
-@include when(all,inline) {
+@include if((target:'inline')) {
   
 	form, p {
 		margin: 0px;

@@ -1,4 +1,4 @@
-@include when(all,inline) {
+@include if((target: inline)) {
   .layout_middle,
   .layout_head_body,
   .layout_base {
@@ -24,7 +24,7 @@
   }
 }
 
-@include when {
+@include if {
   .layout_design {
     background: url('../gfx/graphics.png') -172px -709px;
     text-indent: -10000px;
@@ -42,14 +42,14 @@
   }
 }
 
-@include when(560px,inline) {
+@include if((width: 560px,target: inline)) {
 
   .layout_inner_content {
     padding: 20px 10px;
   }
 }
 
-@include when(760px,inline) {
+@include if((width: 760px, target:inline)) {
   
   .layout_inner_content {
     padding: 20px;
@@ -82,7 +82,7 @@
   }
 }
 
-@include when(760px) {
+@include if((width: 760px)) {
   .layout_head {
     transition: background-color 1s;
     -moz-transition: background-color 1s;
@@ -120,7 +120,7 @@
 
 
 
-@include when(980px) {
+@include if((width: 980px)) {
   
   body, html {
     height: 100%;
@@ -147,7 +147,7 @@
   }
 }
 
-@include when(1000px,inline) {
+@include if((width: 1000px, target: inline)) {
   
   .layout_inner_content {
     padding-left: 0px;
@@ -155,7 +155,7 @@
   }
 }
 
-@include when(1000px) {
+@include if((width: 1000px)) {
   
   .layout_inner_content {
     padding-left: 0px;
@@ -163,7 +163,7 @@
 
 }
 
-@include when(all,msie_lt9) {
+@include if((target: msie_lt9)) {
   .layout_middle, .layout_head_body, .layout_base {
     width: 980px;
     padding-left: 20px;

@@ -1,4 +1,4 @@
-@include when(all,inline) {
+@include if((target: inline)) {
   .layout_search {
   	margin: 0;
   	font-size: 0;
@@ -22,7 +22,7 @@
   }
 }
 
-@include when(all,async) {
+@include if {
   .layout_search_body {
   	position: absolute;
   	top: 0;
@@ -82,7 +82,7 @@
   }
 }
 
-@include when(560px) {
+@include if((width: 560px)) {
 	
   .layout_search_icon:hover {
   	> path {
@@ -155,7 +155,7 @@
   }
 }
 
-@include when(all,msie_lt9) {
+@include if((target: msie_lt9)) {
   .layout_search_icon {
     background: url('../gfx/search.png');
     display: inline-block;

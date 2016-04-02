@@ -1,4 +1,4 @@
-@include when(all,inline) {
+@include if((target: inline)) {
 
 	.sidemenu {
 		margin: 0;
@@ -26,7 +26,7 @@
 	}
 }
 
-@include when(760px,inline) {
+@include if((width: 760px, target: inline)) {
 	
 	.sidemenu
 	{
@@ -59,7 +59,7 @@
 	}
 }
 
-@include when(760px) {
+@include if((width: 760px)) {
   .scroll .sidemenu {
     position: fixed;
     top: 56px;

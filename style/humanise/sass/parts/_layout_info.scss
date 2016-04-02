@@ -1,4 +1,4 @@
-@include when {
+@include if {
 
 	.layout_info {
 		overflow: hidden;
@@ -81,7 +81,7 @@
 
 }
 
-@include when(560px) {	
+@include if((width: 560px)) {	
 
   .layout_info {
     margin: 20px 0;
@@ -105,7 +105,7 @@
 	}
 }
 
-@include when(1000px) {
+@include if((width: 1000px)) {
 	
 	.layout_info {
 		padding: 0;

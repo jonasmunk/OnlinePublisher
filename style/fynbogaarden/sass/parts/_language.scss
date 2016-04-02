@@ -1,6 +1,6 @@
 $language-size: 40px;
 
-@include when(all,inline) {
+@include if((target: inline)) {
   .language {
     text-align: right;
     position: absolute;
@@ -55,7 +55,7 @@ $language-size: 40px;
   }
 }
 
-@include when(769px,inline) {
+@include if((width: 769px, target: inline)) {
   .language {
     position: static;
     padding-top: 0;
@@ -77,8 +77,7 @@ $language-size: 40px;
   }
 }
 
-@include when(msie_lt9) {
-
+@include if((target: msie_lt9)) {
 
   .language_link-english {
     &:before {

@@ -1,4 +1,4 @@
-@include when(all,inline) {
+@include if((target: inline)) {
 	.common_header {
 		margin: 0px;
 		color: #333;
@@ -13,7 +13,7 @@
 	}
 }
 
-@include when(all,async) {
+@include if {
   /************ Headers ***********/
 
 

@@ -1,4 +1,4 @@
-@include when(all,inline) {
+@include if((target:inline)) {
 
   .header {
     background: url('../gfx/header.jpg') 50% 50%;
@@ -33,7 +33,7 @@
   }
 }
 
-@include when(500px,inline) {
+@include if((width: 500px, target: inline)) {
   .header_title {
     width: 250px;
     padding-top: 89 / 370 * 250px;
@@ -48,14 +48,14 @@
   }
 }
 
-@include when(700px,inline) {
+@include if((width: 700px, target: inline)) {
 
   .header_title_more {
     font-size: 24px;
   }
 }
 
-@include when(1000px,inline) {
+@include if((width: 1000px, target: inline)) {
   .header_title {
     left: 50%;
     margin-left: -480px;
@@ -68,7 +68,7 @@
   }
 }
 
-@include when(1200px,inline) {
+@include if((width: 1200px, target: inline)) {
   .header {
     padding-bottom: 674 / 1536 * 1200px;
   }
@@ -81,7 +81,7 @@
 }
 
 
-@include when(msie_lt9) {
+@include if((target: msie_lt9)) {
   .header_title {
     background-image: url('../gfx/logo.outline.png');
     width: 370px;

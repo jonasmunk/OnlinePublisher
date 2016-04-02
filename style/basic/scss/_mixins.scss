@@ -9,6 +9,41 @@
   }
 }
 
+@mixin if($params:()) {
+  @if ($target=='msie_lt9' and map-has-key($params, width)) {
+    @content;
+  }
+  @elseif (map-has-key($params, target)) {
+    @if (map-get($params,'target')==$target or $target==editor) {
+      @if (map-has-key($params, width)) {
+        @media screen and (min-width: #{map-get($params,'width')}) {
+          @content;
+        }
+      }
+      @else {
+        @content;
+      }
+    }
+  }
+  @elseif ($target=='async' or $target=='editor') {
+    @if (map-has-key($params, width)) {
+      @media screen and (min-width: #{map-get($params,'width')}) {
+        @content;
+      }
+    }
+    @else {
+      @content;
+    }    
+  }
+}
+
+// TODO use "if"
+@mixin retina {
+  @media  (-webkit-min-device-pixel-ratio: 2), (min-resolution: 2dppx) {
+    @content;
+  }
+}
+
 @mixin transition($value) {
 	-webkit-transition: $value;
 	-moz-transition: $value;
@@ -28,6 +63,9 @@
 	-moz-box-sizing: border-box;
 }
 
+@mixin no-appearance {
+  -webkit-appearance: none;
+}
 
 @mixin vertical-gradient($start-colour, $end-colour) {
     background-color: $start-colour;

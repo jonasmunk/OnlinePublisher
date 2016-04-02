@@ -1,4 +1,4 @@
-@include when {
+@include if {
   .poster {
     padding-bottom: 120px;
   }
@@ -26,7 +26,7 @@
   }
 }
 
-@include when(500px) {
+@include if((width: 500px)) {
 
   .poster {
     padding-bottom: 200px;
@@ -36,7 +36,7 @@
   }
 }
 
-@include when(700px) {
+@include if((width: 700px)) {
 
   .poster {
     padding-bottom: 280px;
@@ -46,7 +46,7 @@
   }
 }
 
-@include when(960px) {
+@include if((width: 960px)) {
 
   .poster {
     padding-bottom: 380px;
@@ -57,7 +57,7 @@
   }
 }
 
-@include when(1400px) {
+@include if((width: 1400px)) {
 
   .poster {
     padding-bottom: 500px;
