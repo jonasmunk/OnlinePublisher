@@ -173,23 +173,24 @@
 </xsl:template>
 
 <xsl:template name="img:buildsrc">
+  <!-- TODO: It looks like transform is always present, so this does not make sense -->
   <xsl:choose>
   <xsl:when test="img:transform">
     <xsl:value-of select="$path"/><xsl:text>services/images/?id=</xsl:text>
     <xsl:value-of select="o:object/@id"/>
-    <xsl:if test="img:transform/@scale-percent and $highquality='false'">
+    <xsl:if test="img:transform/@scale-percent">
       <xsl:text>&amp;scale=</xsl:text><xsl:value-of select="img:transform/@scale-percent"/>
     </xsl:if>
-    <xsl:if test="img:transform/@width and $highquality='false'">
+    <xsl:if test="img:transform/@width">
       <xsl:text>&amp;width=</xsl:text><xsl:value-of select="img:transform/@width"/>
     </xsl:if>
-    <xsl:if test="img:transform/@height and $highquality='false'">
+    <xsl:if test="img:transform/@height">
       <xsl:text>&amp;height=</xsl:text><xsl:value-of select="img:transform/@height"/>
     </xsl:if>
-    <xsl:if test="img:transform/@max-width and $highquality='false'">
+    <xsl:if test="img:transform/@max-width">
       <xsl:text>&amp;width=</xsl:text><xsl:value-of select="img:transform/@max-width"/>
     </xsl:if>
-    <xsl:if test="img:transform/@max-height and $highquality='false'">
+    <xsl:if test="img:transform/@max-height">
       <xsl:text>&amp;height=</xsl:text><xsl:value-of select="img:transform/@max-height"/>
     </xsl:if>
     <xsl:if test="img:transform/@greyscale='true'">
@@ -197,7 +198,7 @@
     </xsl:if>
   </xsl:when>
   <xsl:otherwise>
-    <xsl:value-of select="$path"/>images/<xsl:value-of select="o:object/o:sub/i:image/i:filename"/>
+    <xsl:value-of select="$data-path"/>images/<xsl:value-of select="o:object/o:sub/i:image/i:filename"/>
   </xsl:otherwise>
   </xsl:choose>
 </xsl:template>

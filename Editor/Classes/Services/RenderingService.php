@@ -138,9 +138,9 @@ class RenderingService {
       'navigation-path' => $navigationPath,
       'page-path' => $pagePath,
       'absolute-path' => $absolutePath,
+      'data-path' => ConfigurationService::getDataUrl(),
       'absolute-page-path' => $absolutePagePath,
       'template' => $template,
-      // 'agent' => RenderingService::_getAgent(), // TODO Disabled for performance reasons (not in use)
       'userid' => $userId,
       'username' => $userName,
       'usertitle' => $userTitle,
@@ -149,13 +149,12 @@ class RenderingService {
       'editor' => false,
       'mini' => Request::getBoolean('mini') ? 'true' : 'false',
       'development' => $development ? 'true' : 'false',
-      'highquality' => Request::getBoolean('print') ? 'true' : 'false',
       'urlrewrite' => ConfigurationService::isUrlRewrite() ? 'true' : 'false',
       'timestamp' => SystemInfo::getDate(),
       'language' => $language,
       'statistics' => ($statistics ? 'true' : 'false')
     ];
-
+//    print_r($variables); exit;
     $xsl = '<?xml version="1.0" encoding="'.$encoding.'"?>'.
       '<xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" version="1.0">'.
       '<xsl:output method="html" indent="no" encoding="'.$encoding.'"/>'.

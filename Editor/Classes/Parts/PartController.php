@@ -114,6 +114,7 @@ class PartController
 		'<xsl:variable name="path">../../../</xsl:variable>'.
 		'<xsl:variable name="navigation-path"></xsl:variable>'.
 		'<xsl:variable name="page-path"></xsl:variable>'.
+    '<xsl:variable name="data-path">' . ConfigurationService::getDataUrl() . '</xsl:variable>'.
 		'<xsl:variable name="template"></xsl:variable>'.
 		'<xsl:variable name="userid"></xsl:variable>'.
 		'<xsl:variable name="username"></xsl:variable>'.
@@ -123,7 +124,6 @@ class PartController
 		'<xsl:variable name="editor">'.($editor ? 'true' : 'false').'</xsl:variable>'.
 		'<xsl:variable name="urlrewrite">'.(ConfigurationService::isUrlRewrite() ? 'true' : 'false').'</xsl:variable>'.
 		'<xsl:variable name="timestamp">'.SystemInfo::getDate().'</xsl:variable>'.
-		'<xsl:variable name="highquality">false</xsl:variable>'.
 		'<xsl:variable name="language">'.strtolower($context->getLanguage()).'</xsl:variable>'.
 		'<xsl:template match="/"><xsl:apply-templates/></xsl:template>'.
 		'</xsl:stylesheet>';

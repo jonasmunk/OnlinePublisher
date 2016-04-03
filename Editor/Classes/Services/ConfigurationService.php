@@ -108,4 +108,13 @@ class ConfigurationService {
     }
     return FileSystemService::join($basePath, $path);
   }
+
+  static function getDataUrl() {
+		global $CONFIG,$basePath;
+    $base = ConfigurationService::getBaseUrl();
+    if (isset($CONFIG['dataDir'])) {
+      return $base . $CONFIG['dataDir'];
+    }
+    return $base;
+  }
 }
