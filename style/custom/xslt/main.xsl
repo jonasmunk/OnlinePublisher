@@ -25,10 +25,10 @@
 				<xsl:call-template name="util:style-build">
           <xsl:with-param name="async" select="'false'"/>
         </xsl:call-template>
-                <xsl:call-template name="util:load-font">
-                    <xsl:with-param name="href" select="'http://fonts.googleapis.com/css?family=Open+Sans:400,600,700,300'"/>
-                    <xsl:with-param name="family" select="'Open Sans'"/>
-                </xsl:call-template>
+        <xsl:call-template name="util:load-font">
+            <xsl:with-param name="href" select="'http://fonts.googleapis.com/css?family=Open+Sans:400,600,700,300'"/>
+            <xsl:with-param name="family" select="'Open Sans'"/>
+        </xsl:call-template>
 				<xsl:if test="//p:design/p:parameter[@key='background-color']">
 					<style>
 						body {
@@ -61,6 +61,7 @@
 						<xsl:comment/></p>
 					<div class="layout_navigation">
 						<xsl:call-template name="util:menu-top-level"/>
+						<xsl:comment/>
 					</div>
 					</div>
 					<div class="layout_sidebar">
