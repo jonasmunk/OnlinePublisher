@@ -10,7 +10,7 @@
           <dropdown name="easing" key="ease"/>
         </field>
         <field label="Duration">
-          <number-input min="0" max="10000" key="duration" value="1000"/>
+          <number-input min="0" max="10000" key="duration" value="2000"/>
         </field>
       </fields>
       <buttons>
@@ -24,14 +24,17 @@
       .container {
         width: 400px;
         height: 20px;
-        background: #eee;
+        background: #ddd;
         margin: 30px;
+        padding: 0 10px;
       }
       
       .box {
         background: red;
         width: 20px;
         height: 20px;
+        position: relative;
+        left: -10px;
       }
     </style>
     <div class="container">

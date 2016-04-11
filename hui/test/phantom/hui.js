@@ -1,7 +1,5 @@
 QUnit.test("Test isString", function(assert) {
 
-	var str =
-
 	// Positives...
 	assert.ok(hui.isString('This is a string'));
 	assert.ok(hui.isString(' '));
@@ -18,6 +16,27 @@ QUnit.test("Test isString", function(assert) {
 	assert.ok(!hui.isString(1));
 	assert.ok(!hui.isString(-1));
 	assert.ok(!hui.isString(0));
+
+})
+
+QUnit.test("Test isArray", function(assert) {
+
+	// Positives...
+	assert.ok(hui.isArray([]));
+	assert.ok(hui.isArray([null]));
+	assert.ok(hui.isArray(Array()));
+
+	// Negatives...
+	assert.ok(!hui.isArray());
+	assert.ok(!hui.isArray(null));
+	assert.ok(!hui.isArray(NaN));
+	assert.ok(!hui.isArray({}));
+	assert.ok(!hui.isArray(""));
+	assert.ok(!hui.isArray(" "));
+	assert.ok(!hui.isArray("[]"));
+	assert.ok(!hui.isArray(1));
+	assert.ok(!hui.isArray(-1));
+	assert.ok(!hui.isArray(0));
 
 })
 
@@ -148,4 +167,22 @@ QUnit.test("Test fitting", function(assert) {
 		assert.equal(50, fitted.height);
 		assert.equal(50, fitted.width);
 	}()
+})
+
+
+QUnit.test("Test string.shorten", function(assert) {
+
+	assert.equal(hui.string.shorten('This is a string',0),'...');
+	assert.equal(hui.string.shorten('This is a string',2),'...');
+	assert.equal(hui.string.shorten('This is a string',5),'Th...');
+	assert.equal(hui.string.shorten('This is a string',6),'Thi...');
+	assert.equal(hui.string.shorten('This',5),'This');
+
+	assert.equal(hui.string.shorten(null,5),'');
+	assert.equal(hui.string.shorten(undefined,5),'');
+	assert.equal(hui.string.shorten([],5),'');
+	assert.equal(hui.string.shorten({x:'saa'},5),'');
+
+	assert.equal(hui.string.shorten(123456789,5),'12...');
+
 })

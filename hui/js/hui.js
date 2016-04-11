@@ -249,6 +249,14 @@ hui.isString = function(obj) {
 };
 
 /**
+ * Checks if an object is a number
+ * @param {Object} obj The object to check
+ */
+hui.isNumber = function(obj) {
+	return typeof(obj)==='number';
+};
+
+/**
  * Checks if an object is an array
  * @param {Object} obj The object to check
  */
@@ -345,7 +353,10 @@ hui.string = {
 	 * @returns {String} The shortened text, '' if undefined or null string
 	 */
 	shorten : function(str,length) {
-		if (!hui.isDefined(str)) {return '';}
+    if (hui.isNumber(str)) {
+      str = str+'';
+    }
+		else if (!hui.isString(str)) {return '';}
 		if (str.length > length) {
 			return str.substring(0,length-3) + '...';
 		}

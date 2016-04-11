@@ -26,6 +26,7 @@ def hey(dir,title) :
 items = '<?xml version="1.0"?>\n<items>\n'
 items+='    <title title="Tests"/>\n'
 items+=hey(base+'/test/unittests','Unit tests')
+items+=hey(base+'/test/phantom','Phantom tests')
 items+=hey(base+'/test/html','HTML tests')
 items+=hey(base+'/test/xml','XML tests')
 items+=hey(base+'/test/guis','Complete GUIs')
