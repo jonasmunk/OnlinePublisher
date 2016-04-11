@@ -29,9 +29,9 @@
 			</bar>
 		</sidebar>
 		<tabs small="true">
-			<tab title="Humanize User Interface">
+			<tab title="Humanise User Interface">
 				<toolbar>
-						<icon icon="common/internet" text="Publish"/>
+						<icon icon="common/info" text="About"/>
 					<right>
 						<icon icon="common/internet" name="publish" text="Publish"/>
 					</right>

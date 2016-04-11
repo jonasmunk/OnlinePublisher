@@ -83,7 +83,7 @@
 			<xsl:for-each select="//gui:style[@source]">
 				<link rel="stylesheet" href="{@source}" type="text/css" media="screen" title="no title" charset="utf-8"/>
 			</xsl:for-each>
-			<xsl:for-each select="//gui:style[not[@source]]">
+			<xsl:for-each select="//gui:style[not(@source)]">
 				<style>
 					<xsl:value-of select="."/>
 				</style>
@@ -1107,7 +1107,7 @@ doc title:'Rich text' class:'hui.ui.RichText'
 	<xsl:copy-of select="child::*|child::text()"/>
 </xsl:template>
 
-<xsl:template match="gui:div|gui:span|gui:strong|gui:p|gui:em|gui:a|gui:input">
+<xsl:template match="gui:div|gui:span|gui:strong|gui:p|gui:em|gui:a|gui:input|gui:h1|gui:h2|gui:h3|gui:h4|gui:h5|gui:h6">
 	<xsl:element name="{name()}">
 		<xsl:if test="@style">
 			<xsl:attribute name="style"><xsl:value-of select="@style"/></xsl:attribute>

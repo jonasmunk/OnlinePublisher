@@ -43,7 +43,7 @@ QUnit.asyncTest( "Clicking",
             }
         })
         
-        Syn.click({},button.element,function() {            
+        syn.click({},button.element,function() {            
             QUnit.start();
         });
     }
@@ -63,11 +63,11 @@ QUnit.asyncTest( "Enable / disable",
             }
         })
         
-        Syn.click({},button.element,function() {
+        syn.click({},button.element,function() {
             button.disable();
-            Syn.click({},button.element,function() {
+            syn.click({},button.element,function() {
                 button.enable();
-                Syn.click({},button.element,function() {
+                syn.click({},button.element,function() {
                     QUnit.start();
                 });
             });
@@ -88,7 +88,7 @@ QUnit.asyncTest( "Overlay",
         })
         
         // Click button
-        Syn.click({},button.element,function() {
+        syn.click({},button.element,function() {
             // Wait for it...
             window.setTimeout(function() {
                 var overlay = hui.get.firstByClass(document.body,'hui_overlay');
@@ -96,15 +96,15 @@ QUnit.asyncTest( "Overlay",
                 var buttons = hui.get.byClass(overlay,'hui_button');
                 assert.equal(buttons.length,2,'There are 2 overlay buttons');
                 // Click "OK"
-                Syn.click({},buttons[0],function() {
+                syn.click({},buttons[0],function() {
                     // Click again
                     window.setTimeout(function() {
                         assert.ok(!hui.dom.isVisible(overlay),'The overlay should be invisible')
-                        Syn.click({},button.element,function() {
+                        syn.click({},button.element,function() {
                             // Wait for it...
                             window.setTimeout(function() {
                                 // Click "Cancel"
-                                Syn.click({},buttons[1],function() {
+                                syn.click({},buttons[1],function() {
                                     assert.ok(!hui.dom.isVisible(overlay),'The overlay should be invisible')
                                     QUnit.start();
                                 });
