@@ -59,13 +59,9 @@
 						<div class="case_sidebar">
 							<div class="case_contact">
 								<h2>Jane Brinkmann Munk</h2>
-								<p>Lindevej 73, 9370 Hals</p>
+								<p>Apotekervænget 16, 9370 Hals</p>
 								<p><em>Tlf:</em> 98 25 18 83</p>
 								<p><em>E-post: </em> <a href="mailto:janemunk@stofanet.dk"><span>janemunk@stofanet.dk</span></a></p>
-						
-								<blockquote>
-									"Kontakt mig venligst hvis du er interesseret i nogle af malerierne. Bemærk at nogle malerier allerede kan være solgt."
-								</blockquote>
 							</div>
 							<xsl:call-template name="thirdlevel"/>
 							<xsl:comment/>
