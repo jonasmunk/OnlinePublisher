@@ -12,12 +12,20 @@
         <item icon="common/page" title="validation" value="unittests/validation.html"/>
         <item icon="common/page" title="window" value="unittests/window.html"/>
     </item>
+    <item icon="common/folder" title="Phantom tests" value="Phantom tests">
+        <item icon="common/page" title="button" value="phantom/button.html"/>
+        <item icon="common/page" title="component" value="phantom/component.html"/>
+        <item icon="common/page" title="hui" value="phantom/hui.html"/>
+        <item icon="common/page" title="markupeditor" value="phantom/markupeditor.html"/>
+        <item icon="common/page" title="test" value="phantom/test.html"/>
+    </item>
     <item icon="common/folder" title="HTML tests" value="HTML tests">
         <item icon="common/page" title="alert" value="html/alert.html"/>
         <item icon="common/page" title="angular" value="html/angular.html"/>
         <item icon="common/page" title="angular_todo" value="html/angular_todo.html"/>
         <item icon="common/page" title="animation" value="html/animation.html"/>
         <item icon="common/page" title="arbor" value="html/arbor.html"/>
+        <item icon="common/page" title="auto" value="html/auto.html"/>
         <item icon="common/page" title="bar" value="html/bar.html"/>
         <item icon="common/page" title="boundpanel" value="html/boundpanel.html"/>
         <item icon="common/page" title="boundpanel_long" value="html/boundpanel_long.html"/>
@@ -63,6 +71,7 @@
         <item icon="common/page" title="xslt" value="html/xslt.html"/>
     </item>
     <item icon="common/folder" title="XML tests" value="XML tests">
+        <item icon="common/page" title="all" value="xml/all.xml"/>
         <item icon="common/page" title="bar" value="xml/bar.xml"/>
         <item icon="common/page" title="box" value="xml/box.xml"/>
         <item icon="common/page" title="button" value="xml/button.xml"/>
@@ -85,6 +94,7 @@
         <item icon="common/page" title="rows" value="xml/rows.xml"/>
         <item icon="common/page" title="skeleton" value="xml/skeleton.xml"/>
         <item icon="common/page" title="split" value="xml/split.xml"/>
+        <item icon="common/page" title="structure-plain" value="xml/structure-plain.xml"/>
         <item icon="common/page" title="structure" value="xml/structure.xml"/>
         <item icon="common/page" title="style" value="xml/style.xml"/>
         <item icon="common/page" title="tabs" value="xml/tabs.xml"/>

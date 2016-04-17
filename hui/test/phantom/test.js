@@ -1,7 +1,7 @@
 QUnit.asyncTest( "a basic test example", function( assert ) {
   expect(2);
   
-  Syn.click({},'hey',function() {
+  syn.click({},document.getElementById('hey'),function() {
     assert.equal(document.getElementById('hey').style.color,'red','Color is rouge');
     QUnit.start();
   });
