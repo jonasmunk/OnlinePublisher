@@ -64,7 +64,7 @@ class DocumentTemplateEditor
     DocumentTemplateEditor::fixStructure($pageId);
     PageService::markChanged($pageId);
   }
-  
+
   static function addPartAtEnd($pageId,$part) {
     if (!$part->isPersistent()) {
       Log::debug('The part is not persistent!');
@@ -83,7 +83,7 @@ class DocumentTemplateEditor
         }
         $sql="insert into document_section (`page_id`,`column_id`,`index`,`type`,`part_id`) values (".Database::int($pageId).",".Database::int($columnId).",".Database::int($index).",'part',".Database::int($part->getId()).")";
         $sectionId=Database::insert($sql);
-        
+
         DocumentTemplateEditor::fixStructure($pageId);
         PageService::markChanged($pageId);
       } else {
@@ -93,7 +93,7 @@ class DocumentTemplateEditor
       Log::debug('No rows found for page='.$pageId);
     }
   }
-  
+
   /**
    * @return The id of the section
    */
@@ -103,7 +103,7 @@ class DocumentTemplateEditor
       Log::debug('Controller not found');
       return null;
     }
-    
+
     $sql="select page_id from document_column where id=".Database::int($columnId);
     if ($row = Database::selectFirst($sql)) {
       $pageId = $row['page_id'];
@@ -111,7 +111,7 @@ class DocumentTemplateEditor
       Log::debug('Column not found');
       return null;
     }
-    
+
     $sql="select * from document_section where column_id=".Database::int($columnId)." and `index`>=".Database::int($index);
     $result = Database::select($sql);
     while ($row = Database::next($result)) {
@@ -127,14 +127,14 @@ class DocumentTemplateEditor
 
     DocumentTemplateEditor::fixStructure($pageId);
     PageService::markChanged($pageId);
-    
+
     return $sectionId;
   }
-  
+
   /**
    * @return The id of the section
    */
-  static function addSectionFromPart($columnId,$index,$part) {    
+  static function addSectionFromPart($columnId,$index,$part) {
     $sql="select page_id from document_column where id=".Database::int($columnId);
     if ($row = Database::selectFirst($sql)) {
       $pageId = $row['page_id'];
@@ -142,7 +142,7 @@ class DocumentTemplateEditor
       Log::debug('Column not found');
       return null;
     }
-    
+
     $sql="select * from document_section where column_id=".Database::int($columnId)." and `index`>=".Database::int($index);
     $result = Database::select($sql);
     while ($row = Database::next($result)) {
@@ -150,18 +150,18 @@ class DocumentTemplateEditor
       Database::update($sql);
     }
     Database::free($result);
-    
+
     $sql = "insert into document_section (`page_id`,`column_id`,`index`,`type`,`part_id`) values (".Database::int($pageId).",".Database::int($columnId).",".Database::int($index).",'part',".Database::int($part->getId()).")";
     $sectionId = Database::insert($sql);
 
     DocumentTemplateEditor::fixStructure($pageId);
     PageService::markChanged($pageId);
-    
+
     return $sectionId;
   }
-  
-  
-  
+
+
+
   static function deleteColumn($columnId) {
     $sql="select * from document_column where id=".Database::int($columnId);
     $row = Database::selectFirst($sql);
@@ -171,7 +171,7 @@ class DocumentTemplateEditor
     $index = $row['index'];
     $rowId = $row['row_id'];
     $pageId = $row['page_id'];
-    
+
     $sql = "select count(id) as num from document_column where row_id=".Database::int($rowId);
     $c = Database::selectFirst($sql);
     if (!$c) {
@@ -182,7 +182,7 @@ class DocumentTemplateEditor
       Log::debug('Aborting delete of last column');
       return;
     }
-    
+
 
     $sql="select * from document_column where row_id=".Database::int($rowId)." and `index`>".Database::int($index);
     $result = Database::select($sql);
@@ -218,12 +218,12 @@ class DocumentTemplateEditor
     DocumentTemplateEditor::fixStructure($pageId);
     PageService::markChanged($pageId);
   }
-  
+
   static function getSection($sectionId) {
     $sql="select document_section.*,part.type as part_type from document_section left join part on part.id = document_section.part_id where document_section.id=".Database::int($sectionId);
     return Database::selectFirst($sql);
   }
-  
+
   static function deleteSection($sectionId) {
 
     $row = DocumentTemplateEditor::getSection($sectionId);
@@ -258,13 +258,13 @@ class DocumentTemplateEditor
       }
     }
   }
-  
+
   static function addRow($pageId,$index) {
     if (!PageService::exists($pageId)) {
       Log::debug('The page with id='.$pageId.' does not exist');
       return;
     }
-    
+
     $sql="select * from document_row where page_id=".Database::int($pageId)." and `index`>=".Database::int($index);
     $result = Database::select($sql);
     while ($row = Database::next($result)) {
@@ -283,7 +283,7 @@ class DocumentTemplateEditor
 
     return $rowId;
   }
-  
+
   static function addColumn($rowId,$index) {
     $sql="select * from document_row where id=".Database::int($rowId);
     $row = Database::selectFirst($sql);
@@ -293,7 +293,7 @@ class DocumentTemplateEditor
     }
     $pageId = $row['page_id'];
 
-    
+
     $sql="select * from document_column where row_id=".Database::int($rowId)." and `index`>=".Database::int($index);
     $result = Database::select($sql);
     while ($row = Database::next($result)) {
@@ -307,10 +307,10 @@ class DocumentTemplateEditor
 
     DocumentTemplateEditor::fixStructure($pageId);
     PageService::markChanged($pageId);
-    
+
     return $columnId;
   }
-  
+
   static function moveSection($sectionId,$direction) {
     if ($direction!==1 && $direction!==-1) {
       return;
@@ -327,15 +327,15 @@ class DocumentTemplateEditor
     $index = $row['index'];
     $column = $row['column_id'];
     $newIndex = $row['index']+$direction;
-  
+
     $sql="select * from document_section where `index`=".Database::int($newIndex)." and column_id=".Database::int($column);
     $row_next = Database::selectFirst($sql);
-  
+
     if ($row_next) {
       $next_id = $row_next['id'];
       Database::update("update document_section set `index`=".Database::int($newIndex)." where id=".Database::int($sectionId));
       Database::update("update document_section set `index`=".Database::int($index)." where id=".Database::int($next_id));
-      
+
       PageService::markChanged($row['page_id']);
     }
   }
@@ -363,14 +363,14 @@ class DocumentTemplateEditor
     }
     $sql="select * from document_column where row_id=".Database::int($row['id'])." order by `index`";
     $columns = Database::selectAll($sql);
-    
+
     $column = @$columns[$params['columnIndex']];
 
     if (!$column) {
       Log::debug('Column not found: pageId='.$pageId.', rowIndex='.$params['rowIndex'].', columnIndex='.$params['columnIndex'].'. Column count is '.count($columns));
       return;
     }
-    
+
     $sql="select * from document_section where column_id=".Database::int($column['id'])." and `index`>".Database::int($params['sectionIndex'])." order by `index`";
     $sections = Database::selectAll($sql);
     for ($i=0; $i < count($sections); $i++) {
@@ -381,23 +381,23 @@ class DocumentTemplateEditor
 
     $sql = "update document_section set `index`=".Database::int($params['sectionIndex']+1).",column_id=".Database::int($column['id'])." where id = ".Database::int($section['id']);
     Database::update($sql);
-    
+
     DocumentTemplateEditor::_rebuildColumn($column['id']);
     DocumentTemplateEditor::_rebuildColumn($section['column_id']);
-    
+
     PageService::markChanged($pageId);
   }
-  
+
   static function _rebuildColumn($id) {
     $sql="select * from document_section where column_id=".Database::int($id)." order by `index`";
     $sections = Database::selectAll($sql);
-    for ($i=0; $i < count($sections); $i++) { 
+    for ($i=0; $i < count($sections); $i++) {
       $sql = "update document_section set `index`=".Database::int($i+1)." where id = ".Database::int($sections[$i]['id']);
       Database::update($sql);
     }
   }
 
-  
+
   static function moveRow($rowId,$direction) {
     if ($direction !== 1 && $direction !== -1) {
       return;
@@ -421,13 +421,13 @@ class DocumentTemplateEditor
       $next_id = $row_next['id'];
       Database::update("update document_row set `index`=".Database::int($newIndex)." where id=".Database::int($rowId));
       Database::update("update document_row set `index`=".Database::int($index)." where id=".Database::int($next_id));
-      
+
       PageService::markChanged($row['page_id']);
     } else {
       Log::debug('The other row was not found!');
     }
   }
-  
+
   static function moveColumn($columnId,$direction) {
     if ($direction!==1 && $direction!==-1) {
       return;
@@ -454,7 +454,7 @@ class DocumentTemplateEditor
       PageService::markChanged($row['page_id']);
     }
   }
-  
+
   static function loadColumn($id) {
     $sql = "select * from document_column where id=".Database::int($id);
     if ($row = Database::selectFirst($sql)) {
@@ -469,12 +469,12 @@ class DocumentTemplateEditor
     }
     return null;
   }
-  
+
   static function loadRow($id) {
     $sql = "select * from document_row where id=".Database::int($id);
     return Database::selectFirst($sql);
   }
-  
+
   static function updateColumn($column) {
     $sql = "select * from document_column where id=".Database::int($column['id']);
     if ($row = Database::selectFirst($sql)) {
@@ -492,9 +492,9 @@ class DocumentTemplateEditor
       Log::debug('Column not found...');
     }
   }
-  
+
   static function updateRow($info) {
-    
+
     $sql = "select * from document_row where id=@int(id)";
     if ($row = Database::selectFirst($sql,['id' => $info['id']])) {
       $sql="update document_row set ".
@@ -503,13 +503,13 @@ class DocumentTemplateEditor
         ",`spacing`=".Database::text($info['spacing']).
         " where id=".Database::int($info['id']);
       Database::update($sql);
-      
+
       PageService::markChanged($row['page_id']);
     } else {
       Log::debug('Row not found...');
     }
   }
-  
+
   /**
    * The purpose of this is to fix any problems with the structure.
    * The structure can get corrupt at any point (ie. in the past) so we need to fix it often.
@@ -537,7 +537,7 @@ class DocumentTemplateEditor
           Database::update($sql,['id' => $column['id'], 'index' => $columnIndex]);
           $modified = true;
         }
-        
+
         $sectionIndex = 1;
         foreach ($column['sections'] as $section) {
           if ($section['index'] !== $sectionIndex) {
@@ -548,14 +548,14 @@ class DocumentTemplateEditor
           }
           $sectionIndex++;
         }
-        
+
         $columnIndex++;
       }
       $rowIndex++;
     }
     return $modified;
   }
-  
+
   /** TODO: refactor using shared code with fixStructure */
   static function check($pageId) {
     $problems = [];
@@ -575,7 +575,7 @@ class DocumentTemplateEditor
         if ($column['index'] !== $columnIndex) {
           $problems[] = 'Column with id='.$column['id'].' has index='.$column['index'].' but should be index='.$columnIndex;
         }
-        
+
         $sectionIndex = 1;
         foreach ($column['sections'] as $section) {
           if ($section['index'] !== $sectionIndex) {
@@ -583,26 +583,26 @@ class DocumentTemplateEditor
           }
           $sectionIndex++;
         }
-        
+
         $columnIndex++;
       }
       $rowIndex++;
     }
     return $problems;
   }
-  
+
   static function getStructure($id) {
-    $sql = "select 
-      document_row.id as row_id, 
-      document_row.index as row_index, 
+    $sql = "select
+      document_row.id as row_id,
+      document_row.index as row_index,
       document_row.top as row_top,
       document_row.bottom as row_bottom,
       document_row.spacing as row_spacing,
 
-      document_column.id as column_id, 
-      document_column.index as column_index, 
+      document_column.id as column_id,
+      document_column.index as column_index,
       document_column.top as column_top,
-      document_column.bottom as column_bottom, 
+      document_column.bottom as column_bottom,
       document_column.left as column_left,
       document_column.right as column_right,
       document_column.width as column_width,
@@ -610,8 +610,8 @@ class DocumentTemplateEditor
       document_section.id as section_id,
       document_section.index as section_index,
       document_section.type as section_type,
-      document_section.top as section_top, 
-      document_section.bottom as section_bottom, 
+      document_section.top as section_top,
+      document_section.bottom as section_bottom,
       document_section.left as section_left,
       document_section.right as section_right,
       document_section.width as section_width,
@@ -619,18 +619,18 @@ class DocumentTemplateEditor
       document_section.part_id as part_id,
       part.type as part_type
 
-      from document_row 
+      from document_row
 
       left join document_column on document_row.id = row_id
-      left join document_section on document_column.id = column_id 
+      left join document_section on document_column.id = column_id
       left join part on document_section.part_id = part.id
 
-      where document_row.page_id=".Database::int($id)." 
+      where document_row.page_id=".Database::int($id)."
 
       order by document_row.index,document_row.id, document_column.index, document_column.id, document_section.index, document_section.id";
     //Log::debug($sql);
-    $structure = array(); 
-    
+    $structure = array();
+
     $result = Database::select($sql);
     while ($line = Database::next($result)) {
       $row = null;
@@ -638,7 +638,7 @@ class DocumentTemplateEditor
       $rowIndex = intval($line['row_index']);
       $columnIndex = intval($line['column_index']);
       $sectionIndex = intval($line['section_index']);
-      
+
       if (!isset($structure[$rowIndex])) {
         $structure[$rowIndex] = array(
           'id' => intval($line['row_id']),
@@ -648,8 +648,8 @@ class DocumentTemplateEditor
           'spacing' => $line['row_spacing'],
           'columns' => array()
         );
-      }     
-      
+      }
+
       if (!isset($structure[$rowIndex]['columns'][$columnIndex])) {
         $structure[$rowIndex]['columns'][$columnIndex] = array(
           'id' => $line['column_id'],
@@ -680,7 +680,7 @@ class DocumentTemplateEditor
       }
     }
     Database::free($result);
-    
+
     return $structure;
   }
 }
