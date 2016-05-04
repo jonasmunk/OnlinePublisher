@@ -48,6 +48,13 @@ module.exports = function(grunt) {
         options: {
           spawn: false,
         }
+      },
+      janemunk: {
+        files: ['style/janemunk/scss/**/*.scss'],
+        tasks: ['sass:janemunk'],
+        options: {
+          spawn: false,
+        }
       }
     },
     compass: {
@@ -88,6 +95,16 @@ module.exports = function(grunt) {
           cwd: 'style/jonasmunk/scss',
           src: ['*.scss'],
           dest: 'style/jonasmunk/css',
+          ext: '.css'
+        }]
+      },
+      janemunk: {
+        options : {sourcemap:'none'},
+        files: [{
+          expand: true,
+          cwd: 'style/janemunk/scss',
+          src: ['*.scss'],
+          dest: 'style/janemunk/css',
           ext: '.css'
         }]
       }
