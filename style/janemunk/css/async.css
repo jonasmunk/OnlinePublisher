@@ -1,0 +1,57 @@
+.layout_navigation {
+  position: fixed;
+  width: 50%;
+  max-width: 300px;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  color: #fff;
+  z-index: 2;
+  text-align: center; }
+.layout_title {
+  background: url("../gfx/logo_dark.svg") 50% no-repeat;
+  height: 100px;
+  font-size: 0;
+  margin: 30px auto;
+  max-width: 80%; }
+  .layout_title-front {
+    background-image: url("../gfx/logo_light.svg"); }
+.layout_menu {
+  display: inline-block;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  font-family: "Amatic SC", sans-serif; }
+.layout_menu_link {
+  display: block;
+  text-transform: uppercase;
+  color: #333;
+  line-height: 1.5;
+  text-decoration: none;
+  letter-spacing: 0px;
+  font-size: 50px; }
+  .layout_menu_link.is-front {
+    color: #fff; }
+
+@media screen and (min-width: 600px) {
+  .layout_content {
+    margin-right: 25%;
+    padding: 20px; }
+  .layout_navigation {
+    width: 25%;
+    background: #ccced0 url("../gfx/menu2.jpg") 50%;
+    background-size: cover;
+    height: 100%;
+    position: fixed;
+    top: 0;
+    right: 0; }
+    .layout_navigation-front {
+      background: none; }
+  .layout_menu_link {
+    font-size: 30px; } }
+@media screen and (min-width: 760px) {
+  .layout_menu_link {
+    font-size: 40px; } }
+@media screen and (min-width: 900px) {
+  .layout_menu_link {
+    font-size: 50px; } }

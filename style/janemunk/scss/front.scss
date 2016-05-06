@@ -1,0 +1,92 @@
+@import 'tools';
+
+$target: 'async';
+
+@include if {
+  .painting {
+    width: 100%;
+    height: 110%;
+    background-size: cover;
+    background-position: 50% 50%;
+    position: relative;
+  }
+
+  .painting_body {
+    width: 100%;
+    height: 100%;
+    background-size: cover;
+    background-position: 50% 50%;
+    position: absolute;
+  }
+
+  .painting:before {
+    content: '';
+    width: 50%;
+    max-width: 300px;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 1;
+    /*-webkit-backdrop-filter: blur(4px);*/
+  }
+
+  .painting-1 {
+    background-image: url('data:image/jpeg;base64,/9j/4QAYRXhpZgAASUkqAAgAAAAAAAAAAAAAAP/sABFEdWNreQABAAQAAAA8AAD/7gAOQWRvYmUAZMAAAAAB/9sAhAAGBAQEBQQGBQUGCQYFBgkLCAYGCAsMCgoLCgoMEAwMDAwMDBAMDg8QDw4MExMUFBMTHBsbGxwfHx8fHx8fHx8fAQcHBw0MDRgQEBgaFREVGh8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx//wAARCAAfADIDAREAAhEBAxEB/8QAggAAAgIDAQAAAAAAAAAAAAAABAYCBQABAwcBAAMBAQEBAAAAAAAAAAAAAAMEBQIBBgAQAAEDAwIEBQUBAAAAAAAAAAECAwQAERJBBSExUhNRYTIVBqHRIkJTFBEAAQMDAgUEAwAAAAAAAAAAAQACAxESBCETMUFRcQWRIhQVMlIG/9oADAMBAAIRAxEAPwBsTu0TgcxUj7WLqtuaV29+bAs3xpHI/oWt0aF1sVUO78hdSoHTUVNHn5C6q1tBFRp8R+yl2So1axPOMfo7RCe1FLmR2gBmLHlVcZUZ5rLQSsfktYXyFa3GnmjUQP8Arb6hzr64LtF5ltu7B2UWFuW48K8RJhuDLgj5H5UTRHmxIqbLVkTSsNObVtkIIWnu29d0H8eYAqnh+P3KmiyY0O5uTjYASmwFIT4ZY+iLFiXIl14qipeU4RYXtT2P4+QkaobogDRVJ3195wtpcxSNb0R14faCnneNBYHKHux/trjz1pnak/ZB+EEro295mfdKVHH9qo5kO2y1LtkvdVXrKXFN3Uk386VxcAuZWi3LO1rk3bF8emS44WlQwOlZdkmE2rt7TqjpfxkMoUoDMp51JdPfNU8Amd+1lAlfe3QiKW/QRpVIZgIJau4UZc73JfahOSGCps2VQYYnSajiq+VLttQvsUzqPqvT3wZlC+0HRPjDW3dhRKm+74Ei9egy2xk+6iihzxwUEiKRgvEDquLUGN2tANEpM54KsIr09pu0JLi0eLaSofShZUUThqW17hLtnmB4O9CjHJm8GGodp2+pKFfakXYuKW6ub6hUYJZieBSD8lVMKrqBvqCKmS4kQPsc2ncL0WBM4HUGvZCbc9KEU4tqv5A074+OlaEJ3PmIA0K7d7cOhXLwNUr5uhUyyDqF/9k=');
+  }
+
+  .painting_body-1 {
+    background-image: url('../gfx/front/background_1.jpg');
+  }
+
+  .painting-1:before {
+    background: rgba(147, 165, 187, 0.6);
+  }
+
+  .painting-2 {
+    background-image: url('data:image/jpeg;base64,/9j/4QAYRXhpZgAASUkqAAgAAAAAAAAAAAAAAP/sABFEdWNreQABAAQAAAA8AAD/7gAOQWRvYmUAZMAAAAAB/9sAhAAGBAQEBQQGBQUGCQYFBgkLCAYGCAsMCgoLCgoMEAwMDAwMDBAMDg8QDw4MExMUFBMTHBsbGxwfHx8fHx8fHx8fAQcHBw0MDRgQEBgaFREVGh8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx//wAARCAAfADIDAREAAhEBAxEB/8QAhwAAAgMBAQAAAAAAAAAAAAAAAwYBBAUCBwEAAgMBAQAAAAAAAAAAAAAAAwQBAgUGABAAAQMCBAQEBgMAAAAAAAAAAQIDBAAFESExUdESEwZBoSIVYZEyFERUI4MWEQACAQMCBQMDBQAAAAAAAAABAgARAwQxkSFBElIFkhMUIjIWM0NTFQb/2gAMAwEAAhEDEQA/APWo8rkZUFap3oR1lwINM6HjzvLGIoZuLXWGUkS8zcrelGIWMKn3VHOSatASr5CSCSrKl7uZbXnLpbMV733V03EljMbUmfKpWgheik6i9zuPMjmbwJ1NJZXmlXSGTGDcayfdjt41n/kDQ3xBFGPfu4LjLcU3iltY+nauhus90fROfLkQXvLzbhiPc3VJwxNZh8deL1J4QqXTSkY4aHxHSpWp0FH+IzmgMt1MogbvKSh1tDx6YIzxrw8VcGvGVN8nSLFwvMSJLS84vnbBy2pW74i7ThAqzFuJh4vfcFwKCUelO1LN/nnZak8YxbusIf8A3lr28vGkvxu7GflGb8eLbori/wCdLZArtscqkXcdUXLu5Y/ucpI6gOIVVjk/VSkkWqiDj94NofQ2t3Fts5Gpt0Q1EI6Ky6y7d+4rDO5S85iRtVTeNakxdbYHCJvclwsamw20lSkjMVC5BJ1ksgmCxe48ZopajlXNlpS122zGvVCrdRYX3Vn9Y6c2njQupu6e91I3G2XVRP3M1I3zFaow7PeNxMtsi5X7TtBGy2xSx1p7IV8XEg+Zpu1iWO9dxBtl3+StsZaas1iH50c/2I40w2LYOrDcQByb/adjIXZ7PmUzY+OxcRxpV8DFP7i+oSRkX+07ShIs8DHEzY2G3URxoC+Oxq8Li+oS5yr/ADU7GAFptivzY4I09aONWu4GPT9RfUIq+TcOqtsZPtsb9tnb6k6fOlv67F/kX1CV9+52naf/2Q==');
+  }
+
+  .painting_body-2 {
+    background-image: url('../gfx/front/background_2.jpg');
+  }
+
+  .painting-2:before {
+    background: rgba(78, 115, 18, 0.46);
+  }
+
+  .painting-3 {
+    background-image: url('data:image/jpeg;base64,/9j/4QAYRXhpZgAASUkqAAgAAAAAAAAAAAAAAP/sABFEdWNreQABAAQAAAA8AAD/7gAOQWRvYmUAZMAAAAAB/9sAhAAGBAQEBQQGBQUGCQYFBgkLCAYGCAsMCgoLCgoMEAwMDAwMDBAMDg8QDw4MExMUFBMTHBsbGxwfHx8fHx8fHx8fAQcHBw0MDRgQEBgaFREVGh8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx//wAARCAAfADIDAREAAhEBAxEB/8QAgwAAAgIDAAAAAAAAAAAAAAAABQYCBAEDBwEAAwEBAQEAAAAAAAAAAAAAAgMEBQEABhAAAQMDAgIGCwAAAAAAAAAAAQIDBAARBTFBURIhcbETBhZhwSIyQlIzUxQVVREAAgIBAwIHAQEAAAAAAAAAAAECAxEhMQRBElFhIhMUBRWxMv/aAAwDAQACEQMRAD8AeIYCuup4ncBaPGLiwkU3uSO6hNMVKALiihLImZJKEFXLSeRZgKtFaciOlJuQPTWf8mMepT2ZFbJzosdRIcHVXf14LqLlxwV5kY+beh/agB7LB8LNzgvo1O1YEPsLs4RRLCDEHxTMYf8AbQSTVcubyFugYuLGTzG6thN0WJ0qiv7C3G2oDrTZqdlTFMF4XSaxrr+RdJ7lcaYxF2ZkZqirndskUMODbPRtg23RiIGenPuSilEi5O16vf16qhmW5mrmOViSBHNL+7vxpHbE3vjfwcGMm1HAeWLhOtadX16U8nbqlKOgyQM9hJsYFCAHU61se1FrVGZPjtbFxrM96+htLY5EnWinx4JZW4NVcuo0ryEd6B3KwlJtrSrKF26BxbTEzNwWXGHUoWASDY0XGq7RFyT3OP5qGqDKU8twqsTTOXSp4TE8SS79ECP3Z471N+PHxPpPl+R1JWKglNlS2Qn4ruJt216Vazox9d2F/ky9iY4j2x8tjm3KXEHsNOlBvqSysjnVBHAxJbKbuPIcXtZQPro1X4sVKxdEQmxvES5BWHuVF+hN69bB40YtTj4FOenMhopJuLdJvRVxxHcms7WxTm49l7m/KkNN8e8WlPaaDs19TCqcE/SB/LmH/pxdb/Xb04e9VWWVe55H/9k=');
+  }
+
+  .painting-3:before {
+    background: rgba(149, 151, 76, 0.6);
+  }
+
+  .painting_body-3 {
+    background-image: url('../gfx/front/background_3.jpg');
+  }
+
+  .painting-4 {
+    background-image: url('data:image/jpeg;base64,/9j/4QAYRXhpZgAASUkqAAgAAAAAAAAAAAAAAP/sABFEdWNreQABAAQAAAA8AAD/7QAsUGhvdG9zaG9wIDMuMAA4QklNBCUAAAAAABAAAAAAAAAAAAAAAAAAAAAA/+4ADkFkb2JlAGTAAAAAAf/bAIQABgQEBAUEBgUFBgkGBQYJCwgGBggLDAoKCwoKDBAMDAwMDAwQDA4PEA8ODBMTFBQTExwbGxscHx8fHx8fHx8fHwEHBwcNDA0YEBAYGhURFRofHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8f/8AAEQgAJgAyAwERAAIRAQMRAf/EAHUAAAICAwAAAAAAAAAAAAAAAAUGAwQAAQcBAQEBAQAAAAAAAAAAAAAAAAIBAwAQAAIBAwIFAQMNAAAAAAAAAAECAwARBCEFMUESEwZRMtIUgZGxweEiUnKCI0NTBxEBAQEBAQEAAAAAAAAAAAAAAAECESEx/9oADAMBAAIRAxEAPwDiGVg9IdiLms83rTU4obbNPj5OqEIxrTWfAlXpfHmz8ssAbHWriDqp9v8AHHgy+2ylkpWJKvNg7jiuzQoe2OVTjlzBllyUInSxrPXjSJvgovTnQ6QccbIycvpjF0J1q4nHaHszxVfhVZVAa1626zsFPCtsiYSrOo6l0F6oi8m0wJkkhBeo5km0QSQuWsNOFRSw22hTJ0tYKdLVNLlF2x68qy40b8diSMuZBdhzp59SmsTRTY4W33rcK0mQtSbLt5jyOrVVamEME+2Fwe0LtbjUXoFuGNmY6MvM0frgTFjUxyiT29aOyyF9tvT+W3yUekHbbumOzt0yDWuwWjTtGSjTrrcU7RkO0M2II4zoDXZrtxdO54kdwCOFS1nIX94zkluQRRzSsKkkTXkkV7Xo62syqda/iH21Ccfw23UOOwrk1rBNe1ZHmakdnFZz+ZB9LV1KdMIzf9F6Vvt725fuR+/XRb1qXM/0I+3gOP1x+9VooJMzzvtnqwGt6l4/eoziUJy8jzcobYrqvOzJ9TUfOr6Ed3y3+mTj6jj89LxH/9k=');
+  }
+
+  .painting-4:before {
+    background: rgba(73, 85, 97, 0.7);
+  }
+
+  .painting_body-4 {
+    background-image: url('../gfx/front/background_4.jpg');
+  }
+}
+
+@include if(( width: 600px)) {
+
+
+
+  .navigation,
+  .painting:before {
+    width: 25%;
+  }
+}

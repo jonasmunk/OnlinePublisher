@@ -1,5 +1,9 @@
+@import 'tools';
+
+$target: 'async';
+
 /********************* Common *******************/
-	
+
 a.common
 {
 	color: #ddd;
@@ -10,23 +14,26 @@ a.common span
 {
 	color: #0079cd;
 }
-	
+
 a.common:hover, a.common:hover span
 {
 	color: #0169b2;
 }
 
-h1.common,h2.common,h3.common,h4.common,h5.common,h6.common
+.common_header
 {
-	margin: 0px;
-	color: #333;
-	font-family: "Palatino Linotype", "Book Antiqua", "Palatino", Georgia, serif;
+	color: #3D494C;
+	font-family: $effect-font;
 	font-weight: normal;
+	margin: 0;
+
+  &-1 {
+    font-size: 50pt;
+  }
 }
 
 p.common, ul.common
 {
-	font-family: "Palatino Linotype", "Book Antiqua", "Palatino", Georgia, serif;
 	font-size: 9pt;
 	line-height: 160%;
 	text-align: justify;
@@ -36,16 +43,12 @@ p.common, ul.common
 
 .part_header
 {
-	color: #2F5078;
-	font-family: "Palatino Linotype", "Book Antiqua", "Palatino", Georgia, serif;
-	font-weight: normal;
-	margin: 0;
+
+  &-1 {
+    font-size: 50pt;
+  }
 }
 
-h1.part_header, textarea.part_header-1
-{
-	font-size: 18pt;
-}
 
 h2.part_header, textarea.part_header-2
 {
@@ -75,48 +78,45 @@ h6.part_header, textarea.part_header-6
 	font-weight: bold;
 }
 
-.part_section_header-1
-{
-	padding-bottom: 15px;
+.part_section_header {
+  &-1 {
+    padding-bottom: 15px;
+  }
+
+  &-2 {
+    padding-top: 10px;
+    padding-bottom: 5px;
+  }
+
+  &-3 {
+    padding-top: 10px;
+  }
+
+  &-4 {
+    padding-top: 10px;
+  }
+
+  &-5 {
+    padding-top: 10px;
+  }
+
+  &-6 {
+    padding-top: 10px;
+  }
 }
 
-.part_section_header-2
-{
-	padding-top: 10px;
-	padding-bottom: 5px;
-}
 
-.part_section_header-3
-{
-	padding-top: 10px;
-}
-
-.part_section_header-4
-{
-	padding-top: 10px;
-}
-
-.part_section_header-5
-{
-	padding-top: 10px;
-}
-
-.part_section_header-6
-{
-	padding-top: 10px;
-}
 
 /*************** Text *************/
 
-div.part_text, textarea.part_text
+.part_text
 {
-	font-family: "Palatino Linotype", "Book Antiqua", "Palatino", Georgia, serif;
+	font-family: $font;
 	font-size: 10pt;
 	line-height: 1.5em;
 	color: #333;
-}
 
-div.part_text p
-{
-	margin: 10px 0px 0px;
+  > p {
+    margin: 10px 0px 0px;
+  }
 }

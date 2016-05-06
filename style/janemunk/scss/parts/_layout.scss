@@ -1,0 +1,98 @@
+@include if {
+  .layout {
+
+    &_navigation {
+      position: fixed;
+      width: 50%;
+      max-width: 300px;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      color: #fff;
+      z-index: 2;
+      text-align: center;
+    }
+
+    &_title {
+      background: url('../gfx/logo_dark.svg') 50% no-repeat;
+      height: 100px;
+      font-size: 0;
+      margin: 30px auto;
+      max-width: 80%;
+
+      &-front {
+        background-image: url('../gfx/logo_light.svg');
+      }
+    }
+
+
+    &_menu {
+      display: inline-block;
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      font-family: $effect-font;
+    }
+
+    &_menu_link {
+      display: block;
+      text-transform: uppercase;
+      color: #333;
+      line-height: 1.5;
+      text-decoration: none;
+      letter-spacing: 0px;
+      font-size: 50px;
+
+      &.is-front {
+        color: #fff;
+      }
+    }
+  }
+}
+
+@include if(( width:600px )) {
+  .layout {
+    &_content {
+      margin-right: 25%;
+      padding: 20px;
+    }
+
+    &_navigation {
+      width: 25%;
+      background: #ccced0 url('../gfx/menu2.jpg') 50%;
+      background-size: cover;
+      height: 100%;
+      position: fixed;
+      top: 0;
+      right: 0;
+
+      &-front {
+        background: none;
+      }
+    }
+
+    &_menu_link {
+      font-size: 30px;
+    }
+  }
+}
+
+@include if(( width:760px )) {
+  .layout {
+
+    &_menu_link {
+      font-size: 40px;
+    }
+  }
+
+}
+
+@include if(( width:900px )) {
+  .layout {
+
+    &_menu_link {
+      font-size: 50px;
+    }
+  }
+
+}
