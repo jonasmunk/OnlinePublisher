@@ -508,11 +508,6 @@ i.parentNode.insertBefore(o,i)}}}})}},_editor.processNoscript()}(window,document
     <xsl:call-template name="util:_style-hui-msie"/>
 </xsl:template>
 
-<xsl:template name="util:css">
-    <xsl:param name="path"/>
-    <link rel="stylesheet" type="text/css" href="{$path}{$timestamp-url}{$path}{$timestamp-query}"/>
-</xsl:template>
-
 <xsl:template name="util:lazy-style">
     <xsl:param name="href"/>
     <!--
