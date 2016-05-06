@@ -16,45 +16,45 @@
 
 
 <xsl:template match="p:page">
-	<html>
-		<xsl:call-template name="util:html-attributes"/>
-		<head>
-			<title><xsl:value-of select="@title"/> - <xsl:value-of select="f:frame/@title"/></title>
-    	<meta name="viewport" content="user-scalable=yes, initial-scale = 1, maximum-scale = 10, minimum-scale = 0.2"/>
-			<xsl:call-template name="util:metatags"/>
-			<xsl:call-template name="util:style"/>
-			<xsl:call-template name="util:style-ie6"/>
+  <html>
+    <xsl:call-template name="util:html-attributes"/>
+    <head>
+      <title><xsl:value-of select="@title"/> - <xsl:value-of select="f:frame/@title"/></title>
+      <meta name="viewport" content="user-scalable=yes, initial-scale = 1, maximum-scale = 10, minimum-scale = 0.2"/>
+      <xsl:call-template name="util:metatags"/>
+      <xsl:call-template name="util:style"/>
+      <xsl:call-template name="util:style-ie6"/>
       <link href='https://fonts.googleapis.com/css?family=Raleway:400,300,500,600|Amatic+SC|Poiret+One' rel='stylesheet' type='text/css'/>
-			<xsl:call-template name="util:scripts"/>
-		</head>
-		<body>
+      <xsl:call-template name="util:scripts"/>
+    </head>
+    <body>
       <xsl:call-template name="new"/>
-			<xsl:call-template name="util:googleanalytics"/>
-		</body>
-	</html>
+      <xsl:call-template name="util:googleanalytics"/>
+    </body>
+  </html>
 </xsl:template>
 
 <xsl:template name="new">
 
-	<xsl:choose>
+  <xsl:choose>
     <xsl:when test="//p:page/p:context/p:home[@page=//p:page/@id]">
-      <div class="layout_navigation layout_navigation-front">
-        <h1 class="layout_title layout_title-front">Jane Munk</h1>
+      <div class="layout_navigation is-front">
+        <h1 class="layout_title is-front">Jane Munk</h1>
         <ul class="layout_menu is-front">
           <xsl:for-each select="f:frame/h:hierarchy/h:item[not(@hidden='true')]">
-        		<xsl:variable name="style">
-        			<xsl:choose>
-        				<xsl:when test="//p:page/@id=@page"><xsl:text>selected</xsl:text></xsl:when>
-        				<xsl:when test="descendant-or-self::*/@page=//p:page/@id"><xsl:text>highlighted</xsl:text></xsl:when>
-        				<xsl:otherwise><xsl:text>normal</xsl:text></xsl:otherwise>
-        			</xsl:choose>
-        		</xsl:variable>
-        		<li class="layout_menu_item layout_menu_item-{$style}">
-        			<a class="layout_menu_link layout_menu_link-{$style} is-front">
-        			  <xsl:call-template name="util:link"/>
+            <xsl:variable name="style">
+              <xsl:choose>
+                <xsl:when test="//p:page/@id=@page"><xsl:text>selected</xsl:text></xsl:when>
+                <xsl:when test="descendant-or-self::*/@page=//p:page/@id"><xsl:text>highlighted</xsl:text></xsl:when>
+                <xsl:otherwise><xsl:text>normal</xsl:text></xsl:otherwise>
+              </xsl:choose>
+            </xsl:variable>
+            <li class="layout_menu_item layout_menu_item-{$style} is-front">
+              <a class="layout_menu_link layout_menu_link-{$style} is-front">
+                <xsl:call-template name="util:link"/>
                 <xsl:value-of select="@title"/>
-        			</a>
-        		</li>
+              </a>
+            </li>
           </xsl:for-each>
         </ul>
       </div>
@@ -69,19 +69,19 @@
           <p class="layout_title">Jane Munk</p>
           <ul class="layout_menu">
             <xsl:for-each select="f:frame/h:hierarchy/h:item[not(@hidden='true')]">
-          		<xsl:variable name="style">
-          			<xsl:choose>
-          				<xsl:when test="//p:page/@id=@page"><xsl:text>selected</xsl:text></xsl:when>
-          				<xsl:when test="descendant-or-self::*/@page=//p:page/@id"><xsl:text>highlighted</xsl:text></xsl:when>
-          				<xsl:otherwise><xsl:text>normal</xsl:text></xsl:otherwise>
-          			</xsl:choose>
-          		</xsl:variable>
-          		<li class="layout_menu_item layout_menu_item-{$style}">
-          			<a class="layout_menu_link layout_menu_link-{$style}">
-          			  <xsl:call-template name="util:link"/>
+              <xsl:variable name="style">
+                <xsl:choose>
+                  <xsl:when test="//p:page/@id=@page"><xsl:text>selected</xsl:text></xsl:when>
+                  <xsl:when test="descendant-or-self::*/@page=//p:page/@id"><xsl:text>highlighted</xsl:text></xsl:when>
+                  <xsl:otherwise><xsl:text>normal</xsl:text></xsl:otherwise>
+                </xsl:choose>
+              </xsl:variable>
+              <li class="layout_menu_item layout_menu_item-{$style}">
+                <a class="layout_menu_link layout_menu_link-{$style}">
+                  <xsl:call-template name="util:link"/>
                   <xsl:value-of select="@title"/>
-          			</a>
-          		</li>
+                </a>
+              </li>
             </xsl:for-each>
           </ul>
         </div>
@@ -94,136 +94,136 @@
 </xsl:template>
 
 <xsl:template name="legacy">
-	<div class="case">
-		<xsl:choose>
-		<xsl:when test="//p:page/p:context/p:home[@page=//p:page/@id]">
-			<div class="case_front">
-				<div id="paintings" class="easel">
-					<div class="easel_painting easel_painting-1"><xsl:comment/></div>
-					<div class="easel_painting easel_painting-2"><xsl:comment/></div>
-					<div class="easel_painting easel_painting-3"><xsl:comment/></div>
-					<div class="easel_painting easel_painting-4"><xsl:comment/></div>
-					<div class="easel_painting easel_painting-5"><xsl:comment/></div>
-					<div class="easel_painting easel_painting-6"><xsl:comment/></div>
-					<div class="easel_painting easel_painting-7"><xsl:comment/></div>
-					<div class="easel_painting easel_painting-8"><xsl:comment/></div>
-					<div class="easel_painting easel_painting-9"><xsl:comment/></div>
-				</div>
-				<div class="case_front_content">
-					<xsl:apply-templates select="p:content"/>
-				</div>
-			</div>
-			<script type="text/javascript">
-				new op.Dissolver({elements:hui.get('paintings').getElementsByTagName('div'),wait:3000,transition:1000,delay:0});
-			</script>
-		</xsl:when>
-		<xsl:otherwise>
-			<div class="case_head">
-				<h1>Jane Munk</h1>
-				<ul class="case_navigation"><xsl:apply-templates select="f:frame/h:hierarchy/h:item"/></ul>
-			</div>
-			<xsl:call-template name="secondlevel"/><xsl:comment/>
-			<div class="case_body">
-				<div class="case_sidebar">
-					<div class="case_contact">
-						<h2>Jane Brinkmann Munk</h2>
-						<p>Apotekervænget 16, 9370 Hals</p>
-						<p><em>Tlf:</em> 98 25 18 83</p>
-						<p><em>E-post: </em> <a href="mailto:janemunk@stofanet.dk"><span>janemunk@stofanet.dk</span></a></p>
-					</div>
-					<xsl:call-template name="thirdlevel"/>
-					<xsl:comment/>
-				</div>
-				<div class="case_sidebar_content">
-				<xsl:apply-templates select="p:content"/>
-				</div>
-			</div>
-			<div class="case_footer"><xsl:comment/></div>
-		</xsl:otherwise>
-		</xsl:choose>
-	</div>
+  <div class="case">
+    <xsl:choose>
+    <xsl:when test="//p:page/p:context/p:home[@page=//p:page/@id]">
+      <div class="case_front">
+        <div id="paintings" class="easel">
+          <div class="easel_painting easel_painting-1"><xsl:comment/></div>
+          <div class="easel_painting easel_painting-2"><xsl:comment/></div>
+          <div class="easel_painting easel_painting-3"><xsl:comment/></div>
+          <div class="easel_painting easel_painting-4"><xsl:comment/></div>
+          <div class="easel_painting easel_painting-5"><xsl:comment/></div>
+          <div class="easel_painting easel_painting-6"><xsl:comment/></div>
+          <div class="easel_painting easel_painting-7"><xsl:comment/></div>
+          <div class="easel_painting easel_painting-8"><xsl:comment/></div>
+          <div class="easel_painting easel_painting-9"><xsl:comment/></div>
+        </div>
+        <div class="case_front_content">
+          <xsl:apply-templates select="p:content"/>
+        </div>
+      </div>
+      <script type="text/javascript">
+        new op.Dissolver({elements:hui.get('paintings').getElementsByTagName('div'),wait:3000,transition:1000,delay:0});
+      </script>
+    </xsl:when>
+    <xsl:otherwise>
+      <div class="case_head">
+        <h1>Jane Munk</h1>
+        <ul class="case_navigation"><xsl:apply-templates select="f:frame/h:hierarchy/h:item"/></ul>
+      </div>
+      <xsl:call-template name="secondlevel"/><xsl:comment/>
+      <div class="case_body">
+        <div class="case_sidebar">
+          <div class="case_contact">
+            <h2>Jane Brinkmann Munk</h2>
+            <p>Apotekervænget 16, 9370 Hals</p>
+            <p><em>Tlf:</em> 98 25 18 83</p>
+            <p><em>E-post: </em> <a href="mailto:janemunk@stofanet.dk"><span>janemunk@stofanet.dk</span></a></p>
+          </div>
+          <xsl:call-template name="thirdlevel"/>
+          <xsl:comment/>
+        </div>
+        <div class="case_sidebar_content">
+        <xsl:apply-templates select="p:content"/>
+        </div>
+      </div>
+      <div class="case_footer"><xsl:comment/></div>
+    </xsl:otherwise>
+    </xsl:choose>
+  </div>
 </xsl:template>
 
 <xsl:template match="p:content">
-	<div class="case_content">
-		<xsl:apply-templates/>
-		<xsl:comment/>
-	</div>
+  <div class="case_content">
+    <xsl:apply-templates/>
+    <xsl:comment/>
+  </div>
 </xsl:template>
 
 
 
 
 <xsl:template match="h:hierarchy/h:item">
-	<xsl:if test="not(@hidden='true')">
-		<xsl:variable name="style">
-			<xsl:choose>
-				<xsl:when test="//p:page/@id=@page"><xsl:text>selected</xsl:text></xsl:when>
-				<xsl:when test="descendant-or-self::*/@page=//p:page/@id"><xsl:text>highlighted</xsl:text></xsl:when>
-				<xsl:otherwise><xsl:text>normal</xsl:text></xsl:otherwise>
-			</xsl:choose>
-		</xsl:variable>
-		<li class="{$style}">
-			<a>
-			<xsl:call-template name="util:link"/>
-			<span><xsl:value-of select="@title"/></span>
-			</a>
-		</li>
-	</xsl:if>
+  <xsl:if test="not(@hidden='true')">
+    <xsl:variable name="style">
+      <xsl:choose>
+        <xsl:when test="//p:page/@id=@page"><xsl:text>selected</xsl:text></xsl:when>
+        <xsl:when test="descendant-or-self::*/@page=//p:page/@id"><xsl:text>highlighted</xsl:text></xsl:when>
+        <xsl:otherwise><xsl:text>normal</xsl:text></xsl:otherwise>
+      </xsl:choose>
+    </xsl:variable>
+    <li class="{$style}">
+      <a>
+      <xsl:call-template name="util:link"/>
+      <span><xsl:value-of select="@title"/></span>
+      </a>
+    </li>
+  </xsl:if>
 </xsl:template>
 
 <xsl:template name="secondlevel">
-	<xsl:if test="//f:frame/h:hierarchy/h:item[descendant-or-self::*/@page=//p:page/@id]/h:item">
-		<ul class="case_sub_navigation">
-			<xsl:apply-templates select="//f:frame/h:hierarchy/h:item[descendant-or-self::*/@page=//p:page/@id]/h:item"/>
-		</ul>
-	</xsl:if>
+  <xsl:if test="//f:frame/h:hierarchy/h:item[descendant-or-self::*/@page=//p:page/@id]/h:item">
+    <ul class="case_sub_navigation">
+      <xsl:apply-templates select="//f:frame/h:hierarchy/h:item[descendant-or-self::*/@page=//p:page/@id]/h:item"/>
+    </ul>
+  </xsl:if>
 </xsl:template>
 
 <xsl:template name="thirdlevel">
-	<xsl:if test="//f:frame/h:hierarchy/h:item/h:item[descendant-or-self::*/@page=//p:page/@id]/h:item">
-		<ul class="case_side_navigation">
-			<xsl:apply-templates select="//f:frame/h:hierarchy/h:item/h:item[descendant-or-self::*/@page=//p:page/@id]/h:item"/>
-		</ul>
-	</xsl:if>
+  <xsl:if test="//f:frame/h:hierarchy/h:item/h:item[descendant-or-self::*/@page=//p:page/@id]/h:item">
+    <ul class="case_side_navigation">
+      <xsl:apply-templates select="//f:frame/h:hierarchy/h:item/h:item[descendant-or-self::*/@page=//p:page/@id]/h:item"/>
+    </ul>
+  </xsl:if>
 </xsl:template>
 
 <xsl:template match="h:hierarchy/h:item/h:item">
-	<xsl:variable name="style">
-		<xsl:choose>
-			<xsl:when test="//p:page/@id=@page"><xsl:text>selected</xsl:text></xsl:when>
-			<xsl:when test="descendant-or-self::*/@page=//p:page/@id"><xsl:text>highlighted</xsl:text></xsl:when>
-		</xsl:choose>
-	</xsl:variable>
-	<xsl:if test="not(@hidden='true')">
-		<li>
-			<a class="{$style}">
-				<xsl:call-template name="util:link"/>
-				<span><xsl:value-of select="@title"/></span>
-			</a>
-		</li>
-	</xsl:if>
+  <xsl:variable name="style">
+    <xsl:choose>
+      <xsl:when test="//p:page/@id=@page"><xsl:text>selected</xsl:text></xsl:when>
+      <xsl:when test="descendant-or-self::*/@page=//p:page/@id"><xsl:text>highlighted</xsl:text></xsl:when>
+    </xsl:choose>
+  </xsl:variable>
+  <xsl:if test="not(@hidden='true')">
+    <li>
+      <a class="{$style}">
+        <xsl:call-template name="util:link"/>
+        <span><xsl:value-of select="@title"/></span>
+      </a>
+    </li>
+  </xsl:if>
 </xsl:template>
 
 <xsl:template match="h:item">
-	<xsl:variable name="style">
-		<xsl:choose>
-			<xsl:when test="//p:page/@id=@page"><xsl:text>selected</xsl:text></xsl:when>
-			<xsl:when test="descendant-or-self::*/@page=//p:page/@id"><xsl:text>highlighted</xsl:text></xsl:when>
-			<xsl:otherwise><xsl:text>standard</xsl:text></xsl:otherwise>
-		</xsl:choose>
-	</xsl:variable>
-	<xsl:if test="not(@hidden='true')">
-		<li>
-		<a class="{$style}">
-			<xsl:call-template name="util:link"/>
-			<span><xsl:value-of select="@title"/></span>
-		</a>
-		<xsl:if test="descendant-or-self::*/@page=//p:page/@id and h:item">
-			<ul><xsl:apply-templates/></ul>
-		</xsl:if>
-		</li>
-	</xsl:if>
+  <xsl:variable name="style">
+    <xsl:choose>
+      <xsl:when test="//p:page/@id=@page"><xsl:text>selected</xsl:text></xsl:when>
+      <xsl:when test="descendant-or-self::*/@page=//p:page/@id"><xsl:text>highlighted</xsl:text></xsl:when>
+      <xsl:otherwise><xsl:text>standard</xsl:text></xsl:otherwise>
+    </xsl:choose>
+  </xsl:variable>
+  <xsl:if test="not(@hidden='true')">
+    <li>
+    <a class="{$style}">
+      <xsl:call-template name="util:link"/>
+      <span><xsl:value-of select="@title"/></span>
+    </a>
+    <xsl:if test="descendant-or-self::*/@page=//p:page/@id and h:item">
+      <ul><xsl:apply-templates/></ul>
+    </xsl:if>
+    </li>
+  </xsl:if>
 </xsl:template>
 
 </xsl:stylesheet>
