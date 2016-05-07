@@ -115,7 +115,7 @@
   }
 }
 
-@include if(( width:760px )) {
+@include if(( width: 760px )) {
   .layout {
 
     &_menu_link, &_menu_link.is-front {
@@ -125,7 +125,7 @@
 
 }
 
-@include if(( width:900px )) {
+@include if(( width: 900px )) {
   .layout {
 
     &_menu_link, &_menu_link.is-front {

@@ -1,0 +1,193 @@
+@include if {
+
+  body.exhibit {
+    margin: 0;
+    background: url('../gfx/exhibition/background_light.jpg') 50%;
+    background-size: cover;
+    -webkit-user-select: none;
+    -webkit-tap-highlight-color: rgba(0,0,0,0);
+    font-family: 'Raleway';
+  }
+
+  .exhibit {
+
+    &_spaces {
+      position: absolute;
+      bottom: 5%;
+      right: 5%;
+      font-size: 0;
+
+      &_option {
+        color: #000;
+        text-decoration: none;
+        display: inline-block;
+        font-size: 14px;
+        letter-spacing: 1px;
+        padding: 0 10px;
+        text-transform: uppercase;
+        font-weight: 400;
+
+        &.is-selected {
+          font-weight: 600;
+        }
+      }
+    }
+
+    &_control {
+      border: 1px solid rgba(0,0,0,.2);
+      background-color: rgba(255,255,255,.2);
+      height: 30px;
+      line-height: 30px;
+      text-transform: uppercase;
+      font-weight: 600;
+      border-radius: 4px;
+    }
+
+    &_back {
+      position: absolute;
+      bottom: 5%;
+      width: 100px;
+      color: #000;
+      text-align: center;
+      text-decoration: none;
+      left: 5%;
+      letter-spacing: 1px;
+      font-size: 14px;
+    }
+
+
+    &_wall {
+      position: absolute;
+      opacity: 0;
+      transition: opacity .5s;
+
+      .is-layout & {
+        opacity: 1;
+      }
+
+      top: 22%;
+      left: 2%;
+      right: 2%;
+      bottom: 44%;
+
+      .is-wide & {
+        top: 50%;
+        margin-top: -25%;
+        left: 7%;
+        width: 86%;
+        padding-bottom: 30%;
+        bottom: auto;
+        right: auto;
+      }
+    }
+
+    &_viewer {
+      display: none;
+      position: absolute;
+      z-index: 2;
+
+      &_inner {
+        width: 100%;
+        height: 100%;
+        position: absolute;
+        background-size: contain;
+        background-repeat: no-repeat;
+        background-position: 50%;
+      }
+
+      &.is-small {
+        display: block;
+      }
+
+      &.is-full {
+        display: block;
+        top: 10px !important;
+        bottom: 10px !important;
+        right: 10px !important;
+        left: 10px !important;
+      }
+    }
+
+    &_paintings {
+      height: 100%;
+      width: 100%;
+      position: absolute;
+      font-size: 0;
+      white-space: nowrap;
+      overflow: auto;
+      overflow-y: hidden;
+      -webkit-overflow-scrolling: touch;
+      -webkit-user-select: none;
+
+      scroll-snap-type: mandatory;
+      -webkit-scroll-snap-type: mandatory;
+
+      scroll-snap-points-x: repeat(33.333333%);
+      -webkit-scroll-snap-points-x: repeat(33.333333%);
+
+      &_page {
+        width: 100%;
+        position: relative;
+        height: 100%;
+        display: inline-block;
+      }
+    }
+
+    &_painting {
+      background-color: #eee;
+      background-size: contain;
+      background-repeat: no-repeat;
+      background-position: 50%;
+      //outline: 1px solid rgba(0,0,0,.1);
+      position: absolute;
+      /*
+      transition: transform .3s;
+
+      &:active {
+        transform: scale(.9);
+      };*/
+
+      &-left {
+        left: 2%;
+        width: 60%;
+        top: 0;
+        bottom: 0;
+      }
+      &-center {
+        right: 2%;
+        width: 32%;
+        top: 0;
+        bottom: 55%;
+      }
+      &-right {
+        right: 2%;
+        width: 32%;
+        top: 55%;
+        bottom: 0;
+      }
+    }
+  }
+
+}
+
+@include if (( width: 600px )) {
+  .exhibit {
+    &_painting {
+      top: 0;
+      bottom: 0;
+      width: 24%;
+
+      &-left {
+        left: 5%;
+        right: auto;
+      }
+      &-center {
+        left: 38%;
+        right: auto;
+      }
+      &-right {
+        right: 5%;
+      }
+    }
+  }
+}

@@ -1,0 +1,26 @@
+body.concrete {
+  background-image: url("../gfx/background_concrete.jpg"); }
+  body.concrete.is-wide .wall {
+    margin-top: -20%; }
+
+body.simple {
+  background-image: url("../gfx/background_simple.jpg"); }
+
+.painting-1 {
+  background-image: url("../gfx/painting_1.png"); }
+.painting-2 {
+  background-image: url("../gfx/painting_2.png"); }
+.painting-3 {
+  background-image: url("../gfx/painting_3.png"); }
+.painting-4 {
+  background-image: url("../gfx/painting_4.png"); }
+.painting-5 {
+  background-image: url("../gfx/painting_5.png"); }
+.painting-6 {
+  background-image: url("../gfx/painting_6.png"); }
+.painting-7 {
+  background-image: url("../gfx/painting_7.png"); }
+.painting-8 {
+  background-image: url("../gfx/painting_8.png"); }
+.painting-9 {
+  background-image: url("../gfx/painting_9.png"); }

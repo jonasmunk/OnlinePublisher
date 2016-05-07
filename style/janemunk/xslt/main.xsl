@@ -8,7 +8,8 @@
  xmlns:n="http://uri.in2isoft.com/onlinepublisher/class/news/1.0/"
  xmlns:o="http://uri.in2isoft.com/onlinepublisher/class/object/1.0/"
  xmlns:util="http://uri.in2isoft.com/onlinepublisher/util/"
- exclude-result-prefixes="p f h n o util"
+ xmlns:widget="http://uri.in2isoft.com/onlinepublisher/part/widget/1.0/"
+ exclude-result-prefixes="p f h n o util widget"
  >
 <xsl:output encoding="UTF-8" method="xml" doctype-public="-//W3C//DTD XHTML 1.1//EN" doctype-system="http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd"/>
 
@@ -28,7 +29,15 @@
       <xsl:call-template name="util:scripts"/>
     </head>
     <body>
-      <xsl:call-template name="new"/>
+      <xsl:choose>
+        <xsl:when test="//widget:exhibition">
+          <xsl:attribute name="class">exhibit</xsl:attribute>
+          <xsl:apply-templates select="//widget:widget"/>
+        </xsl:when>
+        <xsl:otherwise>
+          <xsl:call-template name="new"/>          
+        </xsl:otherwise>
+      </xsl:choose>
       <xsl:call-template name="util:googleanalytics"/>
     </body>
   </html>
@@ -144,86 +153,35 @@
   </div>
 </xsl:template>
 
-<xsl:template match="p:content">
-  <div class="case_content">
-    <xsl:apply-templates/>
-    <xsl:comment/>
+<xsl:template match="widget:exhibition">
+  <div class="exhibit_wall">
+    <div class="exhibit_paintings">
+      <div class="exhibit_paintings_page">
+        <div class="exhibit_painting exhibit_painting-1 exhibit_painting-left"><xsl:comment/></div>
+        <div class="exhibit_painting exhibit_painting-2 exhibit_painting-center"><xsl:comment/><xsl:comment/></div>
+        <div class="exhibit_painting exhibit_painting-3 exhibit_painting-right"><xsl:comment/><xsl:comment/></div>
+      </div>
+      <div class="exhibit_paintings_page">
+        <div class="exhibit_painting exhibit_painting-4 exhibit_painting-left"><xsl:comment/><xsl:comment/></div>
+        <div class="exhibit_painting exhibit_painting-5 exhibit_painting-center"><xsl:comment/><xsl:comment/></div>
+        <div class="exhibit_painting exhibit_painting-6 exhibit_painting-right"><xsl:comment/><xsl:comment/></div>
+      </div>
+      <div class="exhibit_paintings_page">
+        <div class="exhibit_painting exhibit_painting-7 exhibit_painting-left"><xsl:comment/><xsl:comment/></div>
+        <div class="exhibit_painting exhibit_painting-8 exhibit_painting-center"><xsl:comment/><xsl:comment/></div>
+        <div class="exhibit_painting exhibit_painting-9 exhibit_painting-right"><xsl:comment/><xsl:comment/></div>
+      </div>
+    </div>
   </div>
-</xsl:template>
-
-
-
-
-<xsl:template match="h:hierarchy/h:item">
-  <xsl:if test="not(@hidden='true')">
-    <xsl:variable name="style">
-      <xsl:choose>
-        <xsl:when test="//p:page/@id=@page"><xsl:text>selected</xsl:text></xsl:when>
-        <xsl:when test="descendant-or-self::*/@page=//p:page/@id"><xsl:text>highlighted</xsl:text></xsl:when>
-        <xsl:otherwise><xsl:text>normal</xsl:text></xsl:otherwise>
-      </xsl:choose>
-    </xsl:variable>
-    <li class="{$style}">
-      <a>
-      <xsl:call-template name="util:link"/>
-      <span><xsl:value-of select="@title"/></span>
-      </a>
-    </li>
-  </xsl:if>
-</xsl:template>
-
-<xsl:template name="secondlevel">
-  <xsl:if test="//f:frame/h:hierarchy/h:item[descendant-or-self::*/@page=//p:page/@id]/h:item">
-    <ul class="case_sub_navigation">
-      <xsl:apply-templates select="//f:frame/h:hierarchy/h:item[descendant-or-self::*/@page=//p:page/@id]/h:item"/>
-    </ul>
-  </xsl:if>
-</xsl:template>
-
-<xsl:template name="thirdlevel">
-  <xsl:if test="//f:frame/h:hierarchy/h:item/h:item[descendant-or-self::*/@page=//p:page/@id]/h:item">
-    <ul class="case_side_navigation">
-      <xsl:apply-templates select="//f:frame/h:hierarchy/h:item/h:item[descendant-or-self::*/@page=//p:page/@id]/h:item"/>
-    </ul>
-  </xsl:if>
-</xsl:template>
-
-<xsl:template match="h:hierarchy/h:item/h:item">
-  <xsl:variable name="style">
-    <xsl:choose>
-      <xsl:when test="//p:page/@id=@page"><xsl:text>selected</xsl:text></xsl:when>
-      <xsl:when test="descendant-or-self::*/@page=//p:page/@id"><xsl:text>highlighted</xsl:text></xsl:when>
-    </xsl:choose>
-  </xsl:variable>
-  <xsl:if test="not(@hidden='true')">
-    <li>
-      <a class="{$style}">
-        <xsl:call-template name="util:link"/>
-        <span><xsl:value-of select="@title"/></span>
-      </a>
-    </li>
-  </xsl:if>
-</xsl:template>
-
-<xsl:template match="h:item">
-  <xsl:variable name="style">
-    <xsl:choose>
-      <xsl:when test="//p:page/@id=@page"><xsl:text>selected</xsl:text></xsl:when>
-      <xsl:when test="descendant-or-self::*/@page=//p:page/@id"><xsl:text>highlighted</xsl:text></xsl:when>
-      <xsl:otherwise><xsl:text>standard</xsl:text></xsl:otherwise>
-    </xsl:choose>
-  </xsl:variable>
-  <xsl:if test="not(@hidden='true')">
-    <li>
-    <a class="{$style}">
-      <xsl:call-template name="util:link"/>
-      <span><xsl:value-of select="@title"/></span>
-    </a>
-    <xsl:if test="descendant-or-self::*/@page=//p:page/@id and h:item">
-      <ul><xsl:apply-templates/></ul>
-    </xsl:if>
-    </li>
-  </xsl:if>
+  <div class="exhibit_viewer js-viewer"><div class="exhibit_viewer_inner js-viewer-inner"><xsl:comment/></div></div>
+  <div class="exhibit_spaces exhibit_control js-spaces">
+    <a href="#" class="exhibit_spaces_option js-spaces-option" data="light">Lys</a>
+    <a href="#" class="exhibit_spaces_option js-spaces-option is-selected" data="concrete">Beton</a>
+    <a href="#" class="exhibit_spaces_option js-spaces-option" data="simple">Simpel</a>
+  </div>
+  <a href="../janemunk/" class="exhibit_back exhibit_control">Tilbage</a>
+  <script src="{$path}{$timestamp-url}style/{$design}/js/hammer.min.js{$timestamp-query}"><xsl:comment/></script>
+  <script src="{$path}{$timestamp-url}style/{$design}/js/exhibit.js{$timestamp-query}"><xsl:comment/></script>
 </xsl:template>
 
 </xsl:stylesheet>
