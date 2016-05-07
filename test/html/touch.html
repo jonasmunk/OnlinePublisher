@@ -1,0 +1,75 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+	<title>HUI</title>
+  <meta name="viewport" content="user-scalable=yes, initial-scale = 1, maximum-scale = 1, minimum-scale = 1"/>
+	<script charset="utf-8" type="text/javascript" src="../../js/hui.js"></script>
+	<script charset="utf-8" type="text/javascript" src="../../js/hui_animation.js"></script>
+	<script charset="utf-8" type="text/javascript" src="../../js/ui.js"></script>
+	<script type="text/javascript" charset="utf-8">
+		hui.ui.context='../../..';
+	</script>
+  <style type="text/css" media="screen">
+  html,body {height: 100%;}
+  
+  .circle {
+    width: 80px;
+    height: 80px;
+    background: rgba(0,0,0,.1);
+    border-radius: 50%;
+    position: absolute;
+    margin: -40px 0 0 -40px;
+  }
+  </style>
+    
+	<script>
+    hui.onReady(function() {
+      var touches = {};
+      
+      function getCircle(id) {
+        if (touches[id]) {
+          return touches[id];
+        }
+        var circle = hui.build('div',{'class':'circle',parent:document.body});
+        touches[id] = circle;
+        return circle;
+      }
+            
+			hui.listen(document.body,'touchmove',function(ev) {
+        ev.preventDefault();
+        for (var i = 0; i < ev.targetTouches.length; i++) {
+          var touch = ev.targetTouches[i];
+          var touchCircle = getCircle(touch.identifier);
+          hui.style.set(touchCircle,{
+            top: touch.clientY + 'px',
+            left: touch.clientX + 'px'
+          });
+        }
+			  console.log(ev);
+			});
+      
+      hui.listen(document.body,'touchend',function(ev) {
+        console.log('end');
+        console.log(ev)
+        for (var i = 0; i < ev.changedTouches.length; i++) {
+          var touch = ev.changedTouches[i];
+          var circle = touches[touch.identifier];
+          if (circle) {
+            hui.dom.remove(circle);
+            delete touches[touch.identifier];            
+          }
+        }
+      });
+      hui.listen(document.body,'touchcancel',function(ev) {
+        for (id in touches) {
+          hui.dom.remove(touches[id]);
+        }
+        touches = {};
+      })
+    })
+	</script>
+</head>
+
+<body>
+</body>
+</html>

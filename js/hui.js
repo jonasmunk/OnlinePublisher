@@ -1341,6 +1341,40 @@ hui.cls = {
 
 ///////////////////// Events //////////////////
 
+hui.on = function(node,event,func,bind) {
+  if (event=='tap') {
+    if (bind) {
+      func = func.bind(bind);
+    }
+    var moved = false;
+    var touched = false;
+    hui.listen(node,'touchstart',function() {
+      touched = true;
+      moved = false;
+    },bind);
+    hui.listen(node,'touchmove',function() {
+      moved = true;
+    },bind);
+    hui.listen(node,'touchcancel',function() {
+      console.log('cancel')
+    },bind);
+    hui.listen(node,'touchend',function(ev) {
+      touched = false;
+      if (!moved) {
+        touched = true;
+        func(ev);
+      }
+    },bind);
+    hui.listen(node,'click',function(ev) {
+      if (!moved && !touched) {
+        func(ev);
+      }
+    },bind);
+  } else {
+    hui.listen(node,event,func,bind);      
+  }
+}
+
 /**
  * Add an event listener to an element
  * @param {Element} element The element to listen on
