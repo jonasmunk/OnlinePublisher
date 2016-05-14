@@ -1,0 +1,57 @@
+.common_font
+{
+	font-family: "Lucida Grande","Lucida Sans Unicode",sans-serif;
+}
+
+div.part_text, .part_text, div.part_richtext, .part_richtext
+{
+	color: #777777;
+}
+
+.part_header
+{
+	color: #004071;
+	font-family: Georgia,serif;
+	font-weight: normal;
+	font-style: normal;
+	margin: 0;
+}
+
+h1.part_header, textarea.part_header-1
+{
+	font-size: 14pt;
+}
+
+h2.part_header, textarea.part_header-2
+{
+	font-size: 14pt;
+	font-weight: bold;
+}
+
+h3.part_header, textarea.part_header-3
+{
+	font-size: 12pt;
+	font-weight: bold;
+}
+
+h4.part_header, textarea.part_header-4
+{
+	font-size:11pt;
+	font-weight: bold;
+}
+
+h5.part_header, textarea.part_header-5
+{
+	font-size:10pt;
+	font-weight: bold;
+}
+
+h6.part_header, textarea.part_header-6
+{
+	font-size:9pt;
+	font-weight: bold;
+}
+
+div.part_listing span.part_listing_first {
+	font-weight: normal;
+}

@@ -1,0 +1,136 @@
+@include if {
+  .layout {
+
+    &_navigation {
+
+      &.is-front {
+        position: fixed;
+        width: 50%;
+        z-index: 2;
+        text-align: center;
+        top: 0;
+        right: 0;
+        bottom: 0;
+      }
+    }
+
+    &_title {
+      background: url('../gfx/logo_dark.svg') 0% no-repeat;
+      height: 70px;
+      font-size: 0;
+      margin: 10px;
+
+      &.is-front {
+        background-image: url('../gfx/logo_light.svg');
+        background-position: 50%;
+        height: 100px;
+        margin: 30px auto;
+        max-width: 80%;
+      }
+    }
+
+    &_menu {
+      list-style: none;
+      padding: 0;
+      font-family: $effect-font;
+      margin: -33px 0 0 55px;
+
+      &.is-front {
+        margin: 0;
+      }
+    }
+
+    &_menu_item {
+      display: inline-block;
+
+      &.is-front {
+        display: block;
+      }
+    }
+
+    &_menu_link {
+      display: block;
+      text-transform: uppercase;
+      color: #333;
+      text-decoration: none;
+      font-size: 24px;
+      padding: 0 7px;
+
+      &.is-front {
+        color: #fff;
+        line-height: 1.5;
+        font-size: 50px;
+      }
+    }
+
+    &_content {
+      padding: 10px;
+    }
+  }
+}
+
+@include if(( width:600px )) {
+  .layout {
+    &_content {
+      margin-right: 25%;
+      padding: 20px;
+    }
+
+    &_navigation {
+      width: 25%;
+      background: #ccced0 url('../gfx/menu2.jpg') 50%;
+      background: #ccced0 url('../gfx/menu3.jpg') 50%;
+      background-size: cover;
+      height: 100%;
+      position: fixed;
+      top: 0;
+      right: 0;
+
+      &.is-front {
+        background: none;
+        width: 25%;
+      }
+    }
+
+    &_title {
+      background-position: 50%;
+      height: 100px;
+      margin: 30px auto;
+      max-width: 80%;
+    }
+
+    &_menu {
+      text-align: center;
+      margin: 0;
+    }
+
+    &_menu_item {
+      display: block;
+    }
+
+    &_menu_link, &_menu_link.is-front {
+      font-size: 30px;
+      line-height: 1.5;
+    }
+  }
+}
+
+@include if(( width: 760px )) {
+  .layout {
+
+    &_menu_link, &_menu_link.is-front {
+      font-size: 40px;
+    }
+  }
+
+}
+
+@include if(( width: 900px )) {
+  .layout {
+
+    &_menu_link, &_menu_link.is-front {
+      font-size: 50px;
+    }
+  }
+
+}

@@ -1,0 +1,172 @@
+@include when {
+	.header
+	{
+		margin: 0;
+    max-width: 960px;
+    margin: 0 auto;
+    padding: 10px 0 0;
+    position: relative;
+	}
+  
+  .header_logo {
+    display: block;
+    color: inherit;
+    text-decoration: none;
+  }
+	
+	.header_title {
+  	font-family: $header-font;
+    font-weight: normal;
+    font-style: italic;
+    margin: 0;
+    text-align: center;
+    font-size: 42px;
+    line-height: 1;
+    text-rendering: geometricPrecision;
+	}
+	
+	.header_job {
+  	font-family: $header-font;
+    font-weight: normal;
+    font-style: italic;
+    text-align: center;
+    margin: 0 0 15px;
+    font-size: 18px;
+		line-height: 1em;
+    letter-spacing: 1px;
+    color: #999;
+	}
+  
+  .header_menu {
+    display: block;
+    margin: 0 10px;
+    padding: 5px 0;
+		text-align: center;
+    border-top: 1px solid #eee;
+    border-bottom: 1px solid #eee;
+  }
+
+	.header_menu_item {
+    display: inline-block;
+  }
+  
+  .header_menu_link {
+    display: inline-block;
+    color: #6d6671;
+    height: 30px;
+    line-height: 32px;
+    padding: 0 5px;
+    text-decoration: none;
+    font-size: 16px;
+    position: relative;
+    font-weight: normal;
+    
+    &:hover {
+      color: #AF74CC;
+    }
+    
+    &-selected {
+      color: $main-color;
+      font-weight: 600;
+    }
+  }
+}
+
+@include when (600px) {
+	
+	.header_title {
+    font-size: 52px;
+  }
+
+	.header_job {
+    font-size: 24px;
+	}
+
+  .header_menu_link {
+    padding: 0 15px;
+    font-size: 18px;
+  }
+}
+
+@include when (760px) {
+  
+  .header {
+    padding-top: 50px;
+  }
+
+  .header_menu {
+    padding-left: 265px;
+    text-align: left;
+    border-top: none;
+    margin: 0;
+  }
+  
+  .header_logo {
+    position: absolute;
+    left: 40px;
+    top: 20px;
+  }
+  
+  .header_title {
+    font-size: 42px;
+  }
+  
+  .header_job {
+    font-size: 20px;
+    margin: 6px 0 0;
+  }
+
+  .header_menu_link {
+    font-size: 20px;
+    font-weight: 200;
+    height: 50px;
+    line-height: 52px;
+    padding: 0 15px;
+    
+    &-selected {
+      font-weight: 700;
+
+      &:after {
+        content: '';
+        width: 6px;
+        height: 6px;
+        border-radius: 50%;
+        left: 50%;
+        bottom: 0;
+        position: absolute;
+        background: #733392;
+        margin: 0 0 -8px -3px;
+      }
+    }
+  }
+}
+
+@include when (960px) {
+
+  
+  .header_logo {
+    left: 30px;
+  }
+  
+  .header {
+    padding-top: 70px;
+  }
+
+  .header_menu_link {
+    padding: 0 20px;
+  }
+  
+  .header_menu {
+    padding-left: 300px;
+  }
+  
+  .header_title {
+    font-size: 48px;
+    margin-top: 10px;
+  }
+  
+  .header_job {
+    font-size: 24px;
+    margin: 9px 0 0;
+  }
+}

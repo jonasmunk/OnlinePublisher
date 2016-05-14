@@ -1,5 +1,5 @@
 {
-  "name": "humanise_ui",
+  "name": "humanise_editor",
   "version": "1.0.0",
   "devDependencies": {
     "grunt": "^0.4.5",
@@ -9,10 +9,10 @@
     "grunt-contrib-copy": "^0.8.0",
     "grunt-contrib-jshint": "^0.10.0",
     "grunt-contrib-nodeunit": "^0.4.1",
+    "grunt-contrib-sass": "^1.0.0",
     "grunt-contrib-symlink": "^0.3.0",
     "grunt-contrib-uglify": "^0.5.0",
     "grunt-contrib-watch": "^0.6.1",
-    "grunt-contrib-qunit": "^0.5.2",
     "grunt-docular": "^0.2.4",
     "grunt-jsdoc": "^0.5.8",
     "grunt-jsdoc-plugin": "^0.1.4",

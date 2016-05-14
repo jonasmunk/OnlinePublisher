@@ -1,0 +1,112 @@
+@include if {
+  .quote {
+    max-width: 800px;
+    margin: 0 auto;
+    text-align: center;
+    
+    &:before {
+      content: '';
+      display: block;
+      background: url('../gfx/ornament_a_top.svg') 50% 0 no-repeat;
+      padding-bottom: 90 / 1097 * 150% + .1%;
+      background-size: 150%;
+      margin-bottom: 10px;
+    }
+
+    &:after {
+      content: '';
+      display: block;
+      background: url('../gfx/ornament_a_bottom.svg') 50% 0 no-repeat;
+      padding-bottom: 90 / 1097 * 150% + .1%;
+      background-size: cover;
+      margin-top: 10px;
+    }
+  }
+  
+  .quote_text {
+    font-style: italic;
+    background: url('../gfx/henriette.jpg') 0 50% no-repeat;
+    padding-left: 100px;
+    background-size: 85px;
+    font-size: 16px;
+    color: #333;
+    line-height: 1.4;
+
+    > strong {
+      color: #B75228;
+      font-weight: normal;
+    }
+    
+    &:before {
+      content: '\201C';
+      color: #dec490;
+      font-size: 6em;
+      vertical-align: bottom;
+      font-family: Georgia;
+      font-style: normal;
+      height: 0.35em;
+      display: inline-block;
+      line-height: 0.88em;
+    }
+  }
+  
+  .quote_name {
+    display: block;
+    color: #999;
+    text-align: right;
+    font-style: normal;
+    margin-top: 10px;
+    font-size: 12px;
+  }
+}
+
+@include if((width: 400px)) {
+
+  .quote_text {
+    font-size: 18px;
+  }
+}
+
+@include if((width: 600px)) {
+
+  .quote {
+    max-width: 800px;
+    margin: 0 auto;
+    text-align: center;
+    
+    &:before {
+      padding-bottom: 90 / 1097 * 100% + .1%;
+      background-size: cover;
+      margin-bottom: 20px;
+    }
+
+    &:after {
+      padding-bottom: 90 / 1097 * 100% + .1%;
+      background-size: cover;
+      margin-top: 20px;
+    }
+  }
+  
+  .quote_text {
+    font-size: 24px;
+    max-width: 600px;
+    margin: 0 auto;
+    padding-left: 110px;
+    background-size: 100px;
+  }
+  .quote_name {
+    font-size: 16px;
+  }
+}
+
+@include if((width: 769px)) {
+  .quote_text {
+    font-size: 28px;
+    padding-left: 130px;
+    background-size: 120px;
+  }
+  
+  .quote_name {
+    font-size: 18px;
+  }
+}

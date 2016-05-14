@@ -1,0 +1,67 @@
+@include if((target: inline)) {
+
+	.sidemenu {
+		margin: 0;
+		padding: 5px 5px;
+		list-style: none;
+		border-bottom: 1px solid $line-color;
+	}
+
+	.sidemenu_item {
+		display: inline-block;		
+	}
+	
+	.sidemenu_link {
+		padding: 5px;
+		display: inline-block;
+		line-height: 18px;
+		text-decoration: none;
+		color: #333;		
+	}
+
+	.sidemenu_link-selected
+	{
+		color: $highlight-color;
+		font-weight: bold;
+	}
+}
+
+@include if((width: 760px, target: inline)) {
+	
+	.sidemenu
+	{
+		list-style: none;
+		margin: 20px 0 30px 25px;
+		padding: 0 10px;
+		font-size: 12pt;
+		line-height: 26px;
+		border-bottom: none;
+		border-left: 1px solid $line-color;
+	}
+
+	.sidemenu_item {
+		display: block;
+	}
+
+	.sidemenu_link {
+		display: block;
+		padding: 7px 5px;
+		
+		&:hover {
+			text-decoration: underline;			
+		}
+	}
+
+	.sidemenu_sub
+	{
+		list-style: none;
+		padding-left: 15px;
+	}
+}
+
+@include if((width: 760px)) {
+  .scroll .sidemenu {
+    position: fixed;
+    top: 56px;
+  }
+}

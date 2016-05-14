@@ -1,0 +1,59 @@
+.part_file
+{
+	overflow: hidden;
+}
+
+.part_file div
+{
+	background: url('../../basic/gfx/file_bg.png') top left repeat-x;
+	height: 55px;
+	float: left;
+	clear: both;
+	margin-bottom: 10px;
+}
+
+.part_file div div
+{
+	background: url('../../basic/gfx/file_left.png') top left no-repeat;
+	height: 55px;
+}
+
+.part_file div div div
+{
+	background: url('../../basic/gfx/file_right.png') top right no-repeat;
+	height: 55px;
+	padding-right: 20px;
+}
+
+.part_file_title
+{
+	margin: 10px 0 0;
+	font-size: 10pt;
+  line-height: 18px;
+	padding-left: 60px;
+}
+
+.part_file_info
+{
+	padding-left: 60px;
+	font-size: 10px;
+  line-height: 12px;
+	color: #888;
+  margin: 0;
+}
+
+.part_file a
+{
+	color: #ccc;
+}
+
+.part_file a span
+{
+	color: #004EFF;
+}
+
+.part_file a:hover,
+.part_file a:hover span
+{
+	color: #0033AA;
+}

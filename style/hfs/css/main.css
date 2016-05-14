@@ -1,0 +1,769 @@
+@import url('webkit.css');
+
+.clear
+{
+	clear: both;
+}
+
+/********************** Base ***********************/
+
+
+img
+{
+	border: none;
+}
+
+body
+{
+	padding: 0px;
+	margin: 0px;
+	text-align: center;
+	background: #f9f9f9 ;
+	grunge_wall.png
+}
+
+body.design_theme_soccer
+{
+	background: url('../gfx/backgrounds/grass.jpg') 50% 50% fixed;
+	background: url('../gfx/backgrounds/soccer2.jpg') 50% 50% fixed;
+	background: url('../gfx/backgrounds/soccer_blur2.jpg') 50% 50% fixed;
+	background: url('../gfx/backgrounds/soccer.jpg') 50% 50% fixed;
+	-webkit-background-size: cover;
+	-moz-background-size: cover;
+	background-size: cover;
+}
+
+body.design_theme_soccer div.layout
+{
+	box-shadow: 0 0 20px rgba(0,30,0,.8);	
+	box-shadow: 0 0 20px rgba(0,0,0,.4);	
+}
+/*
+body.design_theme_soccer
+{
+	background: url('../gfx/backgrounds/soccer_blur.jpg') 50% 50% fixed;
+	background-size: 100% 100%;
+}*/
+
+body.design_theme_handball
+{
+	background: url('../gfx/backgrounds/handball_blur.jpg') 50% 50% fixed;
+	background: url('../gfx/backgrounds/gymnasium.jpg') 50% 50% fixed;
+	background: url('../gfx/backgrounds/gym.jpg') 50% 50% fixed;
+	background: url('../gfx/backgrounds/gymnasium2.jpg') 50% 50% fixed;
+	background: url('../gfx/backgrounds/handball_blur3.jpg') 50% 50% fixed;
+	background: url('../gfx/backgrounds/handball.jpg') 50% 50% fixed;
+	background-size: 100% 100%;
+	-webkit-background-size: cover;
+	-moz-background-size: cover;
+	background-size: cover;
+}
+
+body.design_theme_tennis
+{
+	background: url('../gfx/backgrounds/tennis.jpg') 50% 50% fixed;
+	background-size: 100% 100%;
+	-webkit-background-size: cover;
+	-moz-background-size: cover;
+	background-size: cover;
+}
+
+body.design_theme_badminton
+{
+	background: url('../gfx/backgrounds/badminton.jpg') 50% 50% fixed;
+	background-size: 100% 100%;
+	-webkit-background-size: cover;
+	-moz-background-size: cover;
+	background-size: cover;
+}
+
+body.design_theme_volleyball
+{
+	background: url('../gfx/backgrounds/volleyball.jpg') 50% 50% fixed;
+	background-size: 100% 100%;
+	-webkit-background-size: cover;
+	-moz-background-size: cover;
+	background-size: cover;
+}
+
+body.design_theme_gymnastics
+{
+	background: url('../gfx/backgrounds/gymnastics.jpg') 50% 50% fixed;
+	background-size: 100% 100%;
+	-webkit-background-size: cover;
+	-moz-background-size: cover;
+	background-size: cover;
+}
+
+body.design_theme_floorball
+{
+	background: url('../gfx/backgrounds/floorball.jpg') 50% 50% fixed;
+	background-size: 100% 100%;
+	-webkit-background-size: cover;
+	-moz-background-size: cover;
+	background-size: cover;
+}
+
+body.design_theme_boxing
+{
+	background: url('../gfx/backgrounds/boxing.jpg') 50% 50% fixed;
+	background-size: 100% 100%;
+	-webkit-background-size: cover;
+	-moz-background-size: cover;
+	background-size: cover;
+}
+
+body,html
+{
+	height: 100%;
+}
+
+form
+{
+	margin: 0px;
+}
+
+div.layout
+{
+	min-height: 100%;
+	position: relative;
+	text-align: left;
+	width: 960px;
+	margin: 0 auto;
+	background: #fff;
+	box-shadow: 0 0 20px rgba(0,0,0,.2);	
+}
+
+div.layout_sidebar
+{
+}
+
+div.layout_base
+{
+	padding-bottom: 280px;
+	width: 100%;
+}
+
+div.layout_header
+{
+	height: 148px;
+	position: relative;
+	background: url('../gfx/sprite.png')
+}
+
+div.layout_logo
+{
+  background: white url('../gfx/sprite.png') -164px -334px no-repeat;
+  position: absolute;
+  box-shadow: 0 1px 3px #AAA;
+  width: 200px;
+  right: 20px;
+  top: 18px;
+  height: 160px;
+}
+
+div.layout_header_content
+{
+}
+
+div.layout_content
+{
+	overflow: hidden;
+	min-height: 400px;
+	width: 960px;
+	margin: 10px auto;
+}
+
+div.layout_content_sidebar
+{
+	padding-right: 0;
+}
+
+div.layout_inner_content
+{
+	padding: 0px 20px;
+}
+
+div.layout_content_sidebar div.layout_inner_content
+{
+	width: 730px;
+}
+
+div.layout_sidebar
+{
+	width: 190px;
+	float: right;
+	font-size: 11pt;
+}
+
+/******** Footer ********/
+
+div.layout_footer
+{
+	font-size: 9pt;
+	position: absolute;
+	text-align: center;
+	background: #f2f2f2 url('../gfx/sprite.png') 0 -148px no-repeat;
+	padding-top: 141px;
+	bottom: 0;
+	width: 100%;
+}
+
+div.layout_footer_body
+{
+	background: #eeeeee;
+	background: -moz-linear-gradient(top, #eeeeee 0%, #ffffff 100%);
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#eeeeee), color-stop(100%,#ffffff));
+	background: -webkit-linear-gradient(top, #eeeeee 0%,#ffffff 100%);
+	background: -o-linear-gradient(top, #eeeeee 0%,#ffffff 100%);
+	background: -ms-linear-gradient(top, #eeeeee 0%,#ffffff 100%);
+	background: linear-gradient(to bottom, #eeeeee 0%,#ffffff 100%);
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#eeeeee', endColorstr='#ffffff',GradientType=0 );
+	padding: 20px 0;
+}
+
+div.layout_footer span
+{
+	color: #666;
+}
+
+a.layout_design
+{
+	background: url('../gfx/designedby.png');
+	text-indent: -10000px;
+	width: 149px;
+	height: 47px;
+	display: block;
+	margin: 0 auto;
+	position: relative;
+}
+
+div.layout_links
+{
+	height: 30px;
+}
+
+/***************** Top navigation *************/
+
+ul.layout_navigation
+{
+	font-family: 'Contrail One', cursive;
+	font-family: 'Play','Helvetica Neue',Arial;
+	position: absolute;
+	bottom: 10px;
+	left: 6px;
+	margin: 0px;
+	padding: 0;
+	display: block;
+	overflow: hidden;
+	cursor: default;
+	list-style: none;
+	width: 760px;
+	margin: 0 auto;
+}
+
+ul.layout_navigation li
+{
+	display: inline-block;
+}
+
+ul.layout_navigation li a
+{
+	display: block;
+	color: #fff;
+	text-decoration: none;
+	font-size: 16pt;
+	font-weight: 400;
+	height: 24px;
+	line-height: 24px;
+	cursor: pointer;
+	padding: 4px 5px 0px;
+}
+
+ul.layout_navigation li span
+{
+	display: block;
+	/*background: #eb5757;*/
+	height: 24px;
+	padding: 0px 5px;
+}
+
+ul.layout_navigation li span span
+{
+	padding: 0px;
+}
+
+ul.layout_navigation li.selected a span span, 
+ul.layout_navigation li.highlighted a span span
+{
+	border-bottom: 2px solid #fff;
+}
+
+ul.layout_navigation img
+{
+	width: 110px;
+	height: 31px;
+	margin: -5px 10px 0 0;
+}
+
+/***************** Sub navigation *************/
+
+
+ul.layout_sub_navigation
+{
+
+	margin: 0;
+	padding: 4px 0 0 5px;
+	display: block;
+	overflow: hidden;
+	list-style: none;
+	font-size:0;
+	cursor: default;
+	font-family: 'Play','Helvetica Neue',Arial;
+	margin-right: 200px;
+}
+
+ul.layout_sub_navigation li
+{
+	float: left;
+}
+
+ul.layout_sub_navigation a
+{
+	text-decoration: none;
+	color: #333;
+	padding: 0px 4px;
+	display: inline-block;
+	cursor: pointer;
+	font-size: 11pt;
+}
+
+ul.layout_sub_navigation a span
+{
+	display: inline-block;
+	height: 26px;
+	line-height: 26px;
+	padding: 0 8px;
+	border: 1px solid #fff;
+}
+
+ul.layout_sub_navigation a:hover span
+{
+	background: #fafafa;
+	border-radius: 3px;
+	border: 1px solid #eee;
+}
+
+ul.layout_sub_navigation a.selected, ul.layout_sub_navigation a.highlighted
+{
+}
+
+ul.layout_sub_navigation a.selected, ul.layout_sub_navigation a.highlighted
+{
+	color: #f00;
+}
+
+ul.layout_sub_navigation a.selected span, ul.layout_sub_navigation a.highlighted span
+{
+}
+
+/***************** Side navigation *************/
+
+ul.layout_side_navigation
+{
+	box-shadow: inset 0 1px 4px rgba(0, 0, 0, .1);
+	list-style: none;
+	margin: 5px 20px 30px 0;
+	padding: 10px 0px;
+	font-size: 10pt;
+	border-radius: 4px;
+	background: #FAFAFA;
+}
+
+ul.layout_side_navigation a
+{
+	color: #333;
+	text-decoration: none;
+	display: block;
+	padding: 3px 5px 3px 15px;
+}
+
+ul.layout_side_navigation a:hover
+{
+	color: #0169b2;
+	text-decoration: underline;
+}
+
+ul.layout_side_navigation a.selected
+{
+	color: #f00;
+	font-weight: bold;
+}
+
+ul.layout_side_navigation a.highlighted
+{
+	font-weight: bold;
+}
+
+ul.layout_side_navigation ul
+{
+	list-style: none;
+	padding-left: 15px;
+}
+
+/********************** Box *********************/
+
+div.layout_box_top, div.layout_box_top div
+{
+	font-size: 0;
+	background: url('../gfx/layout_box.png') no-repeat;
+	height: 7px;
+}
+
+div.layout_box_top div
+{
+	background-position: right -7px;
+}
+
+div.layout_box_top div div
+{
+	background-position: left -14px;
+	background-repeat: repeat-x;
+	margin: 0 8px;
+}
+
+div.layout_box_bottom, div.layout_box_bottom div
+{
+	font-size: 0;
+	background: url('../gfx/layout_box.png') left -21px no-repeat;
+	height: 10px;
+}
+
+div.layout_box_bottom div
+{
+	background-position: right -31px;
+}
+
+div.layout_box_bottom div div
+{
+	background-position: left -41px;
+	background-repeat: repeat-x;
+	margin: 0 8px;
+}
+
+div.layout_box_middle
+{
+	background: url('../gfx/layout_box_middle.png') repeat-y;
+}
+
+div.layout_box_middle div.layout_box_middle
+{
+	background: url('../gfx/layout_box_middle.png') right repeat-y;
+}
+
+div.layout_box_body
+{
+	margin: 0 3px;
+	background: #fff;
+	padding: 1px 0;
+	overflow: hidden;
+}
+
+div.layout_box_head
+{
+	border-bottom: 1px solid #ddd;
+	height: 27px;
+}
+
+div.layout_box_foot
+{
+	border-top: 1px solid #ddd;
+	height: 27px;
+}
+
+
+/*********************** Info **********************/
+
+div.layout_info
+{
+	padding-top: 10px;
+	width: 960px;
+	margin: 0 auto;
+}
+
+div.layout_info h2
+{
+	margin: 0px 0px 10px;
+	height: 26px;
+}
+
+div.layout_info div.about
+{
+	padding: 10px 20px;
+}
+
+div.layout_info div.about p
+{
+	font-size: 11pt;
+	line-height: 16pt;
+	margin: 11px 0 0;
+}
+
+div.layout_info div.contact
+{
+	float: left;
+	width: 260px;
+	padding: 10px 20px;
+}
+
+div.layout_info div.contact h2
+{
+	background-position: left -27px;
+}
+
+div.layout_info div.contact p
+{
+	margin: 0px 0px;
+	font-size: 9pt;
+	color: #666;
+	line-height: 16pt;
+}
+
+div.layout_info div.contact p.name
+{
+	color: #333;
+	font-size: 12pt;
+}
+
+div.layout_info div.contact p.name strong
+{
+	font-weight: normal;
+}
+
+div.layout_info div.about p.more
+{
+	line-height: 11px;
+	font-size: 12px;
+	margin-top: 24px;
+}
+
+/********************** Poster *********************/
+
+#poster
+{
+	width: 900px;
+	height: 310px;
+	background: url('../gfx/poster_bg.png');
+	cursor: pointer;
+}
+#poster .left
+{
+	float: left;
+	height: 310px;
+	width: 450px;
+	overflow: hidden;
+}
+
+#poster .right
+{
+	float: left;
+	height: 310px;
+	width: 450px;
+	overflow: hidden;
+}
+
+#poster .left div
+{
+	width: 900px;
+	height: 310px;
+	background: 200px 0px no-repeat;
+}
+#poster .right div
+{
+	width: 900px;
+	height: 310px;
+	background: 450px 0px no-repeat;
+}
+
+#poster_loader
+{
+	background: #000;
+	color:#FFFFFF;
+	left: 50%;
+	margin-left: -25px;
+	padding: 2px 5px;
+	position: absolute;
+	text-align: center;
+	top: 200px;
+	width: 50px;
+}
+
+
+/************************** Search *********************/
+
+form.layout_search
+{
+	position: absolute;
+	height: 24px;
+	font-size: 0px;
+	top: 200px;
+	right: 18px;
+}
+
+form.layout_search .submit
+{
+	position: absolute;
+	top: 0px;
+	left: -1000px;
+	width: 1px;
+	display: none;
+}
+
+form.layout_search span.hui_searchfield
+{
+	width: 155px;
+}
+
+
+
+
+
+
+
+
+/********** News **********/
+
+div.layout_news
+{
+	padding: 0 5px 10px;
+}
+
+div.layout_news h2
+{
+	font-weight: normal;
+	margin: 0 0 5px;
+	font-size: 11pt;
+	color: #999;
+	padding: 0 10px 3px;
+}
+
+div.layout_news_item
+{
+	padding: 4px 10px 8px;
+	overflow: hidden;
+}
+
+div.layout_news_item h3
+{
+	font-size: 9pt;
+	color: #555;
+	font-weight: normal;
+	padding-bottom: 3px;
+	margin: 0;
+}
+
+p.layout_news_text
+{
+	color:#777;
+	font-size:8pt;
+	line-height:10pt;
+	margin: 0 0 3px;
+}
+
+p.layout_news_date
+{
+	font-weight: normal;
+	color: #bbb;
+	font-size: 8pt;
+	margin: 2px 0 0;
+	float: left;
+}
+
+p.layout_news_links
+{
+	text-align: right;
+	font-size: 8pt;
+	margin-top: 3px;
+	margin: 0;
+}
+
+
+/***************** Feedback ***************/
+
+p.layout_feedback
+{
+	font-size: 10pt;
+	margin-bottom: 0;
+	text-align: right;
+}
+
+div.layout_feedback_form
+{
+	background: #fafafa;
+	border: 1px solid #eee;
+	padding: 5px 10px;
+	margin-top: 20px;
+}
+
+div.layout_feedback_form h1
+{
+	font-size: 24pt;
+	line-height: 24pt;
+	margin: 3px 0 10px;
+	font-weight: normal;
+	font-family: 'Play',sans-serif;
+	color: #bbb;
+}
+
+div.layout_feedback_form p
+{
+	margin: 5px 0;
+}
+
+div.layout_feedback_form label
+{
+	display: block;
+	font-size: 9pt;
+	line-height: 18px;
+}
+
+div.layout_feedback_form input,
+div.layout_feedback_form textarea
+{
+	margin: 0;
+	padding: 4px;
+	width: 100%;
+	box-sizing: border-box;
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	background: #fff;
+	font-size: 12pt;
+}
+
+div.layout_feedback_form textarea
+{
+	height: 200px;
+}
+
+div.layout_feedback_form p.layout_feedback_form_hint
+{
+	font-size: 9pt;
+	font-style: italic;
+	margin: 0 0 15px;
+}
+
+div.layout_feedback_form a
+{
+	text-decoration: none;
+	display: inline-block;
+	background: #eee;
+	color: #333;
+	margin-right: 5px;
+	border: 1px solid #ddd;
+	font-size: 10pt;
+	line-height: 10pt;
+	padding: 0 10px;
+	height: 26px;
+	line-height: 26px;
+	border-radius: 3px;
+}

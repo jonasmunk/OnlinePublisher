@@ -1,0 +1,45 @@
+@import '../../basic/scss/mixins';
+@import "compass/css3/transition";
+
+$header-font: 'Lora',Georgia,"Book Antiqua", "Palatino",Times,serif;
+$text-font: 'Merriweather',Georgia,"Book Antiqua", "Palatino",Times,serif;
+
+$main-color: #733392;
+
+$icons : (
+  right : '\e902',
+  linkedin : '\e000',
+  wikipedia : '\e003',
+  facebook : '\e002',
+  youtube : '\e904'
+);
+
+@mixin icon-before($icon) {
+  &:before {
+  	font-family: 'Lotte-Munk';
+  	content: map_get($icons, $icon);
+  	speak: none;
+  	font-weight: normal;
+  	font-variant: normal;
+  	text-transform: none;
+  	line-height: 1;
+  	-webkit-font-smoothing: antialiased;
+  	-moz-osx-font-smoothing: grayscale;
+    @content;
+  }
+}
+
+@mixin icon-after($icon) {
+  &:after {
+  	font-family: 'Lotte-Munk';
+  	content: map_get($icons, $icon);
+  	speak: none;
+  	font-weight: normal;
+  	font-variant: normal;
+  	text-transform: none;
+  	line-height: 1;
+  	-webkit-font-smoothing: antialiased;
+  	-moz-osx-font-smoothing: grayscale;
+    @content;
+  }
+}

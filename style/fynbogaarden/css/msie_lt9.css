@@ -1,0 +1,184 @@
+.part_header-1 {
+  font-size: 42px;
+}
+
+.part_header-2 {
+  font-size: 38px;
+}
+
+.part_horizontalrule {
+  padding-bottom: 3.78733%;
+}
+
+.part_table table {
+  font-size: 14px;
+}
+
+.header_title {
+  width: 250px;
+  padding-top: 60.13514px;
+}
+
+.header_title_more {
+  font-size: 20px;
+}
+
+.header {
+  padding-bottom: 43.88021%;
+}
+
+.header_title_more {
+  font-size: 24px;
+}
+
+.header_title {
+  left: 50%;
+  margin-left: -480px;
+  width: 25%;
+  padding-top: 6.01351%;
+}
+
+.header_info_phone_number {
+  font-size: 40px;
+}
+
+.header {
+  padding-bottom: 526.5625px;
+}
+
+.header_title {
+  width: 300px;
+  padding-top: 72px;
+}
+
+.header_title {
+  background-image: url("../gfx/logo.outline.png");
+  width: 370px;
+  padding-top: 89px;
+}
+
+.language {
+  position: static;
+  padding-top: 0;
+  margin: 0;
+  white-space: nowrap;
+}
+
+.language_link {
+  font-size: 24px;
+  border-radius: 0;
+  line-height: 40px;
+  padding: 0;
+}
+.language_link:before {
+  width: 40px;
+  height: 40px;
+}
+
+.language_link-english:before {
+  background: url("../gfx/uk.png");
+}
+
+.language_link-danish:before {
+  background: url("../gfx/dk.png");
+}
+
+.language_link-german:before {
+  background: url("../gfx/de.png");
+}
+
+.quote_text {
+  font-size: 18px;
+}
+
+.quote {
+  max-width: 800px;
+  margin: 0 auto;
+  text-align: center;
+}
+.quote:before {
+  padding-bottom: 8.30419%;
+  background-size: cover;
+  margin-bottom: 20px;
+}
+.quote:after {
+  padding-bottom: 8.30419%;
+  background-size: cover;
+  margin-top: 20px;
+}
+
+.quote_text {
+  font-size: 24px;
+  max-width: 600px;
+  margin: 0 auto;
+  padding-left: 110px;
+  background-size: 100px;
+}
+
+.quote_name {
+  font-size: 16px;
+}
+
+.quote_text {
+  font-size: 28px;
+  padding-left: 130px;
+  background-size: 120px;
+}
+
+.quote_name {
+  font-size: 18px;
+}
+
+.poster {
+  padding-bottom: 200px;
+}
+
+.poster_body {
+  height: 200px;
+}
+
+.poster {
+  padding-bottom: 280px;
+}
+
+.poster_body {
+  height: 280px;
+}
+
+.poster {
+  padding-bottom: 380px;
+  margin: 40px 0;
+}
+
+.poster_body {
+  height: 380px;
+}
+
+.poster {
+  padding-bottom: 500px;
+}
+
+.poster_body {
+  height: 500px;
+}
+
+.layout {
+  margin-top: -20px;
+  min-width: 1000px;
+}
+
+.poster_body {
+  min-width: 1000px;
+}
+
+.layout_content {
+  padding-top: 20px;
+}
+
+.document {
+  overflow: hidden;
+}
+
+.quote_text {
+  padding-left: 180px;
+}

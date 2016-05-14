@@ -1,0 +1,349 @@
+/********************* Common *******************/
+.layout_menu {
+  padding: 5px 10px;
+}
+.layout_menu > li {
+  vertical-align: top;
+}
+
+.layout_menu_link {
+  font-size: 20px;
+  line-height: 44px;
+  padding: 0 10px;
+}
+
+.layout_menu_item-first {
+  display: inline-block;
+}
+
+.layout_menu {
+  padding: 5px 0;
+}
+
+.layout_search_icon:hover > path {
+  fill: #333;
+}
+
+.layout_search_body {
+  overflow: hidden;
+  display: block;
+  opacity: 0;
+  position: absolute;
+  -webkit-transition: opacity .2s, width .5s;
+  -moz-transition: opacity .2s, width .5s;
+  -ms-transition: opacity .2s, width .5s;
+  -o-transition: opacity .2s, width .5s;
+  left: auto;
+  width: 0px;
+  height: auto;
+  top: 9px;
+  right: 3px;
+  background: none;
+  padding: 0;
+}
+
+.layout_search_text {
+  border-radius: 3px;
+  border: 1px solid #eee;
+  height: 36px;
+  font-size: 16px;
+  padding: 0 4px 0 30px;
+}
+.layout_search_text:focus {
+  outline: none;
+}
+
+.layout_search_submit {
+  font-size: 0;
+  background-image: url("data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz4NCjxzdmcgdmVyc2lvbj0iMS4xIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHhtbG5zOnhsaW5rPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5L3hsaW5rIiB4PSIwcHgiIHk9IjBweCINCgkgd2lkdGg9IjE5cHgiIGhlaWdodD0iMTlweCIgdmlld0JveD0iMCAwIDE5IDE5IiBlbmFibGUtYmFja2dyb3VuZD0ibmV3IDAgMCAxOSAxOSIgeG1sOnNwYWNlPSJwcmVzZXJ2ZSI+DQo8cGF0aCBmaWxsPSIjNzc3Nzc3IiBkPSJNMTcuNjMyLDE2Ljk1NWwtNC43NjEtNC43NjJjMS4xMDktMS4xODgsMS43OTUtMi43NzYsMS43OTUtNC41MjdjMC0zLjY2Ny0yLjk4Mi02LjY0OC02LjY0OS02LjY0OA0KCWMtMy42NjcsMC02LjY0OSwyLjk4MS02LjY0OSw2LjY0N2MwLDMuNjY3LDIuOTgyLDYuNjQ3LDYuNjQ5LDYuNjQ3YzEuMzkxLDAsMi42ODItMC40MzQsMy43NS0xLjE2NGw0LjgzNCw0LjgzNEwxNy42MzIsMTYuOTU1eg0KCSBNMi44MjQsNy42NjZjMC0yLjg2MiwyLjMzLTUuMTkxLDUuMTkyLTUuMTkxYzIuODY0LDAsNS4xOTIsMi4zMjksNS4xOTIsNS4xOTFjMCwyLjg2MS0yLjMyOCw1LjE5MS01LjE5Miw1LjE5MQ0KCUM1LjE1NCwxMi44NTUsMi44MjQsMTAuNTI3LDIuODI0LDcuNjY2eiIvPg0KPC9zdmc+DQo=");
+  background-position: 50%;
+  background-repeat: no-repeat;
+  background-size: 20px;
+  right: auto;
+  background-color: transparent;
+  width: 32px;
+  height: 36px;
+  cursor: pointer;
+  top: 0;
+}
+
+.layout_search_reset {
+  top: 6px;
+  right: 4px;
+  width: 24px;
+  height: 24px;
+  background-color: transparent;
+  opacity: .5;
+  cursor: pointer;
+}
+.layout_search_reset:hover {
+  opacity: 1;
+}
+
+.layout_search_active .layout_search_body {
+  width: 200px;
+  opacity: 1;
+}
+
+.layout_search_icon {
+  background: url("../gfx/search.png");
+  display: inline-block;
+  width: 30px;
+  height: 30px;
+  position: absolute;
+  top: 10px;
+  right: 10px;
+}
+
+.layout_search_text {
+  padding: 8px 6px 0;
+  box-sizing: border-box;
+}
+
+.layout_info {
+  margin: 20px 0;
+  padding: 0 20px;
+}
+
+.layout_info_about {
+  float: left;
+  width: 66.4%;
+  padding: 15px 0;
+}
+.layout_info_about p {
+  margin-right: 40px;
+}
+
+.layout_info_contact {
+  float: left;
+  width: 33%;
+  padding: 15px 0;
+}
+
+.layout_info {
+  padding: 0;
+}
+
+.layout_placards {
+  border: 1px solid #ddd;
+  border-width: 1px 0;
+  margin: 0 -20px;
+}
+
+.layout_placards_item {
+  float: left;
+  width: 33.333333333%;
+  font-size: 0;
+}
+
+.layout_placards_link {
+  border-right: 1px solid #ddd;
+  border-bottom: none;
+}
+
+.layout_placards_link_last {
+  border: none;
+}
+
+.layout_placards {
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  margin: 0;
+}
+
+.layout_inner_content {
+  padding: 20px 10px;
+}
+
+.layout_inner_content {
+  padding: 20px;
+}
+
+.layout_inner_content_sidebar {
+  margin-right: 30%;
+  overflow: hidden;
+  padding-right: 0;
+}
+
+.layout_sidebar {
+  width: 30%;
+  float: right;
+}
+
+.layout_body {
+  overflow: hidden;
+}
+
+.layout {
+  padding-top: 54px;
+}
+
+.layout_head {
+  top: 0;
+  position: fixed;
+  width: 100%;
+  z-index: 9999;
+}
+
+.layout_head {
+  transition: background-color 1s;
+  -moz-transition: background-color 1s;
+  -webkit-transition: background-color 1s;
+  -ms-transition: background-color 1s;
+}
+
+.scroll .layout_head {
+  background: rgba(255, 255, 255, 0.95);
+  box-shadow: 0 0 7px rgba(0, 0, 0, 0.2);
+}
+.scroll .layout_body {
+  min-height: 500px;
+}
+
+@supports (-webkit-backdrop-filter: none) or (backdrop-filter: none) {
+  .layout_head {
+    -webkit-backdrop-filter: blur(8px);
+  }
+
+  .scroll .layout_head {
+    background: rgba(255, 255, 255, 0.6);
+  }
+  .scroll .layout_menu_link {
+    text-shadow: 0 0 10px #fff;
+  }
+}
+body, html {
+  height: 100%;
+}
+
+.layout_middle,
+.layout_head_body,
+.layout_base {
+  position: relative;
+  min-height: 100%;
+}
+
+.layout_body {
+  min-height: 400px;
+}
+
+.layout_base {
+  padding-bottom: 220px;
+}
+
+.layout_footer {
+  margin-top: -230px;
+}
+
+.layout_inner_content {
+  padding-left: 0px;
+  padding-right: 0;
+}
+
+.layout_inner_content {
+  padding-left: 0px;
+}
+
+.layout_middle, .layout_head_body, .layout_base {
+  width: 980px;
+  padding-left: 20px;
+  padding-right: 20px;
+}
+
+.submenu {
+  padding: 5px 10px;
+}
+
+.submenu_link {
+  padding: 0 10px;
+}
+
+.submenu {
+  padding-left: 0px;
+  padding-right: 0;
+}
+
+.submenu li:first-child {
+  margin-left: -10px;
+}
+
+.sidemenu {
+  list-style: none;
+  margin: 20px 0 30px 25px;
+  padding: 0 10px;
+  font-size: 12pt;
+  line-height: 26px;
+  border-bottom: none;
+  border-left: 1px solid #eee;
+}
+
+.sidemenu_item {
+  display: block;
+}
+
+.sidemenu_link {
+  display: block;
+  padding: 7px 5px;
+}
+.sidemenu_link:hover {
+  text-decoration: underline;
+}
+
+.sidemenu_sub {
+  list-style: none;
+  padding-left: 15px;
+}
+
+.scroll .sidemenu {
+  position: fixed;
+  top: 56px;
+}
+
+#poster {
+  display: block;
+  height: 310px;
+  background: #333;
+  margin-top: 20px;
+  position: relative;
+}
+
+#poster_loader {
+  background: #000;
+  color: #FFFFFF;
+  left: 50%;
+  margin-left: -25px;
+  position: absolute;
+  text-align: center;
+  top: 150px;
+  width: 50px;
+  height: 24px;
+  line-height: 22px;
+}
+
+#poster {
+  background: #333 url("../gfx/poster_bg.png");
+  cursor: pointer;
+  overflow: hidden;
+}
+
+#poster_left {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 48%;
+  overflow: hidden;
+  margin-left: -50%;
+  background: 100% 0px no-repeat;
+}
+
+#poster_right {
+  position: absolute;
+  top: 0;
+  right: 0;
+  height: 100%;
+  width: 48%;
+  overflow: hidden;
+  margin-right: -50%;
+  background: 0 0px no-repeat;
+}

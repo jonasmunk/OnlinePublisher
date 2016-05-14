@@ -1,0 +1,117 @@
+@include if {
+	.layout_placards {
+		list-style: none;
+		background: #f8f8f9;
+		margin: 0 -10px;
+		padding: 0;
+		overflow: hidden;
+		border-top: 1px solid #ddd;
+  
+    strong {
+    	display: block;
+    	font-size: 30px;
+    	line-height: 30px;
+    	font-weight: normal;
+    	color: #89a;
+    	padding: 8px 0px 10px;
+    	font-weight: 300;
+    	white-space: nowrap;
+    	width: 100%;
+    	text-indent: 10px;
+    	overflow: hidden;
+    	text-overflow: ellipsis;
+    }
+
+    em {
+    	font-style: normal;
+    	color: #333537;    
+    }
+  
+	}
+
+	.layout_placards_link {
+	  	display: block;
+	  	text-decoration: none;
+	  	color: #333;
+	  	font-size: 0;
+		border-bottom: 1px solid #ddd;
+  
+	    &:hover {
+			background: #f0f0f3;
+	    }
+
+	    &:focus {
+			outline-offset: -7px;
+	    }
+  
+	}
+
+	.layout_placards_text {
+		display: block;
+		font-size: 18px;
+		line-height: 22px;
+		padding: 5px 20px 0 150px;
+		height: 120px;
+		color: #567;
+		font-weight: 300;    
+		background: url('../gfx/graphics.png') 0 0 no-repeat;
+
+	}
+
+	@include retina {
+    .layout_placards_text {
+  		background-image: url('../gfx/graphics_2x.png');
+  		background-size: 400px 907px;
+    }
+	}
+
+	.layout_placards_text_hui
+	{
+		background-position: -44px -420px;
+	}
+
+	.layout_placards_text_editor
+	{
+		background-position: -40px -5px;
+	}
+
+	.layout_placards_text_objects
+	{
+		background-position: -44px -200px;
+	}
+}
+
+
+@include if((width: 760px)) {
+	.layout_placards
+	{
+		border: 1px solid #ddd;
+		border-width: 1px 0;
+    margin: 0 -20px;
+	}
+
+	.layout_placards_item
+	{
+		float: left;
+		width: 33.333333333%;
+		font-size: 0;
+	}
+	
+	.layout_placards_link {
+	  	border-right: 1px solid #ddd;
+		border-bottom: none;
+	}
+
+	.layout_placards_link_last {
+		border: none;
+	}
+}
+
+@include if((width: 980px)) {
+	.layout_placards
+	{
+		border: 1px solid #ddd;
+		border-radius: 5px;
+		margin: 0;
+	}  
+}

@@ -1,0 +1,74 @@
+@include when {
+
+  .layout_content
+  {
+    padding: 20px 10px 10px;
+    
+    .part_section_header-1 {
+      padding-right: 60px;
+    }
+  }
+
+  .layout_languages {
+    position: absolute;
+    right: 10px;
+    margin-top: 15px;
+    z-index: 1;
+  }
+
+  .layout_language {
+  	color: #333;
+  	text-decoration: none;
+  	font-size: 12pt;
+  	display: inline-block;
+  	background: url('../gfx/flags.png') 0 0 no-repeat;
+  	line-height: 39px;
+  	height: 39px;
+  	padding-left: 39px;
+  }
+  
+  .layout_language_text {
+    display: none;
+  }
+
+  .layout_language_da {
+  	background-position: 0 -39px;
+  }
+  
+}
+
+@include when(500px) {
+  .layout_languages {
+    right: 10px;
+    top: 18px;
+    margin: 0;
+    font-size: 0;
+  }
+
+  .layout_content
+  {
+    padding: 20px 20px 10px;
+  }
+}
+
+@include when(600px) {
+  
+  .layout_content
+  {
+  	padding: 40px;
+  	max-width: 900px;
+  	margin: 0 auto;
+  	position: relative;
+  }
+}
+
+@include when(960px) {
+  .layout_languages {
+    right: 50%;
+    margin-right: -480px;
+  }
+  .layout_content
+  {
+  	padding: 60px 40px;
+  }
+}

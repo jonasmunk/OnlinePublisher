@@ -1,0 +1,79 @@
+@import url(https://fonts.googleapis.com/css?family=Roboto+Slab:400,300,100,700);
+.common_link {
+  color: #ddd;
+  color: rgba(0, 0, 0, 0.1); }
+  .common_link_text {
+    color: #0D589C; }
+  .common_link:hover, .common_link_text:hover {
+    color: #2D8BE0; }
+
+.part_header {
+  color: #333;
+  font-weight: normal;
+  font-family: "Roboto Slab", Georgia, "Palatino", "Book Antiqua", serif; }
+  .part_header-1 {
+    font-size: 42px;
+    font-weight: 100; }
+  .part_header-2 {
+    font-size: 32px;
+    font-weight: 300; }
+  .part_header-3 {
+    font-size: 16px;
+    font-weight: bold; }
+  .part_header-4 {
+    font-size: 16px;
+    font-weight: bold; }
+  .part_header-5 {
+    font-size: 16px;
+    font-weight: bold; }
+  .part_header-6 {
+    font-size: 16px;
+    font-weight: bold; }
+
+.part_horizontalrule {
+  border: none;
+  border-bottom: solid 1px #eee;
+  margin: 10px -20px; }
+
+.part_text {
+  font-family: "Roboto Slab", Georgia, "Palatino", "Book Antiqua", serif;
+  font-size: 16px; }
+
+.part_listing {
+  font-family: "Roboto Slab", Georgia, "Palatino", "Book Antiqua", serif;
+  font-size: 16px; }
+  .part_listing_item {
+    color: #ccc; }
+  .part_listing_text {
+    color: #333; }
+
+.bio {
+  font-family: 'Open Sans',sans-serif;
+  font-weight: 200;
+  list-style: none;
+  color: #999;
+  margin: 0;
+  padding: 0; }
+  .bio_event {
+    line-height: 20px;
+    color: #333;
+    margin-bottom: 10px; }
+  .bio_time {
+    font-weight: 200;
+    margin-right: 30px; }
+    .bio_time_divider {
+      font-weight: 200;
+      color: #aaa;
+      font-size: 12px; }
+  .bio_title {
+    font-weight: 400; }
+  .bio_place {
+    margin-left: 10px; }
+  .bio_points {
+    list-style: none;
+    margin: 0 0 10px 110px;
+    font-size: 10pt; }
+  .bio_point {
+    margin: 0; }
+    .bio_point strong {
+      font-weight: 600; }

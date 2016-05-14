@@ -1,0 +1,348 @@
+.header {
+  margin: 0;
+  max-width: 960px;
+  margin: 0 auto;
+  padding: 10px 0 0;
+  position: relative;
+}
+
+.header_logo {
+  display: block;
+  color: inherit;
+  text-decoration: none;
+}
+
+.header_title {
+  font-family: "Lora", Georgia, "Book Antiqua", "Palatino", Times, serif;
+  font-weight: normal;
+  font-style: italic;
+  margin: 0;
+  text-align: center;
+  font-size: 42px;
+  line-height: 1;
+  text-rendering: geometricPrecision;
+}
+
+.header_job {
+  font-family: "Lora", Georgia, "Book Antiqua", "Palatino", Times, serif;
+  font-weight: normal;
+  font-style: italic;
+  text-align: center;
+  margin: 0 0 15px;
+  font-size: 18px;
+  line-height: 1em;
+  letter-spacing: 1px;
+  color: #999;
+}
+
+.header_menu {
+  display: block;
+  margin: 0 10px;
+  padding: 5px 0;
+  text-align: center;
+  border-top: 1px solid #eee;
+  border-bottom: 1px solid #eee;
+}
+
+.header_menu_item {
+  display: inline-block;
+}
+
+.header_menu_link {
+  display: inline-block;
+  color: #6d6671;
+  height: 30px;
+  line-height: 32px;
+  padding: 0 5px;
+  text-decoration: none;
+  font-size: 16px;
+  position: relative;
+  font-weight: normal;
+}
+.header_menu_link:hover {
+  color: #AF74CC;
+}
+.header_menu_link-selected {
+  color: #733392;
+  font-weight: 600;
+}
+
+@media screen and (min-width: 600px) {
+  .header_title {
+    font-size: 52px;
+  }
+
+  .header_job {
+    font-size: 24px;
+  }
+
+  .header_menu_link {
+    padding: 0 15px;
+    font-size: 18px;
+  }
+}
+@media screen and (min-width: 760px) {
+  .header {
+    padding-top: 50px;
+  }
+
+  .header_menu {
+    padding-left: 265px;
+    text-align: left;
+    border-top: none;
+    margin: 0;
+  }
+
+  .header_logo {
+    position: absolute;
+    left: 40px;
+    top: 20px;
+  }
+
+  .header_title {
+    font-size: 42px;
+  }
+
+  .header_job {
+    font-size: 20px;
+    margin: 6px 0 0;
+  }
+
+  .header_menu_link {
+    font-size: 20px;
+    font-weight: 200;
+    height: 50px;
+    line-height: 52px;
+    padding: 0 15px;
+  }
+  .header_menu_link-selected {
+    font-weight: 700;
+  }
+  .header_menu_link-selected:after {
+    content: '';
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    left: 50%;
+    bottom: 0;
+    position: absolute;
+    background: #733392;
+    margin: 0 0 -8px -3px;
+  }
+}
+@media screen and (min-width: 960px) {
+  .header_logo {
+    left: 30px;
+  }
+
+  .header {
+    padding-top: 70px;
+  }
+
+  .header_menu_link {
+    padding: 0 20px;
+  }
+
+  .header_menu {
+    padding-left: 300px;
+  }
+
+  .header_title {
+    font-size: 48px;
+    margin-top: 10px;
+  }
+
+  .header_job {
+    font-size: 24px;
+    margin: 9px 0 0;
+  }
+}
+.layout_content {
+  padding: 20px 10px 10px;
+}
+.layout_content .part_section_header-1 {
+  padding-right: 60px;
+}
+
+.layout_languages {
+  position: absolute;
+  right: 10px;
+  margin-top: 15px;
+  z-index: 1;
+}
+
+.layout_language {
+  color: #333;
+  text-decoration: none;
+  font-size: 12pt;
+  display: inline-block;
+  background: url("../gfx/flags.png") 0 0 no-repeat;
+  line-height: 39px;
+  height: 39px;
+  padding-left: 39px;
+}
+
+.layout_language_text {
+  display: none;
+}
+
+.layout_language_da {
+  background-position: 0 -39px;
+}
+
+@media screen and (min-width: 500px) {
+  .layout_languages {
+    right: 10px;
+    top: 18px;
+    margin: 0;
+    font-size: 0;
+  }
+
+  .layout_content {
+    padding: 20px 20px 10px;
+  }
+}
+@media screen and (min-width: 600px) {
+  .layout_content {
+    padding: 40px;
+    max-width: 900px;
+    margin: 0 auto;
+    position: relative;
+  }
+}
+@media screen and (min-width: 960px) {
+  .layout_languages {
+    right: 50%;
+    margin-right: -480px;
+  }
+
+  .layout_content {
+    padding: 60px 40px;
+  }
+}
+.layout_footer {
+  text-align: center;
+  padding: 40px 0;
+  background: #fff;
+}
+
+.layout_footer_link {
+  display: inline-block;
+  width: 149px;
+  height: 74px;
+  background: url("../gfx/humanise.png") 50% 50% no-repeat;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  background-size: cover;
+}
+
+.layout_footer_text {
+  position: absolute;
+  left: -1000px;
+  top: -1000px;
+}
+
+@media screen and (min-width: 600px) {
+  .layout_footer_link {
+    display: inline-block;
+    width: 300px;
+    height: 150px;
+  }
+}
+.humanise {
+  height: 0px;
+  background: url("../gfx/hand.jpg") 50% 50%;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  background-size: cover;
+  overflow: hidden;
+  -moz-transition: height 1s cubic-bezier(0.48, 0, 0.21, 1);
+  -o-transition: height 1s cubic-bezier(0.48, 0, 0.21, 1);
+  -webkit-transition: height 1s cubic-bezier(0.48, 0, 0.21, 1);
+  transition: height 1s cubic-bezier(0.48, 0, 0.21, 1);
+}
+.humanise.visible {
+  height: 600px;
+}
+.humanise p {
+  margin-bottom: 20px;
+}
+.humanise a {
+  color: #679;
+  text-decoration: none;
+}
+
+.humanise_body {
+  font-family: 'Gloria Hallelujah', cursive;
+  padding: 30px;
+  font-size: 1.8em;
+  line-height: 1.5em;
+}
+
+section, header, p, header, footer, figure {
+  display: block;
+  margin: 0;
+}
+
+html {
+  font-size: 100%;
+}
+
+body {
+  font-size: 87.5%;
+  margin: 0;
+  padding: 0;
+  font-family: "Merriweather", Georgia, "Book Antiqua", "Palatino", Times, serif;
+  font-weight: 300;
+  background: #fff;
+  -moz-transition: background-color 0.5s ease-out;
+  -o-transition: background-color 0.5s ease-out;
+  -webkit-transition: background-color 0.5s ease-out;
+  transition: background-color 0.5s ease-out;
+}
+body.is-dark {
+  background-color: #000;
+}
+
+@media screen and (max-width: 700px) {
+  .document_row_container {
+    margin: 0 !important;
+  }
+
+  .document_row,
+  .document_row_body,
+  .document_column {
+    display: block;
+  }
+
+  .document_column {
+    width: auto !important;
+    padding: 0 !important;
+  }
+
+  .part_image_image {
+    max-width: 100%;
+    height: auto;
+  }
+
+  .part_section_image {
+    float: none !important;
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+  }
+}
+@media screen and (min-width: 700px) {
+  .document_row {
+    display: table;
+    width: 100%;
+  }
+
+  .document_row_body {
+    display: table-row;
+  }
+
+  div.document_column {
+    display: table-cell;
+    vertical-align: top;
+  }
+}

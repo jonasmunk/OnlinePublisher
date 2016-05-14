@@ -1,0 +1,124 @@
+.common_font
+{
+	font-family: Georgia,"Book Antiqua", "Palatino",Times,serif;
+}
+
+a.common
+{
+	color: #ddd;
+	cursor: pointer;
+}
+
+a.common span
+{
+	color: #0073b9;
+}
+	
+a.common:hover, a.common:hover span
+{
+	color: #005aae;
+}
+
+
+p.common, ul.common
+{
+	font-family: Georgia,"Book Antiqua", "Palatino",Times,serif;
+	font-size: 11pt;
+	line-height: 160%;
+	text-align: justify;
+}
+
+.common_button {
+    display: inline-block;
+    -webkit-appearance: none;
+    height: 32px;
+    font-family: inherit;
+	font-size: 16px;
+    background: #eee;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+}
+
+.common_input {
+	display: inline-block;
+	-webkit-appearance: none;
+    height: 24px;
+    border: 1px solid #ccc;
+    font-family: inherit;
+	font-size: 16px;
+}
+
+.part_header
+{
+	color: #000;
+	font-family: Georgia,"Book Antiqua", "Palatino",Times,serif;
+	font-weight: normal;
+}
+
+.font_playfair .part_header {
+	font-family: 'Playfair Display', Georgia, "Book Antiqua", "Palatino", Times, serif;
+}
+
+.part_header-1 {
+	font-size: 48pt;
+	line-height: 1.1;
+}
+
+.part_header-2 {
+	font-size: 32pt;
+	line-height: 1.1;
+}
+
+.part_header-3 {
+	font-size: 24pt;
+	line-height: 1.1;
+}
+
+.part_header-4 {
+	font-size: 18pt;
+	line-height: 1.1;
+}
+
+.part_horizontalrule {
+	border-bottom: 1px solid #ddd;
+}
+
+.part_text
+{
+	font-size: 16px;
+}
+
+.part_listing {
+	font-size: 14px;
+	color: #333;
+}
+
+.part_listing_first, textarea.part_listing
+{
+	font-size: 16px;
+}
+
+.part_map_static_content {
+	-webkit-filter: saturate(1.5) contrast(1.5) brightness(1.5);
+}
+
+.part_map_static_pin {
+	z-index: 1;
+}
+
+.part_movie_text_inner {
+	background: #000;
+	background: rgba(0,0,0,.6);
+	color: #fff;
+	padding: 0 10px;
+	font-family: 'Playfair Display', Georgia,"Book Antiqua", "Palatino",Times,serif;
+    font-weight: normal;
+	line-height: 40px;
+	display: inline-block;
+	font-size: 32px;
+	height: 44px;
+}
+
+.font_playfair .part_movie_text_inner {
+	font-family: 'Playfair Display', Georgia,"Book Antiqua", "Palatino",Times,serif;
+}

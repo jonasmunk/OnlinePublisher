@@ -1,0 +1,36 @@
+@include when {
+  .layout_footer
+  {
+  	text-align: center;
+  	padding: 40px 0;
+    background: #fff;
+  }
+
+  .layout_footer_link
+  {
+  	display: inline-block;
+		width: 149px;
+		height: 74px;
+  	background: url('../gfx/humanise.png') 50% 50% no-repeat;
+		-webkit-background-size: cover;
+		-moz-background-size: cover;
+		background-size: cover;	
+  }
+
+  .layout_footer_text
+  {
+  	position: absolute;
+  	left: -1000px;
+  	top: -1000px;
+  }
+}
+
+@include when (600px) {
+
+  .layout_footer_link
+  {
+  	display: inline-block;
+  	width: 300px;
+  	height: 150px;
+  }
+}

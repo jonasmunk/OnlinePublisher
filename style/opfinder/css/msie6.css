@@ -1,0 +1,14 @@
+div.case_contact, div.case_contact div, div.case_contact div div
+{
+	background-image: url('../gfx/info_box.gif');
+}
+
+div.case_content
+{
+	background: none;
+}
+
+div.part_imagegallery
+{
+	zoom: 1;
+}

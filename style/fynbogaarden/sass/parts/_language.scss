@@ -1,0 +1,99 @@
+$language-size: 40px;
+
+@include if((target: inline)) {
+  .language {
+    text-align: right;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 10px;
+    padding-top: 674 / 1536 * 100%;
+    font-size: 0;
+    margin-top: -40px;
+  }
+
+  .language_link {
+    font-size: 14px;
+    color: #635648;
+    text-decoration: none;
+    white-space: nowrap;
+    margin-left: 10px;
+    display: inline-block;
+    background: #fff;
+    background: rgba(255,255,255,.8);
+    border-radius: 15px;
+    padding-right: 10px;
+    line-height: 30px;
+    
+    &:before {
+      content: '';
+      display: inline-block;
+      width: 30px;
+      height: 30px;
+      vertical-align: bottom;
+      margin-right: 5px;
+    }
+    
+  }
+
+  .language_link-english {
+    &:before {
+      background: url('../gfx/uk.op.svg');
+    }
+  }
+
+  .language_link-danish {
+    &:before {
+      background: url('../gfx/dk.op.svg');
+    }
+  }
+
+  .language_link-german {
+    &:before {
+      background: url('../gfx/de.op.svg');
+    }
+  }
+}
+
+@include if((width: 769px, target: inline)) {
+  .language {
+    position: static;
+    padding-top: 0;
+    margin: 0;
+    white-space: nowrap;
+  }
+
+  .language_link {
+    font-size: 24px;
+    border-radius: 0;
+    line-height: $language-size;
+    padding: 0;
+    
+    &:before {
+      width: $language-size;
+      height: $language-size;
+    }
+    
+  }
+}
+
+@include if((target: msie_lt9)) {
+
+  .language_link-english {
+    &:before {
+      background: url('../gfx/uk.png');
+    }
+  }
+
+  .language_link-danish {
+    &:before {
+      background: url('../gfx/dk.png');
+    }
+  }
+
+  .language_link-german {
+    &:before {
+      background: url('../gfx/de.png');
+    }
+  }
+}

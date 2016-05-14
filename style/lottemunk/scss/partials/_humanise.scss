@@ -1,0 +1,35 @@
+@include when {
+
+  .humanise
+  {
+  	height: 0px;
+  	background: url('../gfx/hand.jpg') 50% 50%;
+  	-webkit-background-size: cover;
+  	-moz-background-size: cover;
+  	background-size: cover;
+  	overflow: hidden;
+
+  	@include transition(height 1s cubic-bezier(0.48, 0, 0.21, 1));
+
+    &.visible {
+    	height: 600px;
+    }
+    
+    p {
+    	margin-bottom: 20px;
+    }
+
+    a {
+    	color: #679;
+    	text-decoration: none;
+    }
+  }
+
+  .humanise_body
+  {
+  	font-family: 'Gloria Hallelujah', cursive;
+  	padding: 30px;
+  	font-size: 1.8em;
+  	line-height: 1.5em;
+  }
+}

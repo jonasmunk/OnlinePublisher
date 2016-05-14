@@ -1,0 +1,68 @@
+@include if {
+  .poster {
+    padding-bottom: 120px;
+  }
+  
+  .poster_body {
+    height: 120px;
+    position: absolute;
+    left: 0;
+    right: 0;
+    background: #eee 50% 50%;
+    background-size: cover;
+    overflow: hidden;
+  }
+
+  .poster_body-pano {
+    background-image: url('../gfx/pano.jpg');
+  }
+
+  .poster_body-zen {
+    background-image: url('../gfx/zen.jpg');
+  }
+
+  .poster_body-idyl {
+    background-image: url('../gfx/idyl.jpg');
+  }
+}
+
+@include if((width: 500px)) {
+
+  .poster {
+    padding-bottom: 200px;
+  }
+  .poster_body {
+    height: 200px;
+  }
+}
+
+@include if((width: 700px)) {
+
+  .poster {
+    padding-bottom: 280px;
+  }
+  .poster_body {
+    height: 280px;
+  }
+}
+
+@include if((width: 960px)) {
+
+  .poster {
+    padding-bottom: 380px;
+    margin: 40px 0;
+  }
+  .poster_body {
+    height: 380px;
+  }
+}
+
+@include if((width: 1400px)) {
+
+  .poster {
+    padding-bottom: 500px;
+  }
+  .poster_body {
+    height: 500px;
+  }
+}

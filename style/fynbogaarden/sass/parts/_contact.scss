@@ -1,0 +1,49 @@
+@include if((target:async)) {
+
+  .contact {
+    max-width: 360px;
+    margin: 0 auto;
+    text-align: center;
+    
+    &:before {
+      content: '';
+      display: block;
+      background: url('../gfx/curly_top.svg');
+      padding-bottom: 33 / 516 * 100%;
+      background-size: cover;
+      margin-bottom: 10px;
+    }
+
+    &:after {
+      content: '';
+      display: block;
+      background: url('../gfx/curly_bottom.svg');
+      padding-bottom: 22 / 444 * 100%;
+      background-size: cover;
+      margin-top: 10px;
+    }
+  }
+  
+  .contact_phone {
+    font-size: 32px;
+    font-family: Georgia;
+  }
+  
+  .contact_phone_prefix {
+    color: #bbb;
+  }
+  
+  .contact_mail {
+    font-size: 16px;
+    color: #bbb;
+    margin-top: 10px;
+  }
+  
+  .contact_phone_link,
+  .contact_mail_link {
+    color: $link-color;
+    text-decoration: none;
+    padding: 2px 2px;
+    margin: 0 -2px;
+  }
+}
