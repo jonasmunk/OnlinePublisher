@@ -17,6 +17,7 @@ $recipe = array(
 	'quality' => Request::getInt('quality',90),
 	'method' => Request::getString('method'),
 	'format' => Request::getString('format'),
+	'background' => Request::getString('background'),
 	'filters' => array()
 );
 if (!$recipe['method']) {
@@ -26,7 +27,9 @@ $parameters = Request::getParameters();
 foreach ($parameters as $parameter) {
 	$name = $parameter['name'];
 	$value = $parameter['value'];
-	if ($name === 'sharpen' && $value==='true') {
+	if ($name === 'sharpen') {
+		$recipe['filters'][] = array('name' => 'sharpen','amount' => ($value==='true' ? 1 : floatval($value)));
+	} else if ($name === 'sharpen') {
 		$recipe['filters'][] = array('name' => 'sharpen');
 	} else if ($name === 'greyscale' && $value==='true') {
 		$recipe['filters'][] = array('name' => 'greyscale');
@@ -69,8 +72,8 @@ if (file_exists($cache)) {
 			$recipe['destination'] = $cache;
 			ImageTransformationService::transform($recipe);
       if (file_exists($cache)) {
-  			ImageTransformationService::sendFile($cache,$recipe['format']);                
-    	} else if (ConfigurationService::isDebug()) {
+  			ImageTransformationService::sendFile($cache,$recipe['format']);
+      } else if (ConfigurationService::isDebug()) {
         Response::redirect(getPlaceholder($recipe,$row));
       } else {
     		Response::internalServerError('Unable to transform image');

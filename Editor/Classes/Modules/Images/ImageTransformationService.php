@@ -9,7 +9,7 @@ if (!isset($GLOBALS['basePath'])) {
 }
 
 class ImageTransformationService {
-  
+
   static function loadImage($path,$ext=null) {
     if (file_exists($path) && is_readable($path)) {
       if ($ext==null) {
@@ -45,7 +45,7 @@ class ImageTransformationService {
     }
     return null;
   }
-  
+
   static function getImageInfo($path) {
     if (!file_exists($path)) {
       return null;
@@ -56,7 +56,7 @@ class ImageTransformationService {
     }
     return array('width'=>$size[0],'height'=>$size[1],'mime'=>$size['mime']);
   }
-  
+
   static function fitInside($size,$box) {
     // If the width is one to focus on
     if ($size['width']/$size['height'] > $box['width']/$box['height']) {
@@ -69,7 +69,7 @@ class ImageTransformationService {
     }
     return array('width'=>$width,'height'=>$height);
   }
-  
+
   static function cropInside($size,$box) {
     $sizeRatio = $size['width'] / $size['height'];
     $boxRatio = $box['width'] / $box['height'];
@@ -91,7 +91,7 @@ class ImageTransformationService {
 
   static function blur(&$image,$level=1) {
     if (true) {
-      for ($i=0; $i < $level; $i++) { 
+      for ($i=0; $i < $level; $i++) {
         imagefilter($image,IMG_FILTER_GAUSSIAN_BLUR);
       }
     } else {
@@ -100,23 +100,38 @@ class ImageTransformationService {
       ImageConvolution($image, $gaussian, 16, 0);
     }
   }
-  
-  static function sharpen(&$image) {
-    $sharpenMatrix = array(array(-1,-1,-1),array(-1,16,-1),array(-1,-1,-1));
-    $divisor = 8;
+
+  static function sharpen(&$image,$amount,$width,$height) {
+    $cols = [];
+    // TODO Hack to fix transparent images that get black line on top
+    // Save the first row
+    for ($i=0; $i < $width; $i++) {
+      $cols[$i] = ImageColorAt($image, $i, 0);
+    }
+    if (!$amount) {
+      $amount = 1;
+    }
+    $amount = $amount * -1;
+    $sharpenMatrix = array(array($amount,$amount,$amount),array($amount,16,$amount),array($amount,$amount,$amount));
+    $divisor = array_sum(array_map('array_sum', $sharpenMatrix));
     $offset = 0;
     imageconvolution($image, $sharpenMatrix, $divisor, $offset);
+    // Re-apply the first row
+    for ($i=0; $i < count($cols); $i++) {
+      ImageSetPixel($image, $i, 0, $cols[$i]);
+    }
   }
-  
+
   static function applyFilter($image,$filter,$width,$height) {
     if ($filter['name']=='blur') {
       ImageTransformationService::blur($image,$filter['amount']);
     }
     else if ($filter['name']=='sharpen') {
-      ImageTransformationService::sharpen($image);
+      $amount = isset($filter['amount']) ? $filter['amount'] : 1;
+      ImageTransformationService::sharpen($image,$amount,$width,$height);
     }
     else if ($filter['name']=='greyscale') {
-      imagefilter($image,IMG_FILTER_GRAYSCALE);     
+      imagefilter($image,IMG_FILTER_GRAYSCALE);
     }
     else if ($filter['name']=='contrast') {
       imagefilter($image,IMG_FILTER_CONTRAST,$filter['amount']);
@@ -125,12 +140,12 @@ class ImageTransformationService {
       imagefilter($image,IMG_FILTER_BRIGHTNESS,$filter['amount']);
     }
     else if ($filter['name']=='border') {
-      for ($i=0; $i < $filter['width']; $i++) { 
+      for ($i=0; $i < $filter['width']; $i++) {
         imagerectangle($image,$i,$i,$width-$i,$height-$i,imagecolorallocate($image,255,255,255));
       }
     }
   }
-  
+
   static function transform($recipe) {
     $image = ImageTransformationService::loadImage($recipe['path']);
     if ($image==null) {
@@ -146,6 +161,16 @@ class ImageTransformationService {
       $scale = @$recipe['scale'];
       $left = 0;
       $top = 0;
+
+      $format = null;
+      if (isset($recipe['format'])) {
+        $format = $recipe['format'];
+      } else if (isset($recipe['destination'])) {
+        $format = FileSystemService::getFileExtension($recipe['destination']);
+      } else {
+        $format = FileService::mimeTypeToExtension($originalInfo['mime']);
+      }
+
       if ($scale) {
         //Log::debug($recipe);
         $finalWidth = round($originalInfo['width'] * $scale / 100);
@@ -178,9 +203,17 @@ class ImageTransformationService {
         Log::debug($recipe);
         return;
       }
-      $thumb = @imagecreatetruecolor ($finalWidth, $finalHeight);
-      $white = @imagecolorallocate($thumb, 255, 255, 255);
-      @imagefill($thumb,0,0,$white);
+      $thumb = imagecreatetruecolor ($finalWidth, $finalHeight);
+      if ($format=='png' && $recipe['background'] == 'transparent') {
+        imagesavealpha($image, true);
+        imagealphablending($thumb, false);
+        imagesavealpha($thumb, true);
+        $transparent = imagecolorallocatealpha($thumb, 255, 255, 255, 127);
+        imagefilledrectangle($thumb, 0, 0, $finalWidth, $finalHeight, $transparent);
+      } else {
+        $white = @imagecolorallocate($thumb, 255, 255, 255);
+        @imagefill($thumb,0,0,$white);
+      }
       @ImageCopyResampled($thumb, $image, 0, 0, $left, $top, $finalWidth, $finalHeight, $originalWidth, $originalHeight);
       @imagedestroy($image);
       $image = $thumb;
@@ -191,13 +224,6 @@ class ImageTransformationService {
       foreach ($filters as $filter) {
         ImageTransformationService::applyFilter($image,$filter,$finalWidth, $finalHeight);
       }
-    }
-    if (isset($recipe['format'])) {
-      $format = $recipe['format'];
-    } else if (isset($recipe['destination'])) {
-      $format = FileSystemService::getFileExtension($recipe['destination']);
-    } else {
-      $format = FileService::mimeTypeToExtension($originalInfo['mime']);
     }
     if (!isset($recipe['destination'])) {
       //header("Content-Length: " . filesize($basePath.$cache));
@@ -223,12 +249,12 @@ class ImageTransformationService {
     }
     @imagedestroy($image);
   }
-    
+
   static function _memoryCheck ($x, $y, $rgb=3) {
     $maxmem = 32*1024*1024;
     return ( $x * $y * $rgb * 1.7 < $maxmem - memory_get_usage() );
   }
-    
+
   static function optimizeFile($file) {
     return;
     $output = [];
@@ -237,7 +263,7 @@ class ImageTransformationService {
     exec('jpegoptim "'.$file.'"',$output);
     Log::debug($output);
   }
-      
+
   static function sendFile($path,$mimeType) {
     if (!file_exists($path)) {
       error_log('Cannot send image, path does not exist: '.$path);
@@ -268,7 +294,7 @@ class ImageTransformationService {
     header('Date: '.gmdate('D, d M Y H:i:s') . ' GMT');
     readfile($path);
   }
-  
+
   static function buildCachePath($id,$recipe) {
     global $basePath;
     $path = $basePath.'local/cache/images/'.$id;
@@ -286,6 +312,9 @@ class ImageTransformationService {
     }
     if ($recipe['quality']) {
       $path.='_quality-'.$recipe['quality'];
+    }
+    if ($recipe['background']) {
+      $path.='_background-'.$recipe['background'];
     }
     foreach ($recipe['filters'] as $filter) {
       $path.='_'.$filter['name'];
