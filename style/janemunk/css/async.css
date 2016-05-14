@@ -79,11 +79,18 @@
     font-size: 50px; } }
 body.exhibit {
   margin: 0;
-  background: url("../gfx/exhibition/background_light.jpg") 50%;
   background-size: cover;
   -webkit-user-select: none;
   -webkit-tap-highlight-color: transparent;
   font-family: 'Raleway'; }
+  body.exhibit-concrete {
+    background-image: url("../gfx/exhibition/background_concrete.jpg"); }
+    body.exhibit-concrete.is-wide .exhibit_wall {
+      margin-top: -20%; }
+  body.exhibit-simple {
+    background-image: url("../gfx/exhibition/background_simple.jpg"); }
+  body.exhibit-light {
+    background-image: url("../gfx/exhibition/background_light.jpg"); }
 
 .exhibit_spaces {
   position: absolute;
@@ -176,7 +183,6 @@ body.exhibit {
     height: 100%;
     display: inline-block; }
 .exhibit_painting {
-  background-color: #eee;
   background-size: contain;
   background-repeat: no-repeat;
   background-position: 50%;

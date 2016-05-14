@@ -1,7 +1,8 @@
 (function(_) {
 
   var exhibit = {
-    space : 'light',
+    space : 'concrete',
+
     init : function() {
       var self = this;
       _.on(_.find('.js-spaces'),'tap',function(e) {
@@ -10,10 +11,10 @@
         if (option) {
           e.stop();
           var nw = option.getAttribute('data');
-          hui.cls.remove(document.body,self.space);
-          hui.cls.add(document.body,nw);
+          hui.cls.remove(document.body,'exhibit-' + self.space);
+          hui.cls.add(document.body,'exhibit-' + nw);
           self.space = nw;
-          var x = _.findAll('.spaces_option');
+          var x = _.findAll('.js-spaces-option');
           for (var i = 0; i < x.length; i++) {
             _.cls.remove(x[i],'is-selected');
           }
@@ -200,19 +201,27 @@
     },
     show : function(options) {
       if (this.busy) {return;}
+      var self = this;
       this.busy = true;
       this._reset();
       var src = this.source = options.src;
       var bg = _.style.get(src,'background-image');
+      var big = src.getAttribute('data-full');
       _.style.set(this.inner,{
         backgroundImage : bg
       });
+      var img = new Image();
+      img.onload = function() {
+        _.style.set(self.inner,{
+          backgroundImage : 'url(' + big + ')'
+        });
+      }
+      img.src = big;
       this._setViewerSize();
       var element = this.element;
       this.inner.style.transform = '';
       src.style.opacity = '0';
       _.cls.add(element,'is-small');
-      var self = this;
       window.setTimeout(function() {
         _.cls.remove(element,'is-small');
         _.cls.add(element,'is-full');
@@ -245,8 +254,8 @@
     exhibit.init();
   });
 
-  _.on(_.find('.paintings'),'tap',function(ev) {
-    if (_.cls.has(ev.target,'painting')) {
+  _.on(_.find('.exhibit_paintings'),'tap',function(ev) {
+    if (_.cls.has(ev.target,'exhibit_painting')) {
       viewer.show({src:ev.target});
     }
   })

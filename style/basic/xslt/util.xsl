@@ -128,6 +128,30 @@
 	</xsl:choose>
 </xsl:template>
 
+<xsl:template name="util:link-url">
+  <xsl:param name="node"/>
+	<xsl:choose>
+		<xsl:when test="$node/@path and $preview='false'">
+			<xsl:value-of select="$navigation-path"/><xsl:value-of select="$node/@path"/>
+		</xsl:when>
+		<xsl:when test="$node/@page">
+			<xsl:value-of select="$navigation-path"/>?id=<xsl:value-of select="$node/@page"/>
+		</xsl:when>
+		<xsl:when test="$node/@page-reference">
+			<xsl:value-of select="$navigation-path"/>?id=<xsl:value-of select="$node/@page-reference"/>
+		</xsl:when>
+		<xsl:when test="$node/@url">
+			<xsl:attribute name="href"><xsl:value-of select="$node/@url"/></xsl:attribute>
+		</xsl:when>
+		<xsl:when test="$node/@file">
+			<xsl:value-of select="$navigation-path"/>?file=<xsl:value-of select="$node/@file"/><xsl:if test="$node/@target='_download'">&amp;download=true</xsl:if>
+		</xsl:when>
+		<xsl:when test="$node/@email">
+			mailto:<xsl:value-of select="$node/@email"/>
+		</xsl:when>
+	</xsl:choose>
+</xsl:template>
+
 
 
 
