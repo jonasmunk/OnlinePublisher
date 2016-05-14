@@ -1,11 +1,11 @@
 module.exports = function(grunt) {
 
   var clients = {};
-  
+
   (function() {
     var dev = grunt.file.readJSON('Config/dev.json');
     clients = dev.clients;
-  })();  
+  })();
 
   // Project configuration.
   grunt.initConfig({
@@ -48,6 +48,13 @@ module.exports = function(grunt) {
         options: {
           spawn: false,
         }
+      },
+      janemunk: {
+        files: ['style/janemunk/scss/**/*.scss'],
+        tasks: ['sass:janemunk'],
+        options: {
+          spawn: false,
+        }
       }
     },
     compass: {
@@ -55,28 +62,28 @@ module.exports = function(grunt) {
         options: {
           sassDir: "style/humanise/sass",
           cssDir: "style/humanise/css",
-			    noLineComments: true,
+          noLineComments: true,
         }
       },
       karenslyst: {
         options: {
           sassDir: "style/karenslyst/sass",
           cssDir: "style/karenslyst/css",
-			    noLineComments: true,
+          noLineComments: true,
         }
       },
       fynbogaarden: {
         options: {
           sassDir: "style/fynbogaarden/sass",
           cssDir: "style/fynbogaarden/css",
-			    noLineComments: true,
+          noLineComments: true,
         }
       },
       lottemunk: {
         options: {
           sassDir: "style/lottemunk/scss",
           cssDir: "style/lottemunk/css",
-			    noLineComments: true,
+          noLineComments: true,
         }
       }
     },
@@ -90,6 +97,16 @@ module.exports = function(grunt) {
           dest: 'style/jonasmunk/css',
           ext: '.css'
         }]
+      },
+      janemunk: {
+        options : {sourcemap:'none'},
+        files: [{
+          expand: true,
+          cwd: 'style/janemunk/scss',
+          src: ['*.scss'],
+          dest: 'style/janemunk/css',
+          ext: '.css'
+        }]
       }
     },
     shell: {
@@ -99,9 +116,9 @@ module.exports = function(grunt) {
             grunt.log.error('Client not found'); return;
           }
           return 'Config/scripts/transfer.sh '
-            + clients[client].production.database + ' ' 
-            + clients[client].production.folder + ' ' 
-            + clients[client].local.database + ' ' 
+            + clients[client].production.database + ' '
+            + clients[client].production.folder + ' '
+            + clients[client].local.database + ' '
             + clients[client].local.data;
         }
       },
@@ -111,9 +128,9 @@ module.exports = function(grunt) {
             grunt.log.error('Client not found'); return;
           }
           return 'Config/scripts/transfer.sh '
-            + clients[client].staging.database + ' ' 
-            + clients[client].staging.folder + ' ' 
-            + clients[client].local.database + ' ' 
+            + clients[client].staging.database + ' '
+            + clients[client].staging.folder + ' '
+            + clients[client].local.database + ' '
             + clients[client].local.data;
         }
       },
@@ -150,7 +167,7 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-jsdoc');
 
   grunt.registerTask('default', 'Standard tasks', ['watch']);
-  
+
   grunt.registerTask('stage', 'Stage a client', function(client) {
     grunt.task.run('shell:stage:' + client);
   });
@@ -162,7 +179,7 @@ module.exports = function(grunt) {
   grunt.registerTask('put', 'Deploy a client', function(client) {
     grunt.task.run('shell:deploy:' + client);
   });
-  
+
   grunt.registerTask('get', 'Transfer from production to local', function(client) {
     grunt.task.run('shell:transfer:'+client);
   });
@@ -178,5 +195,5 @@ module.exports = function(grunt) {
   grunt.registerTask('get-stage', 'Transfer from production to local', function(client) {
     grunt.task.run('shell:transfer_staging:'+client);
   });
-  
+
 };

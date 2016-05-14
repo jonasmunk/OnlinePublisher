@@ -9,27 +9,27 @@
  >
 
 	<xsl:template match="h:header[@level=1]">
-		<h1 class="part_header part_header-1 common common_header"><xsl:apply-templates/><xsl:comment/></h1>
+		<h1 class="part_header part_header-1 common common_header common_header-1"><xsl:apply-templates/><xsl:comment/></h1>
 	</xsl:template>
 
 	<xsl:template match="h:header[@level=2]">
-		<h2 class="part_header part_header-2 common common_header"><xsl:apply-templates/><xsl:comment/></h2>
+		<h2 class="part_header part_header-2 common common_header common_header-2"><xsl:apply-templates/><xsl:comment/></h2>
 	</xsl:template>
 
 	<xsl:template match="h:header[@level=3]">
-		<h3 class="part_header part_header-3 common common_header"><xsl:apply-templates/><xsl:comment/></h3>
+		<h3 class="part_header part_header-3 common common_header common_header-3"><xsl:apply-templates/><xsl:comment/></h3>
 	</xsl:template>
 
 	<xsl:template match="h:header[@level=4]">
-		<h4 class="part_header part_header-4 common common_header"><xsl:apply-templates/><xsl:comment/></h4>
+		<h4 class="part_header part_header-4 common common_header common_header-4"><xsl:apply-templates/><xsl:comment/></h4>
 	</xsl:template>
 
 	<xsl:template match="h:header[@level=5]">
-		<h5 class="part_header part_header-5 common common_header"><xsl:apply-templates/><xsl:comment/></h5>
+		<h5 class="part_header part_header-5 common common_header common_header-5"><xsl:apply-templates/><xsl:comment/></h5>
 	</xsl:template>
 
 	<xsl:template match="h:header[@level=6]">
-		<h6 class="part_header part_header-6 common common_header"><xsl:apply-templates/><xsl:comment/></h6>
+		<h6 class="part_header part_header-6 common common_header common_header-6"><xsl:apply-templates/><xsl:comment/></h6>
 	</xsl:template>
 
 	<xsl:template match="h:style">

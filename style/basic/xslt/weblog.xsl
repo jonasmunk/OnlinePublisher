@@ -32,7 +32,7 @@
 
 
 	<xsl:template match="wl:title">
-		<h1 class="common"><xsl:apply-templates/></h1>
+		<h1 class="common common_header common_header-1"><xsl:apply-templates/></h1>
 	</xsl:template>
 
 	<xsl:template match="wl:message">
