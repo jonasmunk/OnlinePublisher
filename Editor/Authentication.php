@@ -72,7 +72,7 @@ $gui='
 						<button title="{Cancel; da:Annuller}" click="hui.ui.changeState(\'login\');formula.focus()"/>
 						<button title="{New user; da:Ny bruger}" name="createAdmin"/>
 					</buttons>
-				</fields>				
+				</fields>
 				'
 				).'
 			</formula>
