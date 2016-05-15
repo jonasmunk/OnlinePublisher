@@ -153,6 +153,16 @@ class ImageTransformationService {
       return;
     }
     $originalInfo = ImageTransformationService::getImageInfo($recipe['path']);
+
+    $format = null;
+    if (isset($recipe['format'])) {
+      $format = $recipe['format'];
+    } else if (isset($recipe['destination'])) {
+      $format = FileSystemService::getFileExtension($recipe['destination']);
+    } else {
+      $format = FileService::mimeTypeToExtension($originalInfo['mime']);
+    }
+
     if (isset($recipe['width']) || isset($recipe['height']) || isset($recipe['scale'])) {
       $originalWidth = $originalInfo['width'];
       $originalHeight = $originalInfo['height'];
@@ -161,15 +171,6 @@ class ImageTransformationService {
       $scale = @$recipe['scale'];
       $left = 0;
       $top = 0;
-
-      $format = null;
-      if (isset($recipe['format'])) {
-        $format = $recipe['format'];
-      } else if (isset($recipe['destination'])) {
-        $format = FileSystemService::getFileExtension($recipe['destination']);
-      } else {
-        $format = FileService::mimeTypeToExtension($originalInfo['mime']);
-      }
 
       if ($scale) {
         //Log::debug($recipe);
