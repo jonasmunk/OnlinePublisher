@@ -21,7 +21,14 @@
     <xsl:call-template name="util:html-attributes"/>
     <head>
       <title><xsl:value-of select="@title"/> - <xsl:value-of select="f:frame/@title"/></title>
-      <meta name="viewport" content="user-scalable=yes, initial-scale = 1, maximum-scale = 10, minimum-scale = 0.2"/>
+      <xsl:choose>
+        <xsl:when test="//widget:exhibition">
+          <meta name="viewport" content="user-scalable=no, initial-scale = 1, maximum-scale = 1, minimum-scale = 1"/>
+        </xsl:when>
+        <xsl:otherwise>
+          <meta name="viewport" content="user-scalable=yes, initial-scale = 1, maximum-scale = 10, minimum-scale = 0.2"/>
+        </xsl:otherwise>
+      </xsl:choose>
       <xsl:call-template name="util:metatags"/>
       <xsl:call-template name="util:style"/>
       <xsl:call-template name="util:style-ie6"/>

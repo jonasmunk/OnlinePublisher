@@ -83,7 +83,8 @@ body.exhibit {
   background-position: 50%;
   -webkit-user-select: none;
   -webkit-tap-highlight-color: transparent;
-  font-family: 'Raleway'; }
+  font-family: 'Raleway';
+  overflow: hidden; }
   body.exhibit-concrete {
     background-image: url("../gfx/exhibition/background_concrete.jpg"); }
     body.exhibit-concrete.is-wide .exhibit_wall {
