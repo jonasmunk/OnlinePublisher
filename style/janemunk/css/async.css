@@ -80,6 +80,7 @@
 body.exhibit {
   margin: 0;
   background-size: cover;
+  background-position: 50%;
   -webkit-user-select: none;
   -webkit-tap-highlight-color: transparent;
   font-family: 'Raleway'; }
@@ -155,6 +156,8 @@ body.exhibit {
     background-size: contain;
     background-repeat: no-repeat;
     background-position: 50%; }
+  .exhibit_viewer_image {
+    position: absolute; }
   .exhibit_viewer.is-small {
     display: block; }
   .exhibit_viewer.is-full {

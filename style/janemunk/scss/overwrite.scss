@@ -43,16 +43,15 @@ p.common, ul.common
 
 .part_header
 {
+	font-family: $effect-font;
 
   &-1 {
     font-size: 50pt;
   }
-}
 
-
-h2.part_header, textarea.part_header-2
-{
-	font-size: 13pt;
+  &-2 {
+    font-size: 32pt;
+  }
 }
 
 h3.part_header, textarea.part_header-3

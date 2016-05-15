@@ -108,7 +108,7 @@
 <xsl:template name="util:link-href">
 	<xsl:choose>
 		<xsl:when test="@path and $preview='false'">
-			<xsl:value-of select="$navigation-path"/><xsl:value-of select="@path"/>
+			<xsl:value-of select="$navigation-path"/>
 		</xsl:when>
 		<xsl:when test="@page">
 			<xsl:value-of select="$navigation-path"/>?id=<xsl:value-of select="@page"/>
@@ -132,7 +132,15 @@
   <xsl:param name="node"/>
 	<xsl:choose>
 		<xsl:when test="$node/@path and $preview='false'">
-			<xsl:value-of select="$navigation-path"/><xsl:value-of select="$node/@path"/>
+			<xsl:value-of select="$navigation-path"/>
+      <xsl:choose>
+				<xsl:when test="starts-with(@path,'/')">
+					<xsl:value-of select="substring(@path,2)"/>
+				</xsl:when>
+				<xsl:otherwise>
+					<xsl:value-of select="@path"/>
+				</xsl:otherwise>
+			</xsl:choose>
 		</xsl:when>
 		<xsl:when test="$node/@page">
 			<xsl:value-of select="$navigation-path"/>?id=<xsl:value-of select="$node/@page"/>

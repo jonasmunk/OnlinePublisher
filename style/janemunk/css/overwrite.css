@@ -23,11 +23,12 @@ p.common, ul.common {
   text-align: justify; }
 
 /*************** Header *************/
-.part_header-1 {
-  font-size: 50pt; }
-
-h2.part_header, textarea.part_header-2 {
-  font-size: 13pt; }
+.part_header {
+  font-family: "Amatic SC", sans-serif; }
+  .part_header-1 {
+    font-size: 50pt; }
+  .part_header-2 {
+    font-size: 32pt; }
 
 h3.part_header, textarea.part_header-3 {
   font-size: 11pt; }

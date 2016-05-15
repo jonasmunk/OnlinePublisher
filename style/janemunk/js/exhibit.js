@@ -29,6 +29,7 @@
     inner : _.find('.js-viewer-inner'),
     source : null,
     busy : false,
+    zoomed : false,
     state : {
       rotation : 0,
       scale : 1,
@@ -105,20 +106,30 @@
         var scale = session.scale * self.state.scale;
         //_.log((curRotation + self.state.rotation) + ' / ' + rotation);
         //_.log(session.x + 'x' + session.y);
-        inner.style.transform = 'translate3d(' + (session.x + self.state.x) + 'px,' + (session.y + self.state.y) + 'px,0) rotate(' + rotation + 'deg) scale(' + scale + ')';
-        /*
-        inner.style.transform = 'translate3d(' + (ev.deltaX + self.state.left) + 'px,' + (ev.deltaY + self.state.top) + 'px,0) rotate(' + rotation + 'deg)';
-        inner.style.width = (self.state.scale * ev.scale * 100) + '%';
-        inner.style.height = (self.state.scale * ev.scale * 100) + '%';
-        inner.style.left = ((1 - self.state.scale * ev.scale) * 50) + '%';
-        inner.style.top = ((1 - self.state.scale * ev.scale) * 50) + '%';*/
+        if (!true) {
+          self.image.style.transform = 'translate3d(' + (session.x + self.state.x) + 'px,' + (session.y + self.state.y) + 'px,0) rotate(' + rotation + 'deg)';
+          self.image.style.width = (500*scale) + 'px';
+          self.image.style.height = (500*scale) + 'px';
+        }
+        else if (true) {
+          inner.style.transform = 'translate3d(' + (session.x + self.state.x) + 'px,' + (session.y + self.state.y) + 'px,0) rotate(' + rotation + 'deg) scale(' + scale + ')';
+        } else {
+          inner.style.transform = 'translate3d(' + (session.x + self.state.x) + 'px,' + (session.y + self.state.y) + 'px,0) rotate(' + rotation + 'deg)';
+          inner.style.width = (self.state.scale * ev.scale * 100) + '%';
+          inner.style.height = (self.state.scale * ev.scale * 100) + '%';
+          inner.style.left = ((1 - self.state.scale * ev.scale) * 50) + '%';
+          inner.style.top = ((1 - self.state.scale * ev.scale) * 50) + '%';
+        }
+
         //inner.style.marginTop = (ev.deltaY + self.state.top) + 'px';
+        if (!self.zoomed && scale > 1.2) {
+          //self.zoom();
+          self.zoomed = true;
+        }
       });
       mc.on("rotateend panend", function(ev) {
         if (self.busy) {return;}
         //_.log('-- ' + ev.type + ': rotate=' + ev.rotation + ', scale=' + ev.scale + ', move=' + ev.deltaX +'x'+ev.deltaY+', num=' + ev.srcEvent.targetTouches.length);
-        //lmnt.style.transition = '';
-        //_.log(ev.scale);
         self.state.scale *= session.scale;
         self.state.x += session.x;
         self.state.y += session.y;
@@ -147,11 +158,15 @@
         self.hide();
       });
     },
+    zoom : function() {
+      this.updateImage({node:this.inner,id:this.source.getAttribute('data-id'),width:0,height:0});
+    },
     hide : function() {
       if (this.busy) {return;}
       this.busy = true;
       //_.log('hide')
-      var lmnt = this.element, inner = this.inner;
+      var lmnt = this.element,
+        inner = this.inner;
       lmnt.style.transition = '';
       this._reset();
       this._setViewerSize();
@@ -182,6 +197,7 @@
       this.state.scale = 1;
       this.state.x = 0;
       this.state.y = 0;
+      this.zoomed = false;
     },
     _setViewerSize : function() {
 
@@ -199,6 +215,35 @@
         bottom: (h - pos.top - src.clientHeight) + 'px'
       })
     },
+    getUrl : function(id,width,height) {
+      var ratio = Math.min(2,window.devicePixelRatio || 1);
+      width = width * ratio;
+      height = height * ratio;
+      var url = op.context + 'services/images/?id=' + id;
+      if (width && height) {
+        url += '&width=' + width + '&height=' + height + '&background=transparent&format=png';
+      }
+      return url;
+    },
+
+    updateImage : function(options) {
+      _.cls.add(options.node,'is-loading-image');
+      var width = options.width;
+      width = Math.ceil(width / 100) * 100;
+      var height = options.height;
+      height = Math.ceil(height / 100) * 100;
+      var url = this.getUrl(options.id,width,height);
+      _.log(url);
+      var img = new Image();
+      img.onload = function() {
+        _.style.set(options.node,{
+          backgroundImage : 'url(' + url + ')'
+        });
+        _.cls.remove(options.node,'is-loading-image');
+      }
+      img.src = url;
+    },
+
     show : function(options) {
       if (this.busy) {return;}
       var self = this;
@@ -206,20 +251,16 @@
       this._reset();
       var src = this.source = options.src;
       var bg = _.style.get(src,'background-image');
-      var big = src.getAttribute('data-full');
       _.style.set(this.inner,{
         backgroundImage : bg
       });
-      var img = new Image();
-      img.onload = function() {
-        _.style.set(self.inner,{
-          backgroundImage : 'url(' + big + ')'
-        });
-      }
-      img.src = big;
+      this.updateImage({node:this.inner,id:src.getAttribute('data-id'),width:hui.window.getViewWidth(),height:hui.window.getViewHeight()});
       this._setViewerSize();
       var element = this.element;
       this.inner.style.transform = '';
+      if (!this.image) {
+        //this.image = hui.build('img',{src:this.getUrl(src.getAttribute('data-id')),'class':'exhibit_viewer_image',style:{width:'500px',height:'500px'},parent:this.element})
+      }
       src.style.opacity = '0';
       _.cls.add(element,'is-small');
       window.setTimeout(function() {
