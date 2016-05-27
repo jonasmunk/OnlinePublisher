@@ -21,31 +21,31 @@ class Part extends Entity
 {
 	var $type;
 	var $dynamic;
-	
+
 	function Part($type) {
 		$this->type = $type;
 	}
-	
+
 	function getType() {
 	    return $this->type;
 	}
-    
-    function setType($type) {
-        $this->type = $type;
-    }
-    
-    function setDynamic($dynamic) {
-        $this->dynamic = $dynamic;
-    }
-    
-    function getDynamic() {
-        return $this->isDynamic();
-    }
-	
+
+  function setType($type) {
+      $this->type = $type;
+  }
+
+  function setDynamic($dynamic) {
+      $this->dynamic = $dynamic;
+  }
+
+  function getDynamic() {
+      return $this->isDynamic();
+  }
+
 	function save() {
 		PartService::save($this);
 	}
-	
+
 	function isDynamic() {
 		$ctrl = PartService::getController($this->type);
 		if ($ctrl) {
@@ -53,15 +53,15 @@ class Part extends Entity
 		}
 		return false;
 	}
-	
+
 	function remove() {
 		PartService::remove($this);
 	}
-	
+
 	function isPersistent() {
 		return $this->id!=null;
 	}
-	
+
 	static function get($type,$id) {
 		return PartService::load($type,$id);
 	}
