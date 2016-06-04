@@ -5,25 +5,25 @@ if (!isset($GLOBALS['basePath'])) {
 }
 
 class UI {
-	
+
 	static function renderFile($file) {
 		$gui = file_get_contents($file);
 		UI::render($gui);
 	}
-	
+
 	static function renderFragment($gui) {
 		global $basePath;
 		if (Strings::startsWith($gui,'<?xml')) {
 			$gui = UI::localize($gui,InternalSession::getLanguage());
 		} else {
-			$gui = '<?xml version="1.0" encoding="UTF-8"?><subgui xmlns="uri:hui">'.UI::localize($gui,InternalSession::getLanguage()).'</subgui>';			
+			$gui = '<?xml version="1.0" encoding="UTF-8"?><subgui xmlns="uri:hui">'.UI::localize($gui,InternalSession::getLanguage()).'</subgui>';
 		}
 		$xsl='<?xml version="1.0" encoding="UTF-8"?>'.
 		'<xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" version="1.0">'.
 		'<xsl:output method="xml"/>'.
-		
+
 		UI::_parameters().
-		
+
 		'<xsl:include href="'.$basePath.'hui/xslt/gui.xsl"/>'.
 		'<xsl:template match="/"><xsl:apply-templates/></xsl:template>'.
 		'</xsl:stylesheet>';
@@ -34,10 +34,10 @@ class UI {
 			,'',$result);
 		return $result;
 	}
-    
+
 	static function render(&$gui) {
 		global $basePath;
-		
+
 		$xhtml = strpos($_SERVER['HTTP_ACCEPT'],'application/xhtml+xml')!==false;
 		$xhtml = false;
 		if (Request::exists('xhtml','false')) {
@@ -45,7 +45,7 @@ class UI {
 		}
 
 		$xmlData = UI::localize($gui,InternalSession::getLanguage());
-		
+
 		if (!Strings::startsWith($xmlData,'<?xml')) {
 			$xmlData = '<?xml version="1.0" encoding="UTF-8"?>'.$xmlData;
 		}
@@ -61,7 +61,7 @@ class UI {
 		'<xsl:template match="/"><xsl:apply-templates/></xsl:template>'.
 
 		'</xsl:stylesheet>';
-	
+
         header('X-UA-Compatible: IE=edge');
 		function xslErrorHandler($errno, $errmsg, $filename, $linenum, $vars) {
 			header('Content-Type: text/xml');
@@ -77,19 +77,19 @@ class UI {
 		$doc->loadXML($xmlData);
 		echo MarkupUtils::moveScriptsToBottom($xslt->transformToXML($doc));
 	}
-    
+
 	static function _parameters() {
 
 		$dev = Request::getBoolean('dev');
 		$profile = Request::getBoolean('profile');
 		$context = substr(ConfigurationService::getBaseUrl(),0,-1);
 		$pathVersion = ConfigurationService::isUrlRewrite() ? 'version'.SystemInfo::getDate().'/' : '';
-		
-	    if (true && ConfigurationService::isUrlRewrite()) {
+
+    if (true && ConfigurationService::isUrlRewrite()) {
 			$context.= '/'.'version'.SystemInfo::getDate();
 			$pathVersion = '';
-	    }
-    
+    }
+
 		return '<xsl:variable name="dev">'.($dev ? 'true' : 'false').'</xsl:variable>'.
 		'<xsl:variable name="profile">'.$profile.'</xsl:variable>'.
 		'<xsl:variable name="version">'.SystemInfo::getDate().'</xsl:variable>'.
@@ -99,7 +99,7 @@ class UI {
 	}
 
 	static function localize($xml,$language='en') {
-		
+
 		$pattern = "/({[^}]+})/mi";
 		preg_match_all($pattern, $xml, $matches,PREG_OFFSET_CAPTURE);
 		$diff = 0;
@@ -112,12 +112,12 @@ class UI {
 			$parts = UI::extract($old);
 			$new = array_key_exists($language,$parts) ? $parts[$language] : @$parts['any'];
 			$xml = substr_replace ( $xml , $new , $pos+$diff ,strlen($old));
-			
+
 			$diff = $diff + strlen($new)-strlen($old);
 		}
 		return $xml;
 	}
-	
+
 	static function extract($str) {
 		$parsed = array();
 		$str = substr($str,1,-1);
@@ -134,49 +134,49 @@ class UI {
 		}
 		return $parsed;
 	}
-    
-    static function buildAbstractUI($xml) {
-        $doc = DOMUtils::parse($xml);
-        
-        $root = $doc->documentElement;
-        
-        $children = DOMUtils::getChildElements($root);
-        
-        $gui = '<formula><group>';
-        
-        foreach ($children as $child) {
-            if ($child->tagName=='text') {
-                $gui.='<field label="' . Strings::escapeXML($child->getAttribute('label')) . '">';
-                $gui.='<text-input key="' . Strings::escapeXML($child->getAttribute('key')) . '"/>';
-                $gui.='</field>';
-            }
-        }
-        
-        $gui .= '</group></formula>';
-        return UI::renderFragment($gui);
+
+  static function buildAbstractUI($xml) {
+    $doc = DOMUtils::parse($xml);
+
+    $root = $doc->documentElement;
+
+    $children = DOMUtils::getChildElements($root);
+
+    $gui = '<formula><group>';
+
+    foreach ($children as $child) {
+      if ($child->tagName=='text') {
+        $gui.='<field label="' . Strings::escapeXML($child->getAttribute('label')) . '">';
+        $gui.='<text-input key="' . Strings::escapeXML($child->getAttribute('key')) . '"/>';
+        $gui.='</field>';
+      }
     }
-    
+
+    $gui .= '</group></formula>';
+    return UI::renderFragment($gui);
+  }
+
 	static function compile() {
-        global $basePath;
-        $cmd = $basePath."hui/tools/compile.sh";
-        return shell_exec($cmd);
-    }
+    global $basePath;
+    $cmd = $basePath."hui/tools/compile.sh";
+    return shell_exec($cmd);
+  }
 
 	static function toLinks($links) {
 		$out = array();
 		foreach ($links as $link) {
 			$out[] = array(
-				'id' => $link->getId(), 
-				'text' => $link->getText(), 
-				'kind' => $link->getType(), 
-				'value' => $link->getValue(), 
-				'info' => $link->getInfo(), 
+				'id' => $link->getId(),
+				'text' => $link->getText(),
+				'kind' => $link->getType(),
+				'value' => $link->getValue(),
+				'info' => $link->getInfo(),
 				'icon' => $link->getIcon()
 			);
 		}
 		return $out;
 	}
-	
+
 	static function fromLinks($links) {
 		if (!is_array($links)) return;
 		$out = array();

@@ -1,17 +1,18 @@
 <?xml version="1.0"?>
-<abstract>
+<model>
   <text key="name" label="Name"/>
   <boolean key="administrator" label="Administrator"/>
   <number key="amount" label="Number of items"/>
-  <single key="gender">
-      <option value="male" label="{Male;da:Mand}"/>
-      <option value="female" label="Female"/>
-      <option value="unknown" label="Unknown"/>
-  </single>
-  <multiple key="animals">
-      <option value="dog">Dog</option>
-      <option value="cat">Cat</option>
-  </multiple>
+  <select key="gender">
+    <option value="male" label="{Male;da:Mand}"/>
+    <option value="female" label="Female"/>
+    <option value="unknown" label="Unknown"/>
+  </select>
+  <select key="animals" max="infinite">
+    <option value="dog">Dog</option>
+    <option value="cat">Cat</option>
+  </select>
+  <image key="image" label="Image"/>
   <object key="photo" label="Photo" type="Image"/>
   <link key="link" label="Link"/>
-</abstract>
+</model>

@@ -9,16 +9,20 @@ if (!isset($GLOBALS['basePath'])) {
 }
 
 class FeedParser {
-	
+
 	var $log = array();
-	
+
 	function FeedParser() {
 	}
-	
+
 	function getLog() {
 		return $this->log();
 	}
-	
+
+  public function parseFile($path) {
+    return $this->parseURL($path);
+  }
+
 	function parseURL($url) {
 		$feed = new Feed();
 		$doc = new DOMDocument('1.0','UTF-8');
@@ -34,7 +38,7 @@ class FeedParser {
 			return false;
 		}
 	}
-	
+
 	function parseRSS(&$doc,&$feed) {
 		$feed->format = "RSS ".$doc->documentElement->getAttribute('version');
 		$xpath = new DOMXPath($doc);
@@ -47,7 +51,7 @@ class FeedParser {
 			$feed->setCopyright(DOMUtils::getFirstChildText($channel,'copyright'));
 			$feed->setPubDate(Dates::parseRFC822(DOMUtils::getFirstChildText($channel,'pubDate')));
 			$feed->setLastBuildDate(Dates::parseRFC822(DOMUtils::getFirstChildText($channel,'lastBuildDate')));
-			
+
 			$feed->setDocs(DOMUtils::getFirstChildText($channel,'docs'));
 			$feed->setGenerator(DOMUtils::getFirstChildText($channel,'generator'));
 			$feed->setWebMaster(DOMUtils::getFirstChildText($channel,'webMaster'));
@@ -58,7 +62,7 @@ class FeedParser {
 		}
 		$this->parseRSSItems($doc,$feed);
 	}
-	
+
 	function parseRSSItems(&$doc,&$feed) {
 		$nodes = $doc->getElementsByTagName('item');
 		$len = $nodes->length;
@@ -73,7 +77,7 @@ class FeedParser {
 			$feed->addItem($item);
 		}
 	}
-	
+
 	function parseAtom(&$doc,&$feed) {
 		$root = $doc->documentElement;
 		$feed->setTitle(DOMUtils::getFirstChildText($root,'title'));

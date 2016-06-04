@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<gui xmlns="uri:hui" title="{Builder; da:Bygger}" padding="10" state="list">
+
+  <controller source="controller.js"/>
+  <controller source="sources.js"/>
+  <controller source="workflows.js"/>
+
+  <source name="selectionSource" url="data/Selection.php">
+  </source>
+
+  <source name="listSource" url="data/List.php">
+    <parameter key="windowPage" value="@list.window.page"/>
+    <parameter key="text" value="@search.value"/>
+    <parameter key="kind" value="@selector.kind"/>
+    <parameter key="value" value="@selector.value"/>
+  </source>
+
+  <structure>
+    <top>
+      <toolbar>
+        <icon icon="common/internet" title="{New source; da:Ny kilde}" overlay="new" name="newSource"/>
+        <icon icon="common/folder" title="{New workflow; da:Ny arbejdsgang}" overlay="new" name="newWorkflow"/>
+        <icon icon="common/refresh"
+          title="{Synchronize; da:Synkroniser}"
+          name="synchronizeSource" disabled="true"/>
+        <right>
+          <field label="{Search; da:Søgning}">
+            <searchfield name="search" expanded-width="200"/>
+          </field>
+        </right>
+      </toolbar>
+    </top>
+    <middle>
+      <left>
+        <overflow>
+          <selection value="overview" name="selector" top="5">
+            <items source="selectionSource" name="selectorSource"/>
+          </selection>
+        </overflow>
+      </left>
+      <center>
+        <pages height="full" name="pages">
+          <page key="list">
+            <overflow>
+              <list name="list" source="listSource" state="list"/>
+            </overflow>
+          </page>
+          <page key="workflows">
+            <split>
+              <row height="50%">
+                <rows>
+                  <row height="content">
+                  <bar variant="layout">
+                    <button text="Run" small="true"/>
+                  </bar>
+                  </row>
+                  <row>
+                    <code-input name="workflowRecipe" height="full"/>
+                  </row>
+                </rows>
+              </row>
+              <row>
+              </row>
+            </split>
+          </page>
+        </pages>
+      </center>
+    </middle>
+    <bottom/>
+  </structure>
+
+  <window title="{Source; da:Kilde}" name="sourceWindow" width="300" padding="5">
+    <formula name="sourceFormula">
+      <fields labels="above">
+        <field label="{Title; da:Titel}">
+          <text-input key="title"/>
+        </field>
+        <field label="{Address; da:Adresse}">
+          <text-input key="url" multiline="true"/>
+        </field>
+        <field label="{Interval; da:Interval}">
+          <number-input key="interval"/>
+        </field>
+      </fields>
+      <buttons>
+        <button name="cancelSource" title="{Cancel; da:Annuller}"/>
+        <button name="deleteSource" title="{Delete; da:Slet}">
+          <confirm text="{Are you sure?; da:Er du sikker?}" ok="{Yes, delete; da:Ja, slet}" cancel="{Cancel; da:Annuller}"/>
+        </button>
+        <button name="saveSource" title="{Save; da:Gem}" highlighted="true"/>
+      </buttons>
+    </formula>
+  </window>
+
+  <window title="{Workflow; da:Arbejdsgang}" name="workflowWindow" width="400" padding="5">
+    <formula name="workflowFormula">
+      <fields labels="above">
+        <field label="{Title; da:Titel}">
+          <text-input key="title"/>
+        </field>
+        <field label="{Recipe; da:Opskrift}">
+          <text-input key="recipe" multiline="true"/>
+        </field>
+      </fields>
+      <buttons>
+        <button name="cancelWorkflow" title="{Cancel; da:Annuller}"/>
+        <button name="deleteWorkflow" title="{Delete; da:Slet}">
+          <confirm text="{Are you sure?; da:Er du sikker?}" ok="{Yes, delete; da:Ja, slet}" cancel="{Cancel; da:Annuller}"/>
+        </button>
+        <button name="saveWorkflow" title="{Save; da:Gem}" highlighted="true"/>
+      </buttons>
+    </formula>
+  </window>
+
+</gui>
