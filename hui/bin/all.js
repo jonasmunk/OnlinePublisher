@@ -92,6 +92,49 @@ hui.log = function(obj) {
   }
 };
 
+hui._demanded = [];
+
+hui.define = function(name,obj) {
+  var demanded = hui._demanded;
+  for (var i = demanded.length - 1; i >= 0; i--) {
+    var d = demanded[i]
+    hui.array.remove(d.requirements,name);
+    if (d.requirements.length == 0) {
+      d.callback();
+      demanded.splice(i,1);
+    }
+  }
+}
+
+hui.demand = function() {
+  var names = arguments[0];
+  var callback = arguments[1];
+  var found = [];
+  for (var i = 0; i < names.length; i++) {
+    var vld = hui.evaluate(names[i]);
+    if (!vld) {
+      found = false;
+      break;
+    }
+    found[i] = vld;
+  }
+  if (found) {
+    callback(found);
+  } else {
+    hui.log('deferring: ' + names);
+    hui._demanded.push({requirements:names,callback:callback})
+  }
+}
+
+hui.evaluate = function(expression) {
+  var path = expression.split('.');
+  var cur = window;
+  for (var i = 0; i < path.length && cur!==undefined; i++) {
+    cur = cur[path[i]];
+  }
+  return cur;
+}
+
 /**
  * Defer a function so it will fire when the current "thread" is done
  * @param {Function} func The function to defer
@@ -1581,26 +1624,17 @@ hui.stop = function(event) {
     event.stopped = true;
 };
 
-hui._defered = [];
+hui._ = hui._ || [];
 
 hui._ready = document.readyState == 'complete';// || document.readyState;
 // TODO Maybe interactive is too soon???
 
 hui.onReady = function(func) {
-  if (hui._ready) {
-    func();
-  } else {
-    hui._defered.push(func);
-  }
-  if (hui._defered.length==1) {
-    hui._onReady(function() {
-        hui._ready = true;
-      for (var i = 0; i < hui._defered.length; i++) {
-        hui._defered[i]();
-      }
-            hui._defered = null;
-    });
-  }
+	if (hui._ready) {
+		func();
+	} else {
+		hui._.push(func);
+	}
 };
 
 hui.onDraw = function(func) {
@@ -1665,7 +1699,6 @@ hui._onReady = function(delegate) {
     }
   }
 };
-
 
 
 
@@ -2551,10 +2584,20 @@ hui.location = {
 };
 
 
-
 if (window.define) {
   define('hui',hui);
 }
+
+hui._onReady(function() {
+  hui._ready = true;
+  for (var i = 0; i < hui._.length; i++) {
+    hui._[i]();
+  }
+  delete hui._;
+});
+
+
+hui = window.hui || {};
 
 /////////////////////////// Animation ///////////////////////////
 
@@ -2802,7 +2845,11 @@ hui.animation.Item.prototype.animate = function(from,to,property,duration,delega
 	hui.animation.start();
 };
 
-hui.animation.TRANSFORM = hui.browser.gecko ? 'MozTransform' : 'WebkitTransform';
+hui.animation.TRANSFORM = (function() {
+  var agent = navigator.userAgent;
+  var gecko = agent.indexOf('Gecko') !== -1 && agent.indexOf('WebKit') === -1;
+  return gecko ? 'MozTransform' : 'WebkitTransform';
+})()
 
 hui.animation.Item.parseTransform = function(value,element) {
 	var result = {};
@@ -3128,6 +3175,8 @@ if (!Date.now) {
   };
 }
 
+hui.define && hui.define('hui.animation',hui.animation);
+
 /** @constructor
  * @param str The color like red or rgb(255, 0, 0) or #ff0000 or rgb(100%, 0%, 0%)
  */
@@ -3372,6 +3421,8 @@ hui.Color.rgb2hex = function(rgbary) {
   }
   return c;
 };
+
+hui.define && hui.define('hui.Color',hui.Color);
 
 /*
   * $script.js v1.3
@@ -22621,15 +22672,29 @@ hui.onReady(function() {
     if (type) {
       var children = configs[i].childNodes;
       var options = {};
-      for (var j = children.length - 1; j >= 0; j--) {
-        if (children[j].nodeType == 8) {
-          options = hui.string.fromJSON(children[j].nodeValue);
-          break;
+      var attr = configs[i].getAttribute('data-options');
+      if (attr) {
+        options = hui.string.fromJSON(attr);
+      } else {
+        for (var j = children.length - 1; j >= 0; j--) {
+          if (children[j].nodeType == 8) {
+            options = hui.string.fromJSON(children[j].nodeValue);
+            break;
+          }
         }
       }
       options.element = configs[i];
       new hui.ui[type](options);
     }
+  }
+})
+
+hui.onReady(function() {
+  var configs = document.querySelectorAll('script[type=hui]');
+  for (var i = 0; i < configs.length; i++) {
+    var data = hui.string.fromJSON(configs[i].textContent);
+    data.element = configs[i].parentNode;
+    new hui.ui[configs[i].getAttribute('data-type')](data);
   }
 })
 

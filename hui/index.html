@@ -3,14 +3,13 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
 <head>
 	<title>Humanise User Interface</title>
-  <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,300,600,700,800' rel='stylesheet' type='text/css'>
   <style type="text/css" media="screen">
-  
+
   body {
     font-family: 'Open Sans', Arial, sans-serif;
     margin: 20px 40px;
   }
-  
+
   h1 {
     font-weight: 100;
     font-size: 48px;
@@ -18,16 +17,16 @@
     color: #333;
     letter-spacing: -0.02em;
   }
-  
+
   h1 span {
     display: inline-block;
   }
-  
+
   h1 span:first-letter {
     font-weight: 600;
     color: #000;
   }
-  
+
   .logo {
     color: #999;
     font-size: 20px;
@@ -36,22 +35,23 @@
     color: #000;
     text-transform: uppercase;
   }
-  
+
   a {
     color: #0065EA;
     text-decoration: none;
     border-bottom: 1px solid #eee;
   }
-  
+
   ul {
     color: #aaa;
     font-size: 14px;
   }
-  
+
   li {
     margin: 5px 0;
   }
   </style>
+  <script>hui=window.hui||{_:[],onReady:function(f){this._.push(f)}};</script>
 </head>
 <body>
   <h1><span>Humanise</span> <span>User</span> <span>Interface</span></h1>
@@ -63,5 +63,26 @@
     <li><a href="docs/index.html">JavaScript API (alt)</a></li>
     <li><a href="api/xml/index.html">XML api</a>
   </ul>
+  <script>
+  hui.onReady(function() {
+    hui.build('link',{href:'https://fonts.googleapis.com/css?family=Open+Sans:400,300,600,700,800', rel:'stylesheet', type:'text/css',parent:document.head});
+    hui.demand(['hui.animation','hui.Color'],function() {
+      hui.animate({
+        node : hui.find('h1'),
+        css : { 'font-size' : '56px', color: '#abf' },
+        duration : 300,
+        $complete : function() {
+          hui.animate({
+            node : hui.find('h1'),
+            css : { 'font-size' : '48px', color: '#000' },
+            duration : 300});
+        }
+      });
+    })
+  })
+  </script>
+  <script type="text/javascript" src="js/hui.js" async="async"></script>
+  <script type="text/javascript" src="js/hui_animation.js" async="async"></script>
+  <script type="text/javascript" src="js/hui_color.js" async="async"></script>
 </body>
 </html>

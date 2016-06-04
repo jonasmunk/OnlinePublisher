@@ -34,7 +34,7 @@
 				border: 1px solid #eee;
 				margin: 3px;
 			}
-			
+
 			a.icon:hover
 			{
 				background-position: 0 -100%;
@@ -55,10 +55,15 @@
 						var sizes = obj[group][icon];
 						for (var i=0; i < sizes.length; i++) {
 							var size = sizes[i];
-							hui.log(size)	
 							hui.build('a',{
 								'class' : 'icon icon'+size,
 								style : "background-image:url('../icons/"+group+"/"+icon+size+".png'); width:"+size+"px;height:"+size+"px;",
+								parent : groupNode,
+								title : group+'/'+icon
+							});
+							hui.build('a',{
+								'class' : 'icon icon'+size,
+								style : "background-image:url('../icons/"+group+"/"+icon+size+".svg'); width:"+size+"px;height:"+size+"px;",
 								parent : groupNode,
 								title : group+'/'+icon
 							});

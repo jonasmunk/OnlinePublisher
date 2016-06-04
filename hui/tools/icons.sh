@@ -28,13 +28,13 @@ for group in groups :
 				if (match) :
 					iconName = match.group(1)
 					size = int(match.group(2))
-					if (iconName not in dictionary[group]) : 
+					if (iconName not in dictionary[group]) :
 						dictionary[group][iconName] = []
 					dictionary[group][iconName].append(size)
-				
+
 
 dest = codecs.open(base+'/info/icons.json', mode='w', encoding='utf-8')
-js = json.dumps(dictionary, sort_keys=True, indent=4) 
+js = json.dumps(dictionary, sort_keys=True, indent=4)
 dest.write(js)
 print js
 dest.close()

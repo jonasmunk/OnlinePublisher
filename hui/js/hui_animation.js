@@ -1,3 +1,5 @@
+hui = window.hui || {};
+
 /////////////////////////// Animation ///////////////////////////
 
 /**
@@ -244,7 +246,11 @@ hui.animation.Item.prototype.animate = function(from,to,property,duration,delega
 	hui.animation.start();
 };
 
-hui.animation.TRANSFORM = hui.browser.gecko ? 'MozTransform' : 'WebkitTransform';
+hui.animation.TRANSFORM = (function() {
+  var agent = navigator.userAgent;
+  var gecko = agent.indexOf('Gecko') !== -1 && agent.indexOf('WebKit') === -1;
+  return gecko ? 'MozTransform' : 'WebkitTransform';
+})()
 
 hui.animation.Item.parseTransform = function(value,element) {
 	var result = {};
@@ -569,3 +575,5 @@ if (!Date.now) {
     return new Date().getTime();
   };
 }
+
+hui.define && hui.define('hui.animation',hui.animation);

@@ -64,6 +64,7 @@
         <item icon="common/page" title="selection" value="html/selection.html"/>
         <item icon="common/page" title="slider" value="html/slider.html"/>
         <item icon="common/page" title="supa" value="html/supa.html"/>
+        <item icon="common/page" title="touch" value="html/touch.html"/>
         <item icon="common/page" title="upload" value="html/upload.html"/>
         <item icon="common/page" title="upload_webkit" value="html/upload_webkit.html"/>
         <item icon="common/page" title="video" value="html/video.html"/>

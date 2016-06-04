@@ -28,15 +28,23 @@
 
 <body>
 	<div class="description">
-		<h1>Bar</h1>
-		<p>How to build a bar</p>
+		<h1>Annotated configuration</h1>
 	</div>
-  
+
   <a href="#" class="hui_button"><span><span>This is a button</span></span><noscript data-type="Button">{"confirm":{"text":"It works!"}}</noscript></a>
 
   <a href="#" class="hui_button" data-hui="Button">
     <span><span>This is a button</span></span>
     <!--{"name":"myButton","confirm":{"text":"It works!"}}-->
+  </a>
+
+  <a href="#" class="hui_button">
+    <span><span>This is a button</span></span>
+    <script type="hui" data-type="Button">{"name":"myOtherButton","confirm":{"text":"Sure?"}}</script>
+  </a>
+
+  <a href="#" class="hui_button" data-hui="Button" data-options='{"name":"myOtherButton","confirm":{"text":"Sure?"}}'>
+    <span><span>This is a button</span></span>
   </a>
 
   <script>

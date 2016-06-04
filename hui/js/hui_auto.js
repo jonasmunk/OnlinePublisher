@@ -17,14 +17,28 @@ hui.onReady(function() {
     if (type) {
       var children = configs[i].childNodes;
       var options = {};
-      for (var j = children.length - 1; j >= 0; j--) {
-        if (children[j].nodeType == 8) {
-          options = hui.string.fromJSON(children[j].nodeValue);
-          break;
+      var attr = configs[i].getAttribute('data-options');
+      if (attr) {
+        options = hui.string.fromJSON(attr);
+      } else {
+        for (var j = children.length - 1; j >= 0; j--) {
+          if (children[j].nodeType == 8) {
+            options = hui.string.fromJSON(children[j].nodeValue);
+            break;
+          }
         }
       }
       options.element = configs[i];
       new hui.ui[type](options);
     }
+  }
+})
+
+hui.onReady(function() {
+  var configs = document.querySelectorAll('script[type=hui]');
+  for (var i = 0; i < configs.length; i++) {
+    var data = hui.string.fromJSON(configs[i].textContent);
+    data.element = configs[i].parentNode;
+    new hui.ui[configs[i].getAttribute('data-type')](data);
   }
 })
