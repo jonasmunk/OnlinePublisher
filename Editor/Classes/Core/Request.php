@@ -52,9 +52,10 @@ class Request {
     if ($default!=='' && Strings::isBlank($output)) {
       return $default;
     }
-    $output=str_replace('\\"', '"', $output);
-    $output=str_replace('\\\'', '\'', $output);
-    $output=str_replace('\\\\', '\\', $output);
+// Very old and probably no longer applies
+//    $output=str_replace('\\"', '"', $output);
+//    $output=str_replace('\\\'', '\'', $output);
+//    $output=str_replace('\\\\', '\\', $output);
     return $output;
   }
 
