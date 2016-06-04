@@ -1,6 +1,0 @@
-{
-	"sets" : [
-		{"type":"column", "entries":{"January":10,"February":20,"March":15,"April":45,"May":56}},
-		{"type":"line", "entries":{"January":24,"February":5,"March":59,"April":30,"June":56}}
-	]
-}

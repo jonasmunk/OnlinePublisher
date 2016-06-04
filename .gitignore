@@ -21,6 +21,7 @@ Config/scripts
 .sass-cache
 /node_modules
 /hui/node_modules
+/hui
 
 profile_prepend.php
 profile_append.php
