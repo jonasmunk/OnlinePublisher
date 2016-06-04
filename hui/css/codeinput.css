@@ -1,13 +1,19 @@
-div.hui_codeinput
+.hui_codeinput
 {
 	padding: 2px;
+  box-sizing: border-box;
+	height: 200px;
 }
 
-div.hui_codeinput textarea
+.hui_codeinput-full {
+  height: 100%;
+}
+
+.hui_codeinput_input
 {
 	display: block;
 	width: 100%;
-	height: 200px;
+	height: 100%;
 	box-sizing: border-box;
 	-moz-box-sizing: border-box;
 	border-color: #BBBBBB #CCCCCC #DDDDDD;
@@ -27,7 +33,7 @@ div.hui_codeinput textarea
 	color: white;
 */
 
-div.hui_codeinput textarea:focus
+.hui_codeinput_input:focus
 {
 	border-color: #2678ff;
 	outline: 4px auto #2678ff;

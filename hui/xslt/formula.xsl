@@ -744,8 +744,14 @@
 <code-input name="«text»"/>
 -->
 <xsl:template match="gui:code-input">
-	<div class="hui_codeinput" id="{generate-id()}">
-		<xsl:text disable-output-escaping='yes'><![CDATA[<textarea spellcheck="false"></textarea>]]></xsl:text>
+	<div id="{generate-id()}">
+    <xsl:attribute name="class">
+      <xsl:text>hui_codeinput</xsl:text>
+      <xsl:if test="@height='full'">
+        <xsl:text> hui_codeinput-full</xsl:text>
+      </xsl:if>
+    </xsl:attribute>
+		<xsl:text disable-output-escaping='yes'><![CDATA[<textarea spellcheck="false" class="hui_codeinput_input"></textarea>]]></xsl:text>
 	</div>
 	<script type="text/javascript">
 		var <xsl:value-of select="generate-id()"/>_obj = new hui.ui.CodeInput({
