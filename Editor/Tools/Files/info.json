@@ -1,8 +1,0 @@
-{
-	"key" : "Files",
-	"icon" : "application/files",
-	"name" : {"da" : "Filer", "en" : "Files"},
-	"description" : {"da" : "Tilføj og organisér filer", "en" : "Add and manage files"},
-	"category" : "edit",
-	"priority" : 3
-}

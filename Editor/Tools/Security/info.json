@@ -1,8 +1,0 @@
-{
-	"key" : "Security",
-	"icon" : "common/security",
-	"name" : {"da" : "Sikkerhed", "en" : "Security"},
-	"description" : {"da" : "Brugere og sikre zoner", "en" : "Users and secure zones"},
-	"category" : "setup",
-	"priority" : 1
-}

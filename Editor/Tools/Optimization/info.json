@@ -1,8 +1,0 @@
-{
-	"key" : "Optimization",
-	"icon" : "common/search",
-	"name" : {"da" : "Optimering", "en" : "Optimization"},
-	"description" : {"da" : "Optimering af indhold", "en" : "Optimization of content"},
-	"category" : "analyse",
-	"priority" : 1
-}

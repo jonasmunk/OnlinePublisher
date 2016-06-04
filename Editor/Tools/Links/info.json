@@ -1,8 +1,0 @@
-{
-	"key" : "Links",
-	"icon" : "common/link",
-	"name" : {"da" : "Links", "en" : "Links"},
-	"description" : {"da" : "Oversigt over links", "en" : "Overview of links"},
-	"category" : "analyse",
-	"priority" : 2
-}

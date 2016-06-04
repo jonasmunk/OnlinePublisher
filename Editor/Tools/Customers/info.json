@@ -1,8 +1,0 @@
-{
-	"key" : "Customers",
-	"icon" : "application/persons",
-	"name" : {"da" : "Personer", "en" : "People"},
-	"description" : {"da" : "Organisering af personer", "en" : "People management"},
-	"category" : "edit",
-	"priority" : 5
-}

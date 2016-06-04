@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="ISO-8859-1"?>
-<tool>
-	<icon>Template/Security</icon>
-	<name>Autentifikation</name>
-	<description>En side hvor brugere kan logge ind på hjemmesiden</description>
-	<category>security</category>
-	<priority>0</priority>
-	<status>active</status>
-</tool>

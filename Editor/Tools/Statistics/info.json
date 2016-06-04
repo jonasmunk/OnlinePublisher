@@ -1,8 +1,0 @@
-{
-	"key" : "Statistics",
-	"icon" : "application/statistics",
-	"name" : {"da" : "Statistik", "en" : "Statistics"},
-	"description" : {"da" : "Statistik over besøgende", "en" : "Vistor statistics"},
-	"category" : "analyse",
-	"priority" : 0
-}

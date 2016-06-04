@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="ISO-8859-1"?>
-<tool>
-	<icon>Template/Html</icon>
-	<name>HTML</name>
-	<description>Ren HTML-kode</description>
-	<category>setup</category>
-	<priority>0</priority>
-	<status>active</status>
-</tool>

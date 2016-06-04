@@ -1,8 +1,0 @@
-{
-	"key" : "Waterusage",
-	"icon" : "application/water",
-	"name" : {"da" : "Vandforbrug", "en" : "Water usage"},
-	"description" : {"da" : "Registrer vandforbrug", "en" : "Register water usage"},
-	"category" : "edit",
-	"priority" : 10
-}

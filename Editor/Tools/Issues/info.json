@@ -1,8 +1,0 @@
-{
-	"key" : "Issues",
-	"icon" : "application/inbox",
-	"name" : {"da" : "Opgaver", "en" : "Issues"},
-	"description" : {"da" : "Opgaver", "en" : "Issues"},
-	"category" : "analyse",
-	"priority" : 0
-}

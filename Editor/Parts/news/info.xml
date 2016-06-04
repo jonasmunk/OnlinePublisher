@@ -1,8 +1,0 @@
-<?xml version="1.0" encoding="ISO-8859-1"?>
-<part>
-	<icon>Part/News</icon>
-	<name>Nyheder</name>
-	<description></description>
-	<category>setup</category>
-	<priority>6</priority>
-</part>

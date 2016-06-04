@@ -1,1 +1,0 @@
-document.write('<script type="text/javascript" src="' + _editor.context + 'style/in2isoft/js/Poster.js"></script>');

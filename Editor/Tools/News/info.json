@@ -1,8 +1,0 @@
-{
-	"key" : "News",
-	"icon" : "application/news",
-	"name" : {"da" : "Nyheder", "en" : "News"},
-	"description" : {"da" : "Tilføj og organisér nyheder", "en" : "Add and manage news"},
-	"category" : "edit",
-	"priority" : 3
-}

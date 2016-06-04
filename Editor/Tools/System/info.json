@@ -1,8 +1,0 @@
-{
-	"key" : "System",
-	"icon" : "common/settings",
-	"name" : {"da" : "System", "en" : "System"},
-	"description" : {"da" : "Opsæt og tilpas af systemet", "en" : "Setup and configure the system"},
-	"category" : "setup",
-	"priority" : 0
-}

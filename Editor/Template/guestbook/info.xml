@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="ISO-8859-1"?>
-<tool>
-	<icon>Template/GuestBook</icon>
-	<name>Gæstebog</name>
-	<description>Skabelon til at oprette en simpel gæstebog</description>
-	<category>setup</category>
-	<priority>0</priority>
-	<status>active</status>
-</tool>

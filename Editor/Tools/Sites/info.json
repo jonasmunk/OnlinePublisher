@@ -1,8 +1,0 @@
-{
-	"key" : "Sites",
-	"icon" : "application/pages",
-	"name" : {"da" : "Sider", "en" : "Pages"},
-	"description" : {"da" : "Opret, rediger og organiser sider", "en" : "Add, edit and manage pages"},
-	"category" : "edit",
-	"priority" : 0
-}

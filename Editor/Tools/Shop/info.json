@@ -1,8 +1,0 @@
-{
-	"key" : "Shop",
-	"icon" : "application/shop",
-	"name" : {"da" : "Butik", "en" : "Shop"},
-	"description" : {"da" : "Styring af produkter", "en" : "Product management"},
-	"category" : "edit",
-	"priority" : 5
-}

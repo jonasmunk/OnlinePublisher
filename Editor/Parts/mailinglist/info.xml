@@ -1,8 +1,0 @@
-<?xml version="1.0" encoding="ISO-8859-1"?>
-<part>
-	<icon>Part/Generic</icon>
-	<name>Postliste</name>
-	<description></description>
-	<category>setup</category>
-	<priority>10</priority>
-</part>

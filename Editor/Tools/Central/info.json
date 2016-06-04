@@ -1,8 +1,0 @@
-{
-	"key" : "Central",
-	"icon" : "common/internet",
-	"name" : {"da" : "Central", "en" : "Central"},
-	"description" : {"da" : "Overvåg andre systemer", "en" : "Surveillance of other systems"},
-	"category" : "analyse",
-	"priority" : 3
-}
