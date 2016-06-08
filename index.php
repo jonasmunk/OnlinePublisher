@@ -4,12 +4,12 @@
  * @subpackage Public
  */
 if (ini_get('display_errors')) {
-    ini_set('display_errors', 0);
+  ini_set('display_errors', 0);
 }
 // If no setup, go to setup UI
 if (!file_exists('Config/Setup.php')) {
-  header('Location: '.dirname($_SERVER['PHP_SELF']).'/setup/initial/');
-  exit;
+  header('Location: ' . dirname($_SERVER['PHP_SELF']) . '/setup/initial/');
+  exit();
 }
 require_once 'Editor/Include/Public.php';
 
@@ -30,26 +30,26 @@ if (!Database::testConnection()) {
     'title' => 'The page is not available at the moment',
     'note' => 'Please try again later'
   ]);
-  exit;
+  exit();
 }
 
-$file = Request::getInt('file',-1);
-$id = Request::getInt('id',-1);
+$file = Request::getInt('file', -1);
+$id = Request::getInt('id', -1);
 $path = Request::getString('path');
 if (Strings::isBlank($path)) {
   $path = '/';
 }
 
-if ($file>0) {
+if ($file > 0) {
   RenderingService::showFile($file);
-  exit;
+  exit();
 }
 // TODO move this to service
 if (Request::getBoolean('logout')) {
   ExternalSession::logOut();
 }
 
-if (!CacheService::sendCachedPage($id,$path)) {
+if (!CacheService::sendCachedPage($id, $path)) {
 
   require_once 'Editor/Classes/Services/ClassService.php';
   require_once 'Editor/Classes/Services/RenderingService.php';
@@ -57,64 +57,60 @@ if (!CacheService::sendCachedPage($id,$path)) {
   require_once 'Editor/Classes/Services/TemplateService.php';
   require_once 'Editor/Classes/Templates/TemplateController.php';
 
-
-  if (strlen($path)>1) {
-    $relative = str_repeat('../',substr_count($path,'/'));
-    $samePageBaseUrl = $relative.$path.'?';
-  } else {
-    $relative = '';
-    $samePageBaseUrl = '?id='.$id.'&amp;';
+  if (strlen($path) > 1) {
+    $relative = str_repeat('../', substr_count($path, '/'));
+    $samePageBaseUrl = $relative . $path . '?';
   }
-  if (strlen($relative)==0) {
+  else {
+    $relative = '';
+    $samePageBaseUrl = '?id=' . $id . '&amp;';
+  }
+  if (strlen($relative) == 0) {
     $relative = './';
   }
 
-  if ($id==-1 && Strings::isBlank($path)) {
+  if ($id == -1 && Strings::isBlank($path)) {
     $id = RenderingService::findPage('home');
   }
-  //echo $id;
-  $page = RenderingService::buildPage($id,$path,Request::getParameters());
-  if (!$page && !(Strings::isNotBlank($path) || $id>0)) {
-    //Log::debug('No page : '.$path);
+  // echo $id;
+  $page = RenderingService::buildPage($id, $path, Request::getParameters());
+  if (!$page && !(Strings::isNotBlank($path) || $id > 0)) {
+    // Log::debug('No page : '.$path);
     $id = RenderingService::findPage('home');
-    if ($id==null) {
+    if ($id == null) {
       RenderingService::displayMessage([
         'title' => 'No front page',
         'note' => 'This website has no front page. If you are the editor you probably should log in and fix the issue'
       ]);
-      exit;
+      exit();
     }
     $page = RenderingService::buildPage($id);
   }
 
   if (!$page) {
     RenderingService::handleMissingPage($path);
-  }
-  // If the page has redirect
-  else if ($page['redirect']!==false) {
-    //echo $page['redirect'];
-    //exit;
+  } // If the page has redirect
+  else if ($page['redirect'] !== false) {
+    // echo $page['redirect'];
+    // exit;
     Response::redirect($page['redirect']);
-  }
-  // If the page is secure
+  } // If the page is secure
   else if ($page['secure']) {
     if ($user = ExternalSession::getUser()) {
-      if (RenderingService::userHasAccessToPage($user['id'],$page['id'])) {
-        RenderingService::writePage($id,$path,$page,$relative,$samePageBaseUrl);
+      if (RenderingService::userHasAccessToPage($user['id'], $page['id'])) {
+        RenderingService::writePage($id, $path, $page, $relative, $samePageBaseUrl);
       }
       else {
-        RenderingService::goToAuthenticationPage($page['id'],$path);
+        RenderingService::goToAuthenticationPage($page['id'], $path);
       }
     }
     else {
-      RenderingService::goToAuthenticationPage($page['id'],$path);
+      RenderingService::goToAuthenticationPage($page['id'], $path);
     }
-  }
-  // If nothing special about page
+  } // If nothing special about page
   else {
-    RenderingService::writePage($id,$path,$page,$relative,$samePageBaseUrl);
+    RenderingService::writePage($id, $path, $page, $relative, $samePageBaseUrl);
   }
-
 }
 
 ?>
