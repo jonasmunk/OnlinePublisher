@@ -12,8 +12,12 @@ if ($data->id) {
 	$src = new Workflow();
 }
 if ($src) {
-	$src->setTitle($data->title);
-	$src->setRecipe($data->recipe);
+  if (isset($data->title)) {
+    $src->setTitle($data->title);
+  }
+  if (isset($data->recipe)) {
+    $src->setRecipe($data->recipe);
+  }
 	$src->save();
 	$src->publish();
 }

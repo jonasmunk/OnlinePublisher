@@ -30,6 +30,16 @@ hui.ui.listen({
       }.bind(this)
     });
   },
+  $click$runWorkflow : function() {
+    hui.ui.request({
+      url : 'actions/RunWorkflow.php',
+      message : {start:{en:'Running...',da:'Afvikler...'},delay:300},
+      parameters : {recipe : workflowRecipe.getValue()},
+      $text : function(str) {
+        workflowResult.setValue(str);
+      }
+    });
+  },
 
   editWorkflow : function(id) {
     workflowFormula.reset();

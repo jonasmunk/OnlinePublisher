@@ -51,7 +51,8 @@
                 <rows>
                   <row height="content">
                   <bar variant="layout">
-                    <button text="Run" small="true"/>
+                    <button name="runWorkflow" text="Run" small="true"/>
+                    <button text="Save" small="true"/>
                   </bar>
                   </row>
                   <row>
@@ -60,6 +61,7 @@
                 </rows>
               </row>
               <row>
+                <code-input name="workflowResult" height="full"/>
               </row>
             </split>
           </page>
@@ -97,9 +99,6 @@
       <fields labels="above">
         <field label="{Title; da:Titel}">
           <text-input key="title"/>
-        </field>
-        <field label="{Recipe; da:Opskrift}">
-          <text-input key="recipe" multiline="true"/>
         </field>
       </fields>
       <buttons>
