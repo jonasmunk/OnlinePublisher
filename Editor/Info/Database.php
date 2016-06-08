@@ -103,7 +103,8 @@ $databaseTables = array(
       array("top","varchar(10)","YES","","",""),
       array("bottom","varchar(10)","YES","","",""),
       array("left","varchar(10)","YES","","",""),
-      array("right","varchar(10)","YES","","","")
+      array("right","varchar(10)","YES","","",""),
+      array("class","varchar(255)","YES","","","")
     ),
   'document_row' => array(
       array("id","int(11)","","PRI","","auto_increment"),
@@ -111,7 +112,8 @@ $databaseTables = array(
       array("index","int(11)","","","0",""),
       array("top","varchar(10)","YES","","",""),
       array("bottom","varchar(10)","YES","","",""),
-      array("spacing","varchar(10)","YES","","","")
+      array("spacing","varchar(10)","YES","","",""),
+      array("class","varchar(255)","YES","","","")
     ),
   'document_section' => array(
       array("id","int(11)","","PRI","","auto_increment"),
@@ -125,7 +127,8 @@ $databaseTables = array(
       array("right","varchar(10)","YES","","",""),
       array("part_id","int(11)","YES","","0",""),
       array("float","varchar(10)","YES","","",""),
-      array("width","varchar(10)","YES","","","")
+      array("width","varchar(10)","YES","","",""),
+      array("class","varchar(255)","YES","","","")
     ),
   'email_validation_session' => array(
             array("id","int(11)","","PRI","","auto_increment"),

@@ -124,16 +124,14 @@ class DocumentTemplateController extends TemplateController
 				$sql="select document_section.*,part.type as part_type from document_section left join part on part.id = document_section.part_id where document_section.column_id=".$col['id']." order by document_section.`index`";
 				$result_sec = Database::select($sql);
 				while ($sec = Database::next($result_sec)) {
-					$attrs = '';
-					if ($sec['left']!='') $attrs.=' left="'.$sec['left'].'"';
-					if ($sec['right']!='') $attrs.=' right="'.$sec['right'].'"';
-					if ($sec['top']!='') $attrs.=' top="'.$sec['top'].'"';
-					if ($sec['bottom']!='') $attrs.=' bottom="'.$sec['bottom'].'"';
-					if ($sec['float']!='') $attrs.=' float="'.$sec['float'].'"';
-					if ($sec['width']!='') $attrs.=' width="'.$sec['width'].'"';
 
-
-					$output.= '<section id="'.$sec['id'].'"'.$attrs.'>';
+					$output.= '<section id="'.$sec['id'].'"';
+          foreach (['left','right','top','bottom','float','width','class'] as $key) {
+            if (!empty($sec[$key])) {
+              $output.= ' ' . $key . '="' . Strings::escapeXML($sec[$key]) . '"';
+            }
+          }
+          $output.= '>';
 					$partArr = $this->partPublish($sec['type'],$sec['id'],$id,$sec['part_id'],$sec['part_type'],$context);
 					$output.= $partArr['output'];
 					$index.= ' '.$partArr['index']."\n";

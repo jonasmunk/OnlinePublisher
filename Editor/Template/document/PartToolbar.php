@@ -73,6 +73,9 @@ $gui='
 						<item icon="style/float_right" value="right"/>
 					</segmented>
 				</field>
+				<field label="{Class; da:Klasse}">
+					<text-input name="sectionClass" width="90"/>
+				</field>
 			</toolbar>
 		</tab>
 	</tabs>

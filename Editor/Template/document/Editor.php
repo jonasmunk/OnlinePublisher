@@ -32,7 +32,7 @@ echo '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.or
 		';
 		echo '<link rel="stylesheet" type="text/css" href="../../../hui/'.$cacheUrl.'bin/minimized.css'.$cachePrefix.'" />
 		<link rel="stylesheet" type="text/css" href="../../../style/'.$cacheUrl.'basic/css/parts.php'.$cachePrefix.'" />
-		<link rel="stylesheet" type="text/css" href="../../../style/'.$cacheUrl.'basic/css/document.css'.$cachePrefix.'" />';    
+		<link rel="stylesheet" type="text/css" href="../../../style/'.$cacheUrl.'basic/css/document.css'.$cachePrefix.'" />';
 		if (file_exists($basePath.'style/'.$design.'/css/editor.css')) {
 			echo '<link rel="stylesheet" type="text/css" href="../../../style/'.$cacheUrl.$design.'/css/editor.css'.$cachePrefix.'" />';
 		}
@@ -63,18 +63,18 @@ echo '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.or
 	<body class="editor'.($editedSection!=null ? ' editor_edit_section_mode' : '').'">
 	<div class="editor_body">
 		';
-	
+
 	$partContext = DocumentTemplateController::buildPartContext($pageId);
-	
+
 	displayRows($pageId);
-	
+
 	echo '</div>';
 
 if ($editedSection==null) {
 	$gui = '
 		<source name="pageSource" url="../../Services/Model/Items.php?type=page"/>
 		<source name="fileSource" url="../../Services/Model/Items.php?type=file"/>
-		
+
 		<window width="400" name="linkWindow" padding="5" title="Link">
 			<formula name="linkFormula">
 				<fields labels="above">
@@ -118,7 +118,7 @@ if ($editedSection==null) {
 				</buttons>
 			</formula>
 		</window>
-	
+
 		<boundpanel name="linkPanel" variant="light">
 			<space all="3" bottom="10">
 				<rendering name="linkInfo"/>
@@ -135,11 +135,11 @@ if ($editedSection==null) {
 				<button text="{Cancel; da:Annuller}" name="cancelLinkPanel" variant="light" small="true"/>
 			</buttons>
 		</boundpanel>
-	
+
 		<menu name="linkMenu">
 			<item text="{Delete; da:Slet}" value="delete"/>
 		</menu>
-	
+
 		<menu name="columnMenu">
 			<item text="{Add column; da:Tilføj kolonne}" value="addColumn"/>
 			<item text="{Edit column; da:Instil kolonne}" value="editColumn"/>
@@ -153,7 +153,7 @@ if ($editedSection==null) {
 			<item text="{Add row; da:Tilføj række}" value="addRow"/>
 			<item text="{Delete row; da:Slet række}" value="deleteRow"/>
 		</menu>
-	
+
 		<menu name="sectionMenu">
 			<item text="{Edit section; da:Rediger sektion}" value="editSection"/>
 			<item text="{Delete section; da:Slet sektion}" value="deleteSection"/>
@@ -178,9 +178,9 @@ if ($editedSection==null) {
 				<item text="{Delete row; da:Slet række}" value="deleteRow"/>
 			</item>
 		</menu>
-		
+
 		<menu name="partMenu">
-			
+
 		';
 		$parts = PartService::getPartMenu();
 		foreach ($parts as $part => $info) {
@@ -200,7 +200,7 @@ if ($editedSection==null) {
 			<divider/>
 			<item text="{Paste; da:Indsæt}" value="paste"/>
 		</menu>
-		
+
 		<window width="300" name="rowWindow" padding="5" title="{Row; da:Række}">
 			<formula name="rowFormula">
 				<fields>
@@ -308,9 +308,9 @@ echo '</body></html>';
 
 <?php
 function displayRows($pageId) {
-	
+
 	$structure = DocumentTemplateEditor::getStructure($pageId);
-	
+
 	foreach ($structure as $row) {
     echo '<div class="editor_row_container"';
 		if ($row['spacing']) {
@@ -336,7 +336,7 @@ function displayRows($pageId) {
 }
 
 function displayColumns(&$row) {
-	
+
 	foreach ($row['columns'] as $column) {
 		$style = '';
 		$columnWidth = $column['width'];
@@ -375,7 +375,7 @@ function displayColumns(&$row) {
 function displaySections(&$column,&$row) {
 	global $language,$editedSection;
 	$lastIndex=0;
-		
+
 	foreach ($column['sections'] as $sectionRow) {
 		$style=buildSectionStyle($sectionRow);
 		if ($editedSection==null) {
@@ -430,7 +430,7 @@ function displayPart(&$sectionRow,&$column,&$row) {
 		echo '<div class="editor_error">Error: The part could not be loaded (no type)</div>';
 		return;
 	}
-	
+
 	$ctrl = PartService::getController($sectionRow['partType']);
 	if ($ctrl) {
 		$part = PartService::load($sectionRow['partType'],$sectionRow['partId']);
@@ -442,7 +442,7 @@ function displayPart(&$sectionRow,&$column,&$row) {
 				echo ' onmouseout="controller.sectionOut(this,event)"';
 				echo ' data=\'{"part":'.$part->getId().'}\' onclick="controller.clickSection({event:event,node:this,id:'.$sectionRow['id'].'})">';
 			echo $ctrl->display($part,$partContext);
-			echo '</div>';			
+			echo '</div>';
 		} else {
 			echo '<div class="editor_error">Error: The part could not be loaded</div>';
 		}
@@ -470,7 +470,8 @@ function partEditor($section) {
 	'<input type="hidden" name="bottom" value="'.Strings::escapeXML($section['bottom']).'"/>'.
 	'<input type="hidden" name="top" value="'.Strings::escapeXML($section['top']).'"/>'.
 	'<input type="hidden" name="width" value="'.Strings::escapeXML($section['width']).'"/>'.
-	'<input type="hidden" name="float" value="'.Strings::escapeXML($section['float']).'"/>';
+	'<input type="hidden" name="float" value="'.Strings::escapeXML($section['float']).'"/>'.
+	'<input type="hidden" name="section_class" value="'.Strings::escapeXML($section['class']).'"/>';
 	echo $ctrl->editor($part,$partContext);
 	echo '</form></div>';
 	if (method_exists($ctrl,'editorGui')) {

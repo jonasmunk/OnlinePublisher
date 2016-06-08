@@ -616,6 +616,7 @@ class DocumentTemplateEditor
       document_section.right as section_right,
       document_section.width as section_width,
       document_section.float as section_float,
+      document_section.class as section_class,
       document_section.part_id as part_id,
       part.type as part_type
 
@@ -673,6 +674,7 @@ class DocumentTemplateEditor
             'bottom' => $line['section_bottom'],
             'left' => $line['section_left'],
             'right' => $line['section_right'],
+            'class' => $line['section_class'],
             'partType' => $line['part_type'],
             'partId' => $line['part_id']
           );

@@ -13,9 +13,10 @@ $bottom = Request::getString('bottom');
 $right = Request::getString('right');
 $float = Request::getString('float');
 $width = Request::getString('width');
+$class = Request::getString('section_class');
 
-$sql = "select page_id from document_section where id=".Database::int($section);
-if ($sectionRow = Database::selectFirst($sql)) {
+$sql = "select page_id from document_section where id=@int(id)";
+if ($sectionRow = Database::selectFirst($sql,['id'=>$section])) {
 	$pageId = intval($sectionRow['page_id']);
 
 	// update the section
@@ -26,6 +27,7 @@ if ($sectionRow = Database::selectFirst($sql)) {
 	",`bottom`=".Database::text($bottom).
 	",`float`=".Database::text($float).
 	",`width`=".Database::text($width).
+  ",`class`=".Database::text($class).
 	" where id=".Database::int($section);
 	Database::update($sql);
 

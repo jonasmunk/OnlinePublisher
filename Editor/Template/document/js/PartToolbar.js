@@ -23,13 +23,13 @@ var partToolbar = {
 		}
 		this.partForm = doc.forms['PartForm'];
 		this.section = doc.getElementById('selectedSection');
-		
 		marginLeft.setValue(this.partForm.left.value);
 		marginRight.setValue(this.partForm.right.value);
 		marginBottom.setValue(this.partForm.bottom.value);
 		marginTop.setValue(this.partForm.top.value);
 		sectionWidth.setValue(this.partForm.width.value);
 		sectionFloat.setValue(this.partForm['float'].value);
+		sectionClass.setValue(this.partForm.section_class.value);
 	},
 	syncSize : function() {
 		var ctrl = this.getMainController();
@@ -78,16 +78,18 @@ var partToolbar = {
 		this.partForm.top.value=value;
 		this.animatePadding('padding-top','paddingTop',value);
 	},
+	$valueChanged$sectionClass : function(value) {
+		this.partForm.section_class.value = value;
+	},
 	animatePadding : function(style,prop,value) {
 		if (value) {
-			hui.animate(this.section,style,value,200,{ease:hui.ease.slowFastSlow,onComplete : function() {
+			hui.animate(this.section,style,value,200,{ease:hui.ease.slowFastSlow,$complete : function() {
 				this.syncSize();
 			}.bind(this)})
 		} else {
 			this.section.style[prop]=value;
 			this.syncSize();
 		}
-		
 	},
 	$valueChanged$sectionWidth : function(value) {
 		if (parseInt(value)===0) {
