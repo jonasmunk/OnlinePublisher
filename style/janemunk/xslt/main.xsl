@@ -9,11 +9,14 @@
  xmlns:o="http://uri.in2isoft.com/onlinepublisher/class/object/1.0/"
  xmlns:util="http://uri.in2isoft.com/onlinepublisher/util/"
  xmlns:widget="http://uri.in2isoft.com/onlinepublisher/part/widget/1.0/"
+ xmlns:document="http://uri.in2isoft.com/onlinepublisher/publishing/document/1.0/"
+ xmlns:imagegallery="http://uri.in2isoft.com/onlinepublisher/part/imagegallery/1.0/"
  exclude-result-prefixes="p f h n o util widget"
  >
 <xsl:output encoding="UTF-8" method="xml" doctype-public="-//W3C//DTD XHTML 1.1//EN" doctype-system="http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd"/>
 
 <xsl:include href="../../basic/xslt/util.xsl"/>
+<xsl:include href="exhibit.xsl"/>
 
 
 <xsl:template match="p:page">
@@ -22,7 +25,7 @@
     <head>
       <title><xsl:value-of select="@title"/> - <xsl:value-of select="f:frame/@title"/></title>
       <xsl:choose>
-        <xsl:when test="//widget:exhibition">
+        <xsl:when test="//widget:exhibition or //document:section[@class='artgallery']//imagegallery:imagegallery">
           <meta name="viewport" content="user-scalable=no, initial-scale = 1, maximum-scale = 1, minimum-scale = 1"/>
         </xsl:when>
         <xsl:otherwise>
@@ -37,9 +40,10 @@
     </head>
     <body>
       <xsl:choose>
-        <xsl:when test="//widget:exhibition">
+        <xsl:when test="//widget:exhibition | //document:section[@class='artgallery']//imagegallery:imagegallery">
           <xsl:attribute name="class">exhibit exhibit-concrete</xsl:attribute>
           <xsl:apply-templates select="//widget:widget"/>
+          <xsl:apply-templates select="//document:section[@class='artgallery']//imagegallery:imagegallery"/>
         </xsl:when>
         <xsl:otherwise>
           <xsl:call-template name="new"/>          
@@ -108,7 +112,7 @@
     </xsl:otherwise>
   </xsl:choose>
 </xsl:template>
-
+<!--
 <xsl:template name="legacy">
   <div class="case">
     <xsl:choose>
@@ -159,58 +163,5 @@
     </xsl:choose>
   </div>
 </xsl:template>
-
-<xsl:template match="widget:exhibition">
-  <div class="exhibit_wall">
-    <div class="exhibit_paintings">
-      <xsl:for-each select="widget:page">
-      <div class="exhibit_paintings_page">
-        <xsl:for-each select="widget:image">
-          <div class="exhibit_painting exhibit_painting-left">
-            <xsl:attribute name="class">
-              <xsl:text>exhibit_painting </xsl:text>
-              <xsl:choose>
-                <xsl:when test="position()=1">exhibit_painting-left</xsl:when>
-                <xsl:when test="position()=2">exhibit_painting-center</xsl:when>
-                <xsl:otherwise>exhibit_painting-right</xsl:otherwise>
-              </xsl:choose>
-            </xsl:attribute>
-            <xsl:attribute name="style">
-              <xsl:text>background-image: url('</xsl:text>
-              <xsl:value-of select="$path"/>
-              <xsl:text>services/images/?id=</xsl:text>
-              <xsl:value-of select="@id"/>
-              <xsl:text>&amp;width=311&amp;background=transparent&amp;format=png&amp;sharpen=0.7&amp;nocache=ztrue');</xsl:text>
-            </xsl:attribute>
-            <xsl:attribute name="data-id"><xsl:value-of select="@id"/></xsl:attribute>
-            <xsl:attribute name="data-full">
-              <xsl:value-of select="$path"/>
-              <xsl:text>services/images/?id=</xsl:text>
-              <xsl:value-of select="@id"/>
-              <xsl:text>&amp;width=1000&amp;background=transparent&amp;format=png</xsl:text>
-            </xsl:attribute>
-            <xsl:comment/>
-          </div>
-        </xsl:for-each>
-        <xsl:comment/>
-      </div>
-      </xsl:for-each>
-    </div>
-  </div>
-  <div class="exhibit_viewer js-viewer"><div class="exhibit_viewer_inner js-viewer-inner"><xsl:comment/></div></div>
-  <div class="exhibit_spaces exhibit_control js-spaces">
-    <a href="#" class="exhibit_spaces_option js-spaces-option" data="light">Lys</a>
-    <a href="#" class="exhibit_spaces_option js-spaces-option is-selected" data="concrete">Beton</a>
-    <a href="#" class="exhibit_spaces_option js-spaces-option" data="simple">Simpel</a>
-  </div>
-  <a class="exhibit_back exhibit_control">
-    <xsl:attribute name="href">
-      <xsl:call-template name="util:link-url">
-        <xsl:with-param name="node" select="//p:page/p:context/p:home"/>
-      </xsl:call-template>
-    </xsl:attribute>Tilbage</a>
-  <script src="{$path}{$timestamp-url}style/{$design}/js/hammer.min.js{$timestamp-query}"><xsl:comment/></script>
-  <script src="{$path}{$timestamp-url}style/{$design}/js/exhibit.js{$timestamp-query}"><xsl:comment/></script>
-</xsl:template>
-
+-->
 </xsl:stylesheet>
