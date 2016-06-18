@@ -9,7 +9,7 @@
  xmlns:document="http://uri.in2isoft.com/onlinepublisher/publishing/document/1.0/"
  xmlns:imagegallery="http://uri.in2isoft.com/onlinepublisher/part/imagegallery/1.0/"
  xmlns:image="http://uri.in2isoft.com/onlinepublisher/class/image/1.0/"
- exclude-result-prefixes="p f h n o util widget"
+ exclude-result-prefixes="p o util widget document imagegallery image"
  >
 
 <xsl:template match="widget:exhibition">

@@ -11,7 +11,7 @@
  xmlns:widget="http://uri.in2isoft.com/onlinepublisher/part/widget/1.0/"
  xmlns:document="http://uri.in2isoft.com/onlinepublisher/publishing/document/1.0/"
  xmlns:imagegallery="http://uri.in2isoft.com/onlinepublisher/part/imagegallery/1.0/"
- exclude-result-prefixes="p f h n o util widget"
+ exclude-result-prefixes="p f h n o util widget document imagegallery"
  >
 <xsl:output encoding="UTF-8" method="xml" doctype-public="-//W3C//DTD XHTML 1.1//EN" doctype-system="http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd"/>
 
