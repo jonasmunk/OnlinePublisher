@@ -12,7 +12,7 @@ class ImageService {
 
   static $validTypes = array("image/pjpeg","image/jpeg","image/gif","image/png","image/x-png");
   static $validExtensions = array("jpeg","jpg","gif","png");
-  
+
   static function getUsedImageIds() {
     // Image parts
     $sql = "select image_id as id from part_image".
@@ -31,7 +31,7 @@ class ImageService {
     " where imagegroup_image.imagegroup_id = part_imagegallery.imagegroup_id";
     return Database::getIds($sql);
   }
-  
+
   static function addImageToGroup($imageId,$groupId) {
     $image = Image::load($imageId);
     $group = Imagegroup::load($groupId);
@@ -44,7 +44,7 @@ class ImageService {
       EventService::fireEvent('relation_change','object','imagegroup',$groupId);
     }
   }
-  
+
   static function getGroupCounts() {
     $out = array();
     $sql="select distinct object.id,object.title,count(image.object_id) as imagecount from imagegroup, imagegroup_image, image,object  where imagegroup_image.imagegroup_id=imagegroup.object_id and imagegroup_image.image_id = image.object_id and object.id=imagegroup.object_id group by imagegroup.object_id union select object.id,object.title,'0' from object left join imagegroup_image on imagegroup_image.imagegroup_id=object.id where object.type='imagegroup' and imagegroup_image.image_id is null order by title";
@@ -60,7 +60,7 @@ class ImageService {
     return $out;
   }
 
-  
+
   static function getTotalImageCount() {
     $sql= "select count(object.id) as num FROM object,image where image.object_id=object.id";
     if ($row = Database::selectFirst($sql)) {
@@ -69,7 +69,7 @@ class ImageService {
       return 0;
     }
   }
-  
+
   static function getNumberOfPagesWithImages() {
     $count = 0;
     $sql = "select count(distinct page.id) as num from `part_image`,object,document_section,page where part_image.part_id=document_section.part_id and page.id=document_section.page_id and `part_image`.`image_id`=object.`id`";
@@ -79,10 +79,10 @@ class ImageService {
     $sql = "select distinct page.id as num from part_imagegallery,imagegroup,object,`imagegroup_image`,document_section,page where part_imagegallery.part_id=document_section.part_id and page.id=document_section.page_id and `part_imagegallery`.`imagegroup_id`=imagegroup.`object_id` and `imagegroup_image`.`imagegroup_id`=imagegroup.`object_id` and imagegroup.`object_id`=object.id";
     if ($row = Database::selectFirst($sql)) {
       $count+= intval($row['num']);
-    }   
+    }
     return $count;
   }
-  
+
   static function getNumberOfProductsWithImages() {
     $sql = "select count(object_id) as num from product,object where object.id=product.image_id";
     if ($row = Database::selectFirst($sql)) {
@@ -91,7 +91,7 @@ class ImageService {
       return 0;
     }
   }
-  
+
   static function getNumberOfPersonsWithImages() {
     $sql = "select count(object_id) as num from person,object where object.id=person.image_id";
     if ($row = Database::selectFirst($sql)) {
@@ -100,7 +100,36 @@ class ImageService {
       return 0;
     }
   }
-  
+
+  static function search($query) {
+    $parameters = [];
+    $sql = "select object.id, object.title, imagegroup_image.position, image.size, image.width, image.height, image.type from image,object,imagegroup_image where object.id = image.object_id and imagegroup_image.image_id = object.id and imagegroup_image.imagegroup_id = @int(group)";
+    if (isset($query['group'])) {
+      $parameters['group'] = $query['group'];
+    }
+    if (isset($query['text'])) {
+      $words = preg_split("/[\s,]+/", $query['text']);
+      foreach ($words as $word) {
+        if ($word!='') {
+          $sql .= ' and `object`.`index` like '.Database::search($word);
+        }
+      }
+    }
+    $dir = $query['direction'] == 'ascending' ? 'asc' : 'desc';
+    if ($query['sort'] == 'position') {
+      $sql .= " order by position " . $dir . ",title " . $dir;
+    } else {
+      $sql .= " order by " . $query['sort'] . " " . $dir;
+    }
+    $output = [];
+    $result = Database::select($sql,$parameters);
+    while ($row = Database::next($result)) {
+      $output[] = $row;
+    }
+    Database::free($result);
+    return $output;
+  }
+
   static function getPageImageRelations() {
     $sql = "select image_id,object.title as image_title,page.title as page_title,page.id as page_id,'image' as part,'document' as template".
       " from `part_image`,document_section,page,object".
@@ -127,20 +156,57 @@ class ImageService {
 
     return Database::selectAll($sql);
   }
-  
+
   static function getProductImageRelations() {
     $sql = "select image_object.id as image_id, image_object.title as image_title, product_object.id as product_id, product_object.title as product_title from product,object as image_object,object as product_object where image_object.id=product.image_id and product_object.id=product.object_id";
     return Database::selectAll($sql);
   }
-  
+
   static function getPersonImageRelations() {
     $sql = "select image_object.id as image_id, image_object.title as image_title, person_object.id as person_id, person_object.title as person_title from person,object as image_object,object as person_object where image_object.id=person.image_id and person_object.id=person.object_id";
     return Database::selectAll($sql);
   }
-  
-  
-  
-  
+
+  static function moveImageInGroup($groupId, $imageId, $up) {
+    $result = Database::select(
+      "select imagegroup_image.image_id, imagegroup_image.imagegroup_id
+        from imagegroup_image, object
+        where object.id = imagegroup_image.image_id
+        and imagegroup_image.imagegroup_id = @int(group)
+        order by imagegroup_image.position asc, object.title asc",
+      ['group' => $groupId]
+    );
+    $rows = [];
+    $currentIndex = -1;
+    $i = 0;
+    while($row = Database::next($result)) {
+      $rows[] = $row;
+      if ($row['image_id'] == $imageId) {
+        $currentIndex = $i;
+      }
+      $i++;
+    }
+    Database::free($result);
+
+    if ($currentIndex != -1) {
+      $newIndex = $currentIndex + ($up ? -1 : 1);
+      if ($newIndex >= 0 && $newIndex < count($rows)) {
+        $a = $rows[$currentIndex];
+        $b = $rows[$newIndex];
+        $rows[$currentIndex] = $b;
+        $rows[$newIndex] = $a;
+      }
+    }
+
+    for ($i=0; $i < count($rows); $i++) {
+      $row = $rows[$i];
+      $sql = "update imagegroup_image set position = @int(pos) where image_id=@int(image) and imagegroup_id=@int(group)";
+      Database::update($sql,['pos' => ($i + 1), 'image' => $row['image_id'], 'group' => $row['imagegroup_id']]);
+    }
+  }
+
+
+
   static function getNumberOfImagesNotInGroup() {
     $sql = "select count(object.id) as num from object,image".
       " left join imagegroup_image on imagegroup_image.image_id=image.object_id".
@@ -152,7 +218,7 @@ class ImageService {
       return 0;
     }
   }
-  
+
   static function getUnusedImagesCount() {
     $used = ImageService::getUsedImageIds();
     $sql= "SELECT count(object.id) as num FROM object,image".
@@ -187,7 +253,7 @@ class ImageService {
     } else {
       Log::debug('Unable to load url: '.$url);
     }
-    
+
     $result = new ImportResult();
     $result->setSuccess(false);
     $result->setMessage(array('en'=>'The image could not be fecthed','da'=>'Billedet kunne ikke hentes'));
@@ -202,7 +268,7 @@ class ImageService {
    */
   static function createUploadedImage($title="",$group=0) {
     global $basePath;
-  
+
     $fileName = $_FILES['file']['name'];
     //$fileName = FileSystemService::safeFilename($fileName);
     //$fileType = $_FILES["file"]["type"];
@@ -210,11 +276,11 @@ class ImageService {
     //$fileSize = $_FILES["file"]["size"];
     return ImageService::createImageFromFile($tempFile,$fileName,$title,$group);
   }
-  
+
   static function createImageFromBase64($data,$fileName=null,$title=null) {
     global $basePath;
     $output = array('image'=>null,'success'=>false,'message'=>null);
-    
+
     if (Strings::isBlank($data)) {
       $output['message'] = 'No data';
       return $output;
@@ -231,7 +297,7 @@ class ImageService {
       $output['message'] = 'Unable to write file: '+$tempPath;
       return $output;
     }
-    
+
     $info = getimagesize($tempPath);
     $width = $info[0];
     $height = $info[1];
@@ -255,7 +321,7 @@ class ImageService {
     }
     $path = $basePath.'images/'.$fileName;
     $path = FileSystemService::findFreeFilePath($path);
-    
+
     if (!@rename($tempPath, $path)) {
       $output['message'] = 'Unable to move file from temporary path;';
       @unlink($tempPath);
@@ -263,9 +329,9 @@ class ImageService {
     }
 
     ImageTransformationService::optimizeFile($path);
-    
+
     $fileName = FileSystemService::getFileBaseName($path);
-    
+
     $image = new Image();
     $image->setTitle($title);
     $image->setFilename($fileName);
@@ -275,13 +341,13 @@ class ImageService {
     $image->setHeight($height);
     $image->create();
     $image->publish();
-    
+
     $output['image'] = $image;
     $output['success'] = true;
-    
+
     return $output;
   }
-  
+
   static function isUploadedFileValid($name='file') {
     $path = $_FILES[$name]['tmp_name'];
     $info = ImageTransformationService::getImageInfo($path);
@@ -292,15 +358,15 @@ class ImageService {
     }
     return false;
   }
-  
+
   static function createImageFromFile($tempPath,$fileName=null,$title=null,$group=null) {
     global $basePath;
-    
+
     if (!file_exists($tempPath)) {
       Log::debug('File not found: '.$tempPath);
       return ImportResult::fail(array('en'=>'The file could not be found', 'da'=>'Filen findes ikke'));
     }
-    
+
     $info = ImageTransformationService::getImageInfo($tempPath);
     if (!$info) {
       Log::debug('Unable to get image info: '.$tempPath);
@@ -312,20 +378,20 @@ class ImageService {
       $fileName = FileSystemService::getFileBaseName($tempPath);
     }
     $fileName = FileSystemService::safeFilename($fileName);
-    
+
     $uploadDir = ConfigurationService::getDataPath('images');
     $filePath = FileSystemService::join($uploadDir,$fileName);
-    
+
     // Make sure the file has the correct extension
     $ext = FileService::mimeTypeToExtension($info['mime']);
     $filePath = FileSystemService::overwriteExtension($filePath,$ext);
-    
+
     // Find a free path
     $filePath = FileSystemService::findFreeFilePath($filePath);
-    
+
     // The new file name
     $fileName = FileSystemService::getFileBaseName($filePath);
-    
+
     if (!in_array($info['mime'],ImageService::$validTypes)) {
       Log::debug('Unsupported: '.$info['mime']);
       return ImportResult::fail(array('en'=>'The file format is not supported', 'da'=>'Filens format er ikke understøttet'));
@@ -334,7 +400,7 @@ class ImageService {
       Log::debug('Could not copy: '.$tempPath.' -> '.$filePath);
       return ImportResult::fail(array('en'=>'Unable to copy file', 'da'=>'Kunne ikke kopiere filen'));
     }
-        
+
     ImageTransformationService::optimizeFile($filePath);
 
     // If no title build one from filename
@@ -356,13 +422,13 @@ class ImageService {
     if ($group>0) {
       $image->changeGroups(array($group));
     }
-    
+
     $result = new ImportResult();
     $result->setSuccess(true);
     $result->setObject($image);
     return $result;
   }
-  
+
   static function getLatestImageId() {
     $sql = "select max(object_id) as id from image";
     if ($row = Database::selectFirst($sql)) {

@@ -20,8 +20,12 @@ if ($subset=='latest') {
 }
 if ($group===-1) {
 	$query->withCustom('nogroup',true);
+  $query->orderBy('title');
 } else if ($group) {
 	$query->withCustom('group',$group);
+  $query->orderBy('position')->orderBy('title');
+} else {
+  $query->orderBy('title');
 }
 $list = $query->search()->getList();
 

@@ -294,6 +294,7 @@ $databaseTables = array(
     ),
   'imagegroup_image' => array(
       array("image_id","int(11)","","","0",""),
+      array("position","int(11)","YES","","",""),
       array("imagegroup_id","int(11)","","","0","")
     ),
   'issue' => array(

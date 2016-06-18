@@ -12,21 +12,27 @@ $gui='
 	<controller source="controller.js"/>
 	<controller source="groups.js"/>
 	<controller source="upload.js"/>
+
 	<source name="subsetSource" url="data/Selection.php"/>
 	<source name="groupOptionsSource" url="../../Services/Model/Items.php?type=imagegroup"/>
 	<source name="groupSource" url="data/GroupItems.php"/>
 	<!--<source name="typesSource" url="TypeItems.php"/>-->
+
 	<source name="imagesSource" url="data/GallerySource.php">
 		<parameter key="text" value="@search.value"/>
 		<parameter key="group" value="@groupSelection.value"/>
 		<parameter key="subset" value="@subsetSelection.value"/>
 	</source>
+
 	<source name="listSource" url="data/ListImages.php">
 		<parameter key="text" value="@search.value"/>
 		<parameter key="subset" value="@subsetSelection.value"/>
 		<parameter key="group" value="@groupSelection.value"/>
 		<parameter key="windowPage" value="@list.window.page"/>
+		<parameter key="sort" value="@list.sort.key"/>
+		<parameter key="direction" value="@list.sort.direction"/>
 	</source>
+
 	<structure>
 		<top>
 			<toolbar>

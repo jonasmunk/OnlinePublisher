@@ -9,7 +9,7 @@ if (!isset($GLOBALS['basePath'])) {
 }
 
 class ObjectService {
-  
+
   static function getLatestId($type) {
     $sql = "select max(id) as id from object where type=".Database::text($type);
     if ($row = Database::selectFirst($sql)) {
@@ -17,7 +17,7 @@ class ObjectService {
     }
     return null;
   }
-  
+
   static function getValidIds($ids) {
     if (count($ids)==0) {
       return array();
@@ -25,7 +25,7 @@ class ObjectService {
     $sql = "select id from object where id in (".implode(',',$ids).")";
     return Database::getIds($sql);
   }
-  
+
   static function getInstance($type) {
     if (!$type) {
       return null;
@@ -37,7 +37,7 @@ class ObjectService {
     }
     return null;
   }
-    
+
     static function getObjectData($id) {
       $data = null;
       if ($id) {
@@ -48,7 +48,7 @@ class ObjectService {
       }
       return $data;
     }
-  
+
   static function importType($type) {
     global $basePath;
     $class = ucfirst($type);
@@ -65,12 +65,12 @@ class ObjectService {
     require_once $path;
     return true;
   }
-  
+
   static function addRelation($fromObject,$toObject,$kind='') {
     $sql = "insert into relation (from_object_id,to_object_id,kind) values (".Database::int($fromObject->getId()).",".Database::int($toObject->getId()).",".Database::text($kind).")";
     Database::insert($sql);
   }
-  
+
   static function remove($object) {
     if ($object->isPersistent() && $object->canRemove()) {
       $sql = "delete from `object` where id=".Database::int($object->getId());
@@ -104,7 +104,7 @@ class ObjectService {
     }
     return false;
   }
-  
+
   static function publish($object) {
     if (!$object->isPersistent()) {
       return;
@@ -115,7 +115,7 @@ class ObjectService {
     Database::update($sql);
     EventService::fireEvent('publish','object',$object->getType(),$object->getId());
   }
-  
+
   static function loadAny($id) {
     $sql = "select type from object where id =".Database::int($id);
     if ($row = Database::selectFirst($sql)) {
@@ -132,17 +132,17 @@ class ObjectService {
     return null;
   }
 
-  
+
   static function load($id,$type) {
     return ModelService::load(ucfirst($type),$id);
   }
-  
+
   static function _getSchema($type) {
     if (array_key_exists(ucfirst($type),Entity::$schema)) {
       return Entity::$schema[ucfirst($type)]['properties'];
     }
   }
-  
+
   static function create($object) {
     if ($object->isPersistent()) {
       Log::debug('Tried creating object already persisted...');
@@ -161,7 +161,7 @@ class ObjectService {
     "now(),now(),".
     Database::boolean($object->searchable).",".
     Database::int($object->ownerId).
-    ")";    
+    ")";
     $object->id = Database::insert($sql);
     $schema = ObjectService::_getSchema($object->getType());
     if (is_array($schema)) {
@@ -196,7 +196,7 @@ class ObjectService {
     return true;
   }
 
-  
+
   static function update($object) {
     if (!$object->isPersistent()) {
       Log::debug('Tried updating object not persisted...');
@@ -233,7 +233,7 @@ class ObjectService {
     EventService::fireEvent('update','object',$object->type,$object->id);
     return true;
   }
-  
+
   static function toXml($object) {
     $ns = 'http://uri.in2isoft.com/onlinepublisher/class/object/1.0/';
     $xml = '<object xmlns="'.$ns.'" id="'.$object->id.'" type="'.$object->type.'">'.
@@ -242,9 +242,9 @@ class ObjectService {
       Dates::buildTag('created',$object->created).
       Dates::buildTag('updated',$object->updated).
       Dates::buildTag('published',$object->published);
-    
+
     $links='';
-    
+
     $sql = "select object_link.*,page.path from object_link left join page on page.id=object_link.target_value and object_link.target_type='page' where object_id=".$object->id." order by position";
     $result = Database::select($sql);
     while ($row = Database::next($result)) {
@@ -273,7 +273,7 @@ class ObjectService {
       $links.='/>';
     }
     Database::free($result);
-    
+
     if ($links!='') {
       $xml.='<links>'.$links.'</links>';
     }
@@ -294,16 +294,16 @@ class ObjectService {
     return null;
   }
 
-  
+
   /**
    * @param query Query
    */
   static function search($query) {
-    $parts = array( 
-      'type' => $query->getType(), 
-      'query' => $query->getText(), 
+    $parts = array(
+      'type' => $query->getType(),
+      'query' => $query->getText(),
       'fields' => $query->getFields(),
-      'ordering' => implode(',',$query->getOrdering()),
+      'ordering' => $query->getOrdering(),
       'direction' => $query->getDirection(),
       'tables' => array(),
       'parts' => array()
@@ -320,7 +320,7 @@ class ObjectService {
     $ids = $query->getIds();
     if (is_array($ids) && count($ids)>0) {
       $limit = 'object.id in (';
-      for ($i=0; $i < count($ids); $i++) { 
+      for ($i=0; $i < count($ids); $i++) {
         if ($i>0) {
           $limit.=',';
         }
@@ -331,7 +331,7 @@ class ObjectService {
     }
     if (count($query->getRelationsFrom())>0) {
       $relations = $query->getRelationsFrom();
-      for ($i=0; $i < count($relations); $i++) { 
+      for ($i=0; $i < count($relations); $i++) {
         $relation = $relations[$i];
         $parts['tables'][] = 'relation as relation_from_'.$i;
         $parts['limits'][] = 'relation_from_'.$i.'.to_object_id=object.id';
@@ -345,7 +345,7 @@ class ObjectService {
     }
     if (count($query->getRelationsTo())>0) {
       $relations = $query->getRelationsTo();
-      for ($i=0; $i < count($relations); $i++) { 
+      for ($i=0; $i < count($relations); $i++) {
         $relation = $relations[$i];
         $parts['tables'][] = 'relation as relation_to_'.$i;
         $parts['limits'][] = 'relation_to_'.$i.'.from_object_id=object.id';
@@ -372,7 +372,7 @@ class ObjectService {
     $result->setTotal($x['total']);
     $result->setWindowPage($x['windowPage']);
     $result->setWindowSize($x['windowSize']);
-    
+
     return $result;
   }
 
@@ -389,7 +389,7 @@ class ObjectService {
       // It is important to name type "object_type" since the image class also has a column named type
       'columns' => 'object.id,object.title,object.note,object.type as object_type,object.owner_id,UNIX_TIMESTAMP(object.created) as created,UNIX_TIMESTAMP(object.updated) as updated,UNIX_TIMESTAMP(object.published) as published,object.searchable',
       'tables' => 'object,`'.$type.'`',
-      'ordering' => 'object.title',
+      'ordering' => ['object.title'],
       'limits' => array(
         '`'.$type.'`.object_id=object.id'
       ),
@@ -463,7 +463,7 @@ class ObjectService {
       }
     }
     $list = ObjectService::_find($parts,$query);
-    
+
     ObjectService::importType($type);
     $class = ucfirst($type);
     foreach ($list['rows'] as $row) {
@@ -485,7 +485,7 @@ class ObjectService {
     }
     return $list;
   }
-  
+
   static function findAny($query = array()) {
     $parts = array();
     $parts['columns'] = 'object.id,object.type';
@@ -493,7 +493,7 @@ class ObjectService {
     $parts['limits'] = array();
     $parts['ordering'] = 'object.title';
     $parts['direction'] = $query['direction'];
-      
+
     if ($query['sort']=='title') {
       $parts['ordering']="object.title";
     } else if ($query['sort']=='type') {
@@ -526,7 +526,7 @@ class ObjectService {
     }
     return $list;
   }
-  
+
   static function _find($parts,$query) {
     $list = array('result' => array(),'rows' => array(),'windowPage' => 0,'windowSize' => 0,'total' => 0);
 
@@ -540,14 +540,24 @@ class ObjectService {
     if (is_string($parts['limits']) && strlen($parts['limits'])>0) {
       $sql.=" where ".$parts['limits'];
     }
-    if (strlen($parts['ordering'])) {
-      $sql.=" order by ".$parts['ordering'];
+    if (isset($parts['ordering']) && !empty($parts['ordering'])) {
+      $ordering = is_array($parts['ordering']) ? $parts['ordering'] : [$parts['ordering']];
+      $dir = '';
       if (isset($parts['direction'])) {
-        if ($parts['direction']=='descending') {
-          $sql.=' desc';
-        } else if ($parts['direction']=='ascending') {
-          $sql.=' asc';
-        }                
+        if ($parts['direction'] == 'descending') {
+          $dir = ' desc';
+        } else if ($parts['direction'] == 'ascending') {
+          $dir = ' asc';
+        }
+      }
+      for ($i=0; $i < count($ordering); $i++) {
+        $ord = $ordering[$i];
+        if ($i == 0) {
+          $sql.=" order by ";
+        } else {
+          $sql.=",";
+        }
+        $sql.= $ord . $dir;
       }
     }
     $start=0;
