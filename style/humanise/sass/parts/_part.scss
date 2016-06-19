@@ -1,16 +1,16 @@
 @include if((target: inline)) {
-	.common_header {
-		margin: 0px;
-		color: #333;
-		font-weight: 300;
-	}
+  .common_header {
+    margin: 0px;
+    color: #333;
+    font-weight: 300;
+  }
 
-	.part_text
-	{
-		font-size: 12pt;
-		font-weight: 300;
-		word-spacing: 1px;
-	}
+  .part_text
+  {
+    font-size: 12pt;
+    font-weight: 300;
+    word-spacing: 1px;
+  }
 }
 
 @include if {
@@ -19,63 +19,63 @@
 
   .part_header-1
   {
-  	font-size: 38px;
-  	line-height: 1;
+    font-size: 38px;
+    line-height: 1;
   }
 
   .part_header-2
   {
-  	font-size: 19pt;
-  	line-height: 1.105263158em;
+    font-size: 19pt;
+    line-height: 1.105263158em;
     font-weight: 400;
   }
 
 
   .part_header-3
   {
-  	font-size: 14pt;
-  	line-height: 1.142857143em;
-  	font-weight: 400;
+    font-size: 14pt;
+    line-height: 1.142857143em;
+    font-weight: 400;
   }
 
   .part_header-4,
   .part_header-5,
   .part_header-6
   {
-  	font-weight: 400;
+    font-weight: 400;
   }
 
   .part_section_header-3
   {
-  	padding-bottom: 5px;
+    padding-bottom: 5px;
   }
 
   .windows .part_header
   {
-  	font-weight: normal;
+    font-weight: normal;
   }
 
   .windows .part_header-1
   {
-  	font-weight: 300;
+    font-weight: 300;
   }
 
   /************** Poster ************/
 
   .part_poster_text
   {
-  	font-size: 14px;
-  	font-weight: 300;
+    font-size: 14px;
+    font-weight: 300;
   }
 
   .part_poster_link
   {
-  	font-size: 14px;
+    font-size: 14px;
   }
 
   .part_poster_title
   {
-  	font-weight: 400;
+    font-weight: 400;
   }
 
 
@@ -84,31 +84,31 @@
   .part_text,
   .part_richtext
   {
-  	font-size: 12pt;
-  	font-weight: 300;
-  	/*letter-spacing: 1px;*/
-  	word-spacing: 1px;
+    font-size: 12pt;
+    font-weight: 300;
+    /*letter-spacing: 1px;*/
+    word-spacing: 1px;
   }
 
   .part_text strong,
   .part_richtext strong
   {
-  	color: #000;
-  	font-weight: 400;
+    color: #000;
+    font-weight: 400;
   }
 
   .part_richtext p
   {
-  	margin: 10px 0;
+    margin: 10px 0;
   }
 
   /** Listing **/
 
   .part_listing
   {
-  	font-size: 11pt;
-  	font-weight: 300;
-  	word-spacing: 1px;
+    font-size: 11pt;
+    font-weight: 300;
+    word-spacing: 1px;
     color: #ddd;
   }
 
@@ -118,44 +118,37 @@
 
   .part_listing_first
   {
-  	font-size: 12pt;
-  	font-weight: normal;
+    font-size: 12pt;
+    font-weight: normal;
   }
 
   .part_list h3
   {
-  	font-weight: normal;
+    font-weight: normal;
   }
 
   .part_horizontalrule {
-  	border: none;
-  	border-bottom: solid 1px $line-color;
+    border: none;
+    border-bottom: solid 1px $line-color;
   }
 
   .part_news_item_title
   {
-  	font-size: 10pt;
-  	font-weight: 400;
-
-    .windows & {
-      font-weight: bold;
-    }
+    font-size: 10pt;
+    font-weight: 700;
+    color: #000;
   }
 
   .part_news_item_description
   {
-  	font-size: 10pt;
-  	font-weight: 300;
-
-    .windows & {
-      font-weight: 400;
-    }
+    font-size: 10pt;
+    color: #555;
   }
 
   /** Menu **/
 
   .part_menu-bar {
-	  display: inline-block;
+    display: inline-block;
     font-size: 0;
   }
 
@@ -164,13 +157,13 @@
   }
 
   .part_menu_link-bar {
-	  line-height: 22px;
-	  font-size: 16px;
-	  padding: 6px 10px;
-	  display: block;
-	  text-decoration: none;
+    line-height: 22px;
+    font-size: 16px;
+    padding: 6px 10px;
+    display: block;
+    text-decoration: none;
     color: #666;
-	  border: 1px solid #ddd;
+    border: 1px solid #ddd;
   }
 
   .part_menu_link-bar:hover {
@@ -186,7 +179,7 @@
   }
 
   .part_menu_link-bar-selected {
-	  color: $highlight-color;
+    color: $highlight-color;
     background: #f3f3f3;
     border-color: #ccc;
   }

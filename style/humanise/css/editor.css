@@ -310,18 +310,13 @@ p.common, ul.common {
 
 .part_news_item_title {
   font-size: 10pt;
-  font-weight: 400;
-}
-.windows .part_news_item_title {
-  font-weight: bold;
+  font-weight: 700;
+  color: #000;
 }
 
 .part_news_item_description {
   font-size: 10pt;
-  font-weight: 300;
-}
-.windows .part_news_item_description {
-  font-weight: 400;
+  color: #555;
 }
 
 /** Menu **/

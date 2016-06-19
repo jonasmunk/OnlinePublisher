@@ -1,24 +1,22 @@
 /********************* Common *******************/
 
 @include if((target: inline)) {
-	.common_link
-	{
+	.common_link {
 		color: #ddd;
 		color: rgba(0,0,0,.1);
 		cursor: pointer;
 		font-weight: normal;
 	}
 
-	.common_link_text
-	{
+	.common_link_text {
 		color: $link-color;
 	}
-	
+
 	.common_link:hover, .common_link:hover .common_link_text
 	{
 		color: darken($link-color,10%);
 	}
-  
+
   .common_link:visited {
     .common_link_text {
       color: $link-visited-color;

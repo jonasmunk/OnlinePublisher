@@ -1,0 +1,24 @@
+@include if {
+  .document_row {
+    max-width: 980px;
+    margin: 0 auto;
+    padding: 0 10px;
+
+    &.full-width {
+      max-width: none;
+      padding: 0;
+    }
+  }
+}
+
+@include if((width:760px)) {
+  .document_row {
+    padding: 0 20px;
+  }
+}
+
+@include if((width:1000px)) {
+  .document_row {
+    padding: 0;
+  }
+}

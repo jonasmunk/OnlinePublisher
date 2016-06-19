@@ -1,5 +1,4 @@
 @include if((target: inline)) {
-  .layout_middle,
   .layout_head_body,
   .layout_base {
     position: relative;
@@ -13,14 +12,32 @@
 
   .layout_head {
     background: #f6f6f9;
+
+    &-hero {
+      background: #00a8e6;
+
+      .layout_menu_link {
+        color: #fff;
+        &-first {
+          background-position: -200px -636px;
+          .scroll & {
+            background-position: 0 -636px;
+          }
+        }
+      }
+      .layout_search_icon > path {
+        fill: #fff;
+      }
+    }
+  }
+
+  .layout_content-sidebar {
+    max-width: 980px;
+    margin: 0 auto;
   }
 
   .layout_inner_content {
-    padding: 10px;
-  }
-  
-  .layout_content {
-    overflow: hidden;
+    padding-top: 20px;
   }
 }
 
@@ -33,47 +50,36 @@
     display: block;
     margin: 20px auto 10px;
   }
-  
+
   @include retina {
     .layout_design {
       background-image: url('../gfx/graphics_2x.png');
       background-size: 400px 907px;
-    }   
-  }
-}
-
-@include if((width: 560px,target: inline)) {
-
-  .layout_inner_content {
-    padding: 20px 10px;
+    }
   }
 }
 
 @include if((width: 760px, target:inline)) {
-  
-  .layout_inner_content {
-    padding: 20px;
-  }
 
-  .layout_inner_content_sidebar {
+  .layout_inner_content-sidebar {
     margin-right: 30%;
     overflow: hidden;
     padding-right: 0;
   }
-  
+
   .layout_sidebar {
     width: 30%;
     float: right;
   }
-  
+
   .layout_body {
     overflow: hidden;
   }
-  
+
   .layout {
     padding-top: 54px;
   }
-  
+
   .layout_head {
     top: 0;
     position: fixed;
@@ -84,23 +90,31 @@
 
 @include if((width: 760px)) {
   .layout_head {
-    transition: background-color 1s;
-    -moz-transition: background-color 1s;
-    -webkit-transition: background-color 1s;
-    -ms-transition: background-color 1s;
+    transition: background-color .3s;
+    -moz-transition: background-color .3s;
+    -webkit-transition: background-color .3s;
+    -ms-transition: background-color .3s;
   }
 
   .scroll {
     .layout_head {
       background: rgba(255,255,255,.95);
       box-shadow: 0 0 7px rgba(0,0,0,.2);
+
+      .layout_menu_link {
+        color: $color;
+      }
+
+      .layout_search_icon > path {
+        fill: #aaa;
+      }
     }
-    
+
     .layout_body {
       min-height: 500px;
     }
   }
-  
+
   @supports (-webkit-backdrop-filter: none) or (backdrop-filter: none) {
     .layout_head {
       -webkit-backdrop-filter: blur(8px);
@@ -110,7 +124,7 @@
       .layout_head {
         background: rgba(255,255,255,0.6);
       }
-      
+
       .layout_menu_link {
         text-shadow: 0 0 10px #fff;
       }
@@ -121,50 +135,34 @@
 
 
 @include if((width: 980px)) {
-  
+
   body, html {
     height: 100%;
   }
-  
+
   .layout_middle,
   .layout_head_body,
   .layout_base {
     position: relative;
     min-height: 100%;
   }
-  
+
   .layout_body {
     min-height: 400px;
   }
-  
+
   .layout_base {
     padding-bottom: 220px;
   }
-  
+
   .layout_footer
   {
     margin-top: -230px;
   }
 }
 
-@include if((width: 1000px, target: inline)) {
-  
-  .layout_inner_content {
-    padding-left: 0px;
-    padding-right: 0;
-  }
-}
-
-@include if((width: 1000px)) {
-  
-  .layout_inner_content {
-    padding-left: 0px;
-  }
-
-}
-
 @include if((target: msie_lt9)) {
-  .layout_middle, .layout_head_body, .layout_base {
+  .layout_head_body, .layout_base {
     width: 980px;
     padding-left: 20px;
     padding-right: 20px;

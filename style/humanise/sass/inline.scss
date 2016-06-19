@@ -10,16 +10,21 @@ $target: inline;
 
 @media screen and (max-width: 700px) {
 
-  div.document_column
-  {
-  	display: block;
+  .document_table,
+  .document_table_body,
+  .document_table_column {
+    display: block !important;
   }
 
-	.document_column {
+	.document_table_column {
 		width: auto !important;
 		padding: 0 !important;
 	}
-	
+
+  .document_table_container {
+    margin: 0 !important;
+  }
+
 	.part_image_image {
 		max-width: 100%;
 		height: auto;
@@ -27,14 +32,14 @@ $target: inline;
 }
 
 @media screen and (min-width: 700px) {
-	.document_row {
+	.document_table {
 		display: table;
 		width: 100%;
 	}
-	.document_row_body {
+	.document_table_body {
 		display: table-row;
 	}
-	div.document_column {
+	div.document_table_column {
 		display: table-cell;
 		vertical-align: top;
 	}
