@@ -213,6 +213,9 @@ if ($editedSection==null) {
 					<field label="{Column spacing; da:Kolonne-margen}">
 						<style-length-input key="spacing"/>
 					</field>
+					<field label="{Class; da:Klasse}">
+						<text-input key="class"/>
+					</field>
 				</fields>
 				<buttons top="5">
 					<button text="{Delete; da:Slet}" name="deleteRow">
@@ -314,7 +317,7 @@ function displayRows($pageId) {
 	foreach ($structure as $row) {
     echo '<div class="editor_row_container"';
 		if ($row['spacing']) {
-		  echo 'style="margin: -'.$row['spacing'].';"';
+      echo 'style="margin: 0 -'.$row['spacing'].';"';
 		}
     echo '>';
     echo '<table class="editor_row" border="0" width="100%" cellpadding="0" cellspacing="0" id="row'.$row['id'].'" style="';
@@ -325,7 +328,7 @@ function displayRows($pageId) {
 			echo 'margin-bottom: '.$row['bottom'].';';
 		}
 		if ($row['spacing']) {
-		  echo 'border-spacing: '.$row['spacing'].';';
+      echo 'border-spacing: '.$row['spacing'].' 0;';
 		}
 		echo '"><tr>';
 		displayColumns($row);

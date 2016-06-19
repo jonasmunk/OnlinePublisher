@@ -42,37 +42,70 @@
   </xsl:template>
 
   <xsl:template match="doc:row">
-    <div class="document_row_container">
-      <xsl:if test="@spacing!=''">
-        <xsl:attribute name="style">
-          <xsl:text>margin:-</xsl:text><xsl:value-of select="@spacing"/><xsl:text>;</xsl:text>
-        </xsl:attribute>
+    <xsl:variable name="style">
+      <xsl:if test="@top!=''">
+        <xsl:text>margin-top:</xsl:text><xsl:value-of select="@top"/><xsl:text>;</xsl:text>
       </xsl:if>
-      <div class="document_row">
-        <xsl:variable name="style">
-          <xsl:if test="@spacing!=''">
-            <xsl:text>border-collapse: separate;</xsl:text>
-            <xsl:text>border-spacing:</xsl:text><xsl:value-of select="@spacing"/><xsl:text>;</xsl:text>
-          </xsl:if>
-          <xsl:if test="@top!=''">
-            <xsl:text>margin-top:</xsl:text><xsl:value-of select="@top"/><xsl:text>;</xsl:text>
-          </xsl:if>
-          <xsl:if test="@bottom!=''">
-            <xsl:text>margin-bottom:</xsl:text><xsl:value-of select="@bottom"/><xsl:text>;</xsl:text>
-          </xsl:if>
-        </xsl:variable>
-        <xsl:if test="$style!=''">
-          <xsl:attribute name="style"><xsl:value-of select="$style"/></xsl:attribute>
+      <xsl:if test="@bottom!=''">
+        <xsl:text>margin-bottom:</xsl:text><xsl:value-of select="@bottom"/><xsl:text>;</xsl:text>
+      </xsl:if>
+    </xsl:variable>
+    <div>
+      <xsl:attribute name="class">
+        <xsl:text>document_row</xsl:text>
+        <xsl:if test="@class!=''">
+          <xsl:text> </xsl:text><xsl:value-of select="@class"/>
         </xsl:if>
-        <div class="document_row_body">
-          <xsl:apply-templates/>
-          <xsl:comment/>
+      </xsl:attribute>
+      <xsl:if test="$style!=''">
+        <xsl:attribute name="style"><xsl:value-of select="$style"/></xsl:attribute>
+      </xsl:if>
+      <xsl:apply-templates/>
+      <xsl:comment/>
+    </div>
+  </xsl:template>
+
+  <xsl:template match="doc:column">
+    <div class="document_column">
+      <xsl:apply-templates/>
+      <xsl:comment/>
+    </div>
+  </xsl:template>
+
+  <xsl:template match="doc:row[count(doc:column)>1]">
+    <div class="document_row">
+      <div class="document_table_container">
+        <xsl:if test="@spacing!=''">
+          <xsl:attribute name="style">
+            <xsl:text>margin: 0 -</xsl:text><xsl:value-of select="@spacing"/><xsl:text>;</xsl:text>
+          </xsl:attribute>
+        </xsl:if>
+        <div class="document_table">
+          <xsl:variable name="style">
+            <xsl:if test="@spacing!=''">
+              <xsl:text>border-collapse: separate;</xsl:text>
+              <xsl:text>border-spacing:</xsl:text><xsl:value-of select="@spacing"/><xsl:text> 0;</xsl:text>
+            </xsl:if>
+            <xsl:if test="@top!=''">
+              <xsl:text>margin-top:</xsl:text><xsl:value-of select="@top"/><xsl:text>;</xsl:text>
+            </xsl:if>
+            <xsl:if test="@bottom!=''">
+              <xsl:text>margin-bottom:</xsl:text><xsl:value-of select="@bottom"/><xsl:text>;</xsl:text>
+            </xsl:if>
+          </xsl:variable>
+          <xsl:if test="$style!=''">
+            <xsl:attribute name="style"><xsl:value-of select="$style"/></xsl:attribute>
+          </xsl:if>
+          <div class="document_table_body">
+            <xsl:apply-templates/>
+            <xsl:comment/>
+          </div>
         </div>
       </div>
     </div>
   </xsl:template>
 
-  <xsl:template match="doc:column">
+  <xsl:template match="doc:row[count(doc:column)>1]/doc:column">
     <xsl:variable name="style">
       <xsl:choose>
         <xsl:when test="@width='min'">
@@ -106,7 +139,7 @@
         <xsl:attribute name="style"><xsl:value-of select="$style"/></xsl:attribute>
       </xsl:if>
       <xsl:attribute name="class">
-        <xsl:text>document_column</xsl:text>
+        <xsl:text>document_column document_table_column</xsl:text>
         <xsl:if test="position()=1"> document_column_first</xsl:if>
       </xsl:attribute>
 

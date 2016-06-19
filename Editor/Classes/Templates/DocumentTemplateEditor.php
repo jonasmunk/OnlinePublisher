@@ -501,6 +501,7 @@ class DocumentTemplateEditor
         "`top`=".Database::text($info['top']).
         ",`bottom`=".Database::text($info['bottom']).
         ",`spacing`=".Database::text($info['spacing']).
+        ",`class`=".Database::text($info['class']).
         " where id=".Database::int($info['id']);
       Database::update($sql);
 
@@ -598,6 +599,7 @@ class DocumentTemplateEditor
       document_row.top as row_top,
       document_row.bottom as row_bottom,
       document_row.spacing as row_spacing,
+      document_row.class as row_class,
 
       document_column.id as column_id,
       document_column.index as column_index,
@@ -647,7 +649,8 @@ class DocumentTemplateEditor
           'top' => $line['row_top'],
           'bottom' => $line['row_bottom'],
           'spacing' => $line['row_spacing'],
-          'columns' => array()
+          'class' => $line['class'],
+          'columns' => []
         );
       }
 
@@ -660,7 +663,7 @@ class DocumentTemplateEditor
           'bottom' => $line['column_bottom'],
           'left' => $line['column_left'],
           'right' => $line['column_right'],
-          'sections' => array()
+          'sections' => []
         );
       }
       if ($line['section_id']) {

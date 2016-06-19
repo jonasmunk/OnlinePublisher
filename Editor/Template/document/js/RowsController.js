@@ -1,8 +1,8 @@
 var rowsController = {
-  
+
   rowId : null,
   editedRow : null,
-  
+
   editRow : function(rowId) {
     columnsController.reset();
     this.reset();
@@ -21,7 +21,7 @@ var rowsController = {
       parameters : { id : rowId },
       $object : function(obj) {
         rowWindow.show();
-        rowFormula.setValues(obj);        
+        rowFormula.setValues(obj);
         return;
       }
     })
@@ -47,10 +47,10 @@ var rowsController = {
 
     var node = this.editedRow.node;
     if (node) {
+      node.style.borderSpacing = values.spacing ? values.spacing + ' 0' : '';
+      node.parentNode.style.margin = values.spacing ? '0 -' + values.spacing : '';
       node.style.marginTop = values.top;
       node.style.marginBottom = values.bottom;
-      node.style.borderSpacing = values.spacing;
-      node.parentNode.style.margin = values.spacing ? '-' + values.spacing : '';
     } else {
       hui.log('Row node not found');
     }
@@ -73,12 +73,12 @@ var rowsController = {
     });
     this.clear();
   },
-  
+
   $click$deleteRow : function() {
     this.deleteRow(this.editedRow.id);
     this.reset();
   },
-  
+
   deleteRow : function(id) {
     controller.partControls.hide();
     var node = hui.get('row'+id);
@@ -96,6 +96,6 @@ var rowsController = {
       }
     })
   }
-  
+
 }
 hui.ui.listen(rowsController);
