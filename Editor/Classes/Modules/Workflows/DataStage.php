@@ -13,7 +13,7 @@ class DataStage extends WorkflowStage {
   private $type;
   private $data;
 
-  function DataStage(array $options) {
+  function DataStage(array $options = []) {
     $this->type = isset($options['type']) ? $options['type'] : null;
     $this->data = isset($options['data']) ? $options['data'] : null;
   }

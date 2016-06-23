@@ -13,7 +13,7 @@ class PopulateStreamStage extends WorkflowStage {
   private $streamId;
   private $itemPath;
 
-  function PopulateStreamStage(array $options) {
+  function PopulateStreamStage(array $options = []) {
     $this->streamId = isset($options['id']) ? $options['id'] : null;
     $this->itemPath = isset($options['itemPath']) ? $options['itemPath'] : null;
   }

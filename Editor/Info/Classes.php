@@ -1,7 +1,7 @@
 <?php
 if (!isset($GLOBALS['basePath'])) {
    header('HTTP/1.1 403 Forbidden');
-	exit;
+ exit;
 }
 
 $HUMANISE_EDITOR_CLASSES = array (
@@ -180,14 +180,14 @@ $HUMANISE_EDITOR_CLASSES = array (
     'UserAgentAnalyzer' => 'Network/UserAgentAnalyzer.php',
     'WebRequest' => 'Network/WebRequest.php',
     'WebResponse' => 'Network/WebResponse.php',
-    'WorkflowStage' => 'Modules/Workflows/WorkflowStage.php',
-    'WorkflowState' => 'Modules/Workflows/WorkflowState.php',
-    'WorkflowParser' => 'Modules/Workflows/WorkflowParser.php',
-    'WorkflowDescription' => 'Modules/Workflows/WorkflowDescription.php',
     'DataStage' => 'Modules/Workflows/DataStage.php',
     'FetchStage' => 'Modules/Workflows/FetchStage.php',
     'ParseFeedStage' => 'Modules/Workflows/ParseFeedStage.php',
     'PopulateStreamStage' => 'Modules/Workflows/PopulateStreamStage.php',
+    'WorkflowDescription' => 'Modules/Workflows/WorkflowDescription.php',
+    'WorkflowParser' => 'Modules/Workflows/WorkflowParser.php',
+    'WorkflowStage' => 'Modules/Workflows/WorkflowStage.php',
+    'WorkflowState' => 'Modules/Workflows/WorkflowState.php',
     'WatermeterSummary' => 'Modules/Water/WatermeterSummary.php',
     'ConsoleReporter' => 'Modules/Testing/ConsoleReporter.php',
     'StatisticsQuery' => 'Modules/Statistics/StatisticsQuery.php',
@@ -475,6 +475,13 @@ $HUMANISE_EDITOR_CLASSES = array (
       43 => 'Weblogentry',
       44 => 'Webloggroup',
       45 => 'Workflow',
+    ),
+    'WorkflowStage' => 
+    array (
+      0 => 'DataStage',
+      1 => 'FetchStage',
+      2 => 'ParseFeedStage',
+      3 => 'PopulateStreamStage',
     ),
     'SimpleReporter' => 
     array (

@@ -55,7 +55,7 @@ class Commander {
     echo UI::compile();
   }
 
-	static function style($args) {
+	static function style($args = []) {
     $design = isset($args[2]) ? $args[2] : null;
     DesignService::rebuild($design);
   }
