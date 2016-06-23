@@ -46,10 +46,17 @@
     <xsl:call-template name="util:style-lt-ie9"/>
     <xsl:call-template name="util:style-lt-ie8"/>
     <xsl:call-template name="util:load-font">
+      <xsl:with-param name="href" select="'/style/basic/fonts/Lato/LatoLatin/latolatinfonts_weights.css'"/>
+      <xsl:with-param name="family" select="'Lato'"/>
+      <xsl:with-param name="weights" select="'300,400,700,900'"/>
+    </xsl:call-template>
+    <!--
+    <xsl:call-template name="util:load-font">
       <xsl:with-param name="href" select="'http://fonts.googleapis.com/css?family=Lato:300,400,700,900'"/>
       <xsl:with-param name="family" select="'Lato'"/>
       <xsl:with-param name="weights" select="'300,400,700,900'"/>
     </xsl:call-template>
+      -->
     <!--
     <xsl:call-template name="util:load-font">
       <xsl:with-param name="href" select="'http://fonts.googleapis.com/css?family=Heebo:100,300,400,500'"/>
@@ -57,6 +64,23 @@
       <xsl:with-param name="weights" select="'100,300,400,500'"/>
     </xsl:call-template>
     -->
+      <!--
+        MYRIAD PRO...
+      <script>
+        <xsl:comment>
+        <![CDATA[
+        (function(d) {
+          var config = {
+            kitId: 'gpd5jdr',
+            scriptTimeout: 3000,
+            async: true
+          },
+          h=d.documentElement,t=setTimeout(function(){h.className=h.className.replace(/\bwf-loading\b/g,"")+" wf-inactive";},config.scriptTimeout),tk=d.createElement("script"),f=false,s=d.getElementsByTagName("script")[0],a;h.className+=" wf-loading";tk.src='https://use.typekit.net/'+config.kitId+'.js';tk.async=true;tk.onload=tk.onreadystatechange=function(){a=this.readyState;if(f||a&&a!="complete"&&a!="loaded")return;f=true;clearTimeout(t);try{Typekit.load(config)}catch(e){}};s.parentNode.insertBefore(tk,s)
+        })(document);
+        ]]>
+        </xsl:comment>
+      </script>
+      -->
   </head>
   <body>
         <xsl:call-template name="util:script-inline">

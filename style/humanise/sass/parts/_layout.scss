@@ -102,11 +102,15 @@
       box-shadow: 0 0 7px rgba(0,0,0,.2);
 
       .layout_menu_link {
-        color: $color;
+        color: #000;
       }
 
       .layout_search_icon > path {
         fill: #aaa;
+      }
+
+      .layout_search_icon:hover > path {
+        fill: #333;
       }
     }
 

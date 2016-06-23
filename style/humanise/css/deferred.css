@@ -229,7 +229,7 @@
     width: 0px;
     height: auto;
     top: 9px;
-    right: 3px;
+    right: 8px;
     background: none;
     padding: 0;
   }
@@ -498,10 +498,13 @@
     box-shadow: 0 0 7px rgba(0, 0, 0, 0.2);
   }
   .scroll .layout_head .layout_menu_link {
-    color: #324d60;
+    color: #000;
   }
   .scroll .layout_head .layout_search_icon > path {
     fill: #aaa;
+  }
+  .scroll .layout_head .layout_search_icon:hover > path {
+    fill: #333;
   }
   .scroll .layout_body {
     min-height: 500px;
@@ -650,7 +653,6 @@
   background-image: linear-gradient(top, #0097c8, #9167f1);
   filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#0097c8', endColorstr='#9167f1');
   position: relative;
-  margin-top: -20px;
 }
 
 .hero_rays {
@@ -691,10 +693,11 @@
   left: 10px;
   top: 50%;
   margin-top: -40px;
+  display: block;
 }
 .hero_title_prefix {
   display: block;
-  font-weight: 100;
+  font-weight: 300;
 }
 .hero_title_suffix {
   display: block;
@@ -710,12 +713,13 @@
   z-index: 1;
   text-align: center;
   margin-top: -50px;
+  display: block;
 }
 
 .hero_text {
   color: #fff;
   font-size: 20px;
-  font-weight: 100;
+  font-weight: 300;
   line-height: 1;
   margin-bottom: 10px;
 }
@@ -730,7 +734,7 @@
   text-decoration: none;
   border-radius: 4px;
   font-size: 14px;
-  font-weight: 300;
+  font-weight: 400;
 }
 .hero_button:hover {
   background: rgba(255, 255, 255, 0.3);

@@ -1,6 +1,7 @@
 /********************* Common *******************/
 .layout_menu {
   padding: 5px 10px;
+  text-align: left;
 }
 .layout_menu > li {
   vertical-align: top;
@@ -37,7 +38,7 @@
   width: 0px;
   height: auto;
   top: 9px;
-  right: 3px;
+  right: 8px;
   background: none;
   padding: 0;
 }
@@ -189,10 +190,13 @@
   box-shadow: 0 0 7px rgba(0, 0, 0, 0.2);
 }
 .scroll .layout_head .layout_menu_link {
-  color: #324d60;
+  color: #000;
 }
 .scroll .layout_head .layout_search_icon > path {
   fill: #aaa;
+}
+.scroll .layout_head .layout_search_icon:hover > path {
+  fill: #333;
 }
 .scroll .layout_body {
   min-height: 500px;
@@ -413,7 +417,7 @@ body, html {
 }
 
 .hero {
-  padding-bottom: 500px;
+  padding-bottom: 400px;
 }
 
 .hero_title {

@@ -75,6 +75,7 @@ p.common, ul.common {
   margin: 0;
   padding: 5px;
   list-style: none;
+  text-align: center;
 }
 
 .layout_menu_item {
@@ -89,14 +90,12 @@ p.common, ul.common {
   color: #324d60;
   font-weight: 300;
 }
-
 .layout_menu_link-highlighted {
   color: #007AC5;
 }
-
 .layout_menu_link-selected {
   color: #007AC5;
-  font-weight: bold;
+  font-weight: 400;
 }
 
 .layout_menu_item-first {
@@ -122,6 +121,7 @@ p.common, ul.common {
 @media screen and (min-width: 760px) {
   .layout_menu {
     padding: 5px 10px;
+    text-align: left;
   }
   .layout_menu > li {
     vertical-align: top;
@@ -153,11 +153,11 @@ p.common, ul.common {
 
 .layout_search_icon {
   position: absolute;
-  top: 10px;
-  right: 10px;
+  top: 14px;
+  right: 12px;
   display: inline-block;
-  width: 30px;
-  height: 30px;
+  width: 24px;
+  height: 24px;
 }
 .layout_search_icon > path {
   fill: #aaa;
@@ -358,6 +358,11 @@ p.common, ul.common {
 .hero {
   padding-bottom: 50%;
   overflow: hidden;
+  margin: -20px 0 20px;
+  background: #00a8e6;
+}
+.hero_title, .hero_info {
+  display: none;
 }
 
 @-webkit-keyframes effect {
@@ -368,9 +373,9 @@ p.common, ul.common {
     transform: rotate(360deg);
   }
 }
-@media screen and (min-width: 1000px) {
+@media screen and (min-width: 800px) {
   .hero {
-    padding-bottom: 500px;
+    padding-bottom: 400px;
   }
 }
 @media screen and (max-width: 700px) {

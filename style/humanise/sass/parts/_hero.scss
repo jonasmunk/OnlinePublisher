@@ -2,14 +2,18 @@
   .hero {
     padding-bottom: 50%;
     overflow: hidden;
+    margin: -20px 0 20px;
+    background: #00a8e6;
+    &_title, &_info {
+      display: none;
+    }
   }
 }
 
-@include if() {
+@include if {
   .hero {
     @include vertical-gradient(#0097c8,#9167f1);
     position: relative;
-    margin-top: -20px;
   }
 
   .hero_rays {
@@ -50,10 +54,11 @@
     left: 10px;
     top: 50%;
     margin-top: -40px;
+    display: block;
 
     &_prefix {
       display: block;
-      font-weight: 100;
+      font-weight: 300;
     }
 
     &_suffix {
@@ -71,12 +76,13 @@
     z-index: 1;
     text-align: center;
     margin-top: -50px;
+    display: block;
   }
 
   .hero_text {
     color: #fff;
     font-size: 20px;
-    font-weight: 100;
+    font-weight: 300;
     line-height: 1;
     margin-bottom: 10px;
   }
@@ -91,7 +97,7 @@
     text-decoration: none;
     border-radius: 4px;
     font-size: 14px;
-    font-weight: 300;
+    font-weight: 400;
 
     &:hover {
       background: rgba(255, 255, 255, 0.3);
@@ -194,10 +200,10 @@
   }
 }
 
-@include if((width: 1000px, target:'inline')) {
+@include if((width: 800px, target:'inline')) {
 
   .hero {
-    padding-bottom: 500px;
+    padding-bottom: 400px;
   }
 
 }
