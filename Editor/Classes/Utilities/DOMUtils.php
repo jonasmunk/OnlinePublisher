@@ -9,7 +9,7 @@ if (!isset($GLOBALS['basePath'])) {
 	exit;
 }
 class DOMUtils {
-	
+
 	static $codes = array(
 		XML_ERROR_NONE => 'XML_ERROR_NONE',
 		XML_ERROR_NO_MEMORY => 'XML_ERROR_NO_MEMORY',
@@ -34,7 +34,7 @@ class DOMUtils {
 		XML_ERROR_UNCLOSED_CDATA_SECTION => 'XML_ERROR_UNCLOSED_CDATA_SECTION',
 		XML_ERROR_EXTERNAL_ENTITY_HANDLING => 'XML_ERROR_EXTERNAL_ENTITY_HANDLING'
 	);
-	
+
 	static function getFirstDescendant($node,$name) {
 		$nodes = $node->getElementsByTagName($name);
 		if ($nodes->length>0) {
@@ -42,7 +42,7 @@ class DOMUtils {
 		}
 		return null;
 	}
-	
+
 	static function parseHTML($str) {
 		$doc = new DOMDocument();
 		$doc->recover = TRUE;
@@ -53,7 +53,7 @@ class DOMUtils {
 			return null;
 		}
 	}
-	
+
 	static function parseHTMLFragment($str,$encoding="ISO-8859-15") {
 		$str = '<?xml encoding="' . $encoding . '"><fragment>' . $str . '</fragment>';
 		$doc = new DOMDocument( "1.0", $encoding);
@@ -70,15 +70,15 @@ class DOMUtils {
 		}
 		return null;
 	}
-	
+
 	static function parseAnything($str) {
 		global $basePath;
 		require_once($basePath.'Editor/Libraries/htmlawed/htmLawed.php');
-		$str = htmLawed($str); 
+		$str = htmLawed($str);
 		$doc = new DOMDocument();
 		$doc->recover = TRUE;
 		try {
-			$success = @$doc->loadXML($str,LIBXML_NOERROR);			
+			$success = @$doc->loadXML($str,LIBXML_NOERROR);
 		} catch (Exception $e) {
 			Log::debug($e);
 			Log::debug($str);
@@ -95,10 +95,10 @@ class DOMUtils {
 			return null;
 		}
 	}
-	
+
 	static function getChildElements($node,$name=null) {
 		$result = array();
-		for ($i=0; $i < $node->childNodes->length; $i++) { 
+		for ($i=0; $i < $node->childNodes->length; $i++) {
 			$child = $node->childNodes->item($i);
 			if ($child->nodeType == XML_ELEMENT_NODE) {
  				if ($name!=null && $child->nodeName!=$name) {
@@ -109,9 +109,9 @@ class DOMUtils {
 		}
 		return $result;
 	}
-	
+
 	static function getFirstChildElement($node,$name=null) {
-		for ($i=0; $i < $node->childNodes->length; $i++) { 
+		for ($i=0; $i < $node->childNodes->length; $i++) {
 			$child = $node->childNodes->item($i);
 			if ($child->nodeType == XML_ELEMENT_NODE) {
  				if ($name!=null && $child->nodeName!=$name) {
@@ -122,18 +122,18 @@ class DOMUtils {
 		}
 		return null;
 	}
-	
+
 	static function getFirstChildText($node,$name) {
 		if ($child = DOMUtils::getFirstChildElement($node,$name)) {
 			return DOMUtils::getText($child);
 		}
 		return null;
 	}
-	
+
 	static function getText($node) {
 		return $node->textContent;
 	}
-	
+
 	static function getPathText(&$node,$path) {
 		$xpath = new DOMXPath($node->ownerDocument);
 		if ($child =& $xpath->query($path,$node)->item(0)) {
@@ -142,31 +142,31 @@ class DOMUtils {
 			return '';
 		}
 	}
-	
+
 	static function stripNamespaces($str) {
 		return preg_replace_callback('/ xmlns="[\\w:\\/.]*"/',function($matches) {return '';},$str);
 	}
-	
+
 	static function getInnerXML($node,$encoding="ISO-8859-15") {
 		$doc = DOMUtils::parse('<xml></xml>',$encoding);
-		for ($i=0; $i < $node->childNodes->length; $i++) { 
+		for ($i=0; $i < $node->childNodes->length; $i++) {
 			$clone = $doc->importNode($node->childNodes->item($i),true);
 			$doc->documentElement->appendChild($clone);
 		}
 		$xml = $doc->saveXML();
-		
+
 		return substr($xml, 27, -7);
 	}
-	
+
 	static function getXML($node) {
 		$doc = DOMUtils::parse('<xml></xml>');
 		$clone = $doc->importNode($node,true);
 		$doc->documentElement->appendChild($clone);
 		$xml = $doc->saveXML();
-		
+
 		return substr($xml, 27, -7);
 	}
-	
+
 	static function isValid($data) {
 		$code=0;
 		$parser = xml_parser_create();
@@ -183,7 +183,7 @@ class DOMUtils {
 			return false;
 		}
 	}
-	
+
 	static function isValidFragment($data) {
 		return DOMUtils::isValid('<x>'.$data.'</x>');
 	}
