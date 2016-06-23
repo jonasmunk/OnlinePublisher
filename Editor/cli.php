@@ -17,59 +17,58 @@ echo "base : " . $basePath . "\n";
 $args = Console::getArguments();
 
 if (method_exists('Commander',$args[1])) {
-    Commander::$args[1]($args);
+  Commander::$args[1]($args);
 } else {
-    $methods = get_class_methods('Commander');
-    echo "Tell me what to do: ".join(', ',$methods);
-    echo "\n: ";
-    $handle = fopen ("php://stdin","r");
-    $cmd = trim(fgets($handle));
-    if (method_exists('Commander',$cmd)) {
-        Commander::$cmd();
-    } else {
-        echo "No action: ".$cmd;
-    }
+  $methods = get_class_methods('Commander');
+  echo "Tell me what to do: ".join(', ',$methods);
+  echo "\n: ";
+  $handle = fopen ("php://stdin","r");
+  $cmd = trim(fgets($handle));
+  if (method_exists('Commander',$cmd)) {
+    Commander::$cmd();
+  } else {
+    echo "No action: ".$cmd;
+  }
 }
 
 
 class Commander {
 
 	static function test($args) {
-        if (!Database::testConnection()) {
-            echo "No database - no testing!\n";
-            exit;
-        }
-
-        if (isset($args[2])) {
-            if (strpos($args[2],'/')!==false) {
-                TestService::runTest($args[2],new ConsoleReporter());
-            } else {
-                TestService::runTestsInGroup($args[2],new ConsoleReporter());
-            }
-        } else {
-            TestService::runAllTests(new ConsoleReporter());
-        }
-
+    if (!Database::testConnection()) {
+      echo "No database - no testing!\n";
+      exit;
     }
+
+    if (isset($args[2])) {
+      if (strpos($args[2],'/')!==false) {
+        TestService::runTest($args[2],new ConsoleReporter());
+      } else {
+        TestService::runTestsInGroup($args[2],new ConsoleReporter());
+      }
+    } else {
+      TestService::runAllTests(new ConsoleReporter());
+    }
+  }
 
 	static function hui() {
-        echo UI::compile();
-    }
+    echo UI::compile();
+  }
 
 	static function style($args) {
-        $design = isset($args[2]) ? $args[2] : null;
-        DesignService::rebuild($design);
-    }
+    $design = isset($args[2]) ? $args[2] : null;
+    DesignService::rebuild($design);
+  }
 
 	static function schema() {
-        global $basePath;
-        $schema = SchemaService::getDatabaseSchema();
+    global $basePath;
+    $schema = SchemaService::getDatabaseSchema();
 
-        $schema = var_export(SchemaService::getDatabaseSchema(),true);
+    $schema = var_export(SchemaService::getDatabaseSchema(),true);
 
-        $file = $basePath."Editor/Info/Schema.php";
+    $file = $basePath."Editor/Info/Schema.php";
 
-        $data = "<?php
+    $data = "<?php
 /**
  * @package OnlinePublisher
  * @subpackage Info
@@ -81,29 +80,29 @@ if (!isset(\$GLOBALS['basePath'])) {
 }
 \$HUMANISE_EDITOR_SCHEMA = " . $schema . "
 ?>";
-        FileSystemService::writeStringToFile($data,$file);
-        echo $schema . PHP_EOL;
-    }
+    FileSystemService::writeStringToFile($data,$file);
+    echo $schema . PHP_EOL;
+  }
 
 	static function classes() {
-        $success = ClassService::rebuildClasses();
-        echo $success ? 'Classes successfully rebuild' : 'ERROR: Classes could not be rebuild';
-        echo PHP_EOL;
-    }
+    $success = ClassService::rebuildClasses();
+    echo $success ? 'Classes successfully rebuild' : 'ERROR: Classes could not be rebuild';
+    echo PHP_EOL;
+  }
 
 	static function check() {
-        if (DatabaseUtil::isCorrect()) {
-            echo "The database schema is correct" . PHP_EOL;
-        } else {
-            echo "The database schema is NOT correct" . PHP_EOL;
-        }
-        echo join(PHP_EOL,DatabaseUtil::buildUpdateSQL()) . PHP_EOL;
+    if (DatabaseUtil::isCorrect()) {
+      echo "The database schema is correct" . PHP_EOL;
+    } else {
+      echo "The database schema is NOT correct" . PHP_EOL;
     }
+    echo join(PHP_EOL,DatabaseUtil::buildUpdateSQL()) . PHP_EOL;
+  }
 
 	static function full() {
-        Commander::classes();
-        Commander::hui();
-        Commander::style();
-    }
+    Commander::classes();
+    Commander::hui();
+    Commander::style();
+  }
 }
 ?>
