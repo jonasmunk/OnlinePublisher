@@ -11,29 +11,29 @@ class TextDecorator {
 	var $httpCloseTag = '</a>';
 	var $emailOpenTag = '<a href="mailto:{subject}">';
 	var $emailCloseTag = '</a>';
-	
+
 	function TextDecorator() {
-		
+
 	}
-	
+
 	function setEmailTags($open,$close) {
 		$this->emailOpenTag = $open;
 		$this->emailCloseTag = $close;
 	}
-	
+
 	function setHttpTags($open,$close) {
 		$this->httpOpenTag = $open;
 		$this->httpCloseTag = $close;
 	}
-	
+
 	function addTag($from,$to) {
 		$this->tags[] = array('from' => $from, 'to' => $to);
 	}
-	
+
 	function addReplacement($subject,$open,$close,$condition=null) {
 		$this->replacements[] = array('subject' => $subject, 'open' => $open, 'close' => $close, 'condition' => $condition);
 	}
-	
+
 	function _getFilteredReplacements($condition=null) {
 		if ($condition==null) {
 			return $this->replacements;
@@ -77,7 +77,7 @@ class TextDecorator {
 		//Log::debugJSON($filtered);
 		return array_values($filtered);
 	}
-	
+
     function decorate($text,$condition=null) {
 		$rules = array();
 		$filtered = $this->_getFilteredReplacements($condition);
@@ -107,7 +107,7 @@ class TextDecorator {
 			}
 		}
 	}
-	
+
 	function tags($text,&$rules,$orig,$replacement) {
 		$pattern = "/\[".$orig."\]([^\[\]\n]+)\[".$orig."\]/i";
 		preg_match_all($pattern, $text, $matches,PREG_OFFSET_CAPTURE);
@@ -126,7 +126,7 @@ class TextDecorator {
 		foreach ($matches[0] as $match) {
 		}
 	}
-	
+
 	function email($text,&$rules) {
 		$pattern = "/[a-zA-Z0-9._-]+@[a-zA-Z0-9._-]+\.[a-zA-Z]{2,4}\b/i";
 		preg_match_all($pattern, $text, $matches,PREG_OFFSET_CAPTURE);
@@ -137,10 +137,10 @@ class TextDecorator {
 			$rules[$pos] = array('start' => $pos, 'stop' => $pos+strlen($subject),'openTag' => $openTag,'closeTag' => $this->emailCloseTag);
 		}
 	}
-	
+
 	function url($text,&$rules) {
-		
-		$pattern = "/((http[s]?:\/\/[a-z0-9\-\.]+\.[a-z0-9]{2,3})((\/[a-z0-9.\?&\/\#=_\-\%,~)\(;]*)| |\r\n))/mi";
+
+		$pattern = "/((http[s]?:\/\/[a-z0-9\-\.]+\.[a-z0-9]{2,3})((\/[a-z0-9.\?&\/\#=_\-\%,~\+)\(;]*)| |\r\n))/mi";
 		preg_match_all($pattern, $text, $matches,PREG_OFFSET_CAPTURE);
 		foreach ($matches[0] as $match) {
 			$pos = $match[1];
