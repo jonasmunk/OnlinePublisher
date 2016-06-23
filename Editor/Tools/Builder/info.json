@@ -1,0 +1,8 @@
+{
+	"key" : "Builder",
+	"icon" : "application/calendars",
+	"name" : {"da" : "Bygger", "en" : "Builder"},
+	"description" : {"da" : "Byg noget", "en" : "Build something"},
+	"category" : "edit",
+	"priority" : 99
+}
