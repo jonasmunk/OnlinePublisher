@@ -649,7 +649,7 @@ class DocumentTemplateEditor
           'top' => $line['row_top'],
           'bottom' => $line['row_bottom'],
           'spacing' => $line['row_spacing'],
-          'class' => $line['class'],
+          'class' => $line['row_class'],
           'columns' => []
         );
       }
