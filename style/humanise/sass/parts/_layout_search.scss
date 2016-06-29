@@ -63,6 +63,11 @@
     font-size: 16px;
     border-radius: 3px;
     -webkit-appearance: none;
+
+    &::-ms-clear {
+      width : 0;
+      height: 0;
+    }
   }
 
   .layout_search_submit {

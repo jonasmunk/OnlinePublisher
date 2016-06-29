@@ -194,6 +194,10 @@
   border-radius: 3px;
   -webkit-appearance: none;
 }
+.layout_search_text::-ms-clear {
+  width: 0;
+  height: 0;
+}
 
 .layout_search_submit {
   width: 100px;
@@ -811,7 +815,7 @@
     border-width: 2px;
   }
 }
-@media screen and (min-width: 1000px) {
+@media screen and (min-width: 1040px) {
   .hero_title {
     left: 50%;
     margin-left: -500px;

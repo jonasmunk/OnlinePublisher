@@ -45,18 +45,18 @@
         </xsl:call-template>
     <xsl:call-template name="util:style-lt-ie9"/>
     <xsl:call-template name="util:style-lt-ie8"/>
+    <!--
     <xsl:call-template name="util:load-font">
       <xsl:with-param name="href" select="'/style/basic/fonts/Lato/LatoLatin/latolatinfonts_weights.css'"/>
       <xsl:with-param name="family" select="'Lato'"/>
       <xsl:with-param name="weights" select="'300,400,700,900'"/>
-    </xsl:call-template>
-    <!--
+    </xsl:call-template>-->
     <xsl:call-template name="util:load-font">
       <xsl:with-param name="href" select="'http://fonts.googleapis.com/css?family=Lato:300,400,700,900'"/>
       <xsl:with-param name="family" select="'Lato'"/>
-      <xsl:with-param name="weights" select="'300,400,700,900'"/>
+      <xsl:with-param name="weights" select="'300,400,700'"/>
     </xsl:call-template>
-      -->
+
     <!--
     <xsl:call-template name="util:load-font">
       <xsl:with-param name="href" select="'http://fonts.googleapis.com/css?family=Heebo:100,300,400,500'"/>
