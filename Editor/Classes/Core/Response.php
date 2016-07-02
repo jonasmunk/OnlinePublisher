@@ -27,6 +27,10 @@ class Response {
     echo $str;
 	}
 
+  static function setExpiresInDays($days=0) {
+    Response::setExpiresInHours($days * 24);
+  }
+
   static function setExpiresInHours($hours=0) {
     $offset = 60 * 60 * $hours;
 
