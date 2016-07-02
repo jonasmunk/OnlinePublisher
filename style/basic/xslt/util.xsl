@@ -476,6 +476,22 @@ i.parentNode.insertBefore(o,i)}}}})}},_editor.processNoscript()}(window,document
 	<xsl:comment><![CDATA[[if lt IE 9]><link rel="stylesheet" type="text/css" href="]]><xsl:value-of select="$path"/><xsl:value-of select="$timestamp-url"/>style/<xsl:value-of select="$design"/><![CDATA[/css/msie_lt8.css"> </link><![endif]]]></xsl:comment>
 </xsl:template>
 
+<xsl:template name="util:css">
+  <xsl:if test="$template!='document'">
+    <link rel="stylesheet" type="text/css" href="{$path}{$timestamp-url}style/basic/css/{$template}.css"/>
+  </xsl:if>
+  <xsl:variable name="query">
+  <xsl:choose>
+    <xsl:when test="$development='true'">?development=true</xsl:when>
+		<xsl:when test="$preview='true'">?preview=true</xsl:when>
+    <xsl:when test="$development='true' and $preview='true'">?preview=true&amp;development=true</xsl:when>
+  </xsl:choose>
+  </xsl:variable>
+  <link rel="stylesheet" type="text/css" href="{$path}{$timestamp-url}api/style/{$design}.css{$query}"/>
+  <xsl:call-template name="util:_style-dynamic"/>
+  <xsl:call-template name="util:_style-hui-msie"/>
+</xsl:template>
+
 <xsl:template name="util:style">
 	<link rel="stylesheet" type="text/css" href="{$path}{$timestamp-url}style/basic/css/{$template}.css"/>
 	<link rel="stylesheet" type="text/css" href="{$path}{$timestamp-url}style/{$design}/css/style.php"/>
@@ -494,47 +510,47 @@ i.parentNode.insertBefore(o,i)}}}})}},_editor.processNoscript()}(window,document
 </xsl:template>
 
 <xsl:template name="util:style-build">
-    <xsl:param name="plain" select="'false'"/>
-    <xsl:param name="async" select="'true'"/>
-    <xsl:if test="$template!='document'">
-        <link rel="stylesheet" type="text/css" href="{$path}{$timestamp-url}style/basic/css/{$template}.css"/>
-    </xsl:if>
+  <xsl:param name="plain" select="'false'"/>
+  <xsl:param name="async" select="'true'"/>
+  <xsl:if test="$template!='document'">
+    <link rel="stylesheet" type="text/css" href="{$path}{$timestamp-url}style/basic/css/{$template}.css"/>
+  </xsl:if>
 	<xsl:choose>
 		<xsl:when test="$preview='true' and $development='true'">
 			<link rel="stylesheet" type="text/css" href="{$path}{$timestamp-url}hui/bin/minimized.css{$timestamp-query}"/>
 			<link rel="stylesheet" type="text/css" href="{$path}{$timestamp-url}hui/css/pages.css{$timestamp-query}"/>
 			<link rel="stylesheet" type="text/css" href="{$path}{$timestamp-url}hui/css/editor.css{$timestamp-query}"/>
-	        <link rel="stylesheet" type="text/css" href="{$path}{$timestamp-url}style/{$design}/css/style.dev.css"/>
+      <link rel="stylesheet" type="text/css" href="{$path}{$timestamp-url}style/{$design}/css/style.dev.css"/>
 		</xsl:when>
 		<xsl:when test="$preview='true'">
 			<link rel="stylesheet" type="text/css" href="{$path}{$timestamp-url}hui/bin/minimized.css{$timestamp-query}"/>
 			<link rel="stylesheet" type="text/css" href="{$path}{$timestamp-url}hui/css/pages.css{$timestamp-query}"/>
 			<link rel="stylesheet" type="text/css" href="{$path}{$timestamp-url}hui/css/editor.css{$timestamp-query}"/>
-	        <link rel="stylesheet" type="text/css" href="{$path}{$timestamp-url}style/{$design}/css/style.private.css"/>
+      <link rel="stylesheet" type="text/css" href="{$path}{$timestamp-url}style/{$design}/css/style.private.css"/>
 		</xsl:when>
 		<xsl:when test="$development='true'">
 			<link rel="stylesheet" type="text/css" href="{$path}{$timestamp-url}hui/bin/minimized.site.css{$timestamp-query}"/>
-            <xsl:if test="$plain='false' and $async='true'">
-                <xsl:call-template name="util:lazy-style">
-                    <xsl:with-param name="href">
-                        <xsl:value-of select="$path"/><xsl:value-of select="$timestamp-url"/>style/<xsl:value-of select="$design"/><xsl:text>/css/style.dev.css</xsl:text>
-                    </xsl:with-param>
-                </xsl:call-template>
-            </xsl:if>
-            <xsl:if test="$plain='false' and $async='false'">
-                <link rel="stylesheet" type="text/css" href="{$path}{$timestamp-url}style/{$design}/css/style.dev.css{$timestamp-query}"/>
-            </xsl:if>
-        </xsl:when>
-    	<xsl:when test="$plain='false' and $async='true'">
-            <xsl:call-template name="util:lazy-style">
-                <xsl:with-param name="href">
-                    <xsl:value-of select="$path"/><xsl:value-of select="$timestamp-url"/>style/<xsl:value-of select="$design"/><xsl:text>/css/style.css</xsl:text>
-                </xsl:with-param>
-            </xsl:call-template>
+      <xsl:if test="$plain='false' and $async='true'">
+        <xsl:call-template name="util:lazy-style">
+          <xsl:with-param name="href">
+            <xsl:value-of select="$path"/><xsl:value-of select="$timestamp-url"/>style/<xsl:value-of select="$design"/><xsl:text>/css/style.dev.css</xsl:text>
+          </xsl:with-param>
+        </xsl:call-template>
+      </xsl:if>
+      <xsl:if test="$plain='false' and $async='false'">
+        <link rel="stylesheet" type="text/css" href="{$path}{$timestamp-url}style/{$design}/css/style.dev.css{$timestamp-query}"/>
+      </xsl:if>
+    </xsl:when>
+    <xsl:when test="$plain='false' and $async='true'">
+      <xsl:call-template name="util:lazy-style">
+        <xsl:with-param name="href">
+          <xsl:value-of select="$path"/><xsl:value-of select="$timestamp-url"/>style/<xsl:value-of select="$design"/><xsl:text>/css/style.css</xsl:text>
+        </xsl:with-param>
+      </xsl:call-template>
 		</xsl:when>
-    	<xsl:when test="$plain='false' and $async='false'">
-            <link rel="stylesheet" type="text/css" href="{$path}{$timestamp-url}style/{$design}/css/style.css{$timestamp-query}"/>
-        </xsl:when>
+    <xsl:when test="$plain='false' and $async='false'">
+      <link rel="stylesheet" type="text/css" href="{$path}{$timestamp-url}style/{$design}/css/style.css{$timestamp-query}"/>
+    </xsl:when>
 	</xsl:choose>
     <xsl:call-template name="util:_style-dynamic"/>
     <xsl:call-template name="util:_style-hui-msie"/>

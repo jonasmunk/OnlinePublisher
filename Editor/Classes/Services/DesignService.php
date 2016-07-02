@@ -114,6 +114,105 @@ class DesignService {
     return preg_replace("/url\((['\"]{0,1})..\//um", 'url($1<xsl:value-of select="\$path"/><xsl:value-of select="\$timestamp-url"/>style/'.$design.'/', $css);
   }
 
+  static function writeCSS($design) {
+    $dev = Request::getBoolean('development');
+    $preview = Request::getBoolean('preview');
+    $files = DesignService::getCSSFiles($design, $preview);
+    $key = sha1(join($files,'|').'|'.SystemInfo::getDate());
+    $cachedFile = FileSystemService::getFullPath('local/cache/temp/' . $key . '.css');
+    header('Content-type: text/css');
+    if (file_exists($cachedFile) && !$dev) {
+      DesignService::sendCSSfile($cachedFile);
+      exit;
+    }
+    $out = DesignService::compileCSSfiles($files, $dev);
+    if ($dev) {
+      echo $out;
+    } else {
+      $tempFile = $cachedFile.'.tmp.css';
+      if (FileSystemService::writeStringToFile($out, $tempFile)) {
+        DesignService::_compress($tempFile, $cachedFile);
+        if (file_exists($cachedFile)) {
+          DesignService::sendCSSfile($cachedFile);
+        } else {
+          echo $out;
+        }
+        unlink($tempFile);
+      } else {
+        echo $out;
+      }
+    }
+  }
+  private static function sendCSSfile($path) {
+    if (ConfigurationService::isUrlRewrite()) {
+      Response::setExpiresInDays(365);
+    } else {
+      Response::setExpiresInDays(7);
+    }
+    readfile($path);
+  }
+
+  private static function compileCSSfiles($files, $developmentMode) {
+    $out = '';
+    foreach ($files as $file) {
+      if ($developmentMode) {
+        $out .= '@import url(../../../' . $file . ');' . PHP_EOL;
+      } else {
+        $folder = FileSystemService::folderOfPath($file);
+        $css = DesignService::_read($file);
+        $out .= preg_replace_callback("/(url\\(['\"]?)([^\\)]+)/u", function($matches) use ($folder) {
+          if (strpos($matches[2],'data:') === 0) {
+            return $matches[0];
+          }
+          $local = rtrim($matches[2],"'\"");
+          $joined = FileSystemService::join($folder,$local);
+
+          return 'url(\'../../' . DesignService::getNormalizedPath($joined) . '\'';
+        }, $css);
+      }
+    }
+    return $out;
+  }
+
+  private static function getNormalizedPath($path) {
+    //$path = str_replace(array('/', '\\'), DIRECTORY_SEPARATOR, $path);
+    $parts = array_filter(explode('/', $path), 'strlen');
+    $absolutes = array();
+    foreach ($parts as $part) {
+      if ('.' == $part) continue;
+      if ('..' == $part) {
+        array_pop($absolutes);
+      } else {
+        $absolutes[] = $part;
+      }
+    }
+    return implode('/', $absolutes);
+  }
+
+  private static function getCSSFiles($design, $preview) {
+    global $basePath;
+    $files = [];
+    if ($preview) {
+      $files[] = 'hui/bin/minimized.css';
+      $files[] = 'hui/css/pages.css';
+      $files[] = 'hui/css/editor.css';
+    } else {
+      $files[] = 'hui/bin/joined.site.css';
+    }
+    $info = DesignService::getInfo($design);
+    if (isset($info) && isset($info->build) && isset($info->build->css)) {
+      foreach ($info->build->css as $file) {
+        if ($file=='@parts') {
+          $files[] = 'style/basic/css/document.css';
+          $files = array_merge($files, DesignService::_getPartStyleFiles());
+        } else {
+          $files[] = $file;
+        }
+      }
+    }
+    return $files;
+  }
+
   static function rebuild($design) {
     global $basePath;
 
@@ -128,7 +227,7 @@ class DesignService {
           $imports = array();
 
           $data = '/* '.Strings::toJSON($info->build->css).' */';
-
+          // TODO: Use getCSSFiles
           foreach ($info->build->css as $file) {
             if ($file[0]=='@') {
               if ($file=='@parts') {
@@ -221,7 +320,10 @@ class DesignService {
     } else {
       $cmd = "minify --no-comments ".$in." -o ".$out;
     }
-    shell_exec($cmd);
+    ShellService::execute($cmd);
+    if (!file_exists($out)) {
+      Log::debug('Compression failed: ' . $cmd);
+    }
   }
 
   static function _compressToString($in) {

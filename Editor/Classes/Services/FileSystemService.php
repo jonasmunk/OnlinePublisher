@@ -9,7 +9,7 @@ if (!isset($GLOBALS['basePath'])) {
 }
 
 class FileSystemService {
-  
+
   /**
    * Converts a filename into a safe filename, removing chars that could give problems
    * TODO: Known not to work in extreme cases, use positive chars instead of negative!!
@@ -30,7 +30,15 @@ class FileSystemService {
     }
     return $str;
   }
-  
+
+  static function folderOfPath($path) {
+    $pos = strrpos($path,'/');
+    if ($pos === false) {
+      return '';
+    }
+    return substr($path,0,$pos);
+  }
+
   /**
    * Returns an array of directories inside a given directory
    * @param string $dir Path of the dir to analyze
@@ -50,7 +58,7 @@ class FileSystemService {
     }
     return $out;
   }
-  
+
   /**
    * Finds an array of files inside a given directory
    * @param string $dir The path to the directory
@@ -71,7 +79,7 @@ class FileSystemService {
     }
     return $out;
   }
-  
+
   static function join($base,$end) {
     $out = '';
     if (substr($base,-1)=='/') {
@@ -87,7 +95,7 @@ class FileSystemService {
     $out.=$end;
     return $out;
   }
-  
+
   static function remove($path) {
     if (!file_exists($path)) {
       error_log('Not found: '.$path);
@@ -114,11 +122,11 @@ class FileSystemService {
     }
     return file_exists($path);
   }
-  
+
   static function find($query) {
     return FileSystemService::_find($query['dir'],$query);
   }
-  
+
   static function _find($dir,$query) {
     if ($dir[strlen($dir)-1]!='/') {
       $dir = $dir.'/';
@@ -155,7 +163,7 @@ class FileSystemService {
     }
     return $out;
   }
-  
+
   /**
    * Wites a string to a file, overwriting any existing files
    * @param string $string The string to write
@@ -172,7 +180,7 @@ class FileSystemService {
     fclose($handle);
     return true;
   }
-  
+
   /**
    * Finds the extension of a filename
    * @param string $filename The filename to analyze
@@ -187,21 +195,25 @@ class FileSystemService {
       return substr($filename,$pos+1,strlen($filename)-$pos);
     }
   }
-  
+
   static function getMaxUploadSize() {
     $maxPost = FileSystemService::parseBytes(ini_get('post_max_size'));
     $maxUpload = FileSystemService::parseBytes(ini_get('upload_max_filesize'));
-    if ($maxPost<$maxUpload) {
+    if ($maxPost < $maxUpload) {
       return $maxPost;
     } else {
       return $maxUpload;
     }
   }
-  
+
   static function getFreeTempPath() {
-    global $basePath;
-    $path = $basePath.'local/cache/temp/'.time();
+    $path = FileSystemService::getFullPath('local/cache/temp/'.time());
     return FileSystemService::findFreeFilePath($path);
+  }
+
+  static function getFullPath($path) {
+    global $basePath;
+    return FileSystemService::join($basePath,$path);
   }
 
   /**
@@ -218,7 +230,7 @@ class FileSystemService {
     } else {
       $ext = '';
     }
-  
+
     $output = $path;
     $head = substr($file,0,strlen($file)-strlen($ext)-1);
     $count = 1;
@@ -228,7 +240,7 @@ class FileSystemService {
     }
     return $path;
   }
-  
+
   static function overwriteExtension($path,$extension) {
     $offset = strrpos($path,'/');
     $pos = strpos($path,'.',$offset);
@@ -243,7 +255,7 @@ class FileSystemService {
     }
     return $path;
   }
-  
+
   /**
    * Finds a paths base filename
    * @param string $path The path to analyze
@@ -253,7 +265,7 @@ class FileSystemService {
     $path_parts = pathinfo($path);
     return $path_parts['basename'];
   }
-  
+
   /**
    * Makes a filename into a nice looking title (stripping extensions etc.)
    * @param string $filename The filename to convert
@@ -270,7 +282,7 @@ class FileSystemService {
     $title = str_replace('_',' ',$title);
     return ucfirst($title);
   }
-  
+
 
   static function parseBytes($val) {
     $val = trim($val);
