@@ -9,10 +9,10 @@ if (!isset($GLOBALS['basePath'])) {
 }
 
 class InspectionService {
-  
+
   static function performInspection($query) {
     $inspections = array();
-    
+
     InspectionService::checkFolders($inspections);
     InspectionService::checkPageStructure($inspections);
     InspectionService::checkFrameStructure($inspections);
@@ -20,7 +20,7 @@ class InspectionService {
     InspectionService::checkEnvironment($inspections);
     InspectionService::checkLinks($inspections);
     InspectionService::checkObjects($inspections);
-    
+
     $inspectors = ClassService::getByInterface('Inspector');
     foreach ($inspectors as $inspectorClass) {
       $inspector = new $inspectorClass;
@@ -28,16 +28,16 @@ class InspectionService {
     }
 
     $filtered = array();
-    
+
     foreach ($inspections as $inspection) {
       if ((!isset($query['status']) || $query['status'] == 'all' || $query['status']==$inspection->getStatus()) && (!isset($query['category']) || $query['category'] == 'all' || $query['category']==$inspection->getCategory())) {
         $filtered[] = $inspection;
       }
     }
-    
+
     return $filtered;
   }
-  
+
   static function checkEnvironment(&$inspections) {
     {
       $ok = class_exists('XSLTProcessor');
@@ -85,7 +85,7 @@ class InspectionService {
       $inspections[] = $inspection;
     }
     {
-      $text = shell_exec('jpegoptim -V');
+      $text = ShellService::execute('jpegoptim -V');
       $ok = Strings::isNotBlank($text);
       $inspection = new Inspection();
       $inspection->setCategory('environment');
@@ -96,7 +96,7 @@ class InspectionService {
       $inspections[] = $inspection;
     }
     {
-      $text = shell_exec('optipng -v');
+      $text = ShellService::execute('optipng -v');
       $ok = Strings::isNotBlank($text);
       $inspection = new Inspection();
       $inspection->setCategory('environment');
@@ -106,8 +106,18 @@ class InspectionService {
       $inspection->setInfo($text);
       $inspections[] = $inspection;
     }
-    
-    
+    {
+      $text = ShellService::execute('minify --version');
+      $ok = Strings::isNotBlank($text);
+      $inspection = new Inspection();
+      $inspection->setCategory('environment');
+      $inspection->setEntity(['type'=>'api','title'=>'CSS/JS minification','id'=>'optipng','icon'=>'common/object']);
+      $inspection->setStatus($ok ? 'ok' : 'error');
+      $inspection->setText($ok ? 'CSS/JS minification available' : 'CSS/JS minification is missing (minify from CLI)');
+      $inspection->setInfo($text);
+      $inspections[] = $inspection;
+    }
+
   }
 
   static function checkLinks(&$inspections) {
@@ -128,7 +138,7 @@ class InspectionService {
       }
     }
   }
-  
+
   static function checkPageStructure(&$inspections) {
     $sql = "select title,id from page where design_id not in (select object_id from design)";
     $result = Database::select($sql);
@@ -143,7 +153,7 @@ class InspectionService {
     }
     Database::free($result);
   }
-  
+
   static function checkFrameStructure(&$inspections) {
     $sql = "select name,id from frame where hierarchy_id not in (select id from hierarchy)";
     $result = Database::select($sql);
@@ -158,7 +168,7 @@ class InspectionService {
     }
     Database::free($result);
   }
-  
+
   static function checkObjects(&$inspections) {
     $sql = "select id,title,type from object";
     $result = Database::select($sql);
@@ -173,11 +183,11 @@ class InspectionService {
         $inspection->setText('The object could not be loaded ('.$row['id'].' / '.$row['type'].')');
         $inspections[] = $inspection;
       }
-        
+
     }
     Database::free($result);
   }
-  
+
   static function checkPageContent(&$inspections) {
     $sql = "select title,id,description,path from page order by title";
     $result = Database::select($sql);
@@ -213,7 +223,7 @@ class InspectionService {
     }
     Database::free($result);
   }
-  
+
   static function checkFolders(&$inspections) {
     global $basePath;
     $folders = array("files","images","local/cache/images","local/cache/urls","local/cache/temp");
@@ -235,5 +245,5 @@ class InspectionService {
       $inspections[] = $inspection;
     }
   }
-  
+
 }
