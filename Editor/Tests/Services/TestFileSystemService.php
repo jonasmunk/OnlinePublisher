@@ -10,12 +10,12 @@ if (!isset($GLOBALS['basePath'])) {
 }
 
 class TestFileSystemService extends UnitTestCase {
-    
+
     function testSafeFileName() {
         //$this->assertEqual(FileSystemService::safeFileName('æøå.pdf'),'aeoeaa.pdf');
         $this->assertEqual(FileSystemService::safeFileName('filnavn.php'),'filnavn.php.txt');
     }
-    
+
     function testGetFileExtension() {
         $this->assertTrue(FileSystemService::getFileExtension('filnavn.php')=='php');
         $this->assertTrue(FileSystemService::getFileExtension('filnavn.php.xml')=='xml');
@@ -24,7 +24,13 @@ class TestFileSystemService extends UnitTestCase {
         $this->assertTrue(FileSystemService::getFileExtension('')=='');
         $this->assertTrue(FileSystemService::getFileExtension('filnavn')=='');
     }
-    
+
+    function testGetFolderOfPath() {
+        $this->assertEqual(FileSystemService::folderOfPath('filnavn.php'), '');
+        $this->assertEqual(FileSystemService::folderOfPath('/path/to/filnavn.php'), '/path/to');
+        $this->assertEqual(FileSystemService::folderOfPath('/'), '');
+    }
+
     function testGetFileTitle() {
         $this->assertTrue(FileSystemService::filenameToTitle('filnavn.php')=='Filnavn');
         $this->assertTrue(FileSystemService::filenameToTitle('filnavn.php.xml')=='Filnavn');
@@ -54,7 +60,7 @@ class TestFileSystemService extends UnitTestCase {
         $this->assertEqual(FileSystemService::join('a',null),'a');
         $this->assertEqual(FileSystemService::join(null,'b'),'b');
     }
-    
+
     function testGetExtension() {
         $this->assertEqual(FileService::mimeTypeToExtension('image/jpeg'),'jpg');
         $this->assertEqual(FileService::mimeTypeToExtension('text/html'),'html');
