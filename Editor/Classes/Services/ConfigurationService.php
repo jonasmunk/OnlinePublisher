@@ -9,12 +9,12 @@ if (!isset($GLOBALS['basePath'])) {
 }
 
 class ConfigurationService {
-	
+
 	static function isDebug() {
 		global $CONFIG;
 		return (isset($CONFIG) && isset($CONFIG['debug']) && $CONFIG['debug']==true);
 	}
-	
+
 	private static function _getConfig($name,$default = null) {
 		global $CONFIG;
 		if (isset($CONFIG) && isset($CONFIG[$name])) {
@@ -35,19 +35,23 @@ class ConfigurationService {
 	static function isCachePages() {
 		return ConfigurationService::_getConfig('cachepages',!true);
 	}
-	
+
+	static function getShellPath() {
+		return ConfigurationService::_getConfig('shellpath','');
+	}
+
 	static function isUrlRewrite() {
 		return isset($GLOBALS['CONFIG']) && @$GLOBALS['CONFIG']['urlrewrite'];
 	}
-	
+
 	static function isOptimizeHTML() {
 		global $CONFIG;
-        if (isset($CONFIG) && isset($CONFIG['optimize'])) {
-            return $CONFIG['optimize'];
-        }
+    if (isset($CONFIG) && isset($CONFIG['optimize'])) {
+      return $CONFIG['optimize'];
+    }
 		return true;
 	}
-	
+
 	static function getBaseUrl() {
 		global $CONFIG,$baseUrl;
 		if (isset($CONFIG) && isset($CONFIG['baseUrl'])) {
@@ -55,7 +59,7 @@ class ConfigurationService {
 		}
 		return $baseUrl;
 	}
-	
+
 	static function getDatabase() {
 		global $CONFIG,$database_host, $database_user,$database_password,$database;
 		if (isset($CONFIG) && isset($CONFIG['database'])) {
@@ -68,7 +72,7 @@ class ConfigurationService {
 			'database' => $database
 		);
 	}
-	
+
 	static function getSuperUsername() {
 		global $CONFIG,$superUser;
 		if (isset($CONFIG) && isset($CONFIG['super']) && isset($CONFIG['super']['user'])) {
@@ -76,7 +80,7 @@ class ConfigurationService {
 		}
 		return $superUser;
 	}
-	
+
 	static function getSuperPassword() {
 		global $CONFIG,$superPassword;
 		if (isset($CONFIG) && isset($CONFIG['super']) && isset($CONFIG['super']['password'])) {
@@ -84,7 +88,7 @@ class ConfigurationService {
 		}
 		return $superPassword;
 	}
-	
+
 	static function getCompleteBaseUrl() {
 		$url = ConfigurationService::getBaseUrl();
 		if (!Strings::startsWith($url,'http')) {
@@ -92,7 +96,7 @@ class ConfigurationService {
 		}
 		return $url;
 	}
-  
+
   static function getImagePath($filename) {
 		global $CONFIG,$basePath;
     if (isset($CONFIG['dataDir'])) {
@@ -100,7 +104,7 @@ class ConfigurationService {
     }
   	return $basePath.'images/'.$filename;
   }
-  
+
   static function getDataPath($path) {
 		global $CONFIG,$basePath;
     if (isset($CONFIG['dataDir'])) {

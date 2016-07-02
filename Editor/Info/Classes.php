@@ -69,6 +69,7 @@ $HUMANISE_EDITOR_CLASSES = array (
     'ReportService' => 'Services/ReportService.php',
     'SchemaService' => 'Services/SchemaService.php',
     'SettingService' => 'Services/SettingService.php',
+    'ShellService' => 'Services/ShellService.php',
     'StatisticsService' => 'Services/StatisticsService.php',
     'TemplateService' => 'Services/TemplateService.php',
     'TestService' => 'Services/TestService.php',
