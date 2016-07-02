@@ -257,12 +257,12 @@ class ImageTransformationService {
   }
 
   static function optimizeFile($file) {
-    return;
+    //return;
     $output = [];
     // TODO escape quote
-    exec('optipng -o7 "'.$file.'"',$output);
-    exec('jpegoptim "'.$file.'"',$output);
-    Log::debug($output);
+    ShellService::execute('optipng -o7 "'.$file.'"');
+    ShellService::execute('jpegoptim "'.$file.'"');
+    //Log::debug($output);
   }
 
   static function sendFile($path,$mimeType) {
