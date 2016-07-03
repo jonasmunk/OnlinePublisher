@@ -160,22 +160,25 @@ class DesignService {
       } else {
         $folder = FileSystemService::folderOfPath($file);
         $css = DesignService::_read($file);
-        $out .= preg_replace_callback("/(url\\(['\"]?)([^\\)]+)/u", function($matches) use ($folder) {
-          if (strpos($matches[2],'data:') === 0) {
-            return $matches[0];
-          }
-          $local = rtrim($matches[2],"'\"");
-          $joined = FileSystemService::join($folder,$local);
-
-          return 'url(\'../../' . DesignService::getNormalizedPath($joined) . '\'';
-        }, $css);
+        $out .= DesignService::fixUrls($css, $folder, '../../');
       }
     }
     return $out;
   }
 
-  private static function getNormalizedPath($path) {
-    //$path = str_replace(array('/', '\\'), DIRECTORY_SEPARATOR, $path);
+  private static function fixUrls($css, $context, $prefix) {
+    return preg_replace_callback("/(url\\(['\"]?)([^\\)]+)/u", function($matches) use ($context, $prefix) {
+      if (strpos($matches[2],'data:') === 0) {
+        return $matches[0];
+      }
+      $local = rtrim($matches[2],"'\"");
+      $joined = FileSystemService::join($context,$local);
+
+      return 'url(\'' . $prefix . DesignService::normalizePath($joined) . '\'';
+    }, $css);
+  }
+
+  private static function normalizePath($path) {
     $parts = array_filter(explode('/', $path), 'strlen');
     $absolutes = array();
     foreach ($parts as $part) {
@@ -189,15 +192,38 @@ class DesignService {
     return implode('/', $absolutes);
   }
 
+  private static function loadInlineCSS($design) {
+    $input = FileSystemService::getFullPath('style/' . $design . '/css/inline.css');
+    $css = file_get_contents($input);
+    $css = DesignService::fixUrls($css,'style/' . $design . '/css','/');
+    return $css;
+  }
+
+  public static function getInlineCSS($design,$development='false') {
+    if ($development == 'true') {
+      return DesignService::loadInlineCSS($design);
+    }
+    $out = '';
+    $key = $design . '_inline_' . SystemInfo::getDate();
+    $cacheFile = FileSystemService::getFullPath('local/cache/temp/' . $key . '.css');
+    if (!file_exists($cacheFile)) {
+      $css = DesignService::loadInlineCSS($design);
+      FileSystemService::writeStringToFile($css,$cacheFile);
+      DesignService::_compress($cacheFile,$cacheFile);
+    }
+    return file_get_contents($cacheFile);
+  }
+
   private static function getCSSFiles($design, $preview) {
     global $basePath;
     $files = [];
     if ($preview) {
       $files[] = 'hui/bin/minimized.css';
-      $files[] = 'hui/css/pages.css';
-      $files[] = 'hui/css/editor.css';
     } else {
-      $files[] = 'hui/bin/joined.site.css';
+      $components = ['icon', 'curtain', 'imageviewer', 'overlay', 'box', 'button', 'formula', 'message'];
+      foreach ($components as $name) {
+        $files[] = 'hui/css/' . $name . '.css';
+      }
     }
     $info = DesignService::getInfo($design);
     if (isset($info) && isset($info->build) && isset($info->build->css)) {

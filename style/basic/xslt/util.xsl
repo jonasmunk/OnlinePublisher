@@ -10,154 +10,155 @@
  xmlns:movie="http://uri.in2isoft.com/onlinepublisher/part/movie/1.0/"
  xmlns:util="http://uri.in2isoft.com/onlinepublisher/util/"
  xmlns:part="http://uri.in2isoft.com/onlinepublisher/part/1.0/"
- exclude-result-prefixes="p f h header text util part movie"
+ xmlns:php="http://php.net/xsl"
+ exclude-result-prefixes="p f h header text util part movie php"
  >
 
 <xsl:variable name="only-inline" select="'!true'" />
 
 <xsl:variable name="timestamp-query">
-	<xsl:if test="$urlrewrite!='true'">
-		<xsl:text>?version=</xsl:text><xsl:value-of select="$timestamp"/>
-	</xsl:if>
+  <xsl:if test="$urlrewrite!='true'">
+    <xsl:text>?version=</xsl:text><xsl:value-of select="$timestamp"/>
+  </xsl:if>
 </xsl:variable>
 
 <xsl:variable name="timestamp-url">
-	<xsl:if test="$urlrewrite='true'">
-		<xsl:text>version</xsl:text><xsl:value-of select="$timestamp"/><xsl:text>/</xsl:text>
-	</xsl:if>
+  <xsl:if test="$urlrewrite='true'">
+    <xsl:text>version</xsl:text><xsl:value-of select="$timestamp"/><xsl:text>/</xsl:text>
+  </xsl:if>
 </xsl:variable>
 
 
 <!-- Links -->
 
 <xsl:template name="util:link">
-	<xsl:attribute name="title"><xsl:value-of select="@alternative"/></xsl:attribute>
-	<xsl:choose>
-		<xsl:when test="$editor='true'">
-			<xsl:attribute name="href">javascript://</xsl:attribute>
-			<xsl:choose>
-				<xsl:when test="@id">
-					<xsl:attribute name="onclick">
-					linkController.linkWasClicked({
-						id : <xsl:value-of select="@id"/>
-						, event : event
-						, node : this
-						<xsl:if test="ancestor::part:part/@id">,part : <xsl:value-of select="ancestor::part:part/@id"/></xsl:if>
-					}); return false;
-					</xsl:attribute>
-					<xsl:attribute name="oncontextmenu">
-						linkController.linkMenu({
-							id : <xsl:value-of select="@id"/>
-							, event : event
-							, node : this
-							<xsl:if test="ancestor::part:part/@id">,part : <xsl:value-of select="ancestor::part:part/@id"/></xsl:if>
-						});
-					</xsl:attribute>
-				</xsl:when>
-				<xsl:otherwise>
-					<xsl:attribute name="onclick">return false;</xsl:attribute>
-				</xsl:otherwise>
-			</xsl:choose>
-			<xsl:if test="@part-id">
-				<span class="editor_link_bound"><xsl:comment/></span>
-			</xsl:if>
-		</xsl:when>
-		<xsl:otherwise>
-			<xsl:choose>
-				<xsl:when test="@path and $preview='false'">
-					<xsl:attribute name="href">
-						<xsl:value-of select="$navigation-path"/>
-						<xsl:choose>
-							<xsl:when test="starts-with(@path,'/')">
-								<xsl:value-of select="substring(@path,2)"/>
-							</xsl:when>
-							<xsl:otherwise>
-								<xsl:value-of select="@path"/>
-							</xsl:otherwise>
-						</xsl:choose>
-					</xsl:attribute>
-				</xsl:when>
-				<xsl:when test="@page">
-					<xsl:attribute name="href"><xsl:value-of select="$navigation-path"/>?id=<xsl:value-of select="@page"/></xsl:attribute>
-				</xsl:when>
-				<xsl:when test="@page-reference">
-					<xsl:attribute name="href"><xsl:value-of select="$navigation-path"/>?id=<xsl:value-of select="@page-reference"/></xsl:attribute>
-				</xsl:when>
-				<xsl:when test="@url">
-					<xsl:attribute name="href"><xsl:value-of select="@url"/></xsl:attribute>
-				</xsl:when>
-				<xsl:when test="@file">
-					<xsl:attribute name="href"><xsl:value-of select="$navigation-path"/>?file=<xsl:value-of select="@file"/><xsl:if test="@target='_download'">&amp;download=true</xsl:if></xsl:attribute>
-				</xsl:when>
-				<xsl:when test="@email">
-					<xsl:attribute name="href">mailto:<xsl:value-of select="@email"/></xsl:attribute>
-				</xsl:when>
-			</xsl:choose>
-			<xsl:choose>
-				<xsl:when test="@target='_blank'">
-					<xsl:attribute name="onclick">try {window.open(this.getAttribute('href')); return false;} catch (ignore) {}</xsl:attribute>
-				</xsl:when>
-				<xsl:when test="@target and @target!='_self' and @target!='_download'">
-					<xsl:attribute name="target"><xsl:value-of select="@target"/></xsl:attribute>
-				</xsl:when>
-			</xsl:choose>
-		</xsl:otherwise>
-	</xsl:choose>
+  <xsl:attribute name="title"><xsl:value-of select="@alternative"/></xsl:attribute>
+  <xsl:choose>
+    <xsl:when test="$editor='true'">
+      <xsl:attribute name="href">javascript://</xsl:attribute>
+      <xsl:choose>
+        <xsl:when test="@id">
+          <xsl:attribute name="onclick">
+          linkController.linkWasClicked({
+            id : <xsl:value-of select="@id"/>
+            , event : event
+            , node : this
+            <xsl:if test="ancestor::part:part/@id">,part : <xsl:value-of select="ancestor::part:part/@id"/></xsl:if>
+          }); return false;
+          </xsl:attribute>
+          <xsl:attribute name="oncontextmenu">
+            linkController.linkMenu({
+              id : <xsl:value-of select="@id"/>
+              , event : event
+              , node : this
+              <xsl:if test="ancestor::part:part/@id">,part : <xsl:value-of select="ancestor::part:part/@id"/></xsl:if>
+            });
+          </xsl:attribute>
+        </xsl:when>
+        <xsl:otherwise>
+          <xsl:attribute name="onclick">return false;</xsl:attribute>
+        </xsl:otherwise>
+      </xsl:choose>
+      <xsl:if test="@part-id">
+        <span class="editor_link_bound"><xsl:comment/></span>
+      </xsl:if>
+    </xsl:when>
+    <xsl:otherwise>
+      <xsl:choose>
+        <xsl:when test="@path and $preview='false'">
+          <xsl:attribute name="href">
+            <xsl:value-of select="$navigation-path"/>
+            <xsl:choose>
+              <xsl:when test="starts-with(@path,'/')">
+                <xsl:value-of select="substring(@path,2)"/>
+              </xsl:when>
+              <xsl:otherwise>
+                <xsl:value-of select="@path"/>
+              </xsl:otherwise>
+            </xsl:choose>
+          </xsl:attribute>
+        </xsl:when>
+        <xsl:when test="@page">
+          <xsl:attribute name="href"><xsl:value-of select="$navigation-path"/>?id=<xsl:value-of select="@page"/></xsl:attribute>
+        </xsl:when>
+        <xsl:when test="@page-reference">
+          <xsl:attribute name="href"><xsl:value-of select="$navigation-path"/>?id=<xsl:value-of select="@page-reference"/></xsl:attribute>
+        </xsl:when>
+        <xsl:when test="@url">
+          <xsl:attribute name="href"><xsl:value-of select="@url"/></xsl:attribute>
+        </xsl:when>
+        <xsl:when test="@file">
+          <xsl:attribute name="href"><xsl:value-of select="$navigation-path"/>?file=<xsl:value-of select="@file"/><xsl:if test="@target='_download'">&amp;download=true</xsl:if></xsl:attribute>
+        </xsl:when>
+        <xsl:when test="@email">
+          <xsl:attribute name="href">mailto:<xsl:value-of select="@email"/></xsl:attribute>
+        </xsl:when>
+      </xsl:choose>
+      <xsl:choose>
+        <xsl:when test="@target='_blank'">
+          <xsl:attribute name="onclick">try {window.open(this.getAttribute('href')); return false;} catch (ignore) {}</xsl:attribute>
+        </xsl:when>
+        <xsl:when test="@target and @target!='_self' and @target!='_download'">
+          <xsl:attribute name="target"><xsl:value-of select="@target"/></xsl:attribute>
+        </xsl:when>
+      </xsl:choose>
+    </xsl:otherwise>
+  </xsl:choose>
 </xsl:template>
 
 <xsl:template name="util:link-href">
-	<xsl:choose>
-		<xsl:when test="@path and $preview='false'">
-			<xsl:value-of select="$navigation-path"/>
-		</xsl:when>
-		<xsl:when test="@page">
-			<xsl:value-of select="$navigation-path"/>?id=<xsl:value-of select="@page"/>
-		</xsl:when>
-		<xsl:when test="@page-reference">
-			<xsl:value-of select="$navigation-path"/>?id=<xsl:value-of select="@page-reference"/>
-		</xsl:when>
-		<xsl:when test="@url">
-			<xsl:attribute name="href"><xsl:value-of select="@url"/></xsl:attribute>
-		</xsl:when>
-		<xsl:when test="@file">
-			<xsl:value-of select="$navigation-path"/>?file=<xsl:value-of select="@file"/><xsl:if test="@target='_download'">&amp;download=true</xsl:if>
-		</xsl:when>
-		<xsl:when test="@email">
-			mailto:<xsl:value-of select="@email"/>
-		</xsl:when>
-	</xsl:choose>
+  <xsl:choose>
+    <xsl:when test="@path and $preview='false'">
+      <xsl:value-of select="$navigation-path"/>
+    </xsl:when>
+    <xsl:when test="@page">
+      <xsl:value-of select="$navigation-path"/>?id=<xsl:value-of select="@page"/>
+    </xsl:when>
+    <xsl:when test="@page-reference">
+      <xsl:value-of select="$navigation-path"/>?id=<xsl:value-of select="@page-reference"/>
+    </xsl:when>
+    <xsl:when test="@url">
+      <xsl:attribute name="href"><xsl:value-of select="@url"/></xsl:attribute>
+    </xsl:when>
+    <xsl:when test="@file">
+      <xsl:value-of select="$navigation-path"/>?file=<xsl:value-of select="@file"/><xsl:if test="@target='_download'">&amp;download=true</xsl:if>
+    </xsl:when>
+    <xsl:when test="@email">
+      mailto:<xsl:value-of select="@email"/>
+    </xsl:when>
+  </xsl:choose>
 </xsl:template>
 
 <xsl:template name="util:link-url">
   <xsl:param name="node"/>
-	<xsl:choose>
-		<xsl:when test="$node/@path and $preview='false'">
-			<xsl:value-of select="$navigation-path"/>
+  <xsl:choose>
+    <xsl:when test="$node/@path and $preview='false'">
+      <xsl:value-of select="$navigation-path"/>
       <xsl:choose>
-				<xsl:when test="starts-with(@path,'/')">
-					<xsl:value-of select="substring(@path,2)"/>
-				</xsl:when>
-				<xsl:otherwise>
-					<xsl:value-of select="@path"/>
-				</xsl:otherwise>
-			</xsl:choose>
-		</xsl:when>
-		<xsl:when test="$node/@page">
-			<xsl:value-of select="$navigation-path"/>?id=<xsl:value-of select="$node/@page"/>
-		</xsl:when>
-		<xsl:when test="$node/@page-reference">
-			<xsl:value-of select="$navigation-path"/>?id=<xsl:value-of select="$node/@page-reference"/>
-		</xsl:when>
-		<xsl:when test="$node/@url">
-			<xsl:attribute name="href"><xsl:value-of select="$node/@url"/></xsl:attribute>
-		</xsl:when>
-		<xsl:when test="$node/@file">
-			<xsl:value-of select="$navigation-path"/>?file=<xsl:value-of select="$node/@file"/><xsl:if test="$node/@target='_download'">&amp;download=true</xsl:if>
-		</xsl:when>
-		<xsl:when test="$node/@email">
-			mailto:<xsl:value-of select="$node/@email"/>
-		</xsl:when>
-	</xsl:choose>
+        <xsl:when test="starts-with(@path,'/')">
+          <xsl:value-of select="substring(@path,2)"/>
+        </xsl:when>
+        <xsl:otherwise>
+          <xsl:value-of select="@path"/>
+        </xsl:otherwise>
+      </xsl:choose>
+    </xsl:when>
+    <xsl:when test="$node/@page">
+      <xsl:value-of select="$navigation-path"/>?id=<xsl:value-of select="$node/@page"/>
+    </xsl:when>
+    <xsl:when test="$node/@page-reference">
+      <xsl:value-of select="$navigation-path"/>?id=<xsl:value-of select="$node/@page-reference"/>
+    </xsl:when>
+    <xsl:when test="$node/@url">
+      <xsl:attribute name="href"><xsl:value-of select="$node/@url"/></xsl:attribute>
+    </xsl:when>
+    <xsl:when test="$node/@file">
+      <xsl:value-of select="$navigation-path"/>?file=<xsl:value-of select="$node/@file"/><xsl:if test="$node/@target='_download'">&amp;download=true</xsl:if>
+    </xsl:when>
+    <xsl:when test="$node/@email">
+      mailto:<xsl:value-of select="$node/@email"/>
+    </xsl:when>
+  </xsl:choose>
 </xsl:template>
 
 
@@ -166,32 +167,32 @@
 <!-- Uncategorized -->
 
 <xsl:template name="util:googleanalytics">
-	<xsl:param name="code" select="//p:meta/p:analytics/@key"/>
-	<xsl:if test="not($preview='true') and $code!='' and $statistics='true'">
-		<script>(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+  <xsl:param name="code" select="//p:meta/p:analytics/@key"/>
+  <xsl:if test="not($preview='true') and $code!='' and $statistics='true'">
+    <script>(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
 ga('create', '<xsl:value-of select="$code"/>', {siteSpeedSampleRate : 20});ga('send', 'pageview');</script>
-	</xsl:if>
+  </xsl:if>
 </xsl:template>
 
 <!--
 <xsl:template name="util:googleanalytics_old">
-	<xsl:param name="code" select="//p:meta/p:analytics/@key"/>
-	<xsl:if test="not($preview='true') and $code!='' and $statistics='true'">
-		<script>
-		try {
-			if (document.location.hostname!=="localhost") {
-				//,'_trackPageLoadTime'
-				var _gaq=[['_setAccount','<xsl:value-of select="$code"/>'],['_trackPageview']];
-				 (function() {
-    				var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
-					ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
-					var s = document.getElementsByTagName('script')[0];
-					s.parentNode.insertBefore(ga, s);
-				})();
-			}
-		} catch(ex) {}
-		</script>
-	</xsl:if>
+  <xsl:param name="code" select="//p:meta/p:analytics/@key"/>
+  <xsl:if test="not($preview='true') and $code!='' and $statistics='true'">
+    <script>
+    try {
+      if (document.location.hostname!=="localhost") {
+        //,'_trackPageLoadTime'
+        var _gaq=[['_setAccount','<xsl:value-of select="$code"/>'],['_trackPageview']];
+        (function() {
+          var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+          ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+          var s = document.getElementsByTagName('script')[0];
+          s.parentNode.insertBefore(ga, s);
+        })();
+      }
+    } catch(ex) {}
+    </script>
+  </xsl:if>
 </xsl:template>
 -->
 
@@ -201,93 +202,93 @@ ga('create', '<xsl:value-of select="$code"/>', {siteSpeedSampleRate : 20});ga('s
 </xsl:template>
 
 <xsl:template name="util:title">
-	<title>
-        <xsl:if test="not(//p:page/@id=//p:context/p:home/@page)">
-            <xsl:value-of select="//p:page/@title"/>
-            <xsl:text> - </xsl:text>
-        </xsl:if>
-        <xsl:value-of select="//f:frame/@title"/>
-    </title>
+  <title>
+    <xsl:if test="not(//p:page/@id=//p:context/p:home/@page)">
+      <xsl:value-of select="//p:page/@title"/>
+      <xsl:text> - </xsl:text>
+    </xsl:if>
+    <xsl:value-of select="//f:frame/@title"/>
+  </title>
 </xsl:template>
 
 <xsl:template name="util:google-font">
-    <xsl:param name="family" />
-    <link href='http://fonts.googleapis.com/css?family={$family}' rel='stylesheet' type='text/css'/>
+  <xsl:param name="family" />
+  <link href='http://fonts.googleapis.com/css?family={$family}' rel='stylesheet' type='text/css'/>
 </xsl:template>
 
 <xsl:template name="util:metatags">
-	<meta http-equiv="content-type" content="text/html; charset=utf-8"></meta>
-    <!-- Set on server 
-	<meta http-equiv="X-UA-Compatible" content="IE=Edge"></meta>
+  <meta http-equiv="content-type" content="text/html; charset=utf-8"></meta>
+    <!-- Set on server
+  <meta http-equiv="X-UA-Compatible" content="IE=Edge"></meta>
     -->
-	<meta name="robots" content="index,follow"></meta>
-	<meta property="og:title" content="{//p:page/@title}"/>
-	<meta property="og:site_name" content="{//f:frame/@title}"/>
-	<meta property="og:url" content="{$absolute-page-path}" />
-	<xsl:if test="p:meta/p:description">
-		<meta property="og:description" content="{p:meta/p:description}" />
-		<meta name="Description" content="{p:meta/p:description}"></meta>
-	</xsl:if>
-	<xsl:for-each select="//p:page/p:context/p:translation[@language and @language!=$language and not(@language=//p:page/@language)]">
-		<link rel="alternate" hreflang="{@language}">
+  <meta name="robots" content="index,follow"></meta>
+  <meta property="og:title" content="{//p:page/@title}"/>
+  <meta property="og:site_name" content="{//f:frame/@title}"/>
+  <meta property="og:url" content="{$absolute-page-path}" />
+  <xsl:if test="p:meta/p:description">
+    <meta property="og:description" content="{p:meta/p:description}" />
+    <meta name="Description" content="{p:meta/p:description}"></meta>
+  </xsl:if>
+  <xsl:for-each select="//p:page/p:context/p:translation[@language and @language!=$language and not(@language=//p:page/@language)]">
+    <link rel="alternate" hreflang="{@language}">
       <xsl:attribute name="href">
         <xsl:choose>
-    		<xsl:when test="@path">
-					<xsl:choose>
-						<xsl:when test="starts-with(@path,'/')">
-							<xsl:value-of select="@path"/>
-						</xsl:when>
-						<xsl:otherwise>
-    			    <xsl:value-of select="$navigation-path"/><xsl:value-of select="@path"/>
-						</xsl:otherwise>
-					</xsl:choose>
-    		</xsl:when>
-    		<xsl:when test="@page">
-    			<xsl:value-of select="$navigation-path"/>?id=<xsl:value-of select="@page"/>
-    		</xsl:when>
+        <xsl:when test="@path">
+          <xsl:choose>
+            <xsl:when test="starts-with(@path,'/')">
+              <xsl:value-of select="@path"/>
+            </xsl:when>
+            <xsl:otherwise>
+              <xsl:value-of select="$navigation-path"/><xsl:value-of select="@path"/>
+            </xsl:otherwise>
+          </xsl:choose>
+        </xsl:when>
+        <xsl:when test="@page">
+          <xsl:value-of select="$navigation-path"/>?id=<xsl:value-of select="@page"/>
+        </xsl:when>
         </xsl:choose>
       </xsl:attribute>
     </link>
-	</xsl:for-each>
+  </xsl:for-each>
 </xsl:template>
 
 <xsl:template name="util:feedback">
-	<xsl:param name="text">Feedback</xsl:param>
-	<p class="layout_feedback">
-		<a class="common" href="javascript://" onclick="op.feedback(this)"><span><xsl:value-of select="$text"/></span></a>
-	</p>
+  <xsl:param name="text">Feedback</xsl:param>
+  <p class="layout_feedback">
+    <a class="common" href="javascript://" onclick="op.feedback(this)"><span><xsl:value-of select="$text"/></span></a>
+  </p>
 </xsl:template>
 
 <xsl:template name="util:watermark">
-	<xsl:comment>
-    _    _                             _          
-   | |  | |                           (_)         
-   | |__| |_   _ _ __ ___   __ _ _ __  _ ___  ___ 
+  <xsl:comment>
+    _    _                             _
+   | |  | |                           (_)
+   | |__| |_   _ _ __ ___   __ _ _ __  _ ___  ___
    |  __  | | | | '_ ` _ \ / _` | '_ \| / __|/ _ \
    | |  | | |_| | | | | | | (_| | | | | \__ \  __/
    |_|  |_|\__,_|_| |_| |_|\__,_|_| |_|_|___/\___|
-   
+
    SOFTWARE FOR HUMANS     http://www.humanise.dk/
     </xsl:comment>
 </xsl:template>
 
 <xsl:template name="util:userstatus">
-	<xsl:if test="//f:userstatus">
-		<div class="layout_userstatus">
-			<xsl:choose>
-				<xsl:when test="$userid>0">
-					<strong><xsl:text>Bruger: </xsl:text></strong><xsl:value-of select="$usertitle"/>
-					<xsl:text> </xsl:text>
-					<a href="{$path}?id={//f:userstatus/@page}&amp;logout=true" class="common common_link"><span><xsl:text>log ud</xsl:text></span></a>
-				</xsl:when>
-				<xsl:otherwise>
-    				<span>Ikke logget ind</span>
-    				<xsl:text> </xsl:text>
-    				<a href="{$path}?id={//f:userstatus/@page}" class="common common_link"><span>log ind</span></a>
-				</xsl:otherwise>
-			</xsl:choose>
-		</div>
-	</xsl:if>
+  <xsl:if test="//f:userstatus">
+    <div class="layout_userstatus">
+      <xsl:choose>
+        <xsl:when test="$userid>0">
+          <strong><xsl:text>Bruger: </xsl:text></strong><xsl:value-of select="$usertitle"/>
+          <xsl:text> </xsl:text>
+          <a href="{$path}?id={//f:userstatus/@page}&amp;logout=true" class="common common_link"><span><xsl:text>log ud</xsl:text></span></a>
+        </xsl:when>
+        <xsl:otherwise>
+            <span>Ikke logget ind</span>
+            <xsl:text> </xsl:text>
+            <a href="{$path}?id={//f:userstatus/@page}" class="common common_link"><span>log ind</span></a>
+        </xsl:otherwise>
+      </xsl:choose>
+    </div>
+  </xsl:if>
 </xsl:template>
 
 <xsl:template name="util:parameter">
@@ -310,75 +311,75 @@ ga('create', '<xsl:value-of select="$code"/>', {siteSpeedSampleRate : 20});ga('s
 <!-- Scripts -->
 
 <xsl:template name="util:scripts-build">
-    <xsl:call-template name="util:_scripts-base"/>
-    <xsl:call-template name="util:_scripts-msie"/>
-	<xsl:choose>
-		<xsl:when test="$preview='true'">
-            <xsl:call-template name="util:_scripts-config"/>
-			<script src="{$path}{$timestamp-url}hui/bin/minimized.js{$timestamp-query}"><xsl:comment/></script>
-			<script src="{$path}{$timestamp-url}hui/js/Editor.js{$timestamp-query}"><xsl:comment/></script>
-			<script src="{$path}{$timestamp-url}hui/js/Pages.js{$timestamp-query}"><xsl:comment/></script>
-			<script src="{$path}{$timestamp-url}style/{$design}/js/script.private.js{$timestamp-query}"><xsl:comment/></script>
-		</xsl:when>
-		<xsl:when test="$development='true'">
-            <xsl:call-template name="util:_scripts-config"/>
-			<script src="{$path}{$timestamp-url}hui/bin/joined.site.js{$timestamp-query}"><xsl:comment/></script>
-			<script src="{$path}{$timestamp-url}style/basic/js/OnlinePublisher.js{$timestamp-query}"><xsl:comment/></script>
-			<script src="{$path}{$timestamp-url}style/{$design}/js/script.dev.js{$timestamp-query}"><xsl:comment/></script>
-        </xsl:when>
-		<xsl:otherwise>
-            <xsl:call-template name="util:_scripts-config"/>
-			<script src="{$path}{$timestamp-url}style/{$design}/js/script.js{$timestamp-query}" async="async" defer="defer"><xsl:comment/></script>
-			<!--
-            <script>_editor.loadScript('<xsl:value-of select="$path"/><xsl:value-of select="$timestamp-url"/>style/<xsl:value-of select="$design"/>/js/script.js<xsl:value-of select="$timestamp-query"/>')</script>
-				-->
-		</xsl:otherwise>
-	</xsl:choose>
+  <xsl:call-template name="util:_scripts-base"/>
+  <xsl:call-template name="util:_scripts-msie"/>
+  <xsl:choose>
+    <xsl:when test="$preview='true'">
+      <xsl:call-template name="util:_scripts-config"/>
+      <script src="{$path}{$timestamp-url}hui/bin/minimized.js{$timestamp-query}"><xsl:comment/></script>
+      <script src="{$path}{$timestamp-url}hui/js/Editor.js{$timestamp-query}"><xsl:comment/></script>
+      <script src="{$path}{$timestamp-url}hui/js/Pages.js{$timestamp-query}"><xsl:comment/></script>
+      <script src="{$path}{$timestamp-url}style/{$design}/js/script.private.js{$timestamp-query}"><xsl:comment/></script>
+    </xsl:when>
+    <xsl:when test="$development='true'">
+      <xsl:call-template name="util:_scripts-config"/>
+      <script src="{$path}{$timestamp-url}hui/bin/joined.site.js{$timestamp-query}"><xsl:comment/></script>
+      <script src="{$path}{$timestamp-url}style/basic/js/OnlinePublisher.js{$timestamp-query}"><xsl:comment/></script>
+      <script src="{$path}{$timestamp-url}style/{$design}/js/script.dev.js{$timestamp-query}"><xsl:comment/></script>
+    </xsl:when>
+    <xsl:otherwise>
+      <xsl:call-template name="util:_scripts-config"/>
+      <script src="{$path}{$timestamp-url}style/{$design}/js/script.js{$timestamp-query}" async="async" defer="defer"><xsl:comment/></script>
+      <!--
+      <script>_editor.loadScript('<xsl:value-of select="$path"/><xsl:value-of select="$timestamp-url"/>style/<xsl:value-of select="$design"/>/js/script.js<xsl:value-of select="$timestamp-query"/>')</script>
+      -->
+    </xsl:otherwise>
+  </xsl:choose>
     <xsl:call-template name="util:_scripts-preview"/>
 </xsl:template>
 
 <xsl:template name="util:scripts">
     <xsl:call-template name="util:_scripts-base"/>
     <xsl:call-template name="util:_scripts-msie"/>
-	<xsl:choose>
-		<xsl:when test="$preview='true'">
-			<xsl:choose>
-				<xsl:when test="$development='true'">
-					<script src="{$path}{$timestamp-url}hui/bin/joined.js{$timestamp-query}"><xsl:comment/></script>
-				</xsl:when>
-				<xsl:otherwise>
-					<script src="{$path}{$timestamp-url}hui/bin/minimized.js{$timestamp-query}"><xsl:comment/></script>
-				</xsl:otherwise>
-			</xsl:choose>
-			<script src="{$path}{$timestamp-url}hui/js/Editor.js{$timestamp-query}"><xsl:comment/></script>
-			<script src="{$path}{$timestamp-url}hui/js/Pages.js{$timestamp-query}"><xsl:comment/></script>
-		</xsl:when>
-		<xsl:when test="$development='true'">
-			<script src="{$path}{$timestamp-url}hui/js/hui.js{$timestamp-query}"><xsl:comment/></script>
-			<script src="{$path}{$timestamp-url}hui/js/hui_animation.js{$timestamp-query}"><xsl:comment/></script>
-			<script src="{$path}{$timestamp-url}hui/js/hui_parallax.js{$timestamp-query}"><xsl:comment/></script>
-			<script src="{$path}{$timestamp-url}hui/js/hui_color.js{$timestamp-query}"><xsl:comment/></script>
-			<script src="{$path}{$timestamp-url}hui/js/hui_require.js{$timestamp-query}"><xsl:comment/></script>
-			<script src="{$path}{$timestamp-url}hui/js/ui.js{$timestamp-query}"><xsl:comment/></script>
-			<script src="{$path}{$timestamp-url}hui/js/ImageViewer.js{$timestamp-query}"><xsl:comment/></script>
-			<script src="{$path}{$timestamp-url}hui/js/Box.js{$timestamp-query}"><xsl:comment/></script>
-			<script src="{$path}{$timestamp-url}hui/js/SearchField.js{$timestamp-query}"><xsl:comment/></script>
-		</xsl:when>
-		<xsl:otherwise>
-			<script src="{$path}{$timestamp-url}hui/bin/minimized.site.js{$timestamp-query}"><xsl:comment/></script>
-		</xsl:otherwise>
-	</xsl:choose>
-	<script src="{$path}{$timestamp-url}style/basic/js/OnlinePublisher.js{$timestamp-query}"><xsl:comment/></script>
+  <xsl:choose>
+    <xsl:when test="$preview='true'">
+      <xsl:choose>
+        <xsl:when test="$development='true'">
+          <script src="{$path}{$timestamp-url}hui/bin/joined.js{$timestamp-query}"><xsl:comment/></script>
+        </xsl:when>
+        <xsl:otherwise>
+          <script src="{$path}{$timestamp-url}hui/bin/minimized.js{$timestamp-query}"><xsl:comment/></script>
+        </xsl:otherwise>
+      </xsl:choose>
+      <script src="{$path}{$timestamp-url}hui/js/Editor.js{$timestamp-query}"><xsl:comment/></script>
+      <script src="{$path}{$timestamp-url}hui/js/Pages.js{$timestamp-query}"><xsl:comment/></script>
+    </xsl:when>
+    <xsl:when test="$development='true'">
+      <script src="{$path}{$timestamp-url}hui/js/hui.js{$timestamp-query}"><xsl:comment/></script>
+      <script src="{$path}{$timestamp-url}hui/js/hui_animation.js{$timestamp-query}"><xsl:comment/></script>
+      <script src="{$path}{$timestamp-url}hui/js/hui_parallax.js{$timestamp-query}"><xsl:comment/></script>
+      <script src="{$path}{$timestamp-url}hui/js/hui_color.js{$timestamp-query}"><xsl:comment/></script>
+      <script src="{$path}{$timestamp-url}hui/js/hui_require.js{$timestamp-query}"><xsl:comment/></script>
+      <script src="{$path}{$timestamp-url}hui/js/ui.js{$timestamp-query}"><xsl:comment/></script>
+      <script src="{$path}{$timestamp-url}hui/js/ImageViewer.js{$timestamp-query}"><xsl:comment/></script>
+      <script src="{$path}{$timestamp-url}hui/js/Box.js{$timestamp-query}"><xsl:comment/></script>
+      <script src="{$path}{$timestamp-url}hui/js/SearchField.js{$timestamp-query}"><xsl:comment/></script>
+    </xsl:when>
+    <xsl:otherwise>
+      <script src="{$path}{$timestamp-url}hui/bin/minimized.site.js{$timestamp-query}"><xsl:comment/></script>
+    </xsl:otherwise>
+  </xsl:choose>
+  <script src="{$path}{$timestamp-url}style/basic/js/OnlinePublisher.js{$timestamp-query}"><xsl:comment/></script>
   <xsl:call-template name="util:_scripts-config"/>
   <xsl:call-template name="util:_scripts-preview"/>
 </xsl:template>
 
 <xsl:template name="util:_scripts-preview">
-    
-	<xsl:if test="$preview='true' and $mini!='true'">
-		<script src="editor.js?version={$timestamp}"><xsl:comment/></script>
-		<script src="{$path}{$timestamp-url}Editor/Template/{$template}/js/editor.php{$timestamp-query}"><xsl:comment/></script>
-	</xsl:if>
+
+  <xsl:if test="$preview='true' and $mini!='true'">
+    <script src="editor.js?version={$timestamp}"><xsl:comment/></script>
+    <script src="{$path}{$timestamp-url}Editor/Template/{$template}/js/editor.php{$timestamp-query}"><xsl:comment/></script>
+  </xsl:if>
 </xsl:template>
 
 <xsl:template name="util:_scripts-msie">
@@ -419,7 +420,7 @@ i.parentNode.insertBefore(o,i)}}}})}},_editor.processNoscript()}(window,document
 </xsl:template>
 
 <xsl:template name="util:scripts-adaptive">
-	<script src="{$path}{$timestamp-url}hui/lib/ios-orientationchange-fix.js{$timestamp-query}"><xsl:comment/></script>
+  <script src="{$path}{$timestamp-url}hui/lib/ios-orientationchange-fix.js{$timestamp-query}"><xsl:comment/></script>
 </xsl:template>
 
 <xsl:template name="util:script-inline">
@@ -427,27 +428,27 @@ i.parentNode.insertBefore(o,i)}}}})}},_editor.processNoscript()}(window,document
     <xsl:param name="file"/>
     <xsl:choose>
       <xsl:when test="$development='true'">
-  		<script src="{$path}{$timestamp-url}{$file}{$timestamp-query}"><xsl:comment/></script>
+      <script src="{$path}{$timestamp-url}{$file}{$timestamp-query}"><xsl:comment/></script>
       </xsl:when>
       <xsl:otherwise>
-      	<script>
+        <script>
             <xsl:text disable-output-escaping="yes">//&lt;![CDATA[
 </xsl:text>
-      		<xsl:value-of select="$compiled" disable-output-escaping="yes"/>
+          <xsl:value-of select="$compiled" disable-output-escaping="yes"/>
             <xsl:text disable-output-escaping="yes">
 //]]&gt;</xsl:text>
-      	</script>
+        </script>
       </xsl:otherwise>
-    </xsl:choose>    
+    </xsl:choose>
 </xsl:template>
 
 <xsl:template name="util:html-attributes">
-	<xsl:if test="//p:page/p:meta/p:language">
-		<xsl:if test="//p:page/p:meta/p:language/text()">
-			<xsl:attribute name="lang"><xsl:value-of select="//p:page/p:meta/p:language"/></xsl:attribute>
-			<xsl:attribute name="xml:lang"><xsl:value-of select="//p:page/p:meta/p:language"/></xsl:attribute>
-		</xsl:if>
-	</xsl:if>
+  <xsl:if test="//p:page/p:meta/p:language">
+    <xsl:if test="//p:page/p:meta/p:language/text()">
+      <xsl:attribute name="lang"><xsl:value-of select="//p:page/p:meta/p:language"/></xsl:attribute>
+      <xsl:attribute name="xml:lang"><xsl:value-of select="//p:page/p:meta/p:language"/></xsl:attribute>
+    </xsl:if>
+  </xsl:if>
 </xsl:template>
 
 
@@ -457,54 +458,95 @@ i.parentNode.insertBefore(o,i)}}}})}},_editor.processNoscript()}(window,document
 <!-- Style -->
 
 <xsl:template name="util:style-ie6">
-	<xsl:comment><![CDATA[[if lt IE 7]><link rel="stylesheet" type="text/css" href="]]><xsl:value-of select="$path"/><xsl:value-of select="$timestamp-url"/>style/<xsl:value-of select="$design"/><![CDATA[/css/msie6.css"> </link><![endif]]]></xsl:comment>
+  <xsl:comment><![CDATA[[if lt IE 7]><link rel="stylesheet" type="text/css" href="]]><xsl:value-of select="$path"/><xsl:value-of select="$timestamp-url"/>style/<xsl:value-of select="$design"/><![CDATA[/css/msie6.css"> </link><![endif]]]></xsl:comment>
 </xsl:template>
 
 <xsl:template name="util:style-ie7">
-	<xsl:comment><![CDATA[[if IE 7]><link rel="stylesheet" type="text/css" href="]]><xsl:value-of select="$path"/><xsl:value-of select="$timestamp-url"/>style/<xsl:value-of select="$design"/><![CDATA[/css/msie7.css"> </link><![endif]]]></xsl:comment>
+  <xsl:comment><![CDATA[[if IE 7]><link rel="stylesheet" type="text/css" href="]]><xsl:value-of select="$path"/><xsl:value-of select="$timestamp-url"/>style/<xsl:value-of select="$design"/><![CDATA[/css/msie7.css"> </link><![endif]]]></xsl:comment>
 </xsl:template>
 
 <xsl:template name="util:style-ie8">
-	<xsl:comment><![CDATA[[if IE 8]><link rel="stylesheet" type="text/css" href="]]><xsl:value-of select="$path"/><xsl:value-of select="$timestamp-url"/>style/<xsl:value-of select="$design"/><![CDATA[/css/msie8.css"> </link><![endif]]]></xsl:comment>
+  <xsl:comment><![CDATA[[if IE 8]><link rel="stylesheet" type="text/css" href="]]><xsl:value-of select="$path"/><xsl:value-of select="$timestamp-url"/>style/<xsl:value-of select="$design"/><![CDATA[/css/msie8.css"> </link><![endif]]]></xsl:comment>
 </xsl:template>
 
 <xsl:template name="util:style-lt-ie9">
-	<xsl:comment><![CDATA[[if lt IE 9]><link rel="stylesheet" type="text/css" href="]]><xsl:value-of select="$path"/><xsl:value-of select="$timestamp-url"/>style/<xsl:value-of select="$design"/><![CDATA[/css/msie_lt9.css"> </link><![endif]]]></xsl:comment>
+  <xsl:comment><![CDATA[[if lt IE 9]><link rel="stylesheet" type="text/css" href="]]><xsl:value-of select="$path"/><xsl:value-of select="$timestamp-url"/>style/<xsl:value-of select="$design"/><![CDATA[/css/msie_lt9.css"> </link><![endif]]]></xsl:comment>
 </xsl:template>
 
 <xsl:template name="util:style-lt-ie8">
-	<xsl:comment><![CDATA[[if lt IE 9]><link rel="stylesheet" type="text/css" href="]]><xsl:value-of select="$path"/><xsl:value-of select="$timestamp-url"/>style/<xsl:value-of select="$design"/><![CDATA[/css/msie_lt8.css"> </link><![endif]]]></xsl:comment>
+  <xsl:comment><![CDATA[[if lt IE 9]><link rel="stylesheet" type="text/css" href="]]><xsl:value-of select="$path"/><xsl:value-of select="$timestamp-url"/>style/<xsl:value-of select="$design"/><![CDATA[/css/msie_lt8.css"> </link><![endif]]]></xsl:comment>
 </xsl:template>
 
 <xsl:template name="util:css">
+  <xsl:param name="async" select="'false'"/>
+  <xsl:param name="inline" select="'false'"/>
+  <xsl:param name="ie-lt-9" select="'false'"/>
+  <xsl:param name="ie-lt-8" select="'false'"/>
+
+  <xsl:if test="$inline='true'">
+    <style type="text/css">
+      <xsl:value-of select="php:function('DesignService::getInlineCSS',$design,$development)" disable-output-escaping="yes"/>
+    </style>
+  </xsl:if>
+
   <xsl:if test="$template!='document'">
     <link rel="stylesheet" type="text/css" href="{$path}{$timestamp-url}style/basic/css/{$template}.css"/>
   </xsl:if>
+
   <xsl:variable name="query">
-  <xsl:choose>
-    <xsl:when test="$development='true'">?development=true</xsl:when>
-		<xsl:when test="$preview='true'">?preview=true</xsl:when>
-    <xsl:when test="$development='true' and $preview='true'">?preview=true&amp;development=true</xsl:when>
-  </xsl:choose>
+    <xsl:choose>
+      <xsl:when test="$development='true'">?development=true</xsl:when>
+      <xsl:when test="$preview='true'">?preview=true</xsl:when>
+      <xsl:when test="$development='true' and $preview='true'">?preview=true&amp;development=true</xsl:when>
+    </xsl:choose>
   </xsl:variable>
-  <link rel="stylesheet" type="text/css" href="{$path}{$timestamp-url}api/style/{$design}.css{$query}"/>
+
+  <xsl:variable name="url">
+    <xsl:value-of select="$path"/>
+    <xsl:value-of select="$timestamp-url"/>
+    <xsl:text>api/style/</xsl:text>
+    <xsl:value-of select="$design"/>
+    <xsl:text>.css</xsl:text>
+    <xsl:value-of select="$query"/>
+  </xsl:variable>
+
+  <xsl:choose>
+    <xsl:when test="$async='true'">
+      <xsl:call-template name="util:lazy-style">
+        <xsl:with-param name="href"><xsl:value-of select="$url"/></xsl:with-param>
+      </xsl:call-template>
+    </xsl:when>
+    <xsl:otherwise>
+      <link rel="stylesheet" type="text/css" href="{$url}"/>
+    </xsl:otherwise>
+  </xsl:choose>
+
   <xsl:call-template name="util:_style-dynamic"/>
+
   <xsl:call-template name="util:_style-hui-msie"/>
+
+  <xsl:if test="$ie-lt-9='true'">
+    <xsl:call-template name="util:style-lt-ie9"/>
+  </xsl:if>
+  <xsl:if test="$ie-lt-8='true'">
+    <xsl:call-template name="util:style-lt-ie8"/>
+  </xsl:if>
+
 </xsl:template>
 
 <xsl:template name="util:style">
-	<link rel="stylesheet" type="text/css" href="{$path}{$timestamp-url}style/basic/css/{$template}.css"/>
-	<link rel="stylesheet" type="text/css" href="{$path}{$timestamp-url}style/{$design}/css/style.php"/>
-	<xsl:choose>
-		<xsl:when test="$preview='true'">
-			<link rel="stylesheet" type="text/css" href="{$path}{$timestamp-url}hui/bin/minimized.css{$timestamp-query}"/>
-			<link rel="stylesheet" type="text/css" href="{$path}{$timestamp-url}hui/css/pages.css{$timestamp-query}"/>
-			<link rel="stylesheet" type="text/css" href="{$path}{$timestamp-url}hui/css/editor.css{$timestamp-query}"/>
-		</xsl:when>
-		<xsl:otherwise>
-			<link rel="stylesheet" type="text/css" href="{$path}{$timestamp-url}hui/bin/minimized.site.css{$timestamp-query}"/>
-		</xsl:otherwise>
-	</xsl:choose>
+  <link rel="stylesheet" type="text/css" href="{$path}{$timestamp-url}style/basic/css/{$template}.css"/>
+  <link rel="stylesheet" type="text/css" href="{$path}{$timestamp-url}style/{$design}/css/style.php"/>
+  <xsl:choose>
+    <xsl:when test="$preview='true'">
+      <link rel="stylesheet" type="text/css" href="{$path}{$timestamp-url}hui/bin/minimized.css{$timestamp-query}"/>
+      <link rel="stylesheet" type="text/css" href="{$path}{$timestamp-url}hui/css/pages.css{$timestamp-query}"/>
+      <link rel="stylesheet" type="text/css" href="{$path}{$timestamp-url}hui/css/editor.css{$timestamp-query}"/>
+    </xsl:when>
+    <xsl:otherwise>
+      <link rel="stylesheet" type="text/css" href="{$path}{$timestamp-url}hui/bin/minimized.site.css{$timestamp-query}"/>
+    </xsl:otherwise>
+  </xsl:choose>
     <xsl:call-template name="util:_style-dynamic"/>
     <xsl:call-template name="util:_style-hui-msie"/>
 </xsl:template>
@@ -515,21 +557,21 @@ i.parentNode.insertBefore(o,i)}}}})}},_editor.processNoscript()}(window,document
   <xsl:if test="$template!='document'">
     <link rel="stylesheet" type="text/css" href="{$path}{$timestamp-url}style/basic/css/{$template}.css"/>
   </xsl:if>
-	<xsl:choose>
-		<xsl:when test="$preview='true' and $development='true'">
-			<link rel="stylesheet" type="text/css" href="{$path}{$timestamp-url}hui/bin/minimized.css{$timestamp-query}"/>
-			<link rel="stylesheet" type="text/css" href="{$path}{$timestamp-url}hui/css/pages.css{$timestamp-query}"/>
-			<link rel="stylesheet" type="text/css" href="{$path}{$timestamp-url}hui/css/editor.css{$timestamp-query}"/>
+  <xsl:choose>
+    <xsl:when test="$preview='true' and $development='true'">
+      <link rel="stylesheet" type="text/css" href="{$path}{$timestamp-url}hui/bin/minimized.css{$timestamp-query}"/>
+      <link rel="stylesheet" type="text/css" href="{$path}{$timestamp-url}hui/css/pages.css{$timestamp-query}"/>
+      <link rel="stylesheet" type="text/css" href="{$path}{$timestamp-url}hui/css/editor.css{$timestamp-query}"/>
       <link rel="stylesheet" type="text/css" href="{$path}{$timestamp-url}style/{$design}/css/style.dev.css"/>
-		</xsl:when>
-		<xsl:when test="$preview='true'">
-			<link rel="stylesheet" type="text/css" href="{$path}{$timestamp-url}hui/bin/minimized.css{$timestamp-query}"/>
-			<link rel="stylesheet" type="text/css" href="{$path}{$timestamp-url}hui/css/pages.css{$timestamp-query}"/>
-			<link rel="stylesheet" type="text/css" href="{$path}{$timestamp-url}hui/css/editor.css{$timestamp-query}"/>
+    </xsl:when>
+    <xsl:when test="$preview='true'">
+      <link rel="stylesheet" type="text/css" href="{$path}{$timestamp-url}hui/bin/minimized.css{$timestamp-query}"/>
+      <link rel="stylesheet" type="text/css" href="{$path}{$timestamp-url}hui/css/pages.css{$timestamp-query}"/>
+      <link rel="stylesheet" type="text/css" href="{$path}{$timestamp-url}hui/css/editor.css{$timestamp-query}"/>
       <link rel="stylesheet" type="text/css" href="{$path}{$timestamp-url}style/{$design}/css/style.private.css"/>
-		</xsl:when>
-		<xsl:when test="$development='true'">
-			<link rel="stylesheet" type="text/css" href="{$path}{$timestamp-url}hui/bin/minimized.site.css{$timestamp-query}"/>
+    </xsl:when>
+    <xsl:when test="$development='true'">
+      <link rel="stylesheet" type="text/css" href="{$path}{$timestamp-url}hui/bin/minimized.site.css{$timestamp-query}"/>
       <xsl:if test="$plain='false' and $async='true'">
         <xsl:call-template name="util:lazy-style">
           <xsl:with-param name="href">
@@ -547,11 +589,11 @@ i.parentNode.insertBefore(o,i)}}}})}},_editor.processNoscript()}(window,document
           <xsl:value-of select="$path"/><xsl:value-of select="$timestamp-url"/>style/<xsl:value-of select="$design"/><xsl:text>/css/style.css</xsl:text>
         </xsl:with-param>
       </xsl:call-template>
-		</xsl:when>
+    </xsl:when>
     <xsl:when test="$plain='false' and $async='false'">
       <link rel="stylesheet" type="text/css" href="{$path}{$timestamp-url}style/{$design}/css/style.css{$timestamp-query}"/>
     </xsl:when>
-	</xsl:choose>
+  </xsl:choose>
     <xsl:call-template name="util:_style-dynamic"/>
     <xsl:call-template name="util:_style-hui-msie"/>
 </xsl:template>
@@ -563,7 +605,7 @@ i.parentNode.insertBefore(o,i)}}}})}},_editor.processNoscript()}(window,document
     <noscript class="js-async">
     <link rel="stylesheet" type="text/css" href="{$href}" media="all"/>
     </noscript>
-	<xsl:comment><![CDATA[[if lt IE 9]><link rel="stylesheet" type="text/css" href="]]><xsl:value-of select="$href"/><![CDATA[" media="all"/><![endif]]]></xsl:comment>
+  <xsl:comment><![CDATA[[if lt IE 9]><link rel="stylesheet" type="text/css" href="]]><xsl:value-of select="$href"/><![CDATA[" media="all"/><![endif]]]></xsl:comment>
 </xsl:template>
 
 <xsl:template name="util:load-font">
@@ -620,38 +662,38 @@ V.prototype.ba=function(a){for(var b=this.d,c=new qa(this.f.api,w(b),this.f.text
 W.prototype.L=function(a,b){var c=this.f.id,d=this.d.w,e=this;c?(d.__webfontfontdeckmodule__||(d.__webfontfontdeckmodule__={}),d.__webfontfontdeckmodule__[c]=function(a,c){for(var d=0,p=c.fonts.length;d<p;++d){var m=c.fonts[d];e.p.push(new K(m.name,fa("font-weight:"+m.weight+";font-style:"+m.style)))}b(a)},y(this.d,this.I(c),function(a){a&&b(!1)})):b(!1)};W.prototype.load=function(a){a(this.p)};function X(a,b){this.d=a;this.f=b;this.p=[]}X.prototype.I=function(a){var b=w(this.d);return(this.f.api||b+"//use.typekit.net")+"/"+a+".js"};X.prototype.L=function(a,b){var c=this.f.id,d=this.d.w,e=this;c?y(this.d,this.I(c),function(a){if(a)b(!1);else{if(d.Typekit&&d.Typekit.config&&d.Typekit.config.fn){a=d.Typekit.config.fn;for(var c=0;c<a.length;c+=2)for(var h=a[c],p=a[c+1],m=0;m<p.length;m++)e.p.push(new K(h,p[m]));try{d.Typekit.load({events:!1,classes:!1})}catch(r){}}b(!0)}},2E3):b(!1)};
 X.prototype.load=function(a){a(this.p)};function Y(a,b){this.d=a;this.f=b;this.p=[]}Y.prototype.L=function(a,b){var c=this,d=c.f.projectId,e=c.f.version;if(d){var f=c.d.w;y(this.d,c.I(d,e),function(e){if(e)b(!1);else{if(f["__mti_fntLst"+d]&&(e=f["__mti_fntLst"+d]()))for(var h=0;h<e.length;h++)c.p.push(new K(e[h].fontfamily));b(a.m.R)}}).id="__MonotypeAPIScript__"+d}else b(!1)};Y.prototype.I=function(a,b){var c=w(this.d),d=(this.f.api||"fast.fonts.net/jsapi").replace(/^.*http(s?):(\/\/)?/,"");return c+"//"+d+"/"+a+".js"+(b?"?v="+b:"")};
 Y.prototype.load=function(a){a(this.p)};function Z(a,b){this.d=a;this.f=b}Z.prototype.load=function(a){var b,c,d=this.f.urls||[],e=this.f.families||[],f=this.f.testStrings||{};b=0;for(c=d.length;b<c;b++)x(this.d,d[b]);d=[];b=0;for(c=e.length;b<c;b++){var g=e[b].split(":");if(g[1])for(var h=g[1].split(","),p=0;p<h.length;p+=1)d.push(new K(g[0],h[p]));else d.push(new K(g[0]))}a(d,f)};Z.prototype.L=function(a,b){return b(a.m.R)};var $=new U(k);$.v.A.custom=function(a,b){return new Z(b,a)};$.v.A.fontdeck=function(a,b){return new W(b,a)};$.v.A.monotype=function(a,b){return new Y(b,a)};$.v.A.typekit=function(a,b){return new X(b,a)};$.v.A.google=function(a,b){return new V(b,a)};k.WebFont||(k.WebFont={},k.WebFont.load=n($.load,$),k.WebFontConfig&&$.load(k.WebFontConfig));})(this,document);]]>
-</xsl:text><xsl:text disable-output-escaping="yes">//]]&gt;</xsl:text>	</script>
+</xsl:text><xsl:text disable-output-escaping="yes">//]]&gt;</xsl:text>  </script>
 </xsl:template>
 
 <xsl:template name="util:_style-hui-msie">
-	<xsl:comment><![CDATA[[if lt IE 7]><link rel="stylesheet" type="text/css" href="]]><xsl:value-of select="$path"/><xsl:value-of select="$timestamp-url"/>hui/css/msie6.css<xsl:value-of select="$timestamp-query"/><![CDATA["></link><![endif]]]></xsl:comment>
-	<xsl:comment><![CDATA[[if IE 7]><link rel="stylesheet" type="text/css" href="]]><xsl:value-of select="$path"/><xsl:value-of select="$timestamp-url"/>hui/css/msie7.css<xsl:value-of select="$timestamp-query"/><![CDATA["></link><![endif]]]></xsl:comment>
+  <xsl:comment><![CDATA[[if lt IE 7]><link rel="stylesheet" type="text/css" href="]]><xsl:value-of select="$path"/><xsl:value-of select="$timestamp-url"/>hui/css/msie6.css<xsl:value-of select="$timestamp-query"/><![CDATA["></link><![endif]]]></xsl:comment>
+  <xsl:comment><![CDATA[[if IE 7]><link rel="stylesheet" type="text/css" href="]]><xsl:value-of select="$path"/><xsl:value-of select="$timestamp-url"/>hui/css/msie7.css<xsl:value-of select="$timestamp-query"/><![CDATA["></link><![endif]]]></xsl:comment>
 </xsl:template>
 
 <xsl:template name="util:_style-dynamic">
     <!--
-	<xsl:if test="//movie:movie">
-		<link href="http://vjs.zencdn.net/4.1/video-js.css" rel="stylesheet"/>
-	</xsl:if>
+  <xsl:if test="//movie:movie">
+    <link href="http://vjs.zencdn.net/4.1/video-js.css" rel="stylesheet"/>
+  </xsl:if>
         -->
-	<xsl:if test="//header:style[contains(@font-family,'Cabin Sketch')] or //text:style[contains(@font-family,'Cabin Sketch')]">
-		<link href='http://fonts.googleapis.com/css?family=Cabin+Sketch:bold' rel='stylesheet' type='text/css'/>
-	</xsl:if>
-	<xsl:if test="//header:style[contains(@font-family,'Droid Sans')] or //text:style[contains(@font-family,'Droid Sans')]">
-		<link href='http://fonts.googleapis.com/css?family=Droid+Sans' rel='stylesheet' type='text/css' />
-	</xsl:if>
-	<xsl:if test="//header:style[contains(@font-family,'Just Me Again Down Here')] or //text:style[contains(@font-family,'Just Me Again Down Here')]">
-		<link href='http://fonts.googleapis.com/css?family=Just+Me+Again+Down+Here' rel='stylesheet' type='text/css'/>
-	</xsl:if>
-	<xsl:if test="//header:style[contains(@font-family,'Crimson Text')] or //text:style[contains(@font-family,'Crimson Text')]">
-		<link href='http://fonts.googleapis.com/css?family=Crimson+Text:regular,bold' rel='stylesheet' type='text/css' />
-	</xsl:if>
-	<xsl:if test="//header:style[contains(@font-family,'Luckiest Guy')] or //text:style[contains(@font-family,'Luckiest Guy')]">
-		<link href='http://fonts.googleapis.com/css?family=Luckiest+Guy' rel='stylesheet' type='text/css' />
-	</xsl:if>
-	<xsl:if test="//header:style[contains(@font-family,'Dancing Script')] or //text:style[contains(@font-family,'Dancing Script')]">
-		<link href='http://fonts.googleapis.com/css?family=Dancing+Script' rel='stylesheet' type='text/css' />
-	</xsl:if>
+  <xsl:if test="//header:style[contains(@font-family,'Cabin Sketch')] or //text:style[contains(@font-family,'Cabin Sketch')]">
+    <link href='http://fonts.googleapis.com/css?family=Cabin+Sketch:bold' rel='stylesheet' type='text/css'/>
+  </xsl:if>
+  <xsl:if test="//header:style[contains(@font-family,'Droid Sans')] or //text:style[contains(@font-family,'Droid Sans')]">
+    <link href='http://fonts.googleapis.com/css?family=Droid+Sans' rel='stylesheet' type='text/css' />
+  </xsl:if>
+  <xsl:if test="//header:style[contains(@font-family,'Just Me Again Down Here')] or //text:style[contains(@font-family,'Just Me Again Down Here')]">
+    <link href='http://fonts.googleapis.com/css?family=Just+Me+Again+Down+Here' rel='stylesheet' type='text/css'/>
+  </xsl:if>
+  <xsl:if test="//header:style[contains(@font-family,'Crimson Text')] or //text:style[contains(@font-family,'Crimson Text')]">
+    <link href='http://fonts.googleapis.com/css?family=Crimson+Text:regular,bold' rel='stylesheet' type='text/css' />
+  </xsl:if>
+  <xsl:if test="//header:style[contains(@font-family,'Luckiest Guy')] or //text:style[contains(@font-family,'Luckiest Guy')]">
+    <link href='http://fonts.googleapis.com/css?family=Luckiest+Guy' rel='stylesheet' type='text/css' />
+  </xsl:if>
+  <xsl:if test="//header:style[contains(@font-family,'Dancing Script')] or //text:style[contains(@font-family,'Dancing Script')]">
+    <link href='http://fonts.googleapis.com/css?family=Dancing+Script' rel='stylesheet' type='text/css' />
+  </xsl:if>
 </xsl:template>
 
 <xsl:template name="util:style-inline">
@@ -659,16 +701,16 @@ Y.prototype.load=function(a){a(this.p)};function Z(a,b){this.d=a;this.f=b}Z.prot
     <xsl:param name="file" select="'inline.css'"/>
     <xsl:choose>
       <xsl:when test="$development='true'">
-  		<link rel="stylesheet" type="text/css" href="{$path}{$timestamp-url}style/{$design}/css/{$file}{$timestamp-query}"/>
+      <link rel="stylesheet" type="text/css" href="{$path}{$timestamp-url}style/{$design}/css/{$file}{$timestamp-query}"/>
       </xsl:when>
       <xsl:otherwise>
-      	<style type="text/css">
-            
-      		<xsl:value-of select="$compiled" disable-output-escaping="yes"/>
+        <style type="text/css">
+
+          <xsl:value-of select="$compiled" disable-output-escaping="yes"/>
             <xsl:text> </xsl:text>
-      	</style>
+        </style>
       </xsl:otherwise>
-    </xsl:choose>    
+    </xsl:choose>
 </xsl:template>
 
 
@@ -677,93 +719,93 @@ Y.prototype.load=function(a){a(this.p)};function Z(a,b){this.d=a;this.f=b}Z.prot
 <!-- Dates -->
 
 <xsl:template name="util:weekday">
-	<xsl:param name="node"/>
-	<xsl:choose>
-		<xsl:when test="$language='en'">
-			<xsl:choose>
-				<xsl:when test="$node/@weekday=0">Sunday</xsl:when>
-				<xsl:when test="$node/@weekday=1">Monday</xsl:when>
-				<xsl:when test="$node/@weekday=2">Tuesday</xsl:when>
-				<xsl:when test="$node/@weekday=3">Wednesday</xsl:when>
-				<xsl:when test="$node/@weekday=4">Thursday</xsl:when>
-				<xsl:when test="$node/@weekday=5">Friday</xsl:when>
-				<xsl:when test="$node/@weekday=6">Saturday</xsl:when>
-			</xsl:choose>
-		</xsl:when>
-		<xsl:otherwise>
-			<xsl:choose>
-				<xsl:when test="$node/@weekday=0">Søndag</xsl:when>
-				<xsl:when test="$node/@weekday=1">Mandag</xsl:when>
-				<xsl:when test="$node/@weekday=2">Tirsdag</xsl:when>
-				<xsl:when test="$node/@weekday=3">Onsdag</xsl:when>
-				<xsl:when test="$node/@weekday=4">Torsdag</xsl:when>
-				<xsl:when test="$node/@weekday=5">Fredag</xsl:when>
-				<xsl:when test="$node/@weekday=6">Lørdag</xsl:when>
-			</xsl:choose>
-		</xsl:otherwise>
-	</xsl:choose>
+  <xsl:param name="node"/>
+  <xsl:choose>
+    <xsl:when test="$language='en'">
+      <xsl:choose>
+        <xsl:when test="$node/@weekday=0">Sunday</xsl:when>
+        <xsl:when test="$node/@weekday=1">Monday</xsl:when>
+        <xsl:when test="$node/@weekday=2">Tuesday</xsl:when>
+        <xsl:when test="$node/@weekday=3">Wednesday</xsl:when>
+        <xsl:when test="$node/@weekday=4">Thursday</xsl:when>
+        <xsl:when test="$node/@weekday=5">Friday</xsl:when>
+        <xsl:when test="$node/@weekday=6">Saturday</xsl:when>
+      </xsl:choose>
+    </xsl:when>
+    <xsl:otherwise>
+      <xsl:choose>
+        <xsl:when test="$node/@weekday=0">Søndag</xsl:when>
+        <xsl:when test="$node/@weekday=1">Mandag</xsl:when>
+        <xsl:when test="$node/@weekday=2">Tirsdag</xsl:when>
+        <xsl:when test="$node/@weekday=3">Onsdag</xsl:when>
+        <xsl:when test="$node/@weekday=4">Torsdag</xsl:when>
+        <xsl:when test="$node/@weekday=5">Fredag</xsl:when>
+        <xsl:when test="$node/@weekday=6">Lørdag</xsl:when>
+      </xsl:choose>
+    </xsl:otherwise>
+  </xsl:choose>
 </xsl:template>
 
 <xsl:template name="util:month">
-	<xsl:param name="node"/>
-	<xsl:choose>
-		<xsl:when test="$language='en'">
-			<xsl:choose>
-				<xsl:when test="number($node/@month)=1">January</xsl:when>
-				<xsl:when test="number($node/@month)=2">February</xsl:when>
-				<xsl:when test="number($node/@month)=3">March</xsl:when>
-				<xsl:when test="number($node/@month)=4">April</xsl:when>
-				<xsl:when test="number($node/@month)=5">May</xsl:when>
-				<xsl:when test="number($node/@month)=6">June</xsl:when>
-				<xsl:when test="number($node/@month)=7">July</xsl:when>
-				<xsl:when test="number($node/@month)=8">August</xsl:when>
-				<xsl:when test="number($node/@month)=9">September</xsl:when>
-				<xsl:when test="number($node/@month)=10">October</xsl:when>
-				<xsl:when test="number($node/@month)=11">November</xsl:when>
-				<xsl:when test="number($node/@month)=12">December</xsl:when>
-			</xsl:choose>
-		</xsl:when>
-		<xsl:otherwise>
-			<xsl:choose>
-				<xsl:when test="number($node/@month)=1">januar</xsl:when>
-				<xsl:when test="number($node/@month)=2">februar</xsl:when>
-				<xsl:when test="number($node/@month)=3">marts</xsl:when>
-				<xsl:when test="number($node/@month)=4">april</xsl:when>
-				<xsl:when test="number($node/@month)=5">maj</xsl:when>
-				<xsl:when test="number($node/@month)=6">juni</xsl:when>
-				<xsl:when test="number($node/@month)=7">juli</xsl:when>
-				<xsl:when test="number($node/@month)=8">august</xsl:when>
-				<xsl:when test="number($node/@month)=9">september</xsl:when>
-				<xsl:when test="number($node/@month)=10">oktober</xsl:when>
-				<xsl:when test="number($node/@month)=11">november</xsl:when>
-				<xsl:when test="number($node/@month)=12">december</xsl:when>
-			</xsl:choose>
-		</xsl:otherwise>
-	</xsl:choose>
+  <xsl:param name="node"/>
+  <xsl:choose>
+    <xsl:when test="$language='en'">
+      <xsl:choose>
+        <xsl:when test="number($node/@month)=1">January</xsl:when>
+        <xsl:when test="number($node/@month)=2">February</xsl:when>
+        <xsl:when test="number($node/@month)=3">March</xsl:when>
+        <xsl:when test="number($node/@month)=4">April</xsl:when>
+        <xsl:when test="number($node/@month)=5">May</xsl:when>
+        <xsl:when test="number($node/@month)=6">June</xsl:when>
+        <xsl:when test="number($node/@month)=7">July</xsl:when>
+        <xsl:when test="number($node/@month)=8">August</xsl:when>
+        <xsl:when test="number($node/@month)=9">September</xsl:when>
+        <xsl:when test="number($node/@month)=10">October</xsl:when>
+        <xsl:when test="number($node/@month)=11">November</xsl:when>
+        <xsl:when test="number($node/@month)=12">December</xsl:when>
+      </xsl:choose>
+    </xsl:when>
+    <xsl:otherwise>
+      <xsl:choose>
+        <xsl:when test="number($node/@month)=1">januar</xsl:when>
+        <xsl:when test="number($node/@month)=2">februar</xsl:when>
+        <xsl:when test="number($node/@month)=3">marts</xsl:when>
+        <xsl:when test="number($node/@month)=4">april</xsl:when>
+        <xsl:when test="number($node/@month)=5">maj</xsl:when>
+        <xsl:when test="number($node/@month)=6">juni</xsl:when>
+        <xsl:when test="number($node/@month)=7">juli</xsl:when>
+        <xsl:when test="number($node/@month)=8">august</xsl:when>
+        <xsl:when test="number($node/@month)=9">september</xsl:when>
+        <xsl:when test="number($node/@month)=10">oktober</xsl:when>
+        <xsl:when test="number($node/@month)=11">november</xsl:when>
+        <xsl:when test="number($node/@month)=12">december</xsl:when>
+      </xsl:choose>
+    </xsl:otherwise>
+  </xsl:choose>
 </xsl:template>
 
 <xsl:template name="util:long-date-time">
-	<xsl:param name="node"/>
-	<xsl:choose>
-		<xsl:when test="$language='en'">
-			<xsl:call-template name="util:weekday"><xsl:with-param name="node" select="$node"/></xsl:call-template>
-			<xsl:text>, </xsl:text>
-			<xsl:value-of select="number($node/@day)"/><xsl:text> </xsl:text>
-			<xsl:call-template name="util:month"><xsl:with-param name="node" select="$node"/></xsl:call-template>
-			<xsl:if test="number($node/@hour)>0 or number($node/@minute)>0">
-				<xsl:text> at </xsl:text><xsl:value-of select="$node/@hour"/>:<xsl:value-of select="$node/@minute"/>
-			</xsl:if>
-		</xsl:when>
-		<xsl:otherwise>
-			<xsl:call-template name="util:weekday"><xsl:with-param name="node" select="$node"/></xsl:call-template>
-			<xsl:text> d. </xsl:text>
-			<xsl:value-of select="number($node/@day)"/><xsl:text>. </xsl:text>
-			<xsl:call-template name="util:month"><xsl:with-param name="node" select="$node"/></xsl:call-template>
-			<xsl:if test="number($node/@hour)>0 or number($node/@minute)>0">
-				<xsl:text> kl. </xsl:text><xsl:value-of select="$node/@hour"/>:<xsl:value-of select="$node/@minute"/>
-			</xsl:if>
-		</xsl:otherwise>
-	</xsl:choose>
+  <xsl:param name="node"/>
+  <xsl:choose>
+    <xsl:when test="$language='en'">
+      <xsl:call-template name="util:weekday"><xsl:with-param name="node" select="$node"/></xsl:call-template>
+      <xsl:text>, </xsl:text>
+      <xsl:value-of select="number($node/@day)"/><xsl:text> </xsl:text>
+      <xsl:call-template name="util:month"><xsl:with-param name="node" select="$node"/></xsl:call-template>
+      <xsl:if test="number($node/@hour)>0 or number($node/@minute)>0">
+        <xsl:text> at </xsl:text><xsl:value-of select="$node/@hour"/>:<xsl:value-of select="$node/@minute"/>
+      </xsl:if>
+    </xsl:when>
+    <xsl:otherwise>
+      <xsl:call-template name="util:weekday"><xsl:with-param name="node" select="$node"/></xsl:call-template>
+      <xsl:text> d. </xsl:text>
+      <xsl:value-of select="number($node/@day)"/><xsl:text>. </xsl:text>
+      <xsl:call-template name="util:month"><xsl:with-param name="node" select="$node"/></xsl:call-template>
+      <xsl:if test="number($node/@hour)>0 or number($node/@minute)>0">
+        <xsl:text> kl. </xsl:text><xsl:value-of select="$node/@hour"/>:<xsl:value-of select="$node/@minute"/>
+      </xsl:if>
+    </xsl:otherwise>
+  </xsl:choose>
 </xsl:template>
 
 
@@ -775,30 +817,30 @@ Y.prototype.load=function(a){a(this.p)};function Z(a,b){this.d=a;this.f=b}Z.prot
 <!-- Languages -->
 
 <xsl:template name="util:languages">
-	<xsl:param name="tag" select="'span'"/>
-	<xsl:element name="{$tag}">
-		<xsl:attribute name="class">layout_languages</xsl:attribute>
-		<xsl:for-each select="//p:page/p:context/p:home[@language and @language!=$language and not(@language=//p:page/p:context/p:translation/@language)]">
-			<xsl:call-template name="util:language"/>
-		</xsl:for-each>
-		<xsl:for-each select="//p:page/p:context/p:translation">
-			<xsl:call-template name="util:language"/>
-		</xsl:for-each>
-		<xsl:comment/>
-	</xsl:element>
+  <xsl:param name="tag" select="'span'"/>
+  <xsl:element name="{$tag}">
+    <xsl:attribute name="class">layout_languages</xsl:attribute>
+    <xsl:for-each select="//p:page/p:context/p:home[@language and @language!=$language and not(@language=//p:page/p:context/p:translation/@language)]">
+      <xsl:call-template name="util:language"/>
+    </xsl:for-each>
+    <xsl:for-each select="//p:page/p:context/p:translation">
+      <xsl:call-template name="util:language"/>
+    </xsl:for-each>
+    <xsl:comment/>
+  </xsl:element>
 </xsl:template>
 
 <xsl:template name="util:language">
-	<a class="layout_language layout_language_{@language}">
-		<xsl:call-template name="util:link"/>
-		<span class="layout_language_text">
-		<xsl:choose>
-			<xsl:when test="@language='da'">Dansk version</xsl:when>
-			<xsl:when test="@language='en'">English version</xsl:when>
-			<xsl:otherwise><xsl:value-of select="@language"/></xsl:otherwise>
-		</xsl:choose>
-		</span>
-	</a><xsl:text> </xsl:text>
+  <a class="layout_language layout_language_{@language}">
+    <xsl:call-template name="util:link"/>
+    <span class="layout_language_text">
+    <xsl:choose>
+      <xsl:when test="@language='da'">Dansk version</xsl:when>
+      <xsl:when test="@language='en'">English version</xsl:when>
+      <xsl:otherwise><xsl:value-of select="@language"/></xsl:otherwise>
+    </xsl:choose>
+    </span>
+  </a><xsl:text> </xsl:text>
 </xsl:template>
 
 
@@ -808,137 +850,137 @@ Y.prototype.load=function(a){a(this.p)};function Z(a,b){this.d=a;this.f=b}Z.prot
 <!-- Navigation -->
 
 <xsl:template name="util:menu-top-level">
-	<xsl:if test="//f:frame/h:hierarchy/h:item[not(@hidden='true')]">
-		<ul class="layout_menu_top">
-			<xsl:for-each select="//f:frame/h:hierarchy/h:item">
-				<xsl:if test="not(@hidden='true')">
-					<li>
+  <xsl:if test="//f:frame/h:hierarchy/h:item[not(@hidden='true')]">
+    <ul class="layout_menu_top">
+      <xsl:for-each select="//f:frame/h:hierarchy/h:item">
+        <xsl:if test="not(@hidden='true')">
+          <li>
                         <xsl:attribute name="class">
                             <xsl:text>layout_menu_top_item</xsl:text>
-    						<xsl:choose>
-    							<xsl:when test="//p:page/@id=@page"> layout_menu_top_item_selected</xsl:when>
-    							<xsl:when test="descendant-or-self::*/@page=//p:page/@id"> layout_menu_top_item_highlighted</xsl:when>
-    						</xsl:choose>
+                <xsl:choose>
+                  <xsl:when test="//p:page/@id=@page"> layout_menu_top_item_selected</xsl:when>
+                  <xsl:when test="descendant-or-self::*/@page=//p:page/@id"> layout_menu_top_item_highlighted</xsl:when>
+                </xsl:choose>
                         </xsl:attribute>
-						<a>
+            <a>
                             <xsl:attribute name="class">
                                 <xsl:text>layout_menu_top_link</xsl:text>
-        						<xsl:choose>
-        							<xsl:when test="//p:page/@id=@page"> layout_menu_top_link_selected</xsl:when>
-        							<xsl:when test="descendant-or-self::*/@page=//p:page/@id"> layout_menu_top_link_highlighted</xsl:when>
-        						</xsl:choose>
+                    <xsl:choose>
+                      <xsl:when test="//p:page/@id=@page"> layout_menu_top_link_selected</xsl:when>
+                      <xsl:when test="descendant-or-self::*/@page=//p:page/@id"> layout_menu_top_link_highlighted</xsl:when>
+                    </xsl:choose>
                             </xsl:attribute>
-							<xsl:call-template name="util:link"/>
-							<span><xsl:value-of select="@title"/></span>
-						</a>
-					</li>
-				</xsl:if>
-			</xsl:for-each>
-		</ul>
-	</xsl:if>
+              <xsl:call-template name="util:link"/>
+              <span><xsl:value-of select="@title"/></span>
+            </a>
+          </li>
+        </xsl:if>
+      </xsl:for-each>
+    </ul>
+  </xsl:if>
 </xsl:template>
 
 <xsl:template name="util:navigation-first-level">
-	<xsl:if test="//f:frame/h:hierarchy/h:item[not(@hidden='true')]">
-		<ul class="layout_navigation_first">
-			<xsl:for-each select="//f:frame/h:hierarchy/h:item">
-				<xsl:if test="not(@hidden='true')">
-					<li>
-						<xsl:choose>
-							<xsl:when test="//p:page/@id=@page"><xsl:attribute name="class">layout_selected</xsl:attribute></xsl:when>
-							<xsl:when test="descendant-or-self::*/@page=//p:page/@id"><xsl:attribute name="class">layout_highlighted</xsl:attribute></xsl:when>
-						</xsl:choose>
-						<a>
-							<xsl:call-template name="util:link"/>
-							<span><xsl:value-of select="@title"/></span>
-						</a>
-					</li>
-				</xsl:if>
-			</xsl:for-each>
-		</ul>
-	</xsl:if>
+  <xsl:if test="//f:frame/h:hierarchy/h:item[not(@hidden='true')]">
+    <ul class="layout_navigation_first">
+      <xsl:for-each select="//f:frame/h:hierarchy/h:item">
+        <xsl:if test="not(@hidden='true')">
+          <li>
+            <xsl:choose>
+              <xsl:when test="//p:page/@id=@page"><xsl:attribute name="class">layout_selected</xsl:attribute></xsl:when>
+              <xsl:when test="descendant-or-self::*/@page=//p:page/@id"><xsl:attribute name="class">layout_highlighted</xsl:attribute></xsl:when>
+            </xsl:choose>
+            <a>
+              <xsl:call-template name="util:link"/>
+              <span><xsl:value-of select="@title"/></span>
+            </a>
+          </li>
+        </xsl:if>
+      </xsl:for-each>
+    </ul>
+  </xsl:if>
 </xsl:template>
 
 <xsl:template name="util:navigation-second-level">
-	<xsl:if test="//f:frame/h:hierarchy/h:item[descendant-or-self::*/@page=//p:page/@id]/h:item[not(@hidden='true')]">
-		<ul class="layout_navigation_second">
-			<xsl:for-each select="//f:frame/h:hierarchy/h:item[descendant-or-self::*/@page=//p:page/@id]/h:item">
-				<xsl:if test="not(@hidden='true')">
-					<li>
-						<xsl:choose>
-							<xsl:when test="//p:page/@id=@page"><xsl:attribute name="class">layout_selected</xsl:attribute></xsl:when>
-							<xsl:when test="descendant-or-self::*/@page=//p:page/@id"><xsl:attribute name="class">layout_highlighted</xsl:attribute></xsl:when>
-						</xsl:choose>
-						<a>
-							<xsl:call-template name="util:link"/>
-							<span><xsl:value-of select="@title"/></span>
-						</a>
-					</li>
-				</xsl:if>
-			</xsl:for-each>
-		</ul>
-	</xsl:if>
+  <xsl:if test="//f:frame/h:hierarchy/h:item[descendant-or-self::*/@page=//p:page/@id]/h:item[not(@hidden='true')]">
+    <ul class="layout_navigation_second">
+      <xsl:for-each select="//f:frame/h:hierarchy/h:item[descendant-or-self::*/@page=//p:page/@id]/h:item">
+        <xsl:if test="not(@hidden='true')">
+          <li>
+            <xsl:choose>
+              <xsl:when test="//p:page/@id=@page"><xsl:attribute name="class">layout_selected</xsl:attribute></xsl:when>
+              <xsl:when test="descendant-or-self::*/@page=//p:page/@id"><xsl:attribute name="class">layout_highlighted</xsl:attribute></xsl:when>
+            </xsl:choose>
+            <a>
+              <xsl:call-template name="util:link"/>
+              <span><xsl:value-of select="@title"/></span>
+            </a>
+          </li>
+        </xsl:if>
+      </xsl:for-each>
+    </ul>
+  </xsl:if>
 </xsl:template>
 
 <xsl:template name="util:navigation-third-level">
-	<xsl:if test="//f:frame/h:hierarchy/h:item/h:item[descendant-or-self::*/@page=//p:page/@id]/h:item[not(@hidden='true')]">
-		<ul class="layout_navigation_third">
-			<xsl:for-each select="//f:frame/h:hierarchy/h:item/h:item[descendant-or-self::*/@page=//p:page/@id]/h:item">
-				<xsl:if test="not(@hidden='true')">
-					<li>
-						<xsl:choose>
-							<xsl:when test="//p:page/@id=@page"><xsl:attribute name="class">layout_selected</xsl:attribute></xsl:when>
-							<xsl:when test="descendant-or-self::*/@page=//p:page/@id"><xsl:attribute name="class">layout_highlighted</xsl:attribute></xsl:when>
-						</xsl:choose>
-						<a>
-							<xsl:call-template name="util:link"/>
-							<span><xsl:value-of select="@title"/></span>
-						</a>
-					</li>
-				</xsl:if>
-			</xsl:for-each>
-		</ul>
-	</xsl:if>
+  <xsl:if test="//f:frame/h:hierarchy/h:item/h:item[descendant-or-self::*/@page=//p:page/@id]/h:item[not(@hidden='true')]">
+    <ul class="layout_navigation_third">
+      <xsl:for-each select="//f:frame/h:hierarchy/h:item/h:item[descendant-or-self::*/@page=//p:page/@id]/h:item">
+        <xsl:if test="not(@hidden='true')">
+          <li>
+            <xsl:choose>
+              <xsl:when test="//p:page/@id=@page"><xsl:attribute name="class">layout_selected</xsl:attribute></xsl:when>
+              <xsl:when test="descendant-or-self::*/@page=//p:page/@id"><xsl:attribute name="class">layout_highlighted</xsl:attribute></xsl:when>
+            </xsl:choose>
+            <a>
+              <xsl:call-template name="util:link"/>
+              <span><xsl:value-of select="@title"/></span>
+            </a>
+          </li>
+        </xsl:if>
+      </xsl:for-each>
+    </ul>
+  </xsl:if>
 </xsl:template>
 
 <xsl:template name="util:hierarchy-after-first-level">
-	<xsl:if test="//f:frame/h:hierarchy/h:item[descendant-or-self::*/@page=//p:page/@id]/h:item">
-		<ul>
-			<xsl:for-each select="//f:frame/h:hierarchy/h:item[descendant-or-self::*/@page=//p:page/@id]/h:item">
-				<xsl:call-template name="util:hierarchy-item-iterator"/>
-			</xsl:for-each>
-		</ul>
-	</xsl:if>
+  <xsl:if test="//f:frame/h:hierarchy/h:item[descendant-or-self::*/@page=//p:page/@id]/h:item">
+    <ul>
+      <xsl:for-each select="//f:frame/h:hierarchy/h:item[descendant-or-self::*/@page=//p:page/@id]/h:item">
+        <xsl:call-template name="util:hierarchy-item-iterator"/>
+      </xsl:for-each>
+    </ul>
+  </xsl:if>
 </xsl:template>
 
 <xsl:template name="util:hierarchy-all-levels">
-	<ul>
-		<xsl:for-each select="//f:frame/h:hierarchy/h:item">
-			<xsl:call-template name="util:hierarchy-item-iterator"/>
-		</xsl:for-each>
-	</ul>
+  <ul>
+    <xsl:for-each select="//f:frame/h:hierarchy/h:item">
+      <xsl:call-template name="util:hierarchy-item-iterator"/>
+    </xsl:for-each>
+  </ul>
 </xsl:template>
 
 <xsl:template name="util:hierarchy-item-iterator">
-	<xsl:if test="not(@hidden='true')">
-		<li>
-			<a>
-				<xsl:choose>
-					<xsl:when test="//p:page/@id=@page"><xsl:attribute name="class">selected</xsl:attribute></xsl:when>
-					<xsl:when test="descendant-or-self::*/@page=//p:page/@id"><xsl:attribute name="class">highlighted</xsl:attribute></xsl:when>
-				</xsl:choose>
-				<xsl:call-template name="util:link"/>
-				<span><xsl:value-of select="@title"/></span>
-			</a>
-			<xsl:if test="descendant-or-self::*/@page=//p:page/@id and h:item">
-				<ul>
-					<xsl:for-each select="h:item">
-						<xsl:call-template name="util:hierarchy-item-iterator"/>
-					</xsl:for-each>
-				</ul>
-			</xsl:if>
-		</li>
-	</xsl:if>
+  <xsl:if test="not(@hidden='true')">
+    <li>
+      <a>
+        <xsl:choose>
+          <xsl:when test="//p:page/@id=@page"><xsl:attribute name="class">selected</xsl:attribute></xsl:when>
+          <xsl:when test="descendant-or-self::*/@page=//p:page/@id"><xsl:attribute name="class">highlighted</xsl:attribute></xsl:when>
+        </xsl:choose>
+        <xsl:call-template name="util:link"/>
+        <span><xsl:value-of select="@title"/></span>
+      </a>
+      <xsl:if test="descendant-or-self::*/@page=//p:page/@id and h:item">
+        <ul>
+          <xsl:for-each select="h:item">
+            <xsl:call-template name="util:hierarchy-item-iterator"/>
+          </xsl:for-each>
+        </ul>
+      </xsl:if>
+    </li>
+  </xsl:if>
 </xsl:template>
 
 
@@ -952,83 +994,83 @@ Y.prototype.load=function(a){a(this.p)};function Z(a,b){this.d=a;this.f=b}Z.prot
     <xsl:param name="variant"/>
     <xsl:param name="adaptive"/>
     <xsl:param name="content"/>
-    
-	<xsl:choose>
-		<xsl:when test="$variant!=''">
-			<span>
+
+  <xsl:choose>
+    <xsl:when test="$variant!=''">
+      <span>
         <xsl:attribute name="class">
           <xsl:text>shared_frame shared_frame_</xsl:text><xsl:value-of select="$variant"/>
           <xsl:if test="$adaptive='true'"> shared_frame-adaptive</xsl:if>
         </xsl:attribute>
-				<span class="shared_frame_{$variant}_top"><span class="shared_frame_{$variant}_top_inner"><span class="shared_frame_{$variant}_top_innermost"><xsl:comment/></span></span></span>
-				<span class="shared_frame_{$variant}_middle">
-					<span class="shared_frame_{$variant}_middle_inner">
-						<span class="shared_frame_{$variant}_content">
-							<xsl:copy-of select="$content"/>
-						</span>
-					</span>
-				</span>
-				<span class="shared_frame_{$variant}_bottom"><span class="shared_frame_{$variant}_bottom_inner"><span class="shared_frame_{$variant}_bottom_innermost"><xsl:comment/></span></span></span>
-			</span>
-		</xsl:when>
-		<xsl:otherwise>
-			<xsl:copy-of select="$content"/>
-		</xsl:otherwise>
-	</xsl:choose>
+        <span class="shared_frame_{$variant}_top"><span class="shared_frame_{$variant}_top_inner"><span class="shared_frame_{$variant}_top_innermost"><xsl:comment/></span></span></span>
+        <span class="shared_frame_{$variant}_middle">
+          <span class="shared_frame_{$variant}_middle_inner">
+            <span class="shared_frame_{$variant}_content">
+              <xsl:copy-of select="$content"/>
+            </span>
+          </span>
+        </span>
+        <span class="shared_frame_{$variant}_bottom"><span class="shared_frame_{$variant}_bottom_inner"><span class="shared_frame_{$variant}_bottom_innermost"><xsl:comment/></span></span></span>
+      </span>
+    </xsl:when>
+    <xsl:otherwise>
+      <xsl:copy-of select="$content"/>
+    </xsl:otherwise>
+  </xsl:choose>
 </xsl:template>
-                                               
+
 
 
 <!-- deprecated -->
 <xsl:template name="util:hierarchy-first-level">
-	<ul>
-		<xsl:for-each select="//f:frame/h:hierarchy/h:item">
-			<xsl:if test="not(@hidden='true')">
-				<li>
-				<xsl:choose>
-					<xsl:when test="//p:page/@id=@page"><xsl:attribute name="class">selected</xsl:attribute></xsl:when>
-					<xsl:when test="descendant-or-self::*/@page=//p:page/@id"><xsl:attribute name="class">highlighted</xsl:attribute></xsl:when>
-				</xsl:choose>
-				<a>
-					<xsl:call-template name="util:link"/>
-					<span><xsl:value-of select="@title"/></span>
-				</a>
-				</li>
-			</xsl:if>
-		</xsl:for-each>
-	</ul>
+  <ul>
+    <xsl:for-each select="//f:frame/h:hierarchy/h:item">
+      <xsl:if test="not(@hidden='true')">
+        <li>
+        <xsl:choose>
+          <xsl:when test="//p:page/@id=@page"><xsl:attribute name="class">selected</xsl:attribute></xsl:when>
+          <xsl:when test="descendant-or-self::*/@page=//p:page/@id"><xsl:attribute name="class">highlighted</xsl:attribute></xsl:when>
+        </xsl:choose>
+        <a>
+          <xsl:call-template name="util:link"/>
+          <span><xsl:value-of select="@title"/></span>
+        </a>
+        </li>
+      </xsl:if>
+    </xsl:for-each>
+  </ul>
 </xsl:template>
 
 <!-- Deprecated -->
 <xsl:template name="util:hierarchy-second-level">
-	<xsl:if test="//f:frame/h:hierarchy/h:item[descendant-or-self::*/@page=//p:page/@id]/h:item">
-		<ul class="case_sub_navigation">
-			<xsl:for-each select="//f:frame/h:hierarchy/h:item[descendant-or-self::*/@page=//p:page/@id]/h:item">
-				<xsl:if test="not(@hidden='true')">
-					<li>
-					<xsl:choose>
-						<xsl:when test="//p:page/@id=@page"><xsl:attribute name="class">selected</xsl:attribute></xsl:when>
-						<xsl:when test="descendant-or-self::*/@page=//p:page/@id"><xsl:attribute name="class">highlighted</xsl:attribute></xsl:when>
-					</xsl:choose>
-					<a>
-						<xsl:call-template name="util:link"/>
-						<span><xsl:value-of select="@title"/></span>
-					</a>
-					</li>
-				</xsl:if>
-			</xsl:for-each>
-		</ul>
-	</xsl:if>
+  <xsl:if test="//f:frame/h:hierarchy/h:item[descendant-or-self::*/@page=//p:page/@id]/h:item">
+    <ul class="case_sub_navigation">
+      <xsl:for-each select="//f:frame/h:hierarchy/h:item[descendant-or-self::*/@page=//p:page/@id]/h:item">
+        <xsl:if test="not(@hidden='true')">
+          <li>
+          <xsl:choose>
+            <xsl:when test="//p:page/@id=@page"><xsl:attribute name="class">selected</xsl:attribute></xsl:when>
+            <xsl:when test="descendant-or-self::*/@page=//p:page/@id"><xsl:attribute name="class">highlighted</xsl:attribute></xsl:when>
+          </xsl:choose>
+          <a>
+            <xsl:call-template name="util:link"/>
+            <span><xsl:value-of select="@title"/></span>
+          </a>
+          </li>
+        </xsl:if>
+      </xsl:for-each>
+    </ul>
+  </xsl:if>
 </xsl:template>
 
 
 <!--
-	<xsl:template name="util:share">
-		<script src="http://apis.google.com/js/plusone.js"></script>
-		<g:plusone size="small"></g:plusone>"
-		<div id="fb-root"></div>
-		<script src="http://connect.facebook.net/en_US/all.js#xfbml=1"></script>
-		<fb:like href="" send="false" layout="button_count" width="450" show_faces="false" font="lucida grande"></fb:like>
-	</xsl:template>
+  <xsl:template name="util:share">
+    <script src="http://apis.google.com/js/plusone.js"></script>
+    <g:plusone size="small"></g:plusone>"
+    <div id="fb-root"></div>
+    <script src="http://connect.facebook.net/en_US/all.js#xfbml=1"></script>
+    <fb:like href="" send="false" layout="button_count" width="450" show_faces="false" font="lucida grande"></fb:like>
+  </xsl:template>
 -->
 </xsl:stylesheet>
