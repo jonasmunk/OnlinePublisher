@@ -226,8 +226,8 @@ class DesignService {
       }
     }
     $info = DesignService::getInfo($design);
-    if (isset($info) && isset($info->build) && isset($info->build->css)) {
-      foreach ($info->build->css as $file) {
+    if (isset($info) && isset($info->css)) {
+      foreach ($info->css as $file) {
         if ($file=='@parts') {
           $files[] = 'style/basic/css/document.css';
           $files = array_merge($files, DesignService::_getPartStyleFiles());

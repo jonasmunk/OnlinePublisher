@@ -6,13 +6,13 @@
     "js" : [
       "style/humanise/js/poster.js",
       "style/humanise/js/layout.js"
-    ],
-    "css" : [
-      "style/basic/css/shared.css",
-      "@parts",
-      "style/humanise/css/deferred.css"
     ]
   },
+  "css" : [
+    "style/basic/css/shared.css",
+    "@parts",
+    "style/humanise/css/deferred.css"
+  ],
   "widgets" : {
     "call-to-action" : {
       "template" : "<call-to-action><text>This is the text</text><button url='#'>A button</button></call-to-action>"
