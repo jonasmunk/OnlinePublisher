@@ -145,6 +145,7 @@ p.common, ul.common {
 .layout_search {
   margin: 0;
   font-size: 0;
+  display: block;
 }
 
 .layout_search_body {
@@ -355,6 +356,16 @@ p.common, ul.common {
     line-height: 22px;
   }
 }
+.document_row {
+  max-width: 980px;
+  margin: 0 auto;
+  padding: 0 10px;
+}
+.document_row.full-width {
+  max-width: none;
+  padding: 0;
+}
+
 .hero {
   padding-bottom: 50%;
   overflow: hidden;

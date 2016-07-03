@@ -627,16 +627,6 @@
   outline: none;
 }
 
-.document_row {
-  max-width: 980px;
-  margin: 0 auto;
-  padding: 0 10px;
-}
-.document_row.full-width {
-  max-width: none;
-  padding: 0;
-}
-
 @media screen and (min-width: 760px) {
   .document_row {
     padding: 0 20px;

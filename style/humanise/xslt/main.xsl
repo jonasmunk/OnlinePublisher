@@ -36,54 +36,20 @@
     <meta name="viewport" content="user-scalable=yes, initial-scale = 1, maximum-scale = 10, minimum-scale = 0.2"/>
     <link rel="shortcut icon" href="{$path}style/humanise/gfx/favicon.ico" type="image/x-icon" />
     <xsl:call-template name="util:metatags"/>
-        <xsl:call-template name="util:style-inline">
-      <xsl:with-param name="compiled">body{padding:0;margin:0;font-family:'Helvetica Neue','Helvetica',Arial,'Helvetica',sans-serif}body.font{font-family:Lato,'Helvetica Neue','Helvetica','Arial','Lucida Grande','Lucida Sans Unicode',sans-serif}form{margin:0}img{border:none}a{word-break:break-word}.common_link{color:#ddd;color:rgba(0,0,0,0.1);cursor:pointer;font-weight:normal}.common_link_text{color:#028CE0}.common_link:hover,.common_link:hover .common_link_text{color:#026cad}.common_link:visited .common_link_text{color:#934DE0}h1.common{font-weight:400}p.common,ul.common{font-size:12pt;line-height:160%;text-align:justify}@media (-webkit-min-device-pixel-ratio:2),(min-resolution:2dppx){.common_link{text-decoration:none;background-image:-moz-linear-gradient(top,transparent 99%,rgba(0,0,0,0.5) 99%);background-image:-webkit-linear-gradient(top,transparent 98%,rgba(0,0,0,0.5) 98%);background-image:linear-gradient(top,transparent 98%,rgba(0,0,0,0.5) 98%);background-repeat:repeat-x}}.common_header{margin:0;color:#333;font-weight:300}.part_text{font-size:12pt;font-weight:300;word-spacing:1px}.layout_menu{margin:0;padding:5px;list-style:none;text-align:center}.layout_menu_item{display:inline-block}.layout_menu_link{padding:0 5px;height:32px;line-height:32px;text-decoration:none;color:#324d60;font-weight:300}.layout_menu_link-highlighted{color:#007AC5}.layout_menu_link-selected{color:#007AC5;font-weight:400}.layout_menu_item-first{display:block}.layout_menu_link-first{background:url(<xsl:value-of select="$path"/><xsl:value-of select="$timestamp-url"/>style/humanise/gfx/graphics.png) 0 -636px;display:inline-block;width:160px;height:40px}.layout_menu_link-first > span{display:none}@media (-webkit-min-device-pixel-ratio:2),(min-resolution:192dpi){.layout_menu_link-first{background-image:url(<xsl:value-of select="$path"/><xsl:value-of select="$timestamp-url"/>style/humanise/gfx/graphics_2x.png);background-size:400px 907px}}@media screen and (min-width:760px){.layout_menu{padding:5px 10px;text-align:left}.layout_menu > li{vertical-align:top}.layout_menu_link{font-size:20px;line-height:44px;padding:0 10px}.layout_menu_item-first{display:inline-block}}@media screen and (min-width:1000px){.layout_menu{padding:5px 0}}.layout_search{margin:0;font-size:0}.layout_search_body{display:none}.layout_search_icon{position:absolute;top:14px;right:12px;display:inline-block;width:24px;height:24px}.layout_search_icon > path{fill:#aaa}.layout_head_body,.layout_base{position:relative;max-width:980px;margin:0 auto}.layout_head_body{position:relative}.layout_head{background:#f6f6f9}.layout_head-hero{background:#00a8e6}.layout_head-hero .layout_menu_link{color:#fff}.layout_head-hero .layout_menu_link-first{background-position:-200px -636px}.scroll .layout_head-hero .layout_menu_link-first{background-position:0 -636px}.layout_head-hero .layout_search_icon > path{fill:#fff}.layout_content-sidebar{max-width:980px;margin:0 auto}.layout_inner_content{padding-top:20px}@media screen and (min-width:760px){.layout_inner_content-sidebar{margin-right:30%;overflow:hidden;padding-right:0}.layout_sidebar{width:30%;float:right}.layout_body{overflow:hidden}.layout{padding-top:54px}.layout_head{top:0;position:fixed;width:100%;z-index:9999}}.submenu{margin:0 auto;padding:5px;list-style:none;border-bottom:1px solid #eee;max-width:980px}.submenu_item{display:inline-block}.submenu_link{padding:0 5px;height:32px;line-height:32px;text-decoration:none;color:#333}.submenu_link-highlighted{color:#007AC5}.submenu_link-selected{color:#007AC5;font-weight:bold}@media screen and (min-width:760px){.submenu{padding:5px 10px}.submenu_link{padding:0 10px}}@media screen and (min-width:1000px){.submenu{padding-left:0;padding-right:0}.submenu li:first-child{margin-left:-10px}}.sidemenu{margin:0;padding:5px 5px;list-style:none;border-bottom:1px solid #eee}.sidemenu_item{display:inline-block}.sidemenu_link{padding:5px;display:inline-block;line-height:18px;text-decoration:none;color:#333}.sidemenu_link-selected{color:#007AC5;font-weight:bold}@media screen and (min-width:760px){.sidemenu{list-style:none;margin:20px 0 30px 25px;padding:0 10px;font-size:12pt;line-height:26px;border-bottom:none;border-left:1px solid #eee}.sidemenu_item{display:block}.sidemenu_link{display:block;padding:7px 5px}.sidemenu_link:hover{text-decoration:underline}.sidemenu_sub{list-style:none;padding-left:15px}}#poster{display:none}@media screen and (min-width:700px){#poster{display:block;height:310px;background:#333;margin-top:20px;position:relative}#poster_loader{background:#000;color:#FFF;left:50%;margin-left:-25px;position:absolute;text-align:center;top:150px;width:50px;height:24px;line-height:22px}}.hero{padding-bottom:50%;overflow:hidden;margin:-20px 0 20px;background:#00a8e6}.hero_title,.hero_info{display:none}@-webkit-keyframes effect{0%{transform:rotate(0deg)}100%{transform:rotate(360deg)}}@media screen and (min-width:800px){.hero{padding-bottom:400px}}@media screen and (max-width:700px){.document_table,.document_table_body,.document_table_column{display:block!important}.document_table_column{width:auto!important;padding:0!important}.document_table_container{margin:0!important}.part_image_image{max-width:100%;height:auto}}@media screen and (min-width:700px){.document_table{display:table;width:100%}.document_table_body{display:table-row}div.document_table_column{display:table-cell;vertical-align:top}}</xsl:with-param>
-        </xsl:call-template>
     <xsl:call-template name="util:scripts-build"/>
-    <xsl:call-template name="util:css"/>
-    <!--
-    <xsl:call-template name="util:style-build">
+
+    <xsl:call-template name="util:css">
       <xsl:with-param name="async" select="'true'"/>
+      <xsl:with-param name="inline" select="'true'"/>
+      <xsl:with-param name="ie-lt-9" select="'true'"/>
+      <xsl:with-param name="ie-lt-8" select="'true'"/>
     </xsl:call-template>
-      -->
-    <xsl:call-template name="util:style-lt-ie9"/>
-    <xsl:call-template name="util:style-lt-ie8"/>
-    <!--
-    <xsl:call-template name="util:load-font">
-      <xsl:with-param name="href" select="'/style/basic/fonts/Lato/LatoLatin/latolatinfonts_weights.css'"/>
-      <xsl:with-param name="family" select="'Lato'"/>
-      <xsl:with-param name="weights" select="'300,400,700,900'"/>
-    </xsl:call-template>-->
+
     <xsl:call-template name="util:load-font">
       <xsl:with-param name="href" select="'http://fonts.googleapis.com/css?family=Lato:300,400,700,900'"/>
       <xsl:with-param name="family" select="'Lato'"/>
       <xsl:with-param name="weights" select="'300,400,700'"/>
     </xsl:call-template>
-
-    <!--
-    <xsl:call-template name="util:load-font">
-      <xsl:with-param name="href" select="'http://fonts.googleapis.com/css?family=Heebo:100,300,400,500'"/>
-      <xsl:with-param name="family" select="'Heebo'"/>
-      <xsl:with-param name="weights" select="'100,300,400,500'"/>
-    </xsl:call-template>
-    -->
-      <!--
-        MYRIAD PRO...
-      <script>
-        <xsl:comment>
-        <![CDATA[
-        (function(d) {
-          var config = {
-            kitId: 'gpd5jdr',
-            scriptTimeout: 3000,
-            async: true
-          },
-          h=d.documentElement,t=setTimeout(function(){h.className=h.className.replace(/\bwf-loading\b/g,"")+" wf-inactive";},config.scriptTimeout),tk=d.createElement("script"),f=false,s=d.getElementsByTagName("script")[0],a;h.className+=" wf-loading";tk.src='https://use.typekit.net/'+config.kitId+'.js';tk.async=true;tk.onload=tk.onreadystatechange=function(){a=this.readyState;if(f||a&&a!="complete"&&a!="loaded")return;f=true;clearTimeout(t);try{Typekit.load(config)}catch(e){}};s.parentNode.insertBefore(tk,s)
-        })(document);
-        ]]>
-        </xsl:comment>
-      </script>
-      -->
   </head>
   <body>
         <xsl:call-template name="util:script-inline">
@@ -563,5 +529,42 @@ e!==c&&(o.cls.set(document.body,"scroll",e),c=e)})})
     </li>
   </ul>
 </xsl:template>
+
+
+<!--
+<xsl:call-template name="util:style-build">
+  <xsl:with-param name="async" select="'true'"/>
+</xsl:call-template>
+  -->
+<!--
+<xsl:call-template name="util:load-font">
+  <xsl:with-param name="href" select="'/style/basic/fonts/Lato/LatoLatin/latolatinfonts_weights.css'"/>
+  <xsl:with-param name="family" select="'Lato'"/>
+  <xsl:with-param name="weights" select="'300,400,700,900'"/>
+</xsl:call-template>-->
+<!--
+<xsl:call-template name="util:load-font">
+  <xsl:with-param name="href" select="'http://fonts.googleapis.com/css?family=Heebo:100,300,400,500'"/>
+  <xsl:with-param name="family" select="'Heebo'"/>
+  <xsl:with-param name="weights" select="'100,300,400,500'"/>
+</xsl:call-template>
+-->
+  <!--
+    MYRIAD PRO...
+  <script>
+    <xsl:comment>
+    <![CDATA[
+    (function(d) {
+      var config = {
+        kitId: 'gpd5jdr',
+        scriptTimeout: 3000,
+        async: true
+      },
+      h=d.documentElement,t=setTimeout(function(){h.className=h.className.replace(/\bwf-loading\b/g,"")+" wf-inactive";},config.scriptTimeout),tk=d.createElement("script"),f=false,s=d.getElementsByTagName("script")[0],a;h.className+=" wf-loading";tk.src='https://use.typekit.net/'+config.kitId+'.js';tk.async=true;tk.onload=tk.onreadystatechange=function(){a=this.readyState;if(f||a&&a!="complete"&&a!="loaded")return;f=true;clearTimeout(t);try{Typekit.load(config)}catch(e){}};s.parentNode.insertBefore(tk,s)
+    })(document);
+    ]]>
+    </xsl:comment>
+  </script>
+  -->
 
 </xsl:stylesheet>

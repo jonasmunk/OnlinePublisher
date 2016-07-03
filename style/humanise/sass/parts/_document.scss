@@ -1,4 +1,4 @@
-@include if {
+@include if((target:'inline')) {
   .document_row {
     max-width: 980px;
     margin: 0 auto;
