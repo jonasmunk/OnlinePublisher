@@ -6,6 +6,7 @@
 		list-style: none;
 		border-bottom: 1px solid $line-color;
     max-width: 980px;
+    text-align: center;
 	}
 	.submenu_item {
 		display: inline-block;
@@ -34,6 +35,7 @@
 
 	.submenu {
 		padding: 5px 10px;
+    text-align: left;
 	}
 
 	.submenu_link {

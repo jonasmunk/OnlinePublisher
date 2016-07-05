@@ -83,16 +83,16 @@ class UI {
 		$dev = Request::getBoolean('dev');
 		$profile = Request::getBoolean('profile');
 		$context = substr(ConfigurationService::getBaseUrl(),0,-1);
-		$pathVersion = ConfigurationService::isUrlRewrite() ? 'version'.SystemInfo::getDate().'/' : '';
+		$pathVersion = ConfigurationService::isUrlRewrite() ? 'version'.ConfigurationService::getDeploymentTime().'/' : '';
 
     if (true && ConfigurationService::isUrlRewrite()) {
-			$context.= '/'.'version'.SystemInfo::getDate();
+			$context.= '/'.'version'.ConfigurationService::getDeploymentTime();
 			$pathVersion = '';
     }
 
 		return '<xsl:variable name="dev">'.($dev ? 'true' : 'false').'</xsl:variable>'.
 		'<xsl:variable name="profile">'.$profile.'</xsl:variable>'.
-		'<xsl:variable name="version">'.SystemInfo::getDate().'</xsl:variable>'.
+		'<xsl:variable name="version">'.ConfigurationService::getDeploymentTime().'</xsl:variable>'.
 		'<xsl:variable name="pathVersion">'.$pathVersion.'</xsl:variable>'.
 		'<xsl:variable name="context">'.$context.'</xsl:variable>'.
 		'<xsl:variable name="language">'.InternalSession::getLanguage().'</xsl:variable>';

@@ -39,9 +39,15 @@ $path = Request::getString('path');
 if (Strings::isBlank($path)) {
   $path = '/';
 }
-if (preg_match('/api\/style\/([a-z]+)\.css/', $path, $matches)) {
-  DesignService::writeCSS($matches[1]);
-  exit;
+if (strpos($path, 'api/') === 0) {
+  if (preg_match('/api\/style\/([a-z]+)\.css/', $path, $matches)) {
+    DesignService::writeCSS($matches[1]);
+    exit;
+  }
+  if (preg_match('/api\/style\/([a-z]+)\.js/', $path, $matches)) {
+    DesignService::writeJS($matches[1]);
+    exit;
+  }
 }
 if ($file > 0) {
   RenderingService::showFile($file);

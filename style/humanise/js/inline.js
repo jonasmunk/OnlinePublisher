@@ -1,9 +1,9 @@
 require(['hui'],function(hui) {
   if (hui.browser.windows) {
-  	hui.cls.add(document.body,'windows');
+    hui.cls.add(document.body,'windows');
   }
   if (hui.browser.webkit) {
-  	hui.cls.add(document.body,'webkit');
+    hui.cls.add(document.body,'webkit');
   }
   var check = function() {
     return (document.documentElement.scrollTop || document.body.scrollTop) > 42;
@@ -15,7 +15,7 @@ require(['hui'],function(hui) {
   hui.listen(document,'scroll',function() {
     var test = check();
     if (test!==scrolling) {
-      hui.cls.set(document.body,'scroll',test);      
+      hui.cls.set(document.body,'scroll',test);
       scrolling = test;
     }
   })

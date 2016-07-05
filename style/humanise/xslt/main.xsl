@@ -36,7 +36,7 @@
     <meta name="viewport" content="user-scalable=yes, initial-scale = 1, maximum-scale = 10, minimum-scale = 0.2"/>
     <link rel="shortcut icon" href="{$path}style/humanise/gfx/favicon.ico" type="image/x-icon" />
     <xsl:call-template name="util:metatags"/>
-    <xsl:call-template name="util:scripts-build"/>
+    <xsl:call-template name="util:js"/>
 
     <xsl:call-template name="util:css">
       <xsl:with-param name="async" select="'true'"/>
@@ -52,14 +52,6 @@
     </xsl:call-template>
   </head>
   <body>
-        <xsl:call-template name="util:script-inline">
-            <xsl:with-param name="file" select="'style/humanise/js/inline.js'"/>
-            <xsl:with-param name="compiled"><![CDATA[require(["hui"],function(o){o.browser.windows&&o.cls.add(document.body,"windows"),o.browser.webkit&&o.cls.add(document.body,"webkit")
-var d=function(){return(document.documentElement.scrollTop||document.body.scrollTop)>42},c=d()
-c&&o.cls.add(document.body,"scroll"),o.listen(document,"scroll",function(){var e=d()
-e!==c&&(o.cls.set(document.body,"scroll",e),c=e)})})
-]]></xsl:with-param>
-        </xsl:call-template>
     <div class="layout">
       <div>
         <xsl:attribute name="class">
@@ -491,41 +483,41 @@ e!==c&&(o.cls.set(document.body,"scroll",e),c=e)})})
 </xsl:template>
 
 <xsl:template match="widget:happy-xmas">
-    <div class="happy-xmas">
-        <h1 style="color: red;"><xsl:value-of select="widget:title"/></h1>
-    </div>
+  <div class="happy-xmas">
+    <h1 style="color: red;"><xsl:value-of select="widget:title"/></h1>
+  </div>
 </xsl:template>
 
 <xsl:template match="widget:call-to-action">
-    <div class="call-to-action">
-        <p class="call-to-action-text"><xsl:value-of select="widget:text"/></p>
-        <xsl:apply-templates select="widget:button"/>
-    </div>
+  <div class="call-to-action">
+    <p class="call-to-action-text"><xsl:value-of select="widget:text"/></p>
+    <xsl:apply-templates select="widget:button"/>
+  </div>
 </xsl:template>
 
 <xsl:template match="widget:call-to-action/widget:button">
-    <a class="call-to-action-button">
-        <xsl:call-template name="util:link-href"/>
-        <xsl:value-of select="."/>
-    </a>
+  <a class="call-to-action-button">
+    <xsl:call-template name="util:link-href"/>
+    <xsl:value-of select="."/>
+  </a>
 </xsl:template>
 
 <xsl:template match="widget:placards">
   <ul class="layout_placards">
     <li class="layout_placards_item">
       <a href="{$path}produkter/onlinepublisher/" class="layout_placards_link">
-                <strong>Humanise <em>Editor</em></strong> - <span class="layout_placards_text layout_placards_text_editor">Simpelt værktøj til opbygning og redigering af hjemmesider</span>
-            </a>
+        <strong>Humanise <em>Editor</em></strong> - <span class="layout_placards_text layout_placards_text_editor">Simpelt værktøj til opbygning og redigering af hjemmesider</span>
+      </a>
     </li>
     <li class="layout_placards_item">
       <a href="{$path}produkter/onlineobjects/" class="layout_placards_link">
-                <strong>Online<em>Objects</em></strong> - <span class="layout_placards_text layout_placards_text_objects">Fleksibelt grundsystem til web-applikationer</span>
-            </a>
+        <strong>Online<em>Objects</em></strong> - <span class="layout_placards_text layout_placards_text_objects">Fleksibelt grundsystem til web-applikationer</span>
+      </a>
     </li>
     <li class="layout_placards_item">
       <a href="{$path}teknologi/hui/" class="layout_placards_link layout_placards_link_last">
-                <strong>Humanise <em>UI</em></strong> - <span class="layout_placards_text layout_placards_text_hui">Intuitiv, avanceret og effektiv brugerflade</span>
-            </a>
+        <strong>Humanise <em>UI</em></strong> - <span class="layout_placards_text layout_placards_text_hui">Intuitiv, avanceret og effektiv brugerflade</span>
+      </a>
     </li>
   </ul>
 </xsl:template>

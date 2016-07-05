@@ -237,6 +237,7 @@ p.common, ul.common {
   list-style: none;
   border-bottom: 1px solid #eee;
   max-width: 980px;
+  text-align: center;
 }
 
 .submenu_item {
@@ -263,6 +264,7 @@ p.common, ul.common {
 @media screen and (min-width: 760px) {
   .submenu {
     padding: 5px 10px;
+    text-align: left;
   }
 
   .submenu_link {
@@ -284,6 +286,8 @@ p.common, ul.common {
   padding: 5px 5px;
   list-style: none;
   border-bottom: 1px solid #eee;
+  white-space: nowrap;
+  overflow: auto;
 }
 
 .sidemenu_item {
@@ -312,6 +316,8 @@ p.common, ul.common {
     line-height: 26px;
     border-bottom: none;
     border-left: 1px solid #eee;
+    white-space: normal;
+    overflow: visible;
   }
 
   .sidemenu_item {

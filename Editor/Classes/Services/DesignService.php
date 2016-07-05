@@ -114,11 +114,72 @@ class DesignService {
     return preg_replace("/url\((['\"]{0,1})..\//um", 'url($1<xsl:value-of select="\$path"/><xsl:value-of select="\$timestamp-url"/>style/'.$design.'/', $css);
   }
 
+  static function writeJS($design) {
+    $dev = Request::getBoolean('development');
+    $preview = Request::getBoolean('preview');
+
+    $files = DesignService::getJS($design, 'async');
+
+    $key = sha1(join($files,'|').'|'.ConfigurationService::getDeploymentTime());
+    $cachedFile = FileSystemService::getFullPath('local/cache/temp/' . $key . '.js');
+    header('Content-type: text/javascript');
+    if (file_exists($cachedFile) && !$dev) {
+      readfile($cachedFile);
+      exit;
+    }
+    $out = '';
+    foreach ($files as $file) {
+      $path = FileSystemService::getFullPath($file);
+      readfile($path);
+    }
+  }
+
+  private static function getJS($design,$target='async') {
+    $info = DesignService::getInfo($design);
+    $files = [];
+    if (isset($info) && isset($info->js)) {
+      foreach ($info->js as $file) {
+        $type = 'async';
+        if (is_object($file)) {
+          $type = isset($file->inline) && $file->inline === true ? 'inline' : 'async';
+          $file = $file->file;
+        }
+        if ($type == $target) {
+          $files[] = $file;
+        }
+      }
+    }
+    return $files;
+  }
+
+  private static function getCSS($design,$target='async') {
+    $info = DesignService::getInfo($design);
+    $files = [];
+    if (isset($info) && isset($info->css)) {
+      foreach ($info->css as $file) {
+        $type = 'async';
+        if (is_object($file)) {
+          $type = isset($file->inline) && $file->inline === true ? 'inline' : 'async';
+          $file = $file->file;
+        }
+        if ($type == $target) {
+          if ($file == '@parts') {
+            $files[] = 'style/basic/css/document.css';
+            $files = array_merge($files, DesignService::_getPartStyleFiles());
+          } else {
+            $files[] = $file;
+          }
+        }
+      }
+    }
+    return $files;
+  }
+
   static function writeCSS($design) {
     $dev = Request::getBoolean('development');
     $preview = Request::getBoolean('preview');
     $files = DesignService::getCSSFiles($design, $preview);
-    $key = sha1(join($files,'|').'|'.SystemInfo::getDate());
+    $key = sha1(join($files,'|').'|'.ConfigurationService::getDeploymentTime());
     $cachedFile = FileSystemService::getFullPath('local/cache/temp/' . $key . '.css');
     header('Content-type: text/css');
     if (file_exists($cachedFile) && !$dev) {
@@ -193,10 +254,25 @@ class DesignService {
   }
 
   private static function loadInlineCSS($design) {
-    $input = FileSystemService::getFullPath('style/' . $design . '/css/inline.css');
-    $css = file_get_contents($input);
-    $css = DesignService::fixUrls($css,'style/' . $design . '/css','/');
+    $files = DesignService::getCSS($design, 'inline');
+    $css = '';
+    foreach ($files as $file) {
+      $folder = FileSystemService::folderOfPath($file);
+      $str = DesignService::_read($file);
+      $css .= DesignService::fixUrls($str, $folder, '/');
+    }
     return $css;
+  }
+
+  private static function loadInlineJS($design) {
+    $files = ['style/basic/js/boot.js'];
+    $files = array_merge($files, DesignService::getJS($design, 'inline'));
+    $js = '';
+    foreach ($files as $file) {
+      $path = FileSystemService::getFullPath($file);
+      $js .= file_get_contents($path) . PHP_EOL;
+    }
+    return $js;
   }
 
   public static function getInlineCSS($design,$development='false') {
@@ -204,7 +280,7 @@ class DesignService {
       return DesignService::loadInlineCSS($design);
     }
     $out = '';
-    $key = $design . '_inline_' . SystemInfo::getDate();
+    $key = $design . '_inline_' . ConfigurationService::getDeploymentTime();
     $cacheFile = FileSystemService::getFullPath('local/cache/temp/' . $key . '.css');
     if (!file_exists($cacheFile)) {
       $css = DesignService::loadInlineCSS($design);
@@ -214,8 +290,22 @@ class DesignService {
     return file_get_contents($cacheFile);
   }
 
+  public static function getInlineJS($design,$development='false') {
+    if ($development == 'true') {
+      return DesignService::loadInlineJS($design);
+    }
+    $out = '';
+    $key = $design . '_inline_' . ConfigurationService::getDeploymentTime();
+    $cacheFile = FileSystemService::getFullPath('local/cache/temp/' . $key . '.js');
+    if (!file_exists($cacheFile)) {
+      $css = DesignService::loadInlineJS($design);
+      FileSystemService::writeStringToFile($css,$cacheFile);
+      DesignService::_compress($cacheFile,$cacheFile);
+    }
+    return file_get_contents($cacheFile);
+  }
+
   private static function getCSSFiles($design, $preview) {
-    global $basePath;
     $files = [];
     if ($preview) {
       $files[] = 'hui/bin/minimized.css';
@@ -225,17 +315,7 @@ class DesignService {
         $files[] = 'hui/css/' . $name . '.css';
       }
     }
-    $info = DesignService::getInfo($design);
-    if (isset($info) && isset($info->css)) {
-      foreach ($info->css as $file) {
-        if ($file=='@parts') {
-          $files[] = 'style/basic/css/document.css';
-          $files = array_merge($files, DesignService::_getPartStyleFiles());
-        } else {
-          $files[] = $file;
-        }
-      }
-    }
+    $files = array_merge($files, DesignService::getCSS($design, 'async'));
     return $files;
   }
 
@@ -333,9 +413,8 @@ class DesignService {
   }
 
   static function _read($path) {
-    global $basePath;
     $data = PHP_EOL . '/* '.$path.' */' . PHP_EOL;
-    $data .= file_get_contents($basePath.$path);
+    $data .= file_get_contents(FileSystemService::getFullPath($path));
     return $data;
   }
 

@@ -17,7 +17,7 @@ if (Request::exists('section')) {
 
 $pageId = InternalSession::getPageId();
 
-$stamp = SystemInfo::getDate();
+$stamp = ConfigurationService::getDeploymentTime();
 $cacheUrl = 'version'.$stamp.'/';
 $cachePrefix = '?version='.$stamp;
 if (ConfigurationService::isUrlRewrite()) {

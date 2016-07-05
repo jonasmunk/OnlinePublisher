@@ -245,6 +245,7 @@ body, html {
 
 .submenu {
   padding: 5px 10px;
+  text-align: left;
 }
 
 .submenu_link {
@@ -268,6 +269,8 @@ body, html {
   line-height: 26px;
   border-bottom: none;
   border-left: 1px solid #eee;
+  white-space: normal;
+  overflow: visible;
 }
 
 .sidemenu_item {

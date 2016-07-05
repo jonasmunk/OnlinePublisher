@@ -150,7 +150,7 @@ class RenderingService {
       'mini' => Request::getBoolean('mini') ? 'true' : 'false',
       'development' => $development ? 'true' : 'false',
       'urlrewrite' => ConfigurationService::isUrlRewrite() ? 'true' : 'false',
-      'timestamp' => SystemInfo::getDate(),
+      'timestamp' => ConfigurationService::getDeploymentTime(),
       'language' => $language,
       'statistics' => ($statistics ? 'true' : 'false')
     ];

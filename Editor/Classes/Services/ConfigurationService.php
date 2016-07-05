@@ -32,6 +32,14 @@ class ConfigurationService {
 		return ConfigurationService::_getConfig('statistics',true);
 	}
 
+	static function getDeploymentTime() {
+		$time = ConfigurationService::_getConfig('deployed',0);
+    if ($time==0) {
+      $time = SystemInfo::getDate();
+    }
+    return $time;
+	}
+
 	static function isCachePages() {
 		return ConfigurationService::_getConfig('cachepages',!true);
 	}

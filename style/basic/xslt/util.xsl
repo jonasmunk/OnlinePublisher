@@ -310,6 +310,39 @@ ga('create', '<xsl:value-of select="$code"/>', {siteSpeedSampleRate : 20});ga('s
 
 <!-- Scripts -->
 
+<xsl:template name="util:js">
+  <xsl:call-template name="util:_scripts-msie"/>
+  <script type="text/javascript">
+    <xsl:text disable-output-escaping="yes">//&lt;![CDATA[
+</xsl:text>
+<xsl:value-of select="php:function('DesignService::getInlineJS',$design,$development)" disable-output-escaping="yes"/>
+    <xsl:text disable-output-escaping="yes">
+//]]&gt;</xsl:text>
+  </script>
+  <script>_editor.context = '<xsl:value-of select="$path"/>';</script>
+  <xsl:call-template name="util:_scripts-config"/>
+  <xsl:choose>
+    <xsl:when test="$preview='true'">
+      <xsl:call-template name="util:_scripts-config"/>
+      <script src="{$path}{$timestamp-url}hui/bin/minimized.js{$timestamp-query}"><xsl:comment/></script>
+      <script src="{$path}{$timestamp-url}hui/js/Editor.js{$timestamp-query}"><xsl:comment/></script>
+      <script src="{$path}{$timestamp-url}hui/js/Pages.js{$timestamp-query}"><xsl:comment/></script>
+      <script src="{$path}{$timestamp-url}style/{$design}/js/script.private.js{$timestamp-query}"><xsl:comment/></script>
+    </xsl:when>
+    <xsl:when test="$development='true'">
+      <xsl:call-template name="util:_scripts-config"/>
+      <script src="{$path}{$timestamp-url}hui/bin/joined.site.js{$timestamp-query}"><xsl:comment/></script>
+      <script src="{$path}{$timestamp-url}style/basic/js/OnlinePublisher.js{$timestamp-query}"><xsl:comment/></script>
+      <script src="{$path}{$timestamp-url}style/{$design}/js/script.dev.js{$timestamp-query}"><xsl:comment/></script>
+    </xsl:when>
+    <xsl:otherwise>
+      <xsl:call-template name="util:_scripts-config"/>
+      <script src="{$path}{$timestamp-url}style/{$design}/js/script.js{$timestamp-query}" async="async" defer="defer"><xsl:comment/></script>
+    </xsl:otherwise>
+  </xsl:choose>
+  <xsl:call-template name="util:_scripts-preview"/>
+</xsl:template>
+
 <xsl:template name="util:scripts-build">
   <xsl:call-template name="util:_scripts-base"/>
   <xsl:call-template name="util:_scripts-msie"/>

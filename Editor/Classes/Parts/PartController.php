@@ -123,7 +123,7 @@ class PartController
 		'<xsl:variable name="mini">false</xsl:variable>'.
 		'<xsl:variable name="editor">'.($editor ? 'true' : 'false').'</xsl:variable>'.
 		'<xsl:variable name="urlrewrite">'.(ConfigurationService::isUrlRewrite() ? 'true' : 'false').'</xsl:variable>'.
-		'<xsl:variable name="timestamp">'.SystemInfo::getDate().'</xsl:variable>'.
+		'<xsl:variable name="timestamp">'.ConfigurationService::getDeploymentTime().'</xsl:variable>'.
 		'<xsl:variable name="language">'.strtolower($context->getLanguage()).'</xsl:variable>'.
 		'<xsl:template match="/"><xsl:apply-templates/></xsl:template>'.
 		'</xsl:stylesheet>';

@@ -5,18 +5,20 @@
 		padding: 5px 5px;
 		list-style: none;
 		border-bottom: 1px solid $line-color;
+    white-space: nowrap;
+    overflow: auto;
 	}
 
 	.sidemenu_item {
-		display: inline-block;		
+		display: inline-block;
 	}
-	
+
 	.sidemenu_link {
 		padding: 5px;
 		display: inline-block;
 		line-height: 18px;
 		text-decoration: none;
-		color: #333;		
+		color: #333;
 	}
 
 	.sidemenu_link-selected
@@ -27,7 +29,7 @@
 }
 
 @include if((width: 760px, target: inline)) {
-	
+
 	.sidemenu
 	{
 		list-style: none;
@@ -37,6 +39,8 @@
 		line-height: 26px;
 		border-bottom: none;
 		border-left: 1px solid $line-color;
+    white-space: normal;
+    overflow: visible;
 	}
 
 	.sidemenu_item {
@@ -46,9 +50,9 @@
 	.sidemenu_link {
 		display: block;
 		padding: 7px 5px;
-		
+
 		&:hover {
-			text-decoration: underline;			
+			text-decoration: underline;
 		}
 	}
 
