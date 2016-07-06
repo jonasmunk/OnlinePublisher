@@ -45,6 +45,12 @@
       <xsl:with-param name="ie-lt-8" select="'true'"/>
     </xsl:call-template>
 
+    <xsl:if test="//widget:hero">
+      <xsl:call-template name="util:inline-css">
+        <xsl:with-param name="file" select="'style/humanise/css/hero.css'"/>
+      </xsl:call-template>
+    </xsl:if>
+
     <xsl:call-template name="util:load-font">
       <xsl:with-param name="href" select="'http://fonts.googleapis.com/css?family=Lato:300,400,700,900'"/>
       <xsl:with-param name="family" select="'Lato'"/>

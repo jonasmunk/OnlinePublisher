@@ -510,6 +510,13 @@ i.parentNode.insertBefore(o,i)}}}})}},_editor.processNoscript()}(window,document
   <xsl:comment><![CDATA[[if lt IE 9]><link rel="stylesheet" type="text/css" href="]]><xsl:value-of select="$path"/><xsl:value-of select="$timestamp-url"/>style/<xsl:value-of select="$design"/><![CDATA[/css/msie_lt8.css"> </link><![endif]]]></xsl:comment>
 </xsl:template>
 
+<xsl:template name="util:inline-css">
+  <xsl:param name="file"/>
+  <style type="text/css">
+    <xsl:value-of select="php:function('DesignService::getCustomInlineCSS',$design,$file,$development)" disable-output-escaping="yes"/>
+  </style>
+</xsl:template>
+
 <xsl:template name="util:css">
   <xsl:param name="async" select="'false'"/>
   <xsl:param name="inline" select="'false'"/>

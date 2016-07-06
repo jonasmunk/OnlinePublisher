@@ -275,6 +275,26 @@ class DesignService {
     return $js;
   }
 
+  public static function getCustomInlineCSS($design, $file, $development='false') {
+    if ($development == 'true') {
+      $folder = FileSystemService::folderOfPath($file);
+      $str = DesignService::_read($file);
+      $css .= DesignService::fixUrls($str, $folder, '/');
+      return $css;
+    }
+    $out = '';
+    $key = sha1($file . '|' . ConfigurationService::getDeploymentTime());
+    $cacheFile = FileSystemService::getFullPath('local/cache/temp/' . $key . '.css');
+    if (!file_exists($cacheFile)) {
+      $folder = FileSystemService::folderOfPath($file);
+      $str = DesignService::_read($file);
+      $css = DesignService::fixUrls($str, $folder, '/');
+      FileSystemService::writeStringToFile($css,$cacheFile);
+      DesignService::_compress($cacheFile,$cacheFile);
+    }
+    return file_get_contents($cacheFile);
+  }
+
   public static function getInlineCSS($design,$development='false') {
     if ($development == 'true') {
       return DesignService::loadInlineCSS($design);

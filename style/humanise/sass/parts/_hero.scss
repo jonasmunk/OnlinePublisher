@@ -1,12 +1,5 @@
 @include if((target:inline)) {
   .hero {
-    padding-bottom: 50%;
-    overflow: hidden;
-    margin: -20px 0 20px;
-    background: #00a8e6;
-    &_title, &_info {
-      display: none;
-    }
   }
 }
 
@@ -14,6 +7,9 @@
   .hero {
     @include vertical-gradient(#0097c8,#9167f1);
     position: relative;
+    padding-bottom: 50%;
+    overflow: hidden;
+    margin: -20px 0 20px;
   }
 
   .hero_rays {
@@ -54,7 +50,6 @@
     left: 10px;
     top: 50%;
     margin-top: -40px;
-    display: block;
 
     &_prefix {
       display: block;
@@ -76,7 +71,6 @@
     z-index: 1;
     text-align: center;
     margin-top: -50px;
-    display: block;
   }
 
   .hero_text {
@@ -200,7 +194,7 @@
   }
 }
 
-@include if((width: 800px, target:'inline')) {
+@include if((width: 800px)) {
 
   .hero {
     padding-bottom: 400px;

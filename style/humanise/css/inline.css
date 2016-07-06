@@ -337,32 +337,6 @@ p.common, ul.common {
     padding-left: 15px;
   }
 }
-#poster {
-  display: none;
-}
-
-@media screen and (min-width: 700px) {
-  #poster {
-    display: block;
-    height: 310px;
-    background: #333;
-    margin-top: 20px;
-    position: relative;
-  }
-
-  #poster_loader {
-    background: #000;
-    color: #FFFFFF;
-    left: 50%;
-    margin-left: -25px;
-    position: absolute;
-    text-align: center;
-    top: 150px;
-    width: 50px;
-    height: 24px;
-    line-height: 22px;
-  }
-}
 .document_row {
   max-width: 980px;
   margin: 0 auto;
@@ -373,29 +347,6 @@ p.common, ul.common {
   padding: 0;
 }
 
-.hero {
-  padding-bottom: 50%;
-  overflow: hidden;
-  margin: -20px 0 20px;
-  background: #00a8e6;
-}
-.hero_title, .hero_info {
-  display: none;
-}
-
-@-webkit-keyframes effect {
-  0% {
-    transform: rotate(0deg);
-  }
-  100% {
-    transform: rotate(360deg);
-  }
-}
-@media screen and (min-width: 800px) {
-  .hero {
-    padding-bottom: 400px;
-  }
-}
 @media screen and (max-width: 700px) {
   .document_table,
   .document_table_body,
