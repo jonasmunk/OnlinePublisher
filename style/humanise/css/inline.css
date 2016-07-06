@@ -83,12 +83,13 @@ p.common, ul.common {
 }
 
 .layout_menu_link {
-  padding: 0 5px;
+  padding: 0 3px;
   height: 32px;
   line-height: 32px;
   text-decoration: none;
   color: #324d60;
   font-weight: 300;
+  letter-spacing: -.8px;
 }
 .layout_menu_link-highlighted {
   color: #007AC5;
@@ -116,6 +117,12 @@ p.common, ul.common {
   .layout_menu_link-first {
     background-image: url("../gfx/graphics_2x.png");
     background-size: 400px 907px;
+  }
+}
+@media screen and (min-width: 370px) {
+  .layout_menu_link {
+    letter-spacing: 0;
+    padding: 0 5px;
   }
 }
 @media screen and (min-width: 760px) {
