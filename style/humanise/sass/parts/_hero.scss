@@ -24,10 +24,15 @@
     margin-top: -100%;
     padding-bottom: 200%;
     transition: transform, -webkit-animation-duration;
+    transition: transform, -moz-animation-duration;
     -webkit-animation-name: effect;
     -webkit-animation-duration: 100s;
     -webkit-animation-iteration-count: infinite;
     -webkit-animation-timing-function: linear;
+    -moz-animation-name: effect;
+    -moz-animation-duration: 100s;
+    -moz-animation-iteration-count: infinite;
+    -moz-animation-timing-function: linear;
   }
 
   .hero_pencil {
@@ -99,6 +104,15 @@
 }
 
 @-webkit-keyframes effect {
+ 0% {
+   transform: rotate(0deg);
+ }
+ 100% {
+   transform: rotate(360deg);
+ }
+}
+
+@-moz-keyframes effect {
  0% {
    transform: rotate(0deg);
  }
@@ -183,6 +197,7 @@
     &_text {
       font-size: 38px;
       margin-bottom: 20px;
+      font-weight: 300;
     }
 
     &_button {
