@@ -23,3 +23,7 @@ The system depends on Humanise User Interface which should be placed in the root
 Install minify CLI
 
 	sudo npm install minifier -g
+
+Install SVGO - tool for minifying SVGs
+
+  sudo npm install -g svgo
