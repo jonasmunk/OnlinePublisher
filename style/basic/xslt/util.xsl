@@ -174,28 +174,6 @@ ga('create', '<xsl:value-of select="$code"/>', {siteSpeedSampleRate : 20});ga('s
   </xsl:if>
 </xsl:template>
 
-<!--
-<xsl:template name="util:googleanalytics_old">
-  <xsl:param name="code" select="//p:meta/p:analytics/@key"/>
-  <xsl:if test="not($preview='true') and $code!='' and $statistics='true'">
-    <script>
-    try {
-      if (document.location.hostname!=="localhost") {
-        //,'_trackPageLoadTime'
-        var _gaq=[['_setAccount','<xsl:value-of select="$code"/>'],['_trackPageview']];
-        (function() {
-          var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
-          ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
-          var s = document.getElementsByTagName('script')[0];
-          s.parentNode.insertBefore(ga, s);
-        })();
-      }
-    } catch(ex) {}
-    </script>
-  </xsl:if>
-</xsl:template>
--->
-
 <xsl:template name="util:doctype">
     <xsl:text disable-output-escaping='yes'>&lt;!DOCTYPE html&gt;
 </xsl:text>
