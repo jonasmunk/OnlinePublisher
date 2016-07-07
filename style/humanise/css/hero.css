@@ -8,7 +8,7 @@
   background-image: linear-gradient(top, #0097c8, #9167f1);
   filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#0097c8', endColorstr='#9167f1');
   position: relative;
-  padding-bottom: 50%;
+  padding-bottom: 70%;
   overflow: hidden;
   margin: -20px 0 20px;
 }
@@ -18,11 +18,11 @@
   background-size: cover;
   background-position: 50%;
   top: 50%;
-  left: -100%;
+  left: -78%;
   position: absolute;
   width: 300%;
-  margin-top: -60%;
-  padding-bottom: 120%;
+  margin-top: -100%;
+  padding-bottom: 200%;
   transition: transform, -webkit-animation-duration;
   -webkit-animation-name: effect;
   -webkit-animation-duration: 100s;
@@ -36,21 +36,21 @@
   background-position: 50%;
   background-repeat: no-repeat;
   position: absolute;
-  width: 30%;
-  height: 80%;
-  top: 10%;
-  left: 35%;
+  width: 35%;
+  height: 90%;
+  top: 5%;
+  left: 60%;
 }
 
 .hero_title {
   position: absolute;
   color: #fff;
   z-index: 1;
-  font-size: 26px;
-  line-height: 1;
-  left: 10px;
+  font-size: 36px;
+  line-height: .9;
+  left: 20px;
   top: 50%;
-  margin-top: -40px;
+  margin-top: -90px;
 }
 .hero_title_prefix {
   display: block;
@@ -64,18 +64,16 @@
 
 .hero_info {
   position: absolute;
-  right: 10px;
-  left: 65%;
+  right: 40%;
+  left: 20px;
   top: 50%;
   z-index: 1;
-  text-align: center;
-  margin-top: -50px;
 }
 
 .hero_text {
   color: #fff;
-  font-size: 20px;
-  font-weight: 300;
+  font-size: 18px;
+  font-weight: 400;
   line-height: 1;
   margin-bottom: 10px;
 }
@@ -106,22 +104,45 @@
 }
 @media screen and (min-width: 375px) {
   .hero_title {
-    font-size: 30px;
+    font-size: 42px;
     left: 15px;
-    margin-top: -50px;
+    margin-top: -100px;
   }
   .hero_text {
-    font-size: 24px;
+    font-size: 20px;
     margin-bottom: 20px;
+  }
+  .hero_button {
+    font-size: 16px;
   }
 }
 @media screen and (min-width: 500px) {
+  .hero {
+    padding-bottom: 50%;
+  }
+  .hero_rays {
+    top: 50%;
+    left: -100%;
+    position: absolute;
+    width: 300%;
+    margin-top: -60%;
+    padding-bottom: 120%;
+  }
+  .hero_pencil {
+    width: 30%;
+    height: 80%;
+    top: 10%;
+    left: 35%;
+  }
   .hero_title {
     font-size: 40px;
     margin-top: -60px;
   }
   .hero_info {
     margin-top: -70px;
+    left: 65%;
+    right: 5%;
+    text-align: center;
   }
   .hero_text {
     font-size: 30px;
@@ -140,7 +161,7 @@
     margin-top: -70px;
   }
   .hero_text {
-    font-size: 40px;
+    font-size: 38px;
     margin-bottom: 20px;
   }
   .hero_button {

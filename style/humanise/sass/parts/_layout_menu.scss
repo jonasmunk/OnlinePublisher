@@ -12,12 +12,13 @@
   }
 
   .layout_menu_link {
-    padding: 0 5px;
+    padding: 0 3px;
     height: 32px;
     line-height: 32px;
     text-decoration: none;
     color: $color;
     font-weight: 300;
+    letter-spacing: -.8px;
 
     &-highlighted {
       color: $highlight-color;
@@ -50,6 +51,14 @@
     }
   }
 
+}
+
+@include if((width: 370px, target: inline)) {
+
+  .layout_menu_link {
+    letter-spacing: 0;
+    padding: 0 5px;
+  }
 }
 
 @include if((width: 760px, target: inline)) {
