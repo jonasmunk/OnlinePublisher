@@ -12,6 +12,7 @@ class XslService {
 
 	static function transform($xmlData, $xslData) {
 		$xslt = new xsltProcessor;
+    // TODO: Maybe only registerPHPFunctions if necessary (maybe expensive)
     $xslt->registerPHPFunctions();
 		$doc = new DOMDocument();
 		$doc->loadXML($xslData);
