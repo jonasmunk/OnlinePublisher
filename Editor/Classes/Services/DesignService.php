@@ -279,8 +279,7 @@ class DesignService {
     if ($development == 'true') {
       $folder = FileSystemService::folderOfPath($file);
       $str = DesignService::_read($file);
-      $css .= DesignService::fixUrls($str, $folder, '/');
-      return $css;
+      return DesignService::fixUrls($str, $folder, '/');
     }
     $out = '';
     $key = sha1($file . '|' . ConfigurationService::getDeploymentTime());
