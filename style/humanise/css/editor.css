@@ -162,7 +162,8 @@ body.editor,
   color: #028CE0;
 }
 
-.common_link:hover, .common_link:hover .common_link_text {
+.common_link:hover,
+.common_link:hover .common_link_text {
   color: #026cad;
 }
 
@@ -170,7 +171,7 @@ body.editor,
   color: #934DE0;
 }
 
-h1.common {
+.common_header-1 {
   font-weight: 400;
 }
 

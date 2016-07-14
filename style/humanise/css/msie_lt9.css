@@ -39,6 +39,7 @@
   -moz-transition: opacity .2s, width .5s;
   -ms-transition: opacity .2s, width .5s;
   -o-transition: opacity .2s, width .5s;
+  transition: opacity .2s, width .5s;
   left: auto;
   width: 0px;
   height: auto;
@@ -196,6 +197,7 @@
 }
 .scroll .layout_head .layout_menu_link {
   color: #000;
+  outline-color: #028CE0;
 }
 .scroll .layout_head .layout_search_icon > path {
   fill: #aaa;

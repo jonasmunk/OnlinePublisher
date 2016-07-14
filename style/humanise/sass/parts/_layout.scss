@@ -18,6 +18,8 @@
 
       .layout_menu_link {
         color: #fff;
+        outline-color: #fff;
+
         &-first {
           background-position: -200px -636px;
           .scroll & {
@@ -25,6 +27,7 @@
           }
         }
       }
+
       .layout_search_icon > path {
         fill: #fff;
       }
@@ -103,6 +106,7 @@
 
       .layout_menu_link {
         color: #000;
+        outline-color: $link-color;
       }
 
       .layout_search_icon > path {

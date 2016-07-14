@@ -14,21 +14,21 @@
  >
 
 <xsl:template match="s:search">
-    <div class="search">
-        <h1 class="common"><xsl:value-of select="s:title"/></h1>
-        <xsl:if test="s:text!=''">
-        <p class="common"><xsl:apply-templates select="s:text"/></p>
-        </xsl:if>
-        <form method="get" action="." accept-charset="UTF-8">
-        <input type="hidden" name="id" value="{/p:page/@id}"/>
-        <input name="query" value="{s:parameters/s:query/.}" class="text"/>
-        <input type="submit" value="{s:buttontitle/.}" class="submit"/>
-        <xsl:call-template name="method"/>
-        <xsl:apply-templates select="s:types"/>
-        </form>
-        <xsl:apply-templates select="s:results"/>
-    </div>
-    <script type="text/javascript" src="{$path}style/basic/js/templates/Search.js"><xsl:comment/></script>
+  <div class="search">
+    <h1 class="common common_header common_header-1 search_header"><xsl:value-of select="s:title"/></h1>
+    <xsl:if test="s:text!=''">
+    <p class="common"><xsl:apply-templates select="s:text"/></p>
+    </xsl:if>
+    <form method="get" action="." accept-charset="UTF-8">
+    <input type="hidden" name="id" value="{/p:page/@id}"/>
+    <input name="query" value="{s:parameters/s:query/.}" class="text"/>
+    <input type="submit" value="{s:buttontitle/.}" class="submit"/>
+    <xsl:call-template name="method"/>
+    <xsl:apply-templates select="s:types"/>
+    </form>
+    <xsl:apply-templates select="s:results"/>
+  </div>
+  <script type="text/javascript" src="{$path}style/basic/js/templates/Search.js"><xsl:comment/></script>
 </xsl:template>
 
 <xsl:template match="s:break">
@@ -109,85 +109,87 @@
 </xsl:template>
 
 <xsl:template match="s:page">
-<li class="search_result_item">
-<h3>
-<a href="?id={@id}" class="common"><span><xsl:value-of select="s:title"/></span></a>
-</h3>
-<xsl:if test="not(s:description='')">
-<p class="search_result_description"><xsl:text> </xsl:text>
-<xsl:apply-templates select="s:description"/>
-</p>
-</xsl:if>
-<xsl:if test="not(s:summary='')">
-<xsl:apply-templates select="s:summary"/>
-</xsl:if>
-</li>
+  <li class="search_result_item">
+    <h3>
+      <a href="?id={@id}" class="common common_link"><span class="common_link_text"><xsl:value-of select="s:title"/></span></a>
+    </h3>
+    <xsl:if test="not(s:description='')">
+      <p class="search_result_description"><xsl:text> </xsl:text>
+      <xsl:apply-templates select="s:description"/>
+      </p>
+    </xsl:if>
+    <xsl:if test="not(s:summary='')">
+      <xsl:apply-templates select="s:summary"/>
+    </xsl:if>
+  </li>
 </xsl:template>
 
 <xsl:template match="s:summary">
-<p class="search_result_summary"><xsl:text> </xsl:text>
-<xsl:apply-templates/>
-</p>
+  <p class="search_result_summary"><xsl:text> </xsl:text>
+    <xsl:apply-templates/>
+  </p>
 </xsl:template>
 
 <xsl:template match="s:summary/s:highlight">
-<em class="search_result_highlight"><xsl:apply-templates/></em>
+  <em class="search_result_highlight"><xsl:apply-templates/></em>
 </xsl:template>
 
 
 <xsl:template match="o:note">
-<xsl:if test=".!=''">
-<p class="search_result_note"><xsl:text> </xsl:text>
-<xsl:apply-templates/>
-</p>
-</xsl:if>
+  <xsl:if test=".!=''">
+    <p class="search_result_note"><xsl:text> </xsl:text>
+      <xsl:apply-templates/>
+    </p>
+  </xsl:if>
 </xsl:template>
 
 <xsl:template match="o:break">
-<br/>
+  <br/>
 </xsl:template>
 
 <xsl:template name="s:counter">
-<p class="search_result_count">
-
-<xsl:choose>
-<xsl:when test="@count=1">
-1 emne fundet
-</xsl:when>
-<xsl:when test="@count>0">
-<xsl:value-of select="@count"/> emner fundet
-</xsl:when>
-<xsl:otherwise>
-Intet fundet
-</xsl:otherwise>
-</xsl:choose>
-</p>
+  <p class="search_result_count">
+    <xsl:choose>
+      <xsl:when test="@count=1">
+      1 emne fundet
+      </xsl:when>
+      <xsl:when test="@count>0">
+      <xsl:value-of select="@count"/> emner fundet
+      </xsl:when>
+      <xsl:otherwise>
+      Intet fundet
+      </xsl:otherwise>
+    </xsl:choose>
+  </p>
 </xsl:template>
 
 <xsl:template match="s:result//o:links">
-<div class="search_result_links">
-<xsl:apply-templates/>
-</div>
+  <div class="search_result_links">
+    <xsl:apply-templates/>
+  </div>
 </xsl:template>
 
 <xsl:template match="s:result//o:link">
-<a class="common">
-<xsl:call-template name="util:link"/>
-<span><xsl:value-of select="@title"/></span>
-</a>
+  <a class="common common_link">
+    <xsl:call-template name="util:link"/>
+    <span class="common_link_text"><xsl:value-of select="@title"/></span>
+  </a>
 </xsl:template>
 
 <!--                   images                  -->
 
 <xsl:template match="s:group[@type='image']/s:result">
-<li class="search_result_item">
-<image src="{$path}services/images/?id={o:object/@id}&amp;width=128&amp;height=128" border="0"/>
-<h3>
-<a href="{$path}images/{o:object/o:sub/i:image/i:filename}" class="common"><span><xsl:value-of select="substring(o:object/o:title,1,30)"/></span></a></h3>
-<p class="search_result_metadata"><xsl:value-of select="o:object/o:sub/i:image/i:width"/>x<xsl:value-of select="o:object/o:sub/i:image/i:height"/>, <xsl:value-of select="o:object/o:sub/i:image/i:size"/> bytes</p>
-<xsl:apply-templates select="o:object/o:note"/>
-<xsl:apply-templates select="s:summary"/>
-</li>
+  <li class="search_result_item">
+    <img src="{$path}services/images/?id={o:object/@id}&amp;width=128&amp;height=128" border="0"/>
+    <h3>
+      <a href="{$path}images/{o:object/o:sub/i:image/i:filename}" class="common common_link">
+        <span class="common_link_text"><xsl:value-of select="substring(o:object/o:title,1,30)"/></span>
+      </a>
+    </h3>
+    <p class="search_result_metadata"><xsl:value-of select="o:object/o:sub/i:image/i:width"/>x<xsl:value-of select="o:object/o:sub/i:image/i:height"/>, <xsl:value-of select="o:object/o:sub/i:image/i:size"/> bytes</p>
+    <xsl:apply-templates select="o:object/o:note"/>
+    <xsl:apply-templates select="s:summary"/>
+  </li>
 </xsl:template>
 
 
@@ -195,12 +197,14 @@ Intet fundet
 
 <xsl:template match="s:group[@type='file']/s:result">
 <li class="search_result_item">
-<h3>
-<a href="{$path}?file={o:object/@id}" class="common"><span><xsl:value-of select="o:object/o:title"/></span></a>
-</h3>
-<p><xsl:value-of select="o:object/o:sub/f:file/f:size"/> bytes</p>
-<xsl:apply-templates select="o:object/o:note"/>
-<xsl:apply-templates select="s:summary"/>
+  <h3>
+    <a href="{$path}?file={o:object/@id}" class="common common_link">
+      <span class="common_link_text"><xsl:value-of select="o:object/o:title"/></span>
+    </a>
+  </h3>
+  <p><xsl:value-of select="o:object/o:sub/f:file/f:size"/> bytes</p>
+  <xsl:apply-templates select="o:object/o:note"/>
+  <xsl:apply-templates select="s:summary"/>
 </li>
 </xsl:template>
 
@@ -209,18 +213,18 @@ Intet fundet
 <!--                   persons                    -->
 
 <xsl:template match="s:group[@type='person']/s:result">
-<li class="search_result_item">
-<xsl:if test="o:object/o:sub/ps:person/ps:image">
-<img src="{$path}services/images/?id={o:object/o:sub/ps:person/ps:image/o:object/@id}&amp;width=128&amp;height=128"/>
-</xsl:if>
-<h3><xsl:value-of select="o:object/o:title"/></h3>
-<xsl:if test="o:object/o:sub/ps:person/ps:initials!='' or o:object/o:sub/ps:person/ps:nickname!=''">
-	<p class="search_result_property"><xsl:value-of select="o:object/o:sub/ps:person/ps:initials"/><xsl:if test="o:object/o:sub/ps:person/ps:initials!='' and o:object/o:sub/ps:person/ps:nickname!=''">/</xsl:if><xsl:value-of select="o:object/o:sub/ps:person/ps:nickname"/></p>
-</xsl:if>
-<xsl:apply-templates select="o:object/o:sub/ps:person"/>
-<xsl:apply-templates select="o:object/o:note"/>
-<xsl:apply-templates select="s:summary"/>
-</li>
+  <li class="search_result_item">
+  <xsl:if test="o:object/o:sub/ps:person/ps:image">
+  <img src="{$path}services/images/?id={o:object/o:sub/ps:person/ps:image/o:object/@id}&amp;width=128&amp;height=128"/>
+  </xsl:if>
+  <h3><xsl:value-of select="o:object/o:title"/></h3>
+  <xsl:if test="o:object/o:sub/ps:person/ps:initials!='' or o:object/o:sub/ps:person/ps:nickname!=''">
+    <p class="search_result_property"><xsl:value-of select="o:object/o:sub/ps:person/ps:initials"/><xsl:if test="o:object/o:sub/ps:person/ps:initials!='' and o:object/o:sub/ps:person/ps:nickname!=''">/</xsl:if><xsl:value-of select="o:object/o:sub/ps:person/ps:nickname"/></p>
+  </xsl:if>
+  <xsl:apply-templates select="o:object/o:sub/ps:person"/>
+  <xsl:apply-templates select="o:object/o:note"/>
+  <xsl:apply-templates select="s:summary"/>
+  </li>
 </xsl:template>
 
 

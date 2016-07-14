@@ -32,7 +32,8 @@ a {
   color: #028CE0;
 }
 
-.common_link:hover, .common_link:hover .common_link_text {
+.common_link:hover,
+.common_link:hover .common_link_text {
   color: #026cad;
 }
 
@@ -40,7 +41,7 @@ a {
   color: #934DE0;
 }
 
-h1.common {
+.common_header-1 {
   font-weight: 400;
 }
 
@@ -191,6 +192,7 @@ p.common, ul.common {
 }
 .layout_head-hero .layout_menu_link {
   color: #fff;
+  outline-color: #fff;
 }
 .layout_head-hero .layout_menu_link-first {
   background-position: -200px -636px;

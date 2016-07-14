@@ -29,7 +29,7 @@
     position: absolute;
     top: 0;
     left: 0;
-    background: #fafafa;
+    //background: #fafafa;
     right: 150px;
     padding: 4px;
   }
@@ -38,10 +38,13 @@
     .layout_search_body {
       display: block;
     }
+    .layout_search_icon {
+      display: none;
+    }
   }
 
   .layout_search_reset {
-    background: #f6f6f9 url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA3NjggNzY4Ij4NCjxwYXRoIGQ9Ik02MDggMTI4cTEzLjc1IDAgMjIuODc1IDkuMTI1dDkuMTI1IDIyLjg3NXEwIDEzLjUtOS4yNSAyMi43NWwtMjAxLjUgMjAxLjI1IDIwMS41IDIwMS4yNXE5LjI1IDkuMjUgOS4yNSAyMi43NSAwIDEzLjc1LTkuMTI1IDIyLjg3NXQtMjIuODc1IDkuMTI1cS0xMy41IDAtMjIuNzUtOS4yNWwtMjAxLjI1LTIwMS41LTIwMS4yNSAyMDEuNXEtOS4yNSA5LjI1LTIyLjc1IDkuMjUtMTMuNzUgMC0yMi44NzUtOS4xMjV0LTkuMTI1LTIyLjg3NXEwLTEzLjUgOS4yNS0yMi43NWwyMDEuNS0yMDEuMjUtMjAxLjUtMjAxLjI1cS05LjI1LTkuMjUtOS4yNS0yMi43NSAwLTEzLjc1IDkuMTI1LTIyLjg3NXQyMi44NzUtOS4xMjVxMTMuNSAwIDIyLjc1IDkuMjVsMjAxLjI1IDIwMS41IDIwMS4yNS0yMDEuNXE5LjI1LTkuMjUgMjIuNzUtOS4yNXoiLz4NCjwvc3ZnPg==");
+    background: url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA3NjggNzY4Ij4NCjxwYXRoIGQ9Ik02MDggMTI4cTEzLjc1IDAgMjIuODc1IDkuMTI1dDkuMTI1IDIyLjg3NXEwIDEzLjUtOS4yNSAyMi43NWwtMjAxLjUgMjAxLjI1IDIwMS41IDIwMS4yNXE5LjI1IDkuMjUgOS4yNSAyMi43NSAwIDEzLjc1LTkuMTI1IDIyLjg3NXQtMjIuODc1IDkuMTI1cS0xMy41IDAtMjIuNzUtOS4yNWwtMjAxLjI1LTIwMS41LTIwMS4yNSAyMDEuNXEtOS4yNSA5LjI1LTIyLjc1IDkuMjUtMTMuNzUgMC0yMi44NzUtOS4xMjV0LTkuMTI1LTIyLjg3NXEwLTEzLjUgOS4yNS0yMi43NWwyMDEuNS0yMDEuMjUtMjAxLjUtMjAxLjI1cS05LjI1LTkuMjUtOS4yNS0yMi43NSAwLTEzLjc1IDkuMTI1LTIyLjg3NXQyMi44NzUtOS4xMjVxMTMuNSAwIDIyLjc1IDkuMjVsMjAxLjI1IDIwMS41IDIwMS4yNS0yMDEuNXE5LjI1LTkuMjUgMjIuNzUtOS4yNXoiLz4NCjwvc3ZnPg==");
     border: none;
     position: absolute;
     font-size: 0;
@@ -106,6 +109,7 @@
     -moz-transition: opacity .2s, width .5s;
     -ms-transition: opacity .2s, width .5s;
     -o-transition: opacity .2s, width .5s;
+    transition: opacity .2s, width .5s;
     left: auto;
     width: 0px;
     height: auto;
