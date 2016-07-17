@@ -25,16 +25,33 @@ class PopulateStreamStage extends WorkflowStage {
       $state->fail();
       return;
     }
+    $now = time();
     $obj = $state->getData();
     $items = $obj->getItems(); // TODO
     foreach ($items as $item) {
+      $data = Strings::toJSON($item);
+      $hash = md5($data);
+      $existing = Query::after('streamitem')
+        ->withProperty(Streamitem::$HASH,$hash)
+          ->withProperty(Streamitem::$STREAM_ID,$stream->getId())->first();
+      if ($existing) {
+        Log::debug('Skipping stream item: ' . $hash);
+        continue;
+      }
       $streamItem = new Streamitem();
       $streamItem->setStreamId($stream->getId());
-      $streamItem->setData(Strings::toJSON($item));
+      $streamItem->setData($data);
       $streamItem->setOriginalDate($item->getPubDate());
+      $streamItem->setRetrievalDate($now);
+      $streamItem->setHash($hash);
       $streamItem->save();
+      $streamItem->publish();
     }
     $state->setObjectData($stream);
+  }
+
+  function getDescription() {
+    return 'Loops through an object using the path "' . $this->itemPath . '" and populates the stream with the ID "' . $this->streamId . '"';
   }
 }
 ?>

@@ -25,5 +25,9 @@ class ParseFeedStage extends WorkflowStage {
       $state->fail();
     }
   }
+
+  function getDescription() {
+    return 'Parses data as an RSS/Atom feed into an object';
+  }
 }
 ?>

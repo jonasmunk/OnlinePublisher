@@ -21,5 +21,9 @@ class DataStage extends WorkflowStage {
   function run($state) {
     $state->setData($this->data,$this->type);
   }
+
+  function getDescription() {
+    return 'Returns the value "' . $this->data . '" of type "' . $this->type . '"';
+  }
 }
 ?>

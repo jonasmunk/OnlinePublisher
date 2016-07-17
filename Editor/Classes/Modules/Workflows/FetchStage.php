@@ -29,5 +29,9 @@ class FetchStage extends WorkflowStage {
       $state->fail();
     }
   }
+
+  function getDescription() {
+    return 'Fetches data from an URL with a max age of ' . $this->maxAge;
+  }
 }
 ?>

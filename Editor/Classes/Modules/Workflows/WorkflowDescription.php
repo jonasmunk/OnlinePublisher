@@ -19,6 +19,14 @@ class WorkflowDescription {
     return $this->stages;
   }
 
+  public function getDescription() {
+    $description = [];
+    foreach ($this->stages as $stage) {
+      $description[] = $stage->getDescription();
+    }
+    return $description;
+  }
+
   public function run() {
     $state = new WorkflowState();
     $state->setStringData('http://daringfireball.net/feeds/main');

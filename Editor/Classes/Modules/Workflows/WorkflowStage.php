@@ -10,6 +10,7 @@ if (!isset($GLOBALS['basePath'])) {
 
 abstract class WorkflowStage {
   abstract function run($state);
+  abstract function getDescription();
 }
 
 ?>
