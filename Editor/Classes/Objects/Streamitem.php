@@ -29,6 +29,9 @@ class Streamitem extends Object {
   var $originalDate;
   var $retrievalDate;
 
+  public static $STREAM_ID = 'stream_id';
+  public static $HASH = 'hash';
+
   function Streamitem() {
     parent::Object('streamitem');
   }
