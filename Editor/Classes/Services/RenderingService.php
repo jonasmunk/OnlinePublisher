@@ -563,4 +563,16 @@ class RenderingService {
     Log::debug($sql);
     return null;
   }
+
+  static function applyTwigTemplate($vars = []) {
+    if (isset($vars['path'])) {
+      $loader = new Twig_Loader_String();
+      $twig = new Twig_Environment($loader);
+      $path = FileSystemService::getFullPath($vars['path']);
+      $template = file_get_contents($path);
+      $data = isset($vars['variables']) ? $vars['variables'] : [];
+      return $twig->render($template, $data);
+    }
+    return null;
+  }
 }
