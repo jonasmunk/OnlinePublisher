@@ -9,12 +9,12 @@ if (!isset($GLOBALS['basePath'])) {
 }
 
 class WebRequest {
-	
+
 	private $url;
 	private $parameters = array();
 	private $headers = array();
 	private $unicode;
-	
+
 	function WebRequest($url=null) {
 		$this->url = $url;
 	}
@@ -22,11 +22,11 @@ class WebRequest {
 	function setUrl($url) {
 		$this->url = $url;
 	}
-	
+
 	function getUrl() {
 		return $this->url;
 	}
-	
+
 	function addParameter($name,$value) {
 		$this->parameters[$name] = $value;
 	}
@@ -38,7 +38,7 @@ class WebRequest {
 	function setParameters($parameters) {
 		$this->parameters = $parameters;
 	}
-	
+
 	function getParameters() {
 		return $this->parameters;
 	}
@@ -46,13 +46,13 @@ class WebRequest {
 	function getHeaders() {
 		return $this->headers;
 	}
-	
+
 	function setUnicode($unicode) {
-	    $this->unicode = $unicode;
+    $this->unicode = $unicode;
 	}
-	
+
 	function getUnicode() {
 	    return $this->unicode;
 	}
-	
+
 }
