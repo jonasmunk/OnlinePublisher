@@ -46,7 +46,12 @@ class RemoteDataService {
       $ch = curl_init();
       curl_setopt($ch, CURLOPT_URL, $url);
       curl_setopt($ch, CURLOPT_HEADER, 0);
-      //curl_setopt($ch, CURLOPT_TIMEOUT, 2);
+      //curl_setopt($ch, CURLOPT_VERBOSE, 1);
+      //curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+      //curl_setopt($ch, CURLOPT_POST, 1);
+      //curl_setopt($ch, CURLOPT_FORBID_REUSE, 1);
+      //curl_setopt($ch, CURLOPT_FRESH_CONNECT, 1);
+      curl_setopt($ch, CURLOPT_HTTPHEADER, ["Cache-Control: no-cache", "Pragma: no-cache"]);
       if ($file = fopen($path, "wb")) {
         curl_setopt($ch, CURLOPT_FILE, $file);
         $success = curl_exec($ch);
@@ -87,7 +92,7 @@ class RemoteDataService {
       $cached->setSynchronized(0);
     }
     $age = $now - $cached->getSynchronized();
-    if ($age>$maxAge) {
+    if ($age > $maxAge) {
       $success = RemoteDataService::writeUrlToFile($url,$path);
       if ($success) {
         $cached->setTitle($url);
@@ -98,7 +103,7 @@ class RemoteDataService {
     }
     $data = new RemoteData();
     $data->setAge($age);
-    $data->setFile(RemoteDataService::getPathOfUrl($url));
+    $data->setFile($path);
     $data->setSuccess($success);
     $data->setHasData(file_exists($path) && filesize($path)>0);
     return $data;
