@@ -5,13 +5,14 @@
  xmlns:p="http://uri.in2isoft.com/onlinepublisher/publishing/page/1.0/"
  xmlns:f="http://uri.in2isoft.com/onlinepublisher/publishing/frame/1.0/"
  xmlns:h="http://uri.in2isoft.com/onlinepublisher/publishing/hierarchy/1.0/"
+ xmlns:res="http://uri.in2isoft.com/onlinepublisher/resource/"
  xmlns:header="http://uri.in2isoft.com/onlinepublisher/part/header/1.0/"
  xmlns:text="http://uri.in2isoft.com/onlinepublisher/part/text/1.0/"
  xmlns:movie="http://uri.in2isoft.com/onlinepublisher/part/movie/1.0/"
  xmlns:util="http://uri.in2isoft.com/onlinepublisher/util/"
  xmlns:part="http://uri.in2isoft.com/onlinepublisher/part/1.0/"
  xmlns:php="http://php.net/xsl"
- exclude-result-prefixes="p f h header text util part movie php"
+ exclude-result-prefixes="p f h header text util part movie php res"
  >
 
 <xsl:variable name="only-inline" select="'!true'" />
@@ -511,6 +512,8 @@ i.parentNode.insertBefore(o,i)}}}})}},_editor.processNoscript()}(window,document
     <link rel="stylesheet" type="text/css" href="{$path}{$timestamp-url}style/basic/css/{$template}.css"/>
   </xsl:if>
 
+  <xsl:call-template name="util:css-resources"/>
+
   <xsl:variable name="query">
     <xsl:choose>
       <xsl:when test="$development='true'">?development=true</xsl:when>
@@ -552,6 +555,21 @@ i.parentNode.insertBefore(o,i)}}}})}},_editor.processNoscript()}(window,document
 
 </xsl:template>
 
+<xsl:template name="util:css-resources">
+  <xsl:for-each select="//res:css[@inline]">
+    <xsl:call-template name="util:inline-css">
+      <xsl:with-param name="file" select="string(@inline)"/>
+    </xsl:call-template>
+  </xsl:for-each>
+  <xsl:for-each select="//res:css[@async]">
+    <xsl:call-template name="util:lazy-style">
+      <xsl:with-param name="href">
+        <xsl:value-of select="$path"/><xsl:value-of select="$timestamp-url"/><xsl:value-of select="@async"/>
+      </xsl:with-param>
+    </xsl:call-template>
+  </xsl:for-each>
+</xsl:template>
+
 <xsl:template name="util:style">
   <link rel="stylesheet" type="text/css" href="{$path}{$timestamp-url}style/basic/css/{$template}.css"/>
   <link rel="stylesheet" type="text/css" href="{$path}{$timestamp-url}style/{$design}/css/style.php"/>
@@ -565,8 +583,9 @@ i.parentNode.insertBefore(o,i)}}}})}},_editor.processNoscript()}(window,document
       <link rel="stylesheet" type="text/css" href="{$path}{$timestamp-url}hui/bin/minimized.site.css{$timestamp-query}"/>
     </xsl:otherwise>
   </xsl:choose>
-    <xsl:call-template name="util:_style-dynamic"/>
-    <xsl:call-template name="util:_style-hui-msie"/>
+  <xsl:call-template name="util:css-resources"/>
+  <xsl:call-template name="util:_style-dynamic"/>
+  <xsl:call-template name="util:_style-hui-msie"/>
 </xsl:template>
 
 <xsl:template name="util:style-build">
@@ -612,8 +631,9 @@ i.parentNode.insertBefore(o,i)}}}})}},_editor.processNoscript()}(window,document
       <link rel="stylesheet" type="text/css" href="{$path}{$timestamp-url}style/{$design}/css/style.css{$timestamp-query}"/>
     </xsl:when>
   </xsl:choose>
-    <xsl:call-template name="util:_style-dynamic"/>
-    <xsl:call-template name="util:_style-hui-msie"/>
+  <xsl:call-template name="util:css-resources"/>
+  <xsl:call-template name="util:_style-dynamic"/>
+  <xsl:call-template name="util:_style-hui-msie"/>
 </xsl:template>
 
 <xsl:template name="util:lazy-style">
