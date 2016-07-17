@@ -9,14 +9,14 @@ $kind = Request::getString('kind');
 $value = Request::getString('value');
 
 if ($kind=='stream') {
-  listStreamItems();
+  listStreamItems($value);
 } else if ($kind=='category' && $value=='sources') {
   listSources();
 }
 
 
-function listStreamItems() {
-  $items = Query::after('streamitem')->orderBy('originalDate')->get();
+function listStreamItems($streamId) {
+  $items = Query::after('streamitem')->withProperty(Streamitem::$STREAM_ID,$streamId)->orderBy('originalDate')->descending()->get();
 
   $writer = new ListWriter();
 
