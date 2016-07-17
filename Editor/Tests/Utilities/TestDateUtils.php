@@ -46,7 +46,13 @@ class TestDates extends UnitTestCase {
 		$stamp = Dates::parseRFC3339($date);
 		$this->assertEqual(Dates::formatLongDateTimeGM($stamp,'en_US'),' 6. Dec 2010 kl. 16:12');
 	}
-	
+
+	function testParseRFC3339more() {
+		$date = '2016-07-02T12:52:54+02:00';
+		$stamp = Dates::parseRFC3339($date);
+		$this->assertEqual(Dates::formatLongDateTimeGM($stamp,'en_US'),' 2. Jul 2016 kl. 10:52');
+	}
+
 	function testParseRFC3339_greenwich() {
 		$date = '2010-12-06T08:12:42Z';
 		$stamp = Dates::parseRFC3339($date);
