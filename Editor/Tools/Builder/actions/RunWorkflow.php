@@ -10,5 +10,10 @@ $recipe = Request::getString('recipe');
 $parser = new WorkflowParser();
 $flow = $parser->parse($recipe);
 
-Response::sendObject($flow);
+$result = $flow->run();
+
+Response::sendObject([
+  'description' => $flow->getDescription(),
+  'result' => $result
+]);
 ?>

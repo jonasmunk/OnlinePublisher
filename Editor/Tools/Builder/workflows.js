@@ -14,13 +14,9 @@ hui.ui.listen({
       pages.goTo('list')
     }
   },
-  $open$list : function(row) {
-    if (row.kind=='source') {
-      this.editWorkflow(row.id);
-    }
-  },
 
   openWorflow : function(id) {
+    this.workflowId = id;
     hui.ui.request({
       message : {start:{en:'Loading...',da:'Henter...'},delay:300},
       parameters : {id:id},
@@ -55,8 +51,19 @@ hui.ui.listen({
       }.bind(this)
     });
   },
+  $click$saveWorkflowRecipe : function(button) {
+    var recipe = hui.ui.get('workflowRecipe');
+    button.setEnabled(false);
+    hui.ui.request({
+      url : 'actions/SaveWorkflow.php',
+      json : { data: {id : this.workflowId, recipe : recipe.getValue()} },
+      $success : function() {
+        button.setEnabled(true);
+      }
+    })
+  },
 
-  // Source
+  // Workflow
   $click$cancelWorkflow : function() {
     workflowFormula.reset();
     workflowWindow.hide();

@@ -9,6 +9,11 @@ hui.ui.listen({
       synchronizeSource.setEnabled(false);
     }
   },
+  $select$selector : function(item) {
+    if (item.value=='sources') {
+      listBarText.setText('Sources');
+    }
+  },
   $select$list : function(item) {
     synchronizeSource.setEnabled(item && item.kind=='source');
   },
