@@ -86,8 +86,13 @@ class FeedParser {
 			$node = $entries->item($i);
 			$item = new FeedItem();
 			$item->setTitle(DOMUtils::getFirstChildText($node,'title'));
+			$item->setGuid(DOMUtils::getFirstChildText($node,'id'));
 			$item->setPubDate(Dates::parseRFC3339(DOMUtils::getFirstChildText($node,'updated')));
 			$item->setDescription(DOMUtils::getFirstChildText($node,'content'));
+      $link = DOMUtils::getFirstChildElement($node,'link');
+      if ($link && $href = $link->getAttribute('href')) {
+        $item->setLink($href);
+      }
 			$feed->addItem($item);
 		}
 	}

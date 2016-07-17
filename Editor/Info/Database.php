@@ -454,6 +454,10 @@ $databaseTables = array(
   'part_authentication' => array(
       array("part_id","int(11)","","","0","")
     ),
+  'part_custom' => array(
+      array("part_id","int(11)","","","0",""),
+      array("workflow_id","int(11)","","","0","")
+    ),
   'part_file' => array(
       array("part_id","int(11)","","","0",""),
       array("file_id","int(11)","","","0",""),
