@@ -481,4 +481,5 @@ this.pos==e.length&&(this.pos=0)
 var i=e[this.pos]
 hui.style.setOpacity(i,0),hui.style.set(i,{display:"block",zIndex:this.z}),hui.animate(i,"opacity",1,this.options.transition,{ease:hui.ease.slowFastSlow,onComplete:function(){window.setTimeout(this.next.bind(this),this.options.wait)}.bind(this)})}},window.define&&define("op.Dissolver"),require(["hui"],function(){var e=function(e){this.element=e.element,this.element&&(this.nodes=hui.collect(this.nodes,this.element),this._attach())}
 e.prototype={nodes:{icon:".layout_search_icon",text:".layout_search_text"},_attach:function(){hui.listen(this.nodes.icon,"click",this._toggle.bind(this)),hui.listen(this.nodes.text,"focus",this._focus.bind(this)),hui.listen(this.nodes.text,"blur",this._blur.bind(this)),this.nodes.icon.setAttribute("focusable","false")},_toggle:function(){hui.cls.toggle(this.element,"layout_search_active")
-try{this.nodes.text.focus()}catch(e){}},_focus:function(){hui.cls.add(this.element,"layout_search_active")},_blur:function(){hui.cls.remove(this.element,"layout_search_active")}},new e({element:hui.find(".layout_search")})})
+try{this.nodes.text.focus()}catch(e){}},_focus:function(){hui.cls.add(this.element,"layout_search_active")},_blur:function(){var e=this
+window.setTimeout(function(){hui.cls.remove(e.element,"layout_search_active")},200)}},new e({element:hui.find(".layout_search")})})

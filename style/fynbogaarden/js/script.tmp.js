@@ -6594,7 +6594,10 @@ require(['hui'],function() {
       hui.cls.add(this.element,'layout_search_active');
     },
     _blur : function() {
-      hui.cls.remove(this.element,'layout_search_active');
+      var self = this;
+      window.setTimeout(function() {
+        hui.cls.remove(self.element,'layout_search_active');
+      },200)
     }
   }
   new SearchField({element:hui.find('.layout_search')});
