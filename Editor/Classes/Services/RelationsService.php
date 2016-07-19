@@ -9,7 +9,7 @@ if (!isset($GLOBALS['basePath'])) {
 }
 
 class RelationsService {
-	
+
 	static function relateObjectToObject($fromObject,$toObject,$kind='') {
 		if (!$fromObject || !$toObject) {
 			return false;
@@ -27,7 +27,7 @@ class RelationsService {
 		Database::insert($sql);
 		return true;
 	}
-	
+
 	static function relatePageToObject($fromPage,$toObject,$kind='') {
 		if (!$fromPage || !$toObject) {
 			return false;
@@ -45,7 +45,7 @@ class RelationsService {
 		Database::insert($sql);
 		return true;
 	}
-	
+
 	static function relateObjectToPage($fromObject,$toPage,$kind='') {
 		if (!$fromObject || !$toPage) {
 			return false;
