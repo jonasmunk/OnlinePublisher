@@ -33,13 +33,13 @@ class Object extends Entity {
 	var $searchable;
 	var $ownerId;
 	static $schema = array();
-	
+
 	function Object($type) {
 		$this->type = $type;
 		$this->searchable = true;
 		$this->ownerId = InternalSession::getUserId();
 	}
-	
+
 	function getType() {
 		return $this->type;
 	}
@@ -47,35 +47,35 @@ class Object extends Entity {
 	function setType($type) {
 		$this->type = $type;
 	}
-	
+
 	function setTitle($title) {
 		$this->title = $title;
 	}
-	
+
 	function getTitle() {
 		return (string) $this->title;
 	}
-	
+
 	function setNote($note) {
 		$this->note = $note;
 	}
-	
+
 	function getNote() {
 		return $this->note;
 	}
-	
+
 	function isSearchable() {
 		return $this->searchable;
 	}
-	
+
 	function setSearchable($searchable) {
 		$this->searchable = ($searchable==true);
 	}
-	
+
 	function isPublished() {
 		return ($this->updated<=$this->published);
 	}
-	
+
 	function setPublished($published) {
 		$this->published = $published;
 	}
@@ -83,7 +83,7 @@ class Object extends Entity {
 	function getUpdated() {
 		return $this->updated;
 	}
-	
+
 	function setUpdated($updated) {
 		$this->updated = $updated;
 	}
@@ -91,11 +91,11 @@ class Object extends Entity {
 	function getCreated() {
 		return $this->created;
 	}
-    
+
 	function setCreated($created) {
 		$this->created = $created;
 	}
-	
+
 	function setOwnerId($ownerId) {
 	    $this->ownerId = $ownerId;
 	}
@@ -103,7 +103,7 @@ class Object extends Entity {
 	function getOwnerId() {
 	    return $this->ownerId;
 	}
-	
+
 	function save() {
 		if ($this->id > 0) {
 			return $this->update();
@@ -111,41 +111,41 @@ class Object extends Entity {
 			return $this->create();
 		}
 	}
-	
+
 	function isPersistent() {
 		return $this->id>0;
 	}
-	
+
 	function create() {
 		return ObjectService::create($this);
 	}
-	
+
 	function update() {
 		return ObjectService::update($this);
 	}
-	
+
 	/**
-	 * Override this to prevent removal
-	 */
+   * Override this to prevent removal
+   */
 	function canRemove() {
 		return true;
 	}
-	
+
 	/**
-	 * Override this to prevent creating/updating invalid data
-	 */
+   * Override this to prevent creating/updating invalid data
+   */
 	function isValid() {
 		return true;
 	}
-	
+
 	function remove() {
 		return ObjectService::remove($this);
 	}
-	
+
 	function publish() {
 		ObjectService::publish($this);
 	}
-	
+
 	function getIndex() {
 		$index = '';
 		$index.=$this->title.' ';
@@ -155,22 +155,22 @@ class Object extends Entity {
 		}
 		return $index;
 	}
-	
+
 	function getCurrentXml() {
 		return ObjectService::toXml($this);
 	}
-	
+
 	function _buildnamespace($version) {
 		return 'http://uri.in2isoft.com/onlinepublisher/class/'.$this->type.'/'.$version.'/';
 	}
-	
-		
+
+
     /*=========================== links =======================*/
 
 	function updateLinks($links) {
 		return ObjectLinkService::updateLinks($this->id,$links);
 	}
-	
+
 	function getLinks() {
 		return ObjectLinkService::search(array('objectId'=>$this->id));
 	}
@@ -181,7 +181,7 @@ class Object extends Entity {
     function getIcon() {
         return 'common/object';
     }
-    
+
     ///////////////////////////// Static ///////////////////////////
 
 	static function get($id,$type) {
