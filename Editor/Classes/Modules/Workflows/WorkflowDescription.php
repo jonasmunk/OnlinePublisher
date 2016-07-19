@@ -27,9 +27,10 @@ class WorkflowDescription {
     return $description;
   }
 
-  public function run() {
-    $state = new WorkflowState();
-    $state->setStringData('http://daringfireball.net/feeds/main');
+  public function run(WorkflowState $state = null) {
+    if (!$state) {
+      $state = new WorkflowState();
+    }
     for ($i=0; $i < count($this->stages); $i++) {
       $stage = $this->stages[$i];
       $state->log('Running: ' . get_class($stage));

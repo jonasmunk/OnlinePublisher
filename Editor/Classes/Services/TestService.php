@@ -7,10 +7,9 @@ if (!isset($GLOBALS['basePath'])) {
 	header('HTTP/1.1 403 Forbidden');
 	exit;
 }
-require_once($basePath.'Editor/Libraries/simpletest/unit_tester.php');
-//require_once($basePath.'Editor/Libraries/simpletest/web_tester.php');
-require_once($basePath.'Editor/Libraries/simpletest/reporter.php');
-require_once($basePath.'Editor/Classes/Tests/AbstractObjectTest.php');
+require_once(FileSystemService::getFullPath('Editor/Libraries/simpletest/unit_tester.php'));
+require_once(FileSystemService::getFullPath('Editor/Libraries/simpletest/reporter.php'));
+require_once(FileSystemService::getFullPath('Editor/Classes/Tests/AbstractObjectTest.php'));
 
 class TestService {
 
@@ -23,9 +22,8 @@ class TestService {
 	}
 
 	static function getGroups() {
-		global $basePath;
 		$out = array();
-		$groups = FileSystemService::listDirs($basePath.'Editor/Tests/');
+		$groups = FileSystemService::listDirs(FileSystemService::getFullPath('Editor/Tests/'));
 		for ($i=0; $i < count($groups); $i++) {
 			if ($groups[$i]!='Resources') {
 				$out[] = $groups[$i];
@@ -35,13 +33,11 @@ class TestService {
 	}
 
 	static function getTestsInGroup($group) {
-		global $basePath;
-		return FileSystemService::listFiles($basePath.'Editor/Tests/'.$group.'/');
+		return FileSystemService::listFiles(FileSystemService::getFullPath('Editor/Tests/'.$group.'/'));
 	}
 
 	static function runTest($test,$reporter = null) {
-		global $basePath;
-		$path = $basePath.'Editor/Tests/'.$test.'.php';
+		$path = FileSystemService::getFullPath('Editor/Tests/'.$test.'.php');
 		$test = new TestSuite($test);
 		$test->addFile($path);
     if ($reporter==null) {
@@ -51,12 +47,11 @@ class TestService {
 	}
 
 	static function runTestsInGroup($group,$reporter = null) {
-		global $basePath;
 		$paths = array();
 
 		$tests = TestService::getTestsInGroup($group);
 		foreach ($tests as $test) {
-			$paths[] = $basePath.'Editor/Tests/'.$group.'/'.$test;
+			$paths[] = FileSystemService::getFullPath('Editor/Tests/'.$group.'/'.$test);
 		}
     if ($reporter==null) {
       $reporter = new HtmlReporter();
@@ -70,14 +65,13 @@ class TestService {
 	}
 
 	static function runAllTests($reporter = null) {
-		global $basePath;
 		$paths = array();
 		$groups = TestService::getGroups();
 
 		foreach ($groups as $group) {
 			$tests = TestService::getTestsInGroup($group);
 			foreach ($tests as $test) {
-				$paths[] = $basePath.'Editor/Tests/'.$group.'/'.$test;
+				$paths[] = FileSystemService::getFullPath('Editor/Tests/'.$group.'/'.$test);
 			}
 		}
 		$test = new TestSuite('All tests');

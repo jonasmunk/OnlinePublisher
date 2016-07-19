@@ -34,6 +34,7 @@ class FeedParser {
 			}
 			return $feed;
 		} else {
+      Log::debug('Could not load: '.$url);
 			$log[] = 'Could not load: '.$url;
 			return false;
 		}
@@ -69,9 +70,9 @@ class FeedParser {
 		for ($i=0; $i < $len; $i++) {
 			$node = $nodes->item($i);
 			$item = new FeedItem();
-			$item->setTitle(Strings::fromUnicode(DOMUtils::getFirstChildText($node,'title')));
-			$item->setDescription(Strings::fromUnicode(DOMUtils::getFirstChildText($node,'description')));
-			$item->setLink(Strings::fromUnicode(DOMUtils::getFirstChildText($node,'link')));
+			$item->setTitle(DOMUtils::getFirstChildText($node,'title'));
+			$item->setDescription(DOMUtils::getFirstChildText($node,'description'));
+			$item->setLink(DOMUtils::getFirstChildText($node,'link'));
 			$item->setPubDate(Dates::parseRFC822(DOMUtils::getFirstChildText($node,'pubDate')));
 			$item->setGuid(DOMUtils::getFirstChildText($node,'guid'));
 			$feed->addItem($item);

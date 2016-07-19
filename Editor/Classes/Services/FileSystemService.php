@@ -211,6 +211,11 @@ class FileSystemService {
     return FileSystemService::findFreeFilePath($path);
   }
 
+  static function canRead($path) {
+    $full = FileSystemService::getFullPath($path);
+    return is_file($full) && is_readable($full);
+  }
+
   static function getFullPath($path) {
     global $basePath;
     return FileSystemService::join($basePath,$path);

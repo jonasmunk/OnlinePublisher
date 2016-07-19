@@ -31,7 +31,7 @@ class RemoteDataService {
   static function writeUrlToFile($url,$path) {
     $existing = file_exists($path);
     $success = false;
-    if (!function_exists('curl_init')) {
+    if (true || !function_exists('curl_init')) {
       if ($file = @fopen($url, "rb")) {
           if ($temp = @fopen($path, "wb")) {
           while (!feof($file)) {

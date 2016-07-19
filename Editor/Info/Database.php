@@ -317,6 +317,12 @@ $databaseTables = array(
       array("target_id","int(11)","YES","","",""),
       array("alternative","varchar(255)","YES","","","")
     ),
+  'listener' => array(
+      array("object_id","int(11)","","","0",""),
+      array("event","varchar(255)","YES","","",""),
+      array("latest_execution","datetime","YES","","",""),
+      array("interval","int(11)","NO","","3600","")
+    ),
   'log' => array(
       array("id","int(11)","","PRI","","auto_increment"),
       array("time","datetime","YES","","",""),
@@ -456,7 +462,8 @@ $databaseTables = array(
     ),
   'part_custom' => array(
       array("part_id","int(11)","","","0",""),
-      array("workflow_id","int(11)","","","0","")
+      array("workflow_id","int(11)","","","0",""),
+      array("view_id","int(11)","","","0","")
     ),
   'part_file' => array(
       array("part_id","int(11)","","","0",""),
@@ -924,6 +931,10 @@ $databaseTables = array(
       array("entity_type","varchar(50)","","","",""),
       array("entity_id","int(11)","","","0",""),
       array("permission","varchar(50)","YES","","","")
+    ),
+  'view' => array(
+      array("object_id","int(11)","YES","","0",""),
+      array("path","varchar(255)","","","","")
     ),
   'watermeter' => array(
       array("object_id","int(11)","YES","","0",""),

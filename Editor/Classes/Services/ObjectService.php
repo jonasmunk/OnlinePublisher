@@ -71,18 +71,24 @@ class ObjectService {
     Database::insert($sql);
   }
 
+  static function removeRelations($objectId) {
+    $sql = "delete from `relation` where (from_type='object' and from_object_id=@int(objectId)) or (to_type='object' and to_object_id=@int(objectId))";
+    Database::delete($sql, ['objectId' => $objectId]);
+  }
+
   static function remove($object) {
     if ($object->isPersistent() && $object->canRemove()) {
       $sql = "delete from `object` where id=".Database::int($object->getId());
       $row = Database::delete($sql);
+
       $sql = "delete from `object_link` where object_id=".Database::int($object->getId());
-      $row = Database::delete($sql);
-      $sql = "delete from `relation` where (from_type='object' and from_object_id=".Database::int($object->getId()).") or (to_type='object' and to_object_id=".Database::int($object->getId()).")";
-      $row = Database::delete($sql);
+      Database::delete($sql);
+      ObjectService::removeRelations($object->getId());
+
       $schema = ObjectService::_getSchema($object->getType());
       if (is_array($schema)) {
         $sql = "delete from `".$object->getType()."` where object_id=".Database::int($object->getId());
-        $row = Database::delete($sql);
+        Database::delete($sql);
         if (method_exists($object,'removeMore')) {
           $object->removeMore();
         }

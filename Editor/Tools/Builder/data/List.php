@@ -12,6 +12,10 @@ if ($kind=='stream') {
   listStreamItems($value);
 } else if ($kind=='category' && $value=='sources') {
   listSources();
+} else if ($kind=='category' && $value=='views') {
+  listViews();
+} else if ($kind=='category' && $value=='listeners') {
+  listListeners();
 }
 
 
@@ -62,6 +66,54 @@ function listSources() {
         ->text(Dates::formatLongDateTime($item->getSynchronized()))
       ->endCell()
       ->startCell()->text($item->getInterval())->endCell()
+    ->endRow();
+  }
+  $writer->endList();
+}
+
+function listListeners() {
+  $items = Query::after('listener')->orderBy('title')->get();
+  $writer = new ListWriter();
+  $writer->startList()
+    ->startHeaders()
+      ->header(['title'=>['Title','da'=>'Titel']])
+      ->header(['title'=>['Event','da'=>'Begivenhed']])
+      ->header(['title'=>['Latest execution','da'=>'Seneste afvikling']])
+      ->header(['title'=>['Interval']])
+      ->header(['title'=>['Runnable','da'=>'Eksekvérbar']])
+    ->endHeaders();
+
+  foreach ($items as $item) {
+
+    $flow = Query::after('workflow')->withRelationFrom($item)->first();
+    $writer
+      ->startRow(['kind'=>$item->getType(),'id'=>$item->getId()])
+      ->startCell()->text($item->getTitle())->endCell()
+      ->startCell()->text($item->getEvent())->endCell()
+      ->startCell(['wrap'=>false])
+        ->text(Dates::formatFuzzy($item->getLatestExecution()))
+      ->endCell()
+      ->startCell()->text($item->getInterval())->endCell()
+      ->startCell()->text($flow ? $flow->getTitle() : '-')->endCell()
+    ->endRow();
+  }
+  $writer->endList();
+}
+
+function listViews() {
+  $items = Query::after('view')->orderBy('title')->get();
+  $writer = new ListWriter();
+  $writer->startList()
+    ->startHeaders()
+      ->header(['title'=>['Title','da'=>'Titel']])
+      ->header(['title'=>['Path','da'=>'Sti']])
+    ->endHeaders();
+
+  foreach ($items as $item) {
+    $writer
+      ->startRow(['kind'=>'view','id'=>$item->getId()])
+      ->startCell()->text($item->getTitle())->endCell()
+      ->startCell()->text($item->getPath())->endCell()
     ->endRow();
   }
   $writer->endList();

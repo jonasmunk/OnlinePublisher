@@ -33,6 +33,7 @@
   <xsl:include href="part_menu.xsl"/>
   <xsl:include href="part_widget.xsl"/>
   <xsl:include href="part_authentication.xsl"/>
+  <xsl:include href="part_custom.xsl"/>
 
   <xsl:template match="doc:content">
     <div class="document">

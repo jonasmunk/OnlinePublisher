@@ -22,24 +22,31 @@ class WorkflowParser {
     if (!$stages) {
       return null;
     }
+    return $this->parseNode($stages, $parameters);
+  }
+
+  public function parseNode($stages,$parameters = []) {
     $flow = new WorkflowDescription();
     $children = DOMUtils::getChildElements($stages);
     foreach ($children as $child) {
       $options = [];
+      $stageClass = ucfirst($child->nodeName) . 'Stage';
+      if (!class_exists($stageClass)) {
+        Log::debug('Stage not found: ' . $stageClass);
+        return null;
+      }
       if ($child->hasAttributes()) {
         foreach ($child->attributes as $attr) {
           $options[$attr->nodeName] = $attr->nodeValue;
         }
       }
-      $stageClass = ucfirst($child->nodeName) . 'Stage';
-      if (!class_exists($stageClass)) {
-        return null;
-      }
       $stage = new $stageClass($options);
+      if (method_exists($stage,'parse')) {
+        $stage->parse($child);
+      }
       $flow->add($stage);
     }
     return $flow;
   }
-
 }
 ?>

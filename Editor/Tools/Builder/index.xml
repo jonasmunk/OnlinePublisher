@@ -5,9 +5,11 @@
   <controller source="sources.js"/>
   <controller source="workflows.js"/>
   <controller source="streams.js"/>
+  <controller source="views.js"/>
+  <controller source="listeners.js"/>
 
-  <source name="selectionSource" url="data/Selection.php">
-  </source>
+  <source name="selectionSource" url="data/Selection.php"/>
+  <source name="runnableOptions" url="../../Services/Model/Items.php?type=workflow"/>
 
   <source name="listSource" url="data/List.php">
     <parameter key="windowPage" value="@list.window.page"/>
@@ -20,12 +22,17 @@
     <top>
       <toolbar>
         <icon icon="common/internet" title="{New source; da:Ny kilde}" overlay="new" name="newSource"/>
-        <icon icon="common/folder" title="{New workflow; da:Ny arbejdsgang}" overlay="new" name="newWorkflow"/>
-        <icon icon="common/folder" title="{New stream; da:Ny strøm}" overlay="new" name="newStream"/>
+        <icon icon="application/developer" title="{New workflow; da:Ny arbejdsgang}" overlay="new" name="newWorkflow"/>
+        <icon icon="common/water" title="{New stream; da:Ny strøm}" overlay="new" name="newStream"/>
+        <icon icon="file/generic" title="{New view; da:Ny visning}" overlay="new" click="viewEditor.makeNew()"/>
+        <icon icon="file/generic" title="{New listener; da:Ny observatør}" overlay="new" click="listenerEditor.makeNew()"/>
         <icon icon="common/refresh"
           title="{Synchronize; da:Synkroniser}"
           name="synchronizeSource" disabled="true"/>
         <right>
+          <icon icon="common/play"
+            title="{Heartbeat; da:Hjerteslag}"
+            name="heartbeat"/>
           <field label="{Search; da:Søgning}">
             <searchfield name="search" expanded-width="200"/>
           </field>
@@ -130,5 +137,63 @@
       </buttons>
     </formula>
   </window>
+
+  <managed name="viewEditor"
+    save-url="actions/SaveView.php"
+    read-url="../../Services/Model/LoadObject.php"
+    delete-url="../../Services/Model/DeleteObject.php"
+  >
+    <window title="{View; da:Visning}" width="400" padding="5">
+      <formula>
+        <fields labels="above">
+          <field label="{Title; da:Titel}">
+            <text-input key="title"/>
+          </field>
+          <field label="{Path; da:Sti}">
+            <text-input key="path"/>
+          </field>
+        </fields>
+        <buttons>
+          <button title="{Cancel; da:Annuller}" role="cancel"/>
+          <button title="{Delete; da:Slet}" role="delete">
+            <confirm text="{Are you sure?; da:Er du sikker?}" ok="{Yes, delete; da:Ja, slet}" cancel="{Cancel; da:Annuller}"/>
+          </button>
+          <button title="{Save; da:Gem}" highlighted="true" role="save" submit="true"/>
+        </buttons>
+      </formula>
+    </window>
+  </managed>
+
+  <managed name="listenerEditor"
+    save-url="actions/SaveListener.php"
+    read-url="actions/LoadListener.php"
+    delete-url="../../Services/Model/DeleteObject.php"
+  >
+    <window title="{Listener; da:Observatør}" width="300" padding="5">
+      <formula>
+        <fields labels="above">
+          <field label="{Title; da:Titel}">
+            <text-input key="title"/>
+          </field>
+          <field label="{Event; da:Begivenhed}">
+            <text-input key="event"/>
+          </field>
+          <field label="{Interval; da:Interval}">
+            <number-input key="interval"/>
+          </field>
+          <field label="{Run this; da:Eksekvér denne}">
+            <dropdown key="runnable" source="runnableOptions"/>
+          </field>
+        </fields>
+        <buttons>
+          <button title="{Cancel; da:Annuller}" role="cancel"/>
+          <button title="{Delete; da:Slet}" role="delete">
+            <confirm text="{Are you sure?; da:Er du sikker?}" ok="{Yes, delete; da:Ja, slet}" cancel="{Cancel; da:Annuller}"/>
+          </button>
+          <button title="{Save; da:Gem}" highlighted="true" role="save" submit="true"/>
+        </buttons>
+      </formula>
+    </window>
+  </managed>
 
 </gui>

@@ -9,7 +9,7 @@ if (!isset($GLOBALS['basePath'])) {
 }
 
 class PartService {
-    
+
     static function load($type,$id) {
         if (!$id) {
             return null;
@@ -22,7 +22,7 @@ class PartService {
     }
 
     static function remove($part) {
-        
+
         $sql = "delete from part where id=".Database::int($part->getId());
         Database::delete($sql);
 
@@ -34,7 +34,7 @@ class PartService {
 
         $sql = "delete from part_link where part_id=".Database::int($part->getId());
         Database::delete($sql);
-        
+
         // Delete relations
         $schema = PartService::getSchema($part->getType());
         if (isset($schema['relations']) && is_array($schema['relations'])) {
@@ -44,7 +44,7 @@ class PartService {
             }
         }
     }
-    
+
     static private function getSchema($type) {
         $class = PartService::getClassName($type);
         if (array_key_exists($class,Entity::$schema)) {
@@ -52,7 +52,7 @@ class PartService {
         }
         return null;
     }
-    
+
     static function save($part) {
         $controller = PartService::getController($part->getType());
         if ($part->isPersistent()) {
@@ -62,14 +62,14 @@ class PartService {
             PartService::update($part);
         } else {
             $schema = PartService::getSchema($part->getType());
-            
+
             $sql = "insert into part (type,dynamic,created,updated) values (".
             Database::text($part->getType()).",".
             Database::boolean($part->isDynamic()).",".
             "now(),now()".
             ")";
             $part->setId(Database::insert($sql));
-            
+
             $columns = SchemaService::buildSqlColumns($schema);
             $values = SchemaService::buildSqlValues($part,$schema);
 
@@ -83,7 +83,7 @@ class PartService {
             }
             $sql.=")";
             Database::insert($sql);
-            
+
             if (isset($schema['relations']) && is_array($schema['relations'])) {
                 foreach ($schema['relations'] as $field => $info) {
                     $getter = 'get'.ucfirst($field);
@@ -104,20 +104,20 @@ class PartService {
             }
         }
     }
-    
+
     static function update($part) {
         $sql = "update part set updated=now(),dynamic=".Database::boolean($part->isDynamic())." where id=".Database::int($part->getId());
         Database::update($sql);
-        
-        
+
+
         $schema = PartService::getSchema($part->getType());
         $setters = SchemaService::buildSqlSetters($part,$schema);
-        
+
         if (Strings::isNotBlank($setters)) {
             $sql = "update part_".$part->getType()." set ".$setters." where part_id=".Database::int($part->getId());
             Database::update($sql);
         }
-        
+
         // Update relations
         if (isset($schema['relations']) && is_array($schema['relations'])) {
             foreach ($schema['relations'] as $field => $info) {
@@ -141,7 +141,7 @@ class PartService {
         }
         return ucfirst($type).'Part';
     }
-    
+
     /**
      * Creates a new part based on the type
      */
@@ -152,7 +152,7 @@ class PartService {
         }
         return new $class;
     }
-    
+
     /** Gets the controller for a type */
     static function getController($type) {
         global $basePath;
@@ -169,7 +169,7 @@ class PartService {
         require_once $path;
         return new $class;
     }
-    
+
     static function getPageIdsForPart($partId) {
         $sql = "select page_id as id from document_section where part_id=@int(partId)";
         return Database::selectIntArray($sql,['partId'=>$partId]);
@@ -178,7 +178,7 @@ class PartService {
     /** Builds the context for a page */
     static function buildPartContext($pageId) {
         $context = new PartContext();
-    
+
         $sql = "select link.*,page.path from link left join page on page.id=link.target_id and link.target_type='page' where page_id=".$pageId." and source_type='text'";
 
         $result = Database::select($sql);
@@ -197,7 +197,7 @@ class PartService {
 
         return $context;
     }
-    
+
 
     /** Get a list of all available parts */
     static function getAvailableParts() {
@@ -234,10 +234,11 @@ class PartService {
             'movie' => array ( 'name' => array('da'=>'Film','en'=>'Movie') ),
             'menu' => array ( 'name' => array('da'=>'Menu','en'=>'Menu') ),
             'widget' => array ( 'name' => array('da'=>'Widget','en'=>'Widget') ),
-            'authentication' => array ( 'name' => array('da'=>'Adgangskontrol','en'=>'Authentication') )
+            'authentication' => array ( 'name' => array('da'=>'Adgangskontrol','en'=>'Authentication') ),
+            'custom' => array ( 'name' => array('da'=>'Speciel','en'=>'Custom') )
         );
     }
-    
+
     /** The part menu structure */
     static function getPartMenu() {
         $parts = PartService::getParts();
@@ -265,12 +266,13 @@ class PartService {
                 'movie' => $parts['movie'],
                 'menu' => $parts['menu'],
                 'widget' => $parts['widget'],
+                'custom' => $parts['custom'],
                 'authentication' => $parts['authentication']
             ))
         );
         return $menu;
     }
-    
+
     /** Gets all available controllers */
     static function getAllControllers() {
         $controllers = array();
@@ -315,7 +317,7 @@ class PartService {
             return false;
         }
     }
-    
+
     /** Get the possible link text for a certain part */
     static function getLinkText($partId) {
         $text = '';
@@ -330,7 +332,7 @@ union select html as text,document_section.part_id from part_table,document_sect
         Database::free($result);
         return $text;
     }
-    
+
     /** Get the first link for a part */
     static function getSingleLink($part,$sourceType=null) {
         $sql = "select part_link.*,page.path from part_link left join page on page.id=part_link.target_value and part_link.target_type='page' where part_id=".Database::int($part->getId());
@@ -343,19 +345,19 @@ union select html as text,document_section.part_id from part_table,document_sect
             return false;
         }
     }
-    
+
     /** Remove all existing links for a part */
     static function removeLinks($part) {
         $sql = "delete from part_link where part_id=".Database::int($part->getId());
         Database::delete($sql);
     }
-    
+
     /** Remove all existing links for a part */
     static function removeLink($link) {
         $sql = "delete from part_link where id=@int(id)";
         Database::delete($sql,['id'=>$link->getId()]);
     }
-    
+
     /** Gets all links for a part */
     static function getLinks($part) {
         $links = array();
@@ -374,7 +376,7 @@ union select html as text,document_section.part_id from part_table,document_sect
         Database::free($result);
         return $links;
     }
-    
+
     /** Saves a link */
     static function saveLink($link) { /* PartLink */
         Log::debug($link);

@@ -20,6 +20,10 @@ class Stream extends Object {
     parent::Object('stream');
   }
 
+  function getIcon() {
+    return 'common/water';
+  }
+
   static function load($id) {
     return Object::get($id,'stream');
   }

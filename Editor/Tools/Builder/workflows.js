@@ -31,8 +31,9 @@ hui.ui.listen({
       url : 'actions/RunWorkflow.php',
       message : {start:{en:'Running...',da:'Afvikler...'},delay:300},
       parameters : {recipe : workflowRecipe.getValue()},
-      $text : function(str) {
-        workflowResult.setValue(str);
+      $object : function(obj) {
+        workflowResult.setValue(JSON.stringify(obj,2,2));
+        hui.log(obj);
       }
     });
   },

@@ -1,0 +1,12 @@
+<div class="feed">
+  <ul class="feed_items">
+  {% for item in data %}
+    <li class="feed_item">
+      <h4 class="feed_item_title"><a href="{{item.link}}" class="common common_link"><span class="common_link_text">{{item.title}}</span></a></h4>
+      {% for image in item.image %}<img src="{{image}}"/>{% endfor %}
+      <div class="feed_item_body">{{item.text}}</div>
+      <div class="feed_item_date">{{item.pubDate|date("d. M Y H:i","Europe/Paris")}}</div>
+    </li>
+  {% endfor %}
+  </ul>
+</div>

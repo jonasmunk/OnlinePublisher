@@ -126,41 +126,41 @@ class Dates {
   }
 
   static function formatDuration($seconds,$locale="da_DK") {
-    if ($seconds<60) {
+    if ($seconds < 60) {
       return $seconds.' sekunder';
     }
-    if ($seconds<60*60) {
-      return round($seconds/60,2).' minutter';
+    if ($seconds < 60 * 60) {
+      return round($seconds / 60, 2).' minutter';
     }
-    return round($seconds/60/60,2).' timer';
+    return round($seconds / 60 / 60, 2).' timer';
   }
 
   static function formatFuzzy($timestamp,$locale="da_DK") {
     if ($timestamp) {
-      $diff = time()-$timestamp;
-      if ($diff>0) {
-        if ($diff<60) {
+      $diff = time() - $timestamp;
+      if ($diff > -10) {
+        if ($diff < 60) {
           if (InternalSession::getLanguage()=='da') {
             return 'for '.$diff.' sekunder siden';
           } else {
             return 'about '.$diff.' seconds ago';
           }
-        } else if ($diff<3600) {
-          $minutes = floor($diff/60);
+        } else if ($diff < 3600) {
+          $minutes = floor($diff / 60);
           if (InternalSession::getLanguage()=='da') {
             return 'for '.$minutes.($minutes==1 ? ' minut siden' : ' minutter siden');
           } else {
             return 'about '.$minutes.($minutes==1 ? ' minute ago' : ' minutes ago');
           }
-        } else if ($diff<3600*24) {
-          $minutes = floor($diff/60/60);
+        } else if ($diff < 3600 * 24) {
+          $minutes = floor($diff / 60 / 60);
           if (InternalSession::getLanguage()=='da') {
             return 'for '.$minutes.($minutes==1 ? ' time siden' : ' timer siden');
           } else {
             return 'about '.$minutes.($minutes==1 ? ' hour ago' : ' hours ago');
           }
-        } else if ($diff<3600*24*4) {
-          $days = floor($diff/3600/24);
+        } else if ($diff < 3600 * 24 * 4) {
+          $days = floor($diff / 3600 / 24);
           if (InternalSession::getLanguage()=='da') {
             return 'for '.$days.($days==1 ? ' dag' : ' dage').' siden kl. '.Dates::formatShortTime($timestamp,$locale);
           } else {
@@ -168,7 +168,7 @@ class Dates {
           }
         }
       }
-      if (strftime('%Y',time())!==strftime('%Y',$timestamp)) {
+      if (strftime('%Y',time()) !== strftime('%Y',$timestamp)) {
         return Dates::formatLongDateTime($timestamp,$locale);
       } else {
         return Dates::formatDateTime($timestamp,$locale);

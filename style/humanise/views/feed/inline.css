@@ -1,0 +1,22 @@
+.feed_heading {
+
+}
+
+.feed_items {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.feed_item {
+  padding: 5px 0;
+}
+
+.feed_item_title {
+  margin: 0;
+}
+
+.feed_item_date {
+  font-size: .8em;
+  color: #999;
+}

@@ -12,6 +12,8 @@ $flow = $parser->parse($recipe);
 
 $result = $flow->run();
 
+Log::debug($result);
+
 Response::sendObject([
   'description' => $flow->getDescription(),
   'result' => $result
