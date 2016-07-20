@@ -1,0 +1,36 @@
+.blog_items {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.blog_item {
+  padding: 5px 0;
+}
+
+.blog_title {
+  margin: 0;
+}
+
+.blog_body p {
+  margin: 5px 0;
+  font-size: .8em;
+}
+
+.blog_date {
+  font-size: .8em;
+  color: #999;
+}
+
+.blog_photo {
+  position: relative;
+  display: block;
+}
+
+.blog_photo_img {
+  position: absolute;
+  width: 100%;
+  top: 0;
+  left: 0;
+  height: auto;
+}
