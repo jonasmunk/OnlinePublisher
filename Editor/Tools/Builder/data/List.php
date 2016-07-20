@@ -34,7 +34,7 @@ function listStreamItems($streamId) {
   foreach ($items as $item) {
     $writer
       ->startRow(['kind'=>'streamitem','id'=>$item->getId()])
-      ->startCell()->startWrap()->text($item->getData())->endWrap()->endCell()
+      ->startCell()->startLine()->text($item->getIdentity())->endLine()->startWrap()->text($item->getData())->endWrap()->endCell()
       ->startCell(['wrap'=>false])
         ->text(Dates::formatLongDateTime($item->getOriginalDate()))
       ->endCell()

@@ -196,4 +196,26 @@
     </window>
   </managed>
 
+  <managed name="streamItemEditor"
+    read-url="../../Services/Model/LoadObject.php"
+    delete-url="../../Services/Model/DeleteObject.php"
+  >
+    <window title="{Stream item; da:Emne i strøm}" width="300" padding="5">
+      <formula>
+        <fields labels="above">
+          <field label="{Data; da:Data}">
+            <text-input key="data" multiline="true"/>
+          </field>
+        </fields>
+        <buttons>
+          <button title="{Cancel; da:Annuller}" role="cancel"/>
+          <button title="{Delete; da:Slet}" role="delete">
+            <confirm text="{Are you sure?; da:Er du sikker?}" ok="{Yes, delete; da:Ja, slet}" cancel="{Cancel; da:Annuller}"/>
+          </button>
+          <button title="{Save; da:Gem}" highlighted="true" role="save" submit="true"/>
+        </buttons>
+      </formula>
+    </window>
+  </managed>
+
 </gui>

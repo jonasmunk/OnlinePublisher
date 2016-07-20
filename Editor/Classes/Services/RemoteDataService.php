@@ -13,7 +13,7 @@ class RemoteDataService {
   static function _getUrlAsFile($url) {
     global $basePath;
     $path = RemoteDataService::getPathOfUrl($url);
-    if (!file_exists($path)) {
+    if (true || !file_exists($path)) {
       $success = RemoteDataService::writeUrlToFile($url,$path);
       if ($file = fopen($url, "rb")) {
           if ($temp = fopen($path, "wb")) {
@@ -31,7 +31,7 @@ class RemoteDataService {
   static function writeUrlToFile($url,$path) {
     $existing = file_exists($path);
     $success = false;
-    if (true || !function_exists('curl_init')) {
+    if (!function_exists('curl_init')) {
       if ($file = @fopen($url, "rb")) {
           if ($temp = @fopen($path, "wb")) {
           while (!feof($file)) {

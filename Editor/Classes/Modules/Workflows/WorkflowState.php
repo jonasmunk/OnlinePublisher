@@ -43,6 +43,10 @@ class WorkflowState {
     $this->data = $data;
   }
 
+  public function getType() {
+    return $this->type;
+  }
+
   public function getData() {
     return $this->data;
   }

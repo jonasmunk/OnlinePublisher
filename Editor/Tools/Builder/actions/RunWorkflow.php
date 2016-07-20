@@ -9,13 +9,18 @@ $recipe = Request::getString('recipe');
 
 $parser = new WorkflowParser();
 $flow = $parser->parse($recipe);
+if (!$flow) {
+  Response::sendObject([
+    'error' => 'Unable to parse workflow'
+  ]);
+}
+else {
+  $state = new WorkflowState();
+  $result = $flow->run($state);
 
-$result = $flow->run();
-
-Log::debug($result);
-
-Response::sendObject([
-  'description' => $flow->getDescription(),
-  'result' => $result
-]);
+  Response::sendObject([
+    'description' => $flow->getDescription(),
+    'result' => $state->getData()
+  ]);
+}
 ?>

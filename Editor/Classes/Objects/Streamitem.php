@@ -16,6 +16,7 @@ Entity::$schema['Streamitem'] = [
     ],
     'data' => ['type' => 'string'],
     'hash' => ['type' => 'string'],
+    'identity' => ['type' => 'string'],
     'originalDate' => ['type' => 'datetime', 'column' => 'originaldate'],
     'retrievalDate' => ['type' => 'datetime', 'column' => 'retrievaldate']
   ]
@@ -26,11 +27,13 @@ class Streamitem extends Object {
   var $streamId;
   var $dataId;
   var $hash;
+  var $identity;
   var $originalDate;
   var $retrievalDate;
 
   public static $STREAM_ID = 'stream_id';
   public static $HASH = 'hash';
+  public static $IDENTITY = 'identity';
 
   function Streamitem() {
     parent::Object('streamitem');
@@ -62,6 +65,14 @@ class Streamitem extends Object {
 
   function getHash() {
     return $this->hash;
+  }
+
+  function setIdentity($identity) {
+      $this->identity = $identity;
+  }
+
+  function getIdentity() {
+      return $this->identity;
   }
 
   function setOriginalDate($originalDate) {

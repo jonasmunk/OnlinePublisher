@@ -13,7 +13,7 @@ class HeartBeatService {
 			return;
 		}
 		$duration = time() - intval($latest);
-		if ($duration > 60 * 15) {
+		if ($duration > 60 * 5) {
 			HeartBeatService::run();
 		} else {
 			Log::debug('Skipping beat, duration='.Dates::formatDuration($duration));

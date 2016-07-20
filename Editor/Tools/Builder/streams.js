@@ -11,6 +11,14 @@ hui.ui.listen({
       listBarText.setText(item.title + " (" + item.value + ")");
     }
   },
+  $open$list : function(row) {
+    if (row.kind=='streamitem') {
+      streamItemEditor.edit(row.id);
+    }
+  },
+  $changed$streamItemEditor : function() {
+    list.refresh();
+  },
 
   editStream : function(id) {
     sourceFormula.reset();

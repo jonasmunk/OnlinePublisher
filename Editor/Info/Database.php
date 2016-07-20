@@ -868,6 +868,7 @@ $databaseTables = array(
       array("object_id","int(11)","","","0",""),
       array("stream_id","int(11)","","","0",""),
       array("data","text","YES","","",""),
+      array("identity","text","YES","","",""),
       array("hash","varchar(255)","YES","","",""),
       array("originaldate","datetime","YES","","",""),
       array("retrievaldate","datetime","YES","","","")
