@@ -77,3 +77,12 @@
     background-image:         linear-gradient(top, $start-colour, $end-colour);
     filter:            progid:DXImageTransform.Microsoft.gradient(startColorstr='#{$start-colour}', endColorstr='#{$end-colour}');
 }
+
+@mixin radial-gradient($start-colour, $end-colour) {
+    background-color: $start-colour;
+    background-image: -webkit-gradient(radial, left top, left bottom, from($start-colour), to($end-colour));
+    background-image:    -moz-radial-gradient(center, ellipse cover, $start-colour, $end-colour);
+    background-image: -webkit-radial-gradient(center, ellipse cover, $start-colour, $end-colour);
+    background-image:         radial-gradient(ellipse at center,  $start-colour 0%,$end-colour 100%);
+    filter:            progid:DXImageTransform.Microsoft.gradient(startColorstr='#{$start-colour}', endColorstr='#{$end-colour}',GradientType=1);
+}

@@ -5,7 +5,7 @@
 
 @include if {
   .hero {
-    @include vertical-gradient(#0097c8,#9167f1);
+    @include radial-gradient(#b34884,#00a8e6);
     position: relative;
     padding-bottom: 70%;
     overflow: hidden;
