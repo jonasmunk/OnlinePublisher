@@ -33,8 +33,7 @@
         </xsl:otherwise>
       </xsl:choose>
       <xsl:call-template name="util:metatags"/>
-      <xsl:call-template name="util:style"/>
-      <xsl:call-template name="util:style-ie6"/>
+      <xsl:call-template name="util:css"/>
       <link href='https://fonts.googleapis.com/css?family=Raleway:400,300,500,600|Amatic+SC' rel='stylesheet' type='text/css'/>
       <xsl:call-template name="util:scripts"/>
     </head>

@@ -31,7 +31,7 @@ class CustomPartController extends PartController
 			'workflowId' => $part->getWorkflowId(),
 			'viewId' => $part->getViewId()
     ]) .
-		'<script src="'.ConfigurationService::getBaseUrl().'Editor/Parts/custom/script.js" type="text/javascript" charset="utf-8"></script>';
+		'<script src="'.ConfigurationService::getBaseUrl().'Editor/Parts/custom/editor.js" type="text/javascript" charset="utf-8"></script>';
 	}
 
 	function getFromRequest($id) {

@@ -2,6 +2,14 @@
 	"name" : "Jane Munk",
 	"description" : "Design for janemunk.dk",
 	"owner" : "The design is the property Jane Munk, 9370 Hals, Denmark",
+  "css" : [
+    "style/basic/css/shared.css",
+    "@parts",
+    "style/janemunk/css/main.css",
+    "style/janemunk/css/async.css",
+    "style/janemunk/css/overwrite.css",
+    "style/janemunk/css/front.css"
+  ],
 	"parameters" : [
 		{"key" : "theme", "type" : "selection", "label" : "Theme", "options" : [
 			{"label" : "Full screen", "value" : "full"}

@@ -5,7 +5,8 @@
 }
 
 .blog_item {
-  padding: 5px 0;
+  padding: 20px 0;
+  border-bottom: 1px solid #333;
 }
 
 .blog_title {
