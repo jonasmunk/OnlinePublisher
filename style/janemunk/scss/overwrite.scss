@@ -12,7 +12,7 @@ a.common
 
 a.common span
 {
-	color: #0079cd;
+	color: #1772a9;
 }
 
 a.common:hover, a.common:hover span
@@ -26,6 +26,7 @@ a.common:hover, a.common:hover span
 	font-family: $effect-font;
 	font-weight: normal;
 	margin: 0;
+  text-align: center;
 
   &-1 {
     font-size: 50pt;

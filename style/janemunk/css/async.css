@@ -40,12 +40,11 @@
     line-height: 1.5;
     font-size: 50px; }
 .layout_content {
-  padding: 10px; }
+  padding: 10px;
+  margin: 0 auto;
+  max-width: 960px; }
 
 @media screen and (min-width: 600px) {
-  .layout_content {
-    margin-right: 25%;
-    padding: 20px; }
   .layout_navigation {
     width: 25%;
     background: #ccced0 url("../gfx/menu2.jpg") 50%;
@@ -77,6 +76,33 @@
 @media screen and (min-width: 900px) {
   .layout_menu_link, .layout_menu_link.is-front {
     font-size: 50px; } }
+.layout_header {
+  background: #ccced0 url("../gfx/header.jpg") 50%;
+  padding: 10px 0 5px; }
+  .layout_header_title {
+    font-size: 0;
+    background: url("../gfx/logo_light.svg") no-repeat;
+    background-position: 50%;
+    height: 60px;
+    margin: 0; }
+  .layout_header_menu {
+    display: block;
+    list-style: none;
+    margin: 5px 0 0;
+    padding: 0;
+    text-align: center; }
+    .layout_header_menu_item {
+      display: inline-block; }
+    .layout_header_menu_link {
+      color: #fff;
+      text-decoration: none;
+      padding: 10px 5px;
+      font-size: 16px;
+      display: inline-block; }
+
+@media screen and (min-width: 500px) {
+  .layout_header_menu_link {
+    padding: 0 10px; } }
 body.exhibit {
   margin: 0;
   background-size: cover;

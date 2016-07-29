@@ -312,7 +312,6 @@ ga('create', '<xsl:value-of select="$code"/>', {siteSpeedSampleRate : 20});ga('s
       <xsl:call-template name="util:_scripts-config"/>
       <script src="{$path}{$timestamp-url}hui/bin/joined.site.js{$timestamp-query}"><xsl:comment/></script>
       <script src="{$path}{$timestamp-url}style/basic/js/OnlinePublisher.js{$timestamp-query}"><xsl:comment/></script>
-      <script src="{$path}{$timestamp-url}style/{$design}/js/script.dev.js{$timestamp-query}"><xsl:comment/></script>
     </xsl:when>
     <xsl:otherwise>
       <xsl:call-template name="util:_scripts-config"/>

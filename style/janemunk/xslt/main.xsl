@@ -35,7 +35,7 @@
       <xsl:call-template name="util:metatags"/>
       <xsl:call-template name="util:css"/>
       <link href='https://fonts.googleapis.com/css?family=Raleway:400,300,500,600|Amatic+SC' rel='stylesheet' type='text/css'/>
-      <xsl:call-template name="util:scripts"/>
+      <xsl:call-template name="util:js"/>
     </head>
     <body>
       <xsl:choose>
@@ -84,9 +84,9 @@
     </xsl:when>
     <xsl:otherwise>
       <div class="layout">
-        <div class="layout_navigation">
-          <p class="layout_title">Jane Munk</p>
-          <ul class="layout_menu">
+        <div class="layout_header">
+          <p class="layout_header_title">Jane Munk</p>
+          <ul class="layout_header_menu">
             <xsl:for-each select="f:frame/h:hierarchy/h:item[not(@hidden='true')]">
               <xsl:variable name="style">
                 <xsl:choose>
@@ -95,8 +95,8 @@
                   <xsl:otherwise><xsl:text>normal</xsl:text></xsl:otherwise>
                 </xsl:choose>
               </xsl:variable>
-              <li class="layout_menu_item layout_menu_item-{$style}">
-                <a class="layout_menu_link layout_menu_link-{$style}">
+              <li class="layout_header_menu_item layout_header_menu_item-{$style}">
+                <a class="layout_header_menu_link layout_header_menu_link-{$style}">
                   <xsl:call-template name="util:link"/>
                   <xsl:value-of select="@title"/>
                 </a>
@@ -111,56 +111,5 @@
     </xsl:otherwise>
   </xsl:choose>
 </xsl:template>
-<!--
-<xsl:template name="legacy">
-  <div class="case">
-    <xsl:choose>
-    <xsl:when test="//p:page/p:context/p:home[@page=//p:page/@id]">
-      <div class="case_front">
-        <div id="paintings" class="easel">
-          <div class="easel_painting easel_painting-1"><xsl:comment/></div>
-          <div class="easel_painting easel_painting-2"><xsl:comment/></div>
-          <div class="easel_painting easel_painting-3"><xsl:comment/></div>
-          <div class="easel_painting easel_painting-4"><xsl:comment/></div>
-          <div class="easel_painting easel_painting-5"><xsl:comment/></div>
-          <div class="easel_painting easel_painting-6"><xsl:comment/></div>
-          <div class="easel_painting easel_painting-7"><xsl:comment/></div>
-          <div class="easel_painting easel_painting-8"><xsl:comment/></div>
-          <div class="easel_painting easel_painting-9"><xsl:comment/></div>
-        </div>
-        <div class="case_front_content">
-          <xsl:apply-templates select="p:content"/>
-        </div>
-      </div>
-      <script type="text/javascript">
-        new op.Dissolver({elements:hui.get('paintings').getElementsByTagName('div'),wait:3000,transition:1000,delay:0});
-      </script>
-    </xsl:when>
-    <xsl:otherwise>
-      <div class="case_head">
-        <h1>Jane Munk</h1>
-        <ul class="case_navigation"><xsl:apply-templates select="f:frame/h:hierarchy/h:item"/></ul>
-      </div>
-      <xsl:call-template name="secondlevel"/><xsl:comment/>
-      <div class="case_body">
-        <div class="case_sidebar">
-          <div class="case_contact">
-            <h2>Jane Brinkmann Munk</h2>
-            <p>Apotekervænget 16, 9370 Hals</p>
-            <p><em>Tlf:</em> 98 25 18 83</p>
-            <p><em>E-post: </em> <a href="mailto:janemunk@stofanet.dk"><span>janemunk@stofanet.dk</span></a></p>
-          </div>
-          <xsl:call-template name="thirdlevel"/>
-          <xsl:comment/>
-        </div>
-        <div class="case_sidebar_content">
-        <xsl:apply-templates select="p:content"/>
-        </div>
-      </div>
-      <div class="case_footer"><xsl:comment/></div>
-    </xsl:otherwise>
-    </xsl:choose>
-  </div>
-</xsl:template>
--->
+
 </xsl:stylesheet>

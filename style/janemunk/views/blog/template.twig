@@ -2,17 +2,28 @@
   <ul class="blog_items">
   {% for item in data %}
     <li class="blog_item">
+      <div class="blog_badge {% if loop.index is divisibleby(2) %}blog_badge-1{% else %}blog_badge-2{% endif %}">
+        <span class="blog_badge_date">{{item.timestamp|date("d","Europe/Paris")}}</span>
+        <span class="blog_badge_month">{{item.timestamp|date("F","Europe/Paris")}}</span>
+      </div>
       <h4 class="blog_title"><a href="{{item.post_url}}" class="common common_link"><span class="common_link_text">{{item.summary}}</span></a></h4>
       {% if item.type=='photo' %}
-        {% for photo in item.photos %}
-          <span class="blog_photo" style="padding-bottom: {{photo.original_size.height / photo.original_size.width * 100}}%;">
-            <img class="blog_photo_img" src="{{ photo.original_size.url }}"/>
-          </span>
-        {% endfor %}
+        <div class="blog_photos">
+          {% for photo in item.photos %}
+            {% if photo.original_size.height / photo.original_size.width > 1.2 %}
+              {% set cls = ' blog_image-tall' %}
+            {% else %}
+            {% endif %}
+            <div class="blog_image{{cls}}">
+            <span class="blog_photo" style="padding-bottom: {{photo.original_size.height / photo.original_size.width * 100}}%;">
+              <img class="blog_photo_img" src="{{ photo.original_size.url }}"/>
+            </span>
+            </div>
+          {% endfor %}
+        </div>
       {% elseif item.type=='quote' %}
       <blockquote>{{item.text}} <em>{{item.source}}</em></blockquote>
       {% else %}
-      {% for image in item.image %}<img src="{{image}}"/>{% endfor %}
       <div class="blog_body">{{item.bodyCleaned|raw}}</div>
       {% endif %}
       <div class="blog_date">{{item.timestamp|date("d. M Y H:i","Europe/Paris")}}</div>
