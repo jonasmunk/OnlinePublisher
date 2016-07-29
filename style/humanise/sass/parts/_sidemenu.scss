@@ -2,11 +2,12 @@
 
 	.sidemenu {
 		margin: 0;
-		padding: 5px 5px;
+		padding: 5px 10px;
 		list-style: none;
 		border-bottom: 1px solid $line-color;
     white-space: nowrap;
     overflow: auto;
+    -webkit-overflow-scrolling: touch;
 	}
 
 	.sidemenu_item {
@@ -16,7 +17,7 @@
 	.sidemenu_link {
 		padding: 5px;
 		display: inline-block;
-		line-height: 18px;
+		line-height: 24px;
 		text-decoration: none;
 		color: #333;
 	}

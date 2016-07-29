@@ -669,7 +669,7 @@ require(['hui'],function() {
       text : '.layout_search_text'
     },
     _attach : function() {
-      hui.listen(this.nodes.icon,'click',this._toggle.bind(this));
+      hui.on(this.nodes.icon,'tap',this._toggle.bind(this));
       hui.listen(this.nodes.text,'focus',this._focus.bind(this));
       hui.listen(this.nodes.text,'blur',this._blur.bind(this));
       // Dont remember why - some browser sets focus on svgs

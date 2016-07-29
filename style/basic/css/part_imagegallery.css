@@ -2,6 +2,10 @@
 {
 	font-size: 0;
 }
+.part_imagegallery_changing {
+  z-index: 1;
+  position: relative;
+}
 
 .part_imagegallery_item
 {

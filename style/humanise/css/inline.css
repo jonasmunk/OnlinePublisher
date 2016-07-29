@@ -62,7 +62,7 @@ p.common, ul.common {
 }
 .common_header {
   margin: 0px;
-  color: #333;
+  color: #000;
   font-weight: 300;
 }
 
@@ -70,11 +70,12 @@ p.common, ul.common {
   font-size: 12pt;
   font-weight: 300;
   word-spacing: 1px;
+  color: #000;
 }
 
 .layout_menu {
   margin: 0;
-  padding: 5px;
+  padding: 5px 10px 10px;
   list-style: none;
 }
 
@@ -83,13 +84,13 @@ p.common, ul.common {
 }
 
 .layout_menu_link {
-  padding: 0 3px;
-  height: 32px;
-  line-height: 32px;
+  padding: 0 5px;
+  height: 30px;
+  line-height: 30px;
   text-decoration: none;
   color: #324d60;
-  font-weight: 300;
-  letter-spacing: -.8px;
+  font-weight: 400;
+  font-size: 18px;
 }
 .layout_menu_link-highlighted {
   color: #007AC5;
@@ -241,16 +242,15 @@ p.common, ul.common {
     top: 0;
     position: fixed;
     width: 100%;
-    z-index: 9999;
+    z-index: 10;
   }
 }
 .submenu {
   margin: 0 auto;
-  padding: 5px;
+  padding: 5px 10px 5px;
   list-style: none;
   border-bottom: 1px solid #eee;
   max-width: 980px;
-  text-align: center;
 }
 
 .submenu_item {
@@ -296,11 +296,12 @@ p.common, ul.common {
 }
 .sidemenu {
   margin: 0;
-  padding: 5px 5px;
+  padding: 5px 10px;
   list-style: none;
   border-bottom: 1px solid #eee;
   white-space: nowrap;
   overflow: auto;
+  -webkit-overflow-scrolling: touch;
 }
 
 .sidemenu_item {
@@ -310,7 +311,7 @@ p.common, ul.common {
 .sidemenu_link {
   padding: 5px;
   display: inline-block;
-  line-height: 18px;
+  line-height: 24px;
   text-decoration: none;
   color: #333;
 }

@@ -56,10 +56,10 @@ op.part.ImageGallery.changing = {
     if (nodes.length==0) {
       return;
     }
-        element.style.height = element.clientHeight+'px';
-        for (var i = 0; i < nodes.length; i++) {
-            nodes[i].style.position = 'absolute';
-        }
+    element.style.height = element.clientHeight+'px';
+    for (var i = 0; i < nodes.length; i++) {
+      nodes[i].style.position = 'absolute';
+    }
     var timer;
     var index = -1;
     var zIndex = 1;
@@ -69,15 +69,15 @@ op.part.ImageGallery.changing = {
         hui.animate(nodes[index],'opacity',0,200,{hideOnComplete:true,delay:800});
       }
       index++;
-      if (index>nodes.length-1) {
+      if (index > nodes.length - 1) {
         index = 0;
       }
       if (!first) {
-                hui.style.set(nodes[index],{
-                    opacity: 0,
-                    zIndex : zIndex,
-                    display : 'block'
-                })
+        hui.style.set(nodes[index],{
+          opacity: 0,
+          zIndex : zIndex,
+          display : 'block'
+        })
         hui.animate(nodes[index],'opacity',1,1000,{ease:hui.ease.slowFastSlow});
       }
       window.setTimeout(timer,3000);
@@ -92,11 +92,11 @@ op.part.ImageGallery.Masonry = function(options) {
   this.options = options;
   this.element = hui.get(options.element);
   this.name = options.name;
-  
+
   this.height = parseInt(options.height,10) || 200;
   this.items = [];
   this.latestWidth = 0;
-  
+
   hui.ui.extend(this);
   this._attach();
 }
@@ -185,7 +185,7 @@ op.part.ImageGallery.Masonry.prototype = {
           item.element = hui.build('a',{
             'class' : cls,
             style : {
-              width : percent + '%', 
+              width : percent + '%',
               height : rowHeight + 'px'
             },
             'data-id' : item.id,
@@ -233,7 +233,7 @@ op.part.ImageGallery.Masonry.prototype = {
       if (hui.window.getViewWidth()<400) {
         document.location = this.items[index].href;
       } else {
-        this._toggle(index);        
+        this._toggle(index);
       }
     }
   },
@@ -247,7 +247,7 @@ op.part.ImageGallery.Masonry.prototype = {
         var same = this._toggled === index;
         this._toggled = undefined;
         if (!same) {
-          this._toggle(index);          
+          this._toggle(index);
         } else {
           this._reveal();
         }
@@ -290,9 +290,9 @@ op.part.ImageGallery.Masonry.prototype = {
   _updateDiclosed : function(item,height) {
     item.disclosed.innerHTML = '<div class="oo_masonry_disclosed_image" style="background-image: url(' +
     this._getUrl(item,{width:this.latestWidth,height:600}) +
-    ')"></div>' + 
-    '<div class="oo_masonry_disclosed_info">' + 
-      '<h1 class="oo_masonry_disclosed_title">' + hui.string.escape(item.title) + '</h1>' + 
+    ')"></div>' +
+    '<div class="oo_masonry_disclosed_info">' +
+      '<h1 class="oo_masonry_disclosed_title">' + hui.string.escape(item.title) + '</h1>' +
       '<p class="oo_masonry_disclosed_actions">'+
         //'<a href="javascript://">Full screen</a>'+
         '<a href="' + item.href + '">Info...</a>'+

@@ -2,7 +2,7 @@
 
   .layout_menu {
     margin: 0;
-    padding: 5px;
+    padding: 5px 10px 10px;
     list-style: none;
   }
 
@@ -11,13 +11,13 @@
   }
 
   .layout_menu_link {
-    padding: 0 3px;
-    height: 32px;
-    line-height: 32px;
+    padding: 0 5px;
+    height: 30px;
+    line-height: 30px;
     text-decoration: none;
     color: $color;
-    font-weight: 300;
-    letter-spacing: -.8px;
+    font-weight: 400;
+    font-size: 18px;
 
     &-highlighted {
       color: $highlight-color;
@@ -31,6 +31,7 @@
 
   .layout_menu_item-first {
     display: block;
+    //padding-left: 5px;
   }
 
   .layout_menu_link-first {

@@ -213,7 +213,7 @@ p.common, ul.common {
 
 .common_header {
   margin: 0px;
-  color: #333;
+  color: #000;
   font-weight: 300;
 }
 
@@ -221,6 +221,7 @@ p.common, ul.common {
   font-size: 12pt;
   font-weight: 300;
   word-spacing: 1px;
+  color: #000;
 }
 
 /************ Headers ***********/
