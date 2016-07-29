@@ -1,6 +1,7 @@
 .part_header
 {
 	margin: 0;
+  word-break: break-word;
 }
 
 .part_header-1
@@ -36,7 +37,7 @@
 .part_header-6
 {
 	font-size: 11pt;
-	line-height: 1,090909091em;
+	line-height: 1.090909091em;
 }
 
 .part_section_header-1

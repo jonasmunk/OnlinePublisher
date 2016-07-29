@@ -5,6 +5,10 @@
 }
 
 .layout_menu {
+  text-align: center;
+}
+
+.layout_menu {
   padding: 5px 10px;
   text-align: left;
 }
@@ -141,6 +145,7 @@
   float: left;
   width: 33.333333333%;
   font-size: 0;
+  overflow: hidden;
 }
 
 .layout_placards_link {
@@ -152,10 +157,18 @@
   border: none;
 }
 
+.layout_placards_text {
+  margin-left: -30px;
+}
+
 .layout_placards {
   border: 1px solid #ddd;
   border-radius: 5px;
   margin: 0;
+}
+
+.layout_placards_text {
+  margin-left: 0;
 }
 
 .layout_inner_content-sidebar {

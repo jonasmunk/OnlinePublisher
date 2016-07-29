@@ -132,6 +132,7 @@ body.editor,
     float: left;
     width: 33.333333333%;
     font-size: 0;
+    overflow: hidden;
   }
 
   .layout_placards_link {
@@ -142,12 +143,20 @@ body.editor,
   .layout_placards_link_last {
     border: none;
   }
+
+  .layout_placards_text {
+    margin-left: -30px;
+  }
 }
 @media screen and (min-width: 980px) {
   .layout_placards {
     border: 1px solid #ddd;
     border-radius: 5px;
     margin: 0;
+  }
+
+  .layout_placards_text {
+    margin-left: 0;
   }
 }
 /********************* Common *******************/

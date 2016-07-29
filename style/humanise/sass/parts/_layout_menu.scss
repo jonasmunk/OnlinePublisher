@@ -4,7 +4,6 @@
     margin: 0;
     padding: 5px;
     list-style: none;
-    text-align: center;
   }
 
   .layout_menu_item {
@@ -58,6 +57,13 @@
   .layout_menu_link {
     letter-spacing: 0;
     padding: 0 5px;
+  }
+}
+
+
+@include if((width: 500px, target: inline)) {
+  .layout_menu {
+    text-align: center;
   }
 }
 

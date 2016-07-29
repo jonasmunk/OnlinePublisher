@@ -3625,9 +3625,9 @@ hui.ui = {
 	latestTopIndex : 2000,
 	toolTips : {},
 	confirmOverlays : {},
-	
+
 	delayedUntilReady : [],
-	
+
 	texts : {
 		request_error : {en:'An error occurred on the server',da:'Der skete en fejl på serveren'},
 		'continue' : {en:'Continue',da:'Fortsæt'},
@@ -3650,6 +3650,9 @@ hui.ui.get = function(nameOrComponent) {
 	}
 };
 
+hui.ui.is = function(component, constructor) {
+  return component.__proto__ == constructor.prototype;
+}
 
 /**
  * Called when the DOM is ready and hui.ui is ready
@@ -3678,7 +3681,7 @@ hui.ui._resize = function() {
 
 hui.ui._afterResize = function() {
   hui.onDraw(function() {
-  	hui.ui.callSuperDelegates(hui.ui,'$afterResize');    
+    hui.ui.callSuperDelegates(hui.ui,'$afterResize');
   })
 };
 
@@ -3742,7 +3745,7 @@ hui.ui.confirmOverlay = function(options) {
 
 /**
  * Unregisters a widget
- * @param widget {Widget} The widget to destroy 
+ * @param widget {Widget} The widget to destroy
  */
 hui.ui.destroy = function(widget) {
   if (typeof(widget.destroy)=='function') {
@@ -3815,6 +3818,16 @@ hui.ui.getAncestor = function(widget,cls) {
 	return null;
 };
 
+hui.ui.getComponents = function(predicate) {
+  var comps = [];
+  var o = hui.ui.objects;
+	for (var key in o) {
+    if (predicate(o[key])) {
+      comps.push(o[key]);
+    }
+  }
+  return comps;
+}
 
 
 hui.ui.changeState = function(state) {
@@ -3832,7 +3845,7 @@ hui.ui.changeState = function(state) {
 		}
 	}
 	hui.ui.state=state;
-	
+
 	this.reLayout();
 };
 
@@ -3852,22 +3865,22 @@ hui.ui.reLayout = function() {
 
 hui.ui.nextIndex = function() {
 	hui.ui.latestIndex++;
-	return 	hui.ui.latestIndex;
+	return hui.ui.latestIndex;
 };
 
 hui.ui.nextPanelIndex = function() {
 	hui.ui.latestPanelIndex++;
-	return 	hui.ui.latestPanelIndex;
+	return hui.ui.latestPanelIndex;
 };
 
 hui.ui.nextAlertIndex = function() {
 	hui.ui.latestAlertIndex++;
-	return 	hui.ui.latestAlertIndex;
+	return hui.ui.latestAlertIndex;
 };
 
 hui.ui.nextTopIndex = function() {
 	hui.ui.latestTopIndex++;
-	return 	hui.ui.latestTopIndex;
+	return hui.ui.latestTopIndex;
 };
 
 
@@ -3882,7 +3895,7 @@ hui.ui.showCurtain = function(options) {
 	var widget = options.widget;
 	if (!widget.curtain) {
 		widget.curtain = hui.build('div',{'class':'hui_curtain',style:'z-index:none'});
-		
+
 		var body = hui.get.firstByClass(document.body,'hui_body');
 		if (!body) {
 			body=document.body;
@@ -3920,7 +3933,7 @@ hui.ui.showCurtain = function(options) {
 	}
 	curtain.style.zIndex=options.zIndex;
 	if (options.transparent) {
-		curtain.style.display='block';		
+		curtain.style.display='block';
 	} else {
 		hui.style.setOpacity(curtain,0);
 		curtain.style.display='block';
@@ -3989,7 +4002,7 @@ hui.ui.confirm = function(options) {
 			hui.ui.callDelegates(alert,'cancel');
 		}});
 		alert.addButton(cancel);
-	
+
 		ok = hui.ui.Button.create({name:name+'_ok',text : options.ok || 'OK',highlighted:options.highlighted==='ok'});
 		alert.addButton(ok);
 	} else {
@@ -4311,7 +4324,7 @@ hui.ui.registerComponent = function(component) {
 	if (hui.ui.objects[component.name]) {
 		hui.log('Widget replaced: '+component.name,hui.ui.objects[component.name]);
 	}
-	hui.ui.objects[component.name] = component;  
+	hui.ui.objects[component.name] = component;
 };
 
 /** Send a message to all ancestors of a widget */
@@ -5701,19 +5714,19 @@ hui.ui.Overlay.prototype = {
  * @constructor
  */
 hui.ui.Button = function(options) {
-	this.options = options;
-	this.name = options.name;
-	this.element = hui.get(options.element);
-	this.enabled = !hui.cls.has(this.element,'hui_button_disabled');
-	hui.ui.extend(this);
-	this._attach();
+  this.options = options;
+  this.name = options.name;
+  this.element = hui.get(options.element);
+  this.enabled = !hui.cls.has(this.element,'hui_button_disabled');
+  hui.ui.extend(this);
+  this._attach();
   // TODO: Deprecated!
-	if (options.listener) {
-		this.listen(options.listener);
-	}
-	if (options.listen) {
-		this.listen(options.listen);
-	}
+  if (options.listener) {
+    this.listen(options.listener);
+  }
+  if (options.listen) {
+    this.listen(options.listen);
+  }
 };
 
 /**
@@ -5735,172 +5748,179 @@ hui.ui.Button = function(options) {
  * </pre>
  */
 hui.ui.Button.create = function(options) {
-	options = hui.override({text:'',highlighted:false,enabled:true},options);
-	var className = 'hui_button'+(options.highlighted ? ' hui_button_highlighted' : '');
-	if (options.variant) {
-		className+=' hui_button_'+options.variant;
-	}
-	if (options.small && options.variant) {
-		className+=' hui_button_small_'+options.variant;
-	}
-	if (options.small) {
-		className+=' hui_button_small'+(options.highlighted ? ' hui_button_small_highlighted' : '');
-	}
-	if (!options.enabled) {
-		className+=' hui_button_disabled';
-	}
-	var text = options.text ? hui.ui.getTranslated(options.text) : null;
-	if (options.title) { // Deprecated
-		text = hui.ui.getTranslated(options.title);
-	}
-	var element = options.element = hui.build('a',{'class':className,href:'javascript://'});
-	var inner = hui.build('span',{parent:hui.build('span',{parent:element})});
-	if (options.icon) {
-		var icon = hui.build('em',{parent:inner,'class':'hui_button_icon',style:'background-image:url('+hui.ui.getIconUrl(options.icon,16)+')'});
-		if (!text) {
-			hui.cls.add(icon,'hui_button_icon_notext');
-		}
-	}
-	if (text) {
-		hui.dom.addText(inner,text);
-	}
-	return new hui.ui.Button(options);
+  options = hui.override({text:'',highlighted:false,enabled:true},options);
+  var className = 'hui_button'+(options.highlighted ? ' hui_button_highlighted' : '');
+  if (options.variant) {
+    className+=' hui_button_'+options.variant;
+  }
+  if (options.small && options.variant) {
+    className+=' hui_button_small_'+options.variant;
+  }
+  if (options.small) {
+    className+=' hui_button_small'+(options.highlighted ? ' hui_button_small_highlighted' : '');
+  }
+  if (!options.enabled) {
+    className+=' hui_button_disabled';
+  }
+  var text = options.text ? hui.ui.getTranslated(options.text) : null;
+  if (options.title) { // Deprecated
+    text = hui.ui.getTranslated(options.title);
+  }
+  var element = options.element = hui.build('a',{'class':className,href:'javascript://'});
+  var inner = hui.build('span',{parent:hui.build('span',{parent:element})});
+  if (options.icon) {
+    var icon = hui.build('em',{parent:inner,'class':'hui_button_icon',style:'background-image:url('+hui.ui.getIconUrl(options.icon,16)+')'});
+    if (!text) {
+      hui.cls.add(icon,'hui_button_icon_notext');
+    }
+  }
+  if (text) {
+    hui.dom.addText(inner,text);
+  }
+  return new hui.ui.Button(options);
 };
 
 hui.ui.Button.prototype = {
-	_attach : function() {
-		var self = this;
-		hui.listen(this.element,'mousedown',function(e) {
-			hui.stop(e);
-		});
-		hui.listen(this.element,'click',function(e) {
-			hui.stop(e);
-			self._onClick(e);
-		});
-	},
-	_onClick : function(e) {
-		if (this.enabled) {
-			var alt = false;
-			if (e) {
-				alt = hui.event(e).altKey;
-			}
-			if (this.options.confirm && !alt) {
-				hui.ui.confirmOverlay({
-					widget : this,
-					text : this.options.confirm.text,
-					okText : this.options.confirm.okText,
-					cancelText : this.options.confirm.cancelText,
-					onOk : this._fireClick.bind(this)
-				});
-			} else {
-				this._fireClick();
-			}
-		} else {
-			this.element.blur();
-		}
-	},
-	_fireClick : function() {
-		this.fire('click',this);
-		if (this.options.submit) {
-			var form = hui.ui.getAncestor(this,'hui_formula');
-			if (form) {
-				form.submit();
-			} else {
-				hui.log('No form found to submit');
-			}
-		}
-	},
-	/** Registers a function as a click listener or issues a click
-	 * @param func? {Function} The function to run when clicked, leave out to issue a click
-	 */
-	click : function(func) {
-		if (func) {
-			this.listen({$click:func});
-			return this;
-		} else {
-			this._onClick();
-		}
-	},
-	/** Focus the button */
-	focus : function() {
-		this.element.focus();
-	},
-	/** Registers a function as a click handler
-	 * @param func {Function} The fundtion to invoke when clicked click
-	 */
-	onClick : function(func) {
-		this.listen({$click:func});
-	},
-	/** Enables or disables the button
-	 * @param enabled {Boolean} If the button should be enabled
-	 */
-	setEnabled : function(enabled) {
-		this.enabled = enabled;
-		this._updateUI();
-	},
-	/** Enables the button */
-	enable : function() {
-		this.setEnabled(true);
-	},
-	/** Disables the button */
-	disable : function() {
-		this.setEnabled(false);
-	},
-	/** Sets whether the button is highlighted
-	 * @param highlighted {Boolean} If the button should be highlighted
-	 */
-	setHighlighted : function(highlighted) {
-		hui.cls.set(this.element,'hui_button_highlighted',highlighted);
-	},
-	_updateUI : function() {
-		hui.cls.set(this.element,'hui_button_disabled',!this.enabled);
-	},
-	/** Sets the button text
-	 * @param
-	 */
-	setText : function(text) {
-		hui.dom.setText(this.element.getElementsByTagName('span')[1], hui.ui.getTranslated(text));
-	},
-	/**
-	 * Get the data object for the button
-	 * @returns {Object} The data object
-	 */
-	getData : function() {
-		return this.options.data;
-	}
+  _attach : function() {
+    var self = this;
+    hui.listen(this.element,'mousedown',function(e) {
+      hui.stop(e);
+    });
+    hui.listen(this.element,'click',function(e) {
+      hui.stop(e);
+      self._onClick(e);
+    });
+  },
+  _onClick : function(e) {
+    if (this.enabled) {
+      var alt = false;
+      if (e) {
+        alt = hui.event(e).altKey;
+      }
+      if (this.options.confirm && !alt) {
+        hui.ui.confirmOverlay({
+          widget : this,
+          text : this.options.confirm.text,
+          okText : this.options.confirm.okText,
+          cancelText : this.options.confirm.cancelText,
+          onOk : this._fireClick.bind(this)
+        });
+      } else {
+        this._fireClick();
+      }
+    } else {
+      this.element.blur();
+    }
+  },
+  _fireClick : function() {
+    this.fire('click',this);
+    if (this.options.submit) {
+      var form = hui.ui.getAncestor(this,'hui_formula');
+      if (form) {
+        form.submit();
+      } else {
+        hui.log('No form found to submit');
+      }
+    }
+  },
+  /** Registers a function as a click listener or issues a click
+   * @param func? {Function} The function to run when clicked, leave out to issue a click
+   */
+  click : function(func) {
+    if (func) {
+      this.listen({$click:func});
+      return this;
+    } else {
+      this._onClick();
+    }
+  },
+  /** Focus the button */
+  focus : function() {
+    this.element.focus();
+  },
+  /** Registers a function as a click handler
+   * @param func {Function} The fundtion to invoke when clicked click
+   */
+  onClick : function(func) {
+    this.listen({$click:func});
+  },
+  /** Enables or disables the button
+   * @param enabled {Boolean} If the button should be enabled
+   */
+  setEnabled : function(enabled) {
+    this.enabled = enabled;
+    this._updateUI();
+  },
+  /** Enables the button */
+  enable : function() {
+    this.setEnabled(true);
+  },
+  /** Disables the button */
+  disable : function() {
+    this.setEnabled(false);
+  },
+  /** Sets whether the button is highlighted
+   * @param highlighted {Boolean} If the button should be highlighted
+   */
+  setHighlighted : function(highlighted) {
+    hui.cls.set(this.element,'hui_button_highlighted',highlighted);
+  },
+  _updateUI : function() {
+    hui.cls.set(this.element,'hui_button_disabled',!this.enabled);
+  },
+  /** Sets the button text
+   * @param
+   */
+  setText : function(text) {
+    hui.dom.setText(this.element.getElementsByTagName('span')[1], hui.ui.getTranslated(text));
+  },
+  /**
+   * Get the data object for the button
+   * @returns {Object} The data object
+   */
+  getData : function() {
+    return this.options.data;
+  },
+  /**
+   * Get the role of the button
+   * @returns {String} The role
+   */
+  getRole : function() {
+    return this.options.role;
+  }
 };
 
 ////////////////////////////////// Buttons /////////////////////////////
 
 /** @constructor */
 hui.ui.Buttons = function(options) {
-	this.name = options.name;
-	this.element = hui.get(options.element);
-	this.body = hui.get.firstByClass(this.element,'hui_buttons_body');
-	hui.ui.extend(this);
+  this.name = options.name;
+  this.element = hui.get(options.element);
+  this.body = hui.get.firstByClass(this.element,'hui_buttons_body');
+  hui.ui.extend(this);
 };
 
 hui.ui.Buttons.create = function(options) {
-	options = hui.override({top:0},options);
-	var e = options.element = hui.build('div',{'class':'hui_buttons'});
-	if (options.align==='right') {
-		hui.cls.add(e,'hui_buttons_right');
-	}
-	if (options.align==='center') {
-		hui.cls.add(e,'hui_buttons_center');
-	}
-	if (options.top > 0) {
-		e.style.paddingTop=options.top+'px';
-	}
-	hui.build('div',{'class':'hui_buttons_body',parent:e});
-	return new hui.ui.Buttons(options);
+  options = hui.override({top:0},options);
+  var e = options.element = hui.build('div',{'class':'hui_buttons'});
+  if (options.align==='right') {
+    hui.cls.add(e,'hui_buttons_right');
+  }
+  if (options.align==='center') {
+    hui.cls.add(e,'hui_buttons_center');
+  }
+  if (options.top > 0) {
+    e.style.paddingTop=options.top+'px';
+  }
+  hui.build('div',{'class':'hui_buttons_body',parent:e});
+  return new hui.ui.Buttons(options);
 };
 
 hui.ui.Buttons.prototype = {
-	add : function(widget) {
-		this.body.appendChild(widget.element);
-		return this;
-	}
+  add : function(widget) {
+    this.body.appendChild(widget.element);
+    return this;
+  }
 };
 
 /* EOF */

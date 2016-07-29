@@ -1,6 +1,7 @@
 .part_section_listing
 {
 	padding: 10px 0px;
+  word-break: break-word;
 }
 
 .part_listing_list
