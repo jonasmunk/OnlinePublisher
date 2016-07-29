@@ -16,7 +16,7 @@ module.exports = function(grunt) {
     watch: {
       humanise: {
         files: ['style/humanise/sass/**/*.scss'],
-        tasks: ['compass:humanise'],
+        tasks: ['sass:humanise'],
         options: {
           spawn: false,
         }
@@ -58,13 +58,6 @@ module.exports = function(grunt) {
       }
     },
     compass: {
-      humanise: {
-        options: {
-          sassDir: "style/humanise/sass",
-          cssDir: "style/humanise/css",
-          noLineComments: true,
-        }
-      },
       karenslyst: {
         options: {
           sassDir: "style/karenslyst/sass",
@@ -88,6 +81,16 @@ module.exports = function(grunt) {
       }
     },
     sass : {
+      humanise: {
+        options : {sourcemap:'none'},
+        files: [{
+          expand: true,
+          cwd: 'style/humanise/sass',
+          src: ['*.scss'],
+          dest: 'style/humanise/css',
+          ext: '.css'
+        }]
+      },
       jonasmunk: {
         options : {sourcemap:'none'},
         files: [{

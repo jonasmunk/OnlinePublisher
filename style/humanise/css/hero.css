@@ -8,8 +8,7 @@
   position: relative;
   padding-bottom: 70%;
   overflow: hidden;
-  margin: -20px 0 20px;
-}
+  margin: -20px 0 20px; }
 
 .hero_rays {
   background: url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMDAiIGhlaWdodD0iMTAwIiB2aWV3Qm94PSIwIDAgMTAwIDEwMCI+PHBhdGggZmlsbD0iIzAwYThlNiIgZD0iTTc4LjMyMyA5MS4yMzdBNDkuNjQ0IDQ5LjY0NCAwIDAgMCA4OS43MyA4MC40MUw0OS45MTEgNDkuOTY2bDQ3LjI0IDE2Ljc1QTQ5LjY0MyA0OS42NDMgMCAwIDAgMTAwIDUxLjI1bC01MC4xLTEuMjIxIDQ4LjA2LTE0LjIxNGE1MC4xNjIgNTAuMTYyIDAgMCAwLTYuNzgzLTE0LjE5bC00MS4yNSAyOC40NiAzMC41MjgtMzkuNzVhNTAuMzY0IDUwLjM2NCAwIDAgMC02LjYxNy00LjI5MyA1MC4zNjUgNTAuMzY1IDAgMCAwLTcuMjA5LTMuMjAyTDQ5Ljk4MiA1MC4xMTQgNTEuMzE2LjAxNmE1MC4xNiA1MC4xNiAwIDAgMC0xNS41OTIgMi4wNmwxNC4zMiA0OC4wM0wyMS42NzYgOC43OTJBNDkuNjQzIDQ5LjY0MyAwIDAgMCAxMC4yNyAxOS42MmwzOS44MTggMzAuNDQzLTQ3LjI0LTE2Ljc1QTQ5LjY0MyA0OS42NDMgMCAwIDAgMCA0OC43OEw1MC4xIDUwIDIuMDQgNjQuMjE1YTUwLjE2IDUwLjE2IDAgMCAwIDYuNzgzIDE0LjE5bDQxLjI1LTI4LjQ2LTMwLjUyOCAzOS43NWMyLjA2IDEuNTc4IDQuMjY1IDMuMDE4IDYuNjE3IDQuMjkzczQuNzYzIDIuMzM3IDcuMjA5IDMuMjAybDE2LjY0Ny00Ny4yNzUtMS4zMzQgNTAuMDk4YTUwLjE2IDUwLjE2IDAgMCAwIDE1LjU5Mi0yLjA2bC0xNC4zMi00OC4wMyAyOC4zNjcgNDEuMzE0eiIvPjwvc3ZnPg==");
@@ -30,8 +29,7 @@
   -moz-animation-name: effect;
   -moz-animation-duration: 100s;
   -moz-animation-iteration-count: infinite;
-  -moz-animation-timing-function: linear;
-}
+  -moz-animation-timing-function: linear; }
 
 .hero_pencil {
   background: url("../gfx/pencil.svg");
@@ -42,8 +40,7 @@
   width: 35%;
   height: 90%;
   top: 5%;
-  left: 60%;
-}
+  left: 60%; }
 
 .hero_title {
   position: absolute;
@@ -53,35 +50,30 @@
   line-height: .9;
   left: 15px;
   top: 50%;
-  margin-top: -90px;
-}
-.hero_title_prefix {
-  display: block;
-  font-weight: 300;
-  text-indent: -0.1em;
-}
-.hero_title_suffix {
-  display: block;
-  font-weight: 700;
-  font-size: 2em;
-  text-indent: -0.07em;
-}
+  margin-top: -90px; }
+  .hero_title_prefix {
+    display: block;
+    font-weight: 300;
+    text-indent: -0.1em; }
+  .hero_title_suffix {
+    display: block;
+    font-weight: 700;
+    font-size: 2em;
+    text-indent: -0.07em; }
 
 .hero_info {
   position: absolute;
   right: 40%;
   left: 15px;
   top: 50%;
-  z-index: 1;
-}
+  z-index: 1; }
 
 .hero_text {
   color: #fff;
   font-size: 18px;
   font-weight: 400;
   line-height: 1;
-  margin-bottom: 20px;
-}
+  margin-bottom: 20px; }
 
 .hero_button {
   display: inline-block;
@@ -93,11 +85,9 @@
   text-decoration: none;
   border-radius: 4px;
   font-size: 14px;
-  font-weight: 400;
-}
-.hero_button:hover {
-  background: rgba(255, 255, 255, 0.3);
-}
+  font-weight: 400; }
+  .hero_button:hover {
+    background: rgba(255, 255, 255, 0.3); }
 
 /*
 .hero_button, .hero_button:hover {
@@ -106,131 +96,96 @@
 }*/
 @-webkit-keyframes effect {
   0% {
-    transform: rotate(0deg);
-  }
+    transform: rotate(0deg); }
   100% {
-    transform: rotate(360deg);
-  }
-}
+    transform: rotate(360deg); } }
 @-moz-keyframes effect {
   0% {
-    transform: rotate(0deg);
-  }
+    transform: rotate(0deg); }
   100% {
-    transform: rotate(360deg);
-  }
-}
+    transform: rotate(360deg); } }
 @media screen and (min-width: 375px) {
   .hero_title {
     font-size: 36px;
     left: 15px;
-    margin-top: -110px;
-  }
+    margin-top: -110px; }
   .hero_text {
     font-size: 20px;
-    margin-bottom: 20px;
-  }
+    margin-bottom: 20px; }
   .hero_button {
-    font-size: 16px;
-  }
-}
+    font-size: 16px; } }
 @media screen and (min-width: 500px) {
   .hero {
-    padding-bottom: 50%;
-  }
-  .hero_rays {
-    top: 50%;
-    left: -100%;
-    position: absolute;
-    width: 300%;
-    margin-top: -60%;
-    padding-bottom: 120%;
-  }
-  .hero_pencil {
-    width: 30%;
-    height: 80%;
-    top: 10%;
-    left: 35%;
-  }
-  .hero_title {
-    font-size: 30px;
-    margin-top: -60px;
-  }
-  .hero_info {
-    margin-top: -70px;
-    left: 65%;
-    right: 5%;
-    text-align: center;
-  }
-  .hero_text {
-    font-size: 30px;
-    margin-bottom: 20px;
-  }
-  .hero_button {
-    font-size: 16px;
-  }
-}
+    padding-bottom: 50%; }
+    .hero_rays {
+      top: 50%;
+      left: -100%;
+      position: absolute;
+      width: 300%;
+      margin-top: -60%;
+      padding-bottom: 120%; }
+    .hero_pencil {
+      width: 30%;
+      height: 80%;
+      top: 10%;
+      left: 35%; }
+    .hero_title {
+      font-size: 30px;
+      margin-top: -60px; }
+    .hero_info {
+      margin-top: -70px;
+      left: 65%;
+      right: 5%;
+      text-align: center; }
+    .hero_text {
+      font-size: 30px;
+      margin-bottom: 20px; }
+    .hero_button {
+      font-size: 16px; } }
 @media screen and (min-width: 640px) {
   .hero_title {
     font-size: 40px;
-    margin-top: -60px;
-  }
+    margin-top: -60px; }
   .hero_info {
-    margin-top: -70px;
-  }
+    margin-top: -70px; }
   .hero_text {
     font-size: 38px;
     margin-bottom: 20px;
-    font-weight: 300;
-  }
+    font-weight: 300; }
   .hero_button {
-    font-size: 18px;
-  }
-}
+    font-size: 18px; } }
 @media screen and (min-width: 768px) {
   .hero_title {
     font-size: 48px;
     margin-top: -100px;
-    left: 25px;
-  }
+    left: 25px; }
   .hero_info {
     right: 20px;
-    margin-top: -100px;
-  }
+    margin-top: -100px; }
   .hero_text {
     font-size: 48px;
-    margin-bottom: 30px;
-  }
+    margin-bottom: 30px; }
   .hero_button {
     font-size: 20px;
     border-radius: 7px;
-    border-width: 2px;
-  }
-}
+    border-width: 2px; } }
 @media screen and (min-width: 800px) {
   .hero {
-    padding-bottom: 400px;
-  }
-}
+    padding-bottom: 400px; } }
 @media screen and (min-width: 1040px) {
   .hero_title {
     left: 50%;
     margin-left: -490px;
     font-size: 60px;
-    margin-top: -120px;
-  }
+    margin-top: -120px; }
   .hero_info {
     left: 50%;
     width: 350px;
     right: auto;
     margin-left: 150px;
-    margin-top: -140px;
-  }
+    margin-top: -140px; }
   .hero_text {
     font-size: 60px;
-    margin-bottom: 40px;
-  }
+    margin-bottom: 40px; }
   .hero_button {
-    font-size: 26px;
-  }
-}
+    font-size: 26px; } }
