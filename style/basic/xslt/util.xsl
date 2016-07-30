@@ -300,24 +300,48 @@ ga('create', '<xsl:value-of select="$code"/>', {siteSpeedSampleRate : 20});ga('s
   </script>
   <script>_editor.context = '<xsl:value-of select="$path"/>';</script>
   <xsl:call-template name="util:_scripts-config"/>
+  <!--
   <xsl:choose>
     <xsl:when test="$preview='true'">
-      <xsl:call-template name="util:_scripts-config"/>
       <script src="{$path}{$timestamp-url}hui/bin/minimized.js{$timestamp-query}"><xsl:comment/></script>
       <script src="{$path}{$timestamp-url}hui/js/Editor.js{$timestamp-query}"><xsl:comment/></script>
       <script src="{$path}{$timestamp-url}hui/js/Pages.js{$timestamp-query}"><xsl:comment/></script>
-      <script src="{$path}{$timestamp-url}style/{$design}/js/script.private.js{$timestamp-query}"><xsl:comment/></script>
+      <script src="{$path}{$timestamp-url}style/basic/js/OnlinePublisher.js{$timestamp-query}"><xsl:comment/></script>
     </xsl:when>
     <xsl:when test="$development='true'">
-      <xsl:call-template name="util:_scripts-config"/>
       <script src="{$path}{$timestamp-url}hui/bin/joined.site.js{$timestamp-query}"><xsl:comment/></script>
       <script src="{$path}{$timestamp-url}style/basic/js/OnlinePublisher.js{$timestamp-query}"><xsl:comment/></script>
     </xsl:when>
     <xsl:otherwise>
-      <xsl:call-template name="util:_scripts-config"/>
-      <script src="{$path}{$timestamp-url}style/{$design}/js/script.js{$timestamp-query}" async="async" defer="defer"><xsl:comment/></script>
     </xsl:otherwise>
   </xsl:choose>
+-->
+  <xsl:variable name="query">
+    <xsl:choose>
+      <xsl:when test="$development='true' and $preview='true'">?preview=true&amp;development=true</xsl:when>
+      <xsl:when test="$development='true'">?development=true</xsl:when>
+      <xsl:when test="$preview='true'">?preview=true</xsl:when>
+    </xsl:choose>
+  </xsl:variable>
+
+  <xsl:variable name="url">
+    <xsl:value-of select="$path"/>
+    <xsl:value-of select="$timestamp-url"/>
+    <xsl:text>api/style/</xsl:text>
+    <xsl:value-of select="$design"/>
+    <xsl:text>.js</xsl:text>
+    <xsl:value-of select="$query"/>
+  </xsl:variable>
+
+  <xsl:choose>
+    <xsl:when test="$preview='true'">
+      <script src="{$url}"><xsl:comment/></script>
+    </xsl:when>
+    <xsl:otherwise>
+      <script src="{$url}" async="async" defer="defer"><xsl:comment/></script>
+    </xsl:otherwise>
+  </xsl:choose>
+
   <xsl:call-template name="util:_scripts-preview"/>
 </xsl:template>
 
@@ -511,13 +535,12 @@ i.parentNode.insertBefore(o,i)}}}})}},_editor.processNoscript()}(window,document
     <link rel="stylesheet" type="text/css" href="{$path}{$timestamp-url}style/basic/css/{$template}.css"/>
   </xsl:if>
 
-  <xsl:call-template name="util:css-resources"/>
 
   <xsl:variable name="query">
     <xsl:choose>
+      <xsl:when test="$development='true' and $preview='true'">?preview=true&amp;development=true</xsl:when>
       <xsl:when test="$development='true'">?development=true</xsl:when>
       <xsl:when test="$preview='true'">?preview=true</xsl:when>
-      <xsl:when test="$development='true' and $preview='true'">?preview=true&amp;development=true</xsl:when>
     </xsl:choose>
   </xsl:variable>
 
@@ -552,6 +575,7 @@ i.parentNode.insertBefore(o,i)}}}})}},_editor.processNoscript()}(window,document
     <xsl:call-template name="util:style-lt-ie8"/>
   </xsl:if>
 
+  <xsl:call-template name="util:css-resources"/>
 </xsl:template>
 
 <xsl:template name="util:css-resources">

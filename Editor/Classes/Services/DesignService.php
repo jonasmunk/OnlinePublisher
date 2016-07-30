@@ -120,17 +120,36 @@ class DesignService {
 
     $files = DesignService::getJS($design, 'async');
 
+    if ($preview) {
+      $files[] = 'hui/bin/minimized.js';
+      $files[] = 'hui/js/Editor.js';
+      $files[] = 'hui/js/Pages.js';
+    } else {
+      // TODO: Use list of files
+      $files[] = 'hui/bin/joined.site.js';
+    }
+    $files[] = 'style/basic/js/OnlinePublisher.js';
+
     $key = sha1(join($files,'|').'|'.ConfigurationService::getDeploymentTime());
     $cachedFile = FileSystemService::getFullPath('local/cache/temp/' . $key . '.js');
     header('Content-type: text/javascript');
-    if (file_exists($cachedFile) && !$dev) {
-      readfile($cachedFile);
+    if (!$dev && file_exists($cachedFile)) {
+      DesignService::sendFile($cachedFile);
       exit;
     }
     $out = '';
     foreach ($files as $file) {
       $path = FileSystemService::getFullPath($file);
-      readfile($path);
+      $out.= file_get_contents($path);
+      $out.= "\n";
+    }
+    echo $out;
+    if (!$dev) {
+      $tempFile = $cachedFile.'.tmp.js';
+      if (FileSystemService::writeStringToFile($out, $tempFile)) {
+        DesignService::_compress($tempFile,$cachedFile);
+        unlink($tempFile);
+      }
     }
   }
 
@@ -183,7 +202,7 @@ class DesignService {
     $cachedFile = FileSystemService::getFullPath('local/cache/temp/' . $key . '.css');
     header('Content-type: text/css');
     if (file_exists($cachedFile) && !$dev) {
-      DesignService::sendCSSfile($cachedFile);
+      DesignService::sendFile($cachedFile);
       exit;
     }
     $out = DesignService::compileCSSfiles($files, $dev);
@@ -194,7 +213,7 @@ class DesignService {
       if (FileSystemService::writeStringToFile($out, $tempFile)) {
         DesignService::_compress($tempFile, $cachedFile);
         if (file_exists($cachedFile)) {
-          DesignService::sendCSSfile($cachedFile);
+          DesignService::sendFile($cachedFile);
         } else {
           echo $out;
         }
@@ -204,7 +223,7 @@ class DesignService {
       }
     }
   }
-  private static function sendCSSfile($path) {
+  private static function sendFile($path) {
     if (ConfigurationService::isUrlRewrite()) {
       Response::setExpiresInDays(365);
     } else {
