@@ -41,6 +41,7 @@ $target: 'async';
 
   .painting-1:before {
     background: rgba(147, 165, 187, 0.6);
+    background: rgba(100, 119, 142, 0.6);
   }
 
   .painting-2 {
@@ -86,6 +87,6 @@ $target: 'async';
 
   .navigation,
   .painting:before {
-    width: 25%;
+    width: 300px;
   }
 }

@@ -1,7 +1,8 @@
 @include if {
 
   .layout_header {
-    background: #ccced0 url('../gfx/header.jpg') 50%;
+    background: #387960 url('../gfx/header.jpg') 50%;
+    background-size: cover;
     padding: 10px 0 5px;
     position: relative;
     &:after {
@@ -12,7 +13,6 @@
       right: 0;
       height: 10px;
       background: url('../gfx/cutout.svg') repeat-x;
-      //background-size: cover;
       background-position: 50% 100%;
     };
 
@@ -27,8 +27,8 @@
     &_menu {
       display: block;
       list-style: none;
-      margin: 5px 0 0;
-      padding: 0;
+      margin: 0;
+      padding: 10px 0;
       text-align: center;
 
       &_item {
@@ -38,9 +38,10 @@
       &_link {
         color: #fff;
         text-decoration: none;
-        padding: 10px 5px;
+        padding: 5px 5px;
         font-size: 16px;
         display: inline-block;
+        font-weight: 500;
       }
     }
   }

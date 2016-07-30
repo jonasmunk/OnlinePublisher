@@ -1,4 +1,4 @@
-.layout_navigation.is-front {
+.layout_navigation {
   position: fixed;
   width: 50%;
   z-index: 2;
@@ -7,38 +7,28 @@
   right: 0;
   bottom: 0; }
 .layout_title {
-  background: url("../gfx/logo_dark.svg") 0% no-repeat;
-  height: 70px;
+  background: url("../gfx/logo_light.svg") 0% no-repeat;
   font-size: 0;
-  margin: 10px; }
-  .layout_title.is-front {
-    background-image: url("../gfx/logo_light.svg");
-    background-position: 50%;
-    height: 100px;
-    margin: 30px auto;
-    max-width: 80%; }
+  background-position: 50%;
+  height: 100px;
+  margin: 10px auto;
+  max-width: 80%; }
 .layout_menu {
   list-style: none;
   padding: 0;
   font-family: "Amatic SC", sans-serif;
-  margin: -33px 0 0 55px; }
-  .layout_menu.is-front {
-    margin: 0; }
+  margin: -33px 0 0 55px;
+  margin: 0; }
 .layout_menu_item {
-  display: inline-block; }
-  .layout_menu_item.is-front {
-    display: block; }
+  display: block; }
 .layout_menu_link {
   display: block;
   text-transform: uppercase;
-  color: #333;
   text-decoration: none;
-  font-size: 24px;
-  padding: 0 7px; }
-  .layout_menu_link.is-front {
-    color: #fff;
-    line-height: 1.5;
-    font-size: 50px; }
+  padding: 0 7px;
+  color: #fff;
+  line-height: 1.5;
+  font-size: 42px; }
 .layout_content {
   padding: 15px 15px 50px;
   margin: 0 auto;
@@ -46,17 +36,15 @@
 
 @media screen and (min-width: 600px) {
   .layout_navigation {
-    width: 25%;
     background: #ccced0 url("../gfx/menu2.jpg") 50%;
     background: #ccced0 url("../gfx/menu3.jpg") 50%;
     background-size: cover;
     height: 100%;
     position: fixed;
     top: 0;
-    right: 0; }
-    .layout_navigation.is-front {
-      background: none;
-      width: 25%; }
+    right: 0;
+    background: none;
+    width: 300px; }
   .layout_title {
     background-position: 50%;
     height: 100px;
@@ -66,18 +54,16 @@
     text-align: center;
     margin: 0; }
   .layout_menu_item {
-    display: block; }
-  .layout_menu_link, .layout_menu_link.is-front {
-    font-size: 30px;
-    line-height: 1.5; } }
+    display: block; } }
 @media screen and (min-width: 760px) {
-  .layout_menu_link, .layout_menu_link.is-front {
-    font-size: 40px; } }
+  .layout_menu_link {
+    font-size: 46px; } }
 @media screen and (min-width: 900px) {
-  .layout_menu_link, .layout_menu_link.is-front {
+  .layout_menu_link {
     font-size: 50px; } }
 .layout_header {
-  background: #ccced0 url("../gfx/header.jpg") 50%;
+  background: #387960 url("../gfx/header.jpg") 50%;
+  background-size: cover;
   padding: 10px 0 5px;
   position: relative; }
   .layout_header:after {
@@ -98,17 +84,18 @@
   .layout_header_menu {
     display: block;
     list-style: none;
-    margin: 5px 0 0;
-    padding: 0;
+    margin: 0;
+    padding: 10px 0;
     text-align: center; }
     .layout_header_menu_item {
       display: inline-block; }
     .layout_header_menu_link {
       color: #fff;
       text-decoration: none;
-      padding: 10px 5px;
+      padding: 5px 5px;
       font-size: 16px;
-      display: inline-block; }
+      display: inline-block;
+      font-weight: 500; }
 
 @media screen and (min-width: 500px) {
   .layout_header_menu_link {
