@@ -1,0 +1,86 @@
+@include if {
+
+  /*************** Header *************/
+
+  .part_section_header {
+    &-1 {
+      padding-bottom: 15px;
+    }
+
+    &-2 {
+      padding-top: 10px;
+      padding-bottom: 5px;
+    }
+
+    &-3 {
+      padding-top: 10px;
+    }
+
+    &-4 {
+      padding-top: 10px;
+    }
+
+    &-5 {
+      padding-top: 10px;
+    }
+
+    &-6 {
+      padding-top: 10px;
+    }
+  }
+
+  /*************** Text *************/
+
+  .part_text
+  {
+    font-family: $font;
+    font-size: 16px;
+    line-height: 1.5em;
+    color: #333;
+
+    p {
+      margin: 10px 0px 0px;
+
+      &:first-child {
+        margin-top: 0;
+      };
+    }
+  }
+
+  .part_horizontalrule {
+    border: none;
+    background: url('../gfx/stroke_2.svg') 50% no-repeat;
+    background-size: contain;
+    padding-bottom: 3%;
+  }
+}
+
+@include if(( width: 700px)) {
+
+  .part_header {
+
+    &-1 {
+      font-size: 70pt;
+    }
+
+    &-2 {
+      font-size: 32pt;
+    }
+
+    &-3 {
+      font-size: 28pt;
+    }
+
+    &-4 {
+      font-size: 24pt;
+    }
+
+    &-5 {
+      font-size: 20pt;
+    }
+
+    &-6 {
+      font-size: 16pt;
+    }
+  }
+}

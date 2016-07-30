@@ -10,8 +10,8 @@
 
 .blog_item::before {
   content: '';
-  height: 10px;
-  background: url('../../gfx/stroke_1.svg') 50% no-repeat;
+  height: 26px;
+  background: url('../../gfx/stroke_2.svg') 50% no-repeat;
   background-size: contain;
   display: block;
   margin: 70px 0 50px;
@@ -25,7 +25,7 @@
   height: 4em;
   left: 50%;
   margin-left: -2em;
-  top: -2em;
+  top: -1.8em;
   z-index: 1;
   color: #fff;
   text-align: center;
@@ -36,7 +36,8 @@
 
 .blog_badge-2 {
   background-image: url('../../gfx/splash_2.svg');
-  padding: 1em 0.3em 0 0;
+  padding: .9em 0.3em 0 0;
+  top: -1.5em;
 }
 
 .blog_badge_date {
@@ -52,18 +53,32 @@
 
 .blog_title {
   margin: 0 0 10px;
+  font-size: 24px;
+}
+
+.blog_body {
+  font-size: 16px;
 }
 
 .blog_body p {
   margin: 5px 0;
-  font-size: .8em;
 }
 
 .blog_date {
   font-size: .8em;
-  color: #999;
   text-align: right;
   margin-top: 10px;
+}
+.blog_date_text {
+  color: #999;
+}
+
+.blog_images_title {
+  font-family: 'Indie Flower', cursive;
+  text-align: center;
+  font-size: 28px;
+  line-height: 1.2;
+  margin: -10px 0 15px;
 }
 
 .blog_image-tall {

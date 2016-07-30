@@ -40,7 +40,7 @@
     line-height: 1.5;
     font-size: 50px; }
 .layout_content {
-  padding: 10px;
+  padding: 15px 15px 50px;
   margin: 0 auto;
   max-width: 960px; }
 
@@ -78,7 +78,17 @@
     font-size: 50px; } }
 .layout_header {
   background: #ccced0 url("../gfx/header.jpg") 50%;
-  padding: 10px 0 5px; }
+  padding: 10px 0 5px;
+  position: relative; }
+  .layout_header:after {
+    content: '';
+    position: absolute;
+    bottom: -1px;
+    left: 0;
+    right: 0;
+    height: 10px;
+    background: url("../gfx/cutout.svg") repeat-x;
+    background-position: 50% 100%; }
   .layout_header_title {
     font-size: 0;
     background: url("../gfx/logo_light.svg") no-repeat;
@@ -102,7 +112,29 @@
 
 @media screen and (min-width: 500px) {
   .layout_header_menu_link {
-    padding: 0 10px; } }
+    padding: 10px; } }
+@media screen and (min-width: 768px) {
+  .layout_header {
+    height: 136px;
+    padding: 0; }
+    .layout_header_title {
+      position: absolute;
+      width: 230px;
+      height: 90px;
+      top: 20px;
+      left: 20px; }
+    .layout_header_menu {
+      margin: 0;
+      padding: 80px 0 0; }
+      .layout_header_menu_link {
+        padding: 10px;
+        font-size: 20px;
+        font-weight: 600;
+        letter-spacing: 1px; } }
+@media screen and (min-width: 1000px) {
+  .layout_header_title {
+    left: 50%;
+    margin-left: -480px; } }
 body.exhibit {
   margin: 0;
   background-size: cover;
@@ -252,3 +284,48 @@ body.exhibit {
       right: auto; }
     .exhibit_painting-right {
       right: 5%; } }
+/*************** Header *************/
+.part_section_header-1 {
+  padding-bottom: 15px; }
+.part_section_header-2 {
+  padding-top: 10px;
+  padding-bottom: 5px; }
+.part_section_header-3 {
+  padding-top: 10px; }
+.part_section_header-4 {
+  padding-top: 10px; }
+.part_section_header-5 {
+  padding-top: 10px; }
+.part_section_header-6 {
+  padding-top: 10px; }
+
+/*************** Text *************/
+.part_text {
+  font-family: "Raleway", "Arial", "Helvetica", sans-serif;
+  font-size: 16px;
+  line-height: 1.5em;
+  color: #333; }
+  .part_text p {
+    margin: 10px 0px 0px; }
+    .part_text p:first-child {
+      margin-top: 0; }
+
+.part_horizontalrule {
+  border: none;
+  background: url("../gfx/stroke_2.svg") 50% no-repeat;
+  background-size: contain;
+  padding-bottom: 3%; }
+
+@media screen and (min-width: 700px) {
+  .part_header-1 {
+    font-size: 70pt; }
+  .part_header-2 {
+    font-size: 32pt; }
+  .part_header-3 {
+    font-size: 28pt; }
+  .part_header-4 {
+    font-size: 24pt; }
+  .part_header-5 {
+    font-size: 20pt; }
+  .part_header-6 {
+    font-size: 16pt; } }

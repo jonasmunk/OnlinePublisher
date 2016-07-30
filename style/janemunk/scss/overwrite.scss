@@ -2,121 +2,82 @@
 
 $target: 'async';
 
-/********************* Common *******************/
+@include if {
 
-a.common
-{
-	color: #ddd;
-	cursor: pointer;
-}
+  .common_link
+  {
+    color: rgba(0,0,0,.2);
+    cursor: pointer;
 
-a.common span
-{
-	color: #1772a9;
-}
+    &_text {
+      color: #e44800;
+    }
 
-a.common:hover, a.common:hover span
-{
-	color: #0169b2;
-}
+    &:hover, &:hover &_text {
+      color: #3c69ff;
+    }
+  }
 
-.common_header
-{
-	color: #3D494C;
-	font-family: $effect-font;
-	font-weight: normal;
-	margin: 0;
-  text-align: center;
+  .common_header {
+    color: #3D494C;
+    font-family: $effect-font;
+    font-weight: normal;
+    margin: 0;
+    text-align: center;
 
-  &-1 {
-    font-size: 50pt;
+    &-1 {
+      font-size: 50pt;
+    }
+
+    &-2 {
+      font-size: 32pt;
+    }
+
+    &-3 {
+      font-size: 28pt;
+    }
+
+    &-4 {
+      font-size: 24pt;
+    }
+
+    &-5 {
+      font-size: 20pt;
+    }
+
+    &-6 {
+      font-size: 16pt;
+    }
   }
 }
 
-p.common, ul.common
-{
-	font-size: 9pt;
-	line-height: 160%;
-	text-align: justify;
-}
+@include if(( width: 700px )) {
 
-/*************** Header *************/
+  .common_header {
 
-.part_header
-{
-	font-family: $effect-font;
+    &-1 {
+      font-size: 70pt;
+    }
 
-  &-1 {
-    font-size: 50pt;
+    &-2 {
+      font-size: 32pt;
+    }
+
+    &-3 {
+      font-size: 28pt;
+    }
+
+    &-4 {
+      font-size: 24pt;
+    }
+
+    &-5 {
+      font-size: 20pt;
+    }
+
+    &-6 {
+      font-size: 16pt;
+    }
   }
 
-  &-2 {
-    font-size: 32pt;
-  }
-}
-
-h3.part_header, textarea.part_header-3
-{
-	font-size: 11pt;
-}
-
-h4.part_header, textarea.part_header-4
-{
-	font-size: 10pt;
-	font-weight: bold;
-}
-
-h5.part_header, textarea.part_header-5
-{
-	font-size:10pt;
-	font-weight: bold;
-}
-
-h6.part_header, textarea.part_header-6
-{
-	font-size:10pt;
-	font-weight: bold;
-}
-
-.part_section_header {
-  &-1 {
-    padding-bottom: 15px;
-  }
-
-  &-2 {
-    padding-top: 10px;
-    padding-bottom: 5px;
-  }
-
-  &-3 {
-    padding-top: 10px;
-  }
-
-  &-4 {
-    padding-top: 10px;
-  }
-
-  &-5 {
-    padding-top: 10px;
-  }
-
-  &-6 {
-    padding-top: 10px;
-  }
-}
-
-
-
-/*************** Text *************/
-
-.part_text
-{
-	font-family: $font;
-	font-size: 10pt;
-	line-height: 1.5em;
-	color: #333;
-
-  > p {
-    margin: 10px 0px 0px;
-  }
 }

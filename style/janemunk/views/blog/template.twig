@@ -6,9 +6,9 @@
         <span class="blog_badge_date">{{item.timestamp|date("d","Europe/Paris")}}</span>
         <span class="blog_badge_month">{{item.timestamp|date("F","Europe/Paris")}}</span>
       </div>
-      <h4 class="blog_title"><a href="{{item.post_url}}" class="common common_link"><span class="common_link_text">{{item.summary}}</span></a></h4>
       {% if item.type=='photo' %}
-        <div class="blog_photos">
+        <div class="blog_images">
+          <h4 class="blog_images_title">{{item.summary}}</h4>
           {% for photo in item.photos %}
             {% if photo.original_size.height / photo.original_size.width > 1.2 %}
               {% set cls = ' blog_image-tall' %}
@@ -24,9 +24,10 @@
       {% elseif item.type=='quote' %}
       <blockquote>{{item.text}} <em>{{item.source}}</em></blockquote>
       {% else %}
+      <h4 class="blog_title">{{item.summary}}</h4>
       <div class="blog_body">{{item.bodyCleaned|raw}}</div>
       {% endif %}
-      <div class="blog_date">{{item.timestamp|date("d. M Y H:i","Europe/Paris")}}</div>
+      <div class="blog_date"><a href="{{item.post_url}}" class="common common_link"><span class="common_link_text blog_date_text">{{item.timestamp|date("d. M Y H:i","Europe/Paris")}}</span></a></div>
     </li>
   {% endfor %}
   </ul>
