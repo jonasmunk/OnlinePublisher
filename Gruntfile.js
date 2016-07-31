@@ -15,7 +15,7 @@ module.exports = function(grunt) {
     },
     watch: {
       humanise: {
-        files: ['style/humanise/sass/**/*.scss'],
+        files: ['style/humanise/scss/**/*.scss'],
         tasks: ['sass:humanise'],
         options: {
           spawn: false,
