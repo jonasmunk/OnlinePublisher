@@ -257,21 +257,34 @@ class ImageTransformationService {
   }
 
   static function optimizeFile($file) {
-    //return;
-    $output = [];
-    // TODO escape quote
-    ShellService::execute('optipng -o7 "'.$file.'"');
-    ShellService::execute('jpegoptim "'.$file.'"');
-    //Log::debug($output);
+    if (file_exists($file)) {
+      $size = filesize($file);
+      $ext = strtolower(FileSystemService::getFileExtension($file));
+      $file = str_replace("'", "\'", $file);
+      if ($ext == 'png') {
+        // Only optimize files less than 4Mb since it will take too long
+        if ($size > 1024 * 1024 * 4) {
+          Log::info('PNG file too large to optimize: ' . $size);
+          return;
+        }
+        $level = $size > 1024 * 1024 ? 1 : 7;
+        ShellService::execute('optipng -o'. $level .' "' . $file . '"');
+      } else if ($ext == 'jpg' || $ext == 'jpeg') {
+        ShellService::execute('jpegoptim "' . $file . '"');
+      } else {
+        Log::warn('Unable to optimize unknow file format: ' . $file);
+      }
+      clearstatcache(); // Important to make filesize give new values
+    }
   }
 
   static function sendFile($path,$mimeType) {
     if (!file_exists($path)) {
-      error_log('Cannot send image, path does not exist: '.$path);
+      Log::warn('Cannot send image, path does not exist: '.$path);
       return;
     }
     if (!is_readable($path)) {
-      error_log('Cannot send image, path is not readable: '.$path);
+      Log::warn('Cannot send image, path is not readable: '.$path);
       return;
     }
     if (!$mimeType) {
@@ -287,12 +300,13 @@ class ImageTransformationService {
       $mimeType='image/gif';
     }
     header('Content-Type: '.$mimeType);
-    header("Content-Length: ".filesize($path));
-    header('Last-Modified: '.gmdate('D, d M Y H:i:s', filemtime($path)).' GMT');
+    header('Last-Modified: ' . gmdate('D, d M Y H:i:s', filemtime($path)).' GMT');
+    header("Content-Length: " . filesize($path));
     header('Pragma: public');
     header("Cache-Control: public");
     header('Expires: '.gmdate('D, d M Y H:i:s',time()+(7*24*60*60)) . ' GMT');
     header('Date: '.gmdate('D, d M Y H:i:s') . ' GMT');
+
     readfile($path);
   }
 

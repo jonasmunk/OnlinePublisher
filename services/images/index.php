@@ -80,8 +80,8 @@ if (file_exists($cache)) {
       }
 		}
 	} else if (ConfigurationService::isDebug()) {
-        Response::redirect(getPlaceholder($recipe,$row));
-    } else {
+    Response::redirect(getPlaceholder($recipe,$row));
+  } else {
 		Response::notFound();
 	}
 }
