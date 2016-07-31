@@ -86,7 +86,7 @@ require(['hui'], function(hui) {
         if (self.busy) {return;}
         //hui.log(ev.type + ': rotate=' + ev.rotation + ', scale=' + ev.scale + ', move=' + ev.deltaX +'x'+ev.deltaY+', num=' + ev.srcEvent.targetTouches.length);
         if (start.scale==undefined) {start.scale = ev.scale}
-        if (ev.srcEvent.targetTouches.length == 2) {
+        if (ev.srcEvent.targetTouches && ev.srcEvent.targetTouches.length == 2) {
           if (start.rotation==undefined) {start.rotation = ev.rotation}
           session.rotation = ev.rotation - start.rotation;
         }

@@ -5,7 +5,6 @@
   "css" : [
     "style/basic/css/shared.css",
     "@parts",
-    "style/janemunk/css/main.css",
     "style/janemunk/css/async.css",
     "style/janemunk/css/overwrite.css",
     "style/janemunk/css/front.css"

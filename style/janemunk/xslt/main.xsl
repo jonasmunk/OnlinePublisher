@@ -13,13 +13,14 @@
  xmlns:imagegallery="http://uri.in2isoft.com/onlinepublisher/part/imagegallery/1.0/"
  exclude-result-prefixes="p f h n o util widget document imagegallery"
  >
-<xsl:output encoding="UTF-8" method="xml" doctype-public="-//W3C//DTD XHTML 1.1//EN" doctype-system="http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd"/>
+<xsl:output encoding="UTF-8" method="xml" omit-xml-declaration="yes"/>
 
 <xsl:include href="../../basic/xslt/util.xsl"/>
 <xsl:include href="exhibit.xsl"/>
 
 
 <xsl:template match="p:page">
+  <xsl:call-template name="util:doctype"/>
   <html>
     <xsl:call-template name="util:html-attributes"/>
     <head>

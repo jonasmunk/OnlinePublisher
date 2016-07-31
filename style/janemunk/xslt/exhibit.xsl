@@ -13,56 +13,71 @@
  >
 
 <xsl:template match="widget:exhibition">
-  <div class="exhibit_wall">
-    <div class="exhibit_paintings">
+  <xsl:choose>
+    <xsl:when test="$editor='true'">
+      <div>Exhibit</div>
       <xsl:for-each select="widget:page">
-      <div class="exhibit_paintings_page">
+        <hr/>
         <xsl:for-each select="widget:image">
-          <div class="exhibit_painting exhibit_painting-left">
-            <xsl:attribute name="class">
-              <xsl:text>exhibit_painting </xsl:text>
-              <xsl:choose>
-                <xsl:when test="position()=1">exhibit_painting-left</xsl:when>
-                <xsl:when test="position()=2">exhibit_painting-center</xsl:when>
-                <xsl:otherwise>exhibit_painting-right</xsl:otherwise>
-              </xsl:choose>
-            </xsl:attribute>
-            <xsl:attribute name="style">
-              <xsl:text>background-image: url('</xsl:text>
-              <xsl:value-of select="$path"/>
-              <xsl:text>services/images/?id=</xsl:text>
-              <xsl:value-of select="@id"/>
-              <xsl:text>&amp;width=311&amp;background=transparent&amp;format=png&amp;sharpen=0.7&amp;nocache=ztrue');</xsl:text>
-            </xsl:attribute>
-            <xsl:attribute name="data-id"><xsl:value-of select="@id"/></xsl:attribute>
-            <xsl:attribute name="data-full">
-              <xsl:value-of select="$path"/>
-              <xsl:text>services/images/?id=</xsl:text>
-              <xsl:value-of select="@id"/>
-              <xsl:text>&amp;width=1000&amp;background=transparent&amp;format=png</xsl:text>
-            </xsl:attribute>
-            <xsl:comment/>
-          </div>
+          <div>#<xsl:value-of select="@id"/>: <xsl:value-of select="@width"/>x<xsl:value-of select="@height"/></div>
         </xsl:for-each>
-        <xsl:comment/>
-      </div>
       </xsl:for-each>
+    </xsl:when>
+    <xsl:otherwise>
+    <div class="exhibit_wall">
+      <div class="exhibit_paintings">
+        <xsl:for-each select="widget:page">
+        <div class="exhibit_paintings_page">
+          <xsl:for-each select="widget:image">
+            <div class="exhibit_painting exhibit_painting-left">
+              <xsl:attribute name="class">
+                <xsl:text>exhibit_painting </xsl:text>
+                <xsl:choose>
+                  <xsl:when test="position()=1">exhibit_painting-left</xsl:when>
+                  <xsl:when test="position()=2">exhibit_painting-center</xsl:when>
+                  <xsl:otherwise>exhibit_painting-right</xsl:otherwise>
+                </xsl:choose>
+              </xsl:attribute>
+              <xsl:attribute name="style">
+                <xsl:text>background-image: url('</xsl:text>
+                <xsl:value-of select="$path"/>
+                <xsl:text>services/images/?id=</xsl:text>
+                <xsl:value-of select="@id"/>
+                <xsl:text>&amp;width=311&amp;background=transparent&amp;format=png&amp;sharpen=0.7&amp;nocache=ztrue');</xsl:text>
+              </xsl:attribute>
+              <xsl:attribute name="data-id"><xsl:value-of select="@id"/></xsl:attribute>
+              <xsl:attribute name="data-width"><xsl:value-of select="@width"/></xsl:attribute>
+              <xsl:attribute name="data-height"><xsl:value-of select="@height"/></xsl:attribute>
+              <xsl:attribute name="data-full">
+                <xsl:value-of select="$path"/>
+                <xsl:text>services/images/?id=</xsl:text>
+                <xsl:value-of select="@id"/>
+                <xsl:text>&amp;width=1000&amp;background=transparent&amp;format=png</xsl:text>
+              </xsl:attribute>
+              <xsl:comment/>
+            </div>
+          </xsl:for-each>
+          <xsl:comment/>
+        </div>
+        </xsl:for-each>
+      </div>
     </div>
-  </div>
-  <div class="exhibit_viewer js-viewer"><div class="exhibit_viewer_inner js-viewer-inner"><xsl:comment/></div></div>
-  <div class="exhibit_spaces exhibit_control js-spaces">
-    <a href="#" class="exhibit_spaces_option js-spaces-option" data="light">Lys</a>
-    <a href="#" class="exhibit_spaces_option js-spaces-option is-selected" data="concrete">Beton</a>
-    <a href="#" class="exhibit_spaces_option js-spaces-option" data="simple">Simpel</a>
-  </div>
-  <a class="exhibit_back exhibit_control">
-    <xsl:attribute name="href">
-      <xsl:call-template name="util:link-url">
-        <xsl:with-param name="node" select="//p:page/p:context/p:home"/>
-      </xsl:call-template>
-    </xsl:attribute>Tilbage</a>
-  <script src="{$path}{$timestamp-url}style/{$design}/js/hammer.min.js{$timestamp-query}"><xsl:comment/></script>
-  <script src="{$path}{$timestamp-url}style/{$design}/js/exhibit.js{$timestamp-query}"><xsl:comment/></script>
+    <div class="exhibit_viewer js-viewer"><div class="exhibit_viewer_inner js-viewer-inner"><xsl:comment/></div></div>
+    <div class="exhibit_spaces exhibit_control js-spaces">
+      <a href="#" class="exhibit_spaces_option js-spaces-option" data="light">Lys</a>
+      <a href="#" class="exhibit_spaces_option js-spaces-option is-selected" data="concrete">Beton</a>
+      <a href="#" class="exhibit_spaces_option js-spaces-option" data="simple">Simpel</a>
+    </div>
+    <a class="exhibit_back exhibit_control">
+      <xsl:attribute name="href">
+        <xsl:call-template name="util:link-url">
+          <xsl:with-param name="node" select="//p:page/p:context/p:home"/>
+        </xsl:call-template>
+      </xsl:attribute>Tilbage</a>
+    <script src="{$path}{$timestamp-url}style/janemunk/js/hammer.min.js{$timestamp-query}"><xsl:comment/></script>
+    <script src="{$path}{$timestamp-url}style/janemunk/js/exhibit.js{$timestamp-query}"><xsl:comment/></script>
+  </xsl:otherwise>
+  </xsl:choose>
 </xsl:template>
 
 <xsl:template match="document:section[@class='artgallery']//imagegallery:imagegallery">
