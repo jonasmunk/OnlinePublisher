@@ -1,4 +1,7 @@
 @include if {
+  body.is-front {
+    background: #666;
+  }
   .layout {
 
     &_navigation {

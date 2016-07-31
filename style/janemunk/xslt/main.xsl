@@ -45,6 +45,9 @@
           <xsl:apply-templates select="//document:section[@class='artgallery']//imagegallery:imagegallery"/>
         </xsl:when>
         <xsl:otherwise>
+          <xsl:if test="//p:page/p:context/p:home[@page=//p:page/@id]">
+            <xsl:attribute name="class">is-front</xsl:attribute>
+          </xsl:if>
           <xsl:call-template name="new"/>          
         </xsl:otherwise>
       </xsl:choose>
@@ -57,9 +60,9 @@
 
   <xsl:choose>
     <xsl:when test="//p:page/p:context/p:home[@page=//p:page/@id]">
-      <div class="layout_navigation is-front">
-        <h1 class="layout_title is-front">Jane Munk</h1>
-        <ul class="layout_menu is-front">
+      <div class="layout_navigation">
+        <h1 class="layout_title">Jane Munk</h1>
+        <ul class="layout_menu">
           <xsl:for-each select="f:frame/h:hierarchy/h:item[not(@hidden='true')]">
             <xsl:variable name="style">
               <xsl:choose>
@@ -68,8 +71,8 @@
                 <xsl:otherwise><xsl:text>normal</xsl:text></xsl:otherwise>
               </xsl:choose>
             </xsl:variable>
-            <li class="layout_menu_item layout_menu_item-{$style} is-front">
-              <a class="layout_menu_link layout_menu_link-{$style} is-front">
+            <li class="layout_menu_item layout_menu_item-{$style}">
+              <a class="layout_menu_link layout_menu_link-{$style}">
                 <xsl:call-template name="util:link"/>
                 <xsl:value-of select="@title"/>
               </a>
