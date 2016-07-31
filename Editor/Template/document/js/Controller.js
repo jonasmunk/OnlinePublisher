@@ -1,3 +1,4 @@
+/*
 var _editor = {
   defer : function(func) {
     func();
@@ -11,7 +12,7 @@ if (!window.require) {
 	window.require = function(requirements,callback) {
 		callback();
 	}
-}
+}*/
 
 var controller = {
 	pageId : 0,
